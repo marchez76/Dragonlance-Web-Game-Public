@@ -726,6 +726,7 @@ I metadati ID3 non dichiarano né autore né etichetta né provenienza: l'unico 
 ## Struttura della cartella
 
 ```
+CLAUDE.md                          regole di comportamento per le sessioni AI
 dragonlance-project-reference.md   documento di design
 divisione-del-lavoro.md            chi fa cosa fra questo ambiente e Cowork
 CONTESTO-PROGETTO.md               questo file (generato)

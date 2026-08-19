@@ -91,6 +91,10 @@ __pycache__/
 *.tmp
 *.part
 
+# Note valide solo su questa macchina: percorsi locali, promemoria di
+# ambiente. CLAUDE.md (le regole di progetto) resta pubblico.
+CLAUDE.local.md
+
 # --------------------------------------------------------------------------
 # ECCEZIONI — file che restano NONOSTANTE le regole sopra.
 # Sono nostri o derivano dall'SRD 5.1, che e' CC-BY e ridistribuibile con

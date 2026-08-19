@@ -1183,6 +1183,7 @@ più di una — allora è un corpus, non un documento.
 ## Struttura della cartella
 
 ```
+CLAUDE.md                          regole di comportamento per le sessioni AI
 dragonlance-project-reference.md   documento di design
 divisione-del-lavoro.md            chi fa cosa fra questo ambiente e Cowork
 CONTESTO-PROGETTO.md               questo file (generato)
