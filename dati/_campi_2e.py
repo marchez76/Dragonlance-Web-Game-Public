@@ -82,6 +82,11 @@ GRUPPO_C = {
     "quando_si_decide": (
         "In arena, quando sapremo se i draconici senza resistenza magica "
         "risultano troppo fragili."),
+    "creatura_di_riferimento": (
+        "Lo Yaggol (MC Dragonlance Appendix, pag. 87) ha resistenza magica "
+        "50%, la piu' alta del bestiario: e' la creatura su cui questa "
+        "decisione pesera' di piu', e va tenuta presente quando si valuta "
+        "se ripristinarla."),
 }
 
 GRUPPI = [("A", GRUPPO_A), ("B", GRUPPO_B), ("C", GRUPPO_C)]

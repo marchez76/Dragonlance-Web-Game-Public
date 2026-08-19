@@ -1,6 +1,6 @@
 # Rapporto diagnostico sulle 17 classi di Krynn
 
-*Generato da `dati/analizza_classi.py` il 2026-08-14.*
+*Generato da `dati/analizza_classi.py` il 2026-08-19.*
 
 > **Cos'è.** Una diagnosi, non una conversione. Serve a vedere la forma del
 > problema prima di compilare `mechanics_5e`, come `RAPPORTO-soddisfacibilita.md`
@@ -127,7 +127,7 @@ Dado vita: 1d8 contro 1d8. Tiri salvezza Cleric: Wisdom, Charisma.
 Livelli a cui Sacerdote degli Ordini Sacri delle Stelle concede qualcosa: **1**, contro **11** del Cleric. Privilegi totali: **0** contro **16** (piu' 5 aumenti di caratteristica, che la 2e non ha).
 
 
-> **Lettura interpretativa** — registrata il 2026-08-14. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-08-19. Non e' derivata dai dati.
 >
 > Le classi di Krynn non sono classi nel senso della 5e: sono **profili di
 > restrizione** appoggiati sulle classi base della 2e. Su 19 privilegi totali solo
@@ -170,7 +170,7 @@ Per ciascuna classe di Krynn, la classe base 5e più vicina come chassis.
 |---|---|---|
 | Barbaro | Fighter, **non** Barbarian | Il Barbarian 5e è costruito sull'Ira, che la 2e non ha. Il barbaro di Krynn è un guerriero con competenze ambientali: il Fighter regge meglio, con l'ambiente spostato su background/competenze. |
 | Cavaliere della Corona | Fighter | Specializzazione nelle armi e progressione da guerriero puro. Nessuna magia al 1° grado. |
-| Cavaliere della Spada | Paladin | La fonte dice esplicitamente "capacità della classe Paladino al proprio livello" e concede incantesimi da sacerdote dal 6°. È l'accoppiamento più pulito del roster. |
+| Cavaliere della Spada | Paladin | La fonte rimanda esplicitamente alle capacità della classe Paladino, e concede incantesimi da sacerdote dal 6°. È l'accoppiamento più pulito del roster. |
 | Cavaliere della Rosa | Paladin | Prosegue il grado precedente; l'immunità alla paura è già un privilegio del Paladin 5e (Aura di Coraggio, 10°). |
 | Cavaliere | Fighter con Stile Difesa, oppure Cavalier (sottoclasse) | Sei privilegi tutti di combattimento montato e reputazione. La sottoclasse Cavalier del PHB 2014 copre il montato; il codice comportamentale resta scoperto. |
 | Marinaio | Fighter/Rogue ibrido — **nessun candidato pulito** | Guerriero con quattro abilità da ladro. In 5e sarebbe multiclasse o una sottoclasse dedicata: entrambe le strade sono decisioni, non conversioni. |
@@ -184,7 +184,7 @@ Per ciascuna classe di Krynn, la classe base 5e più vicina come chassis.
 | Popolano | **nessuno** | Non è una classe 5e. O PNG, o background. |
 | Tinker | **nessuno** | Stessa situazione del Popolano, con in più il tema tecnologico gnomesco. Artificer esiste ma non è nel PHB 2014. |
 
-> **Lettura interpretativa** — registrata il 2026-08-14. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-08-19. Non e' derivata dai dati.
 >
 > Su quindici voci, sei hanno un chassis pulito (i due maghi, il Cleric, i due gradi
 > paladinici, il Rogue truffatore); tre non hanno alcun candidato perché non sono
@@ -379,7 +379,7 @@ più un sistema di gradi d'ordine separato dalla classe.
 
 ## Cosa manca ai dati
 
-> **Lettura interpretativa** — registrata il 2026-08-14. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-08-19. Non e' derivata dai dati.
 >
 > Prima di poter compilare `mechanics_5e` per le classi mancano tre cose che non
 > sono decisioni ma estrazioni:
@@ -472,12 +472,12 @@ Il fighter ha:
 | Immunità al freddo | assente | assente | **barbari del ghiaccio** | **specifico di Krynn** |
 | Quattro gruppi culturali | assente | terreno a scelta libera | montagna, pianura, ghiaccio, mare | **specifico di Krynn** |
 
-> **Lettura interpretativa** — registrata il 2026-08-14. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-08-19. Non e' derivata dai dati.
 >
 > **Il Barbaro di Krynn discende dal kit del 1989, non dalla classe del 1995.**
 > La prova non è un'impressione: Tales of the Lance obbliga alle **stesse due armi**
-> del kit — Ascia bipenne e Spada bastarda, che nel kit sono dichiaratamente
-> "le armi classiche del barbaro da narrativa" — e ripete **lo stesso identico
+> del kit — Ascia bipenne e Spada bastarda, che il kit presenta come le armi
+> tipiche del barbaro da narrativa fantasy — e ripete **lo stesso identico
 > vincolo sull'armatura**, splint/banded/bronze plate. Aggiungi dado vita d10,
 > tabella di esperienza del guerriero, movimento normale e il +3/−3 alle reazioni,
 > e la derivazione è completa. Tales of the Lance esce nel 1992, in mezzo alle due
@@ -519,9 +519,9 @@ Il fighter ha:
 - **PHBR14 nomina Krynn una sola volta** e la DRAGONLANCE tre: due esempi di
   terreno natio (le Grandi Paludi) e una nota sui **Kagonesti come elfi barbari**.
   Non contiene materiale su Krynn oltre a questo: non è una fonte di setting.
-- **PHBR14 cita i Kagonesti come esempio di elfi barbari** ("Barbarian elves tend
-  to be wild elves or sylvan elves, such as the Kagonesti"). È una menzione di
-  colore, senza meccanica: non incide sulle decisioni 21 e 22.
+- **PHBR14 cita i Kagonesti come esempio di elfi barbari**, insieme agli elfi
+  silvani in generale. È una menzione di colore, senza meccanica: non incide
+  sulle decisioni 21 e 22.
 
 ---
 
@@ -552,14 +552,14 @@ Il fighter ha:
 
 **Privilegi**: 2, di cui 0 agganciati a un livello esplicito. **Impedimenti**: 1. Da convertire: 3.
 
-| privilegio | livello | testo sintetico |
+| privilegio | livello | stato conversione |
 |---|---|---|
-| Magnetismo selvaggio | — | Quando il tiro di reazione del barbaro e' 8 o meno (contando i bonus razziali e di Carisma), si sottrae un ulteriore +3, rendendo la reazione ancora p. |
-| Immunita' al freddo (solo barbari del ghiaccio) | — | I barbari del ghiaccio sono immuni agli attacchi basati sul freddo, come il soffio del drago bianco e il cono di freddo. |
+| Magnetismo selvaggio | — | pending |
+| Immunita' al freddo (solo barbari del ghiaccio) | — | pending |
 
-| impedimento | testo sintetico |
+| impedimento | stato conversione |
 |---|---|
-| Rovescio del magnetismo | Quando il tiro di reazione e' 14 o piu', si applica una penalita' di -3, peggiorando la reazione rispetto a quanto sarebbe stata. |
+| Rovescio del magnetismo | pending |
 
 **Armi obbligate**: Battle Axe, Bastard Sword.
 **Regole di equipaggiamento**:
@@ -596,21 +596,21 @@ Il fighter ha:
 
 **Privilegi**: 6, di cui 3 agganciati a un livello esplicito. **Impedimenti**: 4. Da convertire: 10.
 
-| privilegio | livello | testo sintetico |
+| privilegio | livello | stato conversione |
 |---|---|---|
-| Maestria con la lancia | 1° | Al 1° livello +1 a colpire in sella usando una lancia in cui e' competente. |
-| Maestria con la spada | 3° | Al 3° livello +1 a colpire con un tipo di spada in cui e' competente. |
-| Maestria con armi da cavaliere | 5° | Al 5° livello +1 a colpire con piccone, mazza o flagello, tutti di tipo da cavaliere. |
-| Coraggio irradiato | — | Immune agli incantesimi di paura. |
-| Resistenza mentale | — | +4 ai tiri salvezza contro ogni magia che influenza la mente: charm person, friends, hypnotism, sleep, irritation, ray of enfeeblement, scare, geas, c. |
-| Reputazione | — | +3 alle reazioni da chiunque appartenga alla sua cultura, tranne malvagi e criminali, dai quali riceve -3. |
+| Maestria con la lancia | 1° | pending |
+| Maestria con la spada | 3° | pending |
+| Maestria con armi da cavaliere | 5° | pending |
+| Coraggio irradiato | — | pending |
+| Resistenza mentale | — | pending |
+| Reputazione | — | pending |
 
-| impedimento | testo sintetico |
+| impedimento | stato conversione |
 |---|---|
-| Obbligo di caricare | Non puo' attaccare a distanza se puo' invece caricare e attaccare in mischia o in giostra. |
-| Obbligo del nemico piu' forte | In ogni mischia deve attaccare il nemico piu' grande e dall'aspetto piu' potente. |
-| Ossessione per l'armatura | Possiede sempre la migliore armatura possibile, con l'obiettivo di arrivare all'armatura completa a piastre. |
-| Violazione del codice | Alla prima violazione, senso di colpa. |
+| Obbligo di caricare | pending |
+| Obbligo del nemico piu' forte | pending |
+| Ossessione per l'armatura | pending |
+| Violazione del codice | pending |
 
 **Armi obbligate**: Lance (any), Sword (any).
 **Regole di equipaggiamento**:
@@ -649,13 +649,13 @@ Titoli di livello: 11 su 25 (fino al 11°).
 
 **Privilegi**: 1, di cui 0 agganciati a un livello esplicito. **Impedimenti**: 1. Da convertire: 1.
 
-| privilegio | livello | testo sintetico |
+| privilegio | livello | stato conversione |
 |---|---|---|
-| Specializzazione nelle armi | — | I Cavalieri della Corona possono usare la specializzazione nelle armi. |
+| Specializzazione nelle armi | — | source_only |
 
-| impedimento | testo sintetico |
+| impedimento | stato conversione |
 |---|---|
-| Cavaliere sconosciuto | I cavalieri poco noti in una zona subiscono -4 alle reazioni dei PNG. |
+| Cavaliere sconosciuto | pending |
 
 **Armi obbligate**: Lance (any), Sword (any).
 **Regole di equipaggiamento**:
@@ -689,9 +689,9 @@ Titoli di livello: 12 su 22 (fino al 15°).
 
 **Privilegi**: 1, di cui 0 agganciati a un livello esplicito. **Impedimenti**: 0. Da convertire: 0.
 
-| privilegio | livello | testo sintetico |
+| privilegio | livello | stato conversione |
 |---|---|---|
-| Immunita' alla paura | — | I Cavalieri della Rosa sono completamente immuni agli incantesimi di paura. |
+| Immunita' alla paura | — | direct |
 
 **Armi obbligate**: Lance (any), Sword (any).
 **Regole di equipaggiamento**: nessuna dichiarata.
@@ -727,11 +727,11 @@ Titoli di livello: 11 su 23 (fino al 13°).
 
 **Privilegi**: 3, di cui 1 agganciati a un livello esplicito. **Impedimenti**: 0. Da convertire: 2.
 
-| privilegio | livello | testo sintetico |
+| privilegio | livello | stato conversione |
 |---|---|---|
-| Capacita' del paladino | — | I Cavalieri della Spada ottengono le capacita' della classe Paladino al proprio livello attuale. |
-| Incantesimi sacerdotali | 6° | Ottengono incantesimi da sacerdote a partire dal 6° livello. |
-| Magia di Kiri-Jolith | — | Usano gli incantesimi di Kiri-Jolith, benche' Paladine sia il dio piu' venerato dall'ordine. |
+| Capacita' del paladino | — | direct |
+| Incantesimi sacerdotali | 6° | pending |
+| Magia di Kiri-Jolith | — | pending |
 
 **Armi obbligate**: Lance (any), Sword (any).
 **Regole di equipaggiamento**: nessuna dichiarata.
@@ -767,13 +767,13 @@ Titoli di livello: 11 su 23 (fino al 13°).
 
 **Privilegi**: 1, di cui 1 agganciati a un livello esplicito. **Impedimenti**: 1. Da convertire: 2.
 
-| privilegio | livello | testo sintetico |
+| privilegio | livello | stato conversione |
 |---|---|---|
-| Abilita' da ladro | 1° | Il marinaio ottiene Climb Walls, Detect Noise, Hide in Shadows e Move Silently. |
+| Abilita' da ladro | 1° | pending |
 
-| impedimento | testo sintetico |
+| impedimento | stato conversione |
 |---|---|
-| Reputazione da pirata | Nessun impedimento meccanico specifico, ma i pirati di successo si attirano addosso pirati rivali, cacciatori di taglie e altri individui poco raccoma. |
+| Reputazione da pirata | pending |
 
 **Armi obbligate**: Cutlass, Belaying Pin, Gaff Hook.
 **Regole di equipaggiamento**:
@@ -807,18 +807,18 @@ Titoli di livello: 1 su 25 (fino al 18°).
 
 **Privilegi**: 3, di cui 2 agganciati a un livello esplicito. **Impedimenti**: 4. Da convertire: 7.
 
-| privilegio | livello | testo sintetico |
+| privilegio | livello | stato conversione |
 |---|---|---|
-| Fasi lunari | 6° | Ogni ordine trae potere dalla propria luna. |
-| Allineamenti lunari | — | Solinari con Lunitari, oppure Nuitari con Lunitari: +1 ai tiri salvezza, +1 incantesimo, +1 al livello effettivo. |
-| Immunita' dei livelli bassi | 3° | I maghi dal 1° al 3° livello non sono mai influenzati dalle fasi lunari: i loro incantesimi sono di potere troppo basso. |
+| Fasi lunari | 6° | pending |
+| Allineamenti lunari | — | pending |
+| Immunita' dei livelli bassi | 3° | pending |
 
-| impedimento | testo sintetico |
+| impedimento | stato conversione |
 |---|---|
-| Il Test dell'Alta Stregoneria | Per progredire oltre il 3° livello il mago deve recarsi alla Torre di Wayreth, dichiarare un allineamento, giurare fedelta' a un ordine e affrontare i. |
-| Cambio di ordine | Un mago puo' cambiare ordine dopo il Test, ma perde due livelli di esperienza e per un mese non e' influenzato dalla luna del nuovo ordine. |
-| Scuole proibite | Le scuole non elencate come consentite sono accessibili solo in parte. |
-| Incantesimi con nomi stranieri | Gli incantesimi che contengono il nome proprio di un personaggio esterno ad Ansalon non sono disponibili: Bigby, Drawmij, Elminster, Evard, Leomund, M. |
+| Il Test dell'Alta Stregoneria | pending |
+| Cambio di ordine | pending |
+| Scuole proibite | pending |
+| Incantesimi con nomi stranieri | pending |
 
 **Armi obbligate**: nessuna.
 **Regole di equipaggiamento**: nessuna dichiarata.
@@ -854,14 +854,14 @@ Titoli di livello: 1 su 25 (fino al 18°).
 
 **Privilegi**: 1, di cui 0 agganciati a un livello esplicito. **Impedimenti**: 2. Da convertire: 3.
 
-| privilegio | livello | testo sintetico |
+| privilegio | livello | stato conversione |
 |---|---|---|
-| Nessun vincolo di scuola | — | Non essendo legato a un ordine, il rinnegato non subisce le restrizioni sulle scuole proibite ne' il vincolo di allineamento delle vesti. |
+| Nessun vincolo di scuola | — | pending |
 
-| impedimento | testo sintetico |
+| impedimento | stato conversione |
 |---|---|
-| Braccato | I rinnegati sono braccati dai Maghi dell'Alta Stregoneria e messi di fronte alla scelta fra unirsi a un ordine o morire. |
-| Nessun potere lunare | Non traendo potere da alcuna luna, il rinnegato non riceve i bonus di fase e di allineamento lunare. |
+| Braccato | pending |
+| Nessun potere lunare | pending |
 
 **Armi obbligate**: nessuna.
 **Regole di equipaggiamento**: nessuna dichiarata.
@@ -896,9 +896,9 @@ Titoli di livello: 1 su 25 (fino al 18°).
 
 **Privilegi**: 0, di cui 0 agganciati a un livello esplicito. **Impedimenti**: 1. Da convertire: 1.
 
-| impedimento | testo sintetico |
+| impedimento | stato conversione |
 |---|---|
-| Vincolo del Bene | Oltre al voto di sostenere la magia, la causa del Bene e' la sua preoccupazione centrale. |
+| Vincolo del Bene | pending |
 
 **Armi obbligate**: nessuna.
 **Regole di equipaggiamento**: nessuna dichiarata.
@@ -930,9 +930,9 @@ Titoli di livello: 1 su 25 (fino al 18°).
 
 **Privilegi**: 0, di cui 0 agganciati a un livello esplicito. **Impedimenti**: 1. Da convertire: 1.
 
-| impedimento | testo sintetico |
+| impedimento | stato conversione |
 |---|---|
-| Vincolo del Male | Abbracciano la causa del Male, ma non scagliano palle di fuoco a caso sui casolari dei contadini: attivita' simili abuserebbero della magia e la mette. |
+| Vincolo del Male | pending |
 
 **Armi obbligate**: nessuna.
 **Regole di equipaggiamento**: nessuna dichiarata.
@@ -964,9 +964,9 @@ Titoli di livello: 1 su 25 (fino al 18°).
 
 **Privilegi**: 0, di cui 0 agganciati a un livello esplicito. **Impedimenti**: 1. Da convertire: 1.
 
-| impedimento | testo sintetico |
+| impedimento | stato conversione |
 |---|---|
-| Vincolo dell'Equilibrio | Oltre alla fedelta' ultima alla magia, il mago delle Vesti Rosse lavora per bilanciare Bene e Male. |
+| Vincolo dell'Equilibrio | pending |
 
 **Armi obbligate**: nessuna.
 **Regole di equipaggiamento**: nessuna dichiarata.
@@ -999,10 +999,10 @@ Titoli di livello: 16 su 25 (fino al 18°).
 
 **Privilegi**: 0, di cui 0 agganciati a un livello esplicito. **Impedimenti**: 2. Da convertire: 2.
 
-| impedimento | testo sintetico |
+| impedimento | stato conversione |
 |---|---|
-| Nessun potere reale | Sacerdoti provenienti da altri mondi o che venerano falsi dei. |
-| Conversione | I sacerdoti di altri mondi perdono un livello convertendosi a una religione dello stesso allineamento e due cambiando allineamento. |
+| Nessun potere reale | pending |
+| Conversione | pending |
 
 **Armi obbligate**: nessuna.
 **Regole di equipaggiamento**: nessuna dichiarata.
@@ -1038,9 +1038,9 @@ Titoli di livello: 16 su 25 (fino al 18°).
 
 **Privilegi**: 0, di cui 0 agganciati a un livello esplicito. **Impedimenti**: 1. Da convertire: 1.
 
-| impedimento | testo sintetico |
+| impedimento | stato conversione |
 |---|---|
-| Obbedienza | Gli dei di Krynn benedicono i propri sacerdoti con certi poteri, ma pretendono in cambio stretta obbedienza. |
+| Obbedienza | pending |
 
 **Armi obbligate**: nessuna.
 **Regole di equipaggiamento**: nessuna dichiarata.
@@ -1075,13 +1075,13 @@ Titoli di livello: 16 su 25 (fino al 18°).
 
 **Privilegi**: 1, di cui 0 agganciati a un livello esplicito. **Impedimenti**: 1. Da convertire: 2.
 
-| privilegio | livello | testo sintetico |
+| privilegio | livello | stato conversione |
 |---|---|---|
-| Abilita' specializzate | — | Il truffatore affina Pick Pockets, Move Silently, Hide in Shadows e Read Languages. |
+| Abilita' specializzate | — | pending |
 
-| impedimento | testo sintetico |
+| impedimento | stato conversione |
 |---|---|
-| Abilita' sacrificate | Non puo' spendere piu' di dieci punti percentuali iniziali su ciascuna delle altre abilita' da ladro, e non piu' di cinque punti per livello guadagnat. |
+| Abilita' sacrificate | pending |
 
 **Armi obbligate**: Qualunque arma da ladro.
 **Regole di equipaggiamento**: nessuna dichiarata.
@@ -1113,11 +1113,11 @@ Titoli di livello: 16 su 25 (fino al 18°).
 
 **Privilegi**: 0, di cui 0 agganciati a un livello esplicito. **Impedimenti**: 3. Da convertire: 3.
 
-| impedimento | testo sintetico |
+| impedimento | stato conversione |
 |---|---|
-| Nessun attacco alle spalle | Gli handler non ricevono il bonus di attacco alle spalle: sono mossi dalla curiosita', non dalla sete di sangue. |
-| Nessuna esperienza dal denaro | Gli handler non ricevono punti esperienza per il denaro trovato. |
-| Seguaci limitati | Attirano soltanto seguaci handler, di norma giovani kender di curiosita' intensa. |
+| Nessun attacco alle spalle | pending |
+| Nessuna esperienza dal denaro | pending |
+| Seguaci limitati | pending |
 
 **Armi obbligate**: nessuna.
 **Regole di equipaggiamento**: nessuna dichiarata.
@@ -1179,9 +1179,9 @@ Titoli di livello: 16 su 25 (fino al 18°).
 
 **Privilegi**: 0, di cui 0 agganciati a un livello esplicito. **Impedimenti**: 1. Da convertire: 1.
 
-| impedimento | testo sintetico |
+| impedimento | stato conversione |
 |---|---|
-| Progetti due volte condannati | Ogni progetto di questi gnomi ingegneri e' condannato due volte. |
+| Progetti due volte condannati | pending |
 
 **Armi obbligate**: nessuna.
 **Regole di equipaggiamento**: nessuna dichiarata.

@@ -16,6 +16,18 @@ REGOLA
     DERIVATO      ogni numero e ogni rapporto: calcolato dai dati.
     INTERPRETATIVO  letture, marcate e datate.
 
+DUE USCITE
+    RAPPORTO-bestiario.md            pubblico. Niente paragrafi di effetti
+                                      alla morte, niente testo descrittivo di
+                                      azioni/tratti SotDQ: parafrasati con
+                                      riferimento di pagina.
+    RAPPORTO-bestiario-completo.md   privato (escluso dal repo pubblico).
+                                      Stesso documento, con il testo di
+                                      fonte completo per riferimento interno.
+    La riduzione e' una funzione del generatore (parametro `completo` di
+    `scheda_confronto()`), non un intervento a posteriori: rigenerare non
+    puo' piu' reintrodurre testo di fonte nel pubblico.
+
 Uso:  python3 dati/analizza_bestiario.py
 """
 
@@ -113,7 +125,67 @@ def dpr_5e(nome):
     return tab[nome]
 
 
-def scheda_confronto(n):
+# Versione RIDOTTA delle azioni/tratti/nota di fonte, per il pubblico: solo
+# valori numerici e riferimenti di pagina, mai il testo descrittivo di SotDQ
+# o dell'MC Appendix (entrambi manuali protetti, SotDQ commerciale quanto il
+# 2e). La versione completa resta disponibile via `completo=True`, privata.
+AZIONI_RIDOTTE = {
+    "Baaz": "Multiattack (due attacchi); Shortsword +3 a colpire, 4 (1d6+1) perforanti.",
+    "Bozak": "Multiattack (Tridente ×2 o Scariche elettriche ×2); Trident +4 a "
+             "colpire, 5 (1d6+2) perforanti (6, 1d8+2 a due mani); Lightning "
+             "Discharge +4 a distanza, 60 ft, 10 (3d6) fulmine; Spellcasting "
+             "CD 12, quattro incantesimi 1/giorno ciascuno.",
+    "Kapak": "Multiattack (Pugnale ×2, con TS su Costituzione CD 12 o "
+             "veleno+paralisi se entrambi colpiscono); Dagger +5 a colpire, "
+             "5 (1d4+3) perforanti + 7 (2d6) veleno.",
+    "Sivak": "Multiattack (Spada seghettata ×2 + Coda); Serrated Sword +6 a "
+             "colpire, 13 (2d8+4) taglienti; Tail +6 a colpire, 8 (1d8+4) "
+             "contundenti (TS Forza CD 14 o prono su bersagli Grandi o più "
+             "piccoli); Shape Theft — reazione: illusione della forma "
+             "dell'ucciso, dopo aver ucciso un Umanoide Medio o più piccolo.",
+    "Aurak": "Multiattack (Squarcio + Raggio di energia, tre attacchi); Rend "
+             "+5 a colpire, 8 (1d12+2) taglienti; Energy Ray +6 a distanza, "
+             "60 ft, 8 (1d10+3) forza; Noxious Breath (ricarica 5-6, cono "
+             "15 ft, TS Costituzione CD 14, 21/6d6 veleno + sfinimento); "
+             "Spellcasting CD 14, incantesimi a volontà e a usi giornalieri.",
+}
+TRATTI_RIDOTTI = {
+    "Baaz": "Controlled Fall (riduce i danni da caduta); Draconic Devotion "
+            "(vantaggio ai tiri per colpire vicino a un drago non ostile).",
+    "Bozak": "Glide (riduce i danni da caduta, sposta 2 ft orizzontali per "
+             "ft di discesa).",
+    "Kapak": "Glide (come il Bozak).",
+    "Sivak": None,
+    "Aurak": "Aura of Command: i draconici vicini resistono meglio a charme "
+             "e paura (SotDQ pag. 196).",
+}
+ATTACCHI_RIGA_RIDOTTA = {
+    "Baaz": "Due attacchi con Spada corta.",
+    "Bozak": "Due attacchi (Tridente, o due Scariche elettriche a distanza).",
+    "Kapak": "Due attacchi con Pugnale (veleno e paralisi se entrambi colpiscono).",
+    "Sivak": "Due attacchi con Spada seghettata più uno di Coda.",
+    "Aurak": "Tre attacchi fra Squarcio e Raggio di energia.",
+}
+NOTE_RIDOTTE = {
+    "Baaz": "dalle uova di draghi d'ottone (MC Dragonlance Appendix, voce "
+            "Draconian, Baaz).",
+    "Bozak": "dalle uova di draghi di bronzo, incantatori (MC Dragonlance "
+             "Appendix, voce Draconian, Bozak).",
+    "Kapak": "dalle uova di draghi di rame, assassini con percentuali "
+             "innate da ladro (MC Dragonlance Appendix, voce Draconian, "
+             "Kapak).",
+    "Sivak": "dalle uova di draghi d'argento, gli unici che volano davvero "
+             "(MC Dragonlance Appendix, voce Draconian, Sivak).",
+    "Aurak": "dalle uova di draghi d'oro, gli unici senza ali (MC "
+             "Dragonlance Appendix, voce Draconian, Aurak).",
+}
+
+
+def scheda_confronto(n, completo=False):
+    """completo=True include i paragrafi degli effetti alla morte e il
+    testo descrittivo di azioni/tratti/nota di fonte, presi da _draconici.py
+    (privato, trascrizione di MC Appendix e SotDQ). completo=False (uscita
+    pubblica) li sostituisce con parafrasi e riferimenti di pagina."""
     a, b = D.DUE_E[n], D.CINQUE_E[n]
     r = [f"### {n} Draconian", ""]
     r += [
@@ -126,7 +198,7 @@ def scheda_confronto(n):
         f"| resistenza | {a['hd']} DV | {b['hp']} PF ({b['hp_formula']}) |",
         f"| attacco | TAC0 {a['thac0']} | bonus di competenza +{b['pb']} |",
         f"| attacchi | {a['attacks']} — {a['damage']} | "
-        f"{b['azioni'][0][1]} |",
+        f"{b['azioni'][0][1] if completo else ATTACCHI_RIGA_RIDOTTA[n]} |",
         f"| movimento | {a['movement']} | {b['speed']} |",
         f"| difese speciali | {a['special_defenses']} | "
         f"{b.get('extra', '—')} |",
@@ -136,22 +208,34 @@ def scheda_confronto(n):
         f"| valore | {a['xp']:,} PE (formula 2e) | ".replace(",", ".")
         + f"Grado di Sfida **{b['cr']}** ({b['xp']:,} PE) |".replace(",", "."),
         "",
-        f"**Effetto alla morte — la firma del draconico.**", "",
-        f"*2e*: {a['morte']}", "",
-        f"*5e*: {[t for t in b['tratti'] if t[0] == 'Death Throes'][0][1]}", "",
     ]
-    r += ["**Azioni 5e**", ""]
-    for nome, testo in b["azioni"]:
-        r.append(f"- **{nome}.** {testo}")
-    for nome, testo in b.get("reazioni", []):
-        r.append(f"- **{nome}** *(reazione)*. {testo}")
-    r.append("")
-    r += ["**Altri tratti 5e**", ""]
-    for nome, testo in b["tratti"]:
-        if nome != "Death Throes":
+    if completo:
+        r += [
+            f"**Effetto alla morte — la firma del draconico.**", "",
+            f"*2e*: {a['morte']}", "",
+            f"*5e*: {[t for t in b['tratti'] if t[0] == 'Death Throes'][0][1]}", "",
+            "**Azioni 5e**", "",
+        ]
+        for nome, testo in b["azioni"]:
             r.append(f"- **{nome}.** {testo}")
-    r.append("")
-    r += [f"**Nota di fonte 2e**: {a['note']}", ""]
+        for nome, testo in b.get("reazioni", []):
+            r.append(f"- **{nome}** *(reazione)*. {testo}")
+        r.append("")
+        r += ["**Altri tratti 5e**", ""]
+        for nome, testo in b["tratti"]:
+            if nome != "Death Throes":
+                r.append(f"- **{nome}.** {testo}")
+        r.append("")
+        r += [f"**Nota di fonte 2e**: {a['note']}", ""]
+    else:
+        r += [
+            "**Effetto alla morte**: vedi \"Cosa l'ufficiale ha reso, "
+            "scartato e aggiunto\" più sotto.", "",
+            f"**Azioni 5e**: {AZIONI_RIDOTTE[n]}", "",
+        ]
+        if TRATTI_RIDOTTI[n]:
+            r += [f"**Altri tratti 5e**: {TRATTI_RIDOTTI[n]}", ""]
+        r += [f"**Nota di fonte 2e**: {NOTE_RIDOTTE[n]}", ""]
     return "\n".join(r)
 
 
@@ -277,63 +361,104 @@ ANALOGIE = {
 
 
 # ==========================================================================
-# PARTE 5 — ordine di lavorazione proposto
+# PARTE 5 — ordine di lavorazione proposto, RICOSTRUITO sull'elenco completo
+# (48 creature da convertire) dopo il ricontaggio voce per voce.
 # ==========================================================================
-# (nome, fascia, motivo, analogo SRD evidente?)
+# I cinque draconici NON sono in questa lista: hanno gia' un precedente
+# ufficiale completo, analizzato nelle parti 2-4. Il conteggio qui sotto
+# copre le 48 - 5 = 43 creature restanti.
+#
+# (nome, fascia, motivo, analogo SRD evidente?, n_creature nella voce)
 PRIORITA = [
     ("Traag (proto-draconico)", 1,
      "Completa la famiglia dei draconici, l'unica su cui abbiamo un precedente "
      "ufficiale. E' il gradino piu' basso: serve all'arena come avversario "
-     "iniziale.", "sì — Kobold / Goblin"),
+     "iniziale.", "sì — Kobold / Goblin", 1),
     ("Warrior, Skeleton", 1,
      "Non morto generico di basso livello, il riempitivo classico dell'arena. "
-     "Ha l'analogo SRD piu' diretto di tutto il roster.", "sì — Skeleton"),
+     "Ha l'analogo SRD piu' diretto di tutto il roster.", "sì — Skeleton", 1),
     ("Thanoi (Walrus Man)", 1,
      "Umanoide bestiale di fascia bassa, identitario del nord di Krynn.",
-     "sì — Gnoll / Lizardfolk"),
+     "sì — Gnoll / Lizardfolk", 1),
     ("Kyrie", 1,
      "Umanoidi alati, avversari volanti di fascia bassa: l'arena ha bisogno "
-     "di bersagli in volo presto.", "sì — Harpy / Hippogriff"),
+     "di bersagli in volo presto.", "sì — Harpy / Hippogriff", 1),
+
     ("Horax", 2,
      "Bestia da branco, utile a riempire incontri senza tattica complessa.",
-     "sì — Giant Wasp / Giant Spider"),
-    ("Skrit", 2, "Come sopra, fascia bassissima.", "sì — Giant Centipede"),
+     "sì — Giant Wasp / Giant Spider", 1),
+    ("Skrit", 2, "Come sopra, fascia bassissima.", "sì — Giant Centipede", 1),
     ("Wichtlin", 2,
-     "Non morto elfico, identitario e di fascia media.", "sì — Wight / Specter"),
-    ("Fetch", 2, "Non morto mutaforma di fascia media.", "sì — Shadow / Ghost"),
-    ("Spectral Minion", 2, "Non morto evocato, fascia media.", "sì — Specter"),
+     "Non morto elfico, identitario e di fascia media.", "sì — Wight / Specter", 1),
+    ("Fetch", 2, "Non morto mutaforma di fascia media.", "sì — Shadow / Ghost", 1),
+    ("Spectral Minion", 2, "Non morto evocato, fascia media.", "sì — Specter", 1),
+    ("Shadowperson", 2,
+     "Non morto elfico di fascia media. La voce contiene anche il Revered "
+     "Ancient One, il suo anziano — quasi tutto `Nil`: non combatte, va "
+     "convertito come comparsa non nella scheda dell'avversario.",
+     "parziale — Shadow / Specter", 2),
+    ("Avian (Emre, Kingfisher, Skyfisher, 'Wari)", 2,
+     "Quattro varianti sotto una sola voce: uccelli o umanoidi alati "
+     "acquatici di Krynn. Ruolo e taglia esatti non ancora verificati "
+     "sull'immagine di pagina — segnaposto di fascia bassa.",
+     "da verificare — probabile Hawk / Giant Owl", 4),
+    ("Stag (Wild Stag, Giant Stag)", 2,
+     "I due cervi normali della voce Stag: bestie da branco pulite. Il "
+     "terzo abitante della voce, il Cervo Bianco, e' trattato a parte, "
+     "fuori fascia — vedi sotto.", "sì — Elk / Giant Elk", 2),
+
     ("Dreamshadow", 3,
-     "Non morto psichico: identitario ma senza analogo pulito.", "no"),
-    ("Dreamwraith", 3, "Come sopra, fascia piu' alta.", "no"),
-    ("Fireshadow", 3, "Creatura elementale di Krynn, nessun analogo diretto.", "no"),
-    ("Fire Minion", 3, "Come sopra.", "parziale — Magmin"),
+     "Non morto psichico: identitario ma senza analogo pulito.", "no", 1),
+    ("Dreamwraith", 3, "Come sopra, fascia piu' alta.", "no", 1),
+    ("Fireshadow", 3, "Creatura elementale di Krynn, nessun analogo diretto.", "no", 1),
+    ("Fire Minion", 3, "Come sopra.", "parziale — Magmin", 1),
     ("Tylor", 3,
-     "Mostruosita' grande e identitaria, fascia medio-alta.", "parziale — Chimera"),
+     "Mostruosita' grande e identitaria, fascia medio-alta.", "parziale — Chimera", 1),
     ("Knight, Death", 3,
      "**Il Cavaliere della Morte**: e' Lord Soth, cioe' l'antagonista "
      "simbolo del setting. SotDQ ha lo statblock di Soth come PERSONAGGIO, "
      "che puo' servire da riferimento ma non e' la scheda di specie.",
-     "parziale — Wight / Revenant, ma sottodimensionati"),
-    ("Haunt, Knight", 3, "Variante spettrale del precedente.", "no"),
-    ("Gurik Cha-ahl", 4, "Creatura di nicchia.", "no"),
-    ("Disir", 4, "Creatura di nicchia.", "no"),
-    ("Kani Doll", 4, "Costrutto di nicchia.", "parziale — Homunculus"),
-    ("Shimmerweed", 4, "Pianta, nicchia.", "parziale — Shrieker"),
-    ("Wyndlass", 4, "Creatura acquatica di nicchia.", "no"),
-    ("Kalothagh (Prickleback)", 4, "Bestia acquatica.", "sì — Reef Shark"),
-    ("Anemone, Giant", 4, "Bestia acquatica.", "parziale"),
-    ("Imp, Blood Sea", 4, "Diavoletto locale.", "sì — Imp / Quasit"),
-    ("Eyewing", 4, "Bestia volante di nicchia.", "no"),
-    ("Bear, Ice", 4, "Bestia.", "sì — Polar Bear"),
-    ("Wild Stage", 4, "Bestia.", "sì — Elk"),
-    ("Dragon, Amphi", 5, "Drago: la Fase 2 non ne ha bisogno.", "sì — draghi SRD"),
-    ("Dragon, Kodragon", 5, "Come sopra.", "sì"),
-    ("Dragon, Sea", 5, "Come sopra.", "sì"),
-    ("Y a g g o l", 5, "Nome corrotto nell'estrazione: da riverificare prima.", "no"),
-    ("Tayling Tayland", 5, "Nome corrotto nell'estrazione: da riverificare.", "no"),
-    ("Ice Folk Knights of", 5, "Nome corrotto: e' una voce Man/Knight spezzata.", "no"),
-    ("Shadowperson Revered Ancient One", 5,
-     "Nome corrotto: due voci fuse dall'estrazione.", "no"),
+     "parziale — Wight / Revenant, ma sottodimensionati", 1),
+    ("Haunt, Knight", 3, "Variante spettrale del precedente.", "no", 1),
+    ("Yaggol", 3,
+     "Sotto-razza degenerata dei mind flayer, con kit complesso (sei "
+     "attacchi piu' un potere psichico) e la resistenza magica piu' alta "
+     "del bestiario (50%). Identitario e costoso: nessun mostro SRD a GS "
+     "1/4-4 replica un mind-flayer minore.",
+     "no — Mind Flayer vero e' GS 7, fuori target", 1),
+    ("Tayling (+ Taylang)", 3,
+     "Gemelli telepatici che nascono sempre in coppia: l'intelligente "
+     "(Tayling) e il bestiale (Taylang). Nessun analogo SRD replica la "
+     "coppia legata telepaticamente.", "no", 2),
+
+    ("Gurik Cha-ahl", 4, "Creatura di nicchia.", "no", 1),
+    ("Disir", 4, "Creatura di nicchia.", "no", 1),
+    ("Kani Doll", 4, "Costrutto di nicchia.", "parziale — Homunculus", 1),
+    ("Shimmerweed", 4, "Pianta, nicchia.", "parziale — Shrieker", 1),
+    ("Wyndlass", 4, "Creatura acquatica di nicchia.", "no", 1),
+    ("Kalothagh (Prickleback)", 4, "Bestia acquatica.", "sì — Reef Shark", 1),
+    ("Anemone, Giant", 4, "Bestia acquatica.", "parziale", 1),
+    ("Imp, Blood Sea", 4, "Diavoletto locale.", "sì — Imp / Quasit", 1),
+    ("Eyewing", 4, "Bestia volante di nicchia.", "no", 1),
+    ("Bear, Ice", 4, "Bestia.", "sì — Polar Bear", 1),
+
+    ("Dragon, Amphi", 5, "Drago: la Fase 2 non ne ha bisogno.", "sì — draghi SRD", 1),
+    ("Dragon, Kodragon", 5, "Come sopra.", "sì", 1),
+    ("Dragon, Sea", 5, "Come sopra.", "sì", 1),
+    ("Dragon, Astral", 5,
+     "Drago, come sopra. Due statblock nella voce (solitario e coppia "
+     "accoppiata da 35 DV) ma una sola specie in due stati: contata come "
+     "una riga, non due.", "sì", 1),
+]
+
+# Fuori dalle cinque fasce di combattimento: non e' materiale da arena.
+FUORI_FASCIA = [
+    ("The White Stag", "Il terzo abitante della voce Stag (pag. 78). Non è "
+     "una bestia: è unico, allineamento legale buono, 2.000 PE, con "
+     "capacità magiche — una creatura sacra da incontro narrativo, non un "
+     "avversario. Proposta: schedarlo quando esiste uno schema per "
+     "creature uniche/da avventura (vicino allo schema Personaggio), non "
+     "forzarlo nel bestiario da combattimento."),
 ]
 
 # Le voci razziali dell'MC Appendix: NON sono mostri da convertire, sono le
@@ -377,11 +502,21 @@ def main():
         + "\n"
         for n in D.ORDINE_5E)
 
+    # Tabella dei nomi corrotti: UNA fonte sola, _bestiario_mc.NOMI_CORRETTI
+    # incrociato con VOCI per pagina e causa. Prima c'erano due elenchi
+    # indipendenti (questo e NV.VERIFICATE, fermo a 4 voci su 8) che si sono
+    # sfasati: la causa dell'incoerenza 2, risolta unificando la fonte.
+    voce_per_nome = {v[1]: v for v in BM.VOCI}
+    causa_extra = {v["estratto"]: v["causa"] for v in NV.VERIFICATE}
     tab_nomi = "\n".join(
-        f"| `{v['estratto']}` | **{v['corretto']}**"
-        + (f" (+{len(v['creature'])-1} varianti)" if len(v['creature']) > 1 else "")
-        + f" | {v['pagina_pdf']} | {v['causa']} |"
-        for v in NV.VERIFICATE)
+        f"| `{estratto}` | **{corretto}**"
+        + (f" (+{len(voce_per_nome[corretto][2]) - 1} varianti)"
+           if len(voce_per_nome[corretto][2]) > 1 else "")
+        + f" | {voce_per_nome[corretto][0]} | "
+        + f"{causa_extra.get(estratto) or voce_per_nome[corretto][5]} |"
+        for estratto, corretto in sorted(BM.NOMI_CORRETTI.items(),
+                                          key=lambda kv: voce_per_nome[kv[1]][0]))
+    n_creature_multi = sum(len(v[2]) for v in BM.VOCI if len(v[2]) > 1)
 
     NOMI_G = {"A": "dati di mondo", "B": "morale", "C": "resistenza magica"}
     tab_27 = "\n".join(
@@ -422,22 +557,36 @@ def main():
     kapak = [p for p in prof if p[0] == "Kapak"][0]
 
     per_fascia = collections.defaultdict(list)
-    for nome, f, motivo, an in PRIORITA:
-        per_fascia[f].append((nome, motivo, an))
+    for nome, f, motivo, an, nc in PRIORITA:
+        per_fascia[f].append((nome, motivo, an, nc))
     NOMI_FASCIA = {1: "Prima — servono subito all'arena",
                    2: "Seconda — riempitivi di fascia bassa e media",
                    3: "Terza — identitari ma senza analogo pulito",
                    4: "Quarta — nicchia",
-                   5: "Quinta — non servono alla Fase 2, o da riverificare"}
+                   5: "Quinta — draghi, non servono alla Fase 2"}
     blocchi_prio = []
+    tot_righe = tot_creature = 0
     for f in sorted(per_fascia):
-        blocchi_prio.append(f"### {NOMI_FASCIA[f]} ({len(per_fascia[f])})\n")
+        righe_f = per_fascia[f]
+        creature_f = sum(nc for _, _, _, nc in righe_f)
+        tot_righe += len(righe_f)
+        tot_creature += creature_f
+        etichetta = (f"{len(righe_f)} voci, {creature_f} creature" if creature_f != len(righe_f)
+                     else f"{len(righe_f)}")
+        blocchi_prio.append(f"### {NOMI_FASCIA[f]} ({etichetta})\n")
         blocchi_prio.append("| creatura | perché | analogo SRD |\n|---|---|---|")
-        for nome, motivo, an in per_fascia[f]:
+        for nome, motivo, an, nc in righe_f:
             blocchi_prio.append(f"| {nome} | {motivo} | {an} |")
         blocchi_prio.append("")
+    blocchi_prio.append(
+        f"### Fuori fascia — non da arena ({len(FUORI_FASCIA)})\n")
+    for nome, motivo in FUORI_FASCIA:
+        blocchi_prio.append(f"**{nome}.** {motivo}\n")
 
-    doc = f"""# Il bestiario di Krynn — diagnostica
+    USCITE = [(False, os.path.join(BASE, "RAPPORTO-bestiario.md")),
+              (True, os.path.join(BASE, "RAPPORTO-bestiario-completo.md"))]
+    for completo, out in USCITE:
+      doc = f"""# Il bestiario di Krynn — diagnostica
 
 *Generato da `dati/analizza_bestiario.py` il {OGGI}.*
 
@@ -491,7 +640,7 @@ sbagliato in modo silenzioso.''')}
 Le uniche creature con scheda in entrambe le edizioni. Sono anche le creature
 identitarie di Krynn, quindi il campione non è casuale: è il migliore possibile.
 
-{chr(10).join(scheda_confronto(n) for n in D.ORDINE_5E)}
+{chr(10).join(scheda_confronto(n, completo) for n in D.ORDINE_5E)}
 
 ---
 
@@ -689,10 +838,9 @@ immagini di pagina lo ha rifatto voce per voce.
 |---|---:|---|
 {tab_multi}
 
-**{BS['nomi_sbagliati']} nomi di voce erano sbagliati** nel testo estratto, non quattro come si
-credeva. Le altre quattro emerse ora: `Emre Kingfisher` era **Avian**,
-`Unmated Mated pair*` era **Dragon, Astral**, `Blood Sea Minotaur` era
-**Minotaur (of Krynn)**, `Wild Stage` era **Stag**.
+**{BS['nomi_sbagliati']} nomi di voce erano sbagliati** nel testo estratto, non solo i quattro
+verificati per primi. Il dettaglio completo — testo estratto, nome reale, pagina,
+causa — è nella tabella più sotto.
 
 {interpretativo(f'''**L'estrazione non ha solo sbagliato i nomi: ha perso dei dati.** In tre voci
 le colonne di destra sono sparite del tutto — `Avian` aveva quattro uccelli e
@@ -700,8 +848,9 @@ ne restavano due, `Stag` tre cervi e ne restava uno, `Man (of Krynn)` quattro
 culture e ne restavano due. Sono **sette creature** che dal testo estratto non
 esistevano affatto.
 
-Il conteggio passa così da {len(mc)} a **{BS['creature']}**. Non è un aggiustamento marginale: è
-il 24% in più, e cambia la stima di quanto lavoro c'è davanti.
+Il conteggio passa così da {BS['voci']} voci a **{BS['creature']}** creature vere. Non è un
+aggiustamento marginale: è il 24% in più, e cambia la stima di quanto lavoro
+c'è davanti.
 
 Due ritrovamenti che vale la pena segnalare. Il **Cervo Bianco**, una delle tre
 colonne di `Stag`, non è una bestia: è unico, di allineamento legale buono,
@@ -717,15 +866,20 @@ che il manuale tratta come singola creatura.''')}
 Le **{BS['da_convertire']} creature** da convertire, tolte le {BS['razza_nostra']} schede di razze giocanti già
 coperte da `dati/razze/` e le {BS['razza_altra']} razze fuori roster. **Proposta, non decisione.**
 
-L'ordine qui sotto è quello formulato prima del ricontaggio: **va rivisto**,
-perché sette creature nuove non erano nell'elenco.
+Ricostruito sull'elenco completo dopo il ricontaggio voce per voce. I **cinque
+draconici non sono in questa lista**: hanno già un precedente ufficiale
+completo, analizzato nelle parti 2-4 sopra. Restano **{tot_creature} creature**
+su **{tot_righe} voci** nelle cinque fasce, più il Cervo Bianco fuori fascia.
 
 {chr(10).join(blocchi_prio)}
 
 {interpretativo('''**Il criterio è l'arena, non la completezza.** La Fase 2 è un motore di
 combattimento e ha bisogno di avversari fra GS 1/4 e GS 4, in quantità e con
 tattiche diverse fra loro. Non ha bisogno di draghi: un drago in arena è una
-sessione, non un banco di prova.
+sessione, non un banco di prova. Per questo la quinta fascia, ora che i nomi
+corrotti sono risolti, contiene solo draghi — compreso il Drago Astrale, che
+resta un drago anche se il manuale gli dedica due statblock per due stati
+della stessa specie.
 
 La prima fascia è scelta così: il **Traag** completa la famiglia dei draconici
 e quindi si converte con il precedente ufficiale ancora in mano; **Scheletro
@@ -737,67 +891,73 @@ La terza fascia è quella che costa di più, e va affrontata quando il metodo è
 rodato: sono creature identitarie senza analogo pulito, dove bisogna comporre.
 Il **Cavaliere della Morte** è il caso simbolo — è Lord Soth — e ha una
 particolarità utile: SotDQ ha lo statblock di Soth come personaggio, che serve
-da riferimento numerico anche se non è la scheda di specie.
+da riferimento numerico anche se non è la scheda di specie. Lo **Yaggol** è il
+secondo caso costoso emerso dal ricontaggio: un derivato di mind flayer con
+kit complesso e la resistenza magica più alta del bestiario, senza analogo
+SRD nella fascia di grado utile alla Fase 2.
 
-Quattro voci della quinta fascia hanno il nome corrotto dall'estrazione a
-colonne. Vanno riverificate sulle pagine originali prima di qualunque lavoro:
-non si converte una creatura di cui non si sa il nome.''')}
+Il **Cervo Bianco** resta fuori da tutte e cinque le fasce: non è un
+avversario, è una creatura sacra unica da incontro narrativo. Forzarlo in una
+fascia da combattimento travisirebbe cosa è.''')}
 
 ---
 
-## I quattro nomi corrotti — verificati
+## Gli {BS['nomi_sbagliati']} nomi corrotti — verificati
 
 Riletti sulle immagini di pagina, con lo stesso metodo dei tratti razziali del
-PHB 2e. **Tutti e quattro leggibili: nessuna voce resta sospesa.**
+PHB 2e. I primi quattro erano stati verificati in un primo giro; il
+ricontaggio voce per voce ne ha trovati altri quattro con la stessa causa.
+**Tutti e {BS['nomi_sbagliati']} leggibili: nessuna voce resta sospesa.**
 
 | testo estratto | nome reale | pag. PDF | causa |
 |---|---|---:|---|
 {tab_nomi}
 
-{interpretativo(f'''**La causa è una sola, e non è un difetto delle pagine.** Tre casi su quattro
-sono voci con statblock a **più colonne**: una sola voce del manuale contiene
-due o più creature affiancate, ciascuna con la propria colonna di valori.
-L'estrattore, che lavora a due colonne di testo, legge i titoli delle colonne
-di fianco come se fossero una riga sola. Il quarto è semplicemente un titolo
-con le lettere spaziate.
+{interpretativo(f'''**La causa è quasi sempre una sola, e non è un difetto delle pagine.**
+{BS['n_multi']} casi su {BS['nomi_sbagliati']} sono voci con statblock a **più colonne**: una sola
+voce del manuale contiene due o più creature affiancate, ciascuna con la
+propria colonna di valori. L'estrattore, che lavora a due colonne di testo,
+legge i titoli delle colonne di fianco come se fossero una riga sola. Gli
+altri {BS['nomi_sbagliati'] - BS['n_multi']} hanno un'altra causa: `Minotaur (of Krynn)` prendeva
+l'intestazione di una colonna interna (`Blood Sea Minotaur`) come titolo
+della voce; `Yaggol` aveva semplicemente le lettere spaziate nello stampato.
 
-**Questo cambia il conteggio del bestiario.** Dietro le quattro voci ci sono
-**{NV.totale_creature()} creature**, non quattro: `Man (of Krynn)` ne contiene quattro,
-`Tayling` e `Shadowperson` due ciascuna. Lo stesso segnale — due valori di
-`FREQUENCY` sulla stessa riga — ne individua altre {len(NV.SOSPETTE_STESSA_CAUSA)} con lo stesso difetto.
-Il numero di creature dell'MC Appendix è quindi **maggiore delle {len(mc)} voci
-contate**, e va stabilito voce per voce prima di pianificare davvero.
+**Questo cambia il conteggio del bestiario.** Dietro le {BS['n_multi']} voci a più colonne
+ci sono **{n_creature_multi} creature**, non {BS['n_multi']}: `Man (of Krynn)` ne contiene quattro,
+`Avian` altrettante, `Stag` tre, `Tayling`, `Shadowperson` e `Dragon, Astral`
+due ciascuna. Il numero vero — **{BS['voci']} voci, {BS['creature']} creature** — è quello
+stabilito qui sopra in "Il conteggio vero del bestiario", voce per voce sulle
+immagini di pagina: non resta più nulla da chiarire su questo fronte.
 
 Due correzioni puntuali che l'immagine ha prodotto: il gemello bestiale del
 Tayling si chiama **Taylang**, non "Tayland" come leggeva il testo estratto; e
 `Man (of Krynn)` è una scheda di **PNG umani**, quindi va con le voci razziali
-già escluse dal conteggio dei mostri, non fra le creature da convertire.
-
-Un dato utile emerso per strada: lo **Yaggol** ha resistenza magica **50%**, la
-più alta del bestiario. È la creatura su cui la decisione 27 gruppo C peserà di
-più.''')}
+già escluse dal conteggio dei mostri, non fra le creature da convertire.''')}
 
 ---
 
 ## Cosa manca prima di poter convertire
 
-Delle tre cose che mancavano, **due sono fatte**.
+Delle tre cose che mancavano, **sono fatte tutte e tre**.
 
 - ~~Schema del mostro~~ → `dati/schema/mostro.schema.json`, validato sui cinque
   draconici.
-- ~~Verifica dei quattro nomi corrotti~~ → tutti e quattro leggibili, vedi sopra.
-- **Decisione sui sette campi senza corrispettivo** → decisione 27, sotto: due
+- ~~Verifica degli {BS['nomi_sbagliati']} nomi corrotti~~ → tutti leggibili, vedi sopra.
+- ~~Decisione sui sette campi senza corrispettivo~~ → decisione 27, sotto: due
   gruppi chiusi, uno rinviato con motivo.
+- ~~Conteggio vero delle creature dell'MC Appendix~~ → **{BS['voci']} voci,
+  {BS['creature']} creature**, stabilito voce per voce sulle immagini di pagina —
+  vedi "Il conteggio vero del bestiario" sopra.
 
-{interpretativo(f'''Resta una cosa sola, e non è una decisione: **il conteggio vero delle creature
-dell'MC Appendix**. Le {len(mc)} voci contate non sono {len(mc)} creature, perché almeno
-{len(NV.VERIFICATE) + len(NV.SOSPETTE_STESSA_CAUSA)} voci ne contengono più d'una su colonne affiancate. Prima di stabilire
-un ordine di lavorazione definitivo va fatto un passaggio voce per voce che
-separi le colonne — è lo stesso lavoro dei quattro nomi, esteso a tutto il
-bestiario, e si fa con le immagini di pagina.
-
-Non è bloccante per cominciare: le creature della prima fascia proposta hanno
-tutte una voce singola. È bloccante per sapere quante sono in totale.''')}
+{interpretativo(f'''Nessuna delle tre resta aperta. Quello che resta, e non è bloccante per
+cominciare a convertire, è un disallineamento scoperto per strada: il
+generatore di `RAPPORTO-mostri.md` (`confronta_mostri.py`) conta le voci
+dell'MC Appendix rileggendo il testo estratto con un'altra regola (i blocchi
+`CLIMATE/TERRAIN:`), indipendente da questo ricontaggio verificato sulle
+immagini. Dà **55**, non {BS['voci']}. Non è lo stesso tipo di errore dei nomi
+corrotti — è un secondo modo di contare, mai riconciliato col primo dopo il
+ricontaggio. Va allineato a questa fonte prima di fidarsi del suo numero, ma
+non impedisce di cominciare a convertire: la prima fascia non dipende da lui.''')}
 
 ---
 
@@ -838,11 +998,12 @@ Nello schema è `mechanics_5e.morale_2e`, con valore, etichetta della fonte e
 Il valore percentuale resta in `source_2e` e in
 `mechanics_5e.magic_resistance_2e` con `applied: false`.
 **Quando si decide:** {C27.GRUPPO_C['quando_si_decide']}
+
+**Creatura di riferimento.** {C27.GRUPPO_C['creatura_di_riferimento']}
 """
-    out = os.path.join(BASE, "RAPPORTO-bestiario.md")
-    open(out, "w", encoding="utf-8").write(doc)
-    testo = open(out, encoding="utf-8").read()
-    print(f"scritto {out} ({len(testo):,} caratteri)".replace(",", "."))
+      open(out, "w", encoding="utf-8").write(doc)
+      testo = open(out, encoding="utf-8").read()
+      print(f"scritto {out} ({len(testo):,} caratteri)".replace(",", "."))
     print(f"campi 2e: {dict(cat1)}")
     print(f"PF/DV: min {min(rapporti):.1f} max {max(rapporti):.1f} "
           f"media {sum(rapporti)/len(rapporti):.1f}")

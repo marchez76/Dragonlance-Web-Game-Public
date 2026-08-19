@@ -16,6 +16,18 @@ FONTE DEI CONFRONTI 5e
     Non e' piu' materiale a memoria: e' una fonte, con la stessa dignita' dei
     JSON di Krynn.
 
+DUE USCITE
+    RAPPORTO-classi.md            pubblico. Le schede per classe mostrano lo
+                                   STATO di conversione dei privilegi, non il
+                                   loro testo: e' trascrizione 2e e non va nel
+                                   repository pubblico.
+    RAPPORTO-classi-completo.md   privato (escluso dal repo pubblico). Stesso
+                                   documento, con il testo sintetico dei
+                                   privilegi per riferimento interno.
+    La riduzione e' una funzione del generatore (parametro `completo` di
+    `scheda()`), non un intervento a posteriori sul file: rigenerare non puo'
+    piu' reintrodurre testo di fonte nel pubblico.
+
 Uso:  python3 analizza_classi.py
 """
 
@@ -91,8 +103,21 @@ def prog(c):
     return c["source_2e"].get("progression") or []
 
 
-def scheda(c):
-    """Blocco per singola classe. Tutto derivato."""
+def stato_privilegio(c, nome):
+    """conversion_status del privilegio/impedimento dai dati mechanics_5e."""
+    for f in c["mechanics_5e"].get("features") or []:
+        if f["name"] == nome:
+            return f.get("conversion_status") or "—"
+    return "—"
+
+
+def scheda(c, completo=False):
+    """Blocco per singola classe. Tutto derivato.
+
+    completo=True include il testo sintetico (150 caratteri) del privilegio,
+    trascritto dalla fonte 2e: SOLO per la versione privata. completo=False
+    (default, uscita pubblica) lo sostituisce con lo stato di conversione,
+    che e' informazione nostra e non riproduce il manuale."""
     s = c["source_2e"]
     P, H = privilegi(c), impedimenti(c)
     pr = prog(c)
@@ -174,18 +199,23 @@ def scheda(c):
                  f"{c['mechanics_5e']['features_pending']}.")
     righe.append("")
     if P:
-        righe.append("| privilegio | livello | testo sintetico |")
+        terza = "testo sintetico" if completo else "stato conversione"
+        righe.append(f"| privilegio | livello | {terza} |")
         righe.append("|---|---|---|")
         for b in P:
             m = re.search(r"(\d+)°\s*livello", b["text"])
-            righe.append(f"| {b['name']} | {m.group(1) + '°' if m else '—'} | "
-                         f"{b['text'].split('.')[0][:150]}. |")
+            terzo = (f"{b['text'].split('.')[0][:150]}." if completo
+                     else stato_privilegio(c, b["name"]))
+            righe.append(f"| {b['name']} | {m.group(1) + '°' if m else '—'} | {terzo} |")
         righe.append("")
     if H:
-        righe.append("| impedimento | testo sintetico |")
+        terza = "testo sintetico" if completo else "stato conversione"
+        righe.append(f"| impedimento | {terza} |")
         righe.append("|---|---|")
         for h in H:
-            righe.append(f"| {h['name']} | {h['text'].split('.')[0][:150]}. |")
+            terzo = (f"{h['text'].split('.')[0][:150]}." if completo
+                     else stato_privilegio(c, h["name"]))
+            righe.append(f"| {h['name']} | {terzo} |")
         righe.append("")
 
     # armi, armature
@@ -407,7 +437,7 @@ Per ciascuna classe di Krynn, la classe base 5e più vicina come chassis.
 |---|---|---|
 | Barbaro | Fighter, **non** Barbarian | Il Barbarian 5e è costruito sull'Ira, che la 2e non ha. Il barbaro di Krynn è un guerriero con competenze ambientali: il Fighter regge meglio, con l'ambiente spostato su background/competenze. |
 | Cavaliere della Corona | Fighter | Specializzazione nelle armi e progressione da guerriero puro. Nessuna magia al 1° grado. |
-| Cavaliere della Spada | Paladin | La fonte dice esplicitamente "capacità della classe Paladino al proprio livello" e concede incantesimi da sacerdote dal 6°. È l'accoppiamento più pulito del roster. |
+| Cavaliere della Spada | Paladin | La fonte rimanda esplicitamente alle capacità della classe Paladino, e concede incantesimi da sacerdote dal 6°. È l'accoppiamento più pulito del roster. |
 | Cavaliere della Rosa | Paladin | Prosegue il grado precedente; l'immunità alla paura è già un privilegio del Paladin 5e (Aura di Coraggio, 10°). |
 | Cavaliere | Fighter con Stile Difesa, oppure Cavalier (sottoclasse) | Sei privilegi tutti di combattimento montato e reputazione. La sottoclasse Cavalier del PHB 2014 copre il montato; il codice comportamentale resta scoperto. |
 | Marinaio | Fighter/Rogue ibrido — **nessun candidato pulito** | Guerriero con quattro abilità da ladro. In 5e sarebbe multiclasse o una sottoclasse dedicata: entrambe le strade sono decisioni, non conversioni. |
@@ -707,8 +737,8 @@ Il fighter ha:
 
 {interpretativo('''**Il Barbaro di Krynn discende dal kit del 1989, non dalla classe del 1995.**
 La prova non è un'impressione: Tales of the Lance obbliga alle **stesse due armi**
-del kit — Ascia bipenne e Spada bastarda, che nel kit sono dichiaratamente
-"le armi classiche del barbaro da narrativa" — e ripete **lo stesso identico
+del kit — Ascia bipenne e Spada bastarda, che il kit presenta come le armi
+tipiche del barbaro da narrativa fantasy — e ripete **lo stesso identico
 vincolo sull'armatura**, splint/banded/bronze plate. Aggiungi dado vita d10,
 tabella di esperienza del guerriero, movimento normale e il +3/−3 alle reazioni,
 e la derivazione è completa. Tales of the Lance esce nel 1992, in mezzo alle due
@@ -750,22 +780,32 @@ PHBR14 sarebbe la sostituzione naturale. Non è una proposta: è materiale.''')}
 - **PHBR14 nomina Krynn una sola volta** e la DRAGONLANCE tre: due esempi di
   terreno natio (le Grandi Paludi) e una nota sui **Kagonesti come elfi barbari**.
   Non contiene materiale su Krynn oltre a questo: non è una fonte di setting.
-- **PHBR14 cita i Kagonesti come esempio di elfi barbari** ("Barbarian elves tend
-  to be wild elves or sylvan elves, such as the Kagonesti"). È una menzione di
-  colore, senza meccanica: non incide sulle decisioni 21 e 22.
+- **PHBR14 cita i Kagonesti come esempio di elfi barbari**, insieme agli elfi
+  silvani in generale. È una menzione di colore, senza meccanica: non incide
+  sulle decisioni 21 e 22.
 """
 
+    classi_ord = sorted(classi, key=lambda x: (GRUPPI.index(x["group"]), x["id"]))
+
+    # PUBBLICO: senza testo sintetico dei privilegi, solo stato di conversione.
     out = os.path.join(BASE, "RAPPORTO-classi.md")
-    open(out, "w", encoding="utf-8").write(doc)
-
-    # schede per classe in coda al rapporto
-    with open(out, "a", encoding="utf-8") as f:
+    with open(out, "w", encoding="utf-8") as f:
+        f.write(doc)
         f.write("\n---\n\n## Schede per classe\n\n")
-        for c in sorted(classi, key=lambda x: (GRUPPI.index(x["group"]), x["id"])):
-            f.write(scheda(c) + "\n---\n\n")
+        for c in classi_ord:
+            f.write(scheda(c, completo=False) + "\n---\n\n")
 
-    testo = open(out, encoding="utf-8").read()
-    print(f"scritto {out} ({len(testo):,} caratteri)".replace(",", "."))
+    # PRIVATO: con il testo sintetico. Mai nel pubblico: e' trascrizione 2e.
+    out_completo = os.path.join(BASE, "RAPPORTO-classi-completo.md")
+    with open(out_completo, "w", encoding="utf-8") as f:
+        f.write(doc)
+        f.write("\n---\n\n## Schede per classe (completo, con testo di fonte)\n\n")
+        for c in classi_ord:
+            f.write(scheda(c, completo=True) + "\n---\n\n")
+
+    for p in (out, out_completo):
+        testo = open(p, encoding="utf-8").read()
+        print(f"scritto {p} ({len(testo):,} caratteri)".replace(",", "."))
     return S
 
 

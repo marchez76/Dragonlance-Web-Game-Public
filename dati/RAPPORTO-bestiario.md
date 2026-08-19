@@ -1,6 +1,6 @@
 # Il bestiario di Krynn — diagnostica
 
-*Generato da `dati/analizza_bestiario.py` il 2026-08-18.*
+*Generato da `dati/analizza_bestiario.py` il 2026-08-19.*
 
 > **Diagnostica, non conversione.** Serve a vedere la forma del problema prima
 > di cominciare, come `RAPPORTO-classi.md` per le classi. Nessuno statblock è
@@ -44,7 +44,7 @@ reale del **Baaz**.
 
 I 7 senza corrispettivo: `FREQUENCY`, `ORGANIZATION`, `ACTIVITY CYCLE`, `DIET`, `NO. APPEARING`, `MAGIC RESISTANCE`, `MORALE`.
 
-> **Lettura interpretativa** — registrata il 2026-08-18. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-08-19. Non e' derivata dai dati.
 >
 > Un terzo abbondante della scheda 2e — 7 campi su 21 — non ha dove andare.
 > Ma le due metà del problema non si somigliano.
@@ -105,7 +105,7 @@ identitarie di Krynn, quindi il campione non è casuale: è il migliore possibil
 | classe armatura | **2** (scala discendente) | **15** (natural armor, scala ascendente) |
 | resistenza | 4 DV | 40 PF (9d8) |
 | attacco | TAC0 17 | bonus di competenza +2 |
-| attacchi | 2 or 1 — 1-4/1-4 or by weapon | Due attacchi con Tridente oppure due Scariche elettriche. |
+| attacchi | 2 or 1 — 1-4/1-4 or by weapon | Due attacchi (Tridente, o due Scariche elettriche a distanza). |
 | movimento | 6, Run 15, Glide 18, Fl 6 (E) | 30 ft. |
 | difese speciali | +2 bonus to saves | — |
 | resistenza magica | 20% | **non esiste in 5e** |
@@ -128,7 +128,7 @@ identitarie di Krynn, quindi il campione non è casuale: è il migliore possibil
 | classe armatura | **4** (scala discendente) | **15** (natural armor, scala ascendente) |
 | resistenza | 3 DV | 39 PF (6d8 + 12) |
 | attacco | TAC0 17 | bonus di competenza +2 |
-| attacchi | 1 — 1-4 | Due attacchi con Pugnale. Se entrambi colpiscono lo stesso bersaglio, TS su Costituzione CD 12 o avvelenato fino alla fine del suo turno successivo; mentre e' avvelenato cosi' e' anche paralizzato. |
+| attacchi | 1 — 1-4 | Due attacchi con Pugnale (veleno e paralisi se entrambi colpiscono). |
 | movimento | 6, Run 15, Glide 18 | 40 ft., climb 40 ft. |
 | difese speciali | Nil | Abilita': Inganno +4, Percezione +3, Furtivita' +7. Immunita' ai danni da veleno e alla condizione avvelenato. |
 | resistenza magica | 20% | **non esiste in 5e** |
@@ -151,7 +151,7 @@ identitarie di Krynn, quindi il campione non è casuale: è il migliore possibil
 | classe armatura | **1** (scala discendente) | **16** (natural armor, scala ascendente) |
 | resistenza | 6 DV | 57 PF (6d10 + 24) |
 | attacco | TAC0 15 | bonus di competenza +2 |
-| attacchi | 3 or 1 — 1-6/1-6/2-12 or by weapon | Due attacchi con Spada seghettata e uno con Coda. |
+| attacchi | 3 or 1 — 1-6/1-6/2-12 or by weapon | Due attacchi con Spada seghettata più uno di Coda. |
 | movimento | 6, Run 15, Glide 18, Fl 24 (C) | 30 ft., fly 60 ft. |
 | difese speciali | +2 bonus to saves | — |
 | resistenza magica | 20% | **non esiste in 5e** |
@@ -183,7 +183,7 @@ identitarie di Krynn, quindi il campione non è casuale: è il migliore possibil
 
 **Azioni 5e**: Multiattack (Squarcio + Raggio di energia, tre attacchi); Rend +5 a colpire, 8 (1d12+2) taglienti; Energy Ray +6 a distanza, 60 ft, 8 (1d10+3) forza; Noxious Breath (ricarica 5-6, cono 15 ft, TS Costituzione CD 14, 21/6d6 veleno + sfinimento); Spellcasting CD 14, incantesimi a volontà e a usi giornalieri.
 
-**Altri tratti 5e**: Aura of Command — i draconici vicini resistono meglio a charme e paura (SotDQ pag. 196).
+**Altri tratti 5e**: Aura of Command: i draconici vicini resistono meglio a charme e paura (SotDQ pag. 196).
 
 **Nota di fonte 2e**: dalle uova di draghi d'oro, gli unici senza ali (MC Dragonlance Appendix, voce Draconian, Aurak).
 
@@ -251,7 +251,7 @@ identitarie di Krynn, quindi il campione non è casuale: è il migliore possibil
 | — | **aggiunto** | `Aura of Command`: aura di comando sugli altri draconici. In 2e l'Aurak era un comandante nel testo, non nelle regole. |
 
 
-> **Lettura interpretativa** — registrata il 2026-08-18. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-08-19. Non e' derivata dai dati.
 >
 > Tre regolarità nel modo di rendere, che valgono per tutti e cinque.
 >
@@ -328,7 +328,7 @@ ma non c'è una formula: Baaz e Kapak hanno la stessa CA 2e (4) e finiscono a 14
 | Sivak | 14.0 | 34.0 | ×2.4 |
 | Aurak | 13.0 | 24.0 | ×1.8 |
 
-> **Lettura interpretativa** — registrata il 2026-08-18. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-08-19. Non e' derivata dai dati.
 >
 > **La risposta alla domanda è no: cinque casi non bastano.**
 >
@@ -377,16 +377,16 @@ costruito creature nella norma o fuori.
 
 | draconico | GS | ruolo | CA/PF del draconico | mediana SRD del GS | analoghi SRD per ruolo |
 |---|---|---|---|---|---|
-| Baaz | 1/2 | fante di prima linea, in gruppo | 14 / 22 | 12 / 21 | Lizardfolk, Gnoll, Hobgoblin, Orc |
+| Baaz | 1/2 | fante di prima linea, in gruppo | 14 / 22 | 12 / 22 | Lizardfolk, Gnoll, Hobgoblin, Orc |
 | Bozak | 2 | incantatore di supporto in mischia | 15 / 40 | 13 / 45 | Cult Fanatic, Gargoyle, Berserker |
 | Kapak | 3 | assassino furtivo con veleno | 15 / 39 | 14 / 58 | Doppelganger, Veteran, Werewolf |
 | Sivak | 4 | bruto Grande volante, truppa d'assalto | 16 / 57 | 12 / 85 | Ettin, Chuul, Succubus/Incubus |
 | Aurak | 6 | comandante incantatore | 17 / 67 | 15 / 114 | Mage, Medusa, Drider |
 
 Il bestiario SRD usato è in `dati/_fonti/srd51_mostri.py`: 322 creature,
-l'intero SRD 5.1 (era limitato a 110 creature su cinque gradi di sfida;
-completato perché la Fase 2 calibrerà anche le altre 48 creature
-dell'Appendice, di gradi ancora ignoti).
+l'intero SRD 5.1 (era limitato a 110 creature su cinque gradi di sfida; completato
+perché la Fase 2 calibrerà anche le altre 48 creature dell'Appendice, di gradi
+ancora ignoti).
 
 ### Il profilo difensivo, che è il pezzo che spiega il Kapak
 
@@ -396,13 +396,13 @@ il danno la tira su da sola.
 
 | draconico | GS | PF | mediana SRD del grado | quota | danno/round | ×rispetto al 2e |
 |---|---|---:|---:|---:|---:|---:|
-| Baaz | 1/2 | 22 | 21 | 105% | 8 | ×1.6 |
+| Baaz | 1/2 | 22 | 22 | 100% | 8 | ×1.6 |
 | Bozak | 2 | 40 | 45 | 89% | 20 | ×4.0 |
 | Kapak | 3 | 39 | 58 | 67% | 24 | ×9.6 |
 | Sivak | 4 | 57 | 85 | 67% | 34 | ×2.4 |
 | Aurak | 6 | 67 | 114 | 59% | 24 | ×1.8 |
 
-> **Lettura interpretativa** — registrata il 2026-08-18. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-08-19. Non e' derivata dai dati.
 >
 > **Il Kapak ha 39 punti ferita contro una mediana di 58 al suo grado: il 67%.**
 > Sta *sotto* la mediana in difesa e ci arriva col danno — 24 per round. È un
@@ -425,7 +425,7 @@ il danno la tira su da sola.
 > offensivo rispetto alla propria fonte**: ×9.6 contro il ×1.6–×4.0 degli altri
 > quattro. Gli altri sono stati riscalati; lui è stato **ripensato**.
 
-> **Lettura interpretativa** — registrata il 2026-08-18. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-08-19. Non e' derivata dai dati.
 >
 > **Sopra la mediana in armatura, sotto in punti ferita.** È lo stesso profilo
 > visto sopra, letto sui due assi: la CA dei draconici sta sempre a pari o sopra
@@ -470,12 +470,11 @@ immagini di pagina lo ha rifatto voce per voce.
 | **Stag** | 78 | 3 — Wild Stag, Giant Stag, The White Stag |
 | **Tayling** | 79 | 2 — Tayling, Taylang |
 
-**8 nomi di voce erano sbagliati** nel testo estratto, non quattro come si
-credeva. Le altre quattro emerse ora: `Emre Kingfisher` era **Avian**,
-`Unmated Mated pair*` era **Dragon, Astral**, `Blood Sea Minotaur` era
-**Minotaur (of Krynn)**, `Wild Stage` era **Stag**.
+**8 nomi di voce erano sbagliati** nel testo estratto, non solo i quattro
+verificati per primi. Il dettaglio completo — testo estratto, nome reale, pagina,
+causa — è nella tabella più sotto.
 
-> **Lettura interpretativa** — registrata il 2026-08-18. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-08-19. Non e' derivata dai dati.
 >
 > **L'estrazione non ha solo sbagliato i nomi: ha perso dei dati.** In tre voci
 > le colonne di destra sono sparite del tutto — `Avian` aveva quattro uccelli e
@@ -483,8 +482,9 @@ credeva. Le altre quattro emerse ora: `Emre Kingfisher` era **Avian**,
 > culture e ne restavano due. Sono **sette creature** che dal testo estratto non
 > esistevano affatto.
 >
-> Il conteggio passa così da 55 a **68**. Non è un aggiustamento marginale: è
-> il 24% in più, e cambia la stima di quanto lavoro c'è davanti.
+> Il conteggio passa così da 57 voci a **68** creature vere. Non è un
+> aggiustamento marginale: è il 24% in più, e cambia la stima di quanto lavoro
+> c'è davanti.
 >
 > Due ritrovamenti che vale la pena segnalare. Il **Cervo Bianco**, una delle tre
 > colonne di `Stag`, non è una bestia: è unico, di allineamento legale buono,
@@ -500,8 +500,10 @@ credeva. Le altre quattro emerse ora: `Emre Kingfisher` era **Avian**,
 Le **48 creature** da convertire, tolte le 13 schede di razze giocanti già
 coperte da `dati/razze/` e le 4 razze fuori roster. **Proposta, non decisione.**
 
-L'ordine qui sotto è quello formulato prima del ricontaggio: **va rivisto**,
-perché sette creature nuove non erano nell'elenco.
+Ricostruito sull'elenco completo dopo il ricontaggio voce per voce. I **cinque
+draconici non sono in questa lista**: hanno già un precedente ufficiale
+completo, analizzato nelle parti 2-4 sopra. Restano **41 creature**
+su **35 voci** nelle cinque fasce, più il Cervo Bianco fuori fascia.
 
 ### Prima — servono subito all'arena (4)
 
@@ -512,7 +514,7 @@ perché sette creature nuove non erano nell'elenco.
 | Thanoi (Walrus Man) | Umanoide bestiale di fascia bassa, identitario del nord di Krynn. | sì — Gnoll / Lizardfolk |
 | Kyrie | Umanoidi alati, avversari volanti di fascia bassa: l'arena ha bisogno di bersagli in volo presto. | sì — Harpy / Hippogriff |
 
-### Seconda — riempitivi di fascia bassa e media (5)
+### Seconda — riempitivi di fascia bassa e media (8 voci, 13 creature)
 
 | creatura | perché | analogo SRD |
 |---|---|---|
@@ -521,8 +523,11 @@ perché sette creature nuove non erano nell'elenco.
 | Wichtlin | Non morto elfico, identitario e di fascia media. | sì — Wight / Specter |
 | Fetch | Non morto mutaforma di fascia media. | sì — Shadow / Ghost |
 | Spectral Minion | Non morto evocato, fascia media. | sì — Specter |
+| Shadowperson | Non morto elfico di fascia media. La voce contiene anche il Revered Ancient One, il suo anziano — quasi tutto `Nil`: non combatte, va convertito come comparsa non nella scheda dell'avversario. | parziale — Shadow / Specter |
+| Avian (Emre, Kingfisher, Skyfisher, 'Wari) | Quattro varianti sotto una sola voce: uccelli o umanoidi alati acquatici di Krynn. Ruolo e taglia esatti non ancora verificati sull'immagine di pagina — segnaposto di fascia bassa. | da verificare — probabile Hawk / Giant Owl |
+| Stag (Wild Stag, Giant Stag) | I due cervi normali della voce Stag: bestie da branco pulite. Il terzo abitante della voce, il Cervo Bianco, e' trattato a parte, fuori fascia — vedi sotto. | sì — Elk / Giant Elk |
 
-### Terza — identitari ma senza analogo pulito (7)
+### Terza — identitari ma senza analogo pulito (9 voci, 10 creature)
 
 | creatura | perché | analogo SRD |
 |---|---|---|
@@ -533,8 +538,10 @@ perché sette creature nuove non erano nell'elenco.
 | Tylor | Mostruosita' grande e identitaria, fascia medio-alta. | parziale — Chimera |
 | Knight, Death | **Il Cavaliere della Morte**: e' Lord Soth, cioe' l'antagonista simbolo del setting. SotDQ ha lo statblock di Soth come PERSONAGGIO, che puo' servire da riferimento ma non e' la scheda di specie. | parziale — Wight / Revenant, ma sottodimensionati |
 | Haunt, Knight | Variante spettrale del precedente. | no |
+| Yaggol | Sotto-razza degenerata dei mind flayer, con kit complesso (sei attacchi piu' un potere psichico) e la resistenza magica piu' alta del bestiario (50%). Identitario e costoso: nessun mostro SRD a GS 1/4-4 replica un mind-flayer minore. | no — Mind Flayer vero e' GS 7, fuori target |
+| Tayling (+ Taylang) | Gemelli telepatici che nascono sempre in coppia: l'intelligente (Tayling) e il bestiale (Taylang). Nessun analogo SRD replica la coppia legata telepaticamente. | no |
 
-### Quarta — nicchia (11)
+### Quarta — nicchia (10)
 
 | creatura | perché | analogo SRD |
 |---|---|---|
@@ -548,27 +555,30 @@ perché sette creature nuove non erano nell'elenco.
 | Imp, Blood Sea | Diavoletto locale. | sì — Imp / Quasit |
 | Eyewing | Bestia volante di nicchia. | no |
 | Bear, Ice | Bestia. | sì — Polar Bear |
-| Wild Stage | Bestia. | sì — Elk |
 
-### Quinta — non servono alla Fase 2, o da riverificare (7)
+### Quinta — draghi, non servono alla Fase 2 (4)
 
 | creatura | perché | analogo SRD |
 |---|---|---|
 | Dragon, Amphi | Drago: la Fase 2 non ne ha bisogno. | sì — draghi SRD |
 | Dragon, Kodragon | Come sopra. | sì |
 | Dragon, Sea | Come sopra. | sì |
-| Y a g g o l | Nome corrotto nell'estrazione: da riverificare prima. | no |
-| Tayling Tayland | Nome corrotto nell'estrazione: da riverificare. | no |
-| Ice Folk Knights of | Nome corrotto: e' una voce Man/Knight spezzata. | no |
-| Shadowperson Revered Ancient One | Nome corrotto: due voci fuse dall'estrazione. | no |
+| Dragon, Astral | Drago, come sopra. Due statblock nella voce (solitario e coppia accoppiata da 35 DV) ma una sola specie in due stati: contata come una riga, non due. | sì |
+
+### Fuori fascia — non da arena (1)
+
+**The White Stag.** Il terzo abitante della voce Stag (pag. 78). Non è una bestia: è unico, allineamento legale buono, 2.000 PE, con capacità magiche — una creatura sacra da incontro narrativo, non un avversario. Proposta: schedarlo quando esiste uno schema per creature uniche/da avventura (vicino allo schema Personaggio), non forzarlo nel bestiario da combattimento.
 
 
-> **Lettura interpretativa** — registrata il 2026-08-18. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-08-19. Non e' derivata dai dati.
 >
 > **Il criterio è l'arena, non la completezza.** La Fase 2 è un motore di
 > combattimento e ha bisogno di avversari fra GS 1/4 e GS 4, in quantità e con
 > tattiche diverse fra loro. Non ha bisogno di draghi: un drago in arena è una
-> sessione, non un banco di prova.
+> sessione, non un banco di prova. Per questo la quinta fascia, ora che i nomi
+> corrotti sono risolti, contiene solo draghi — compreso il Drago Astrale, che
+> resta un drago anche se il manuale gli dedica due statblock per due stati
+> della stessa specie.
 >
 > La prima fascia è scelta così: il **Traag** completa la famiglia dei draconici
 > e quindi si converte con il precedente ufficiale ancora in mano; **Scheletro
@@ -580,74 +590,84 @@ perché sette creature nuove non erano nell'elenco.
 > rodato: sono creature identitarie senza analogo pulito, dove bisogna comporre.
 > Il **Cavaliere della Morte** è il caso simbolo — è Lord Soth — e ha una
 > particolarità utile: SotDQ ha lo statblock di Soth come personaggio, che serve
-> da riferimento numerico anche se non è la scheda di specie.
+> da riferimento numerico anche se non è la scheda di specie. Lo **Yaggol** è il
+> secondo caso costoso emerso dal ricontaggio: un derivato di mind flayer con
+> kit complesso e la resistenza magica più alta del bestiario, senza analogo
+> SRD nella fascia di grado utile alla Fase 2.
 >
-> Quattro voci della quinta fascia hanno il nome corrotto dall'estrazione a
-> colonne. Vanno riverificate sulle pagine originali prima di qualunque lavoro:
-> non si converte una creatura di cui non si sa il nome.
+> Il **Cervo Bianco** resta fuori da tutte e cinque le fasce: non è un
+> avversario, è una creatura sacra unica da incontro narrativo. Forzarlo in una
+> fascia da combattimento travisirebbe cosa è.
 
 ---
 
-## I quattro nomi corrotti — verificati
+## Gli 8 nomi corrotti — verificati
 
 Riletti sulle immagini di pagina, con lo stesso metodo dei tratti razziali del
-PHB 2e. **Tutti e quattro leggibili: nessuna voce resta sospesa.**
+PHB 2e. I primi quattro erano stati verificati in un primo giro; il
+ricontaggio voce per voce ne ha trovati altri quattro con la stessa causa.
+**Tutti e 8 leggibili: nessuna voce resta sospesa.**
 
 | testo estratto | nome reale | pag. PDF | causa |
 |---|---|---:|---|
-| `Y a g g o l` | **Yaggol** | 87 | titolo con spaziatura fra le lettere nel layout |
-| `Tayling Tayland` | **Tayling** (+1 varianti) | 79 | statblock a due colonne |
-| `Shadowperson Revered Ancient One` | **Shadowperson** (+1 varianti) | 71 | statblock a due colonne |
+| `Emre Kingfisher` | **Avian** (+3 varianti) | 4 | QUATTRO colonne. L'estrazione ne aveva salvate due e chiamava la voce "Emre Kingfisher". Skyfisher e 'Wari erano persi del tutto. |
+| `Unmated Mated pair*` | **Dragon, Astral** (+1 varianti) | 20 | DUE colonne, ma sono la stessa specie in due stati: il drago astrale solitario e la coppia accoppiata, che il manuale tratta come una singola creatura da 35 DV. Due statblock, una specie. Il nome dell'entrata era andato perso: l'estrazione la chiamava "Unmated Mated pair*". |
 | `Ice Folk Knights of` | **Man (of Krynn)** (+3 varianti) | 59 | statblock a QUATTRO colonne |
+| `Blood Sea Minotaur` | **Minotaur (of Krynn)** | 63 | UNA colonna sola, ma il nome era sbagliato: l'estrazione prendeva l'intestazione di colonna "Blood Sea Minotaur" come titolo. |
+| `Shadowperson Revered Ancient One` | **Shadowperson** (+1 varianti) | 71 | statblock a due colonne |
+| `Wild Stage` | **Stag** (+2 varianti) | 78 | TRE colonne. L'estrazione ne aveva una sola, con refuso: "Wild Stage". Il Cervo Bianco e' unico, di allineamento legale buono e da 2.000 PE: non e' una bestia ma una creatura sacra. |
+| `Tayling Tayland` | **Tayling** (+1 varianti) | 79 | statblock a due colonne |
+| `Y a g g o l` | **Yaggol** | 87 | titolo con spaziatura fra le lettere nel layout |
 
-> **Lettura interpretativa** — registrata il 2026-08-18. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-08-19. Non e' derivata dai dati.
 >
-> **La causa è una sola, e non è un difetto delle pagine.** Tre casi su quattro
-> sono voci con statblock a **più colonne**: una sola voce del manuale contiene
-> due o più creature affiancate, ciascuna con la propria colonna di valori.
-> L'estrattore, che lavora a due colonne di testo, legge i titoli delle colonne
-> di fianco come se fossero una riga sola. Il quarto è semplicemente un titolo
-> con le lettere spaziate.
+> **La causa è quasi sempre una sola, e non è un difetto delle pagine.**
+> 6 casi su 8 sono voci con statblock a **più colonne**: una sola
+> voce del manuale contiene due o più creature affiancate, ciascuna con la
+> propria colonna di valori. L'estrattore, che lavora a due colonne di testo,
+> legge i titoli delle colonne di fianco come se fossero una riga sola. Gli
+> altri 2 hanno un'altra causa: `Minotaur (of Krynn)` prendeva
+> l'intestazione di una colonna interna (`Blood Sea Minotaur`) come titolo
+> della voce; `Yaggol` aveva semplicemente le lettere spaziate nello stampato.
 >
-> **Questo cambia il conteggio del bestiario.** Dietro le quattro voci ci sono
-> **9 creature**, non quattro: `Man (of Krynn)` ne contiene quattro,
-> `Tayling` e `Shadowperson` due ciascuna. Lo stesso segnale — due valori di
-> `FREQUENCY` sulla stessa riga — ne individua altre 2 con lo stesso difetto.
-> Il numero di creature dell'MC Appendix è quindi **maggiore delle 55 voci
-> contate**, e va stabilito voce per voce prima di pianificare davvero.
+> **Questo cambia il conteggio del bestiario.** Dietro le 6 voci a più colonne
+> ci sono **17 creature**, non 6: `Man (of Krynn)` ne contiene quattro,
+> `Avian` altrettante, `Stag` tre, `Tayling`, `Shadowperson` e `Dragon, Astral`
+> due ciascuna. Il numero vero — **57 voci, 68 creature** — è quello
+> stabilito qui sopra in "Il conteggio vero del bestiario", voce per voce sulle
+> immagini di pagina: non resta più nulla da chiarire su questo fronte.
 >
 > Due correzioni puntuali che l'immagine ha prodotto: il gemello bestiale del
 > Tayling si chiama **Taylang**, non "Tayland" come leggeva il testo estratto; e
 > `Man (of Krynn)` è una scheda di **PNG umani**, quindi va con le voci razziali
 > già escluse dal conteggio dei mostri, non fra le creature da convertire.
->
-> Un dato utile emerso per strada: lo **Yaggol** ha resistenza magica **50%**, la
-> più alta del bestiario. È la creatura su cui la decisione 27 gruppo C peserà di
-> più.
 
 ---
 
 ## Cosa manca prima di poter convertire
 
-Delle tre cose che mancavano, **due sono fatte**.
+Delle tre cose che mancavano, **sono fatte tutte e tre**.
 
 - ~~Schema del mostro~~ → `dati/schema/mostro.schema.json`, validato sui cinque
   draconici.
-- ~~Verifica dei quattro nomi corrotti~~ → tutti e quattro leggibili, vedi sopra.
-- **Decisione sui sette campi senza corrispettivo** → decisione 27, sotto: due
+- ~~Verifica degli 8 nomi corrotti~~ → tutti leggibili, vedi sopra.
+- ~~Decisione sui sette campi senza corrispettivo~~ → decisione 27, sotto: due
   gruppi chiusi, uno rinviato con motivo.
+- ~~Conteggio vero delle creature dell'MC Appendix~~ → **57 voci,
+  68 creature**, stabilito voce per voce sulle immagini di pagina —
+  vedi "Il conteggio vero del bestiario" sopra.
 
-> **Lettura interpretativa** — registrata il 2026-08-18. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-08-19. Non e' derivata dai dati.
 >
-> Resta una cosa sola, e non è una decisione: **il conteggio vero delle creature
-> dell'MC Appendix**. Le 55 voci contate non sono 55 creature, perché almeno
-> 6 voci ne contengono più d'una su colonne affiancate. Prima di stabilire
-> un ordine di lavorazione definitivo va fatto un passaggio voce per voce che
-> separi le colonne — è lo stesso lavoro dei quattro nomi, esteso a tutto il
-> bestiario, e si fa con le immagini di pagina.
->
-> Non è bloccante per cominciare: le creature della prima fascia proposta hanno
-> tutte una voce singola. È bloccante per sapere quante sono in totale.
+> Nessuna delle tre resta aperta. Quello che resta, e non è bloccante per
+> cominciare a convertire, è un disallineamento scoperto per strada: il
+> generatore di `RAPPORTO-mostri.md` (`confronta_mostri.py`) conta le voci
+> dell'MC Appendix rileggendo il testo estratto con un'altra regola (i blocchi
+> `CLIMATE/TERRAIN:`), indipendente da questo ricontaggio verificato sulle
+> immagini. Dà **55**, non 57. Non è lo stesso tipo di errore dei nomi
+> corrotti — è un secondo modo di contare, mai riconciliato col primo dopo il
+> ricontaggio. Va allineato a questa fonte prima di fidarsi del suo numero, ma
+> non impedisce di cominciare a convertire: la prima fascia non dipende da lui.
 
 ---
 
@@ -690,3 +710,5 @@ E' l'unica vera decisione dei sette, e va presa con i numeri davanti.
 Il valore percentuale resta in `source_2e` e in
 `mechanics_5e.magic_resistance_2e` con `applied: false`.
 **Quando si decide:** In arena, quando sapremo se i draconici senza resistenza magica risultano troppo fragili.
+
+**Creatura di riferimento.** Lo Yaggol (MC Dragonlance Appendix, pag. 87) ha resistenza magica 50%, la piu' alta del bestiario: e' la creatura su cui questa decisione pesera' di piu', e va tenuta presente quando si valuta se ripristinarla.

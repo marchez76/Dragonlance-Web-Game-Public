@@ -1,6 +1,6 @@
 # Verifica di giocabilità del filtro delle sfere
 
-*Generato da `dati/verifica_sfere.py` il 2026-08-14.*
+*Generato da `dati/verifica_sfere.py` il 2026-08-19.*
 
 > **Cos'è.** Il conteggio richiesto prima di attivare il filtro della
 > decisione 24. Non risolve nulla: non aggiunge sfere, non ammorbidisce il
@@ -104,7 +104,7 @@ restorazioni. "Offesa" conta solo il danno diretto, non i controlli.
 | Sun | 4 | 2 | 13 |
 | Weather | 1 | 1 | 5 |
 
-> **Lettura interpretativa** — registrata il 2026-08-14. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-08-19. Non e' derivata dai dati.
 >
 > **1 sfera su 16 non trova un solo incantesimo nella lista base del chierico
 > 5e: Plant.** Animal ne trova 1, Weather 1. Non è un errore della

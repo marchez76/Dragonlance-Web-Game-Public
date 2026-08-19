@@ -59,6 +59,9 @@ PERCORSI=(
     dati/_fonti/progressioni_2e.json
     dati/_fonti/incantesimi_2e.json
     dati/_fonti/divinita_2e.json
+    dati/RAPPORTO-bestiario-completo.md
+    dati/RAPPORTO-sfere-completo.md
+    dati/RAPPORTO-classi-completo.md
     inventario_manuali.tsv
     riscontro
 )

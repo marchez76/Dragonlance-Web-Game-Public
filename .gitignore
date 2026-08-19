@@ -117,3 +117,13 @@ __pycache__/
 !dati/valida_mostri.py
 !dati/RAPPORTO-*.md
 !dati/DOSSIER-*.md
+
+# --------------------------------------------------------------------------
+# ECCEZIONE DENTRO L'ECCEZIONE — le versioni "completo" dei RAPPORTO-*.md.
+# Alcuni generatori (analizza_bestiario.py, verifica_sfere.py,
+# analizza_classi.py) producono DUE uscite dalla stessa analisi: una
+# ridotta (pubblica, sopra) e una completa con il testo di fonte per
+# riferimento interno. La completa non deve mai finire qui, altrimenti la
+# riduzione e' cosmetica: la stessa ragione di dati/_draconici.py.
+# --------------------------------------------------------------------------
+dati/RAPPORTO-*-completo.md

@@ -7,6 +7,17 @@ DA ESEGUIRE PRIMA DI ATTIVARE IL FILTRO.
     Prima di applicarlo bisogna sapere se ogni divinita' produce ancora un
     chierico giocabile. Questo script non risolve nulla: conta.
 
+DUE USCITE
+    RAPPORTO-sfere.md            pubblico. Le schede per divinita' NON
+                                  elencano le sfere maggiori/minori: e' la
+                                  tabella del capitolo Realms Above,
+                                  riprodotta per intero se elencata.
+    RAPPORTO-sfere-completo.md   privato (escluso dal repo pubblico). Stesso
+                                  documento, con le sfere maggiori/minori per
+                                  riferimento interno.
+    La riduzione e' una funzione del generatore (parametro `completo` di
+    `scheda_divinita()`), non un intervento a posteriori.
+
 Uso:  python3 verifica_sfere.py
 """
 
@@ -69,6 +80,29 @@ def analizza(d):
         "dominio": dom, "motivo_dominio": motivo,
         "nostre": sum(1 for i, _ in acc if i["derivation"] == "nostra"),
     }
+
+
+def scheda_divinita(a, tot_base, completo):
+    """Scheda di una divinita'. completo=True include le sfere
+    maggiori/minori (tabella del manuale): SOLO per la versione privata."""
+    r = [f"### {a['nome']}", ""]
+    if completo:
+        r.append(f"Sfere maggiori: {', '.join(a['sfere_maj'])}. "
+                  f"Minori: {', '.join(a['sfere_min']) or 'nessuna'}.")
+        r.append("")
+    r.append(f"**{a['tot']} incantesimi accessibili** su {tot_base} "
+              f"({round(100 * a['tot'] / tot_base)}%), di cui {a['trucchetti']} trucchetti "
+              f"e {a['nostre']} da attribuzione nostra.")
+    r.append("")
+    r.append("| livello | " + " | ".join(f"{l}°" for l in LIVELLI) + " |")
+    r.append("|---|" + "---:|" * len(LIVELLI))
+    r.append("| incantesimi | " + " | ".join(str(a["per_liv"][l]) for l in LIVELLI) + " |")
+    r.append("")
+    r.append(f"- Guarigione: {', '.join(a['guarigione']) or '**nessuna cura**'}")
+    r.append(f"- Offesa diretta: {', '.join(a['offesa']) or '**nessuna**'}")
+    r.append(f"- Dominio: **{a['dominio']}** — {a['motivo_dominio']}")
+    r.append("")
+    return "\n".join(r)
 
 
 def interpretativo(testo):
@@ -239,36 +273,35 @@ o compensare col Dominio. Non ne ho scelta nessuna.''')}
 - **Nessun Dominio 2014 copre il commercio**: Shinare è assegnata a Inganno per
   esclusione, non per coerenza.
 """
+    attribuzioni = ["| incantesimo | liv. | scuola | sfere assegnate | perché |",
+                     "|---|---:|---|---|---|"]
+    for i in S.LISTA_BASE:
+        if i["derivation"] == "nostra":
+            attribuzioni.append(f"| {i['name']} | {i['level']} | {i['school']} | "
+                                 f"{', '.join(i['spheres'])} | {i['note'] or 'classificato per effetto'} |")
+
+    def scrivi(path, completo):
+        with open(path, "w", encoding="utf-8") as f:
+            f.write(doc)
+            f.write("\n---\n\n## Le attribuzioni nostre\n\n")
+            f.write("Incantesimi 5e senza antenato 2e diretto, classificati per "
+                    "effetto. Restano distinguibili nel dato con `derivation: nostra`.\n\n")
+            f.write("\n".join(attribuzioni))
+            f.write("\n\n---\n\n## Schede per divinità\n\n")
+            for a in sorted(A, key=lambda x: x["nome"]):
+                f.write(scheda_divinita(a, tot_base, completo) + "\n")
+
+    # PUBBLICO: senza le sfere maggiori/minori (tabella del manuale).
     out = os.path.join(BASE, "RAPPORTO-sfere.md")
-    open(out, "w", encoding="utf-8").write(doc)
+    scrivi(out, completo=False)
 
-    with open(out, "a", encoding="utf-8") as f:
-        f.write("\n---\n\n## Le attribuzioni nostre\n\n")
-        f.write("Incantesimi 5e senza antenato 2e diretto, classificati per "
-                "effetto. Restano distinguibili nel dato con `derivation: nostra`.\n\n")
-        f.write("| incantesimo | liv. | scuola | sfere assegnate | perché |\n")
-        f.write("|---|---:|---|---|---|\n")
-        for i in S.LISTA_BASE:
-            if i["derivation"] == "nostra":
-                f.write(f"| {i['name']} | {i['level']} | {i['school']} | "
-                        f"{', '.join(i['spheres'])} | {i['note'] or 'classificato per effetto'} |\n")
-        f.write("\n---\n\n## Schede per divinità\n\n")
-        for a in sorted(A, key=lambda x: x["nome"]):
-            f.write(f"### {a['nome']}\n\n")
-            f.write(f"Sfere maggiori: {', '.join(a['sfere_maj'])}. "
-                    f"Minori: {', '.join(a['sfere_min']) or 'nessuna'}.\n\n")
-            f.write(f"**{a['tot']} incantesimi accessibili** su {tot_base} "
-                    f"({round(100 * a['tot'] / tot_base)}%), di cui {a['trucchetti']} trucchetti "
-                    f"e {a['nostre']} da attribuzione nostra.\n\n")
-            f.write("| livello | " + " | ".join(f"{l}°" for l in LIVELLI) + " |\n")
-            f.write("|---|" + "---:|" * len(LIVELLI) + "\n")
-            f.write("| incantesimi | " + " | ".join(str(a["per_liv"][l]) for l in LIVELLI) + " |\n\n")
-            f.write(f"- Guarigione: {', '.join(a['guarigione']) or '**nessuna cura**'}\n")
-            f.write(f"- Offesa diretta: {', '.join(a['offesa']) or '**nessuna**'}\n")
-            f.write(f"- Dominio: **{a['dominio']}** — {a['motivo_dominio']}\n\n")
+    # PRIVATO: con le sfere. Mai nel pubblico: e' la tabella di Realms Above.
+    out_completo = os.path.join(BASE, "RAPPORTO-sfere-completo.md")
+    scrivi(out_completo, completo=True)
 
-    testo = open(out, encoding="utf-8").read()
-    print(f"scritto {out} ({len(testo):,} caratteri)".replace(",", "."))
+    for p in (out, out_completo):
+        testo = open(p, encoding="utf-8").read()
+        print(f"scritto {p} ({len(testo):,} caratteri)".replace(",", "."))
     print(f"{n} divinità | senza cure: {len(senza_guar)} | senza offesa: {len(senza_off)} "
           f"| con livelli vuoti: {len(con_vuoti)} | sotto soglia: {len(con_scarsi)}")
     for a in A[:6]:
