@@ -66,6 +66,11 @@ VOCI = [
     # ---- voci a colonna singola, nome corretto nel testo estratto ----
     (3, "Anemone, Giant", ["Giant Anemone"], "creatura", False, None),
     (5, "Bear, Ice", ["Ice Bear"], "creatura", False, None),
+    (6, "Beast, Undead", ["Stahnk", "Gholor"], "creatura", True,
+     "DUE colonne: lo stahnk (bestia senza forma) e il gholor (\"il "
+     "divoratore\", senza arti posteriori). Trovata nella seconda passata "
+     "(segnale: valori ripetuti su otto campi diversi sulla stessa riga): "
+     "non era ne' in VOCI ne' fra le corrotte, mancava del tutto."),
     (9, "Disir", ["Disir"], "creatura", False, None),
     (10, "Draconian (proto-), Traag", ["Traag"], "creatura", False, None),
     (12, "Draconian, Aurak", ["Aurak Draconian"], "creatura", False, None),
@@ -78,6 +83,17 @@ VOCI = [
     (23, "Dragon, Sea", ["Sea Dragon"], "creatura", False, None),
     (24, "Dreamshadow", ["Dreamshadow"], "creatura", False, None),
     (25, "Dreamwraith", ["Dreamwraith"], "creatura", False, None),
+    (27, "Dwarf, Daergar", ["Daergar"], "razza_altra", True,
+     "Colonna singola. Clan nanico che Tales of the Lance riserva ai PNG "
+     "(gia' noto: e' uno dei quattro esclusi dal roster), ma la scheda "
+     "dell'Appendice non era mai stata registrata qui. Trovata nella "
+     "seconda passata."),
+    (28, "Dwarf, Gully", ["Gully Dwarf"], "razza_nostra", True,
+     "Colonna singola. E' l'Aghar: il testo dichiara esplicitamente "
+     "l'equivalenza dei due nomi. Corrisponde a nano-aghar in dati/razze/, ma finora "
+     "nessuna voce dell'Appendice era collegata alla razza. Trovata nella "
+     "seconda passata; da valutare se integrare tratti come per Minotauro "
+     "e Irda (decisione 18)."),
     (29, "Dwarf, Hill (Neidar)", ["Hill Dwarf"], "razza_nostra", False, None),
     (30, "Dwarf, Mountain (Hylar)", ["Mountain Dwarf"], "razza_nostra", False, None),
     (31, "Dwarf, Theiwar", ["Theiwar"], "razza_altra", False,
@@ -97,21 +113,48 @@ VOCI = [
     (42, "Fireshadow", ["Fireshadow"], "creatura", False, None),
     (43, "Gnome, Tinker (Minoi)", ["Tinker Gnome"], "razza_nostra", False, None),
     (45, "Gurik Cha-ahl", ["Gurik Cha-ahl"], "creatura", False, None),
+    (46, "Hatori", ["Lesser Hatori", "Greater Hatori"], "creatura", True,
+     "DUE colonne: hatori minore e maggiore, lo stesso animale a stadi di "
+     "crescita diversi (guadagnano 1 DV ogni 10 anni). Trovata nella "
+     "seconda passata."),
     (47, "Haunt, Knight", ["Knight Haunt"], "creatura", False, None),
     (48, "Horax", ["Horax"], "creatura", False, None),
     (49, "Imp, Blood Sea", ["Blood Sea Imp"], "creatura", False, None),
+    (50, "Insect Swarm", ["Velvet Ant Swarm", "Grasshopper and Locust Swarm"],
+     "creatura", True,
+     "DUE colonne: sciame di formiche di velluto e sciame di "
+     "cavallette/locuste. Trovata nella seconda passata."),
     (51, "Kalothagh (Prickleback)", ["Kalothagh"], "creatura", False, None),
     (52, "Kani Doll", ["Kani Doll"], "creatura", False, None),
     (53, "Kender", ["Kender"], "razza_nostra", False, None),
     (55, "Knight, Death", ["Death Knight"], "creatura", False,
      "E' Lord Soth. SotDQ ne ha lo statblock come PERSONAGGIO, non come specie."),
     (56, "Kyrie", ["Kyrie"], "creatura", False, None),
-    (65, "Ogre (of Krynn)", ["Ogre"], "razza_altra", False,
-     "Ogre comune di Krynn, non gli Irda."),
+    (57, "Lizard Man (of Krynn)", ["Jarak-Sinn", "Bakali"], "creatura", True,
+     "DUE colonne: i jarak-sinn (la stirpe piu' numerosa, adoratori di "
+     "Chislev) e i bakali, loro progenitori. Trovata nella seconda passata."),
+    (65, "Ogre (of Krynn)", ["Ogre", "Orughi"], "razza_altra", True,
+     "DUE colonne, scoperte nella seconda passata (segnali indipendenti dal "
+     "primo ricontaggio): Ogre comune (L, 7'-9') e Orughi (M, 4'-5', tribu' "
+     "separata), non gli Irda. Il testo estratto univa CLIMATE/TERRAIN e "
+     "Ogre senza i due punti, un difetto diverso da tutti gli altri: non ha "
+     "corrotto il nome, ha impedito al pattern-matching di trovare la voce "
+     "del tutto. Sfuggita sia al primo ricontaggio sia al conteggio "
+     "indipendente di confronta_mostri.py, per due ragioni diverse. "
+     "Categoria razza_altra proposta per coerenza con Theiwar/Zakhar "
+     "(parentela dichiarata con l'Irda, non roster giocante): da confermare."),
     (67, "Ogre, High (Irda)", ["Irda"], "razza_nostra", False, None),
+    (69, "Phaethon", ["Phaethon", "Elder Phaethon"], "creatura", True,
+     "DUE colonne: il phaethon adulto e l'anziano (piu' Intelligenza, piu' "
+     "DV, 5% di resistenza magica contro nessuna). Trovata nella seconda "
+     "passata."),
     (73, "Shimmerweed", ["Shimmerweed"], "creatura", False, None),
     (74, "Skrit", ["Skrit"], "creatura", False, None),
     (75, "Spectral Minion", ["Spectral Minion"], "creatura", False, None),
+    (77, "Spider (of Krynn)", ["Whisper Spider", "Giant Trap Door Spider"],
+     "creatura", True,
+     "DUE colonne: due specie di ragno distinte (non una variante della "
+     "stessa). Trovata nella seconda passata."),
     (81, "Thanoi (Walrus Man)", ["Thanoi"], "creatura", False, None),
     (83, "Tylor", ["Tylor"], "creatura", False, None),
     (84, "Warrior, Skeleton", ["Skeleton Warrior"], "creatura", False, None),

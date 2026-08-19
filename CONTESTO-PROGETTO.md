@@ -475,7 +475,7 @@ un'interpretazione parallela.
 
 | id | soggetto | punto | ufficiale | nostro | governa |
 |---|---|---|---|---|---|
-| `kender-schernire` | kender | Schernire (Taunting) | Azione bonus, raggio 60 piedi, tiro salvezza su Saggezza, CD 8 + bonus di competenza + INT/SAG/CAR a scelta, u… | Era: azione bonus, raggio 30 piedi, TS su Saggezza, nessun limite di usi. RITIRA… | dec. 25.A |
+| `kender-schernire` | kender | Schernire (Taunting) | SotDQ pag. 27: azione bonus, raggio 60 piedi, TS su Saggezza, usi limitati per riposo lungo. Meccanicamente pi… | Era: azione bonus, raggio 30 piedi, TS su Saggezza, nessun limite di usi. RITIRA… | dec. 25.A |
 | `kender-nome-tratto` | kender | nome del secondo tratto | "Kender Aptitude" (pag. 27 stampata). | Nessun tratto corrispondente: la competenza a scelta non e' nel nostro roster ke… | dec. 25 — annotazione |
 
 ### Dove divergiamo (6)
@@ -551,7 +551,7 @@ asse.**
 > unico del Kapak è il **salto offensivo rispetto alla propria fonte**: gli altri
 > sono stati riscalati, lui è stato ripensato.
 >
-> Applicare quell'euristica alle 34 creature restanti sposterebbe il tempo
+> Applicare quell'euristica alle 41 creature restanti sposterebbe il tempo
 > dalla conversione al debug. Quello che i cinque casi danno non è un algoritmo
 > ma tre vincoli:
 >
@@ -591,13 +591,13 @@ pagina:
 
 | | |
 |---|---:|
-| voci dell'MC Appendix | **57** |
-| creature vere (statblock distinti) | **68** |
-| schede di razze già in `dati/razze/` | 13 |
-| razze e culture fuori dal roster | 4 |
-| **creature da convertire** | **48** |
+| voci dell'MC Appendix | **65** |
+| creature vere (statblock distinti) | **83** |
+| schede di razze già in `dati/razze/` | 14 |
+| razze e culture fuori dal roster | 5 |
+| **creature da convertire** | **60** |
 
-**6 voci hanno lo statblock su più colonne** — una voce, più creature:
+**13 voci hanno lo statblock su più colonne** — una voce, più creature:
 
 | voce | pag. | creature |
 |---|---:|---|
@@ -607,6 +607,13 @@ pagina:
 | **Shadowperson** | 71 | 2 — Shadowperson, Revered Ancient One |
 | **Stag** | 78 | 3 — Wild Stag, Giant Stag, The White Stag |
 | **Tayling** | 79 | 2 — Tayling, Taylang |
+| **Beast, Undead** | 6 | 2 — Stahnk, Gholor |
+| **Hatori** | 46 | 2 — Lesser Hatori, Greater Hatori |
+| **Insect Swarm** | 50 | 2 — Velvet Ant Swarm, Grasshopper and Locust Swarm |
+| **Lizard Man (of Krynn)** | 57 | 2 — Jarak-Sinn, Bakali |
+| **Ogre (of Krynn)** | 65 | 2 — Ogre, Orughi |
+| **Phaethon** | 69 | 2 — Phaethon, Elder Phaethon |
+| **Spider (of Krynn)** | 77 | 2 — Whisper Spider, Giant Trap Door Spider |
 
 **8 nomi di voce erano sbagliati** nel testo estratto, non i quattro noti.
 
@@ -618,7 +625,7 @@ pagina:
 > culture e ne restavano due. Sono sette creature che dal testo estratto non
 > esistevano.
 >
-> Il conteggio passa da 55 a **68**: il 24% in più. Fra i ritrovamenti c'è il
+> Il conteggio passa da 65 a **83**: il 28% in più. Fra i ritrovamenti c'è il
 > **Cervo Bianco**, che non è una bestia ma una creatura sacra unica da 2.000 punti
 > esperienza, con capacità magiche.
 >
@@ -720,7 +727,7 @@ I metadati ID3 non dichiarano né autore né etichetta né provenienza: l'unico 
 
 ```
 dragonlance-project-reference.md   documento di design
-stato-lavoro-cowork.md             handoff dettagliato
+divisione-del-lavoro.md            chi fa cosa fra questo ambiente e Cowork
 CONTESTO-PROGETTO.md               questo file (generato)
 RETE-domini-permessi.md            allowlist di rete del sandbox (generato)
 .claude/settings.json              la stessa allowlist, in forma eseguibile

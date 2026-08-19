@@ -11,9 +11,13 @@ DOMANDA A CUI RISPONDE
     NON decide nulla. Conta.
 
 FONTI
-    MC Appendix   Testi/Dragonlance/MC - Dragonlance Appendix.txt, estratto a
-                  colonne. Le voci mostro si riconoscono dal blocco
-                  "CLIMATE/TERRAIN:" che apre ogni scheda.
+    MC Appendix   dati/_bestiario_mc.py, il ricontaggio verificato sulle
+                  immagini di pagina — non piu' un regex indipendente sul
+                  testo estratto. Il regex (basato sul blocco
+                  "CLIMATE/TERRAIN:") perdeva le voci il cui layout a
+                  colonne confondeva l'estrazione: due modi di contare la
+                  stessa cosa si sfasano sempre, ed erano arrivati a
+                  contare 55 voci contro le 57 (poi 65) verificate.
     SotDQ         Testi/Dragonlance/Dragonlance - Shadow of the Dragon Queen.txt,
                   Appendice B "Friends and Foes" (pagg. 191-209 stampate) e
                   Appendice C "Sidekicks" (pagg. 210-213).
@@ -27,12 +31,17 @@ Uso:  python3 dati/confronta_mostri.py
 import collections
 import os
 import re
+import sys
 from datetime import date
 
 BASE = os.path.dirname(os.path.abspath(__file__))
 RADICE = os.path.dirname(BASE)
 TESTI = os.path.join(RADICE, "Testi", "Dragonlance")
 OGGI = date.today().isoformat()
+
+if BASE not in sys.path:
+    sys.path.insert(0, BASE)
+import _bestiario_mc as BM
 
 
 def interpretativo(testo):
@@ -60,20 +69,14 @@ def chiave(nome):
 
 
 # --------------------------------------------------------------------------
-# MC Dragonlance Appendix — le voci si aprono con CLIMATE/TERRAIN
+# MC Dragonlance Appendix — nomi delle voci, dalla fonte verificata.
+# NON rilegge il testo estratto: _bestiario_mc.py e' gia' il risultato di
+# quella lettura, verificata voce per voce sulle immagini di pagina. Un
+# secondo modo di contare le stesse voci, indipendente da questo, si
+# sfaserebbe di nuovo — e' gia' successo.
 # --------------------------------------------------------------------------
 def mostri_mc():
-    p = os.path.join(TESTI, "MC - Dragonlance Appendix.txt")
-    t = open(p, encoding="utf-8", errors="replace").read()
-    out = []
-    for m in re.finditer(r"CLIMATE/TERRAIN:", t):
-        testa = t[max(0, m.start() - 260):m.start()]
-        righe = [r.strip() for r in testa.split("\n") if r.strip()]
-        if righe:
-            out.append(pulisci(righe[-1]))
-    # scarto le righe che non sono nomi di creatura ma code di tabella
-    scarti = {"Unmated Mated pair*"}
-    return [x for x in out if x not in scarti]
+    return [v[1] for v in BM.VOCI]
 
 
 # --------------------------------------------------------------------------

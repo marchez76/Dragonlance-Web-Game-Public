@@ -169,6 +169,37 @@ riga per riga e non sono affidabili per il parsing. I capitoli usati qui sono
 stati ri-estratti con ritaglio per colonna, rilevando il gutter reale della
 pagina invece di tagliare a metà.
 
+## Indici di pagina — due convenzioni, non intercambiabili
+
+Convivono due numeri diversi, e vanno tenuti separati per nome, non per valore:
+
+- **Indice PDF, 0-based** (`pages_pdf` nei JSON; `pagina` in `_bestiario_mc.py`;
+  i marcatori `[[p.N]]` di `colstep.py`) — la posizione della pagina nel file,
+  contando da 0. Per aprirla con uno strumento 1-based (`pdftoppm`, un lettore
+  PDF qualsiasi) va usato **indice+1**. È l'unico numero disponibile per l'MC
+  Dragonlance Appendix, che non stampa numeri di pagina (formato Monstrous
+  Compendium a fogli sciolti).
+- **Pagina stampata** (citazioni nel testo, `"pag. N stampata"`) — il numero
+  che compare davvero sulla pagina fisica, per i manuali che lo stampano:
+  *Tales of the Lance* (indice PDF −2), *Shadow of the Dragon Queen* (indice
+  PDF −1, offset verificato ma di lettura difficile per via dell'OCR del
+  manuale). Non coincide con l'indice PDF: l'offset viene dal materiale
+  iniziale non numerato (copertina, indice, crediti) e va verificato pagina
+  per pagina la prima volta che si cita un manuale nuovo, non assunto.
+
+**Mai scrivere "pag. N stampata" per l'MC Dragonlance Appendix**: non esiste un
+numero stampato da citare. Per quella fonte, cita per **voce** ("MC
+Dragonlance Appendix, voce «Nome»") o per indice PDF esplicitamente marcato
+come tale — mai i due mescolati sotto la parola "stampata".
+
+Errore trovato e corretto il 19/08/2026: `_tratti_mc.py` dichiarava
+"stampata" un numero che era in realtà l'indice 0-based, in 9 citazioni
+(Minotauro ×5, Irda ×2, Kagonesti ×1, Silvanesti ×1). I valori numerici
+erano tutti corretti — verificati sulle immagini di pagina, zero discrepanze
+— solo l'etichetta era falsa: nessuno di quei numeri era mai stato stampato
+da nessuna parte. Corretto in un punto solo (`_tratti_mc.py`, blocco
+`PAGINE`), che ora cita per voce; `dati/razze/*.json` rigenerati.
+
 ## Cosa è rimasto aperto
 
 Ogni razza ha un campo `open_questions` con le ambiguità della fonte. Le tre

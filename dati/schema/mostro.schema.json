@@ -96,8 +96,16 @@
       "properties": {
         "source_edition": { "const": "2e" },
         "source_book": { "type": "string" },
-        "pages_pdf": { "type": "array", "items": { "type": "integer" } },
-        "pages_printed": { "type": "array", "items": { "type": "integer" } },
+        "pages_pdf": {
+          "type": "array",
+          "items": { "type": "integer" },
+          "description": "Indici di pagina 0-based nel PDF sorgente (per poter risalire al testo originale con uno strumento 1-based tipo pdftoppm, va usato indice+1). Sempre presente, per qualunque manuale."
+        },
+        "pages_printed": {
+          "type": "array",
+          "items": { "type": "integer" },
+          "description": "Il numero stampato sulla pagina fisica, SOLO per manuali che lo stampano. L'MC Dragonlance Appendix (Monstrous Compendium, foglio sciolto) non stampa numeri di pagina: per quella fonte questo campo va omesso, mai riempito con l'indice PDF rietichettato. Vedi dati/LEGGIMI.md, sezione \"Indici di pagina\"."
+        },
         "verified_on_image": {
           "type": "boolean",
           "default": false,

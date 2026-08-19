@@ -463,7 +463,6 @@ def d_bestiario():
         "pf_med": sum(rap) / len(rap),
         "ordine_2e": " → ".join(D.ORDINE_2E),
         "ordine_5e": " → ".join(D.ORDINE_5E),
-        "prima_fascia": ", ".join(n for n, f, _, _ in AB.PRIORITA if f == 1),
         # profilo difensivo contro la mediana SRD del proprio grado
         "quote": {n: 100 * D.CINQUE_E[n]["hp"]
                   / SRD.statistiche(D.CINQUE_E[n]["cr"])["pf_med"]
@@ -1125,7 +1124,7 @@ restavano due, `Stag` tre cervi e ne restava uno, `Man (of Krynn)` quattro
 culture e ne restavano due. Sono sette creature che dal testo estratto non
 esistevano.
 
-Il conteggio passa da {BS['n_mc']} a **{BS['bm']['creature']}**: il 24% in più. Fra i ritrovamenti c'è il
+Il conteggio passa da {BS['n_mc']} a **{BS['bm']['creature']}**: il {round(100 * (BS['bm']['creature'] / BS['n_mc'] - 1))}% in più. Fra i ritrovamenti c'è il
 **Cervo Bianco**, che non è una bestia ma una creatura sacra unica da 2.000 punti
 esperienza, con capacità magiche.
 
@@ -1185,7 +1184,7 @@ più di una — allora è un corpus, non un documento.
 
 ```
 dragonlance-project-reference.md   documento di design
-stato-lavoro-cowork.md             handoff dettagliato
+divisione-del-lavoro.md            chi fa cosa fra questo ambiente e Cowork
 CONTESTO-PROGETTO.md               questo file (generato)
 RETE-domini-permessi.md            allowlist di rete del sandbox (generato)
 .claude/settings.json              la stessa allowlist, in forma eseguibile

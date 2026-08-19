@@ -43,7 +43,11 @@
       "properties": {
         "source_edition": { "enum": ["2e", "3.5e", "5e", "5e-SotDQ", "SAGA", "homebrew"] },
         "source_book": { "type": "string" },
-        "pages_pdf": { "type": "array", "items": { "type": "integer", "minimum": 0 } },
+        "pages_pdf": {
+          "type": "array",
+          "items": { "type": "integer", "minimum": 0 },
+          "description": "Indici di pagina 0-based nel PDF sorgente, per poter risalire al testo originale. Diverso dal numero stampato sulla pagina, quando il manuale ne stampa uno: vedi dati/LEGGIMI.md, sezione \"Indici di pagina\"."
+        },
         "homebrew_conversion": { "type": "boolean" }
       }
     },

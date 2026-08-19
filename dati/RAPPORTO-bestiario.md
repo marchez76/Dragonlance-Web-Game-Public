@@ -453,13 +453,13 @@ immagini di pagina lo ha rifatto voce per voce.
 
 | | |
 |---|---:|
-| voci dell'MC Appendix | **57** |
-| creature vere (statblock distinti) | **68** |
-| di cui schede di razze già in `dati/razze/` | 13 |
-| di cui razze e culture fuori dal roster | 4 |
-| **creature da convertire** | **48** |
+| voci dell'MC Appendix | **65** |
+| creature vere (statblock distinti) | **83** |
+| di cui schede di razze già in `dati/razze/` | 14 |
+| di cui razze e culture fuori dal roster | 5 |
+| **creature da convertire** | **60** |
 
-**6 voci hanno lo statblock su più colonne**: una voce, più creature.
+**13 voci hanno lo statblock su più colonne**: una voce, più creature.
 
 | voce | pag. | creature |
 |---|---:|---|
@@ -469,6 +469,13 @@ immagini di pagina lo ha rifatto voce per voce.
 | **Shadowperson** | 71 | 2 — Shadowperson, Revered Ancient One |
 | **Stag** | 78 | 3 — Wild Stag, Giant Stag, The White Stag |
 | **Tayling** | 79 | 2 — Tayling, Taylang |
+| **Beast, Undead** | 6 | 2 — Stahnk, Gholor |
+| **Hatori** | 46 | 2 — Lesser Hatori, Greater Hatori |
+| **Insect Swarm** | 50 | 2 — Velvet Ant Swarm, Grasshopper and Locust Swarm |
+| **Lizard Man (of Krynn)** | 57 | 2 — Jarak-Sinn, Bakali |
+| **Ogre (of Krynn)** | 65 | 2 — Ogre, Orughi |
+| **Phaethon** | 69 | 2 — Phaethon, Elder Phaethon |
+| **Spider (of Krynn)** | 77 | 2 — Whisper Spider, Giant Trap Door Spider |
 
 **8 nomi di voce erano sbagliati** nel testo estratto, non solo i quattro
 verificati per primi. Il dettaglio completo — testo estratto, nome reale, pagina,
@@ -482,8 +489,8 @@ causa — è nella tabella più sotto.
 > culture e ne restavano due. Sono **sette creature** che dal testo estratto non
 > esistevano affatto.
 >
-> Il conteggio passa così da 57 voci a **68** creature vere. Non è un
-> aggiustamento marginale: è il 24% in più, e cambia la stima di quanto lavoro
+> Il conteggio passa così da 65 voci a **83** creature vere. Non è un
+> aggiustamento marginale: è il 28% in più, e cambia la stima di quanto lavoro
 > c'è davanti.
 >
 > Due ritrovamenti che vale la pena segnalare. Il **Cervo Bianco**, una delle tre
@@ -497,13 +504,13 @@ causa — è nella tabella più sotto.
 
 ## Parte 5 — da dove iniziare
 
-Le **48 creature** da convertire, tolte le 13 schede di razze giocanti già
-coperte da `dati/razze/` e le 4 razze fuori roster. **Proposta, non decisione.**
+Le **60 creature** da convertire, tolte le 14 schede di razze giocanti già
+coperte da `dati/razze/` e le 5 razze fuori roster. **Proposta, non decisione.**
 
 Ricostruito sull'elenco completo dopo il ricontaggio voce per voce. I **cinque
 draconici non sono in questa lista**: hanno già un precedente ufficiale
-completo, analizzato nelle parti 2-4 sopra. Restano **41 creature**
-su **35 voci** nelle cinque fasce, più il Cervo Bianco fuori fascia.
+completo, analizzato nelle parti 2-4 sopra. Restano **53 creature**
+su **45 voci** nelle cinque fasce, più il Cervo Bianco fuori fascia.
 
 ### Prima — servono subito all'arena (4)
 
@@ -514,7 +521,7 @@ su **35 voci** nelle cinque fasce, più il Cervo Bianco fuori fascia.
 | Thanoi (Walrus Man) | Umanoide bestiale di fascia bassa, identitario del nord di Krynn. | sì — Gnoll / Lizardfolk |
 | Kyrie | Umanoidi alati, avversari volanti di fascia bassa: l'arena ha bisogno di bersagli in volo presto. | sì — Harpy / Hippogriff |
 
-### Seconda — riempitivi di fascia bassa e media (8 voci, 13 creature)
+### Seconda — riempitivi di fascia bassa e media (11 voci, 17 creature)
 
 | creatura | perché | analogo SRD |
 |---|---|---|
@@ -526,8 +533,11 @@ su **35 voci** nelle cinque fasce, più il Cervo Bianco fuori fascia.
 | Shadowperson | Non morto elfico di fascia media. La voce contiene anche il Revered Ancient One, il suo anziano — quasi tutto `Nil`: non combatte, va convertito come comparsa non nella scheda dell'avversario. | parziale — Shadow / Specter |
 | Avian (Emre, Kingfisher, Skyfisher, 'Wari) | Quattro varianti sotto una sola voce: uccelli o umanoidi alati acquatici di Krynn. Ruolo e taglia esatti non ancora verificati sull'immagine di pagina — segnaposto di fascia bassa. | da verificare — probabile Hawk / Giant Owl |
 | Stag (Wild Stag, Giant Stag) | I due cervi normali della voce Stag: bestie da branco pulite. Il terzo abitante della voce, il Cervo Bianco, e' trattato a parte, fuori fascia — vedi sotto. | sì — Elk / Giant Elk |
+| Lizard Man (Jarak-Sinn, Bakali) | Umanoidi rettili tribali, fascia bassa-media pulita: i jarak-sinn (piu' numerosi) e i bakali, loro progenitori piu' rari. Voce nuova, trovata nella seconda passata. | sì — Lizardfolk |
+| Phaethon | Umanoide alato dei monti, GS basso-medio: alternativa a Kyrie come avversario volante. Voce nuova. | parziale — nessun analogo diretto SRD |
+| Insect Swarm, Grasshopper and Locust | Sciame di insetti, minaccia bassa per individuo, utile come ostacolo/ambientazione in arena. Voce nuova. | sì — Swarm of Insects |
 
-### Terza — identitari ma senza analogo pulito (9 voci, 10 creature)
+### Terza — identitari ma senza analogo pulito (11 voci, 12 creature)
 
 | creatura | perché | analogo SRD |
 |---|---|---|
@@ -538,10 +548,12 @@ su **35 voci** nelle cinque fasce, più il Cervo Bianco fuori fascia.
 | Tylor | Mostruosita' grande e identitaria, fascia medio-alta. | parziale — Chimera |
 | Knight, Death | **Il Cavaliere della Morte**: e' Lord Soth, cioe' l'antagonista simbolo del setting. SotDQ ha lo statblock di Soth come PERSONAGGIO, che puo' servire da riferimento ma non e' la scheda di specie. | parziale — Wight / Revenant, ma sottodimensionati |
 | Haunt, Knight | Variante spettrale del precedente. | no |
+| Phaethon, Elder | Variante piu' forte del Phaethon base, con un accenno di resistenza magica (5%): identitario, da comporre insieme al Phaethon. Voce nuova. | no |
+| Insect Swarm, Velvet Ant | Sciame con veleno e formula di dimensione variabile: meccanica piu' complessa del semplice sciame. Voce nuova. | parziale — Swarm of Insects, senza il veleno |
 | Yaggol | Sotto-razza degenerata dei mind flayer, con kit complesso (sei attacchi piu' un potere psichico) e la resistenza magica piu' alta del bestiario (50%). Identitario e costoso: nessun mostro SRD a GS 1/4-4 replica un mind-flayer minore. | no — Mind Flayer vero e' GS 7, fuori target |
 | Tayling (+ Taylang) | Gemelli telepatici che nascono sempre in coppia: l'intelligente (Tayling) e il bestiale (Taylang). Nessun analogo SRD replica la coppia legata telepaticamente. | no |
 
-### Quarta — nicchia (10)
+### Quarta — nicchia (12)
 
 | creatura | perché | analogo SRD |
 |---|---|---|
@@ -555,8 +567,10 @@ su **35 voci** nelle cinque fasce, più il Cervo Bianco fuori fascia.
 | Imp, Blood Sea | Diavoletto locale. | sì — Imp / Quasit |
 | Eyewing | Bestia volante di nicchia. | no |
 | Bear, Ice | Bestia. | sì — Polar Bear |
+| Hatori, Lesser | Predatore del deserto a Dadi Vita variabili (1-5): complesso da fissare a un singolo GS, ma il taglio piu' basso rientra nel target. | no |
+| Spider, Giant Trap Door | Ragno imboscatore di taglia Large, 8 DV: sopra la fascia bassa ma non enorme. Voce nuova, trovata nella seconda passata. | parziale — Giant Spider |
 
-### Quinta — draghi, non servono alla Fase 2 (4)
+### Quinta — fuori target (draghi e alti Dadi Vita), non servono alla Fase 2 (7 voci, 8 creature)
 
 | creatura | perché | analogo SRD |
 |---|---|---|
@@ -564,6 +578,9 @@ su **35 voci** nelle cinque fasce, più il Cervo Bianco fuori fascia.
 | Dragon, Kodragon | Come sopra. | sì |
 | Dragon, Sea | Come sopra. | sì |
 | Dragon, Astral | Drago, come sopra. Due statblock nella voce (solitario e coppia accoppiata da 35 DV) ma una sola specie in due stati: contata come una riga, non due. | sì |
+| Hatori, Greater | Variante adulta dell'Hatori, 6-20 DV: fuori target quanto un drago, serve oltre la Fase 2. Voce nuova. | no |
+| Beast, Undead (Stahnk, Gholor) | 24 Dadi Vita ciascuno (12+12): fuori target quanto un drago. Voce nuova, trovata nella seconda passata — mancava del tutto dal ricontaggio precedente. | no |
+| Spider, Whisper | 16 Dadi Vita (8+8): fuori target quanto un drago. Voce nuova. | no |
 
 ### Fuori fascia — non da arena (1)
 
@@ -622,18 +639,18 @@ ricontaggio voce per voce ne ha trovati altri quattro con la stessa causa.
 > **Lettura interpretativa** — registrata il 2026-08-19. Non e' derivata dai dati.
 >
 > **La causa è quasi sempre una sola, e non è un difetto delle pagine.**
-> 6 casi su 8 sono voci con statblock a **più colonne**: una sola
+> 13 casi su 8 sono voci con statblock a **più colonne**: una sola
 > voce del manuale contiene due o più creature affiancate, ciascuna con la
 > propria colonna di valori. L'estrattore, che lavora a due colonne di testo,
 > legge i titoli delle colonne di fianco come se fossero una riga sola. Gli
-> altri 2 hanno un'altra causa: `Minotaur (of Krynn)` prendeva
+> altri -5 hanno un'altra causa: `Minotaur (of Krynn)` prendeva
 > l'intestazione di una colonna interna (`Blood Sea Minotaur`) come titolo
 > della voce; `Yaggol` aveva semplicemente le lettere spaziate nello stampato.
 >
-> **Questo cambia il conteggio del bestiario.** Dietro le 6 voci a più colonne
-> ci sono **17 creature**, non 6: `Man (of Krynn)` ne contiene quattro,
+> **Questo cambia il conteggio del bestiario.** Dietro le 13 voci a più colonne
+> ci sono **31 creature**, non 13: `Man (of Krynn)` ne contiene quattro,
 > `Avian` altrettante, `Stag` tre, `Tayling`, `Shadowperson` e `Dragon, Astral`
-> due ciascuna. Il numero vero — **57 voci, 68 creature** — è quello
+> due ciascuna. Il numero vero — **65 voci, 83 creature** — è quello
 > stabilito qui sopra in "Il conteggio vero del bestiario", voce per voce sulle
 > immagini di pagina: non resta più nulla da chiarire su questo fronte.
 >
@@ -653,8 +670,8 @@ Delle tre cose che mancavano, **sono fatte tutte e tre**.
 - ~~Verifica degli 8 nomi corrotti~~ → tutti leggibili, vedi sopra.
 - ~~Decisione sui sette campi senza corrispettivo~~ → decisione 27, sotto: due
   gruppi chiusi, uno rinviato con motivo.
-- ~~Conteggio vero delle creature dell'MC Appendix~~ → **57 voci,
-  68 creature**, stabilito voce per voce sulle immagini di pagina —
+- ~~Conteggio vero delle creature dell'MC Appendix~~ → **65 voci,
+  83 creature**, stabilito voce per voce sulle immagini di pagina —
   vedi "Il conteggio vero del bestiario" sopra.
 
 > **Lettura interpretativa** — registrata il 2026-08-19. Non e' derivata dai dati.
@@ -664,7 +681,7 @@ Delle tre cose che mancavano, **sono fatte tutte e tre**.
 > generatore di `RAPPORTO-mostri.md` (`confronta_mostri.py`) conta le voci
 > dell'MC Appendix rileggendo il testo estratto con un'altra regola (i blocchi
 > `CLIMATE/TERRAIN:`), indipendente da questo ricontaggio verificato sulle
-> immagini. Dà **55**, non 57. Non è lo stesso tipo di errore dei nomi
+> immagini. Dà **55**, non 65. Non è lo stesso tipo di errore dei nomi
 > corrotti — è un secondo modo di contare, mai riconciliato col primo dopo il
 > ricontaggio. Va allineato a questa fonte prima di fidarsi del suo numero, ma
 > non impedisce di cominciare a convertire: la prima fascia non dipende da lui.

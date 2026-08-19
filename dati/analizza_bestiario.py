@@ -361,12 +361,12 @@ ANALOGIE = {
 
 
 # ==========================================================================
-# PARTE 5 — ordine di lavorazione proposto, RICOSTRUITO sull'elenco completo
-# (48 creature da convertire) dopo il ricontaggio voce per voce.
+# PARTE 5 — ordine di lavorazione proposto, sull'elenco delle creature da
+# convertire (BM.statistiche()['da_convertire'], MAI un numero scritto qui:
+# si sfaserebbe di nuovo, come e' gia' successo due volte).
 # ==========================================================================
 # I cinque draconici NON sono in questa lista: hanno gia' un precedente
-# ufficiale completo, analizzato nelle parti 2-4. Il conteggio qui sotto
-# copre le 48 - 5 = 43 creature restanti.
+# ufficiale completo, analizzato nelle parti 2-4.
 #
 # (nome, fascia, motivo, analogo SRD evidente?, n_creature nella voce)
 PRIORITA = [
@@ -406,6 +406,17 @@ PRIORITA = [
      "I due cervi normali della voce Stag: bestie da branco pulite. Il "
      "terzo abitante della voce, il Cervo Bianco, e' trattato a parte, "
      "fuori fascia — vedi sotto.", "sì — Elk / Giant Elk", 2),
+    ("Lizard Man (Jarak-Sinn, Bakali)", 2,
+     "Umanoidi rettili tribali, fascia bassa-media pulita: i jarak-sinn "
+     "(piu' numerosi) e i bakali, loro progenitori piu' rari. Voce nuova, "
+     "trovata nella seconda passata.", "sì — Lizardfolk", 2),
+    ("Phaethon", 2,
+     "Umanoide alato dei monti, GS basso-medio: alternativa a Kyrie come "
+     "avversario volante. Voce nuova.",
+     "parziale — nessun analogo diretto SRD", 1),
+    ("Insect Swarm, Grasshopper and Locust", 2,
+     "Sciame di insetti, minaccia bassa per individuo, utile come "
+     "ostacolo/ambientazione in arena. Voce nuova.", "sì — Swarm of Insects", 1),
 
     ("Dreamshadow", 3,
      "Non morto psichico: identitario ma senza analogo pulito.", "no", 1),
@@ -420,6 +431,14 @@ PRIORITA = [
      "che puo' servire da riferimento ma non e' la scheda di specie.",
      "parziale — Wight / Revenant, ma sottodimensionati", 1),
     ("Haunt, Knight", 3, "Variante spettrale del precedente.", "no", 1),
+    ("Phaethon, Elder", 3,
+     "Variante piu' forte del Phaethon base, con un accenno di resistenza "
+     "magica (5%): identitario, da comporre insieme al Phaethon. Voce nuova.",
+     "no", 1),
+    ("Insect Swarm, Velvet Ant", 3,
+     "Sciame con veleno e formula di dimensione variabile: meccanica piu' "
+     "complessa del semplice sciame. Voce nuova.",
+     "parziale — Swarm of Insects, senza il veleno", 1),
     ("Yaggol", 3,
      "Sotto-razza degenerata dei mind flayer, con kit complesso (sei "
      "attacchi piu' un potere psichico) e la resistenza magica piu' alta "
@@ -441,6 +460,13 @@ PRIORITA = [
     ("Imp, Blood Sea", 4, "Diavoletto locale.", "sì — Imp / Quasit", 1),
     ("Eyewing", 4, "Bestia volante di nicchia.", "no", 1),
     ("Bear, Ice", 4, "Bestia.", "sì — Polar Bear", 1),
+    ("Hatori, Lesser", 4,
+     "Predatore del deserto a Dadi Vita variabili (1-5): complesso da "
+     "fissare a un singolo GS, ma il taglio piu' basso rientra nel target.",
+     "no", 1),
+    ("Spider, Giant Trap Door", 4,
+     "Ragno imboscatore di taglia Large, 8 DV: sopra la fascia bassa ma non "
+     "enorme. Voce nuova, trovata nella seconda passata.", "parziale — Giant Spider", 1),
 
     ("Dragon, Amphi", 5, "Drago: la Fase 2 non ne ha bisogno.", "sì — draghi SRD", 1),
     ("Dragon, Kodragon", 5, "Come sopra.", "sì", 1),
@@ -449,6 +475,15 @@ PRIORITA = [
      "Drago, come sopra. Due statblock nella voce (solitario e coppia "
      "accoppiata da 35 DV) ma una sola specie in due stati: contata come "
      "una riga, non due.", "sì", 1),
+    ("Hatori, Greater", 5,
+     "Variante adulta dell'Hatori, 6-20 DV: fuori target quanto un drago, "
+     "serve oltre la Fase 2. Voce nuova.", "no", 1),
+    ("Beast, Undead (Stahnk, Gholor)", 5,
+     "24 Dadi Vita ciascuno (12+12): fuori target quanto un drago. Voce "
+     "nuova, trovata nella seconda passata — mancava del tutto dal "
+     "ricontaggio precedente.", "no", 2),
+    ("Spider, Whisper", 5,
+     "16 Dadi Vita (8+8): fuori target quanto un drago. Voce nuova.", "no", 1),
 ]
 
 # Fuori dalle cinque fasce di combattimento: non e' materiale da arena.
@@ -461,16 +496,12 @@ FUORI_FASCIA = [
      "forzarlo nel bestiario da combattimento."),
 ]
 
-# Le voci razziali dell'MC Appendix: NON sono mostri da convertire, sono le
-# schede PNG delle razze giocanti che abbiamo gia' in dati/razze/.
-VOCI_RAZZIALI = [
-    "Dwarf, Hill (Neidar)", "Dwarf, Mountain (Hylar)", "Dwarf, Theiwar",
-    "Dwarf, Zakhar", "Elf, Half", "Elf, High-Qualinesti",
-    "Elf, High-Silvanesti", "Elf, Wild-Kagonesti", "Elf, Sea-Dargonesti",
-    "Elf, Sea-Dimernesti", "Gnome, Tinker (Minoi)", "Kender",
-    "Ogre, High (Irda)", "Blood Sea Minotaur", "Emre Kingfisher",
-    "Yeti-kin, Saqualaminoi",
-]
+# Le voci razziali dell'MC Appendix (razza_nostra + razza_altra): NON sono
+# mostri da convertire. Derivata da BM invece che ricopiata a mano, per non
+# sfasarsi di nuovo come il resto del bestiario: era ferma a 16 voci con due
+# nomi corrotti (Blood Sea Minotaur, Emre Kingfisher) mai aggiornati dopo il
+# ricontaggio.
+VOCI_RAZZIALI = [v[1] for v in BM.VOCI if v[3] in ("razza_nostra", "razza_altra")]
 
 
 def main():
@@ -563,7 +594,7 @@ def main():
                    2: "Seconda — riempitivi di fascia bassa e media",
                    3: "Terza — identitari ma senza analogo pulito",
                    4: "Quarta — nicchia",
-                   5: "Quinta — draghi, non servono alla Fase 2"}
+                   5: "Quinta — fuori target (draghi e alti Dadi Vita), non servono alla Fase 2"}
     blocchi_prio = []
     tot_righe = tot_creature = 0
     for f in sorted(per_fascia):
@@ -849,7 +880,7 @@ culture e ne restavano due. Sono **sette creature** che dal testo estratto non
 esistevano affatto.
 
 Il conteggio passa così da {BS['voci']} voci a **{BS['creature']}** creature vere. Non è un
-aggiustamento marginale: è il 24% in più, e cambia la stima di quanto lavoro
+aggiustamento marginale: è il {round(100 * (BS['creature'] / BS['voci'] - 1))}% in più, e cambia la stima di quanto lavoro
 c'è davanti.
 
 Due ritrovamenti che vale la pena segnalare. Il **Cervo Bianco**, una delle tre

@@ -1,6 +1,6 @@
 # I due bestiari di Krynn
 
-*Generato da `dati/confronta_mostri.py` il 2026-08-15.*
+*Generato da `dati/confronta_mostri.py` il 2026-08-19.*
 
 > **Diagnostico.** Serve a decidere quale fonte sia primaria e quale
 > precedente. Non decide, non estrae, non tocca `dati/`.
@@ -9,10 +9,10 @@
 
 | | voci |
 |---|---:|
-| `MC - Dragonlance Appendix` (2e) | **55** |
+| `MC - Dragonlance Appendix` (2e) | **65** |
 | `Shadow of the Dragon Queen` (5e), Appendice B | **22** |
 | in comune — dove avremmo un precedente ufficiale | **5** |
-| solo in MC Appendix | **50** |
+| solo in MC Appendix | **60** |
 | solo in SotDQ | **16** |
 
 ## In comune: 5 creature
@@ -36,9 +36,9 @@ Coppie in cui una parte del nome coincide ma le due voci non sono la stessa cosa
 |---|---|---|
 | Kender | Kender Skirmisher | la voce SotDQ specializza il nome: e' un blocco statistiche da PNG, non la scheda della specie |
 
-## Solo in MC Appendix: 50
+## Solo in MC Appendix: 60
 
-Gurik Cha-ahl, Dragon, Amphi, Shadowperson Revered Ancient One, Anemone, Giant, Bear, Ice, Imp, Blood Sea, Blood Sea Minotaur, Elf, Sea-Dargonesti, Knight, Death, Elf, Sea-Dimernesti, Disir, Kani Doll, Draconian (proto-), Traag, Dragon, Kodragon, Dragon, Sea, Dreamshadow, Dreamwraith, Dwarf, Hill (Neidar), Dwarf, Mountain (Hylar), Dwarf, Theiwar, Dwarf, Zakhar, Elf, Half, Elf, High-Qualinesti, Elf, High-Silvanesti, Elf, Wild-Kagonesti, Emre Kingfisher, Eyewing, Fetch, Fire Minion, Fireshadow, Ice Folk Knights of, Y a g g o l, Gnome, Tinker (Minoi), Haunt, Knight, Ogre, High (Irda), Horax, Kalothagh (Prickleback), Kender, Yeti-kin, Saqualaminoi, Kyrie, Thanoi (Walrus Man), Spectral Minion, Shimmerweed, Warrior, Skeleton, Skrit, Wild Stage, Tayling Tayland, Tylor, Wichtlin, Wyndlass
+Gurik Cha-ahl, Dragon, Amphi, Anemone, Giant, Dragon, Astral, Avian, Bear, Ice, Beast, Undead, Imp, Blood Sea, Dwarf, Daergar, Elf, Sea-Dargonesti, Knight, Death, Elf, Sea-Dimernesti, Disir, Kani Doll, Draconian (proto-), Traag, Dragon, Kodragon, Dragon, Sea, Dreamshadow, Dreamwraith, Dwarf, Gully, Dwarf, Hill (Neidar), Dwarf, Mountain (Hylar), Dwarf, Theiwar, Dwarf, Zakhar, Elf, Half, Elf, High-Qualinesti, Elf, High-Silvanesti, Elf, Wild-Kagonesti, Eyewing, Fetch, Fire Minion, Fireshadow, Gnome, Tinker (Minoi), Hatori, Haunt, Knight, Ogre, High (Irda), Horax, Insect Swarm, Kalothagh (Prickleback), Kender, Yeti-kin, Saqualaminoi, Lizard Man (of Krynn), Man (of Krynn), Minotaur (of Krynn), Ogre (of Krynn), Spider (of Krynn), Kyrie, Thanoi (Walrus Man), Spectral Minion, Phaethon, Shadowperson, Shimmerweed, Warrior, Skeleton, Skrit, Stag, Tayling, Tylor, Wichtlin, Wyndlass, Yaggol
 
 ## Solo in SotDQ: 16
 
@@ -66,9 +66,9 @@ Andir Valmakos, Ayik Ur, Hrigg Roundrook, Iriad, Levna Drakehorn, Tem Temble
 I **22 `Challenge`** coincidono esattamente con le 22 creature
 dell'Appendice B: il bestiario è integro e i valori sono ricavabili.
 
-> **Lettura interpretativa** — registrata il 2026-08-15. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-08-19. Non e' derivata dai dati.
 >
-> Il rapporto fra i due bestiari è 55 a 22, e l'intersezione è
+> Il rapporto fra i due bestiari è 65 a 22, e l'intersezione è
 > **5 creature**: tutti e 5 i **draconiani** — Aurak, Baaz, Bozak, Kapak, Sivak. Tutto il resto
 > di SotDQ sono PNG dell'avventura — Lord Soth, Kansaldi Fire-Eyes, Caradoc,
 > Lohezet — che in 2e non hanno una scheda mostro perché sono personaggi, non
@@ -83,7 +83,7 @@ dell'Appendice B: il bestiario è integro e i valori sono ricavabili.
 >
 > Questo conferma numericamente l'inclinazione già espressa: **MC Appendix è
 > l'unica fonte con ampiezza sufficiente** a popolare un bestiario, e SotDQ non
-> può sostituirla — 22 creature contro 55, e di quelle 22 solo 5 sono specie
+> può sostituirla — 22 creature contro 65, e di quelle 22 solo 5 sono specie
 > condivise.
 >
 > Come precedente di conversione però 5 creature non sono poche, perché sono
