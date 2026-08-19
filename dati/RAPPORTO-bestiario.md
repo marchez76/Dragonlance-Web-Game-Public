@@ -456,8 +456,8 @@ immagini di pagina lo ha rifatto voce per voce.
 | voci dell'MC Appendix | **65** |
 | creature vere (statblock distinti) | **83** |
 | di cui schede di razze già in `dati/razze/` | 14 |
-| di cui razze e culture fuori dal roster | 5 |
-| **creature da convertire** | **60** |
+| di cui razze e culture fuori dal roster | 4 |
+| **creature da convertire** | **62** |
 
 **13 voci hanno lo statblock su più colonne**: una voce, più creature.
 
@@ -500,12 +500,55 @@ causa — è nella tabella più sotto.
 > specie sola in due stati, il solitario e la coppia accoppiata da 35 dadi vita
 > che il manuale tratta come singola creatura.
 
+> **Lettura interpretativa** — registrata il 2026-08-19. Non e' derivata dai dati.
+>
+> **Questo numero non è un fatto acquisito: è la stima migliore ottenuta finora,
+> e va detto invece di presentare 83 come definitivo.** Il conteggio "definitivo"
+> è già stato smentito due volte in due giri — 55 → 68 → 83 — e le voci a
+> colonne multiple sono emerse in tre passate successive, non in una sola: non
+> c'è garanzia che siano finite.
+>
+> **I segnali usati, in ordine di scoperta:**
+>
+> 1. *Duplicazione di un campo sulla stessa riga.* Le prime quattro voci
+>    corrotte (`Yaggol`, `Tayling`, `Shadowperson`, `Man (of Krynn)`) sono state
+>    trovate perché il testo estratto riportava DUE valori di `FREQUENCY` sulla
+>    stessa riga (es. "Rare Uncommon"): un sintomo meccanico di colonne
+>    affiancate lette come una riga sola.
+> 2. *La stessa duplicazione estesa a più campi.* La seconda passata ha
+>    allargato la ricerca a valori ripetuti su un numero qualunque di campi
+>    della scheda 2e, non solo `FREQUENCY`: ha trovato `Beast, Undead`
+>    (otto campi ripetuti) e altre voci che il primo segnale, più stretto, non
+>    intercettava.
+> 3. *Rilettura manuale, voce per voce, sulle immagini di pagina.* Non un
+>    segnale automatico ma la verifica finale: ogni voce dell'elenco sopra è
+>    stata riletta sull'immagine, non solo sul testo estratto.
+>
+> **Segnali NON usati**, e quindi punti dove un quarto giro potrebbe ancora
+> trovare qualcosa: nessun controllo automatico ha confrontato il numero di
+> voci trovate con un indice o sommario del manuale (l'MC Appendix, formato
+> Monstrous Compendium a fogli sciolti, non ne ha uno stampato); nessun
+> controllo ha verificato che OGNI voce, non solo quelle già sospette, abbia un
+> blocco statistiche internamente coerente (es. `NO. OF ATTACKS` e
+> `DAMAGE/ATTACK` con lo stesso numero di elementi); e non è stata fatta una
+> terza rilettura sistematica di TUTTE le pagine a immagine, solo di quelle già
+> segnalate da un sintomo testuale — quindi un difetto che non lascia sintomo
+> nel testo estratto (come è successo con `Ogre (of Krynn)`, dove
+> l'estrazione univa `CLIMATE/TERRAIN` e il nome senza i due punti, invece di
+> duplicare un campo) resta strutturalmente invisibile ai primi due segnali e
+> va scoperto per altra via, come è successo.
+>
+> Non si fa una terza passata sistematica adesso: il costo supera il beneficio
+> e non blocca l'inizio della conversione, che comincia dalla prima fascia
+> (Traag e gli altri tre) indipendentemente da questo numero. Ma il rapporto
+> deve dirlo, non nasconderlo dietro un totale che sembra chiuso.
+
 ---
 
 ## Parte 5 — da dove iniziare
 
-Le **60 creature** da convertire, tolte le 14 schede di razze giocanti già
-coperte da `dati/razze/` e le 5 razze fuori roster. **Proposta, non decisione.**
+Le **62 creature** da convertire, tolte le 14 schede di razze giocanti già
+coperte da `dati/razze/` e le 4 razze fuori roster. **Proposta, non decisione.**
 
 Ricostruito sull'elenco completo dopo il ricontaggio voce per voce. I **cinque
 draconici non sono in questa lista**: hanno già un precedente ufficiale

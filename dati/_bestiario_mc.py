@@ -133,7 +133,7 @@ VOCI = [
     (57, "Lizard Man (of Krynn)", ["Jarak-Sinn", "Bakali"], "creatura", True,
      "DUE colonne: i jarak-sinn (la stirpe piu' numerosa, adoratori di "
      "Chislev) e i bakali, loro progenitori. Trovata nella seconda passata."),
-    (65, "Ogre (of Krynn)", ["Ogre", "Orughi"], "razza_altra", True,
+    (65, "Ogre (of Krynn)", ["Ogre", "Orughi"], "creatura", True,
      "DUE colonne, scoperte nella seconda passata (segnali indipendenti dal "
      "primo ricontaggio): Ogre comune (L, 7'-9') e Orughi (M, 4'-5', tribu' "
      "separata), non gli Irda. Il testo estratto univa CLIMATE/TERRAIN e "
@@ -141,8 +141,13 @@ VOCI = [
      "corrotto il nome, ha impedito al pattern-matching di trovare la voce "
      "del tutto. Sfuggita sia al primo ricontaggio sia al conteggio "
      "indipendente di confronta_mostri.py, per due ragioni diverse. "
-     "Categoria razza_altra proposta per coerenza con Theiwar/Zakhar "
-     "(parentela dichiarata con l'Irda, non roster giocante): da confermare."),
+     "DECISIONE 28: categoria CREATURA, non razza_altra. A differenza di "
+     "Theiwar/Zakhar (clan nanici riservati dal manuale ai PNG giocabili), "
+     "gli ogre comuni non sono un clan riservato: sono avversari classici, "
+     "e servono all'arena. La parentela con l'Irda (stirpe separatasi) resta "
+     "come nota di lore nella voce di conversione, non come criterio di "
+     "categoria — vale il criterio della porta aperta: un mostro puo' sempre "
+     "diventare razza in seguito, il contrario e' piu' fastidioso."),
     (67, "Ogre, High (Irda)", ["Irda"], "razza_nostra", False, None),
     (69, "Phaethon", ["Phaethon", "Elder Phaethon"], "creatura", True,
      "DUE colonne: il phaethon adulto e l'anziano (piu' Intelligenza, piu' "

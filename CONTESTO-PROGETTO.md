@@ -22,7 +22,7 @@
 
 ---
 
-## Le 27 decisioni prese
+## Le 28 decisioni prese
 
 Ordine cronologico. Questa è la storia completa delle scelte: non serve
 ricostruirla dalle sezioni.
@@ -54,6 +54,7 @@ ricostruirla dalle sezioni.
 25. **Lo statuto di SotDQ** — *Shadow of the Dragon Queen* è materiale ufficiale 5e su Krynn: **quinta provenienza** nel campo fonte dei tratti di `mechanics_5e`, non un terzo strato. Non è autoritativo su tutto, perché non è la conversione ufficiale del materiale 2e ma un prodotto scritto da zero che ne condivide i nomi. Prevale su *Schernire*; altrove divergiamo, e le divergenze sono registrate.
 26. **Il criterio della tracciabilità** — **Qualsiasi materiale esterno che non porti con sé fonte e pagina è inutilizzabile**, a prescindere dal resto della sua qualità. Tutto il progetto si regge sulla tracciabilità: un dato non verificabile non entra. È un filtro che si applica in trenta secondi e risparmia analisi lunghe. Entrambi i lotti in `import/` sono respinti e chiusi.
 27. **I sette campi 2e senza corrispettivo** — Non erano un problema unico. **Gruppo A** — frequenza, numero, organizzazione, ciclo, dieta: dati di mondo, non di scheda, e diventano input del generatore di incontri in Fase 3. **Gruppo B** — il morale non è un campo ma un parametro di comportamento: senza, ogni scontro finisce con tutti i nemici morti, e diventa input dell'IA in arena. **Gruppo C** — la resistenza magica è l'unica vera decisione ed è **rinviata alla Fase 2**, perché i Gradi di Sfida su cui calibriamo presuppongono che non ci sia.
+28. **Ogre e Orughi sono mostri** — La voce `Ogre (of Krynn)` dell'Appendice torna a categoria **creatura**, non `razza_altra`. L'asimmetria con Theiwar/Zakhar (clan nanici che il manuale riserva ai PNG giocabili) non regge per gli ogre comuni: non sono un clan riservato, sono avversari classici e servono all'arena. La parentela dichiarata con l'Irda resta nota di lore nella voce, non criterio di categoria. Vale il criterio della porta aperta: un mostro può sempre diventare razza in seguito, il contrario è più fastidioso.
 
 ---
 
@@ -551,7 +552,7 @@ asse.**
 > unico del Kapak è il **salto offensivo rispetto alla propria fonte**: gli altri
 > sono stati riscalati, lui è stato ripensato.
 >
-> Applicare quell'euristica alle 41 creature restanti sposterebbe il tempo
+> Applicare quell'euristica alle 42 creature restanti sposterebbe il tempo
 > dalla conversione al debug. Quello che i cinque casi danno non è un algoritmo
 > ma tre vincoli:
 >
@@ -594,8 +595,8 @@ pagina:
 | voci dell'MC Appendix | **65** |
 | creature vere (statblock distinti) | **83** |
 | schede di razze già in `dati/razze/` | 14 |
-| razze e culture fuori dal roster | 5 |
-| **creature da convertire** | **60** |
+| razze e culture fuori dal roster | 4 |
+| **creature da convertire** | **62** |
 
 **13 voci hanno lo statblock su più colonne** — una voce, più creature:
 

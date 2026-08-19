@@ -1,7 +1,7 @@
 # Istruzioni di progetto
 
 Contratto di comportamento, non documentazione. Per il progetto vedi
-`CONTESTO-PROGETTO.md` (stato e le 27 decisioni). Se una regola qui sotto
+`CONTESTO-PROGETTO.md` (stato e le 28 decisioni). Se una regola qui sotto
 viene ignorata, il danno è reale, non stilistico.
 
 ## 1. Due repository, e cosa non deve mai uscire
@@ -10,6 +10,17 @@ viene ignorata, il danno è reale, non stilistico.
 **Privato** (`.git-private`, wrapper `git-privato.sh`): `Manuali/`, `Testi/`,
 `Estratti/`, `import/`, `Musica/`, `riscontro/`,
 `dati/razze|classi|divinita|mostri/`, `dati/RAPPORTO-*-completo.md`.
+
+**Meccanismo.** `.git-private` è un secondo repository Git nella STESSA
+cartella di lavoro del pubblico, non un archivio a parte: stesso albero di
+file, due storie separate. Si tocca **solo** tramite `git-privato.sh`
+(comandi `aggiungi`, `elenco`, o qualunque sottocomando `git` passato come
+argomento), **mai con `git` diretto** — un `git add`/`git commit` invocato
+senza il wrapper opera sul `.git` pubblico e può far filtrare testo di
+manuale nella storia pubblica. Se una sessione futura incontra la cartella
+`.git-private` senza questo contesto, il rischio è trattarla come residuo da
+ripulire o ricominciare a tracciarla dal pubblico: è esattamente l'incidente
+che l'uso del wrapper evita.
 
 Il testo dei manuali non va **mai** nel pubblico. Criterio da applicare prima
 di ogni commit pubblico, su ogni file toccato: **"questo file riproduce testo
@@ -60,7 +71,7 @@ scansioni in coda e **non tocca git**. Dettaglio in `divisione-del-lavoro.md`.
 
 ## 6. Rimandi
 
-- `CONTESTO-PROGETTO.md` — stato del progetto e le 27 decisioni.
+- `CONTESTO-PROGETTO.md` — stato del progetto e le 28 decisioni.
 - `dati/RAPPORTO-*.md` — diagnostiche generate.
 - `dati/LEGGIMI.md` — struttura dei dati e convenzione delle pagine.
 - `divisione-del-lavoro.md` — chi fa cosa.
