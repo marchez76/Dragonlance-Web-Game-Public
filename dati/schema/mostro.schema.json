@@ -380,7 +380,28 @@
           }
         },
 
-        "note": { "type": "array", "items": { "type": "string" } }
+        "note": { "type": "array", "items": { "type": "string" } },
+
+        "oggetti_collegati": {
+          "type": "array",
+          "description": "DECISIONE 33. Riferimenti a oggetti di dati/oggetti/ (schema oggetto.schema.json) che il mostro usa, indossa, o a cui e' legato — un'arma, un'armatura, o un oggetto con creatura legata come il diadema dello Scheletro Guerriero. Il mostro referenzia l'oggetto per id: non duplica la sua meccanica qui. Un oggetto vuoto o assente (la maggior parte dei mostri, che non hanno equipaggiamento nominato dalla fonte) lascia questo campo a [].",
+          "items": {
+            "type": "object",
+            "required": ["object_id", "ruolo"],
+            "additionalProperties": false,
+            "properties": {
+              "object_id": {
+                "type": "string",
+                "description": "id dell'oggetto in dati/oggetti/, es. \"diadema-anima-legata\"."
+              },
+              "ruolo": {
+                "type": "string",
+                "description": "Come il mostro si relaziona all'oggetto, es. \"arma impugnata\", \"anima imprigionata nell'oggetto\", \"armatura indossata\"."
+              },
+              "note": { "type": ["string", "null"] }
+            }
+          }
+        }
       }
     }
   }

@@ -682,14 +682,32 @@ fuori fascia.
 >   proprio, resta un'istanza particolare dello stesso tipo — non la fonte di
 >   questa voce.
 >
-> **2 voci non hanno un singolo grado di sfida**, e vanno segnalate a parte:
+> **La categoria ENTITÀ, per ora, è vuota.** Fra le 62 voci lette non ce n'è
+> una che abbia nome proprio e storia propria dichiarati dalla fonte stessa
+> (il Cavaliere della Morte era l'unica candidata, ed è ricaduta in creatura).
+> Non è un difetto della categoria: il criterio della decisione 32 ha retto al
+> primo caso a cui è stato applicato, respingendolo. Resta nello schema e nel
+> metodo per il giorno in cui una voce ci ricadrà davvero — un nome proprio
+> dichiarato dalla fonte, non un'identificazione fatta da noi.
 >
-> - **Dreamshadow**: ogni campo della scheda è dichiarato "as creature or
->   person mimicked" — non ha statistiche proprie. Serve un mostro-modello che
->   copia il bersaglio, non un analogo SRD.
-> - **Tylor**: sei categorie d'età con Dadi Vita, CA e soffio diversi, sullo
->   stesso schema degli age category dei draghi. Serve una famiglia di
->   statblock, non uno.
+> **Il Tylor non è un problema aperto: è lavoro rimandato.** Sei categorie
+> d'età con Dadi Vita, CA e soffio diversi, sullo stesso schema degli age
+> category dei draghi — esattamente il caso per cui lo schema del mostro ha
+> già `name.variante_di`. Si converte come una famiglia di statblock collegati
+> da quel campo (una voce per categoria d'età, ciascuna con il proprio GS),
+> non come un singolo mostro: non serve una decisione, serve solo farlo
+> quando tocca al Tylor.
+>
+> **Il Dreamshadow è un problema diverso, non un'altra voce complicata.** Ogni
+> campo della sua scheda — CA, DV, THAC0, danno, taglia, perfino l'allineamento
+> — è dichiarato "as creature or person mimicked": la voce non ha statistiche
+> proprie da nessuna parte. Non è una creatura a cui manca un analogo SRD, è
+> una **regola di trasformazione** applicata a un'altra creatura o persona: il
+> metodo per analogia non si applica perché non c'è nulla a cui applicarlo, il
+> bersaglio cambia scheda ogni volta che il Dreamshadow ne imita una diversa.
+> Registrato qui come categoria a parte, non forzato in uno statblock: è il
+> primo caso del genere nel bestiario, e probabilmente non l'ultimo — conviene
+> riconoscerli quando emergono invece di inventargli un GS di comodo.
 >
 > **Il criterio resta l'arena, non la completezza**, e non cambia: la Fase 2 ha
 > bisogno di avversari fra GS 1/4 e GS 4, in quantità e con tattiche diverse. La
@@ -817,4 +835,4 @@ Il valore percentuale resta in `source_2e` e in
 `mechanics_5e.magic_resistance_2e` con `applied: false`.
 **Quando si decide:** In arena, quando sapremo se i draconici senza resistenza magica risultano troppo fragili.
 
-**Creatura di riferimento.** Lo Yaggol (MC Dragonlance Appendix, pag. 87) ha resistenza magica 50%, la piu' alta del bestiario: e' la creatura su cui questa decisione pesera' di piu', e va tenuta presente quando si valuta se ripristinarla.
+**Creatura di riferimento.** CORRETTO dopo la rilettura di tutte le 62 voci (vedi Parte 5): lo Yaggol NON ha la resistenza magica piu' alta del bestiario. La graduatoria vera e' Scheletro Guerriero 90% (MC Dragonlance Appendix, pag. 84), poi Cavaliere della Morte 75% (pag. 55), poi lo Yaggol 50% (pag. 87) — terzo, non primo. La nota precedente era scritta su un dato sbagliato, letto senza verificare le altre voci ad alta resistenza. E' lo Scheletro Guerriero la creatura su cui questa decisione pesera' di piu': a un grado di sfida molto piu' alto (GS 7 contro l'1/4-6 dei draconici), l'assenza del 90% conta molto di piu' che sui draconici o sullo stesso Yaggol.

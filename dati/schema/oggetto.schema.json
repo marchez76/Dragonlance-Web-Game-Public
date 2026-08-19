@@ -1,0 +1,244 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dragonlance-gdr.local/schema/oggetto.schema.json",
+  "title": "Oggetto di Krynn",
+  "description": "Stesso doppio strato di razza, classe, divinità e mostro: `source_2e` fedele al manuale e immutabile, `mechanics_5e` con stato di conversione e provenienza su ogni elemento (decisione 33). Copre tre casi, non uno solo: equipaggiamento ordinario (armi, armature, attrezzatura d'avventura — il buco più urgente per l'arena, dove oggi mancano perfino i danni di una spada lunga), oggetti magici, e oggetti con una creatura legata come il diadema dello Scheletro Guerriero. Il diadema è il primo caso concreto che ha reso necessario questo schema, non il modello su cui è tagliato: un oggetto magico ordinario (senza creatura legata) e un'arma mondana (senza nulla di magico) devono starci comodi allo stesso modo. Nel mostro resta un riferimento all'oggetto (campo `oggetti_collegati` di mostro.schema.json), non l'oggetto stesso.",
+  "type": "object",
+  "required": ["id", "name", "categoria", "source", "source_2e", "mechanics_5e"],
+  "additionalProperties": false,
+
+  "$defs": {
+    "conversion_status": {
+      "enum": ["direct", "adapted", "pending", "source_only"],
+      "description": "Stessi quattro valori degli altri schemi. direct: il 5e ha gia' un equivalente e si copia quello (es. una spada lunga mondana e' gia' nell'SRD). adapted: convertito da noi con una scelta di forma. pending: da convertire, la meccanica 5e non e' ancora decisa. source_only: registrato dalla fonte ma senza effetto in 5e, per scelta motivata."
+    },
+    "provenienza": {
+      "enum": [
+        "PHB 2e",
+        "DMG 2e",
+        "MC - Dragonlance Appendix",
+        "Tales of the Lance",
+        "SotDQ (ufficiale 5e)",
+        "SRD 5.1",
+        "conversione editoriale nostra"
+      ],
+      "description": "Gli stessi valori usati altrove, piu' PHB 2e e DMG 2e: le tabelle di armi/armature mondane stanno nel Player's Handbook, gli oggetti magici tipicamente nel Dungeon Master's Guide. Nessuna delle due fonti e' stata ancora estratta per l'equipaggiamento: quando lo sara', va marcata qui, non genericamente come 'PHB 2e' se il dato viene davvero dalla DMG."
+    },
+    "elemento_5e": {
+      "type": "object",
+      "required": ["name", "conversion_status", "source"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string" },
+        "text_2e": { "type": ["string", "null"] },
+        "mechanics_5e": { "type": ["string", "null"] },
+        "conversion_status": { "$ref": "#/$defs/conversion_status" },
+        "source": { "$ref": "#/$defs/provenienza" },
+        "analogo_srd": { "type": ["string", "null"] },
+        "note": { "type": ["string", "null"] },
+        "editorial": { "type": "boolean", "default": false },
+        "provisional": { "type": ["string", "null"] }
+      }
+    }
+  },
+
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+    "name": {
+      "type": "object",
+      "required": ["en", "it"],
+      "additionalProperties": false,
+      "properties": {
+        "en": { "type": "string" },
+        "it": { "type": "string" }
+      }
+    },
+
+    "categoria": {
+      "enum": ["arma", "armatura", "scudo", "attrezzatura", "oggetto_magico"],
+      "description": "Classificazione di base, indipendente dal fatto che l'oggetto sia magico o abbia una creatura legata: entrambe sono proprieta' aggiuntive (`magico`, `creatura_legata`), non categorie a se'. Un'arma puo' essere magica (`categoria: \"arma\"`, `magico: true`); un oggetto puramente magico senza forma di equipaggiamento (anello, bacchetta, amuleto) va sotto `oggetto_magico`."
+    },
+    "magico": {
+      "type": "boolean",
+      "default": false,
+      "description": "true se l'oggetto ha proprieta' magiche, indipendentemente dalla categoria. Quando true, `mechanics_5e.rarity` e `mechanics_5e.proprieta_magiche` diventano rilevanti."
+    },
+
+    "source": {
+      "type": "object",
+      "required": ["source_edition", "source_book", "pages_pdf"],
+      "additionalProperties": false,
+      "properties": {
+        "source_edition": { "const": "2e" },
+        "source_book": { "type": "string" },
+        "pages_pdf": {
+          "type": "array",
+          "items": { "type": "integer" },
+          "description": "Indici di pagina 0-based nel PDF sorgente (indice+1 per pdftoppm/lettore PDF 1-based). Vedi dati/LEGGIMI.md, sezione \"Indici di pagina\"."
+        },
+        "pages_printed": {
+          "type": "array",
+          "items": { "type": "integer" },
+          "description": "Numero stampato sulla pagina fisica, solo per manuali che lo stampano. Omesso per l'MC Dragonlance Appendix."
+        },
+        "verified_on_image": {
+          "type": "boolean",
+          "default": false
+        }
+      }
+    },
+
+    "valid_eras": {
+      "type": ["array", "null"],
+      "items": {
+        "enum": ["pre_cataclysm", "age_of_despair", "war_of_lance",
+                 "age_of_mortals_post_chaos", "post_war_of_souls"]
+      },
+      "description": "Strato editoriale nostro, non dato di fonte (decisione 12). Rilevante soprattutto per oggetti magici legati a un evento storico preciso."
+    },
+
+    "source_2e": {
+      "type": "object",
+      "description": "Trascrizione fedele della fonte 2e. Non tutte le sotto-sezioni si applicano a ogni categoria: una spada mondana usa `weapon_table`, un'armatura `armor_table`, un oggetto magico `magic_item_text`. Nessuna delle tre e' obbligatoria da sola: e' obbligatorio che almeno una sia compilata (vedi la nota su come verificarlo in fase di validazione, dati/valida_oggetti.py).",
+      "required": ["descrizione", "notes", "open_questions"],
+      "additionalProperties": false,
+      "properties": {
+        "descrizione": {
+          "type": "string",
+          "description": "Sintesi o citazione breve di cosa dice la fonte. Per il testo integrale di oggetti con prosa lunga (voci magiche della DMG, oggetti unici di Krynn) usare `raw`, non gonfiare questo campo."
+        },
+        "weapon_table": {
+          "type": ["object", "null"],
+          "additionalProperties": false,
+          "properties": {
+            "cost": { "type": ["string", "null"] },
+            "damage_s_m": { "type": ["string", "null"], "description": "Danno contro bersagli Small/Medium, notazione 2e (es. \"1d8\")." },
+            "damage_l": { "type": ["string", "null"], "description": "Danno contro bersagli Large, quando diverso." },
+            "weight_2e": { "type": ["string", "null"] },
+            "size": { "type": ["string", "null"] },
+            "type": { "type": ["string", "null"], "description": "P/S/C (perforante/tagliente/contundente) nella notazione 2e." },
+            "speed_factor": { "type": ["integer", "null"] },
+            "note": { "type": ["string", "null"] }
+          }
+        },
+        "armor_table": {
+          "type": ["object", "null"],
+          "additionalProperties": false,
+          "properties": {
+            "cost": { "type": ["string", "null"] },
+            "ac_base_2e": { "type": ["integer", "null"], "description": "Scala discendente della 2e, come nei mostri." },
+            "weight_2e": { "type": ["string", "null"] },
+            "note": { "type": ["string", "null"] }
+          }
+        },
+        "magic_item_text": {
+          "type": ["object", "null"],
+          "additionalProperties": false,
+          "properties": {
+            "xp_value": { "type": ["integer", "null"] },
+            "gp_value": { "type": ["integer", "null"] },
+            "poteri": { "type": "array", "items": { "type": "string" }, "description": "Elenco dei poteri come dichiarati dalla fonte, uno per voce." },
+            "note": { "type": ["string", "null"] }
+          }
+        },
+        "creatura_legata_2e": {
+          "type": ["object", "null"],
+          "description": "Solo per oggetti con una creatura legata (es. il diadema dello Scheletro Guerriero). La meccanica di controllo vera e propria sta qui, nella fonte: il mostro che vi fa riferimento non la duplica.",
+          "additionalProperties": false,
+          "properties": {
+            "descrizione": { "type": "string" },
+            "raggio_controllo": { "type": ["string", "null"] },
+            "condizione_stabilimento": { "type": ["string", "null"] },
+            "condizione_perdita": { "type": ["string", "null"] },
+            "comportamento_alla_perdita": { "type": ["string", "null"] },
+            "note": { "type": ["string", "null"] }
+          }
+        },
+        "notes": { "type": "array", "items": { "type": "string" } },
+        "open_questions": { "type": "array", "items": { "type": "string" } },
+        "raw": {
+          "type": ["string", "null"],
+          "description": "Il testo della fonte come appare nell'estrazione, per poter riverificare senza riaprire il PDF. Comodita', non dato: se la trascrizione integrale non si lascia scrivere (stesso caso gia' visto su alcuni mostri non morti), il campo va OMESSO (null) con una nota in `notes` che rimanda a voce e pagina per la riverifica — non riformulato per aggirare il problema. Vedi mostro.schema.json, campo `raw`, per il precedente."
+        }
+      }
+    },
+
+    "mechanics_5e": {
+      "type": "object",
+      "description": "Statistiche 5e. Le sotto-sezioni non compilate per la categoria dell'oggetto restano null, non vuote a forza.",
+      "required": ["conversion_status", "note"],
+      "additionalProperties": false,
+      "properties": {
+        "conversion_status": {
+          "enum": ["da_compilare", "in_corso", "compilato"],
+          "description": "Stato della scheda nel suo insieme."
+        },
+        "weapon_5e": {
+          "type": ["object", "null"],
+          "additionalProperties": false,
+          "properties": {
+            "damage_dice": { "type": "string" },
+            "damage_type": { "type": "string" },
+            "properties": { "type": "array", "items": { "type": "string" }, "description": "Es. \"versatile (1d10)\", \"reach\", \"thrown (20/60)\", \"two-handed\"." },
+            "weight_lb": { "type": ["number", "null"] },
+            "cost_gp": { "type": ["number", "null"] },
+            "conversion_status": { "$ref": "#/$defs/conversion_status" },
+            "source": { "$ref": "#/$defs/provenienza" },
+            "note": { "type": ["string", "null"] }
+          }
+        },
+        "armor_5e": {
+          "type": ["object", "null"],
+          "additionalProperties": false,
+          "properties": {
+            "ac_formula": { "type": "string", "description": "Es. \"11 + Dex modifier (max 2)\", \"18\"." },
+            "strength_requirement": { "type": ["integer", "null"] },
+            "stealth_disadvantage": { "type": "boolean", "default": false },
+            "weight_lb": { "type": ["number", "null"] },
+            "cost_gp": { "type": ["number", "null"] },
+            "conversion_status": { "$ref": "#/$defs/conversion_status" },
+            "source": { "$ref": "#/$defs/provenienza" },
+            "note": { "type": ["string", "null"] }
+          }
+        },
+        "rarity": {
+          "type": ["string", "null"],
+          "enum": ["comune", "non comune", "raro", "molto raro", "leggendario", "artefatto", null],
+          "description": "Scala di rarita' 5e. Solo per oggetti con `magico: true`."
+        },
+        "attunement": {
+          "type": ["boolean", "null"],
+          "description": "Richiede sintonia. null quando non applicabile (oggetto non magico)."
+        },
+        "proprieta_magiche": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/elemento_5e" },
+          "description": "Ogni potere magico dichiarato dalla fonte, con stato di conversione e provenienza, sullo stesso modello dei tratti di un mostro o di una razza. Vuoto per oggetti non magici."
+        },
+        "creatura_legata": {
+          "type": ["object", "null"],
+          "description": "Solo per oggetti che vincolano una creatura (decisione 33: il diadema e' il primo caso). Il mostro legato NON va duplicato qui: si referenzia per id, la scheda del mostro vive in dati/mostri/.",
+          "required": ["monster_id", "meccanica"],
+          "additionalProperties": false,
+          "properties": {
+            "monster_id": {
+              "type": "string",
+              "description": "id del mostro in dati/mostri/, es. \"scheletro-guerriero\". La procedura e' ripetibile (decisione 32): lo stesso oggetto-tipo puo' legare mostri diversi, ma UNA istanza dell'oggetto lega UNA istanza del mostro."
+            },
+            "raggio_controllo_ft": { "type": ["integer", "null"] },
+            "meccanica": {
+              "type": "string",
+              "description": "La regola giocabile per intero: come si stabilisce il controllo, come si perde, cosa succede quando lo si perde. Testo strutturato, non solo colore."
+            },
+            "note": { "type": ["string", "null"] }
+          }
+        },
+        "note": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Note libere sull'insieme della conversione."
+        }
+      }
+    }
+  }
+}

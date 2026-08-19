@@ -45,6 +45,7 @@ PERCORSI=(
     dati/classi
     dati/divinita
     dati/mostri
+    dati/oggetti
     dati/razze.index.json
     dati/classi.index.json
     dati/divinita.index.json

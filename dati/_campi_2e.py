@@ -83,10 +83,16 @@ GRUPPO_C = {
         "In arena, quando sapremo se i draconici senza resistenza magica "
         "risultano troppo fragili."),
     "creatura_di_riferimento": (
-        "Lo Yaggol (MC Dragonlance Appendix, pag. 87) ha resistenza magica "
-        "50%, la piu' alta del bestiario: e' la creatura su cui questa "
-        "decisione pesera' di piu', e va tenuta presente quando si valuta "
-        "se ripristinarla."),
+        "CORRETTO dopo la rilettura di tutte le 62 voci (vedi Parte 5): lo "
+        "Yaggol NON ha la resistenza magica piu' alta del bestiario. La "
+        "graduatoria vera e' Scheletro Guerriero 90% (MC Dragonlance "
+        "Appendix, pag. 84), poi Cavaliere della Morte 75% (pag. 55), poi "
+        "lo Yaggol 50% (pag. 87) — terzo, non primo. La nota precedente era "
+        "scritta su un dato sbagliato, letto senza verificare le altre voci "
+        "ad alta resistenza. E' lo Scheletro Guerriero la creatura su cui "
+        "questa decisione pesera' di piu': a un grado di sfida molto piu' "
+        "alto (GS 7 contro l'1/4-6 dei draconici), l'assenza del 90% conta "
+        "molto di piu' che sui draconici o sullo stesso Yaggol."),
 }
 
 GRUPPI = [("A", GRUPPO_A), ("B", GRUPPO_B), ("C", GRUPPO_C)]
