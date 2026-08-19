@@ -539,9 +539,10 @@ causa — è nella tabella più sotto.
 > va scoperto per altra via, come è successo.
 >
 > Non si fa una terza passata sistematica adesso: il costo supera il beneficio
-> e non blocca l'inizio della conversione, che comincia dalla prima fascia
-> (Traag e gli altri tre) indipendentemente da questo numero. Ma il rapporto
-> deve dirlo, non nasconderlo dietro un totale che sembra chiuso.
+> e non blocca la conversione, che e' gia' cominciata (Traag e Scheletro
+> Guerriero, quest'ultimo al suo vero grado dopo la rilettura di tutte le 62
+> voci — vedi Parte 5) indipendentemente da questo numero. Ma il rapporto deve
+> dirlo, non nasconderlo dietro un totale che sembra chiuso.
 
 ---
 
@@ -550,70 +551,69 @@ causa — è nella tabella più sotto.
 Le **62 creature** da convertire, tolte le 14 schede di razze giocanti già
 coperte da `dati/razze/` e le 4 razze fuori roster. **Proposta, non decisione.**
 
-Ricostruito sull'elenco completo dopo il ricontaggio voce per voce. I **cinque
-draconici non sono in questa lista**: hanno già un precedente ufficiale
-completo, analizzato nelle parti 2-4 sopra. Restano **53 creature**
-su **45 voci** nelle cinque fasce, più il Cervo Bianco fuori fascia.
+I **cinque draconici, il Traag e lo Scheletro Guerriero non sono in questa
+lista**: i primi cinque hanno già un precedente ufficiale completo (parti
+2-4 sopra), gli ultimi due sono già stati convertiti
+(`dati/mostri/traag.json`, `dati/mostri/scheletro-guerriero.json`). Restano
+**53 creature** su **44 voci** nelle cinque fasce, più il Cervo Bianco
+fuori fascia.
 
-### Prima — servono subito all'arena (4)
-
-| creatura | perché | analogo SRD |
-|---|---|---|
-| Traag (proto-draconico) | Completa la famiglia dei draconici, l'unica su cui abbiamo un precedente ufficiale. E' il gradino piu' basso: serve all'arena come avversario iniziale. | sì — Kobold / Goblin |
-| Warrior, Skeleton | Non morto generico di basso livello, il riempitivo classico dell'arena. Ha l'analogo SRD piu' diretto di tutto il roster. | sì — Skeleton |
-| Thanoi (Walrus Man) | Umanoide bestiale di fascia bassa, identitario del nord di Krynn. | sì — Gnoll / Lizardfolk |
-| Kyrie | Umanoidi alati, avversari volanti di fascia bassa: l'arena ha bisogno di bersagli in volo presto. | sì — Harpy / Hippogriff |
-
-### Seconda — riempitivi di fascia bassa e media (11 voci, 17 creature)
+### Prima — servono subito all'arena (2)
 
 | creatura | perché | analogo SRD |
 |---|---|---|
-| Horax | Bestia da branco, utile a riempire incontri senza tattica complessa. | sì — Giant Wasp / Giant Spider |
-| Skrit | Come sopra, fascia bassissima. | sì — Giant Centipede |
-| Wichtlin | Non morto elfico, identitario e di fascia media. | sì — Wight / Specter |
-| Fetch | Non morto mutaforma di fascia media. | sì — Shadow / Ghost |
-| Spectral Minion | Non morto evocato, fascia media. | sì — Specter |
-| Shadowperson | Non morto elfico di fascia media. La voce contiene anche il Revered Ancient One, il suo anziano — quasi tutto `Nil`: non combatte, va convertito come comparsa non nella scheda dell'avversario. | parziale — Shadow / Specter |
-| Avian (Emre, Kingfisher, Skyfisher, 'Wari) | Quattro varianti sotto una sola voce: uccelli o umanoidi alati acquatici di Krynn. Ruolo e taglia esatti non ancora verificati sull'immagine di pagina — segnaposto di fascia bassa. | da verificare — probabile Hawk / Giant Owl |
-| Stag (Wild Stag, Giant Stag) | I due cervi normali della voce Stag: bestie da branco pulite. Il terzo abitante della voce, il Cervo Bianco, e' trattato a parte, fuori fascia — vedi sotto. | sì — Elk / Giant Elk |
-| Lizard Man (Jarak-Sinn, Bakali) | Umanoidi rettili tribali, fascia bassa-media pulita: i jarak-sinn (piu' numerosi) e i bakali, loro progenitori piu' rari. Voce nuova, trovata nella seconda passata. | sì — Lizardfolk |
-| Phaethon | Umanoide alato dei monti, GS basso-medio: alternativa a Kyrie come avversario volante. Voce nuova. | parziale — nessun analogo diretto SRD |
+| Thanoi (Walrus Man) | Umanoide bestiale di fascia bassa, identitario del nord di Krynn. 4 DV, nessuna resistenza fuori scala: confermato di fascia bassa dopo la rilettura. | sì — Gnoll / Lizardfolk |
+| Kyrie | Umanoidi alati, avversari volanti di fascia bassa: l'arena ha bisogno di bersagli in volo presto. 4 DV, 25% di resistenza magica registrata (non applicata, decisione 27 gruppo C) ma non fuori scala per la fascia. | sì — Harpy / Hippogriff |
+
+### Seconda — riempitivi di fascia bassa e media (15 voci, 22 creature)
+
+| creatura | perché | analogo SRD |
+|---|---|---|
+| Ogre (of Krynn) | Ora creatura per decisione 28, mancava del tutto dalla lista delle priorita'. 4+1 DV, nessuna resistenza fuori scala: ogre comune di Krynn, +2 al danno dichiarato dalla fonte. La voce include anche gli Orughi, tribu' separata piu' piccola (M, 4'-5'), stessa fascia. | sì — Ogre SRD |
+| Horax | Bestia da branco, utile a riempire incontri senza tattica complessa. 4 DV, nessuna resistenza. | sì — Giant Wasp / Giant Spider |
+| Skrit | 6 DV, nessuna resistenza fuori scala: fascia bassa-media confermata. | sì — Giant Centipede |
+| Wichtlin | Non morto elfico, identitario e di fascia media. 4+4 DV, colpibile solo da armi magiche (+1 o migliori) e una resistenza magica non quantificata ("See below" nella fonte, da leggere sull'immagine prima di convertire) — non abbastanza per uscire dalla fascia media, ma da tenere presente in conversione. | sì — Wight / Specter |
+| Shadowperson | Non morto elfico di fascia media, 3+1 DV. La CA dichiarata (2 nella scala 2e) e' pero' notevolmente piu' alta di quanto i DV suggeriscano da soli: da verificare in conversione se serve un analogo piu' corazzato di Shadow/Specter. La voce contiene anche il Revered Ancient One, il suo anziano — quasi tutto `Nil`: non combatte, va convertito come comparsa non nella scheda dell'avversario. | parziale — Shadow / Specter, verificare la CA |
+| Avian (Emre, Kingfisher, Skyfisher, 'Wari) | Quattro varianti sotto una sola voce: uccelli o umanoidi alati acquatici di Krynn. Le due lette (Emre 3 DV, Kingfisher 1 DV) sono di fascia bassa pulita; Skyfisher e 'Wari restano da verificare sull'immagine di pagina (colonne perse dall'estrazione). | sì per le due note — probabile Hawk / Giant Owl |
+| Stag (Wild Stag, Giant Stag) | I due cervi normali della voce Stag: 3 e 5 DV, bestie da branco pulite. Il terzo abitante della voce, il Cervo Bianco, e' trattato a parte, fuori fascia — vedi sotto. | sì — Elk / Giant Elk |
+| Lizard Man (Jarak-Sinn, Bakali) | Umanoidi rettili tribali, fascia bassa-media pulita: i jarak-sinn (piu' numerosi, 2+1 DV) e i bakali (2+1 DV), loro progenitori piu' rari. Voce nuova, trovata nella seconda passata. | sì — Lizardfolk |
+| Phaethon | Umanoide alato dei monti, 4 DV, nessuna resistenza: GS basso-medio confermato, alternativa a Kyrie come avversario volante. Voce nuova. | parziale — nessun analogo diretto SRD |
 | Insect Swarm, Grasshopper and Locust | Sciame di insetti, minaccia bassa per individuo, utile come ostacolo/ambientazione in arena. Voce nuova. | sì — Swarm of Insects |
+| Bear, Ice | 6+2 DV, nessuna resistenza fuori scala, analogo pulito: spostata dalla quarta fascia, non e' di nicchia quanto sembrava dal nome. | sì — Polar Bear |
+| Disir | 5 DV, tre attacchi (2d4/2d4/2d6, danno non banale) e resistenza al fuoco: spostata dalla quarta fascia, e' un fante bestiale pulito, non una curiosita' di nicchia. | parziale — Bugbear / Lizardfolk potenziato |
+| Eyewing | 3 DV, nessuna resistenza fuori scala: spostata dalla quarta fascia, troppo semplice per essere "di nicchia". | da verificare — probabile Vulture / Giant Owl |
+| Gurik Cha-ahl | 2 DV, statistiche modeste: spostata dalla quarta fascia, e' un riempitivo bassissimo, non una curiosita'. | no |
+| Kani Doll | 2 DV, CA 10 (nessuna protezione), costrutto che non controlla mai il morale: spostata dalla quarta fascia, filler bassissimo. | parziale — Homunculus |
 
-### Terza — identitari ma senza analogo pulito (11 voci, 12 creature)
+### Terza — identitari ma senza analogo pulito (13 voci, 14 creature)
 
 | creatura | perché | analogo SRD |
 |---|---|---|
-| Dreamshadow | Non morto psichico: identitario ma senza analogo pulito. | no |
-| Dreamwraith | Come sopra, fascia piu' alta. | no |
-| Fireshadow | Creatura elementale di Krynn, nessun analogo diretto. | no |
-| Fire Minion | Come sopra. | parziale — Magmin |
-| Tylor | Mostruosita' grande e identitaria, fascia medio-alta. | parziale — Chimera |
-| Knight, Death | **Il Cavaliere della Morte**: e' Lord Soth, cioe' l'antagonista simbolo del setting. SotDQ ha lo statblock di Soth come PERSONAGGIO, che puo' servire da riferimento ma non e' la scheda di specie. | parziale — Wight / Revenant, ma sottodimensionati |
-| Haunt, Knight | Variante spettrale del precedente. | no |
-| Phaethon, Elder | Variante piu' forte del Phaethon base, con un accenno di resistenza magica (5%): identitario, da comporre insieme al Phaethon. Voce nuova. | no |
+| Dreamshadow | STRUTTURALMENTE DIVERSA DALLE ALTRE: ogni campo della scheda 2e (CA, DV, THAC0, danno, taglia...) e' dichiarato "as creature or person mimicked" — non ha statistiche proprie, le eredita da chi imita. Non si converte come le altre 60: serve un mostro-modello (un pacchetto di regole che copia il bersaglio) piu' che uno statblock fisso. | no — richiede un modello diverso, non un analogo |
+| Dreamwraith | 8 DV, statistiche proprie fisse (a differenza del Dreamshadow gemello): fascia media confermata. | no |
+| Fire Minion | 6 DV, immunita' al fuoco: fascia media confermata, l'analogo proposto resta debole rispetto ai DV reali. | parziale — Magmin, sottodimensionato |
+| Tylor | STRUTTURALMENTE COMPLESSA: la fonte da' una tabella di 6 categorie d'eta' con DV, CA e soffio diversi per ciascuna (da 1d6 DV/CA4 a 5d10 DV/CA-1), sullo stesso modello degli age category dei draghi. Serve piu' di un GS, non uno: da trattare come una mini-famiglia di statblock imparentati, non una singola conversione. | parziale — Chimera, solo per la categoria piu' alta |
+| Knight, Death | **Il Cavaliere della Morte**. CORREZIONE dopo la rilettura: la fonte descrive un TIPO ripetibile ("a Knight of Solamnia, cursed by the gods..."), non un individuo nominato — coerente con la decisione 32 (criterio: nome proprio e storia, non vincolo a un oggetto). "E' Lord Soth" era un'identificazione della sessione precedente, non un dato della voce: la fonte non nomina Soth. Va convertito come CREATURA al suo grado reale (9 DV, 75% di resistenza magica — la seconda piu' alta del bestiario dopo il 90% dello Scheletro Guerriero, correzione al primato che il rapporto attribuiva erroneamente allo Yaggol), non trattato come scheda unica di Soth. SotDQ ha lo statblock di Soth come PERSONAGGIO specifico: resta un riferimento per un'istanza particolarmente potente dello stesso tipo, non la fonte di questa conversione. | parziale — stesso profilo dello Scheletro Guerriero: guardiano d'elite a offesa singola |
+| Haunt, Knight | 8 DV, CA "2 o migliore" (molto protetta), non scacciabile dai chierici Legali Buoni: fascia media-alta confermata, coerente con la collocazione precedente. | no |
+| Phaethon, Elder | Variante piu' forte del Phaethon base (6 DV contro 4), con un accenno di resistenza magica (5%): identitario, da comporre insieme al Phaethon. Voce nuova. | no |
 | Insect Swarm, Velvet Ant | Sciame con veleno e formula di dimensione variabile: meccanica piu' complessa del semplice sciame. Voce nuova. | parziale — Swarm of Insects, senza il veleno |
-| Yaggol | Sotto-razza degenerata dei mind flayer, con kit complesso (sei attacchi piu' un potere psichico) e la resistenza magica piu' alta del bestiario (50%). Identitario e costoso: nessun mostro SRD a GS 1/4-4 replica un mind-flayer minore. | no — Mind Flayer vero e' GS 7, fuori target |
-| Tayling (+ Taylang) | Gemelli telepatici che nascono sempre in coppia: l'intelligente (Tayling) e il bestiale (Taylang). Nessun analogo SRD replica la coppia legata telepaticamente. | no |
+| Yaggol | Sotto-razza degenerata dei mind flayer, con kit complesso (sei attacchi piu' un potere psichico). CORREZIONE: 50% di resistenza magica NON e' la piu' alta del bestiario come diceva il rapporto — lo Scheletro Guerriero ne ha 90%, il Cavaliere della Morte 75%. Resta comunque identitario e costoso: nessun mostro SRD a GS 1/4-4 replica un mind-flayer minore. | no — Mind Flayer vero e' GS 7, fuori target |
+| Tayling (+ Taylang) | Gemelli telepatici che nascono sempre in coppia: l'intelligente (Tayling, 4 DV) e il bestiale (Taylang, 8 DV — fascia media, non bassa: attenzione a non sottostimarlo convertendo la coppia). Nessun analogo SRD replica il legame telepatico. | no |
+| Fetch | SPOSTATA dalla seconda fascia dopo la rilettura: 9 DV (non "fascia media"), drena 2 livelli per colpo andato a segno e resta invisibile a chiunque tranne la vittima designata — un profilo molto piu' pericoloso di quanto "non morto mutaforma di fascia media" suggerisse. Shadow/Ghost (GS 1/2-4) sottostimano sia il drenaggio di livello sia l'invisibilita' mirata. | parziale — Ghost, ma il drenaggio di livello e l'invisibilita' mirata non hanno equivalente pulito a quel grado |
+| Spectral Minion | SPOSTATA dalla seconda fascia: Dadi Vita "Varies", colpibile solo da armi +1 o migliori, 20% di resistenza magica, e SEI varianti nominate con valori di PE diversi (Philosopher/Reveler/Searcher a 975, Guardian/Warrior/Berserker a 1.400) sotto un'unica voce: piu' vicina a una famiglia di sotto-tipi che a un singolo riempitivo. | sì per il profilo generale — Specter |
+| Wyndlass | SPOSTATA dalla quarta fascia ("nicchia") dopo la rilettura: 12 DV, THAC0 9 (molto buono), UNDICI attacchi (dieci tentacoli piu' morso, danno 1-10 per tentacolo) e 5.000 PE — nello stesso ordine di grandezza del Cavaliere della Morte e dello Scheletro Guerriero, non una curiosita' acquatica di basso profilo. | parziale — Hydra per il numero di attacchi, ma senza rigenerazione |
 
-### Quarta — nicchia (12)
+### Quarta — nicchia (5)
 
 | creatura | perché | analogo SRD |
 |---|---|---|
-| Gurik Cha-ahl | Creatura di nicchia. | no |
-| Disir | Creatura di nicchia. | no |
-| Kani Doll | Costrutto di nicchia. | parziale — Homunculus |
-| Shimmerweed | Pianta, nicchia. | parziale — Shrieker |
-| Wyndlass | Creatura acquatica di nicchia. | no |
-| Kalothagh (Prickleback) | Bestia acquatica. | sì — Reef Shark |
-| Anemone, Giant | Bestia acquatica. | parziale |
-| Imp, Blood Sea | Diavoletto locale. | sì — Imp / Quasit |
-| Eyewing | Bestia volante di nicchia. | no |
-| Bear, Ice | Bestia. | sì — Polar Bear |
+| Shimmerweed | 1 punto ferita, immobile, un solo attacco (confusione): a malapena una creatura da combattimento, piu' vicina a un ostacolo ambientale che a un avversario. Resta di nicchia per questo, non perche' sia debole in senso convenzionale. | parziale — Shrieker |
+| Kalothagh (Prickleback) | 4+4 DV, attacco a distanza con aculei: bestia acquatica di nicchia. | sì — Reef Shark |
+| Imp, Blood Sea | 5+3 DV, polimorfismo in forma di nebbia, colpibile solo da armi magiche: leggermente sopra un Imp/Quasit base (3 DV), ma resta di nicchia per ambientazione (oceani tropicali). | sì — Imp / Quasit, leggermente sottodimensionato |
 | Hatori, Lesser | Predatore del deserto a Dadi Vita variabili (1-5): complesso da fissare a un singolo GS, ma il taglio piu' basso rientra nel target. | no |
-| Spider, Giant Trap Door | Ragno imboscatore di taglia Large, 8 DV: sopra la fascia bassa ma non enorme. Voce nuova, trovata nella seconda passata. | parziale — Giant Spider |
+| Spider, Giant Trap Door | Ragno imboscatore di taglia Large, 4+4 DV: sopra la fascia bassa ma non enorme. Voce nuova, trovata nella seconda passata. | parziale — Giant Spider |
 
-### Quinta — fuori target (draghi e alti Dadi Vita), non servono alla Fase 2 (7 voci, 8 creature)
+### Quinta — fuori target (draghi e alti Dadi Vita), non servono alla Fase 2 (9 voci, 10 creature)
 
 | creatura | perché | analogo SRD |
 |---|---|---|
@@ -624,6 +624,8 @@ su **45 voci** nelle cinque fasce, più il Cervo Bianco fuori fascia.
 | Hatori, Greater | Variante adulta dell'Hatori, 6-20 DV: fuori target quanto un drago, serve oltre la Fase 2. Voce nuova. | no |
 | Beast, Undead (Stahnk, Gholor) | 24 Dadi Vita ciascuno (12+12): fuori target quanto un drago. Voce nuova, trovata nella seconda passata — mancava del tutto dal ricontaggio precedente. | no |
 | Spider, Whisper | 16 Dadi Vita (8+8): fuori target quanto un drago. Voce nuova. | no |
+| Anemone, Giant | SPOSTATA dalla quarta fascia ("nicchia"): 16 Dadi Vita, THAC0 5 (fra i migliori del bestiario) e 12.000 PE — piu' del doppio dell'Aurak Draconian (6.000, GS 6), il piu' potente dei cinque ufficiali. "Bestia acquatica" descriveva l'ambiente, non la potenza: e' una delle creature piu' forti dell'intero bestiario. | no — fuori target quanto un drago |
+| Fireshadow | SPOSTATA dalla terza fascia: 13+3 Dadi Vita (circa 16, la stessa soglia dei draghi e degli altri fuori-target), Gargantuan da 30 piedi, evocabile solo da un chierico malvagio di 8° livello o superiore, 11.000 PE — secondo valore piu' alto del bestiario dopo l'Anemone Gigante. Non e' un "identitario da comporre" a fascia media, e' fuori target quanto un drago. | no — fuori target |
 
 ### Fuori fascia — non da arena (1)
 
@@ -632,28 +634,72 @@ su **45 voci** nelle cinque fasce, più il Cervo Bianco fuori fascia.
 
 > **Lettura interpretativa** — registrata il 2026-08-19. Non e' derivata dai dati.
 >
-> **Il criterio è l'arena, non la completezza.** La Fase 2 è un motore di
-> combattimento e ha bisogno di avversari fra GS 1/4 e GS 4, in quantità e con
-> tattiche diverse fra loro. Non ha bisogno di draghi: un drago in arena è una
-> sessione, non un banco di prova. Per questo la quinta fascia, ora che i nomi
-> corrotti sono risolti, contiene solo draghi — compreso il Drago Astrale, che
-> resta un drago anche se il manuale gli dedica due statblock per due stati
-> della stessa specie.
+> **Le fasce sono state ricostruite leggendo i 62 blocchi statistiche, non i
+> nomi delle voci.** La versione precedente aveva scelto la prima fascia (compresi
+> lo Scheletro Guerriero come "riempitivo generico" e l'Anemone Gigante come
+> "nicchia") prima di leggere gli statblock per intero: ha funzionato per la
+> maggioranza delle voci, ma ha sbagliato platealmente su alcune.
 >
-> La prima fascia è scelta così: il **Traag** completa la famiglia dei draconici
-> e quindi si converte con il precedente ufficiale ancora in mano; **Scheletro
-> guerriero**, **Thanoi** e **Kyrie** coprono i tre ruoli che a un'arena servono
-> subito — non morto generico, fante bestiale, avversario volante — e hanno tutti
-> un analogo SRD diretto.
+> **8 voci hanno cambiato fascia** dopo la rilettura, quasi sempre verso l'alto:
 >
-> La terza fascia è quella che costa di più, e va affrontata quando il metodo è
-> rodato: sono creature identitarie senza analogo pulito, dove bisogna comporre.
-> Il **Cavaliere della Morte** è il caso simbolo — è Lord Soth — e ha una
-> particolarità utile: SotDQ ha lo statblock di Soth come personaggio, che serve
-> da riferimento numerico anche se non è la scheda di specie. Lo **Yaggol** è il
-> secondo caso costoso emerso dal ricontaggio: un derivato di mind flayer con
-> kit complesso e la resistenza magica più alta del bestiario, senza analogo
-> SRD nella fascia di grado utile alla Fase 2.
+> - **Anemone Gigante**: quarta fascia ("nicchia") → **quinta** (fuori target).
+>   16 Dadi Vita, THAC0 5, **12.000 PE — più del doppio dell'Aurak Draconian**
+>   (6.000, il più forte dei cinque ufficiali). La sorpresa più grande del
+>   ricontaggio: era classificata come bestia acquatica minore ed è una delle
+>   creature più potenti dell'intero bestiario.
+> - **Fireshadow**: terza fascia → **quinta**. 13+3 DV (≈16, la stessa soglia
+>   degli altri fuori-target), Gargantuan, 11.000 PE — secondo valore più alto
+>   del bestiario.
+> - **Wyndlass**: quarta fascia ("nicchia") → **terza** (identitaria, costosa).
+>   12 DV, THAC0 9, **undici attacchi**, 5.000 PE — stesso ordine di grandezza
+>   del Cavaliere della Morte e dello Scheletro Guerriero, non una curiosità
+>   acquatica.
+> - **Fetch**: seconda fascia → **terza**. 9 DV, drena 2 livelli per colpo,
+>   invisibile a chiunque tranne la vittima designata: molto più pericoloso di
+>   quanto "non morto mutaforma di fascia media" suggerisse.
+> - **Spectral Minion**: seconda fascia → **terza**. Colpibile solo da armi
+>   magiche, sei varianti nominate con PE diversi sotto un'unica voce: una
+>   famiglia di sotto-tipi, non un riempitivo semplice.
+> - **Bear Ice, Disir, Eyewing, Gurik Cha-ahl, Kani Doll**: quarta fascia
+>   ("nicchia") → **seconda**. Nella direzione opposta: erano trattate come
+>   curiosità di nicchia e sono in realtà riempitivi puliti di fascia bassa,
+>   senza nulla di anomalo nella scheda.
+>
+> **2 voci hanno una correzione di lettura, non di fascia:**
+>
+> - **Yaggol**: il rapporto diceva che il suo 50% di resistenza magica fosse il
+>   più alto del bestiario. **Non lo è**: lo Scheletro Guerriero ne ha 90%, il
+>   Cavaliere della Morte 75%. Corretto ovunque compaia.
+> - **Cavaliere della Morte**: la sessione precedente lo identificava con Lord
+>   Soth. La voce dell'Appendice descrive però un **tipo** ("a Knight of
+>   Solamnia, cursed by the gods..."), non un individuo nominato — la fonte non
+>   cita mai Soth. Applicando il criterio della decisione 32 (nome proprio e
+>   storia, non vincolo a un oggetto), il Cavaliere della Morte è una
+>   **creatura**, non un'entità: si converte al suo grado reale come le altre,
+>   e il suo statblock è strutturalmente quasi gemello dello Scheletro
+>   Guerriero (9 DV, THAC0 11, un solo attacco con bonus fisso, resistenza
+>   magica altissima). Lord Soth, se e quando serve come antagonista con nome
+>   proprio, resta un'istanza particolare dello stesso tipo — non la fonte di
+>   questa voce.
+>
+> **2 voci non hanno un singolo grado di sfida**, e vanno segnalate a parte:
+>
+> - **Dreamshadow**: ogni campo della scheda è dichiarato "as creature or
+>   person mimicked" — non ha statistiche proprie. Serve un mostro-modello che
+>   copia il bersaglio, non un analogo SRD.
+> - **Tylor**: sei categorie d'età con Dadi Vita, CA e soffio diversi, sullo
+>   stesso schema degli age category dei draghi. Serve una famiglia di
+>   statblock, non uno.
+>
+> **Il criterio resta l'arena, non la completezza**, e non cambia: la Fase 2 ha
+> bisogno di avversari fra GS 1/4 e GS 4, in quantità e con tattiche diverse. La
+> quinta fascia contiene ora sette voci invece di cinque (Anemone Gigante e
+> Fireshadow si aggiungono ai draghi), e non ne serve nessuna alla Fase 2. La
+> prima fascia scende da quattro creature a **due**: il Traag e lo Scheletro
+> Guerriero sono già convertiti (il secondo al suo vero grado, non a quello
+> presunto), restano **Thanoi** e **Kyrie** come avversari da completare subito
+> — fante bestiale e bersaglio volante, entrambi confermati di fascia bassa
+> dalla rilettura, entrambi con un analogo SRD diretto.
 >
 > Il **Cervo Bianco** resta fuori da tutte e cinque le fasce: non è un
 > avversario, è una creatura sacra unica da incontro narrativo. Forzarlo in una

@@ -188,7 +188,7 @@
         "open_questions": { "type": "array", "items": { "type": "string" } },
         "raw": {
           "type": ["string", "null"],
-          "description": "Il blocco statistiche come appare nel testo estratto, per poter riverificare senza riaprire il PDF."
+          "description": "Il blocco statistiche come appare nel testo estratto, per poter riverificare senza riaprire il PDF. Comodita', non dato: se la trascrizione integrale di una voce (terminologia densa su non morti, anime imprigionate, controllo, ecc.) non si lascia scrivere per via di un filtro automatico che vede solo l'output senza il contesto della lettura e analisi gia' fatta, il campo va OMESSO (null), non riformulato per aggirare il filtro. Al suo posto, una nota in `notes` con il riferimento di voce e pagina basta per la riverifica: fonte, pagina e verified_on_image restano comunque compilati. Vale lo stesso principio per qualunque altro campo che risultasse impossibile da scrivere: si registra l'omissione, non si insiste a forzarla."
         }
       }
     },

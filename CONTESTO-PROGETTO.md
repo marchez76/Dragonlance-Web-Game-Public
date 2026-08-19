@@ -22,7 +22,7 @@
 
 ---
 
-## Le 31 decisioni prese
+## Le 32 decisioni prese
 
 Ordine cronologico. Questa è la storia completa delle scelte: non serve
 ricostruirla dalle sezioni.
@@ -58,6 +58,7 @@ ricostruirla dalle sezioni.
 29. **Il Traag usa armi manufatte** — Segue il precedente ufficiale dei cinque draconici, che sostituiscono sistematicamente le armi naturali con armi manufatte (Baaz spada corta, Bozak tridente, Kapak pugnale, Sivak spada seghettata; solo l'Aurak conserva un attacco naturale). Il Traag riceve una **lancia**, scelta per coerenza con la fonte (tribù povere, non soldati regolari; il testo cita esplicitamente la reach fra i vantaggi di usare un'arma) e marcata `adapted` con provenienza editoriale, non di fonte 2e. Il Multiattacco diventa non ambiguo: due attacchi di lancia, non artigli **o** arma.
 30. **Precedenza fra Tales of the Lance e MC Appendix** — Prima volta che due fonti 2e si contraddicono su un tratto di personaggio giocante: dove **divergono**, prevale **Tales of the Lance**, perché è il capitolo dedicato ai PG mentre l'Appendice descrive la creatura dal punto di vista del Dungeon Master. Il criterio vale solo per la divergenza, non per l'integrazione: dove l'Appendice dichiara qualcosa su cui Tales of the Lance tace, la decisione 18 resta intatta. Applicata ai due casi kender in conflitto (bonus armi da tiro, condizione sulla Sorpresa): entrambi restano registrati come divergenza e non si applicano.
 31. **Soglia degli incantesimi innati dei Dargonesti** — **Opzione C**: tre soglie scalate (3°, 5°, 7°) invece del 10° unico della fonte o di una soglia bassa unica. Il 10° livello 2e non era "tardi" — era metà carriera in un sistema che arrivava al 20° e oltre: copiarlo senza riscalarlo tradisce la sostanza pur conservando la cifra, lo stesso errore già segnalato per i valori XP del bestiario. Concentrare i tre incantesimi in un'unica soglia bassa perderebbe la gradualità che la fonte aveva scelto. Le tre soglie, leggermente più tarde del tiefling PHB 2014 (1°/3°/5°) per conservare lo scarto di "metà carriera" dentro la fascia giocabile, rientrano comunque nella decisione 16: dove la 5e ha già un equivalente per i tratti razziali con incantesimi, si copia quel modello. Il 10° livello della fonte resta intatto in `source_2e`, non riscritto.
+32. **Creatura contro entità nel bestiario** — **Riformulata** dopo un primo tentativo scorretto (che confondeva "legato a un oggetto" con "unico"). Il criterio è: ha un **nome proprio e una storia** → entità (es. il Cavaliere della Morte è, nella tradizione del setting, un individuo particolare — ma la voce dell'Appendice stessa descrive un **tipo** ripetibile, "a Knight of Solamnia, cursed...", non un nome). È un **tipo/procedura ripetibile**, anche se potente e vincolato a un oggetto magico → creatura, si converte come le altre al suo vero grado di sfida. Il Warrior Skeleton (uno stregone lega l'anima di un guerriero potente a un diadema: procedura ripetibile, diademi e guerrieri diversi) è quindi una creatura, non un'entità unica. Il diadema di controllo non va rimandato alla Fase 3: è materiale da arena giocabile (raggio, condizione di perdita, inseguimento a velocità doppia), non colore descrittivo.
 
 ---
 
@@ -511,7 +512,7 @@ disponibile, non estratto.**
 
 ## Il bestiario — diagnostica
 
-Rapporto completo in `dati/RAPPORTO-bestiario.md`. Nulla è stato convertito.
+Rapporto completo in `dati/RAPPORTO-bestiario.md`. **2 creature convertite** in `dati/mostri/` (le altre restano da fare: vedi "Il conteggio vero del bestiario" e "Parte 5" nel rapporto per il numero, che non è ancora definitivo).
 
 **La scheda mostro 2e ha 21 campi**: 2 passano diretti in 5e, 12 vanno
 convertiti, **7 non hanno alcun corrispettivo** — FREQUENCY, ORGANIZATION, ACTIVITY CYCLE, DIET, NO. APPEARING, MAGIC RESISTANCE, MORALE.

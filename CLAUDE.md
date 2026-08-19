@@ -1,7 +1,7 @@
 # Istruzioni di progetto
 
 Contratto di comportamento, non documentazione. Per il progetto vedi
-`CONTESTO-PROGETTO.md` (stato e le 31 decisioni). Se una regola qui sotto
+`CONTESTO-PROGETTO.md` (stato e le 32 decisioni). Se una regola qui sotto
 viene ignorata, il danno è reale, non stilistico.
 
 ## 1. Due repository, e cosa non deve mai uscire
@@ -71,7 +71,7 @@ scansioni in coda e **non tocca git**. Dettaglio in `divisione-del-lavoro.md`.
 
 ## 6. Rimandi
 
-- `CONTESTO-PROGETTO.md` — stato del progetto e le 31 decisioni.
+- `CONTESTO-PROGETTO.md` — stato del progetto e le 32 decisioni.
 - `dati/RAPPORTO-*.md` — diagnostiche generate.
 - `dati/LEGGIMI.md` — struttura dei dati e convenzione delle pagine.
 - `divisione-del-lavoro.md` — chi fa cosa.
