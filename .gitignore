@@ -1,0 +1,119 @@
+# ==========================================================================
+# ESCLUSIONI DEL REPOSITORY PUBBLICO
+#
+# La regola generale e' semplice: qui dentro va cio' che abbiamo SCRITTO NOI —
+# documenti, script, schemi, decisioni. Non va nulla che sia TRASCRIZIONE di
+# un manuale.
+#
+# Le esclusioni sono elencate una per una, con il motivo. Preferisco una lista
+# lunga a una regola breve: cosi' se un giorno una cartella nuova non e'
+# coperta, se ne accorge chi legge invece che nessuno.
+# ==========================================================================
+
+# --------------------------------------------------------------------------
+# FONTI E TESTI ESTRATTI
+# I PDF dei manuali e tutto cio' che ne deriva per estrazione diretta.
+# Marco ne possiede copia fisica: l'uso e' personale, la ridistribuzione no.
+# --------------------------------------------------------------------------
+Manuali/
+Testi/
+Estratti/
+
+# --------------------------------------------------------------------------
+# DATI DI GIOCO
+# Ogni JSON in queste cartelle contiene `source_2e`, che per costruzione e'
+# trascrizione fedele del manuale — requisiti, tabelle di avanzamento, testi
+# delle capacita', statblock. E' la fedelta' che lo rende utile al progetto,
+# ed e' la stessa fedelta' che lo rende non pubblicabile.
+#
+# Lo strato `mechanics_5e` sarebbe nostro, ma vive nello stesso file: non si
+# possono separare senza spezzare lo schema a due strati. Quindi esce tutto.
+# --------------------------------------------------------------------------
+dati/razze/
+dati/classi/
+dati/divinita/
+dati/mostri/
+dati/*.index.json
+
+# Moduli e dati di trascrizione: contengono i testi 2e verbatim.
+dati/_tratti_phb2e.py
+dati/_tratti_mc.py
+dati/_draconici.py
+dati/_fonti/progressioni_2e.json
+dati/_fonti/incantesimi_2e.json
+# Sfere, poteri concessi e scacciare non morti delle 21 divinita', trascritti
+# parola per parola dal capitolo Realms Above.
+dati/_fonti/divinita_2e.json
+
+# Le build che li generano leggono i testi estratti e li incorporano.
+dati/build_razze.py
+dati/build_classi.py
+dati/build_divinita.py
+dati/_strato5e.py
+
+# --------------------------------------------------------------------------
+# MATERIALE ESTERNO
+# Respinto dalla decisione 26 perche' non tracciabile. Non va da nessuna
+# parte, tantomeno in un repository pubblico.
+# --------------------------------------------------------------------------
+import/
+
+# Consultazione 3.5: materiale di terzi, statuto di riscontro.
+riscontro/
+
+# --------------------------------------------------------------------------
+# ALTRO MATERIALE NON NOSTRO
+# --------------------------------------------------------------------------
+Musica/
+
+# Inventario dei PDF posseduti: e' l'indice della libreria privata, sta con
+# lei e non qui.
+inventario_manuali.tsv
+
+# --------------------------------------------------------------------------
+# IL SECONDO REPOSITORY
+# .git-private/ e' un secondo repository git (dati/ con source_2e) che vive
+# nella stessa cartella di lavoro. Senza questa esclusione un `git add -A`
+# nel pubblico ne traccia gli interni — index, HEAD, oggetti — dentro la
+# cronologia pubblica. E' successo una volta: la correzione e' qui.
+# --------------------------------------------------------------------------
+.git-private/
+
+# --------------------------------------------------------------------------
+# STATO DI LAVORO E TEMPORANEI
+# --------------------------------------------------------------------------
+.colstep_state/
+.ocr_state/
+ocr_queue.txt
+__pycache__/
+*.pyc
+.DS_Store
+*.tmp
+*.part
+
+# --------------------------------------------------------------------------
+# ECCEZIONI — file che restano NONOSTANTE le regole sopra.
+# Sono nostri o derivano dall'SRD 5.1, che e' CC-BY e ridistribuibile con
+# attribuzione (vedi LICENSE-SRD.md).
+# --------------------------------------------------------------------------
+!dati/schema/
+!dati/schema/*.json
+!dati/_srd51.py
+!dati/_sfere_5e.py
+!dati/_fonti/srd51_mostri.py
+!dati/_chassis_5e.py
+!dati/_campi_2e.py
+!dati/_criterio_fonti.py
+!dati/_divergenze_sotdq.py
+!dati/_nomi_verificati.py
+!dati/_bestiario_mc.py
+!dati/analizza_classi.py
+!dati/analizza_bestiario.py
+!dati/confronta_mostri.py
+!dati/verifica_sfere.py
+!dati/valida.py
+!dati/valida_classi.py
+!dati/valida_divinita.py
+!dati/valida_mostri.py
+!dati/RAPPORTO-*.md
+!dati/DOSSIER-*.md

@@ -1,0 +1,195 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dragonlance-gdr.local/schema/razza.schema.json",
+  "title": "Razza di Krynn",
+  "description": "Schema a doppio strato. `source_2e` contiene i dati grezzi fedeli al manuale sorgente e non va modificato se non correggendo errori di trascrizione. `mechanics_5e` contiene la conversione, rivedibile liberamente senza rileggere i PDF.",
+  "type": "object",
+  "required": ["id", "name", "category", "source", "valid_eras", "source_2e", "mechanics_5e"],
+  "additionalProperties": false,
+
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "Identificatore stabile, usato come chiave nel DB e nelle URL."
+    },
+    "name": {
+      "type": "object",
+      "required": ["en", "it"],
+      "additionalProperties": false,
+      "properties": {
+        "en": { "type": "string" },
+        "it": { "type": "string" }
+      }
+    },
+    "epithet": {
+      "type": ["string", "null"],
+      "description": "Epiteto dato dal manuale, es. \"Children of the World\" per i Kender."
+    },
+    "category": {
+      "enum": ["human", "demihuman", "humanoid"],
+      "description": "Classificazione AD&D 2e usata dal manuale."
+    },
+    "parent": {
+      "type": ["string", "null"],
+      "description": "id della razza padre se questa è una sottorazza (es. elfo-silvanesti -> elfo)."
+    },
+    "playable": {
+      "type": "boolean",
+      "description": "false per i gruppi che Tales of the Lance riserva esplicitamente ai PNG."
+    },
+
+    "source": {
+      "type": "object",
+      "required": ["source_edition", "source_book", "homebrew_conversion"],
+      "additionalProperties": false,
+      "properties": {
+        "source_edition": {
+          "enum": ["2e", "3.5e", "5e", "5e-SotDQ", "SAGA", "homebrew"]
+        },
+        "source_book": { "type": "string" },
+        "pages_pdf": {
+          "type": "array",
+          "items": { "type": "integer", "minimum": 0 },
+          "description": "Indici di pagina 0-based nel PDF sorgente, per poter risalire al testo originale."
+        },
+        "homebrew_conversion": {
+          "type": "boolean",
+          "description": "true se i dati sono stati ricostruiti o adattati a mano invece che letti dal manuale."
+        }
+      }
+    },
+
+    "valid_eras": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "pre_cataclysm",
+          "age_of_despair",
+          "war_of_lance",
+          "age_of_mortals_post_chaos",
+          "post_war_of_souls"
+        ]
+      },
+      "description": "STRATO EDITORIALE, non presente nel manuale sorgente. Tales of the Lance è ambientato alla Guerra della Lancia e non ragiona per epoche: questi valori sono una nostra inferenza dal canone e vanno rivisti quando arriveranno le fonti 3.5e."
+    },
+
+    "source_2e": {
+      "type": "object",
+      "description": "Dati grezzi AD&D 2e, fedeli al manuale.",
+      "required": ["ability_requirements"],
+      "additionalProperties": false,
+      "properties": {
+        "ability_generation": {
+          "type": ["object", "null"],
+          "description": "Metodo di tiro non standard, quando il manuale ne impone uno (es. Aghar, Kender). null = 3d6 standard.",
+          "additionalProperties": { "type": "string" }
+        },
+        "ability_adjustments": {
+          "type": "object",
+          "description": "Modificatori fissi applicati dopo il tiro.",
+          "additionalProperties": { "type": "integer" }
+        },
+        "ability_requirements": {
+          "type": "object",
+          "required": ["str", "dex", "con", "int", "wis", "cha"],
+          "additionalProperties": false,
+          "patternProperties": {
+            "^(str|dex|con|int|wis|cha)$": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "min": { "type": ["integer", "null"] },
+                "max": { "type": ["integer", "null"] }
+              }
+            }
+          }
+        },
+        "physical": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "height_in": {
+              "type": "object",
+              "additionalProperties": { "type": ["string", "null"] },
+              "description": "Formula di dado in pollici, per genere. Es. \"2d8+36\"."
+            },
+            "weight_lb": {
+              "type": "object",
+              "additionalProperties": { "type": ["string", "null"] }
+            },
+            "age": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "adult_at": { "type": ["integer", "null"] },
+                "max_formula": { "type": ["string", "null"] },
+                "max_typical": { "type": ["integer", "null"] }
+              }
+            }
+          }
+        },
+        "infravision_ft": {
+          "type": ["integer", "null"],
+          "description": "null = non specificato dal manuale per questa razza."
+        },
+        "languages_start": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "class_level_limits": {
+          "type": "array",
+          "description": "Dalla tabella Class/Race Combinations. Una classe assente dalla tabella non è disponibile per quella razza.",
+          "items": {
+            "type": "object",
+            "required": ["group", "class", "limit"],
+            "additionalProperties": false,
+            "properties": {
+              "group": { "enum": ["Warrior", "Wizard", "Priest", "Rogue", "Normal"] },
+              "class": { "type": "string" },
+              "limit": {
+                "type": ["integer", "null"],
+                "description": "null = illimitato (nel manuale è reso con un trattino)."
+              },
+              "note": { "type": ["string", "null"] }
+            }
+          }
+        },
+        "special_abilities": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "text"],
+            "additionalProperties": false,
+            "properties": {
+              "name": { "type": "string" },
+              "text": { "type": "string" }
+            }
+          }
+        },
+        "proficiencies_common": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "phb_baseline": {
+          "type": ["string", "null"],
+          "description": "Quando il manuale rimanda al Player's Handbook 2e invece di ripetere i tratti (\"hanno tutte le abilità speciali degli elfi elencate nel PHB\")."
+        },
+        "notes": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "open_questions": {
+          "type": "array",
+          "description": "Contraddizioni o ambiguità del manuale sorgente, da risolvere prima della conversione.",
+          "items": { "type": "string" }
+        }
+      }
+    },
+
+    "mechanics_5e": {
+      "type": ["object", "null"],
+      "description": "null finché la conversione non è stata fatta. Da compilare quando saranno disponibili PHB 5e e Shadow of the Dragon Queen."
+    }
+  }
+}

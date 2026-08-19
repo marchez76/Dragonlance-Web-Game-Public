@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dragonlance-gdr.local/schema/divinita.schema.json",
+  "title": "Divinità di Krynn",
+  "description": "Stesso doppio strato di razza e classe. Le 21 vere divinità più l'Alto Dio.",
+  "type": "object",
+  "required": ["id", "name", "family", "rank", "source", "valid_eras", "source_2e", "mechanics_5e"],
+  "additionalProperties": false,
+
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+    "name": {
+      "type": "object",
+      "required": ["en"],
+      "additionalProperties": false,
+      "properties": {
+        "en": { "type": "string" },
+        "epithet": { "type": ["string", "null"], "description": "Epiteto del manuale, es. \"the Dragon's Lord\"." },
+        "aliases": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Nomi con cui la divinità è conosciuta nelle diverse culture di Krynn."
+        }
+      }
+    },
+    "family": {
+      "enum": ["good", "evil", "neutral"],
+      "description": "Famiglia celeste. Sette divinità per famiglia, ventuno in tutto, sovrintese dall'Alto Dio."
+    },
+    "rank": {
+      "enum": ["greater", "intermediate", "lesser"],
+      "description": "Classificazione secondo il sistema di Legends & Lore."
+    },
+    "holy_order": {
+      "enum": ["Order of Good", "Order of Evil", "Order of Neutrality"],
+      "description": "Ordine Sacro delle Stelle a cui appartengono i suoi sacerdoti."
+    },
+
+    "source": {
+      "type": "object",
+      "required": ["source_edition", "source_book", "homebrew_conversion"],
+      "additionalProperties": false,
+      "properties": {
+        "source_edition": { "enum": ["2e", "3.5e", "5e", "5e-SotDQ", "SAGA", "homebrew"] },
+        "source_book": { "type": "string" },
+        "pages_pdf": { "type": "array", "items": { "type": "integer", "minimum": 0 } },
+        "homebrew_conversion": { "type": "boolean" }
+      }
+    },
+
+    "valid_eras": {
+      "type": "array",
+      "items": {
+        "enum": ["pre_cataclysm", "age_of_despair", "war_of_lance", "age_of_mortals_post_chaos", "post_war_of_souls"]
+      },
+      "description": "STRATO EDITORIALE. Le divinità esistono sempre, ma non sempre concedono poteri: nell'Era della Disperazione e dopo la Guerra del Caos si ritirano. Qui si intende: epoche in cui la divinità concede incantesimi ai propri sacerdoti."
+    },
+
+    "source_2e": {
+      "type": "object",
+      "required": ["spheres"],
+      "additionalProperties": false,
+      "properties": {
+        "priest_alignment": {
+          "type": ["string", "null"],
+          "description": "Sigla PAL del manuale: allineamento consentito ai sacerdoti."
+        },
+        "worshipper_alignment": {
+          "type": ["string", "null"],
+          "description": "Sigla WAL: allineamento dei fedeli. Alcune voci danno questa invece di PAL."
+        },
+        "ability_requirements": { "type": ["string", "null"], "description": "Sigla AB." },
+        "weapons": { "type": ["string", "null"], "description": "Sigla WP/WPN." },
+        "armor": { "type": ["string", "null"], "description": "Sigla AR." },
+        "spheres": {
+          "type": "array",
+          "description": "Sigla SP, scomposta. L'asterisco nel manuale indica accesso minore.",
+          "items": {
+            "type": "object",
+            "required": ["name", "access"],
+            "additionalProperties": false,
+            "properties": {
+              "name": { "type": "string" },
+              "access": { "enum": ["major", "minor"] },
+              "note": { "type": ["string", "null"] }
+            }
+          }
+        },
+        "extra_spells": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Incantesimi concessi in aggiunta alle sfere (\"plus prayer, remove/bestow curse\")."
+        },
+        "granted_powers": { "type": ["string", "null"], "description": "Sigla PW." },
+        "turn_undead": { "type": ["string", "null"], "description": "Sigla TU." },
+        "raw": { "type": ["string", "null"], "description": "Blocco Requirements originale, per la verifica." },
+        "notes": { "type": "array", "items": { "type": "string" } },
+        "open_questions": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+
+    "mechanics_5e": { "type": ["object", "null"] }
+  }
+}

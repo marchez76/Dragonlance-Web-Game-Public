@@ -1,0 +1,165 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dragonlance-gdr.local/schema/classe.schema.json",
+  "title": "Classe di Krynn",
+  "description": "Stesso doppio strato dello schema della razza. `source_2e` contiene i dati grezzi fedeli al manuale, `mechanics_5e` la conversione.",
+  "type": "object",
+  "required": ["id", "name", "group", "source", "valid_eras", "source_2e", "mechanics_5e"],
+  "additionalProperties": false,
+
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+    "name": {
+      "type": "object",
+      "required": ["en", "it"],
+      "additionalProperties": false,
+      "properties": { "en": { "type": "string" }, "it": { "type": "string" } }
+    },
+    "group": {
+      "enum": ["Warrior", "Wizard", "Priest", "Rogue", "Normal"],
+      "description": "Gruppo di classe AD&D 2e. Coincide con il campo `group` in class_level_limits delle razze."
+    },
+    "order": {
+      "type": ["string", "null"],
+      "description": "Ordine di appartenenza per le classi che ne hanno uno: cavaliere-solamnia, alta-stregoneria, ordini-sacri."
+    },
+    "tier": {
+      "type": ["integer", "null"],
+      "description": "Posizione nella sequenza di un ordine a gradi. Corona=1, Spada=2, Rosa=3. null se la classe non è a gradi."
+    },
+    "requires_class": {
+      "type": ["string", "null"],
+      "description": "id della classe che va posseduta prima di poter accedere a questa (sequenzialità obbligata degli ordini cavallereschi)."
+    },
+
+    "source": {
+      "type": "object",
+      "required": ["source_edition", "source_book", "homebrew_conversion"],
+      "additionalProperties": false,
+      "properties": {
+        "source_edition": { "enum": ["2e", "3.5e", "5e", "5e-SotDQ", "SAGA", "homebrew"] },
+        "source_book": { "type": "string" },
+        "pages_pdf": { "type": "array", "items": { "type": "integer", "minimum": 0 } },
+        "homebrew_conversion": { "type": "boolean" }
+      }
+    },
+
+    "valid_eras": {
+      "type": "array",
+      "items": {
+        "enum": ["pre_cataclysm", "age_of_despair", "war_of_lance", "age_of_mortals_post_chaos", "post_war_of_souls"]
+      },
+      "description": "STRATO EDITORIALE, non presente nel manuale. Le classi da incantatore divino sono le più vincolate: gli Ordini Sacri non esistono in age_of_despair."
+    },
+
+    "source_2e": {
+      "type": "object",
+      "required": ["ability_minimums"],
+      "additionalProperties": false,
+      "properties": {
+        "ability_minimums": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Solo le caratteristiche con un minimo dichiarato. Una caratteristica assente non ha requisito.",
+          "patternProperties": {
+            "^(str|dex|con|int|wis|cha)$": { "type": "integer", "minimum": 1, "maximum": 25 }
+          }
+        },
+        "xp_bonus": {
+          "type": ["object", "null"],
+          "additionalProperties": false,
+          "description": "Bonus percentuale ai PE per caratteristica elevata.",
+          "properties": {
+            "ability": { "enum": ["str", "dex", "con", "int", "wis", "cha"] },
+            "threshold": { "type": "integer" },
+            "percent": { "type": "integer" }
+          }
+        },
+        "entry_level": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Livello a cui si entra nella classe. 1 per la maggior parte; 3 per il Cavaliere della Spada, 4 per quello della Rosa."
+        },
+        "hit_die": { "type": ["string", "null"], "description": "es. \"d10\", \"1d4\", \"1d8\"." },
+        "alignment_restriction": { "type": ["string", "null"] },
+        "race_restriction": {
+          "type": ["array", "null"],
+          "items": { "type": "string" },
+          "description": "id di razza ammessi. null = nessuna restrizione oltre ai class_level_limits delle razze."
+        },
+        "social_class_minimum": { "type": ["string", "null"] },
+
+        "progression": {
+          "type": "array",
+          "description": "Tabella di avanzamento del manuale, estratta programmaticamente e verificata sull'immagine.",
+          "items": {
+            "type": "object",
+            "required": ["level", "xp", "hit_dice"],
+            "additionalProperties": false,
+            "properties": {
+              "level": { "type": "integer" },
+              "xp": { "type": "integer", "minimum": 0 },
+              "hit_dice": { "type": "string", "description": "\"7\" oppure \"10+4\": dopo il 10° livello si sommano PF fissi." },
+              "title": { "type": ["string", "null"] }
+            }
+          }
+        },
+        "spell_progression": {
+          "type": ["object", "null"],
+          "description": "Chiave = livello di classe, valore = array di incantesimi per livello di incantesimo (indice 0 = 1° livello).",
+          "additionalProperties": {
+            "type": "array",
+            "items": { "type": "integer", "minimum": 0 }
+          }
+        },
+
+        "weapon_proficiencies": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "required": { "type": "array", "items": { "type": "string" } },
+            "recommended": { "type": "array", "items": { "type": "string" } }
+          }
+        },
+        "nonweapon_proficiencies": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "bonus": { "type": "array", "items": { "type": "string" } },
+            "required": { "type": "array", "items": { "type": "string" } },
+            "recommended": { "type": "array", "items": { "type": "string" } }
+          }
+        },
+        "allowed_schools": {
+          "type": ["array", "null"],
+          "items": { "type": "string" },
+          "description": "Scuole di magia consentite. Rilevante per le tre vesti dell'Alta Stregoneria."
+        },
+        "special_benefits": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "text"],
+            "additionalProperties": false,
+            "properties": { "name": { "type": "string" }, "text": { "type": "string" } }
+          }
+        },
+        "special_hindrances": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "text"],
+            "additionalProperties": false,
+            "properties": { "name": { "type": "string" }, "text": { "type": "string" } }
+          }
+        },
+        "starting_wealth": { "type": ["string", "null"], "description": "Formula in pezzi d'acciaio (stl)." },
+        "equipment_rules": { "type": "array", "items": { "type": "string" } },
+        "notes": { "type": "array", "items": { "type": "string" } },
+        "open_questions": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+
+    "mechanics_5e": { "type": ["object", "null"] }
+  }
+}

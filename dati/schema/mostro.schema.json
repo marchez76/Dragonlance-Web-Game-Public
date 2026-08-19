@@ -1,0 +1,379 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dragonlance-gdr.local/schema/mostro.schema.json",
+  "title": "Mostro di Krynn",
+  "description": "Schema a doppio strato, come razza e classe. `source_2e` accoglie TUTTI i 21 campi della scheda dell'MC Dragonlance Appendix, compresi i sette che in 5e non hanno corrispettivo: e' trascrizione fedele e immutabile. `mechanics_5e` ha la forma di uno statblock 5e, ogni elemento con il proprio stato di conversione e la propria provenienza. Due campi non esistevano negli altri schemi: `ruolo`, che serve alla conversione per analogia e all'IA di combattimento, e `morale_2e`, che la decisione 27 destina al comportamento in arena invece che allo statblock.",
+  "type": "object",
+  "required": ["id", "name", "ruolo", "source", "source_2e", "mechanics_5e"],
+  "additionalProperties": false,
+
+  "$defs": {
+    "conversion_status": {
+      "enum": ["direct", "adapted", "pending", "source_only"],
+      "description": "direct: il 5e ha gia' un equivalente e si copia quello. adapted: convertito da noi con una scelta di forma. pending: da convertire, la meccanica 5e non e' ancora decisa. source_only: registrato dalla fonte ma senza effetto in 5e, per scelta motivata."
+    },
+    "provenienza": {
+      "enum": [
+        "MC - Dragonlance Appendix",
+        "Tales of the Lance",
+        "SotDQ (ufficiale 5e)",
+        "SRD 5.1",
+        "conversione editoriale nostra"
+      ],
+      "description": "Gli stessi valori usati per i tratti razziali, adattati al bestiario. `SRD 5.1` compare quando un elemento e' preso da una creatura SRD per analogia (parte 4 di RAPPORTO-bestiario.md)."
+    },
+    "elemento_5e": {
+      "type": "object",
+      "required": ["name", "conversion_status", "source"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string" },
+        "text_2e": {
+          "type": ["string", "null"],
+          "description": "Il testo della fonte da cui questo elemento deriva, quando esiste."
+        },
+        "mechanics_5e": {
+          "type": ["string", "null"],
+          "description": "La forma 5e. null quando lo stato e' `pending` o `source_only`."
+        },
+        "conversion_status": { "$ref": "#/$defs/conversion_status" },
+        "source": { "$ref": "#/$defs/provenienza" },
+        "analogo_srd": {
+          "type": ["string", "null"],
+          "description": "Creatura SRD 5.1 usata come termine di paragone, se la conversione e' avvenuta per analogia."
+        },
+        "note": { "type": ["string", "null"] },
+        "editorial": {
+          "type": "boolean",
+          "default": false,
+          "description": "true se l'elemento e' una nostra invenzione e non viene da alcuna fonte."
+        },
+        "provisional": {
+          "type": ["string", "null"],
+          "description": "Motivo per cui la conversione va riverificata quando arriva una fonte mancante."
+        }
+      }
+    }
+  },
+
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+    "name": {
+      "type": "object",
+      "required": ["en", "it"],
+      "additionalProperties": false,
+      "properties": {
+        "en": { "type": "string" },
+        "it": { "type": "string" },
+        "variante_di": {
+          "type": ["string", "null"],
+          "description": "Alcune voci dell'MC Appendix contengono piu' creature nello stesso blocco, su colonne affiancate: `Man (of Krynn)` ne ha quattro, `Tayling` e `Shadowperson` due ciascuna. Ogni variante diventa un mostro a se' e cita qui la voce da cui viene."
+        }
+      }
+    },
+
+    "ruolo": {
+      "enum": ["fante", "bruto", "incantatore", "assassino", "comandante",
+               "bestia", "sciame", "artiglieria", "supporto", "non-combattente"],
+      "description": "Come si comporta in combattimento. Serve a due cose: scegliere l'analogo SRD nella conversione per analogia, e guidare l'IA del mostro nell'arena di Fase 2. NON e' un dato di fonte: e' una nostra classificazione, e va letta come tale."
+    },
+    "ruolo_note": {
+      "type": ["string", "null"],
+      "description": "Perche' e' stato assegnato quel ruolo, se non e' ovvio. Obbligatorio quando il ruolo 5e diverge da quello 2e: e' il caso del Kapak, che in 2e era un assassino con un attacco debole e in 5e e' un duellante avvelenatore."
+    },
+    "ruolo_2e": {
+      "type": ["string", "null"],
+      "description": "Il ruolo che la creatura aveva secondo la fonte 2e, quando diverge da quello 5e. Registrarlo e' il modo di rendere visibile un cambio d'asse invece di nasconderlo dentro i numeri."
+    },
+
+    "source": {
+      "type": "object",
+      "required": ["source_edition", "source_book", "pages_pdf"],
+      "additionalProperties": false,
+      "properties": {
+        "source_edition": { "const": "2e" },
+        "source_book": { "type": "string" },
+        "pages_pdf": { "type": "array", "items": { "type": "integer" } },
+        "pages_printed": { "type": "array", "items": { "type": "integer" } },
+        "verified_on_image": {
+          "type": "boolean",
+          "default": false,
+          "description": "true se la voce e' stata riletta sull'immagine di pagina, non solo sul testo estratto. Serve per le voci che l'estrazione a colonne ha corrotto."
+        }
+      }
+    },
+
+    "valid_eras": {
+      "type": ["array", "null"],
+      "items": {
+        "enum": ["pre_cataclysm", "age_of_despair", "war_of_lance",
+                 "age_of_mortals_post_chaos", "post_war_of_souls"]
+      },
+      "description": "Strato editoriale nostro, non dato di fonte (decisione 12)."
+    },
+
+    "source_2e": {
+      "type": "object",
+      "description": "Tutti e 21 i campi della scheda dell'MC Appendix, nell'ordine di stampa. Trascrizione fedele: non si normalizza, non si corregge, non si omette. I sette campi senza corrispettivo 5e stanno qui come tutti gli altri (decisione 27).",
+      "required": [
+        "climate_terrain", "frequency", "organization", "activity_cycle",
+        "diet", "intelligence", "treasure", "alignment", "no_appearing",
+        "armor_class", "movement", "hit_dice", "thac0", "no_of_attacks",
+        "damage_per_attack", "special_attacks", "special_defenses",
+        "magic_resistance", "size", "morale", "xp_value"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "climate_terrain": { "type": "string" },
+        "frequency": {
+          "type": "string",
+          "description": "GRUPPO A della decisione 27: dato di mondo. Resta qui e alimenta il generatore di incontri in Fase 3."
+        },
+        "organization": { "type": "string", "description": "Gruppo A." },
+        "activity_cycle": { "type": "string", "description": "Gruppo A." },
+        "diet": { "type": "string", "description": "Gruppo A." },
+        "intelligence": {
+          "type": "string",
+          "description": "Scala descrittiva 2e con intervallo, es. \"Average (8-10)\"."
+        },
+        "treasure": { "type": "string" },
+        "alignment": { "type": "string" },
+        "no_appearing": { "type": "string", "description": "Gruppo A." },
+        "armor_class": {
+          "type": "integer",
+          "description": "Scala DISCENDENTE della 2e: piu' basso e' meglio protetto."
+        },
+        "armor_class_note": { "type": ["string", "null"] },
+        "movement": { "type": "string" },
+        "hit_dice": { "type": "string" },
+        "thac0": { "type": "integer" },
+        "no_of_attacks": { "type": "string" },
+        "damage_per_attack": { "type": "string" },
+        "special_attacks": { "type": "string" },
+        "special_defenses": { "type": "string" },
+        "magic_resistance": {
+          "type": "string",
+          "description": "GRUPPO C della decisione 27: RINVIATO. Il valore percentuale resta qui e non si converte finche' l'arena non dira' se i draconici senza resistenza risultano troppo fragili."
+        },
+        "size": { "type": "string" },
+        "morale": {
+          "type": "string",
+          "description": "GRUPPO B della decisione 27: non e' un campo di scheda ma un parametro di comportamento. Il valore resta qui e viene letto da `mechanics_5e.morale_2e`."
+        },
+        "xp_value": {
+          "type": ["integer", "null"],
+          "description": "Calcolato con la formula 2e. NON va copiato nei PE della 5e, che derivano dal Grado di Sfida e non viceversa."
+        },
+        "abilities_text": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Le sezioni Combat, Habitat/Society ed Ecology, per le parti che contengono meccanica."
+        },
+        "death_effect": {
+          "type": ["string", "null"],
+          "description": "Estratto a parte perche' e' la firma dei draconici e di molti mostri di Krynn."
+        },
+        "notes": { "type": "array", "items": { "type": "string" } },
+        "open_questions": { "type": "array", "items": { "type": "string" } },
+        "raw": {
+          "type": ["string", "null"],
+          "description": "Il blocco statistiche come appare nel testo estratto, per poter riverificare senza riaprire il PDF."
+        }
+      }
+    },
+
+    "mechanics_5e": {
+      "type": "object",
+      "description": "Statblock 5e. Ogni elemento porta stato di conversione e provenienza.",
+      "required": ["conversion_status", "size", "type", "alignment",
+                   "armor_class", "hit_points", "speed", "abilities",
+                   "challenge_rating", "traits", "actions"],
+      "additionalProperties": false,
+      "properties": {
+        "conversion_status": {
+          "enum": ["da_compilare", "in_corso", "compilato"],
+          "description": "Stato della scheda nel suo insieme."
+        },
+        "size": { "enum": ["Tiny", "Small", "Medium", "Large", "Huge", "Gargantuan"] },
+        "type": { "type": "string" },
+        "subtype": { "type": ["string", "null"] },
+        "alignment": { "type": "string" },
+
+        "armor_class": {
+          "type": "object",
+          "required": ["value", "conversion_status", "source"],
+          "additionalProperties": false,
+          "properties": {
+            "value": { "type": "integer", "description": "Scala ASCENDENTE della 5e." },
+            "from": { "type": ["string", "null"] },
+            "ac_2e": { "type": ["integer", "null"] },
+            "conversion_status": { "$ref": "#/$defs/conversion_status" },
+            "source": { "$ref": "#/$defs/provenienza" },
+            "analogo_srd": { "type": ["string", "null"] },
+            "note": { "type": ["string", "null"] }
+          }
+        },
+        "hit_points": {
+          "type": "object",
+          "required": ["average", "formula", "conversion_status", "source"],
+          "additionalProperties": false,
+          "properties": {
+            "average": { "type": "integer" },
+            "formula": { "type": "string", "description": "Es. \"4d8 + 4\"." },
+            "hd_2e": { "type": ["string", "null"] },
+            "conversion_status": { "$ref": "#/$defs/conversion_status" },
+            "source": { "$ref": "#/$defs/provenienza" },
+            "analogo_srd": { "type": ["string", "null"] },
+            "note": { "type": ["string", "null"] }
+          }
+        },
+        "speed": {
+          "type": "object",
+          "required": ["walk"],
+          "additionalProperties": false,
+          "properties": {
+            "walk": { "type": "integer" },
+            "fly": { "type": ["integer", "null"] },
+            "swim": { "type": ["integer", "null"] },
+            "climb": { "type": ["integer", "null"] },
+            "burrow": { "type": ["integer", "null"] },
+            "hover": { "type": "boolean", "default": false },
+            "movement_2e": { "type": ["string", "null"] },
+            "note": { "type": ["string", "null"] }
+          }
+        },
+
+        "abilities": {
+          "type": "object",
+          "required": ["str", "dex", "con", "int", "wis", "cha"],
+          "additionalProperties": false,
+          "properties": {
+            "str": { "type": "integer", "minimum": 1, "maximum": 30 },
+            "dex": { "type": "integer", "minimum": 1, "maximum": 30 },
+            "con": { "type": "integer", "minimum": 1, "maximum": 30 },
+            "int": { "type": "integer", "minimum": 1, "maximum": 30 },
+            "wis": { "type": "integer", "minimum": 1, "maximum": 30 },
+            "cha": { "type": "integer", "minimum": 1, "maximum": 30 }
+          }
+        },
+        "abilities_note": {
+          "type": ["string", "null"],
+          "description": "La 2e non dava le sei caratteristiche ai mostri: quando non ci sono nella fonte, qui va detto come sono state ricavate."
+        },
+
+        "saving_throws": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "proficient": {
+              "type": "array",
+              "items": { "enum": ["str", "dex", "con", "int", "wis", "cha"] }
+            },
+            "note": { "type": ["string", "null"] }
+          }
+        },
+        "skills": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "bonus"],
+            "additionalProperties": false,
+            "properties": {
+              "name": { "type": "string" },
+              "bonus": { "type": "integer" },
+              "from_2e": {
+                "type": ["string", "null"],
+                "description": "Le percentuali da ladro della 2e diventano bonus di abilita': qui la percentuale originale."
+              }
+            }
+          }
+        },
+        "damage_resistances": { "type": "array", "items": { "type": "string" } },
+        "damage_immunities": { "type": "array", "items": { "type": "string" } },
+        "damage_vulnerabilities": { "type": "array", "items": { "type": "string" } },
+        "condition_immunities": { "type": "array", "items": { "type": "string" } },
+        "senses": { "type": "array", "items": { "type": "string" } },
+        "passive_perception": { "type": ["integer", "null"] },
+        "languages": { "type": "array", "items": { "type": "string" } },
+
+        "challenge_rating": {
+          "type": "object",
+          "required": ["value", "xp", "conversion_status", "source"],
+          "additionalProperties": false,
+          "properties": {
+            "value": { "type": "string", "description": "Es. \"1/2\", \"3\"." },
+            "xp": { "type": "integer" },
+            "proficiency_bonus": { "type": "integer" },
+            "conversion_status": { "$ref": "#/$defs/conversion_status" },
+            "source": { "$ref": "#/$defs/provenienza" },
+            "analogo_srd": { "type": ["string", "null"] },
+            "note": {
+              "type": ["string", "null"],
+              "description": "In 5e il GS e' la media fra componente difensiva e offensiva. Quando una creatura sta sotto la mediana difensiva del proprio grado e ci arriva col danno, va detto qui: e' il caso del Kapak."
+            }
+          }
+        },
+
+        "traits": { "type": "array", "items": { "$ref": "#/$defs/elemento_5e" } },
+        "actions": { "type": "array", "items": { "$ref": "#/$defs/elemento_5e" } },
+        "bonus_actions": { "type": "array", "items": { "$ref": "#/$defs/elemento_5e" } },
+        "reactions": { "type": "array", "items": { "$ref": "#/$defs/elemento_5e" } },
+        "legendary_actions": { "type": "array", "items": { "$ref": "#/$defs/elemento_5e" } },
+
+        "morale_2e": {
+          "type": "object",
+          "description": "DECISIONE 27, GRUPPO B. Il morale non entra nello statblock ma non si butta: in un gioco in solitario il DM e' il motore, e senza morale ogni scontro finisce con tutti i nemici morti fino all'ultimo. Questo blocco e' l'input dell'IA del mostro in Fase 2.",
+          "required": ["value", "label", "destinazione"],
+          "additionalProperties": false,
+          "properties": {
+            "value": { "type": "integer", "minimum": 2, "maximum": 20 },
+            "label": {
+              "type": "string",
+              "description": "L'etichetta della fonte, es. \"Elite (13)\", \"Champion (15)\"."
+            },
+            "destinazione": {
+              "const": "ia_combattimento",
+              "description": "Marcatore esplicito: questo dato non e' meccanica di scheda."
+            },
+            "note": { "type": ["string", "null"] }
+          }
+        },
+
+        "magic_resistance_2e": {
+          "type": ["object", "null"],
+          "description": "DECISIONE 27, GRUPPO C. RINVIATA alla Fase 2. Il valore resta registrato ma non e' convertito: i Gradi di Sfida su cui stiamo calibrando presuppongono che la resistenza magica non ci sia, e il 20% della 2e negava l'incantesimo del tutto mentre il tratto 5e piu' vicino da' solo vantaggio ai tiri salvezza. Non sono equivalenti.",
+          "required": ["percent", "applied", "note"],
+          "additionalProperties": false,
+          "properties": {
+            "percent": { "type": "integer" },
+            "applied": { "const": false },
+            "note": { "type": "string" }
+          }
+        },
+
+        "world_data_2e": {
+          "type": ["object", "null"],
+          "description": "DECISIONE 27, GRUPPO A. I cinque campi che la 5e ha spostato dalle schede alle tabelle d'incontro. Non sono conversione: sono l'input del generatore di incontri in Fase 3. Riportati qui per comodita' di lettura; la fonte resta `source_2e`.",
+          "required": ["destinazione"],
+          "additionalProperties": false,
+          "properties": {
+            "frequency": { "type": ["string", "null"] },
+            "no_appearing": { "type": ["string", "null"] },
+            "organization": { "type": ["string", "null"] },
+            "activity_cycle": { "type": ["string", "null"] },
+            "diet": { "type": ["string", "null"] },
+            "destinazione": {
+              "const": "generatore_incontri",
+              "description": "Marcatore esplicito: non e' meccanica di scheda."
+            }
+          }
+        },
+
+        "note": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}
