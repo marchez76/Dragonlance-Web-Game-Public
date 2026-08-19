@@ -18,11 +18,11 @@
 
 **Libreria**: 101/141 manuali estratti (72%), 14.017 pagine, 61.499.879 caratteri. Restano 22 scansioni in coda OCR e 18 manuali non ancora lavorati.
 
-**Dati strutturati**: 15 razze, 17 classi, 21 divinità, validate a zero errori. 105 tratti razziali, 1 in sospeso, 3 di conversione editoriale nostra.
+**Dati strutturati**: 15 razze, 17 classi, 21 divinità, validate a zero errori. 105 tratti razziali, 0 in sospeso, 3 di conversione editoriale nostra.
 
 ---
 
-## Le 30 decisioni prese
+## Le 31 decisioni prese
 
 Ordine cronologico. Questa è la storia completa delle scelte: non serve
 ricostruirla dalle sezioni.
@@ -57,6 +57,7 @@ ricostruirla dalle sezioni.
 28. **Ogre e Orughi sono mostri** — La voce `Ogre (of Krynn)` dell'Appendice torna a categoria **creatura**, non `razza_altra`. L'asimmetria con Theiwar/Zakhar (clan nanici che il manuale riserva ai PNG giocabili) non regge per gli ogre comuni: non sono un clan riservato, sono avversari classici e servono all'arena. La parentela dichiarata con l'Irda resta nota di lore nella voce, non criterio di categoria. Vale il criterio della porta aperta: un mostro può sempre diventare razza in seguito, il contrario è più fastidioso.
 29. **Il Traag usa armi manufatte** — Segue il precedente ufficiale dei cinque draconici, che sostituiscono sistematicamente le armi naturali con armi manufatte (Baaz spada corta, Bozak tridente, Kapak pugnale, Sivak spada seghettata; solo l'Aurak conserva un attacco naturale). Il Traag riceve una **lancia**, scelta per coerenza con la fonte (tribù povere, non soldati regolari; il testo cita esplicitamente la reach fra i vantaggi di usare un'arma) e marcata `adapted` con provenienza editoriale, non di fonte 2e. Il Multiattacco diventa non ambiguo: due attacchi di lancia, non artigli **o** arma.
 30. **Precedenza fra Tales of the Lance e MC Appendix** — Prima volta che due fonti 2e si contraddicono su un tratto di personaggio giocante: dove **divergono**, prevale **Tales of the Lance**, perché è il capitolo dedicato ai PG mentre l'Appendice descrive la creatura dal punto di vista del Dungeon Master. Il criterio vale solo per la divergenza, non per l'integrazione: dove l'Appendice dichiara qualcosa su cui Tales of the Lance tace, la decisione 18 resta intatta. Applicata ai due casi kender in conflitto (bonus armi da tiro, condizione sulla Sorpresa): entrambi restano registrati come divergenza e non si applicano.
+31. **Soglia degli incantesimi innati dei Dargonesti** — **Opzione C**: tre soglie scalate (3°, 5°, 7°) invece del 10° unico della fonte o di una soglia bassa unica. Il 10° livello 2e non era "tardi" — era metà carriera in un sistema che arrivava al 20° e oltre: copiarlo senza riscalarlo tradisce la sostanza pur conservando la cifra, lo stesso errore già segnalato per i valori XP del bestiario. Concentrare i tre incantesimi in un'unica soglia bassa perderebbe la gradualità che la fonte aveva scelto. Le tre soglie, leggermente più tarde del tiefling PHB 2014 (1°/3°/5°) per conservare lo scarto di "metà carriera" dentro la fascia giocabile, rientrano comunque nella decisione 16: dove la 5e ha già un equivalente per i tratti razziali con incantesimi, si copia quel modello. Il 10° livello della fonte resta intatto in `source_2e`, non riscritto.
 
 ---
 
@@ -403,8 +404,8 @@ Combinazioni sotto l'1%:
 | stato | tratti | quota |
 |---|---:|---:|
 | `direct` | 35 | 33% |
-| `adapted` | 57 | 54% |
-| `pending` | 1 | 1% |
+| `adapted` | 58 | 55% |
+| `pending` | 0 | 0% |
 | `source_only` | 12 | 11% |
 
 ### Per provenienza
