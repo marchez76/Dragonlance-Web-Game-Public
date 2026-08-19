@@ -18,11 +18,11 @@
 
 **Libreria**: 101/141 manuali estratti (72%), 14.017 pagine, 61.499.879 caratteri. Restano 22 scansioni in coda OCR e 18 manuali non ancora lavorati.
 
-**Dati strutturati**: 15 razze, 17 classi, 21 divinità, validate a zero errori. 103 tratti razziali, 0 in sospeso, 3 di conversione editoriale nostra.
+**Dati strutturati**: 15 razze, 17 classi, 21 divinità, validate a zero errori. 105 tratti razziali, 1 in sospeso, 3 di conversione editoriale nostra.
 
 ---
 
-## Le 28 decisioni prese
+## Le 30 decisioni prese
 
 Ordine cronologico. Questa è la storia completa delle scelte: non serve
 ricostruirla dalle sezioni.
@@ -55,6 +55,8 @@ ricostruirla dalle sezioni.
 26. **Il criterio della tracciabilità** — **Qualsiasi materiale esterno che non porti con sé fonte e pagina è inutilizzabile**, a prescindere dal resto della sua qualità. Tutto il progetto si regge sulla tracciabilità: un dato non verificabile non entra. È un filtro che si applica in trenta secondi e risparmia analisi lunghe. Entrambi i lotti in `import/` sono respinti e chiusi.
 27. **I sette campi 2e senza corrispettivo** — Non erano un problema unico. **Gruppo A** — frequenza, numero, organizzazione, ciclo, dieta: dati di mondo, non di scheda, e diventano input del generatore di incontri in Fase 3. **Gruppo B** — il morale non è un campo ma un parametro di comportamento: senza, ogni scontro finisce con tutti i nemici morti, e diventa input dell'IA in arena. **Gruppo C** — la resistenza magica è l'unica vera decisione ed è **rinviata alla Fase 2**, perché i Gradi di Sfida su cui calibriamo presuppongono che non ci sia.
 28. **Ogre e Orughi sono mostri** — La voce `Ogre (of Krynn)` dell'Appendice torna a categoria **creatura**, non `razza_altra`. L'asimmetria con Theiwar/Zakhar (clan nanici che il manuale riserva ai PNG giocabili) non regge per gli ogre comuni: non sono un clan riservato, sono avversari classici e servono all'arena. La parentela dichiarata con l'Irda resta nota di lore nella voce, non criterio di categoria. Vale il criterio della porta aperta: un mostro può sempre diventare razza in seguito, il contrario è più fastidioso.
+29. **Il Traag usa armi manufatte** — Segue il precedente ufficiale dei cinque draconici, che sostituiscono sistematicamente le armi naturali con armi manufatte (Baaz spada corta, Bozak tridente, Kapak pugnale, Sivak spada seghettata; solo l'Aurak conserva un attacco naturale). Il Traag riceve una **lancia**, scelta per coerenza con la fonte (tribù povere, non soldati regolari; il testo cita esplicitamente la reach fra i vantaggi di usare un'arma) e marcata `adapted` con provenienza editoriale, non di fonte 2e. Il Multiattacco diventa non ambiguo: due attacchi di lancia, non artigli **o** arma.
+30. **Precedenza fra Tales of the Lance e MC Appendix** — Prima volta che due fonti 2e si contraddicono su un tratto di personaggio giocante: dove **divergono**, prevale **Tales of the Lance**, perché è il capitolo dedicato ai PG mentre l'Appendice descrive la creatura dal punto di vista del Dungeon Master. Il criterio vale solo per la divergenza, non per l'integrazione: dove l'Appendice dichiara qualcosa su cui Tales of the Lance tace, la decisione 18 resta intatta. Applicata ai due casi kender in conflitto (bonus armi da tiro, condizione sulla Sorpresa): entrambi restano registrati come divergenza e non si applicano.
 
 ---
 
@@ -394,24 +396,24 @@ Combinazioni sotto l'1%:
 
 ---
 
-## Tratti razziali — 103 in tutto
+## Tratti razziali — 105 in tutto
 
 ### Per stato di conversione
 
 | stato | tratti | quota |
 |---|---:|---:|
-| `direct` | 35 | 34% |
-| `adapted` | 56 | 54% |
-| `pending` | 0 | 0% |
-| `source_only` | 12 | 12% |
+| `direct` | 35 | 33% |
+| `adapted` | 57 | 54% |
+| `pending` | 1 | 1% |
+| `source_only` | 12 | 11% |
 
 ### Per provenienza
 
 | fonte | tratti | quota |
 |---|---:|---:|
-| PHB 2e (per rimando) | 70 | 68% |
+| PHB 2e (per rimando) | 70 | 67% |
 | Tales of the Lance | 20 | 19% |
-| MC Dragonlance Appendix | 9 | 9% |
+| MC Dragonlance Appendix | 11 | 10% |
 | conversione editoriale nostra | 3 | 3% |
 | SotDQ (ufficiale 5e) | 1 | 1% |
 
@@ -419,7 +421,7 @@ Combinazioni sotto l'1%:
 
 | razza | totale | PHB 2e | Tales of the Lance | Appendice | editoriali | SotDQ |
 |---|---:|---:|---:|---:|---:|---:|
-| Elfo Dargonesti (Elfo degli Abissi) | 9 | 7 | 2 | 0 | 0 | 0 |
+| Elfo Dargonesti (Elfo degli Abissi) | 10 | 7 | 2 | 1 | 0 | 0 |
 | Elfo Dimernesti (Elfo dei Bassifondi) | 9 | 7 | 2 | 0 | 0 | 0 |
 | Gnomo (Minoi) | 9 | 8 | 1 | 0 | 0 | 0 |
 | Nano Sozzo (Aghar) | 9 | 7 | 2 | 0 | 0 | 0 |
@@ -428,8 +430,8 @@ Combinazioni sotto l'1%:
 | Nano delle Colline (Neidar) | 8 | 7 | 1 | 0 | 0 | 0 |
 | Nano delle Montagne (Hylar / Daewar) | 8 | 7 | 1 | 0 | 0 | 0 |
 | Elfo Qualinesti | 7 | 7 | 0 | 0 | 0 | 0 |
+| Kender | 7 | 0 | 5 | 1 | 0 | 1 |
 | Mezzelfo | 7 | 6 | 1 | 0 | 0 | 0 |
-| Kender | 6 | 0 | 5 | 0 | 0 | 1 |
 | Minotauro | 6 | 0 | 1 | 5 | 0 | 0 |
 | Irda (Alto Ogre) | 4 | 0 | 2 | 2 | 0 | 0 |
 | Umano | 3 | 0 | 0 | 0 | 3 | 0 |
@@ -437,15 +439,15 @@ Combinazioni sotto l'1%:
 
 > **Lettura interpretativa** — registrata il 2026-08-19. Non e' derivata dai dati.
 >
-> Su 103 tratti, 70 vengono dal PHB 2e (68%) e
-> 30 dalle fonti di Krynn (29%). La densità apparente di una
+> Su 105 tratti, 70 vengono dal PHB 2e (67%) e
+> 32 dalle fonti di Krynn (30%). La densità apparente di una
 > razza misura quindi in buona parte l'appartenenza a una stirpe del PHB, non la
 > profondità con cui il setting l'ha caratterizzata.
 >
 > I 3 tratti di conversione editoriale non sono di Krynn: sono nostri, marcati
 > `editorial: True` e reversibili.
 >
-> Il roster va da 2 a 9 tratti per razza. Le razze native di Krynn — Kender,
+> Il roster va da 2 a 10 tratti per razza. Le razze native di Krynn — Kender,
 > Minotauro, Irda — non ereditano nulla dal PHB e restano nella fascia bassa
 > nonostante le integrazioni dall'Appendice.
 
