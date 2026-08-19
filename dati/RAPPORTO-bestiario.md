@@ -383,8 +383,10 @@ costruito creature nella norma o fuori.
 | Sivak | 4 | bruto Grande volante, truppa d'assalto | 16 / 57 | 12 / 85 | Ettin, Chuul, Succubus/Incubus |
 | Aurak | 6 | comandante incantatore | 17 / 67 | 15 / 114 | Mage, Medusa, Drider |
 
-Il sottoinsieme SRD usato è in `dati/_fonti/srd51_mostri.py`: 110 creature
-sui 322 totali, limitate ai cinque gradi di sfida che servono.
+Il bestiario SRD usato è in `dati/_fonti/srd51_mostri.py`: 322 creature,
+l'intero SRD 5.1 (era limitato a 110 creature su cinque gradi di sfida;
+completato perché la Fase 2 calibrerà anche le altre 48 creature
+dell'Appendice, di gradi ancora ignoti).
 
 ### Il profilo difensivo, che è il pezzo che spiega il Kapak
 

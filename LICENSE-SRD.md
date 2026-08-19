@@ -25,7 +25,7 @@ La licenza richiede l'attribuzione. Questo file la fornisce.
 |---|---|
 | `dati/_srd51.py` | Tabelle di classe: privilegi livello per livello, dado vita e tiri salvezza competenti di Fighter, Wizard, Cleric, Paladin, Rogue. |
 | `dati/_sfere_5e.py` | La lista incantesimi base del chierico (105 voci), usata come dominio del filtro delle sfere 2e. Le sfere assegnate e le note sono nostre; i nomi, i livelli e le scuole vengono dall'SRD. |
-| `dati/_fonti/srd51_mostri.py` | Sottoinsieme del bestiario: 110 creature dei gradi di sfida 1/2, 2, 3, 4 e 6, con taglia, tipo, classe armatura, punti ferita e velocità. |
+| `dati/_fonti/srd51_mostri.py` | Bestiario completo: 322 creature (tutti i gradi di sfida dell'SRD 5.1), con taglia, tipo, classe armatura, punti ferita e velocità. |
 
 I valori sono trascritti verbatim. Ogni file dichiara nella propria
 intestazione l'endpoint da cui provengono.

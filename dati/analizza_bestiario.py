@@ -615,8 +615,10 @@ costruito creature nella norma o fuori.
 |---|---|---|---|---|---|
 {chr(10).join(tab_srd)}
 
-Il sottoinsieme SRD usato è in `dati/_fonti/srd51_mostri.py`: {len(SRD.MOSTRI)} creature
-sui {SRD.TOTALE_SRD} totali, limitate ai cinque gradi di sfida che servono.
+Il bestiario SRD usato è in `dati/_fonti/srd51_mostri.py`: {len(SRD.MOSTRI)} creature,
+l'intero SRD 5.1 (era limitato a 110 creature su cinque gradi di sfida; completato
+perché la Fase 2 calibrerà anche le altre 48 creature dell'Appendice, di gradi
+ancora ignoti).
 
 ### Il profilo difensivo, che è il pezzo che spiega il Kapak
 
