@@ -377,13 +377,16 @@ ANALOGIE = {
 # voci ma ha sbagliato platealmente su alcune. Il dettaglio di cosa si e'
 # spostato e perche' e' nell'interpretativo subito sotto la tabella.
 #
-# Traag, Warrior Skeleton, Thanoi, Kyrie, Ogre (of Krynn), Orughi, Horax e
-# Bear Ice non sono piu' in questa lista: sono gia' stati convertiti
-# (dati/mostri/traag.json, dati/mostri/scheletro-guerriero.json,
-# dati/mostri/thanoi.json, dati/mostri/kyrie.json, dati/mostri/ogre-krynn.json,
+# Traag, Warrior Skeleton, Thanoi, Kyrie, Ogre (of Krynn), Orughi, Horax,
+# Bear Ice, Fetch, Shadowperson (e il suo Revered Ancient One) non sono piu'
+# in questa lista: sono gia' stati convertiti (dati/mostri/traag.json,
+# dati/mostri/scheletro-guerriero.json, dati/mostri/thanoi.json,
+# dati/mostri/kyrie.json, dati/mostri/ogre-krynn.json,
 # dati/mostri/orughi.json, dati/mostri/horax.json,
-# dati/mostri/orso-glaciale.json) — la prima fascia e' completa e la seconda
-# e' cominciata dai riempitivi piu' puliti.
+# dati/mostri/orso-glaciale.json, dati/mostri/fetch.json,
+# dati/mostri/shadowperson.json,
+# dati/mostri/anziano-venerato-ombrolo.json) — la prima fascia e' completa e
+# la seconda e' a buon punto, coi due casi col riscontro 3.5 fatti con calma.
 # I cinque draconici veri restano fuori come prima.
 PRIORITA = [
     ("Centaur (of Krynn)", 2,
@@ -407,20 +410,12 @@ PRIORITA = [
      "riempitivo pulito.",
      "parziale — nessun mostro SRD replica la dissoluzione curabile solo per rigenerazione", 1),
     ("Wichtlin", 2,
-     "Non morto elfico, identitario e di fascia media. 4+4 DV, colpibile "
-     "solo da armi magiche (+1 o migliori) e una resistenza magica non "
-     "quantificata (\"See below\" nella fonte, da leggere sull'immagine "
-     "prima di convertire) — non abbastanza per uscire dalla fascia media, "
-     "ma da tenere presente in conversione.",
-     "sì — Wight / Specter", 1),
-    ("Shadowperson", 2,
-     "Non morto elfico di fascia media, 3+1 DV. La CA dichiarata (2 nella "
-     "scala 2e) e' pero' notevolmente piu' alta di quanto i DV suggeriscano "
-     "da soli: da verificare in conversione se serve un analogo piu' "
-     "corazzato di Shadow/Specter. La voce contiene anche il Revered "
-     "Ancient One, il suo anziano — quasi tutto `Nil`: non combatte, va "
-     "convertito come comparsa non nella scheda dell'avversario.",
-     "parziale — Shadow / Specter, verificare la CA", 2),
+     "SEGNALATO (audit XP del 20 agosto 2026), non riclassificato: XP 1.400, "
+     "comparabile al Bozak Draconian ufficiale (GS 2). CA 2, DAMAGE/ATTACK e "
+     "SPECIAL ATTACKS entrambi \"See below\" nella fonte, mai letti per "
+     "intero. Probabile candidato alla terza fascia dopo una rilettura "
+     "completa, sullo stesso modello dello Skrit.",
+     "sì — Wight / Specter, da riverificare dopo lettura completa", 1),
     ("Avian (Emre, Kingfisher, Skyfisher, 'Wari)", 2,
      "Quattro varianti sotto una sola voce: uccelli o umanoidi alati "
      "acquatici di Krynn. Le due lette (Emre 3 DV, Kingfisher 1 DV) sono "
@@ -448,7 +443,11 @@ PRIORITA = [
      "una curiosita' di nicchia.", "parziale — Bugbear / Lizardfolk potenziato", 1),
     ("Eyewing", 2,
      "3 DV, nessuna resistenza fuori scala: spostata dalla quarta fascia, "
-     "troppo semplice per essere \"di nicchia\".", "da verificare — probabile Vulture / Giant Owl", 1),
+     "troppo semplice per essere \"di nicchia\". SEGNALATO (audit XP del 20 "
+     "agosto 2026): XP 650, alto per 3 DV. SPECIAL ATTACKS \"Tears\" e "
+     "SPECIAL DEFENSES \"See below\" mai lette per intero — rileggere prima "
+     "di convertire.",
+     "da verificare — probabile Vulture / Giant Owl, dopo lettura completa", 1),
     ("Gurik Cha-ahl", 2,
      "2 DV, statistiche modeste: spostata dalla quarta fascia, e' un "
      "riempitivo bassissimo, non una curiosita'.", "no", 1),
@@ -518,15 +517,6 @@ PRIORITA = [
      "(Tayling, 4 DV) e il bestiale (Taylang, 8 DV — fascia media, non "
      "bassa: attenzione a non sottostimarlo convertendo la coppia). "
      "Nessun analogo SRD replica il legame telepatico.", "no", 2),
-    ("Fetch", 3,
-     "SPOSTATA dalla seconda fascia dopo la rilettura: 9 DV (non \"fascia "
-     "media\"), drena 2 livelli per colpo andato a segno e resta invisibile "
-     "a chiunque tranne la vittima designata — un profilo molto piu' "
-     "pericoloso di quanto \"non morto mutaforma di fascia media\" "
-     "suggerisse. Shadow/Ghost (GS 1/2-4) sottostimano sia il drenaggio "
-     "di livello sia l'invisibilita' mirata.",
-     "parziale — Ghost, ma il drenaggio di livello e l'invisibilita' "
-     "mirata non hanno equivalente pulito a quel grado", 1),
     ("Spectral Minion", 3,
      "SPOSTATA dalla seconda fascia: Dadi Vita \"Varies\", colpibile solo "
      "da armi +1 o migliori, 20% di resistenza magica, e SEI varianti "
@@ -551,7 +541,12 @@ PRIORITA = [
     ("Imp, Blood Sea", 4,
      "5+3 DV, polimorfismo in forma di nebbia, colpibile solo da armi "
      "magiche: leggermente sopra un Imp/Quasit base (3 DV), ma resta di "
-     "nicchia per ambientazione (oceani tropicali).", "sì — Imp / Quasit, leggermente sottodimensionato", 1),
+     "nicchia per ambientazione (oceani tropicali). SEGNALATO (audit XP del "
+     "20 agosto 2026): XP 975, alto per una voce etichettata di nicchia — "
+     "piu' del Fire Minion, che sta in terza fascia con lo stesso XP. "
+     "MAGIC RESISTANCE \"See below\" non quantificata: rileggere prima di "
+     "convertire.",
+     "sì — Imp / Quasit, leggermente sottodimensionato, da riverificare", 1),
     ("Hatori, Lesser", 4,
      "Predatore del deserto a Dadi Vita variabili (1-5): complesso da "
      "fissare a un singolo GS, ma il taglio piu' basso rientra nel target.",
@@ -1067,14 +1062,18 @@ Le **{BS['da_convertire']} creature** da convertire, tolte le {BS['razza_nostra'
 coperte da `dati/razze/` e le {BS['razza_altra']} razze fuori roster. **Proposta, non decisione.**
 
 I **cinque draconici, il Traag, lo Scheletro Guerriero, il Thanoi, il Kyrie,
-l'Ogre di Krynn, l'Orughi, l'Horax e l'Orso Glaciale non sono in questa
-lista**: i primi cinque hanno già un precedente ufficiale completo (parti
-2-4 sopra), gli ultimi otto sono già stati convertiti
-(`dati/mostri/traag.json`, `dati/mostri/scheletro-guerriero.json`,
-`dati/mostri/thanoi.json`, `dati/mostri/kyrie.json`,
-`dati/mostri/ogre-krynn.json`, `dati/mostri/orughi.json`,
-`dati/mostri/horax.json`, `dati/mostri/orso-glaciale.json` — la prima fascia
-dell'arena è completa e la seconda è a buon punto). Restano **{tot_creature} creature** su **{tot_righe} voci** nelle
+l'Ogre di Krynn, l'Orughi, l'Horax, l'Orso Glaciale, il Fetch, l'Ombrolo e il
+suo Anziano Venerato non sono in questa lista**: i primi cinque hanno già un
+precedente ufficiale completo (parti 2-4 sopra), gli ultimi undici sono già
+stati convertiti (`dati/mostri/traag.json`,
+`dati/mostri/scheletro-guerriero.json`, `dati/mostri/thanoi.json`,
+`dati/mostri/kyrie.json`, `dati/mostri/ogre-krynn.json`,
+`dati/mostri/orughi.json`, `dati/mostri/horax.json`,
+`dati/mostri/orso-glaciale.json`, `dati/mostri/fetch.json`,
+`dati/mostri/shadowperson.json`,
+`dati/mostri/anziano-venerato-ombrolo.json` — la prima fascia dell'arena è
+completa e la seconda è a buon punto, coi due casi con precedente 3.5 fatti
+con calma). Restano **{tot_creature} creature** su **{tot_righe} voci** nelle
 cinque fasce, più il Cervo Bianco fuori fascia.
 
 {chr(10).join(blocchi_prio)}
@@ -1153,6 +1152,48 @@ bersaglio cambia scheda ogni volta che il Dreamshadow ne imita una diversa.
 Registrato qui come categoria a parte, non forzato in uno statblock: è il
 primo caso del genere nel bestiario, e probabilmente non l'ultimo — conviene
 riconoscerli quando emergono invece di inventargli un GS di comodo.
+
+**I Dadi Vita non bastano a classificare una voce — vale anche per i Punti
+Esperienza, e non erano stati controllati sistematicamente.** Lo Scheletro
+Guerriero e lo Skrit sono stati classificati male nello stesso modo: fascia
+dedotta da DV/CA senza guardare gli XP dichiarati. In 2e gli XP sono il
+giudizio del manuale sulla pericolosità complessiva, non un derivato dei
+Dadi Vita. Ripassata la lista confrontando XP dichiarati e fascia assegnata:
+un controllo di minuti, non di ore.
+
+**Voci dove gli XP non tornano con la fascia — segnalate, non
+riclassificate**: il numero impone la lettura completa prima di convertire,
+non è un verdetto automatico (lo Skrit era anche lui "solo un numero" finché
+non si è letto il resto).
+
+- **Wichtlin** (seconda fascia): XP 1.400, comparabile al Bozak Draconian
+  ufficiale (GS 2). CA 2 nella scala 2e (molto protetta, alla pari di
+  Bozak), `DAMAGE/ATTACK` e `SPECIAL ATTACKS` entrambi "See below" nella
+  fonte: meccanica non ancora letta per intero. Va riletta prima di
+  convertire, probabile candidata alla terza fascia.
+- **Eyewing** (seconda fascia): XP 650, alto per 3 Dadi Vita. `SPECIAL
+  ATTACKS: Tears` e `SPECIAL DEFENSES: See below` non ancora lette per
+  intero. Stesso trattamento del Wichtlin: rileggere prima di convertire.
+- **Imp, Blood Sea** (quarta fascia — "nicchia"): XP 975, alto per una
+  voce etichettata di nicchia (più della metà del Fire Minion, che sta in
+  terza fascia con lo stesso XP). Colpibile solo da armi magiche,
+  `MAGIC RESISTANCE: See below` non quantificata. La fascia "nicchia"
+  descriveva l'ambientazione (oceani tropicali), non la pericolosità:
+  stesso equivoco già corretto su Bear Ice e Disir, ma nella direzione
+  opposta.
+- **Kyrie** (già convertito, GS 1): XP 1.400 in 2e, lo stesso ordine di
+  grandezza del Wichtlin e del Bozak Draconian ufficiale (GS 2). La
+  conversione già fatta assegna GS 1 sul danno per round dichiarato (un
+  solo attacco, mai più di 1d8) e sull'assenza di resistenze: il numero
+  resta un segnale da tenere presente, non un errore accertato — a
+  differenza dello Skrit, qui il danno base *è* stato letto per intero e
+  *è* modesto. Segnalato, non ritoccato.
+
+Verificati e confermati COERENTI con la fascia assegnata: Lizard Man
+(Jarak-Sinn 270, Bakali 175 — bassi, seconda fascia corretta), Insect Swarm
+(XP "See below" per entrambe le varianti: non c'è un numero fisso da
+confrontare, la fascia distingue sulla base del veleno dichiarato, non
+degli XP).
 
 **Il criterio resta l'arena, non la completezza**, e non cambia: la Fase 2 ha
 bisogno di avversari fra GS 1/4 e GS 4, in quantità e con tattiche diverse. La

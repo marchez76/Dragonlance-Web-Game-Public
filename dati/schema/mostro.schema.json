@@ -10,7 +10,7 @@
   "$defs": {
     "conversion_status": {
       "enum": ["direct", "adapted", "pending", "source_only"],
-      "description": "direct: il 5e ha gia' un equivalente e si copia quello. adapted: convertito da noi con una scelta di forma. pending: da convertire, la meccanica 5e non e' ancora decisa. source_only: registrato dalla fonte ma senza effetto in 5e, per scelta motivata."
+      "description": "direct: il 5e ha gia' un equivalente e si copia quello — DUE varianti, da distinguere nel `note`: (a) conversione A INDICAZIONE DI FONTE, la piu' solida delle due, quando il testo 2e stesso nomina o descrive l'equivalente 5e da usare (es. Horax: la fonte dice che il freddo \"ha l'effetto di un incantesimo slow\", si copia *slow* dall'SRD; Ogre di Krynn: la fonte dichiara che gli ogre di Krynn sono fisicamente identici agli ogre standard, si adotta l'Ogre SRD di peso) — non e' analogia nostra, e' il testo che indica dove guardare, e va cercata PRIMA di ripiegare sull'analogo SRD scelto da noi; (b) conversione diretta per SCELTA NOSTRA, quando riconosciamo che il 5e ha gia' un idioma adatto ma la fonte non lo nomina esplicitamente (es. \"colpibile solo da armi magiche\" -> resistenza alle armi non magiche, idioma standard ma non citato dalla fonte con quelle parole). adapted: convertito da noi con una scelta di forma, senza che la fonte indichi l'equivalente (analogia SRD, invenzione editoriale minima, ecc.). pending: da convertire, la meccanica 5e non e' ancora decisa. source_only: registrato dalla fonte ma senza effetto in 5e, per scelta motivata."
     },
     "provenienza": {
       "enum": [

@@ -513,7 +513,7 @@ disponibile, non estratto.**
 
 ## Il bestiario — diagnostica
 
-Rapporto completo in `dati/RAPPORTO-bestiario.md`. **8 creature convertite** in `dati/mostri/` (le altre restano da fare: vedi "Il conteggio vero del bestiario" e "Parte 5" nel rapporto per il numero, che non è ancora definitivo).
+Rapporto completo in `dati/RAPPORTO-bestiario.md`. **11 creature convertite** in `dati/mostri/` (le altre restano da fare: vedi "Il conteggio vero del bestiario" e "Parte 5" nel rapporto per il numero, che non è ancora definitivo).
 
 **La scheda mostro 2e ha 21 campi**: 2 passano diretti in 5e, 12 vanno
 convertiti, **7 non hanno alcun corrispettivo** — FREQUENCY, ORGANIZATION, ACTIVITY CYCLE, DIET, NO. APPEARING, MAGIC RESISTANCE, MORALE.

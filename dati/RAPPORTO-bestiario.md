@@ -573,34 +573,37 @@ Le **66 creature** da convertire, tolte le 14 schede di razze giocanti già
 coperte da `dati/razze/` e le 4 razze fuori roster. **Proposta, non decisione.**
 
 I **cinque draconici, il Traag, lo Scheletro Guerriero, il Thanoi, il Kyrie,
-l'Ogre di Krynn, l'Orughi, l'Horax e l'Orso Glaciale non sono in questa
-lista**: i primi cinque hanno già un precedente ufficiale completo (parti
-2-4 sopra), gli ultimi otto sono già stati convertiti
-(`dati/mostri/traag.json`, `dati/mostri/scheletro-guerriero.json`,
-`dati/mostri/thanoi.json`, `dati/mostri/kyrie.json`,
-`dati/mostri/ogre-krynn.json`, `dati/mostri/orughi.json`,
-`dati/mostri/horax.json`, `dati/mostri/orso-glaciale.json` — la prima fascia
-dell'arena è completa e la seconda è a buon punto). Restano **51 creature** su **40 voci** nelle
+l'Ogre di Krynn, l'Orughi, l'Horax, l'Orso Glaciale, il Fetch, l'Ombrolo e il
+suo Anziano Venerato non sono in questa lista**: i primi cinque hanno già un
+precedente ufficiale completo (parti 2-4 sopra), gli ultimi undici sono già
+stati convertiti (`dati/mostri/traag.json`,
+`dati/mostri/scheletro-guerriero.json`, `dati/mostri/thanoi.json`,
+`dati/mostri/kyrie.json`, `dati/mostri/ogre-krynn.json`,
+`dati/mostri/orughi.json`, `dati/mostri/horax.json`,
+`dati/mostri/orso-glaciale.json`, `dati/mostri/fetch.json`,
+`dati/mostri/shadowperson.json`,
+`dati/mostri/anziano-venerato-ombrolo.json` — la prima fascia dell'arena è
+completa e la seconda è a buon punto, coi due casi con precedente 3.5 fatti
+con calma). Restano **48 creature** su **38 voci** nelle
 cinque fasce, più il Cervo Bianco fuori fascia.
 
-### Seconda — riempitivi di fascia bassa e media (12 voci, 21 creature)
+### Seconda — riempitivi di fascia bassa e media (11 voci, 19 creature)
 
 | creatura | perché | analogo SRD |
 |---|---|---|
 | Centaur (of Krynn) | Trovata il 20 agosto 2026 (compito 1, verifica Half-Ogre/Centaur): 4 DV, CA 5, nessuna resistenza fuori scala — profilo base pulito di fascia bassa-media, come Thanoi. Quattro sotto-specie nominate (Abanasinian, Crystalmir, Endscape, Wendle) con differenze di comportamento non ancora estratte per intero: la conversione base puo' partire dal profilo generico, le sotto-specie vanno lette a parte. | sì — Centaur SRD |
-| Wichtlin | Non morto elfico, identitario e di fascia media. 4+4 DV, colpibile solo da armi magiche (+1 o migliori) e una resistenza magica non quantificata ("See below" nella fonte, da leggere sull'immagine prima di convertire) — non abbastanza per uscire dalla fascia media, ma da tenere presente in conversione. | sì — Wight / Specter |
-| Shadowperson | Non morto elfico di fascia media, 3+1 DV. La CA dichiarata (2 nella scala 2e) e' pero' notevolmente piu' alta di quanto i DV suggeriscano da soli: da verificare in conversione se serve un analogo piu' corazzato di Shadow/Specter. La voce contiene anche il Revered Ancient One, il suo anziano — quasi tutto `Nil`: non combatte, va convertito come comparsa non nella scheda dell'avversario. | parziale — Shadow / Specter, verificare la CA |
+| Wichtlin | SEGNALATO (audit XP del 20 agosto 2026), non riclassificato: XP 1.400, comparabile al Bozak Draconian ufficiale (GS 2). CA 2, DAMAGE/ATTACK e SPECIAL ATTACKS entrambi "See below" nella fonte, mai letti per intero. Probabile candidato alla terza fascia dopo una rilettura completa, sullo stesso modello dello Skrit. | sì — Wight / Specter, da riverificare dopo lettura completa |
 | Avian (Emre, Kingfisher, Skyfisher, 'Wari) | Quattro varianti sotto una sola voce: uccelli o umanoidi alati acquatici di Krynn. Le due lette (Emre 3 DV, Kingfisher 1 DV) sono di fascia bassa pulita; Skyfisher e 'Wari restano da verificare sull'immagine di pagina (colonne perse dall'estrazione). | sì per le due note — probabile Hawk / Giant Owl |
 | Stag (Wild Stag, Giant Stag) | I due cervi normali della voce Stag: 3 e 5 DV, bestie da branco pulite. Il terzo abitante della voce, il Cervo Bianco, e' trattato a parte, fuori fascia — vedi sotto. | sì — Elk / Giant Elk |
 | Lizard Man (Jarak-Sinn, Bakali) | Umanoidi rettili tribali, fascia bassa-media pulita: i jarak-sinn (piu' numerosi, 2+1 DV) e i bakali (2+1 DV), loro progenitori piu' rari. Voce nuova, trovata nella seconda passata. | sì — Lizardfolk |
 | Phaethon | Umanoide alato dei monti, 4 DV, nessuna resistenza: GS basso-medio confermato, alternativa a Kyrie come avversario volante. Voce nuova. | parziale — nessun analogo diretto SRD |
 | Insect Swarm, Grasshopper and Locust | Sciame di insetti, minaccia bassa per individuo, utile come ostacolo/ambientazione in arena. Voce nuova. | sì — Swarm of Insects |
 | Disir | 5 DV, tre attacchi (2d4/2d4/2d6, danno non banale) e resistenza al fuoco: spostata dalla quarta fascia, e' un fante bestiale pulito, non una curiosita' di nicchia. | parziale — Bugbear / Lizardfolk potenziato |
-| Eyewing | 3 DV, nessuna resistenza fuori scala: spostata dalla quarta fascia, troppo semplice per essere "di nicchia". | da verificare — probabile Vulture / Giant Owl |
+| Eyewing | 3 DV, nessuna resistenza fuori scala: spostata dalla quarta fascia, troppo semplice per essere "di nicchia". SEGNALATO (audit XP del 20 agosto 2026): XP 650, alto per 3 DV. SPECIAL ATTACKS "Tears" e SPECIAL DEFENSES "See below" mai lette per intero — rileggere prima di convertire. | da verificare — probabile Vulture / Giant Owl, dopo lettura completa |
 | Gurik Cha-ahl | 2 DV, statistiche modeste: spostata dalla quarta fascia, e' un riempitivo bassissimo, non una curiosita'. | no |
 | Kani Doll | 2 DV, CA 10 (nessuna protezione), costrutto che non controlla mai il morale: spostata dalla quarta fascia, filler bassissimo. | parziale — Homunculus |
 
-### Terza — identitari ma senza analogo pulito (14 voci, 15 creature)
+### Terza — identitari ma senza analogo pulito (13 voci, 14 creature)
 
 | creatura | perché | analogo SRD |
 |---|---|---|
@@ -615,7 +618,6 @@ cinque fasce, più il Cervo Bianco fuori fascia.
 | Insect Swarm, Velvet Ant | Sciame con veleno e formula di dimensione variabile: meccanica piu' complessa del semplice sciame. Voce nuova. | parziale — Swarm of Insects, senza il veleno |
 | Yaggol | Sotto-razza degenerata dei mind flayer, con kit complesso (sei attacchi piu' un potere psichico). CORREZIONE: 50% di resistenza magica NON e' la piu' alta del bestiario come diceva il rapporto — lo Scheletro Guerriero ne ha 90%, il Cavaliere della Morte 75%. Resta comunque identitario e costoso: nessun mostro SRD a GS 1/4-4 replica un mind-flayer minore. | no — Mind Flayer vero e' GS 7, fuori target |
 | Tayling (+ Taylang) | Gemelli telepatici che nascono sempre in coppia: l'intelligente (Tayling, 4 DV) e il bestiale (Taylang, 8 DV — fascia media, non bassa: attenzione a non sottostimarlo convertendo la coppia). Nessun analogo SRD replica il legame telepatico. | no |
-| Fetch | SPOSTATA dalla seconda fascia dopo la rilettura: 9 DV (non "fascia media"), drena 2 livelli per colpo andato a segno e resta invisibile a chiunque tranne la vittima designata — un profilo molto piu' pericoloso di quanto "non morto mutaforma di fascia media" suggerisse. Shadow/Ghost (GS 1/2-4) sottostimano sia il drenaggio di livello sia l'invisibilita' mirata. | parziale — Ghost, ma il drenaggio di livello e l'invisibilita' mirata non hanno equivalente pulito a quel grado |
 | Spectral Minion | SPOSTATA dalla seconda fascia: Dadi Vita "Varies", colpibile solo da armi +1 o migliori, 20% di resistenza magica, e SEI varianti nominate con valori di PE diversi (Philosopher/Reveler/Searcher a 975, Guardian/Warrior/Berserker a 1.400) sotto un'unica voce: piu' vicina a una famiglia di sotto-tipi che a un singolo riempitivo. | sì per il profilo generale — Specter |
 | Wyndlass | SPOSTATA dalla quarta fascia ("nicchia") dopo la rilettura: 12 DV, THAC0 9 (molto buono), UNDICI attacchi (dieci tentacoli piu' morso, danno 1-10 per tentacolo) e 5.000 PE — nello stesso ordine di grandezza del Cavaliere della Morte e dello Scheletro Guerriero, non una curiosita' acquatica di basso profilo. | parziale — Hydra per il numero di attacchi, ma senza rigenerazione |
 
@@ -625,7 +627,7 @@ cinque fasce, più il Cervo Bianco fuori fascia.
 |---|---|---|
 | Shimmerweed | 1 punto ferita, immobile, un solo attacco (confusione): a malapena una creatura da combattimento, piu' vicina a un ostacolo ambientale che a un avversario. Resta di nicchia per questo, non perche' sia debole in senso convenzionale. | parziale — Shrieker |
 | Kalothagh (Prickleback) | 4+4 DV, attacco a distanza con aculei: bestia acquatica di nicchia. | sì — Reef Shark |
-| Imp, Blood Sea | 5+3 DV, polimorfismo in forma di nebbia, colpibile solo da armi magiche: leggermente sopra un Imp/Quasit base (3 DV), ma resta di nicchia per ambientazione (oceani tropicali). | sì — Imp / Quasit, leggermente sottodimensionato |
+| Imp, Blood Sea | 5+3 DV, polimorfismo in forma di nebbia, colpibile solo da armi magiche: leggermente sopra un Imp/Quasit base (3 DV), ma resta di nicchia per ambientazione (oceani tropicali). SEGNALATO (audit XP del 20 agosto 2026): XP 975, alto per una voce etichettata di nicchia — piu' del Fire Minion, che sta in terza fascia con lo stesso XP. MAGIC RESISTANCE "See below" non quantificata: rileggere prima di convertire. | sì — Imp / Quasit, leggermente sottodimensionato, da riverificare |
 | Hatori, Lesser | Predatore del deserto a Dadi Vita variabili (1-5): complesso da fissare a un singolo GS, ma il taglio piu' basso rientra nel target. | no |
 | Spider, Giant Trap Door | Ragno imboscatore di taglia Large, 4+4 DV: sopra la fascia bassa ma non enorme. Voce nuova, trovata nella seconda passata. | parziale — Giant Spider |
 
@@ -724,6 +726,48 @@ cinque fasce, più il Cervo Bianco fuori fascia.
 > Registrato qui come categoria a parte, non forzato in uno statblock: è il
 > primo caso del genere nel bestiario, e probabilmente non l'ultimo — conviene
 > riconoscerli quando emergono invece di inventargli un GS di comodo.
+>
+> **I Dadi Vita non bastano a classificare una voce — vale anche per i Punti
+> Esperienza, e non erano stati controllati sistematicamente.** Lo Scheletro
+> Guerriero e lo Skrit sono stati classificati male nello stesso modo: fascia
+> dedotta da DV/CA senza guardare gli XP dichiarati. In 2e gli XP sono il
+> giudizio del manuale sulla pericolosità complessiva, non un derivato dei
+> Dadi Vita. Ripassata la lista confrontando XP dichiarati e fascia assegnata:
+> un controllo di minuti, non di ore.
+>
+> **Voci dove gli XP non tornano con la fascia — segnalate, non
+> riclassificate**: il numero impone la lettura completa prima di convertire,
+> non è un verdetto automatico (lo Skrit era anche lui "solo un numero" finché
+> non si è letto il resto).
+>
+> - **Wichtlin** (seconda fascia): XP 1.400, comparabile al Bozak Draconian
+>   ufficiale (GS 2). CA 2 nella scala 2e (molto protetta, alla pari di
+>   Bozak), `DAMAGE/ATTACK` e `SPECIAL ATTACKS` entrambi "See below" nella
+>   fonte: meccanica non ancora letta per intero. Va riletta prima di
+>   convertire, probabile candidata alla terza fascia.
+> - **Eyewing** (seconda fascia): XP 650, alto per 3 Dadi Vita. `SPECIAL
+>   ATTACKS: Tears` e `SPECIAL DEFENSES: See below` non ancora lette per
+>   intero. Stesso trattamento del Wichtlin: rileggere prima di convertire.
+> - **Imp, Blood Sea** (quarta fascia — "nicchia"): XP 975, alto per una
+>   voce etichettata di nicchia (più della metà del Fire Minion, che sta in
+>   terza fascia con lo stesso XP). Colpibile solo da armi magiche,
+>   `MAGIC RESISTANCE: See below` non quantificata. La fascia "nicchia"
+>   descriveva l'ambientazione (oceani tropicali), non la pericolosità:
+>   stesso equivoco già corretto su Bear Ice e Disir, ma nella direzione
+>   opposta.
+> - **Kyrie** (già convertito, GS 1): XP 1.400 in 2e, lo stesso ordine di
+>   grandezza del Wichtlin e del Bozak Draconian ufficiale (GS 2). La
+>   conversione già fatta assegna GS 1 sul danno per round dichiarato (un
+>   solo attacco, mai più di 1d8) e sull'assenza di resistenze: il numero
+>   resta un segnale da tenere presente, non un errore accertato — a
+>   differenza dello Skrit, qui il danno base *è* stato letto per intero e
+>   *è* modesto. Segnalato, non ritoccato.
+>
+> Verificati e confermati COERENTI con la fascia assegnata: Lizard Man
+> (Jarak-Sinn 270, Bakali 175 — bassi, seconda fascia corretta), Insect Swarm
+> (XP "See below" per entrambe le varianti: non c'è un numero fisso da
+> confrontare, la fascia distingue sulla base del veleno dichiarato, non
+> degli XP).
 >
 > **Il criterio resta l'arena, non la completezza**, e non cambia: la Fase 2 ha
 > bisogno di avversari fra GS 1/4 e GS 4, in quantità e con tattiche diverse. La
