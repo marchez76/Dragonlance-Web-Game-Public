@@ -378,16 +378,61 @@ ANALOGIE = {
 # spostato e perche' e' nell'interpretativo subito sotto la tabella.
 #
 # Traag, Warrior Skeleton, Thanoi, Kyrie, Ogre (of Krynn), Orughi, Horax,
-# Bear Ice, Fetch, Shadowperson (e il suo Revered Ancient One) non sono piu'
-# in questa lista: sono gia' stati convertiti (dati/mostri/traag.json,
+# Bear Ice, Fetch, Shadowperson (e il suo Revered Ancient One), Eyewing non
+# sono piu' in questa lista: sono gia' stati convertiti (dati/mostri/traag.json,
 # dati/mostri/scheletro-guerriero.json, dati/mostri/thanoi.json,
 # dati/mostri/kyrie.json, dati/mostri/ogre-krynn.json,
 # dati/mostri/orughi.json, dati/mostri/horax.json,
 # dati/mostri/orso-glaciale.json, dati/mostri/fetch.json,
 # dati/mostri/shadowperson.json,
-# dati/mostri/anziano-venerato-ombrolo.json) — la prima fascia e' completa e
+# dati/mostri/anziano-venerato-ombrolo.json,
+# dati/mostri/eyewing.json) — la prima fascia e' completa e
 # la seconda e' a buon punto, coi due casi col riscontro 3.5 fatti con calma.
 # I cinque draconici veri restano fuori come prima.
+
+# ==========================================================================
+# QUINTO SEGNALE — "See below" nei campi di combattimento delle 48 voci
+# "creatura" dell'Appendice (BM.VOCI, categoria creatura). Trovato cercando
+# la stringa su tutto il testo estratto e filtrando ai soli campi di
+# combattimento (esclusi TREASURE/NO. APPEARING quando sono dati di mondo,
+# gruppo A della decisione 27 — l'unica eccezione e' Haunt/Knight, dove
+# TREASURE stesso resta "See below" e viene contato perche' non c'e' un
+# valore alternativo dichiarato altrove).
+#
+# (voce, fascia_attuale o None se fuori fascia, [campi con "See below"])
+# fascia_attuale e' la fascia della SOTTO-CREATURA flaggata, non
+# necessariamente quella dell'intera voce quando la voce ne contiene piu'
+# di una (es. Stag: solo il Cervo Bianco e' flaggato, fuori fascia; Insect
+# Swarm: entrambe le colonne lo sono, riportata alla fascia piu' bassa delle
+# due — la Velvet Ant, fascia 3, e' annotata a parte nel testo).
+# ==========================================================================
+SEGNALE_5 = [
+    ("Anemone, Giant", 5,
+     ["TREASURE", "NO. OF ATTACKS", "DAMAGE/ATTACK", "SPECIAL ATTACKS",
+      "SPECIAL DEFENSES"]),
+    ("Bear, Ice", 2, ["SPECIAL DEFENSES"]),
+    ("Beast, Undead", 5, ["SPECIAL DEFENSES"]),
+    ("Centaur (of Krynn)", 2, ["SPECIAL DEFENSES"]),
+    ("Dreamshadow", 3, ["MAGIC RESISTANCE"]),
+    ("Dreamwraith", 3, ["MAGIC RESISTANCE"]),
+    ("Eyewing", 2, ["SPECIAL DEFENSES"]),
+    ("Fireshadow", 5, ["SPECIAL ATTACKS"]),
+    ("Haunt, Knight", 3, ["TREASURE"]),
+    ("Imp, Blood Sea", 3, ["MAGIC RESISTANCE"]),
+    ("Insect Swarm", 2,
+     ["NO. APPEARING", "HIT DICE", "THAC0", "DAMAGE/ATTACK", "SIZE",
+      "XP VALUE"]),
+    ("Kalothagh (Prickleback)", 4, ["SPECIAL DEFENSES"]),
+    ("Knight, Death", 3,
+     ["SPECIAL ATTACKS", "SPECIAL DEFENSES", "MAGIC RESISTANCE"]),
+    ("Lizard Man (of Krynn)", 2, ["SPECIAL DEFENSES"]),
+    ("Shadowperson", 2, ["SPECIAL ATTACKS", "SPECIAL DEFENSES"]),
+    ("Spectral Minion", 3, ["SPECIAL ATTACKS"]),
+    ("Stag", None, ["SPECIAL DEFENSES"]),
+    ("Warrior, Skeleton", 1, ["SPECIAL ATTACKS", "SPECIAL DEFENSES"]),
+    ("Wichtlin", 3, ["DAMAGE/ATTACK", "SPECIAL ATTACKS", "MAGIC RESISTANCE"]),
+]
+
 PRIORITA = [
     ("Centaur (of Krynn)", 2,
      "Trovata il 20 agosto 2026 (compito 1, verifica Half-Ogre/Centaur): "
@@ -396,7 +441,12 @@ PRIORITA = [
      "(Abanasinian, Crystalmir, Endscape, Wendle) con differenze di "
      "comportamento non ancora estratte per intero: la conversione base "
      "puo' partire dal profilo generico, le sotto-specie vanno lette a "
-     "parte.", "sì — Centaur SRD", 4),
+     "parte. CONFERMATA dal quinto segnale (20 agosto 2026): SPECIAL "
+     "DEFENSES \"See below\" si risolve nel +2 ai tiri salvezza degli "
+     "Abanasiniani (\"extremely robust\"), gia' anticipato come dettaglio "
+     "di sotto-specie da estrarre in sede di conversione — nessuna "
+     "sorpresa, segnale confermato ma causa gia' nota.",
+     "sì — Centaur SRD", 4),
     ("Skrit", 3,
      "CORRETTA dopo lettura del testo completo (20 agosto 2026): la prima "
      "rilettura l'aveva confermata in seconda fascia guardando solo i DV "
@@ -409,13 +459,6 @@ PRIORITA = [
      "normale. Identitaria e costosa da rendere fedelmente, non un "
      "riempitivo pulito.",
      "parziale — nessun mostro SRD replica la dissoluzione curabile solo per rigenerazione", 1),
-    ("Wichtlin", 2,
-     "SEGNALATO (audit XP del 20 agosto 2026), non riclassificato: XP 1.400, "
-     "comparabile al Bozak Draconian ufficiale (GS 2). CA 2, DAMAGE/ATTACK e "
-     "SPECIAL ATTACKS entrambi \"See below\" nella fonte, mai letti per "
-     "intero. Probabile candidato alla terza fascia dopo una rilettura "
-     "completa, sullo stesso modello dello Skrit.",
-     "sì — Wight / Specter, da riverificare dopo lettura completa", 1),
     ("Avian (Emre, Kingfisher, Skyfisher, 'Wari)", 2,
      "Quattro varianti sotto una sola voce: uccelli o umanoidi alati "
      "acquatici di Krynn. Le due lette (Emre 3 DV, Kingfisher 1 DV) sono "
@@ -429,7 +472,18 @@ PRIORITA = [
     ("Lizard Man (Jarak-Sinn, Bakali)", 2,
      "Umanoidi rettili tribali, fascia bassa-media pulita: i jarak-sinn "
      "(piu' numerosi, 2+1 DV) e i bakali (2+1 DV), loro progenitori piu' "
-     "rari. Voce nuova, trovata nella seconda passata.", "sì — Lizardfolk", 2),
+     "rari. Voce nuova, trovata nella seconda passata. Il quinto segnale "
+     "(20 agosto 2026) trova SPECIAL DEFENSES \"See below\" su ENTRAMBE le "
+     "colonne, mai controllato prima (la coerenza precedente era solo "
+     "sugli XP): per i jarak-sinn e' la coda distaccabile a volonta' "
+     "(chi la afferra resta con la coda mentre il jarak-sinn fugge; "
+     "ricresce in 1d4+8 settimane) — un meccanismo di fuga che il "
+     "Lizardfolk SRD non replica; per i bakali e' una VULNERABILITA' al "
+     "freddo (1 danno extra per dado da attacchi a base di freddo) piu' "
+     "una membrana nittitante (+1 ai TS contro accecamento). Fascia "
+     "confermata bassa-media (XP 270/175 restano modesti), ma la "
+     "conversione dovra' rendere questi tre dettagli invece di limitarsi "
+     "al Lizardfolk di peso.", "sì — Lizardfolk", 2),
     ("Phaethon", 2,
      "Umanoide alato dei monti, 4 DV, nessuna resistenza: GS basso-medio "
      "confermato, alternativa a Kyrie come avversario volante. Voce nuova.",
@@ -441,13 +495,6 @@ PRIORITA = [
      "5 DV, tre attacchi (2d4/2d4/2d6, danno non banale) e resistenza al "
      "fuoco: spostata dalla quarta fascia, e' un fante bestiale pulito, non "
      "una curiosita' di nicchia.", "parziale — Bugbear / Lizardfolk potenziato", 1),
-    ("Eyewing", 2,
-     "3 DV, nessuna resistenza fuori scala: spostata dalla quarta fascia, "
-     "troppo semplice per essere \"di nicchia\". SEGNALATO (audit XP del 20 "
-     "agosto 2026): XP 650, alto per 3 DV. SPECIAL ATTACKS \"Tears\" e "
-     "SPECIAL DEFENSES \"See below\" mai lette per intero — rileggere prima "
-     "di convertire.",
-     "da verificare — probabile Vulture / Giant Owl, dopo lettura completa", 1),
     ("Gurik Cha-ahl", 2,
      "2 DV, statistiche modeste: spostata dalla quarta fascia, e' un "
      "riempitivo bassissimo, non una curiosita'.", "no", 1),
@@ -531,6 +578,38 @@ PRIORITA = [
      "grandezza del Cavaliere della Morte e dello Scheletro Guerriero, non "
      "una curiosita' acquatica di basso profilo.",
      "parziale — Hydra per il numero di attacchi, ma senza rigenerazione", 1),
+    ("Wichtlin", 3,
+     "SPOSTATA dalla seconda fascia dopo lettura completa (quinto segnale, "
+     "20 agosto 2026: DAMAGE/ATTACK, SPECIAL ATTACKS e MAGIC RESISTANCE "
+     "tutti \"See below\"). Non e' un riempitivo: elfo non morto con due "
+     "attacchi di contatto distinti (mano sinistra paralizza 2d4 round, "
+     "mano destra avvelena per 2d6), immune a veleno/paralisi/sonno/"
+     "charme/hold/incantesimi da freddo, colpibile solo da armi magiche "
+     "+1, danneggiato dall'acqua santa (2d4/fiala), turnabile come "
+     "spettro. Se era un incantatore in vita, lancia a meta' livello. Un "
+     "elfo ucciso da un wichtlin diventa un wichtlin in sette giorni se "
+     "non resuscitato: e' un effetto di CONTAGIO, non solo un mostro "
+     "singolo. Include una variante montata (\"Wichtlin Wild Stag\") con "
+     "meccanica di paralisi propria. Identitaria e costosa quanto lo "
+     "Skrit, non un riempitivo di seconda fascia.",
+     "parziale — Specter per il profilo generale, nessuno replica il "
+     "contagio ne' il doppio tocco paralisi/veleno", 1),
+    ("Imp, Blood Sea", 3,
+     "SPOSTATA dalla quarta fascia (\"nicchia\") dopo lettura completa "
+     "(quinto segnale, 20 agosto 2026: MAGIC RESISTANCE \"See below\", "
+     "che non si risolve in una percentuale ma nell'elenco di immunita' "
+     "sotto): 5+3 DV, polimorfismo a volonta' fra forma fisica (CA 4, "
+     "tocco gelido 1d6) e forma di nebbia (CA 1, vola, ma solo 1 punto di "
+     "danno da contatto e nessuna azione fisica), colpibile solo da armi "
+     "magiche, immune a sonno/charme/incantesimi da freddo/paralisi/"
+     "veleno, 10% di possibilita' di generare una copia di se stesso se "
+     "colpito da un fulmine. La fascia \"nicchia\" descriveva "
+     "l'ambientazione (il Mare di Sangue), non la meccanica: stesso "
+     "equivoco gia' corretto su Bear Ice/Disir/Eyewing nella direzione "
+     "opposta, qui va nella direzione di un identitario vero, non di un "
+     "riempitivo.",
+     "parziale — Imp/Quasit per il polimorfismo, ma nessuno replica la "
+     "scissione da fulmine", 1),
 
     ("Shimmerweed", 4,
      "1 punto ferita, immobile, un solo attacco (confusione): a malapena "
@@ -538,15 +617,6 @@ PRIORITA = [
      "che a un avversario. Resta di nicchia per questo, non perche' sia "
      "debole in senso convenzionale.", "parziale — Shrieker", 1),
     ("Kalothagh (Prickleback)", 4, "4+4 DV, attacco a distanza con aculei: bestia acquatica di nicchia.", "sì — Reef Shark", 1),
-    ("Imp, Blood Sea", 4,
-     "5+3 DV, polimorfismo in forma di nebbia, colpibile solo da armi "
-     "magiche: leggermente sopra un Imp/Quasit base (3 DV), ma resta di "
-     "nicchia per ambientazione (oceani tropicali). SEGNALATO (audit XP del "
-     "20 agosto 2026): XP 975, alto per una voce etichettata di nicchia — "
-     "piu' del Fire Minion, che sta in terza fascia con lo stesso XP. "
-     "MAGIC RESISTANCE \"See below\" non quantificata: rileggere prima di "
-     "convertire.",
-     "sì — Imp / Quasit, leggermente sottodimensionato, da riverificare", 1),
     ("Hatori, Lesser", 4,
      "Predatore del deserto a Dadi Vita variabili (1-5): complesso da "
      "fissare a un singolo GS, ma il taglio piu' basso rientra nel target.",
@@ -666,6 +736,22 @@ def main():
     tab_multi = "\n".join(
         f"| **{n}** | {p} | {len(c)} — {', '.join(c)} |"
         for p, n, c, _ in _bs["multi"])
+
+    # --- quinto segnale: conteggio derivato da SEGNALE_5, mai scritto a mano
+    n_voci_creatura = len([v for v in BM.VOCI if v[3] == "creatura"])
+    n_flag = len(SEGNALE_5)
+    quota_flag = round(100 * n_flag / n_voci_creatura)
+    per_fascia_5 = collections.Counter(f for _, f, _ in SEGNALE_5)
+    NOMI_FASCIA_5 = {1: "prima", 2: "seconda", 3: "terza", 4: "quarta",
+                     5: "quinta", None: "fuori fascia"}
+    dist_5 = ", ".join(
+        f"{per_fascia_5[f]} in {NOMI_FASCIA_5[f]}"
+        for f in [1, 2, 3, 4, 5, None] if per_fascia_5[f])
+    n_basse_medie = per_fascia_5[2] + per_fascia_5[3]
+    quota_basse_medie = round(100 * n_basse_medie / n_flag)
+    tab_segnale_5 = "\n".join(
+        f"| {v} | {NOMI_FASCIA_5[f]} | {', '.join('`' + c + '`' for c in campi)} |"
+        for v, f, campi in SEGNALE_5)
 
     tab_srd = []
     for n in D.ORDINE_5E:
@@ -1034,8 +1120,54 @@ c'è garanzia che siano finite.
    (`Dragon, Othlorx`, pag. 22) che non necessitava aggiunta: descrive
    varianti comportamentali di draghi standard già coperti (\"physically
    identical to the existing dragon forms\"), non un nuovo statblock.
+5. *Ricerca di "See below" su tutti i campi di tutte le voci — di natura
+   diversa dai primi quattro quanto il quarto lo era dai primi tre, ma nella
+   direzione opposta.* I segnali 1-4 cercano voci MANCANTI o mal titolate:
+   presuppongono che qualcosa nel testo estratto sia rotto o assente. Il
+   quinto non cerca niente che manchi — cerca, dentro voci già lette e già
+   classificate, i campi che la SCHEDA STESSA rimanda al testo perché "la
+   riga della tabella non basta a descriverli". In AD&D 2e "See below" è
+   dichiarazione dell'autore, non difetto di estrazione: la tabella ha uno
+   spazio fisso, e quando non basta il manuale rimanda alla prosa. Trovato
+   applicandolo prima ancora di leggere per intero le tre voci segnalate
+   dall'audit dei Punti Esperienza (Wichtlin, Eyewing, Imp Blood Sea, tutte
+   e tre con almeno un campo "See below"): il segnale vero dietro quell'audit
+   non erano i PE alti in sé, ma la presenza di questi campi rimandati — i PE
+   sono l'effetto (il manuale li conta nel totale), non la causa. A
+   differenza dei segnali 1-4, questo si applica PRIMA di leggere una voce
+   per intero, come segnale di priorità: fra le {n_voci_creatura} voci
+   "creatura" dell'Appendice, **{n_flag} ({quota_flag}%)** hanno almeno un
+   campo "See below" in un dato di combattimento (non nei campi di mondo
+   `TREASURE`/`NO. APPEARING`, sempre esclusi dallo statblock per la
+   decisione 27 gruppo A — l'unica eccezione è `Haunt, Knight`, dove
+   `TREASURE` stesso resta "See below" senza un valore alternativo
+   dichiarato altrove, e va comunque letto). Distribuzione sulle fasce
+   attuali: {dist_5}. Tutte già lette per intero in questa sessione (elenco
+   completo più sotto): tre nella seconda fascia (Bear Ice, Centaur,
+   Eyewing) risolvono in un'immunità o un bonus singolo senza cambiare
+   fascia, una (Lizard Man) rivela tre dettagli di fuga/vulnerabilità nuovi
+   restando comunque di fascia bassa, due (Wichtlin, Imp Blood Sea) erano
+   proprio le voci arrivate dall'audit sui PE e si sono confermate
+   identitarie. La concentrazione nelle fasce basse-medie (seconda e terza,
+   **{n_basse_medie} voci su {n_flag}, il {quota_basse_medie}%**) conferma
+   l'aspettativa che l'ha motivato: è lì che un campo rimandato al testo può
+   far più danno, perché è lì che ci si fida di più della prima impressione.
 
-**Segnali NON usati**, e quindi punti dove un quinto giro potrebbe ancora
+   | voce | fascia | campi "See below" |
+   |---|---|---|
+   {tab_segnale_5}
+
+**Un limite dichiarato del quinto segnale**: non cattura tutto cio' che
+richiede lettura completa. Lo Skrit (fascia 3, capacita' "jellification" mai
+quantificata in nessun campo) e il Tylor (`SPECIAL DEFENSES: Special`, sei
+categorie d'eta' con statistiche diverse) sono identitari quanto Wichtlin ma
+il loro campo critico non dice "See below": dice un nome ("jellification") o
+la parola "Special" senza rimando esplicito. Il quarto vincolo del metodo
+(leggere lo statblock intero prima di classificare, mai dedotto da un solo
+segnale) resta la rete di sicurezza; il quinto segnale e' un modo piu' economico
+di decidere DA DOVE cominciare a leggere, non un sostituto della lettura.
+
+**Segnali NON usati**, e quindi punti dove un ulteriore giro potrebbe ancora
 trovare qualcosa: nessun controllo automatico ha confrontato il numero di
 voci trovate con un indice o sommario del manuale (l'MC Appendix, formato
 Monstrous Compendium a fogli sciolti, non ne ha uno stampato); nessun
@@ -1043,16 +1175,16 @@ controllo ha verificato che OGNI voce, non solo quelle già sospette, abbia un
 blocco statistiche internamente coerente (es. `NO. OF ATTACKS` e
 `DAMAGE/ATTACK` con lo stesso numero di elementi); e non è stata fatta una
 rilettura sistematica di TUTTE le pagine a immagine, solo di quelle già
-segnalate da un sintomo testuale o da un salto di pagina — quindi un difetto
-che non lascia nessuno dei due sintomi (un'intestazione corrotta ma su una
-pagina consecutiva, senza salto) resta strutturalmente invisibile a tutti e
-quattro i segnali usati finora.
+segnalate da un sintomo testuale, da un salto di pagina, o da un campo
+rimandato al testo — quindi un difetto che non lascia nessuno dei tre
+sintomi (un'intestazione corrotta ma su una pagina consecutiva, senza salto,
+senza "See below") resta strutturalmente invisibile a tutti e cinque i
+segnali usati finora.
 
-Non si fa una quinta passata sistematica adesso: il costo supera il beneficio
-e non blocca la conversione, che e' gia' cominciata e ha completato la prima
-fascia (Traag, Scheletro Guerriero al suo vero grado, Thanoi, Kyrie — vedi
-Parte 5) indipendentemente da questo numero. Ma il rapporto deve dirlo, non
-nasconderlo dietro un totale che sembra chiuso.''')}
+Il conteggio delle voci (48 creatura, {BS['creature']} creature) non e'
+cambiato con il quinto segnale: cerca dentro voci gia' contate, non ne
+aggiunge. Il rapporto deve comunque dirlo, non nasconderlo dietro un
+elenco di segnali che sembra chiuso.''')}
 
 ---
 
@@ -1062,16 +1194,18 @@ Le **{BS['da_convertire']} creature** da convertire, tolte le {BS['razza_nostra'
 coperte da `dati/razze/` e le {BS['razza_altra']} razze fuori roster. **Proposta, non decisione.**
 
 I **cinque draconici, il Traag, lo Scheletro Guerriero, il Thanoi, il Kyrie,
-l'Ogre di Krynn, l'Orughi, l'Horax, l'Orso Glaciale, il Fetch, l'Ombrolo e il
-suo Anziano Venerato non sono in questa lista**: i primi cinque hanno già un
-precedente ufficiale completo (parti 2-4 sopra), gli ultimi undici sono già
+l'Ogre di Krynn, l'Orughi, l'Horax, l'Orso Glaciale, il Fetch, l'Ombrolo, il
+suo Anziano Venerato e l'Occhialato (Eyewing) non sono in questa lista**: i
+primi cinque hanno già un
+precedente ufficiale completo (parti 2-4 sopra), gli ultimi dodici sono già
 stati convertiti (`dati/mostri/traag.json`,
 `dati/mostri/scheletro-guerriero.json`, `dati/mostri/thanoi.json`,
 `dati/mostri/kyrie.json`, `dati/mostri/ogre-krynn.json`,
 `dati/mostri/orughi.json`, `dati/mostri/horax.json`,
 `dati/mostri/orso-glaciale.json`, `dati/mostri/fetch.json`,
 `dati/mostri/shadowperson.json`,
-`dati/mostri/anziano-venerato-ombrolo.json` — la prima fascia dell'arena è
+`dati/mostri/anziano-venerato-ombrolo.json`,
+`dati/mostri/eyewing.json` — la prima fascia dell'arena è
 completa e la seconda è a buon punto, coi due casi con precedente 3.5 fatti
 con calma). Restano **{tot_creature} creature** su **{tot_righe} voci** nelle
 cinque fasce, più il Cervo Bianco fuori fascia.
@@ -1108,6 +1242,24 @@ maggioranza delle voci, ma ha sbagliato platealmente su alcune.
   (\"nicchia\") → **seconda**. Nella direzione opposta: erano trattate come
   curiosità di nicchia e sono in realtà riempitivi puliti di fascia bassa,
   senza nulla di anomalo nella scheda.
+
+**2 voci in più hanno cambiato fascia il 20 agosto 2026**, dopo l'audit sui
+Punti Esperienza e il quinto segnale (ricerca di \"See below\"; dettaglio
+sopra, \"Il conteggio vero del bestiario\"):
+
+- **Wichtlin**: seconda fascia → **terza** (identitaria, costosa). Doppio
+  tocco di contatto (paralisi + veleno), immunità multiple, contagio su
+  elfi uccisi in sette giorni, variante montata: molto più di un
+  riempitivo, nello stesso modo in cui lo era risultato lo Skrit.
+- **Imp, Blood Sea**: quarta fascia (\"nicchia\") → **terza** (identitaria,
+  costosa). Polimorfismo fisico/nebbia, immunità multiple, scissione da
+  fulmine: la fascia \"nicchia\" descriveva l'ambientazione (il Mare di
+  Sangue), non la meccanica — lo stesso equivoco di Bear Ice/Disir/Eyewing,
+  ma nella direzione opposta.
+
+L'**Eyewing**, letto per intero nello stesso giro, e' rimasto in seconda
+fascia (il campo rimandato al testo si risolveva in una sola immunita' al
+freddo) ed e' stato **convertito**: vedi `dati/mostri/eyewing.json`.
 
 **2 voci hanno una correzione di lettura, non di fascia:**
 
@@ -1161,26 +1313,24 @@ giudizio del manuale sulla pericolosità complessiva, non un derivato dei
 Dadi Vita. Ripassata la lista confrontando XP dichiarati e fascia assegnata:
 un controllo di minuti, non di ore.
 
-**Voci dove gli XP non tornano con la fascia — segnalate, non
-riclassificate**: il numero impone la lettura completa prima di convertire,
-non è un verdetto automatico (lo Skrit era anche lui "solo un numero" finché
-non si è letto il resto).
+**Voci dove gli XP non tornano con la fascia — RISOLTE il 20 agosto 2026
+con la lettura completa** (vedi anche il quinto segnale, sopra, che ha
+trovato lo stesso terzetto cercando "See below" invece degli XP): il numero
+impone la lettura completa prima di convertire, non è un verdetto automatico
+(lo Skrit era anche lui "solo un numero" finché non si è letto il resto).
 
-- **Wichtlin** (seconda fascia): XP 1.400, comparabile al Bozak Draconian
-  ufficiale (GS 2). CA 2 nella scala 2e (molto protetta, alla pari di
-  Bozak), `DAMAGE/ATTACK` e `SPECIAL ATTACKS` entrambi "See below" nella
-  fonte: meccanica non ancora letta per intero. Va riletta prima di
-  convertire, probabile candidata alla terza fascia.
-- **Eyewing** (seconda fascia): XP 650, alto per 3 Dadi Vita. `SPECIAL
-  ATTACKS: Tears` e `SPECIAL DEFENSES: See below` non ancora lette per
-  intero. Stesso trattamento del Wichtlin: rileggere prima di convertire.
-- **Imp, Blood Sea** (quarta fascia — "nicchia"): XP 975, alto per una
-  voce etichettata di nicchia (più della metà del Fire Minion, che sta in
-  terza fascia con lo stesso XP). Colpibile solo da armi magiche,
-  `MAGIC RESISTANCE: See below` non quantificata. La fascia "nicchia"
-  descriveva l'ambientazione (oceani tropicali), non la pericolosità:
-  stesso equivoco già corretto su Bear Ice e Disir, ma nella direzione
-  opposta.
+- **Wichtlin**: LETTO PER INTERO, SPOSTATO in terza fascia (era seconda).
+  Non un riempitivo: doppio tocco paralisi/veleno, immunità multiple,
+  contagio su elfi uccisi, variante montata. Dettaglio nella voce di terza
+  fascia, sopra.
+- **Eyewing**: LETTO PER INTERO, CONVERTITO in seconda fascia (fascia
+  confermata). `SPECIAL DEFENSES: See below` si risolve nella sola
+  immunità al freddo: il segnale era acceso ma la causa era semplice, come
+  già per il Kyrie. Vedi `dati/mostri/eyewing.json`.
+- **Imp, Blood Sea**: LETTO PER INTERO, SPOSTATO in terza fascia (era
+  quarta). Polimorfismo fisico/nebbia, immunità multiple, scissione da
+  fulmine: la fascia "nicchia" descriveva l'ambientazione, non la
+  meccanica. Dettaglio nella voce di terza fascia, sopra.
 - **Kyrie** (già convertito, GS 1): XP 1.400 in 2e, lo stesso ordine di
   grandezza del Wichtlin e del Bozak Draconian ufficiale (GS 2). La
   conversione già fatta assegna GS 1 sul danno per round dichiarato (un
@@ -1189,11 +1339,18 @@ non si è letto il resto).
   differenza dello Skrit, qui il danno base *è* stato letto per intero e
   *è* modesto. Segnalato, non ritoccato.
 
-Verificati e confermati COERENTI con la fascia assegnata: Lizard Man
-(Jarak-Sinn 270, Bakali 175 — bassi, seconda fascia corretta), Insect Swarm
-(XP "See below" per entrambe le varianti: non c'è un numero fisso da
-confrontare, la fascia distingue sulla base del veleno dichiarato, non
-degli XP).
+Verificati sugli XP e poi CORRETTI da una lettura più a fondo (il quinto
+segnale, sopra, non l'audit sugli XP): **Lizard Man** (Jarak-Sinn 270,
+Bakali 175 — XP bassi, fascia confermata, ma `SPECIAL DEFENSES: See below`
+su entrambe le colonne nasconde la coda distaccabile del jarak-sinn e la
+vulnerabilità al freddo del bakali, mai controllate perché gli XP sembravano
+chiudere la questione) e **Centaur (of Krynn)** (stesso schema: fascia
+confermata, il campo risolve nel +2 ai tiri salvezza degli Abanasiniani, già
+previsto come dettaglio di sotto-specie da estrarre in conversione). Insect
+Swarm resta verificato coerente sulla fascia (XP "See below" per entrambe le
+varianti: non c'è un numero fisso da confrontare, la fascia distingue sulla
+base del veleno dichiarato) ma porta anch'esso più campi "See below" del
+previsto — vedi il quinto segnale.
 
 **Il criterio resta l'arena, non la completezza**, e non cambia: la Fase 2 ha
 bisogno di avversari fra GS 1/4 e GS 4, in quantità e con tattiche diverse. La

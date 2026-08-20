@@ -4,6 +4,10 @@ Contratto di comportamento, non documentazione. Per il progetto vedi
 `CONTESTO-PROGETTO.md` (stato e le 33 decisioni). Se una regola qui sotto
 viene ignorata, il danno è reale, non stilistico.
 
+La lingua di lavoro è l'ITALIANO: commit, rapporti, commenti, e le risposte
+in sessione. Vale da subito in ogni sessione nuova, non solo dopo che la
+conversazione lo ha reso ovvio dal contesto.
+
 ## 1. Due repository, e cosa non deve mai uscire
 
 **Pubblico** (`.git`): documenti, script, schemi.
