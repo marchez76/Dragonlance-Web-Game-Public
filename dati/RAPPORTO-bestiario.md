@@ -564,19 +564,21 @@ causa — è nella tabella più sotto.
 Le **66 creature** da convertire, tolte le 14 schede di razze giocanti già
 coperte da `dati/razze/` e le 4 razze fuori roster. **Proposta, non decisione.**
 
-I **cinque draconici, il Traag, lo Scheletro Guerriero, il Thanoi e il Kyrie
-non sono in questa lista**: i primi cinque hanno già un precedente ufficiale
-completo (parti 2-4 sopra), gli ultimi quattro sono già stati convertiti
-(`dati/mostri/traag.json`, `dati/mostri/scheletro-guerriero.json`,
-`dati/mostri/thanoi.json`, `dati/mostri/kyrie.json` — la prima fascia
-dell'arena è completa). Restano **51 creature** su **42 voci** nelle
+I **cinque draconici, il Traag, lo Scheletro Guerriero, il Thanoi, il Kyrie,
+l'Ogre di Krynn e l'Orughi non sono in questa lista**: i primi cinque hanno
+già un precedente ufficiale completo (parti 2-4 sopra), gli ultimi sei sono
+già stati convertiti (`dati/mostri/traag.json`,
+`dati/mostri/scheletro-guerriero.json`, `dati/mostri/thanoi.json`,
+`dati/mostri/kyrie.json`, `dati/mostri/ogre-krynn.json`,
+`dati/mostri/orughi.json` — la prima fascia dell'arena è completa e la
+seconda è cominciata). Restano **53 creature** su **42 voci** nelle
 cinque fasce, più il Cervo Bianco fuori fascia.
 
-### Seconda — riempitivi di fascia bassa e media (15 voci, 22 creature)
+### Seconda — riempitivi di fascia bassa e media (15 voci, 24 creature)
 
 | creatura | perché | analogo SRD |
 |---|---|---|
-| Ogre (of Krynn) | Ora creatura per decisione 28, mancava del tutto dalla lista delle priorita'. 4+1 DV, nessuna resistenza fuori scala: ogre comune di Krynn, +2 al danno dichiarato dalla fonte. La voce include anche gli Orughi, tribu' separata piu' piccola (M, 4'-5'), stessa fascia. | sì — Ogre SRD |
+| Centaur (of Krynn) | Trovata il 20 agosto 2026 (compito 1, verifica Half-Ogre/Centaur): 4 DV, CA 5, nessuna resistenza fuori scala — profilo base pulito di fascia bassa-media, come Thanoi. Quattro sotto-specie nominate (Abanasinian, Crystalmir, Endscape, Wendle) con differenze di comportamento non ancora estratte per intero: la conversione base puo' partire dal profilo generico, le sotto-specie vanno lette a parte. | sì — Centaur SRD |
 | Horax | Bestia da branco, utile a riempire incontri senza tattica complessa. 4 DV, nessuna resistenza. | sì — Giant Wasp / Giant Spider |
 | Skrit | 6 DV, nessuna resistenza fuori scala: fascia bassa-media confermata. | sì — Giant Centipede |
 | Wichtlin | Non morto elfico, identitario e di fascia media. 4+4 DV, colpibile solo da armi magiche (+1 o migliori) e una resistenza magica non quantificata ("See below" nella fonte, da leggere sull'immagine prima di convertire) — non abbastanza per uscire dalla fascia media, ma da tenere presente in conversione. | sì — Wight / Specter |

@@ -377,18 +377,22 @@ ANALOGIE = {
 # voci ma ha sbagliato platealmente su alcune. Il dettaglio di cosa si e'
 # spostato e perche' e' nell'interpretativo subito sotto la tabella.
 #
-# Traag, Warrior Skeleton, Thanoi e Kyrie non sono piu' in questa lista:
-# sono gia' stati convertiti (dati/mostri/traag.json,
+# Traag, Warrior Skeleton, Thanoi, Kyrie, Ogre (of Krynn) e Orughi non sono
+# piu' in questa lista: sono gia' stati convertiti (dati/mostri/traag.json,
 # dati/mostri/scheletro-guerriero.json, dati/mostri/thanoi.json,
-# dati/mostri/kyrie.json) — la prima fascia e' completa.
+# dati/mostri/kyrie.json, dati/mostri/ogre-krynn.json,
+# dati/mostri/orughi.json) — la prima fascia e' completa e la seconda e'
+# cominciata dai riempitivi piu' puliti.
 # I cinque draconici veri restano fuori come prima.
 PRIORITA = [
-    ("Ogre (of Krynn)", 2,
-     "Ora creatura per decisione 28, mancava del tutto dalla lista delle "
-     "priorita'. 4+1 DV, nessuna resistenza fuori scala: ogre comune di "
-     "Krynn, +2 al danno dichiarato dalla fonte. La voce include anche gli "
-     "Orughi, tribu' separata piu' piccola (M, 4'-5'), stessa fascia.",
-     "sì — Ogre SRD", 2),
+    ("Centaur (of Krynn)", 2,
+     "Trovata il 20 agosto 2026 (compito 1, verifica Half-Ogre/Centaur): "
+     "4 DV, CA 5, nessuna resistenza fuori scala — profilo base pulito di "
+     "fascia bassa-media, come Thanoi. Quattro sotto-specie nominate "
+     "(Abanasinian, Crystalmir, Endscape, Wendle) con differenze di "
+     "comportamento non ancora estratte per intero: la conversione base "
+     "puo' partire dal profilo generico, le sotto-specie vanno lette a "
+     "parte.", "sì — Centaur SRD", 4),
     ("Horax", 2,
      "Bestia da branco, utile a riempire incontri senza tattica complessa. "
      "4 DV, nessuna resistenza.",
@@ -1051,12 +1055,14 @@ nasconderlo dietro un totale che sembra chiuso.''')}
 Le **{BS['da_convertire']} creature** da convertire, tolte le {BS['razza_nostra']} schede di razze giocanti già
 coperte da `dati/razze/` e le {BS['razza_altra']} razze fuori roster. **Proposta, non decisione.**
 
-I **cinque draconici, il Traag, lo Scheletro Guerriero, il Thanoi e il Kyrie
-non sono in questa lista**: i primi cinque hanno già un precedente ufficiale
-completo (parti 2-4 sopra), gli ultimi quattro sono già stati convertiti
-(`dati/mostri/traag.json`, `dati/mostri/scheletro-guerriero.json`,
-`dati/mostri/thanoi.json`, `dati/mostri/kyrie.json` — la prima fascia
-dell'arena è completa). Restano **{tot_creature} creature** su **{tot_righe} voci** nelle
+I **cinque draconici, il Traag, lo Scheletro Guerriero, il Thanoi, il Kyrie,
+l'Ogre di Krynn e l'Orughi non sono in questa lista**: i primi cinque hanno
+già un precedente ufficiale completo (parti 2-4 sopra), gli ultimi sei sono
+già stati convertiti (`dati/mostri/traag.json`,
+`dati/mostri/scheletro-guerriero.json`, `dati/mostri/thanoi.json`,
+`dati/mostri/kyrie.json`, `dati/mostri/ogre-krynn.json`,
+`dati/mostri/orughi.json` — la prima fascia dell'arena è completa e la
+seconda è cominciata). Restano **{tot_creature} creature** su **{tot_righe} voci** nelle
 cinque fasce, più il Cervo Bianco fuori fascia.
 
 {chr(10).join(blocchi_prio)}
