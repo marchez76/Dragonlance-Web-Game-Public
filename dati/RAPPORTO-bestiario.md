@@ -1,6 +1,6 @@
 # Il bestiario di Krynn — diagnostica
 
-*Generato da `dati/analizza_bestiario.py` il 2026-08-19.*
+*Generato da `dati/analizza_bestiario.py` il 2026-08-20.*
 
 > **Diagnostica, non conversione.** Serve a vedere la forma del problema prima
 > di cominciare, come `RAPPORTO-classi.md` per le classi. Nessuno statblock è
@@ -44,7 +44,7 @@ reale del **Baaz**.
 
 I 7 senza corrispettivo: `FREQUENCY`, `ORGANIZATION`, `ACTIVITY CYCLE`, `DIET`, `NO. APPEARING`, `MAGIC RESISTANCE`, `MORALE`.
 
-> **Lettura interpretativa** — registrata il 2026-08-19. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-08-20. Non e' derivata dai dati.
 >
 > Un terzo abbondante della scheda 2e — 7 campi su 21 — non ha dove andare.
 > Ma le due metà del problema non si somigliano.
@@ -251,7 +251,7 @@ identitarie di Krynn, quindi il campione non è casuale: è il migliore possibil
 | — | **aggiunto** | `Aura of Command`: aura di comando sugli altri draconici. In 2e l'Aurak era un comandante nel testo, non nelle regole. |
 
 
-> **Lettura interpretativa** — registrata il 2026-08-19. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-08-20. Non e' derivata dai dati.
 >
 > Tre regolarità nel modo di rendere, che valgono per tutti e cinque.
 >
@@ -328,7 +328,7 @@ ma non c'è una formula: Baaz e Kapak hanno la stessa CA 2e (4) e finiscono a 14
 | Sivak | 14.0 | 34.0 | ×2.4 |
 | Aurak | 13.0 | 24.0 | ×1.8 |
 
-> **Lettura interpretativa** — registrata il 2026-08-19. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-08-20. Non e' derivata dai dati.
 >
 > **La risposta alla domanda è no: cinque casi non bastano.**
 >
@@ -402,7 +402,7 @@ il danno la tira su da sola.
 | Sivak | 4 | 57 | 85 | 67% | 34 | ×2.4 |
 | Aurak | 6 | 67 | 114 | 59% | 24 | ×1.8 |
 
-> **Lettura interpretativa** — registrata il 2026-08-19. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-08-20. Non e' derivata dai dati.
 >
 > **Il Kapak ha 39 punti ferita contro una mediana di 58 al suo grado: il 67%.**
 > Sta *sotto* la mediana in difesa e ci arriva col danno — 24 per round. È un
@@ -425,7 +425,7 @@ il danno la tira su da sola.
 > offensivo rispetto alla propria fonte**: ×9.6 contro il ×1.6–×4.0 degli altri
 > quattro. Gli altri sono stati riscalati; lui è stato **ripensato**.
 
-> **Lettura interpretativa** — registrata il 2026-08-19. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-08-20. Non e' derivata dai dati.
 >
 > **Sopra la mediana in armatura, sotto in punti ferita.** È lo stesso profilo
 > visto sopra, letto sui due assi: la CA dei draconici sta sempre a pari o sopra
@@ -481,7 +481,7 @@ immagini di pagina lo ha rifatto voce per voce.
 verificati per primi. Il dettaglio completo — testo estratto, nome reale, pagina,
 causa — è nella tabella più sotto.
 
-> **Lettura interpretativa** — registrata il 2026-08-19. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-08-20. Non e' derivata dai dati.
 >
 > **L'estrazione non ha solo sbagliato i nomi: ha perso dei dati.** In tre voci
 > le colonne di destra sono sparite del tutto — `Avian` aveva quattro uccelli e
@@ -500,7 +500,7 @@ causa — è nella tabella più sotto.
 > specie sola in due stati, il solitario e la coppia accoppiata da 35 dadi vita
 > che il manuale tratta come singola creatura.
 
-> **Lettura interpretativa** — registrata il 2026-08-19. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-08-20. Non e' derivata dai dati.
 >
 > **Questo numero non è un fatto acquisito: è la stima migliore ottenuta finora,
 > e va detto invece di presentare 83 come definitivo.** Il conteggio "definitivo"
@@ -551,19 +551,13 @@ causa — è nella tabella più sotto.
 Le **62 creature** da convertire, tolte le 14 schede di razze giocanti già
 coperte da `dati/razze/` e le 4 razze fuori roster. **Proposta, non decisione.**
 
-I **cinque draconici, il Traag e lo Scheletro Guerriero non sono in questa
-lista**: i primi cinque hanno già un precedente ufficiale completo (parti
-2-4 sopra), gli ultimi due sono già stati convertiti
-(`dati/mostri/traag.json`, `dati/mostri/scheletro-guerriero.json`). Restano
-**53 creature** su **44 voci** nelle cinque fasce, più il Cervo Bianco
-fuori fascia.
-
-### Prima — servono subito all'arena (2)
-
-| creatura | perché | analogo SRD |
-|---|---|---|
-| Thanoi (Walrus Man) | Umanoide bestiale di fascia bassa, identitario del nord di Krynn. 4 DV, nessuna resistenza fuori scala: confermato di fascia bassa dopo la rilettura. | sì — Gnoll / Lizardfolk |
-| Kyrie | Umanoidi alati, avversari volanti di fascia bassa: l'arena ha bisogno di bersagli in volo presto. 4 DV, 25% di resistenza magica registrata (non applicata, decisione 27 gruppo C) ma non fuori scala per la fascia. | sì — Harpy / Hippogriff |
+I **cinque draconici, il Traag, lo Scheletro Guerriero, il Thanoi e il Kyrie
+non sono in questa lista**: i primi cinque hanno già un precedente ufficiale
+completo (parti 2-4 sopra), gli ultimi quattro sono già stati convertiti
+(`dati/mostri/traag.json`, `dati/mostri/scheletro-guerriero.json`,
+`dati/mostri/thanoi.json`, `dati/mostri/kyrie.json` — la prima fascia
+dell'arena è completa). Restano **51 creature** su **42 voci** nelle
+cinque fasce, più il Cervo Bianco fuori fascia.
 
 ### Seconda — riempitivi di fascia bassa e media (15 voci, 22 creature)
 
@@ -632,7 +626,7 @@ fuori fascia.
 **The White Stag.** Il terzo abitante della voce Stag (pag. 78). Non è una bestia: è unico, allineamento legale buono, 2.000 PE, con capacità magiche — una creatura sacra da incontro narrativo, non un avversario. Proposta: schedarlo quando esiste uno schema per creature uniche/da avventura (vicino allo schema Personaggio), non forzarlo nel bestiario da combattimento.
 
 
-> **Lettura interpretativa** — registrata il 2026-08-19. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-08-20. Non e' derivata dai dati.
 >
 > **Le fasce sono state ricostruite leggendo i 62 blocchi statistiche, non i
 > nomi delle voci.** La versione precedente aveva scelto la prima fascia (compresi
@@ -712,12 +706,13 @@ fuori fascia.
 > **Il criterio resta l'arena, non la completezza**, e non cambia: la Fase 2 ha
 > bisogno di avversari fra GS 1/4 e GS 4, in quantità e con tattiche diverse. La
 > quinta fascia contiene ora sette voci invece di cinque (Anemone Gigante e
-> Fireshadow si aggiungono ai draghi), e non ne serve nessuna alla Fase 2. La
-> prima fascia scende da quattro creature a **due**: il Traag e lo Scheletro
-> Guerriero sono già convertiti (il secondo al suo vero grado, non a quello
-> presunto), restano **Thanoi** e **Kyrie** come avversari da completare subito
-> — fante bestiale e bersaglio volante, entrambi confermati di fascia bassa
-> dalla rilettura, entrambi con un analogo SRD diretto.
+> Fireshadow si aggiungono ai draghi), e non ne serve nessuna alla Fase 2. **La
+> prima fascia è completa**: Traag (GS 1/4), Scheletro Guerriero (GS 7, al suo
+> vero grado, non a quello presunto), Thanoi (GS 2) e Kyrie (GS 1) sono tutti
+> convertiti. Il Thanoi ha avuto un riscontro in più: le statistiche 3.5 del
+> lotto Dragonlance Campaign Setting (`riscontro/3.5/`, consultazione, non
+> fonte) assegnano CR 2 in modo indipendente, confermando la stima fatta sulla
+> sola scheda 2e più l'analogia SRD.
 >
 > Il **Cervo Bianco** resta fuori da tutte e cinque le fasce: non è un
 > avversario, è una creatura sacra unica da incontro narrativo. Forzarlo in una
@@ -743,7 +738,7 @@ ricontaggio voce per voce ne ha trovati altri quattro con la stessa causa.
 | `Tayling Tayland` | **Tayling** (+1 varianti) | 79 | statblock a due colonne |
 | `Y a g g o l` | **Yaggol** | 87 | titolo con spaziatura fra le lettere nel layout |
 
-> **Lettura interpretativa** — registrata il 2026-08-19. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-08-20. Non e' derivata dai dati.
 >
 > **La causa è quasi sempre una sola, e non è un difetto delle pagine.**
 > 13 casi su 8 sono voci con statblock a **più colonne**: una sola
@@ -781,7 +776,7 @@ Delle tre cose che mancavano, **sono fatte tutte e tre**.
   83 creature**, stabilito voce per voce sulle immagini di pagina —
   vedi "Il conteggio vero del bestiario" sopra.
 
-> **Lettura interpretativa** — registrata il 2026-08-19. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-08-20. Non e' derivata dai dati.
 >
 > Nessuna delle tre resta aperta. Quello che resta, e non è bloccante per
 > cominciare a convertire, è un disallineamento scoperto per strada: il

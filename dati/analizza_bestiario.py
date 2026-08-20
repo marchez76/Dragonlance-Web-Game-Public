@@ -377,21 +377,12 @@ ANALOGIE = {
 # voci ma ha sbagliato platealmente su alcune. Il dettaglio di cosa si e'
 # spostato e perche' e' nell'interpretativo subito sotto la tabella.
 #
-# Traag e Warrior Skeleton non sono piu' in questa lista: sono gia' stati
-# convertiti (dati/mostri/traag.json, dati/mostri/scheletro-guerriero.json).
+# Traag, Warrior Skeleton, Thanoi e Kyrie non sono piu' in questa lista:
+# sono gia' stati convertiti (dati/mostri/traag.json,
+# dati/mostri/scheletro-guerriero.json, dati/mostri/thanoi.json,
+# dati/mostri/kyrie.json) — la prima fascia e' completa.
 # I cinque draconici veri restano fuori come prima.
 PRIORITA = [
-    ("Thanoi (Walrus Man)", 1,
-     "Umanoide bestiale di fascia bassa, identitario del nord di Krynn. "
-     "4 DV, nessuna resistenza fuori scala: confermato di fascia bassa "
-     "dopo la rilettura.",
-     "sì — Gnoll / Lizardfolk", 1),
-    ("Kyrie", 1,
-     "Umanoidi alati, avversari volanti di fascia bassa: l'arena ha bisogno "
-     "di bersagli in volo presto. 4 DV, 25% di resistenza magica registrata "
-     "(non applicata, decisione 27 gruppo C) ma non fuori scala per la "
-     "fascia.", "sì — Harpy / Hippogriff", 1),
-
     ("Ogre (of Krynn)", 2,
      "Ora creatura per decisione 28, mancava del tutto dalla lista delle "
      "priorita'. 4+1 DV, nessuna resistenza fuori scala: ogre comune di "
@@ -1048,12 +1039,13 @@ dirlo, non nasconderlo dietro un totale che sembra chiuso.''')}
 Le **{BS['da_convertire']} creature** da convertire, tolte le {BS['razza_nostra']} schede di razze giocanti già
 coperte da `dati/razze/` e le {BS['razza_altra']} razze fuori roster. **Proposta, non decisione.**
 
-I **cinque draconici, il Traag e lo Scheletro Guerriero non sono in questa
-lista**: i primi cinque hanno già un precedente ufficiale completo (parti
-2-4 sopra), gli ultimi due sono già stati convertiti
-(`dati/mostri/traag.json`, `dati/mostri/scheletro-guerriero.json`). Restano
-**{tot_creature} creature** su **{tot_righe} voci** nelle cinque fasce, più il Cervo Bianco
-fuori fascia.
+I **cinque draconici, il Traag, lo Scheletro Guerriero, il Thanoi e il Kyrie
+non sono in questa lista**: i primi cinque hanno già un precedente ufficiale
+completo (parti 2-4 sopra), gli ultimi quattro sono già stati convertiti
+(`dati/mostri/traag.json`, `dati/mostri/scheletro-guerriero.json`,
+`dati/mostri/thanoi.json`, `dati/mostri/kyrie.json` — la prima fascia
+dell'arena è completa). Restano **{tot_creature} creature** su **{tot_righe} voci** nelle
+cinque fasce, più il Cervo Bianco fuori fascia.
 
 {chr(10).join(blocchi_prio)}
 
@@ -1135,12 +1127,13 @@ riconoscerli quando emergono invece di inventargli un GS di comodo.
 **Il criterio resta l'arena, non la completezza**, e non cambia: la Fase 2 ha
 bisogno di avversari fra GS 1/4 e GS 4, in quantità e con tattiche diverse. La
 quinta fascia contiene ora sette voci invece di cinque (Anemone Gigante e
-Fireshadow si aggiungono ai draghi), e non ne serve nessuna alla Fase 2. La
-prima fascia scende da quattro creature a **due**: il Traag e lo Scheletro
-Guerriero sono già convertiti (il secondo al suo vero grado, non a quello
-presunto), restano **Thanoi** e **Kyrie** come avversari da completare subito
-— fante bestiale e bersaglio volante, entrambi confermati di fascia bassa
-dalla rilettura, entrambi con un analogo SRD diretto.
+Fireshadow si aggiungono ai draghi), e non ne serve nessuna alla Fase 2. **La
+prima fascia è completa**: Traag (GS 1/4), Scheletro Guerriero (GS 7, al suo
+vero grado, non a quello presunto), Thanoi (GS 2) e Kyrie (GS 1) sono tutti
+convertiti. Il Thanoi ha avuto un riscontro in più: le statistiche 3.5 del
+lotto Dragonlance Campaign Setting (`riscontro/3.5/`, consultazione, non
+fonte) assegnano CR 2 in modo indipendente, confermando la stima fatta sulla
+sola scheda 2e più l'analogia SRD.
 
 Il **Cervo Bianco** resta fuori da tutte e cinque le fasce: non è un
 avversario, è una creatura sacra unica da incontro narrativo. Forzarlo in una

@@ -1,6 +1,6 @@
 # Dragonlance Web GDR — contesto di progetto
 
-*Generato da `genera_contesto.py` il 2026-08-19.*
+*Generato da `genera_contesto.py` il 2026-08-20.*
 
 > **Come leggere questo documento.** Ogni numero, tabella e percentuale è
 > **derivato dai JSON** al momento della generazione: se un dato cambia, cambia
@@ -108,7 +108,7 @@ caratteristica, conservata perché è del manuale:
 - Nano delle Colline (Neidar) (CAR -1, max 12)
 - Nano delle Montagne (Hylar / Daewar) (CAR -1, max 16)
 
-> **Lettura interpretativa** — registrata il 2026-08-19. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-08-20. Non e' derivata dai dati.
 >
 > Il netto va da +0 a +2: nessuna razza raggiunge il +3 che la 5e
 > 2014 assegna di norma. Non va pareggiato. Le razze di Krynn non vengono mescolate
@@ -142,7 +142,7 @@ La velocità è derivata dai **tassi MV della 2e**, non dalla taglia.
 | 9 | 25 ft | Irda (Alto Ogre), Kender |
 | 12 | 30 ft | Barbaro, Elfo Dargonesti (Elfo degli Abissi), Elfo Dimernesti (Elfo dei Bassifondi), Elfo Kagonesti, Elfo Qualinesti, Elfo Silvanesti, Mezzelfo, Minotauro, Umano |
 
-> **Lettura interpretativa** — registrata il 2026-08-19. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-08-20. Non e' derivata dai dati.
 >
 > Derivare la velocità dalla taglia invertiva l'ordinamento della fonte: i nani
 > finivano a 30 e i Kender a 25, cioè il nano correva più del Kender. La 5e stessa
@@ -224,7 +224,7 @@ ottengano.
 - **Nessuna classe ha una tabella di THAC0 o di tiri salvezza**: valgono quelle di
   gruppo del PHB 2e, che non sono ancora nei dati.
 
-> **Lettura interpretativa** — registrata il 2026-08-19. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-08-20. Non e' derivata dai dati.
 >
 > Le classi di Krynn non sono classi nel senso della 5e: sono profili di
 > restrizione appoggiati sulle classi base della 2e. Convertirle non è un lavoro di
@@ -285,7 +285,7 @@ come sottoclasse. Accesso minore: solo fino al 3° livello, come in 2e.
 - Delle 105 voci, 28 sono attribuzioni nostre e non ereditate da un
   antenato 2e: restano marcate `nostra` nel dato.
 
-> **Lettura interpretativa** — registrata il 2026-08-19. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-08-20. Non e' derivata dai dati.
 >
 > 1 sfera 2e non trova un solo incantesimo nella lista base del chierico 5e:
 > Plant. Animal ne trova 1, Weather 1. Non è un difetto della mappatura:
@@ -376,7 +376,7 @@ Combinazioni sotto l'1%:
 |---|---|---:|---:|
 | Nano Sozzo (Aghar) | `barbaro` | 0,249% | 1 ogni 402 |
 
-> **Lettura interpretativa** — registrata il 2026-08-19. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-08-20. Non e' derivata dai dati.
 >
 > **Perché si tira.** Sotto point-buy due percorsi erano matematicamente
 > impossibili — il Cavaliere e il Cavaliere della Rosa — e il Nano Sozzo non aveva
@@ -440,7 +440,7 @@ Combinazioni sotto l'1%:
 | Umano | 3 | 0 | 0 | 0 | 3 | 0 |
 | Barbaro | 2 | 0 | 2 | 0 | 0 | 0 |
 
-> **Lettura interpretativa** — registrata il 2026-08-19. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-08-20. Non e' derivata dai dati.
 >
 > Su 105 tratti, 70 vengono dal PHB 2e (67%) e
 > 32 dalle fonti di Krynn (30%). La densità apparente di una
@@ -513,7 +513,7 @@ disponibile, non estratto.**
 
 ## Il bestiario — diagnostica
 
-Rapporto completo in `dati/RAPPORTO-bestiario.md`. **2 creature convertite** in `dati/mostri/` (le altre restano da fare: vedi "Il conteggio vero del bestiario" e "Parte 5" nel rapporto per il numero, che non è ancora definitivo).
+Rapporto completo in `dati/RAPPORTO-bestiario.md`. **4 creature convertite** in `dati/mostri/` (le altre restano da fare: vedi "Il conteggio vero del bestiario" e "Parte 5" nel rapporto per il numero, che non è ancora definitivo).
 
 **La scheda mostro 2e ha 21 campi**: 2 passano diretti in 5e, 12 vanno
 convertiti, **7 non hanno alcun corrispettivo** — FREQUENCY, ORGANIZATION, ACTIVITY CYCLE, DIET, NO. APPEARING, MAGIC RESISTANCE, MORALE.
@@ -543,7 +543,7 @@ attacco da 1-4.
 perché i dadi vita della 2e misurano solo la resistenza. **Il Kapak ha cambiato
 asse.**
 
-> **Lettura interpretativa** — registrata il 2026-08-19. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-08-20. Non e' derivata dai dati.
 >
 > **Non esiste una formula estraibile da cinque casi.** Una regolarità si
 > intravede — grado di sfida uguale ai dadi vita meno due — e tiene per quattro
@@ -623,7 +623,7 @@ pagina:
 
 **8 nomi di voce erano sbagliati** nel testo estratto, non i quattro noti.
 
-> **Lettura interpretativa** — registrata il 2026-08-19. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-08-20. Non e' derivata dai dati.
 >
 > **L'estrazione non ha solo sbagliato i nomi: ha perso dei dati.** In tre voci
 > le colonne di destra sono sparite del tutto — `Avian` aveva quattro uccelli e ne
@@ -685,7 +685,7 @@ I metadati ID3 non dichiarano né autore né etichetta né provenienza: l'unico 
 
 ### Richiedono una decisione
 
-> **Lettura interpretativa** — registrata il 2026-08-19. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-08-20. Non e' derivata dai dati.
 >
 > - **Il PHB 5e 2014 non è fra i PDF**: la cartella contiene solo edizioni 2024.
 >   Alternativa disponibile: `2014.5e.tools`, che espone il materiale 2014 come
