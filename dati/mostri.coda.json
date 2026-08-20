@@ -25,7 +25,9 @@
     { "id": "centauro-endscape", "name_it": "Centauro di Endscape", "challenge_rating": "2", "file": "mostri/centauro-endscape.json" },
     { "id": "centauro-wendle", "name_it": "Centauro Wendle", "challenge_rating": "1", "file": "mostri/centauro-wendle.json" },
     { "id": "emre", "name_it": "Emre", "challenge_rating": "1/8", "file": "mostri/emre.json" },
-    { "id": "kingfisher", "name_it": "Kingfisher", "challenge_rating": "0", "file": "mostri/kingfisher.json" }
+    { "id": "kingfisher", "name_it": "Kingfisher", "challenge_rating": "0", "file": "mostri/kingfisher.json" },
+    { "id": "wari", "name_it": "'Wari", "challenge_rating": "1/4", "file": "mostri/wari.json" },
+    { "id": "skyfisher", "name_it": "Skyfisher", "challenge_rating": "1/2", "file": "mostri/skyfisher.json" }
   ],
 
   "coda": [
@@ -48,7 +50,7 @@
       "creature_totali": 16,
       "voci": [
         { "voce": "Centaur (of Krynn)", "creature": ["Centaur, Abanasinian", "Centaur, Crystalmir", "Centaur, Endscape", "Centaur, Wendle"], "stato": "fatto", "note": "4 DV, CA 5 (Wendle CA 4). Analogo SRD: Centaur (GS 2). Abanasiniano GS 2 (base), Crystalmir GS 1/2 (piu' debole, dichiarato dalla fonte), Endscape GS 2 (bonus al danno dichiarati), Wendle GS 1 (taglia Media, unica delle quattro).", "file": ["mostri/centauro-abanasiniano.json", "mostri/centauro-crystalmir.json", "mostri/centauro-endscape.json", "mostri/centauro-wendle.json"] },
-        { "voce": "Avian", "creature": ["Emre", "Kingfisher", "Skyfisher", "'Wari"], "stato": "parziale", "note": "Emre (GS 1/8, analogo Giant Owl) e Kingfisher (GS 0, analogo Hawk) convertiti. Restano da_fare: Skyfisher (Dive/Drop, aggancio in volo) e 'Wari (Trample) — nessun analogo SRD pulito per Skyfisher.", "file": ["mostri/emre.json", "mostri/kingfisher.json"] },
+        { "voce": "Avian", "creature": ["Emre", "Kingfisher", "Skyfisher", "'Wari"], "stato": "fatto", "note": "Voce completata in due giri (cambio di unita' di lavoro da creatura a voce dopo Emre/Kingfisher). Emre GS 1/8 (analogo Giant Owl), Kingfisher GS 0 (analogo Hawk), 'Wari GS 1/4 (nessun analogo pulito; Calpestio registrato come tratto di gregge, non contato nel danno del singolo), Skyfisher GS 1/2 (nessun analogo pulito; base PF da Giant Eagle, aggancio in volo e Picchiata editoriali — GS medio fra difesa bassa e offesa alta, come il Kapak). Gradazione: Kingfisher < Emre < 'Wari < Skyfisher, coerente con la fonte (\"the skyfisher is the most dangerous of these birds\").", "file": ["mostri/emre.json", "mostri/kingfisher.json", "mostri/wari.json", "mostri/skyfisher.json"] },
         { "voce": "Stag", "creature": ["Wild Stag", "Giant Stag"], "stato": "da_fare", "note": "3 e 5 DV, bestie da branco pulite. Analogo: Elk/Giant Elk. Il White Stag della stessa voce e' fuori fascia, vedi sotto." },
         { "voce": "Lizard Man (of Krynn)", "creature": ["Jarak-Sinn", "Bakali"], "stato": "da_fare", "note": "2+1 DV ciascuno. Jarak-Sinn: coda distaccabile a volonta'. Bakali: vulnerabilita' al freddo + membrana nittitante; 'Squirt blood' PENDING (mai spiegato nel testo estratto, riverificare pag. 57). Analogo: Lizardfolk." },
         { "voce": "Phaethon", "creature": ["Phaethon"], "stato": "da_fare", "note": "4 DV, nessuna resistenza. Nessun analogo SRD diretto. Elder Phaethon e' voce separata, fascia 3." },

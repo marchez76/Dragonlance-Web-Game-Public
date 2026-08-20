@@ -48,6 +48,16 @@ le riorganizza per l'uso, non le sostituisce.
 
 ## 3. Regole ferme
 
+- **L'unità di lavoro è la VOCE, non la creatura.** Una voce letta per
+  intero — immagine di pagina, tutti gli statblock, verifica dei nomi — va
+  convertita per intero nello stesso giro: tornarci dopo un `/clear`
+  significa rileggerla da capo, e le varianti si gradano meglio a
+  confronto diretto (il Centauro è venuto bene perché le quattro culture
+  sono state graduate insieme). Tetto: oltre quattro creature per voce, ci
+  si ferma a quattro e si lascia il resto in coda; voce singola, se ne
+  prendono due come prima. Precedente: Avian, convertita in due giri prima
+  della regola (Emre/Kingfisher) e dopo (Skyfisher/'Wari) — la differenza
+  di costo fra i due giri è il motivo del cambio.
 - **Il nome della voce è un contenitore editoriale del manuale, non una
   creatura.** Quando nessuna variante lo porta come proprio, tutte vanno
   registrate in `variante_di` e **nessuna** viene promossa arbitrariamente a
