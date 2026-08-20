@@ -93,6 +93,21 @@ le riorganizza per l'uso, non le sostituisce.
   entità, fuori dal bestiario. Tipo/procedura ripetibile, anche se potente o
   legato a un oggetto magico → creatura, si converte come le altre.
   "Legato a un oggetto" non equivale a "unico".
+- **La media fra grado difensivo e grado offensivo non è un compromesso, è
+  la regola.** In 5e il Grado di Sfida è per definizione la media fra i due
+  assi (DMG): un mostro con difesa 1/8 e offesa 1 dà GS 1/2 perché così si
+  calcola, non perché ci si "incontra a metà strada". Non giustificare ogni
+  divergenza fra difesa e offesa come tensione da annotare — è normale,
+  quasi sempre lo è. La tensione vera, quella da scrivere in `note`, è solo
+  quando il risultato non torna nemmeno facendo la media (Kapak: salto
+  offensivo ×9.6 sulla fonte, non assorbibile da nessuna media).
+- **I comportamenti di gruppo vanno al generatore di incontri, non persi.**
+  Un'azione che la creatura fa solo in stormo/branco (es. il Calpestio del
+  'Wari) va esclusa dal calcolo del GS del singolo — è corretto — ma
+  registrata con destinazione `generatore_incontri`, stesso trattamento del
+  morale (decisione 27, gruppo B). Un buco silenzioso qui è come un buco
+  silenzioso su una capacità individuale: la regola ferma sulle capacità
+  dichiarate (sopra) vale anche per i comportamenti collettivi.
 
 ## 4. La procedura, passo per passo
 
