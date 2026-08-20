@@ -48,6 +48,14 @@ le riorganizza per l'uso, non le sostituisce.
 
 ## 3. Regole ferme
 
+- **Il nome della voce è un contenitore editoriale del manuale, non una
+  creatura.** Quando nessuna variante lo porta come proprio, tutte vanno
+  registrate in `variante_di` e **nessuna** viene promossa arbitrariamente a
+  "principale" solo per riempire il campo. Precedente: Centaur (of Krynn),
+  quattro culture (Abanasiniano, Crystalmir, Endscape, Wendle), nessuna
+  chiamata come la voce — stesso schema di Man (of Krynn), già nello schema
+  prima del Centauro.
+
 - Una capacità che la fonte **dichiara** ma senza resa 5e evidente va
   `pending`, **mai omessa in silenzio** — vale per incantesimi, tratti e
   varianti/sottospecie.
@@ -103,8 +111,9 @@ una checklist burocratica.
 10. Compilare `morale_2e` (destinazione `ia_combattimento`) e
     `world_data_2e` (destinazione `generatore_incontri`) dai gruppi A/B
     della decisione 27.
-11. Validare contro `dati/schema/mostro.schema.json`, aggiungere la voce a
-    `dati/mostri.index.json`.
+11. Validare contro `dati/schema/mostro.schema.json`, poi rigenerare
+    `dati/mostri.index.json` con `python3 dati/build_mostri_index.py`
+    (derivato dal contenuto di `dati/mostri/`, non tenuto a mano).
 
 ## 5. Le categorie aperte
 

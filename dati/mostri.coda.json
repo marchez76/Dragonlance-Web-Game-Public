@@ -1,0 +1,134 @@
+{
+  "nota": "Coda di lavoro del bestiario di Krynn. Elenco ordinato per fascia di priorita' (dati/RAPPORTO-bestiario.md, Parte 5), con stato da_fare/fatto. Come convertire: dati/METODO-conversione-mostri.md. Perche' le fasce sono ordinate cosi': dati/RAPPORTO-bestiario.md. Generato a mano il 2026-08-21, non da uno script: da tenere sincronizzato manualmente a ogni conversione.",
+  "aggiornato": "2026-08-21",
+
+  "convertite": [
+    { "id": "traag", "name_it": "Traag", "challenge_rating": "1/4", "file": "mostri/traag.json" },
+    { "id": "scheletro-guerriero", "name_it": "Scheletro Guerriero", "challenge_rating": "7", "file": "mostri/scheletro-guerriero.json" },
+    { "id": "thanoi", "name_it": "Thanoi", "challenge_rating": "2", "file": "mostri/thanoi.json" },
+    { "id": "kyrie", "name_it": "Kyrie", "challenge_rating": "1", "file": "mostri/kyrie.json" },
+    { "id": "ogre-krynn", "name_it": "Ogre di Krynn", "challenge_rating": "2", "file": "mostri/ogre-krynn.json" },
+    { "id": "orughi", "name_it": "Orughi", "challenge_rating": "1", "file": "mostri/orughi.json" },
+    { "id": "horax", "name_it": "Horax", "challenge_rating": "1", "file": "mostri/horax.json" },
+    { "id": "orso-glaciale", "name_it": "Orso Glaciale", "challenge_rating": "3", "file": "mostri/orso-glaciale.json" },
+    { "id": "fetch", "name_it": "Fetch", "challenge_rating": "6", "file": "mostri/fetch.json" },
+    { "id": "shadowperson", "name_it": "Ombrolo", "challenge_rating": "2", "file": "mostri/shadowperson.json" },
+    { "id": "anziano-venerato-ombrolo", "name_it": "Anziano Venerato", "challenge_rating": "0", "file": "mostri/anziano-venerato-ombrolo.json" },
+    { "id": "eyewing", "name_it": "Occhialato", "challenge_rating": "1", "file": "mostri/eyewing.json" },
+    { "id": "draconico-baaz", "name_it": "Draconico Baaz", "challenge_rating": "1/2", "file": "mostri/draconico-baaz.json" },
+    { "id": "draconico-bozak", "name_it": "Draconico Bozak", "challenge_rating": "2", "file": "mostri/draconico-bozak.json" },
+    { "id": "draconico-kapak", "name_it": "Draconico Kapak", "challenge_rating": "3", "file": "mostri/draconico-kapak.json" },
+    { "id": "draconico-sivak", "name_it": "Draconico Sivak", "challenge_rating": "4", "file": "mostri/draconico-sivak.json" },
+    { "id": "draconico-aurak", "name_it": "Draconico Aurak", "challenge_rating": "6", "file": "mostri/draconico-aurak.json" },
+    { "id": "centauro-abanasiniano", "name_it": "Centauro Abanasiniano", "challenge_rating": "2", "file": "mostri/centauro-abanasiniano.json" },
+    { "id": "centauro-crystalmir", "name_it": "Centauro di Crystalmir", "challenge_rating": "1/2", "file": "mostri/centauro-crystalmir.json" },
+    { "id": "centauro-endscape", "name_it": "Centauro di Endscape", "challenge_rating": "2", "file": "mostri/centauro-endscape.json" },
+    { "id": "centauro-wendle", "name_it": "Centauro Wendle", "challenge_rating": "1", "file": "mostri/centauro-wendle.json" },
+    { "id": "emre", "name_it": "Emre", "challenge_rating": "1/8", "file": "mostri/emre.json" },
+    { "id": "kingfisher", "name_it": "Kingfisher", "challenge_rating": "0", "file": "mostri/kingfisher.json" }
+  ],
+
+  "coda": [
+    {
+      "fascia": 1,
+      "label": "Draconici ufficiali — precedente 5e completo in SotDQ",
+      "nota": "Gli unici cinque con statblock 2e E 5e ufficiale (RAPPORTO-bestiario.md, Parti 2-4). Non convertire per analogia: trascrivere lo statblock SotDQ gia' noto, con source_2e dall'MC Appendix.",
+      "voci": [
+        { "voce": "Draconian, Baaz", "stato": "fatto", "note": "SotDQ pag. 197 stampata. GS 1/2.", "file": "mostri/draconico-baaz.json" },
+        { "voce": "Draconian, Bozak", "stato": "fatto", "note": "SotDQ pag. 198 stampata. GS 2.", "file": "mostri/draconico-bozak.json" },
+        { "voce": "Draconian, Kapak", "stato": "fatto", "note": "SotDQ pag. 198 stampata. GS 3 — rompe GS=DV-2, vedi RAPPORTO-bestiario.md Parte 3.", "file": "mostri/draconico-kapak.json" },
+        { "voce": "Draconian, Sivak", "stato": "fatto", "note": "SotDQ pag. 199 stampata. GS 4.", "file": "mostri/draconico-sivak.json" },
+        { "voce": "Draconian, Aurak", "stato": "fatto", "note": "SotDQ pag. 196 stampata. GS 6.", "file": "mostri/draconico-aurak.json" }
+      ]
+    },
+    {
+      "fascia": 2,
+      "label": "Riempitivi di fascia bassa e media",
+      "voci_totali": 8,
+      "creature_totali": 16,
+      "voci": [
+        { "voce": "Centaur (of Krynn)", "creature": ["Centaur, Abanasinian", "Centaur, Crystalmir", "Centaur, Endscape", "Centaur, Wendle"], "stato": "fatto", "note": "4 DV, CA 5 (Wendle CA 4). Analogo SRD: Centaur (GS 2). Abanasiniano GS 2 (base), Crystalmir GS 1/2 (piu' debole, dichiarato dalla fonte), Endscape GS 2 (bonus al danno dichiarati), Wendle GS 1 (taglia Media, unica delle quattro).", "file": ["mostri/centauro-abanasiniano.json", "mostri/centauro-crystalmir.json", "mostri/centauro-endscape.json", "mostri/centauro-wendle.json"] },
+        { "voce": "Avian", "creature": ["Emre", "Kingfisher", "Skyfisher", "'Wari"], "stato": "parziale", "note": "Emre (GS 1/8, analogo Giant Owl) e Kingfisher (GS 0, analogo Hawk) convertiti. Restano da_fare: Skyfisher (Dive/Drop, aggancio in volo) e 'Wari (Trample) — nessun analogo SRD pulito per Skyfisher.", "file": ["mostri/emre.json", "mostri/kingfisher.json"] },
+        { "voce": "Stag", "creature": ["Wild Stag", "Giant Stag"], "stato": "da_fare", "note": "3 e 5 DV, bestie da branco pulite. Analogo: Elk/Giant Elk. Il White Stag della stessa voce e' fuori fascia, vedi sotto." },
+        { "voce": "Lizard Man (of Krynn)", "creature": ["Jarak-Sinn", "Bakali"], "stato": "da_fare", "note": "2+1 DV ciascuno. Jarak-Sinn: coda distaccabile a volonta'. Bakali: vulnerabilita' al freddo + membrana nittitante; 'Squirt blood' PENDING (mai spiegato nel testo estratto, riverificare pag. 57). Analogo: Lizardfolk." },
+        { "voce": "Phaethon", "creature": ["Phaethon"], "stato": "da_fare", "note": "4 DV, nessuna resistenza. Nessun analogo SRD diretto. Elder Phaethon e' voce separata, fascia 3." },
+        { "voce": "Insect Swarm, Grasshopper and Locust", "creature": ["Grasshopper and Locust Swarm"], "stato": "da_fare", "note": "Formula di scala (dimensione 1d100), nessun veleno. Analogo: Swarm of Insects." },
+        { "voce": "Gurik Cha-ahl", "creature": ["Gurik Cha-ahl"], "stato": "da_fare", "note": "2 DV, riempitivo bassissimo. Nessun analogo SRD." },
+        { "voce": "Kani Doll", "creature": ["Kani Doll"], "stato": "da_fare", "note": "2 DV, CA 10, costrutto senza morale. 'Continuous attacks' = idioma dell'Aggancio dell'Horax gia' convertito. Analogo parziale: Homunculus." }
+      ]
+    },
+    {
+      "fascia": 3,
+      "label": "Identitari ma senza analogo pulito",
+      "voci_totali": 17,
+      "creature_totali": 18,
+      "voci": [
+        { "voce": "Skrit", "stato": "da_fare", "note": "XP 2.000. Paralisi da veleno progressiva poi dissoluzione dei tessuti, curabile solo con rigenerazione/guarigione naturale. Nessun analogo SRD pulito." },
+        { "voce": "Disir", "stato": "da_fare", "note": "Tre attacchi tutti avvelenati dal gel, TS con penalita' cumulativa fino a paralisi progressiva. Nessun analogo SRD pulito." },
+        { "voce": "Dreamshadow", "stato": "categoria_aperta", "note": "CREATURA-MODELLO: ogni campo 'as creature or person mimicked'. Vedi METODO-conversione-mostri.md §5, non convertire con la procedura standard." },
+        { "voce": "Dreamwraith", "stato": "da_fare", "note": "8 DV, statistiche proprie fisse (a differenza del Dreamshadow gemello). Sotto-sistema di 'disbelief' condiviso, da rendere non copiare 1:1." },
+        { "voce": "Fire Minion", "stato": "da_fare", "note": "6 DV. Aura passiva 1d6 senza TS, immunita' al fuoco totale, vulnerabilita' all'acqua, vincolo ambientale (danno se lontano dal fuoco). Analogo parziale: Magmin, sottodimensionato." },
+        { "voce": "Tylor", "stato": "categoria_aperta", "note": "FAMIGLIA DI STATBLOCK: 6 categorie d'eta' con DV/CA/soffio propri. Vedi METODO-conversione-mostri.md §5. Nessun soffio in nessuna categoria; eredita una sola resistenza elementare dal genitore." },
+        { "voce": "Knight, Death", "creature": ["Cavaliere della Morte"], "stato": "da_fare", "note": "TIPO ripetibile (decisione 32), non Lord Soth. 9 DV, 75% resistenza magica, incantatore a 20° livello. GS ben oltre 7, nessun analogo SRD combina guardiano corazzato e incantatore a questo livello." },
+        { "voce": "Haunt, Knight", "stato": "da_fare", "note": "8 DV, CA molto protetta. Controllo di paura, immunita' multiple, rigenera senza acqua santa. Nessun analogo SRD." },
+        { "voce": "Phaethon, Elder", "stato": "da_fare", "note": "Variante piu' forte del Phaethon base (6 DV, 5% resistenza magica). Comporre insieme al Phaethon." },
+        { "voce": "Insect Swarm, Velvet Ant", "stato": "da_fare", "note": "Dimensione 1d100x1.000, morso + TS veleno o -2 a tutti i tiri. Analogo parziale: Swarm of Insects, senza il veleno." },
+        { "voce": "Yaggol", "stato": "da_fare", "note": "Sotto-razza mind flayer minore. Mind blast 10 ft/3d6/1h ricarica, sei attacchi (pugni + 4 tentacoli aggancianti). 50% resistenza magica. Mind Flayer vero e' GS 7, fuori target." },
+        { "voce": "Tayling", "creature": ["Tayling", "Taylang"], "stato": "da_fare", "note": "Gemelli telepatici obbligati: Tayling (4 DV, intelligente), Taylang (8 DV, bestiale — fascia media, non sottostimare). Nessun analogo SRD per il legame telepatico." },
+        { "voce": "Spectral Minion", "stato": "da_fare", "note": "TEMPLATE su statistiche della vita precedente (DV 'Varies'), non statblock fisso — come Dreamshadow. Sei varianti comportamentali (guardiano/filosofo/ricercatore/guerriero/festaiolo/berserker), non gradi di potenza. Colpibile solo da armi magiche, 20% resistenza magica. Analogo per il profilo generale: Specter." },
+        { "voce": "Wyndlass", "stato": "da_fare", "note": "12 DV, THAC0 9, undici attacchi (10 tentacoli + morso), 5.000 PE — ordine di grandezza del Cavaliere della Morte. Analogo parziale: Hydra per il numero di attacchi, senza rigenerazione." },
+        { "voce": "Wichtlin", "stato": "da_fare", "note": "Elfo non morto: due tocchi distinti (paralisi 2d4 round, veleno 2d6), immunita' multiple, colpibile solo da armi magiche +1, contagio su elfi uccisi (diventano wichtlin in 7 giorni). Variante montata inclusa. Analogo parziale: Specter, nessuno replica il contagio." },
+        { "voce": "Imp, Blood Sea", "stato": "da_fare", "note": "Polimorfismo fisico/nebbia a volonta', colpibile solo da armi magiche, immunita' multiple, 10% di scissione se colpito da fulmine. Analogo parziale: Imp/Quasit, nessuno replica la scissione." },
+        { "voce": "Kalothagh (Prickleback)", "stato": "da_fare", "note": "4+4 DV, quattro meccaniche distinte: aculei a distanza velenosi, aculeo conficcato, impalamento passivo in mischia, 'fa il morto' sotto il 75% PF. Analogo parziale: Manticore acquatico, nessuno replica tutte e quattro." }
+      ]
+    },
+    {
+      "fascia": 4,
+      "label": "Nicchia",
+      "voci_totali": 3,
+      "voci": [
+        { "voce": "Shimmerweed", "stato": "da_fare", "note": "1 PF, immobile, un solo attacco (confusione). Piu' ostacolo ambientale che avversario. Analogo parziale: Shrieker." },
+        { "voce": "Hatori, Lesser", "stato": "da_fare", "note": "DV variabili 1-5. Complesso da fissare a un singolo GS; il taglio piu' basso rientra nel target." },
+        { "voce": "Spider, Giant Trap Door", "stato": "da_fare", "note": "4+4 DV, taglia Large, imboscatore. Analogo parziale: Giant Spider." }
+      ]
+    },
+    {
+      "fascia": 5,
+      "label": "Fuori target (draghi e alti Dadi Vita) — non serve alla Fase 2, priorita' bassa",
+      "voci_totali": 9,
+      "creature_totali": 10,
+      "voci": [
+        { "voce": "Dragon, Amphi", "stato": "da_fare", "note": "Drago. Analogo: draghi SRD." },
+        { "voce": "Dragon, Kodragon", "stato": "da_fare", "note": "Drago. Analogo: draghi SRD." },
+        { "voce": "Dragon, Sea", "stato": "da_fare", "note": "Drago. Analogo: draghi SRD." },
+        { "voce": "Dragon, Astral", "creature": ["Astral Dragon (unmated)", "Astral Dragon (mated pair)"], "stato": "da_fare", "note": "Una specie in due stati (solitario, coppia da 35 DV): una riga, non due. Analogo: draghi SRD." },
+        { "voce": "Hatori, Greater", "stato": "da_fare", "note": "Variante adulta, 6-20 DV. Fuori target quanto un drago." },
+        { "voce": "Beast, Undead", "creature": ["Stahnk", "Gholor"], "stato": "da_fare", "note": "24 DV (12+12) ciascuno. Fuori target quanto un drago." },
+        { "voce": "Spider, Whisper", "stato": "da_fare", "note": "16 DV (8+8). Fuori target quanto un drago." },
+        { "voce": "Anemone, Giant", "stato": "da_fare", "note": "16 DV, THAC0 5, 12.000 PE — piu' del doppio dell'Aurak (6.000, il piu' forte dei cinque draconici ufficiali). Una delle creature piu' potenti del bestiario." },
+        { "voce": "Fireshadow", "stato": "da_fare", "note": "13+3 DV (~16), Gargantuan, 11.000 PE — secondo valore piu' alto del bestiario. Evocabile solo da chierico malvagio 8°+." }
+      ]
+    }
+  ],
+
+  "fuori_fascia": [
+    {
+      "voce": "Stag, The White Stag",
+      "stato": "rinviato",
+      "note": "Unico, allineamento legale buono, 2.000 PE, capacita' magiche (find the path, speak with animals a volonta', bless 3/giorno). Creatura sacra da incontro narrativo, non un avversario da bestiario. Da schedare quando esiste uno schema per creature uniche/da avventura (vicino allo schema Personaggio), non forzare qui."
+    }
+  ],
+
+  "categorie_aperte": [
+    {
+      "nome": "creature-modello",
+      "voci": ["Dreamshadow", "Spectral Minion"],
+      "nota": "Statistiche ereditate da un bersaglio ('as creature or person mimicked' / 'quelli della vita precedente'), non fisse. Serve un pacchetto di regole, non uno statblock. METODO-conversione-mostri.md §5."
+    },
+    {
+      "nome": "famiglie di statblock",
+      "voci": ["Tylor"],
+      "nota": "Tabella di categorie d'eta' con DV/CA/capacita' propri per categoria, come gli age category dei draghi. Serve piu' di un GS. METODO-conversione-mostri.md §5."
+    }
+  ]
+}
