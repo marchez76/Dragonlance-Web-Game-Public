@@ -524,19 +524,27 @@ causa — è nella tabella più sotto.
 > 3. *Rilettura manuale, voce per voce, sulle immagini di pagina.* Non un
 >    segnale automatico ma la verifica finale: ogni voce dell'elenco sopra è
 >    stata riletta sull'immagine, non solo sul testo estratto.
-> 4. *Controllo dei salti nella sequenza di pagina.* Elencate le pagine di
->    tutte le voci già note e cercati i punti dove il numero di pagina salta
->    più di un'unità: la maggior parte dei salti erano continuazioni legittime
->    di voci già catalogate (una voce lunga due pagine), ma uno — pagg. 7-8,
->    fra `Beast, Undead` (pag. 6) e `Disir` (pag. 9) — nascondeva `Centaur (of
->    Krynn)`, mai trovata nei tre giri precedenti perché la sua intestazione
->    ha i NOMI DEI CAMPI corrotti ("CUMATf.iTERRAIN" invece di
->    "CLIMATE/TERRAIN", "THACO;" invece di "THAC0:"), non solo i valori:
->    invisibile a qualunque pattern-matching cerchi le etichette esatte.
->    Individuata anche una voce di dragoni (`Dragon, Othlorx`, pag. 22) che
->    non necessitava aggiunta: descrive varianti comportamentali di draghi
->    standard già coperti ("physically identical to the existing dragon
->    forms"), non un nuovo statblock.
+> 4. *Controllo dei salti nella sequenza di pagina — di natura diversa dai
+>    primi tre, e per questo ha trovato quello che loro non potevano.* I
+>    segnali 1-3 cercano tutti un'anomalia LEGGIBILE dentro il testo estratto
+>    di una voce: due valori sulla stessa riga, un'etichetta senza i due
+>    punti, un valore duplicato. Presuppongono cioè che la voce si lasci
+>    leggere almeno in parte. Il quarto segnale non cerca un difetto dentro le
+>    voci: elenca le pagine di tutte le voci già note e cerca i punti dove il
+>    numero salta più di un'unità — "dove mancano pagine fra due voci note",
+>    non "cosa c'è di storto in questa voce". Per questo è l'UNICO controllo
+>    che non dipende dal riuscire a leggere l'entrata mancante, ed è l'unico
+>    che poteva trovare `Centaur (of Krynn)` (pagg. 7-8, nel salto fra `Beast,
+>    Undead` a pag. 6 e `Disir` a pag. 9): la sua intestazione ha i NOMI DEI
+>    CAMPI corrotti ("CUMATf.iTERRAIN" invece di "CLIMATE/TERRAIN",
+>    "THACO;" invece di "THAC0:"), non solo i valori o il titolo — non
+>    c'era nulla da confrontare, quindi invisibile ai segnali 1-3 per
+>    costruzione, non per sfortuna. La maggior parte degli altri salti erano
+>    continuazioni legittime di voci già catalogate (una voce lunga due
+>    pagine); uno ha portato anche a verificare una voce di dragoni
+>    (`Dragon, Othlorx`, pag. 22) che non necessitava aggiunta: descrive
+>    varianti comportamentali di draghi standard già coperti ("physically
+>    identical to the existing dragon forms"), non un nuovo statblock.
 >
 > **Segnali NON usati**, e quindi punti dove un quinto giro potrebbe ancora
 > trovare qualcosa: nessun controllo automatico ha confrontato il numero di
@@ -565,22 +573,21 @@ Le **66 creature** da convertire, tolte le 14 schede di razze giocanti già
 coperte da `dati/razze/` e le 4 razze fuori roster. **Proposta, non decisione.**
 
 I **cinque draconici, il Traag, lo Scheletro Guerriero, il Thanoi, il Kyrie,
-l'Ogre di Krynn e l'Orughi non sono in questa lista**: i primi cinque hanno
-già un precedente ufficiale completo (parti 2-4 sopra), gli ultimi sei sono
-già stati convertiti (`dati/mostri/traag.json`,
-`dati/mostri/scheletro-guerriero.json`, `dati/mostri/thanoi.json`,
-`dati/mostri/kyrie.json`, `dati/mostri/ogre-krynn.json`,
-`dati/mostri/orughi.json` — la prima fascia dell'arena è completa e la
-seconda è cominciata). Restano **53 creature** su **42 voci** nelle
+l'Ogre di Krynn, l'Orughi, l'Horax e l'Orso Glaciale non sono in questa
+lista**: i primi cinque hanno già un precedente ufficiale completo (parti
+2-4 sopra), gli ultimi otto sono già stati convertiti
+(`dati/mostri/traag.json`, `dati/mostri/scheletro-guerriero.json`,
+`dati/mostri/thanoi.json`, `dati/mostri/kyrie.json`,
+`dati/mostri/ogre-krynn.json`, `dati/mostri/orughi.json`,
+`dati/mostri/horax.json`, `dati/mostri/orso-glaciale.json` — la prima fascia
+dell'arena è completa e la seconda è a buon punto). Restano **51 creature** su **40 voci** nelle
 cinque fasce, più il Cervo Bianco fuori fascia.
 
-### Seconda — riempitivi di fascia bassa e media (15 voci, 24 creature)
+### Seconda — riempitivi di fascia bassa e media (12 voci, 21 creature)
 
 | creatura | perché | analogo SRD |
 |---|---|---|
 | Centaur (of Krynn) | Trovata il 20 agosto 2026 (compito 1, verifica Half-Ogre/Centaur): 4 DV, CA 5, nessuna resistenza fuori scala — profilo base pulito di fascia bassa-media, come Thanoi. Quattro sotto-specie nominate (Abanasinian, Crystalmir, Endscape, Wendle) con differenze di comportamento non ancora estratte per intero: la conversione base puo' partire dal profilo generico, le sotto-specie vanno lette a parte. | sì — Centaur SRD |
-| Horax | Bestia da branco, utile a riempire incontri senza tattica complessa. 4 DV, nessuna resistenza. | sì — Giant Wasp / Giant Spider |
-| Skrit | 6 DV, nessuna resistenza fuori scala: fascia bassa-media confermata. | sì — Giant Centipede |
 | Wichtlin | Non morto elfico, identitario e di fascia media. 4+4 DV, colpibile solo da armi magiche (+1 o migliori) e una resistenza magica non quantificata ("See below" nella fonte, da leggere sull'immagine prima di convertire) — non abbastanza per uscire dalla fascia media, ma da tenere presente in conversione. | sì — Wight / Specter |
 | Shadowperson | Non morto elfico di fascia media, 3+1 DV. La CA dichiarata (2 nella scala 2e) e' pero' notevolmente piu' alta di quanto i DV suggeriscano da soli: da verificare in conversione se serve un analogo piu' corazzato di Shadow/Specter. La voce contiene anche il Revered Ancient One, il suo anziano — quasi tutto `Nil`: non combatte, va convertito come comparsa non nella scheda dell'avversario. | parziale — Shadow / Specter, verificare la CA |
 | Avian (Emre, Kingfisher, Skyfisher, 'Wari) | Quattro varianti sotto una sola voce: uccelli o umanoidi alati acquatici di Krynn. Le due lette (Emre 3 DV, Kingfisher 1 DV) sono di fascia bassa pulita; Skyfisher e 'Wari restano da verificare sull'immagine di pagina (colonne perse dall'estrazione). | sì per le due note — probabile Hawk / Giant Owl |
@@ -588,16 +595,16 @@ cinque fasce, più il Cervo Bianco fuori fascia.
 | Lizard Man (Jarak-Sinn, Bakali) | Umanoidi rettili tribali, fascia bassa-media pulita: i jarak-sinn (piu' numerosi, 2+1 DV) e i bakali (2+1 DV), loro progenitori piu' rari. Voce nuova, trovata nella seconda passata. | sì — Lizardfolk |
 | Phaethon | Umanoide alato dei monti, 4 DV, nessuna resistenza: GS basso-medio confermato, alternativa a Kyrie come avversario volante. Voce nuova. | parziale — nessun analogo diretto SRD |
 | Insect Swarm, Grasshopper and Locust | Sciame di insetti, minaccia bassa per individuo, utile come ostacolo/ambientazione in arena. Voce nuova. | sì — Swarm of Insects |
-| Bear, Ice | 6+2 DV, nessuna resistenza fuori scala, analogo pulito: spostata dalla quarta fascia, non e' di nicchia quanto sembrava dal nome. | sì — Polar Bear |
 | Disir | 5 DV, tre attacchi (2d4/2d4/2d6, danno non banale) e resistenza al fuoco: spostata dalla quarta fascia, e' un fante bestiale pulito, non una curiosita' di nicchia. | parziale — Bugbear / Lizardfolk potenziato |
 | Eyewing | 3 DV, nessuna resistenza fuori scala: spostata dalla quarta fascia, troppo semplice per essere "di nicchia". | da verificare — probabile Vulture / Giant Owl |
 | Gurik Cha-ahl | 2 DV, statistiche modeste: spostata dalla quarta fascia, e' un riempitivo bassissimo, non una curiosita'. | no |
 | Kani Doll | 2 DV, CA 10 (nessuna protezione), costrutto che non controlla mai il morale: spostata dalla quarta fascia, filler bassissimo. | parziale — Homunculus |
 
-### Terza — identitari ma senza analogo pulito (13 voci, 14 creature)
+### Terza — identitari ma senza analogo pulito (14 voci, 15 creature)
 
 | creatura | perché | analogo SRD |
 |---|---|---|
+| Skrit | CORRETTA dopo lettura del testo completo (20 agosto 2026): la prima rilettura l'aveva confermata in seconda fascia guardando solo i DV (6) e la CA (3), lo stesso errore che il metodo aveva gia' imparato a evitare sullo Scheletro Guerriero. Il testo pieno rivela XP 2.000 (non da riempitivo) e un attacco velenoso in due fasi che nessun header riassume: paralisi con TS su veleno ogni round di aggancio (penalita' -1 cumulativa), poi dissoluzione dei tessuti (10 PF/ora) curabile SOLO con rigenerazione o guarigione naturale, non con magia curativa normale. Identitaria e costosa da rendere fedelmente, non un riempitivo pulito. | parziale — nessun mostro SRD replica la dissoluzione curabile solo per rigenerazione |
 | Dreamshadow | STRUTTURALMENTE DIVERSA DALLE ALTRE: ogni campo della scheda 2e (CA, DV, THAC0, danno, taglia...) e' dichiarato "as creature or person mimicked" — non ha statistiche proprie, le eredita da chi imita. Non si converte come le altre 60: serve un mostro-modello (un pacchetto di regole che copia il bersaglio) piu' che uno statblock fisso. | no — richiede un modello diverso, non un analogo |
 | Dreamwraith | 8 DV, statistiche proprie fisse (a differenza del Dreamshadow gemello): fascia media confermata. | no |
 | Fire Minion | 6 DV, immunita' al fuoco: fascia media confermata, l'analogo proposto resta debole rispetto ai DV reali. | parziale — Magmin, sottodimensionato |

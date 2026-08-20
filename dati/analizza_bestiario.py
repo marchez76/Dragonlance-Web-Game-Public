@@ -377,12 +377,13 @@ ANALOGIE = {
 # voci ma ha sbagliato platealmente su alcune. Il dettaglio di cosa si e'
 # spostato e perche' e' nell'interpretativo subito sotto la tabella.
 #
-# Traag, Warrior Skeleton, Thanoi, Kyrie, Ogre (of Krynn) e Orughi non sono
-# piu' in questa lista: sono gia' stati convertiti (dati/mostri/traag.json,
-# dati/mostri/scheletro-guerriero.json, dati/mostri/thanoi.json,
-# dati/mostri/kyrie.json, dati/mostri/ogre-krynn.json,
-# dati/mostri/orughi.json) — la prima fascia e' completa e la seconda e'
-# cominciata dai riempitivi piu' puliti.
+# Traag, Warrior Skeleton, Thanoi, Kyrie, Ogre (of Krynn), Orughi, Horax e
+# Bear Ice non sono piu' in questa lista: sono gia' stati convertiti
+# (dati/mostri/traag.json, dati/mostri/scheletro-guerriero.json,
+# dati/mostri/thanoi.json, dati/mostri/kyrie.json, dati/mostri/ogre-krynn.json,
+# dati/mostri/orughi.json, dati/mostri/horax.json,
+# dati/mostri/orso-glaciale.json) — la prima fascia e' completa e la seconda
+# e' cominciata dai riempitivi piu' puliti.
 # I cinque draconici veri restano fuori come prima.
 PRIORITA = [
     ("Centaur (of Krynn)", 2,
@@ -393,12 +394,18 @@ PRIORITA = [
      "comportamento non ancora estratte per intero: la conversione base "
      "puo' partire dal profilo generico, le sotto-specie vanno lette a "
      "parte.", "sì — Centaur SRD", 4),
-    ("Horax", 2,
-     "Bestia da branco, utile a riempire incontri senza tattica complessa. "
-     "4 DV, nessuna resistenza.",
-     "sì — Giant Wasp / Giant Spider", 1),
-    ("Skrit", 2, "6 DV, nessuna resistenza fuori scala: fascia bassa-media confermata.",
-     "sì — Giant Centipede", 1),
+    ("Skrit", 3,
+     "CORRETTA dopo lettura del testo completo (20 agosto 2026): la prima "
+     "rilettura l'aveva confermata in seconda fascia guardando solo i DV "
+     "(6) e la CA (3), lo stesso errore che il metodo aveva gia' imparato a "
+     "evitare sullo Scheletro Guerriero. Il testo pieno rivela XP 2.000 (non "
+     "da riempitivo) e un attacco velenoso in due fasi che nessun header "
+     "riassume: paralisi con TS su veleno ogni round di aggancio (penalita' "
+     "-1 cumulativa), poi dissoluzione dei tessuti (10 PF/ora) curabile "
+     "SOLO con rigenerazione o guarigione naturale, non con magia curativa "
+     "normale. Identitaria e costosa da rendere fedelmente, non un "
+     "riempitivo pulito.",
+     "parziale — nessun mostro SRD replica la dissoluzione curabile solo per rigenerazione", 1),
     ("Wichtlin", 2,
      "Non morto elfico, identitario e di fascia media. 4+4 DV, colpibile "
      "solo da armi magiche (+1 o migliori) e una resistenza magica non "
@@ -435,10 +442,6 @@ PRIORITA = [
     ("Insect Swarm, Grasshopper and Locust", 2,
      "Sciame di insetti, minaccia bassa per individuo, utile come "
      "ostacolo/ambientazione in arena. Voce nuova.", "sì — Swarm of Insects", 1),
-    ("Bear, Ice", 2,
-     "6+2 DV, nessuna resistenza fuori scala, analogo pulito: spostata dalla "
-     "quarta fascia, non e' di nicchia quanto sembrava dal nome.",
-     "sì — Polar Bear", 1),
     ("Disir", 2,
      "5 DV, tre attacchi (2d4/2d4/2d6, danno non banale) e resistenza al "
      "fuoco: spostata dalla quarta fascia, e' un fante bestiale pulito, non "
@@ -1015,19 +1018,27 @@ c'è garanzia che siano finite.
 3. *Rilettura manuale, voce per voce, sulle immagini di pagina.* Non un
    segnale automatico ma la verifica finale: ogni voce dell'elenco sopra è
    stata riletta sull'immagine, non solo sul testo estratto.
-4. *Controllo dei salti nella sequenza di pagina.* Elencate le pagine di
-   tutte le voci già note e cercati i punti dove il numero di pagina salta
-   più di un'unità: la maggior parte dei salti erano continuazioni legittime
-   di voci già catalogate (una voce lunga due pagine), ma uno — pagg. 7-8,
-   fra `Beast, Undead` (pag. 6) e `Disir` (pag. 9) — nascondeva `Centaur (of
-   Krynn)`, mai trovata nei tre giri precedenti perché la sua intestazione
-   ha i NOMI DEI CAMPI corrotti (\"CUMATf.iTERRAIN\" invece di
-   \"CLIMATE/TERRAIN\", \"THACO;\" invece di \"THAC0:\"), non solo i valori:
-   invisibile a qualunque pattern-matching cerchi le etichette esatte.
-   Individuata anche una voce di dragoni (`Dragon, Othlorx`, pag. 22) che
-   non necessitava aggiunta: descrive varianti comportamentali di draghi
-   standard già coperti (\"physically identical to the existing dragon
-   forms\"), non un nuovo statblock.
+4. *Controllo dei salti nella sequenza di pagina — di natura diversa dai
+   primi tre, e per questo ha trovato quello che loro non potevano.* I
+   segnali 1-3 cercano tutti un'anomalia LEGGIBILE dentro il testo estratto
+   di una voce: due valori sulla stessa riga, un'etichetta senza i due
+   punti, un valore duplicato. Presuppongono cioè che la voce si lasci
+   leggere almeno in parte. Il quarto segnale non cerca un difetto dentro le
+   voci: elenca le pagine di tutte le voci già note e cerca i punti dove il
+   numero salta più di un'unità — "dove mancano pagine fra due voci note",
+   non "cosa c'è di storto in questa voce". Per questo è l'UNICO controllo
+   che non dipende dal riuscire a leggere l'entrata mancante, ed è l'unico
+   che poteva trovare `Centaur (of Krynn)` (pagg. 7-8, nel salto fra `Beast,
+   Undead` a pag. 6 e `Disir` a pag. 9): la sua intestazione ha i NOMI DEI
+   CAMPI corrotti (\"CUMATf.iTERRAIN\" invece di \"CLIMATE/TERRAIN\",
+   \"THACO;\" invece di \"THAC0:\"), non solo i valori o il titolo — non
+   c'era nulla da confrontare, quindi invisibile ai segnali 1-3 per
+   costruzione, non per sfortuna. La maggior parte degli altri salti erano
+   continuazioni legittime di voci già catalogate (una voce lunga due
+   pagine); uno ha portato anche a verificare una voce di dragoni
+   (`Dragon, Othlorx`, pag. 22) che non necessitava aggiunta: descrive
+   varianti comportamentali di draghi standard già coperti (\"physically
+   identical to the existing dragon forms\"), non un nuovo statblock.
 
 **Segnali NON usati**, e quindi punti dove un quinto giro potrebbe ancora
 trovare qualcosa: nessun controllo automatico ha confrontato il numero di
@@ -1056,13 +1067,14 @@ Le **{BS['da_convertire']} creature** da convertire, tolte le {BS['razza_nostra'
 coperte da `dati/razze/` e le {BS['razza_altra']} razze fuori roster. **Proposta, non decisione.**
 
 I **cinque draconici, il Traag, lo Scheletro Guerriero, il Thanoi, il Kyrie,
-l'Ogre di Krynn e l'Orughi non sono in questa lista**: i primi cinque hanno
-già un precedente ufficiale completo (parti 2-4 sopra), gli ultimi sei sono
-già stati convertiti (`dati/mostri/traag.json`,
-`dati/mostri/scheletro-guerriero.json`, `dati/mostri/thanoi.json`,
-`dati/mostri/kyrie.json`, `dati/mostri/ogre-krynn.json`,
-`dati/mostri/orughi.json` — la prima fascia dell'arena è completa e la
-seconda è cominciata). Restano **{tot_creature} creature** su **{tot_righe} voci** nelle
+l'Ogre di Krynn, l'Orughi, l'Horax e l'Orso Glaciale non sono in questa
+lista**: i primi cinque hanno già un precedente ufficiale completo (parti
+2-4 sopra), gli ultimi otto sono già stati convertiti
+(`dati/mostri/traag.json`, `dati/mostri/scheletro-guerriero.json`,
+`dati/mostri/thanoi.json`, `dati/mostri/kyrie.json`,
+`dati/mostri/ogre-krynn.json`, `dati/mostri/orughi.json`,
+`dati/mostri/horax.json`, `dati/mostri/orso-glaciale.json` — la prima fascia
+dell'arena è completa e la seconda è a buon punto). Restano **{tot_creature} creature** su **{tot_righe} voci** nelle
 cinque fasce, più il Cervo Bianco fuori fascia.
 
 {chr(10).join(blocchi_prio)}
