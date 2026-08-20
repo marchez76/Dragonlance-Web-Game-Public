@@ -50,6 +50,7 @@ PERCORSI=(
     dati/classi.index.json
     dati/divinita.index.json
     dati/mostri.index.json
+    dati/mostri.coda.json
     dati/_tratti_phb2e.py
     dati/_tratti_mc.py
     dati/_draconici.py
