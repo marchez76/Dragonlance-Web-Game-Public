@@ -992,8 +992,8 @@ che il manuale tratta come singola creatura.''')}
 
 {interpretativo(f'''**Questo numero non è un fatto acquisito: è la stima migliore ottenuta finora,
 e va detto invece di presentare {BS['creature']} come definitivo.** Il conteggio "definitivo"
-è già stato smentito due volte in due giri — 55 → 68 → {BS['creature']} — e le voci a
-colonne multiple sono emerse in tre passate successive, non in una sola: non
+è già stato smentito tre volte in quattro giri — 55 → 68 → 83 → {BS['creature']} — e le voci a
+colonne multiple sono emerse in passate successive, non in una sola: non
 c'è garanzia che siano finite.
 
 **I segnali usati, in ordine di scoperta:**
@@ -1011,26 +1011,38 @@ c'è garanzia che siano finite.
 3. *Rilettura manuale, voce per voce, sulle immagini di pagina.* Non un
    segnale automatico ma la verifica finale: ogni voce dell'elenco sopra è
    stata riletta sull'immagine, non solo sul testo estratto.
+4. *Controllo dei salti nella sequenza di pagina.* Elencate le pagine di
+   tutte le voci già note e cercati i punti dove il numero di pagina salta
+   più di un'unità: la maggior parte dei salti erano continuazioni legittime
+   di voci già catalogate (una voce lunga due pagine), ma uno — pagg. 7-8,
+   fra `Beast, Undead` (pag. 6) e `Disir` (pag. 9) — nascondeva `Centaur (of
+   Krynn)`, mai trovata nei tre giri precedenti perché la sua intestazione
+   ha i NOMI DEI CAMPI corrotti (\"CUMATf.iTERRAIN\" invece di
+   \"CLIMATE/TERRAIN\", \"THACO;\" invece di \"THAC0:\"), non solo i valori:
+   invisibile a qualunque pattern-matching cerchi le etichette esatte.
+   Individuata anche una voce di dragoni (`Dragon, Othlorx`, pag. 22) che
+   non necessitava aggiunta: descrive varianti comportamentali di draghi
+   standard già coperti (\"physically identical to the existing dragon
+   forms\"), non un nuovo statblock.
 
-**Segnali NON usati**, e quindi punti dove un quarto giro potrebbe ancora
+**Segnali NON usati**, e quindi punti dove un quinto giro potrebbe ancora
 trovare qualcosa: nessun controllo automatico ha confrontato il numero di
 voci trovate con un indice o sommario del manuale (l'MC Appendix, formato
 Monstrous Compendium a fogli sciolti, non ne ha uno stampato); nessun
 controllo ha verificato che OGNI voce, non solo quelle già sospette, abbia un
 blocco statistiche internamente coerente (es. `NO. OF ATTACKS` e
 `DAMAGE/ATTACK` con lo stesso numero di elementi); e non è stata fatta una
-terza rilettura sistematica di TUTTE le pagine a immagine, solo di quelle già
-segnalate da un sintomo testuale — quindi un difetto che non lascia sintomo
-nel testo estratto (come è successo con `Ogre (of Krynn)`, dove
-l'estrazione univa `CLIMATE/TERRAIN` e il nome senza i due punti, invece di
-duplicare un campo) resta strutturalmente invisibile ai primi due segnali e
-va scoperto per altra via, come è successo.
+rilettura sistematica di TUTTE le pagine a immagine, solo di quelle già
+segnalate da un sintomo testuale o da un salto di pagina — quindi un difetto
+che non lascia nessuno dei due sintomi (un'intestazione corrotta ma su una
+pagina consecutiva, senza salto) resta strutturalmente invisibile a tutti e
+quattro i segnali usati finora.
 
-Non si fa una terza passata sistematica adesso: il costo supera il beneficio
-e non blocca la conversione, che e' gia' cominciata (Traag e Scheletro
-Guerriero, quest'ultimo al suo vero grado dopo la rilettura di tutte le 62
-voci — vedi Parte 5) indipendentemente da questo numero. Ma il rapporto deve
-dirlo, non nasconderlo dietro un totale che sembra chiuso.''')}
+Non si fa una quinta passata sistematica adesso: il costo supera il beneficio
+e non blocca la conversione, che e' gia' cominciata e ha completato la prima
+fascia (Traag, Scheletro Guerriero al suo vero grado, Thanoi, Kyrie — vedi
+Parte 5) indipendentemente da questo numero. Ma il rapporto deve dirlo, non
+nasconderlo dietro un totale che sembra chiuso.''')}
 
 ---
 

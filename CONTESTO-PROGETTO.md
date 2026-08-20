@@ -557,7 +557,7 @@ asse.**
 > unico del Kapak è il **salto offensivo rispetto alla propria fonte**: gli altri
 > sono stati riscalati, lui è stato ripensato.
 >
-> Applicare quell'euristica alle 42 creature restanti sposterebbe il tempo
+> Applicare quell'euristica alle 43 creature restanti sposterebbe il tempo
 > dalla conversione al debug. Quello che i cinque casi danno non è un algoritmo
 > ma tre vincoli:
 >
@@ -597,13 +597,13 @@ pagina:
 
 | | |
 |---|---:|
-| voci dell'MC Appendix | **65** |
-| creature vere (statblock distinti) | **83** |
+| voci dell'MC Appendix | **66** |
+| creature vere (statblock distinti) | **87** |
 | schede di razze già in `dati/razze/` | 14 |
 | razze e culture fuori dal roster | 4 |
-| **creature da convertire** | **62** |
+| **creature da convertire** | **66** |
 
-**13 voci hanno lo statblock su più colonne** — una voce, più creature:
+**14 voci hanno lo statblock su più colonne** — una voce, più creature:
 
 | voce | pag. | creature |
 |---|---:|---|
@@ -613,6 +613,7 @@ pagina:
 | **Shadowperson** | 71 | 2 — Shadowperson, Revered Ancient One |
 | **Stag** | 78 | 3 — Wild Stag, Giant Stag, The White Stag |
 | **Tayling** | 79 | 2 — Tayling, Taylang |
+| **Centaur (of Krynn)** | 7 | 4 — Centaur, Abanasinian, Centaur, Crystalmir, Centaur, Endscape, Centaur, Wendle |
 | **Beast, Undead** | 6 | 2 — Stahnk, Gholor |
 | **Hatori** | 46 | 2 — Lesser Hatori, Greater Hatori |
 | **Insect Swarm** | 50 | 2 — Velvet Ant Swarm, Grasshopper and Locust Swarm |
@@ -631,7 +632,7 @@ pagina:
 > culture e ne restavano due. Sono sette creature che dal testo estratto non
 > esistevano.
 >
-> Il conteggio passa da 65 a **83**: il 28% in più. Fra i ritrovamenti c'è il
+> Il conteggio passa da 66 a **87**: il 32% in più. Fra i ritrovamenti c'è il
 > **Cervo Bianco**, che non è una bestia ma una creatura sacra unica da 2.000 punti
 > esperienza, con capacità magiche.
 >

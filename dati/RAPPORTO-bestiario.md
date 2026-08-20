@@ -453,13 +453,13 @@ immagini di pagina lo ha rifatto voce per voce.
 
 | | |
 |---|---:|
-| voci dell'MC Appendix | **65** |
-| creature vere (statblock distinti) | **83** |
+| voci dell'MC Appendix | **66** |
+| creature vere (statblock distinti) | **87** |
 | di cui schede di razze già in `dati/razze/` | 14 |
 | di cui razze e culture fuori dal roster | 4 |
-| **creature da convertire** | **62** |
+| **creature da convertire** | **66** |
 
-**13 voci hanno lo statblock su più colonne**: una voce, più creature.
+**14 voci hanno lo statblock su più colonne**: una voce, più creature.
 
 | voce | pag. | creature |
 |---|---:|---|
@@ -469,6 +469,7 @@ immagini di pagina lo ha rifatto voce per voce.
 | **Shadowperson** | 71 | 2 — Shadowperson, Revered Ancient One |
 | **Stag** | 78 | 3 — Wild Stag, Giant Stag, The White Stag |
 | **Tayling** | 79 | 2 — Tayling, Taylang |
+| **Centaur (of Krynn)** | 7 | 4 — Centaur, Abanasinian, Centaur, Crystalmir, Centaur, Endscape, Centaur, Wendle |
 | **Beast, Undead** | 6 | 2 — Stahnk, Gholor |
 | **Hatori** | 46 | 2 — Lesser Hatori, Greater Hatori |
 | **Insect Swarm** | 50 | 2 — Velvet Ant Swarm, Grasshopper and Locust Swarm |
@@ -489,8 +490,8 @@ causa — è nella tabella più sotto.
 > culture e ne restavano due. Sono **sette creature** che dal testo estratto non
 > esistevano affatto.
 >
-> Il conteggio passa così da 65 voci a **83** creature vere. Non è un
-> aggiustamento marginale: è il 28% in più, e cambia la stima di quanto lavoro
+> Il conteggio passa così da 66 voci a **87** creature vere. Non è un
+> aggiustamento marginale: è il 32% in più, e cambia la stima di quanto lavoro
 > c'è davanti.
 >
 > Due ritrovamenti che vale la pena segnalare. Il **Cervo Bianco**, una delle tre
@@ -503,9 +504,9 @@ causa — è nella tabella più sotto.
 > **Lettura interpretativa** — registrata il 2026-08-20. Non e' derivata dai dati.
 >
 > **Questo numero non è un fatto acquisito: è la stima migliore ottenuta finora,
-> e va detto invece di presentare 83 come definitivo.** Il conteggio "definitivo"
-> è già stato smentito due volte in due giri — 55 → 68 → 83 — e le voci a
-> colonne multiple sono emerse in tre passate successive, non in una sola: non
+> e va detto invece di presentare 87 come definitivo.** Il conteggio "definitivo"
+> è già stato smentito tre volte in quattro giri — 55 → 68 → 83 → 87 — e le voci a
+> colonne multiple sono emerse in passate successive, non in una sola: non
 > c'è garanzia che siano finite.
 >
 > **I segnali usati, in ordine di scoperta:**
@@ -523,32 +524,44 @@ causa — è nella tabella più sotto.
 > 3. *Rilettura manuale, voce per voce, sulle immagini di pagina.* Non un
 >    segnale automatico ma la verifica finale: ogni voce dell'elenco sopra è
 >    stata riletta sull'immagine, non solo sul testo estratto.
+> 4. *Controllo dei salti nella sequenza di pagina.* Elencate le pagine di
+>    tutte le voci già note e cercati i punti dove il numero di pagina salta
+>    più di un'unità: la maggior parte dei salti erano continuazioni legittime
+>    di voci già catalogate (una voce lunga due pagine), ma uno — pagg. 7-8,
+>    fra `Beast, Undead` (pag. 6) e `Disir` (pag. 9) — nascondeva `Centaur (of
+>    Krynn)`, mai trovata nei tre giri precedenti perché la sua intestazione
+>    ha i NOMI DEI CAMPI corrotti ("CUMATf.iTERRAIN" invece di
+>    "CLIMATE/TERRAIN", "THACO;" invece di "THAC0:"), non solo i valori:
+>    invisibile a qualunque pattern-matching cerchi le etichette esatte.
+>    Individuata anche una voce di dragoni (`Dragon, Othlorx`, pag. 22) che
+>    non necessitava aggiunta: descrive varianti comportamentali di draghi
+>    standard già coperti ("physically identical to the existing dragon
+>    forms"), non un nuovo statblock.
 >
-> **Segnali NON usati**, e quindi punti dove un quarto giro potrebbe ancora
+> **Segnali NON usati**, e quindi punti dove un quinto giro potrebbe ancora
 > trovare qualcosa: nessun controllo automatico ha confrontato il numero di
 > voci trovate con un indice o sommario del manuale (l'MC Appendix, formato
 > Monstrous Compendium a fogli sciolti, non ne ha uno stampato); nessun
 > controllo ha verificato che OGNI voce, non solo quelle già sospette, abbia un
 > blocco statistiche internamente coerente (es. `NO. OF ATTACKS` e
 > `DAMAGE/ATTACK` con lo stesso numero di elementi); e non è stata fatta una
-> terza rilettura sistematica di TUTTE le pagine a immagine, solo di quelle già
-> segnalate da un sintomo testuale — quindi un difetto che non lascia sintomo
-> nel testo estratto (come è successo con `Ogre (of Krynn)`, dove
-> l'estrazione univa `CLIMATE/TERRAIN` e il nome senza i due punti, invece di
-> duplicare un campo) resta strutturalmente invisibile ai primi due segnali e
-> va scoperto per altra via, come è successo.
+> rilettura sistematica di TUTTE le pagine a immagine, solo di quelle già
+> segnalate da un sintomo testuale o da un salto di pagina — quindi un difetto
+> che non lascia nessuno dei due sintomi (un'intestazione corrotta ma su una
+> pagina consecutiva, senza salto) resta strutturalmente invisibile a tutti e
+> quattro i segnali usati finora.
 >
-> Non si fa una terza passata sistematica adesso: il costo supera il beneficio
-> e non blocca la conversione, che e' gia' cominciata (Traag e Scheletro
-> Guerriero, quest'ultimo al suo vero grado dopo la rilettura di tutte le 62
-> voci — vedi Parte 5) indipendentemente da questo numero. Ma il rapporto deve
-> dirlo, non nasconderlo dietro un totale che sembra chiuso.
+> Non si fa una quinta passata sistematica adesso: il costo supera il beneficio
+> e non blocca la conversione, che e' gia' cominciata e ha completato la prima
+> fascia (Traag, Scheletro Guerriero al suo vero grado, Thanoi, Kyrie — vedi
+> Parte 5) indipendentemente da questo numero. Ma il rapporto deve dirlo, non
+> nasconderlo dietro un totale che sembra chiuso.
 
 ---
 
 ## Parte 5 — da dove iniziare
 
-Le **62 creature** da convertire, tolte le 14 schede di razze giocanti già
+Le **66 creature** da convertire, tolte le 14 schede di razze giocanti già
 coperte da `dati/razze/` e le 4 razze fuori roster. **Proposta, non decisione.**
 
 I **cinque draconici, il Traag, lo Scheletro Guerriero, il Thanoi e il Kyrie
@@ -741,18 +754,18 @@ ricontaggio voce per voce ne ha trovati altri quattro con la stessa causa.
 > **Lettura interpretativa** — registrata il 2026-08-20. Non e' derivata dai dati.
 >
 > **La causa è quasi sempre una sola, e non è un difetto delle pagine.**
-> 13 casi su 8 sono voci con statblock a **più colonne**: una sola
+> 14 casi su 8 sono voci con statblock a **più colonne**: una sola
 > voce del manuale contiene due o più creature affiancate, ciascuna con la
 > propria colonna di valori. L'estrattore, che lavora a due colonne di testo,
 > legge i titoli delle colonne di fianco come se fossero una riga sola. Gli
-> altri -5 hanno un'altra causa: `Minotaur (of Krynn)` prendeva
+> altri -6 hanno un'altra causa: `Minotaur (of Krynn)` prendeva
 > l'intestazione di una colonna interna (`Blood Sea Minotaur`) come titolo
 > della voce; `Yaggol` aveva semplicemente le lettere spaziate nello stampato.
 >
-> **Questo cambia il conteggio del bestiario.** Dietro le 13 voci a più colonne
-> ci sono **31 creature**, non 13: `Man (of Krynn)` ne contiene quattro,
+> **Questo cambia il conteggio del bestiario.** Dietro le 14 voci a più colonne
+> ci sono **35 creature**, non 14: `Man (of Krynn)` ne contiene quattro,
 > `Avian` altrettante, `Stag` tre, `Tayling`, `Shadowperson` e `Dragon, Astral`
-> due ciascuna. Il numero vero — **65 voci, 83 creature** — è quello
+> due ciascuna. Il numero vero — **66 voci, 87 creature** — è quello
 > stabilito qui sopra in "Il conteggio vero del bestiario", voce per voce sulle
 > immagini di pagina: non resta più nulla da chiarire su questo fronte.
 >
@@ -772,8 +785,8 @@ Delle tre cose che mancavano, **sono fatte tutte e tre**.
 - ~~Verifica degli 8 nomi corrotti~~ → tutti leggibili, vedi sopra.
 - ~~Decisione sui sette campi senza corrispettivo~~ → decisione 27, sotto: due
   gruppi chiusi, uno rinviato con motivo.
-- ~~Conteggio vero delle creature dell'MC Appendix~~ → **65 voci,
-  83 creature**, stabilito voce per voce sulle immagini di pagina —
+- ~~Conteggio vero delle creature dell'MC Appendix~~ → **66 voci,
+  87 creature**, stabilito voce per voce sulle immagini di pagina —
   vedi "Il conteggio vero del bestiario" sopra.
 
 > **Lettura interpretativa** — registrata il 2026-08-20. Non e' derivata dai dati.
@@ -783,7 +796,7 @@ Delle tre cose che mancavano, **sono fatte tutte e tre**.
 > generatore di `RAPPORTO-mostri.md` (`confronta_mostri.py`) conta le voci
 > dell'MC Appendix rileggendo il testo estratto con un'altra regola (i blocchi
 > `CLIMATE/TERRAIN:`), indipendente da questo ricontaggio verificato sulle
-> immagini. Dà **55**, non 65. Non è lo stesso tipo di errore dei nomi
+> immagini. Dà **55**, non 66. Non è lo stesso tipo di errore dei nomi
 > corrotti — è un secondo modo di contare, mai riconciliato col primo dopo il
 > ricontaggio. Va allineato a questa fonte prima di fidarsi del suo numero, ma
 > non impedisce di cominciare a convertire: la prima fascia non dipende da lui.

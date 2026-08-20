@@ -66,6 +66,30 @@ VOCI = [
     # ---- voci a colonna singola, nome corretto nel testo estratto ----
     (3, "Anemone, Giant", ["Giant Anemone"], "creatura", False, None),
     (5, "Bear, Ice", ["Ice Bear"], "creatura", False, None),
+    (7, "Centaur (of Krynn)",
+     ["Centaur, Abanasinian", "Centaur, Crystalmir", "Centaur, Endscape", "Centaur, Wendle"],
+     "creatura", False,
+     "TROVATA IL 20 AGOSTO 2026, non nella prima ne' nella seconda passata: "
+     "voce a colonna SINGOLA (non un caso di colonne affiancate come Ogre), "
+     "sfuggita perche' l'intestazione del blocco statistiche e' corrotta sui "
+     "NOMI DEI CAMPI stessi, non solo sui valori — \"CUMATf.iTERRAIN\" al "
+     "posto di \"CLIMATE/TERRAIN\", \"THACO;\" al posto di \"THAC0:\", "
+     "\"DAMAGfJATTACK\" al posto di \"DAMAGE/ATTACK:\" — quindi invisibile a "
+     "qualunque pattern-matching che cerchi le etichette esatte dei campi, "
+     "un difetto diverso sia dai nomi di voce sbagliati sia dai campi "
+     "duplicati che avevano segnalato gli altri casi mancanti. Spana le "
+     "pagine 7-8; il blocco statistiche base (CA 5, 4 DV, THAC0 17, 120 PE) "
+     "descrive il centauro generico, poi quattro sotto-specie nominate "
+     "(Abanasinian, Crystalmir, Endscape, Wendle) con una tabella di "
+     "incontro casuale (1-13 Abanasinian, 14-15 Crystalmir, 16-19 Endscape, "
+     "20 Wendle su 1d20) e differenze di taglia/comportamento/capacita' "
+     "descritte in prosa (i Wendle hanno +1 INT, i Crystalmir sono "
+     "pacifisti, gli Endscape sono i piu' selvaggi). Categoria creatura, "
+     "non razza_altra: schema monster-manual completo con tabella di "
+     "incontro, non un clan riservato ai PNG (stesso principio della "
+     "decisione 28 sull'Ogre). Statistiche complete delle quattro "
+     "sotto-specie non ancora estratte per intero: da fare in sede di "
+     "conversione, non qui."),
     (6, "Beast, Undead", ["Stahnk", "Gholor"], "creatura", True,
      "DUE colonne: lo stahnk (bestia senza forma) e il gholor (\"il "
      "divoratore\", senza arti posteriori). Trovata nella seconda passata "
