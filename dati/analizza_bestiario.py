@@ -422,7 +422,7 @@ SEGNALE_5 = [
     ("Insect Swarm", 2,
      ["NO. APPEARING", "HIT DICE", "THAC0", "DAMAGE/ATTACK", "SIZE",
       "XP VALUE"]),
-    ("Kalothagh (Prickleback)", 4, ["SPECIAL DEFENSES"]),
+    ("Kalothagh (Prickleback)", 3, ["SPECIAL DEFENSES"]),
     ("Knight, Death", 3,
      ["SPECIAL ATTACKS", "SPECIAL DEFENSES", "MAGIC RESISTANCE"]),
     ("Lizard Man (of Krynn)", 2, ["SPECIAL DEFENSES"]),
@@ -431,6 +431,102 @@ SEGNALE_5 = [
     ("Stag", None, ["SPECIAL DEFENSES"]),
     ("Warrior, Skeleton", 1, ["SPECIAL ATTACKS", "SPECIAL DEFENSES"]),
     ("Wichtlin", 3, ["DAMAGE/ATTACK", "SPECIAL ATTACKS", "MAGIC RESISTANCE"]),
+]
+
+# ==========================================================================
+# SESTO SEGNALE — generalizzazione del quinto (20 agosto 2026). Il quinto
+# cerca la stringa letterale "See below": trova solo quella variante. Il
+# sesto cerca CAMPI IL CUI VALORE NON E' UN DATO — non un numero, una
+# formula di dadi, o un valore standard di scala per quel campo — e quindi
+# comprende anche "Special", "Varies"/"Variable", "As creature or person
+# mimicked", e le clausole di SPECIAL ATTACKS/DEFENSES che non sono ne'
+# quantificate (nessuna cifra) ne' un termine catalogato (vedi WHITELIST_6
+# sotto). Applicato programmaticamente su tutti i campi di combattimento
+# delle 42 voci "creatura" a colonna singola (esclusi i cinque draconici
+# ufficiali, che hanno precedente proprio) con un classificatore a
+# sentinelle + lista di termini riconosciuti; le 13 voci a piu' colonne
+# sono state controllate a mano sullo stesso criterio, insieme alla
+# rilettura completa del compito 3.
+#
+# (voce, fascia_attuale, campo, valore, "nuova voce" | "campo nuovo su voce
+# gia' segnalata dal quinto")
+# ==========================================================================
+WHITELIST_6 = [
+    "nil", "poison", "paraly", "charm", "fear", "disease", "petrif", "drain",
+    "rend", "constrict", "grab", "swallow", "web", "confus", "blind", "stun",
+    "surpris", "camouflage", "regenerat", "curse", "breath weapon", "spell",
+    "immun", "resistan", "invisib", "teleport", "plane shift", "turned",
+    "magical weapon", "silver weapon", "weapon", "bite", "claw", "tail",
+    "hook", "crush", "hug", "gaze", "touch", "level",
+]
+
+SEGNALE_6 = [
+    ("Disir", 3, "SPECIAL ATTACKS", "Pain", "nuova voce"),
+    ("Fire Minion", 3, "SPECIAL ATTACKS", "Fire", "nuova voce"),
+    ("Kani Doll", 2, "SPECIAL ATTACKS", "Continuous attacks", "nuova voce"),
+    ("Skrit", 3, "SPECIAL ATTACKS", "jellification (in \"Surprise, jellification\")",
+     "nuova voce"),
+    ("Tylor", 3, "SPECIAL DEFENSES", "Special", "nuova voce"),
+    ("Yaggol", 3, "SPECIAL ATTACKS", "Mind blast", "nuova voce"),
+    ("Avian", 2, "SPECIAL ATTACKS",
+     "Dive/Drop (Skyfisher), Trample ('Wari)", "nuova voce"),
+    ("Haunt, Knight", 3, "SPECIAL ATTACKS", "Horror",
+     "campo nuovo su voce gia' segnalata dal quinto"),
+    ("Kalothagh (Prickleback)", 3, "SPECIAL ATTACKS", "Shoots spines",
+     "campo nuovo su voce gia' segnalata dal quinto"),
+    ("Lizard Man (of Krynn)", 2, "SPECIAL ATTACKS",
+     "Venom (jarak-sinn, risolto), Squirt blood (bakali, MAI risolto nel "
+     "testo estratto)", "campo nuovo su voce gia' segnalata dal quinto"),
+]
+
+# ==========================================================================
+# COMPITO 3 (20 agosto 2026) — lettura completa di tutte le voci con un
+# campo rimandato al testo (SEGNALE_5 + SEGNALE_6, fasce 1-4) prima di
+# convertire altro. Il Cervo Bianco e' fuori fascia ma incluso perche' era
+# nell'elenco dello stesso segnale. I gia' letti in sessione (Wichtlin, Imp
+# Blood Sea, Eyewing, Centaur, Bear Ice) hanno gia' il resoconto sopra, in
+# "8 voci hanno cambiato fascia" e nel paragrafo appena precedente: non
+# ripetuti qui per non duplicare la tabella.
+#
+# (voce, fascia_prima, fascia_dopo o None se fuori fascia, cosa nascondeva)
+# ==========================================================================
+LETTURA_COMPLETA_3 = [
+    ("Disir", 2, 3, "Veleno progressivo: TS con penalita' cumulativa per "
+     "attacco, poi paralisi in 1d4+1 round — non un fante bestiale pulito"),
+    ("Kalothagh (Prickleback)", 4, 3, "Quattro meccaniche stratificate: "
+     "volata di aculei velenosi, impalamento passivo in mischia, "
+     "\"fa il morto\" sotto il 75% dei PF"),
+    ("Fire Minion", 3, 3, "Aura passiva 1d6 senza tiro ne' TS, vincolo "
+     "ambientale (danno se lontano dal fuoco troppo a lungo)"),
+    ("Dreamshadow", 3, 3, "Resistenza magica a scala 0/10/20% per livello "
+     "del sogno mindspin — struttura gia' nota confermata"),
+    ("Dreamwraith", 3, 3, "Sotto-sistema di disbelief condiviso col "
+     "Dreamshadow, variante \"disperazione\" con TS su incantesimi"),
+    ("Haunt, Knight", 3, 3, "Controllo di paura (-4 a tutti i tiri), "
+     "immunita' multiple, si riforma senza acqua santa sull'armatura"),
+    ("Knight, Death", 3, 3, "Incantatore a 20° livello con riflessione "
+     "magica al 75%: sottostimato come \"quasi gemello dello Scheletro "
+     "Guerriero\", corretto"),
+    ("Spectral Minion", 3, 3, "Template sulle statistiche della vita "
+     "precedente, non uno statblock fisso — secondo caso dopo il "
+     "Dreamshadow"),
+    ("Insect Swarm, Grasshopper e Locust", 2, 2,
+     "Formula di scala dimensione/PF/danno, nessun veleno"),
+    ("Insect Swarm, Velvet Ant", 3, 3,
+     "Stessa formula di scala, piu' un debuff da veleno/dolore"),
+    ("Tylor", 3, 3, "Eredita una sola resistenza elementare (fuoco o "
+     "freddo) dal genitore; nessun soffio in nessuna categoria d'eta'"),
+    ("Yaggol", 3, 3, "Numeri esatti del Mind Blast (10 piedi, TS o 3d6, "
+     "un'ora di ricarica) mai estratti prima"),
+    ("Avian, Skyfisher e 'Wari", 2, 2, "Dive/Drop (aggancio in volo) e "
+     "Trample (calpestio da fuga): entrambe quantificate, nessuna sorpresa"),
+    ("Lizard Man, Bakali", 2, 2, "Venom risolto (saliva acida gia' nota); "
+     "Squirt blood MAI spiegato nel testo estratto — pending"),
+    ("Kani Doll", 2, 2, "Continuous attacks = stesso idioma dell'Aggancio "
+     "dell'Horax, gia' convertito"),
+    ("The White Stag", None, None, "Maledizione su chi lo uccide (+1 CA "
+     "nella scala 2e, cioe' peggiore) piu' tre incantesimi a volonta'/"
+     "giornalieri — conferma fuori fascia"),
 ]
 
 PRIORITA = [
@@ -461,10 +557,19 @@ PRIORITA = [
      "parziale — nessun mostro SRD replica la dissoluzione curabile solo per rigenerazione", 1),
     ("Avian (Emre, Kingfisher, Skyfisher, 'Wari)", 2,
      "Quattro varianti sotto una sola voce: uccelli o umanoidi alati "
-     "acquatici di Krynn. Le due lette (Emre 3 DV, Kingfisher 1 DV) sono "
-     "di fascia bassa pulita; Skyfisher e 'Wari restano da verificare "
-     "sull'immagine di pagina (colonne perse dall'estrazione).",
-     "sì per le due note — probabile Hawk / Giant Owl", 4),
+     "acquatici di Krynn. LETTURA COMPLETA (compito 3, 20 agosto 2026, "
+     "trovata dal sesto segnale): Emre (3 DV) e Kingfisher (1 DV) restano "
+     "riempitivi puliti senza attacchi speciali. Skyfisher (4 DV, XP 270, "
+     "Intelligenza Alta 13-14) ha \"Dive/Drop\": in picchiata +2 a colpire "
+     "e danno raddoppiato, poi afferra con gli artigli (prova di Destrezza "
+     "o resta agganciato, trasportato 1d4 round e lasciato cadere, 1d6 "
+     "danni/round in volo; molla la preda a 10 danni subiti o oltre 200 "
+     "libbre). 'Wari (3 DV) ha \"Trample\": se spaventati stampedono, "
+     "3d4 danni/round a chi si trova nel percorso. Nessuna sorpresa: "
+     "entrambe le meccaniche sono singole, quantificate, fascia bassa "
+     "confermata su tutte e quattro le varianti.",
+     "sì per Emre/Kingfisher — probabile Hawk / Giant Owl; Skyfisher "
+     "richiede un aggancio in volo, nessun analogo SRD diretto", 4),
     ("Stag (Wild Stag, Giant Stag)", 2,
      "I due cervi normali della voce Stag: 3 e 5 DV, bestie da branco "
      "pulite. Il terzo abitante della voce, il Cervo Bianco, e' trattato a "
@@ -483,45 +588,105 @@ PRIORITA = [
      "una membrana nittitante (+1 ai TS contro accecamento). Fascia "
      "confermata bassa-media (XP 270/175 restano modesti), ma la "
      "conversione dovra' rendere questi tre dettagli invece di limitarsi "
-     "al Lizardfolk di peso.", "sì — Lizardfolk", 2),
+     "al Lizardfolk di peso. SESTO SEGNALE (compito 3, 20 agosto 2026): "
+     "anche SPECIAL ATTACKS aveva un campo non catalogato su ENTRAMBE le "
+     "colonne. Per i jarak-sinn si risolve (\"Venom\": la saliva acida gia' "
+     "letta sopra, danno da veleno se l'arma e' intinta). Per i bakali "
+     "NO: \"Squirt blood\" non e' mai spiegato nel testo estratto — ne' "
+     "nel paragrafo Combat condiviso ne' altrove nella voce. PENDING, non "
+     "inventato: da riverificare sull'immagine di pagina (57) prima della "
+     "conversione, stesso trattamento del campo `raw` bloccato da filtro "
+     "(vincolo 5).", "sì — Lizardfolk", 2),
     ("Phaethon", 2,
      "Umanoide alato dei monti, 4 DV, nessuna resistenza: GS basso-medio "
      "confermato, alternativa a Kyrie come avversario volante. Voce nuova.",
      "parziale — nessun analogo diretto SRD", 1),
     ("Insect Swarm, Grasshopper and Locust", 2,
      "Sciame di insetti, minaccia bassa per individuo, utile come "
-     "ostacolo/ambientazione in arena. Voce nuova.", "sì — Swarm of Insects", 1),
-    ("Disir", 2,
-     "5 DV, tre attacchi (2d4/2d4/2d6, danno non banale) e resistenza al "
-     "fuoco: spostata dalla quarta fascia, e' un fante bestiale pulito, non "
-     "una curiosita' di nicchia.", "parziale — Bugbear / Lizardfolk potenziato", 1),
+     "ostacolo/ambientazione in arena. Voce nuova. LETTURA COMPLETA "
+     "(compito 3): i sei campi \"See below\" (dimensione, DV, THAC0, "
+     "danno, taglia, PE) sono tutti la STESSA formula di scala — dimensione "
+     "dello sciame per 1d100, poi 1 pf ogni 20 insetti, THAC0/danno "
+     "derivati dalla dimensione. Morso 90% di probabilita'/round, 1 danno "
+     "fisso, visione ridotta a 2d4 piedi nella nube. Nessun veleno per "
+     "questa variante (a differenza della Velvet Ant, sotto): fascia "
+     "bassa confermata, meccanica di scala non di combattimento.",
+     "sì — Swarm of Insects", 1),
     ("Gurik Cha-ahl", 2,
      "2 DV, statistiche modeste: spostata dalla quarta fascia, e' un "
      "riempitivo bassissimo, non una curiosita'.", "no", 1),
     ("Kani Doll", 2,
      "2 DV, CA 10 (nessuna protezione), costrutto che non controlla mai il "
-     "morale: spostata dalla quarta fascia, filler bassissimo.",
+     "morale: spostata dalla quarta fascia, filler bassissimo. SESTO "
+     "SEGNALE (compito 3): \"Continuous attacks\" si risolve in 1d4 danni "
+     "al morso poi 1 danno/round finche' non e' distrutta o ha compiuto il "
+     "suo scopo — stesso idioma dell'Aggancio dell'Horax, gia' convertito "
+     "in 5e. Fascia bassa confermata, nessuna sorpresa.",
      "parziale — Homunculus", 1),
 
+    ("Disir", 3,
+     "SPOSTATA dalla seconda fascia dopo lettura completa (compito 3, "
+     "sesto segnale, 20 agosto 2026: SPECIAL ATTACKS \"Pain\" non "
+     "catalogato). Non e' un fante bestiale pulito: tutti e tre gli "
+     "attacchi (2d4/2d4/2d6) sono avvelenati dal gel che secernono. TS su "
+     "veleno con penalita' CUMULATIVA per attacco riuscito (-1/artiglio, "
+     "-2/morso, fino a -4 se colpito da tutti e tre); se fallito, dolore "
+     "che paralizza progressivamente in 1d4+1 round con -1 THAC0 "
+     "cumulativo per round fino alla paralisi, durata 1d4 turni. "
+     "SPECIAL DEFENSES (\"Fire resistance\") si risolve in +4 ai TS contro "
+     "il fuoco e -1 danno/dado da fonti di fuoco, dallo stesso gel. Una "
+     "catena di penalita' progressive fino alla paralisi non ha equivalente "
+     "SRD pulito: identitaria, non riempitivo.",
+     "parziale — nessun mostro SRD replica la paralisi progressiva a "
+     "penalita' cumulativa", 1),
     ("Dreamshadow", 3,
      "STRUTTURALMENTE DIVERSA DALLE ALTRE: ogni campo della scheda 2e "
      "(CA, DV, THAC0, danno, taglia...) e' dichiarato \"as creature or "
      "person mimicked\" — non ha statistiche proprie, le eredita da chi "
      "imita. Non si converte come le altre 60: serve un mostro-modello "
      "(un pacchetto di regole che copia il bersaglio) piu' che uno "
-     "statblock fisso.", "no — richiede un modello diverso, non un analogo", 1),
+     "statblock fisso. LETTURA COMPLETA (compito 3): MAGIC RESISTANCE "
+     "\"See below\" si risolve in una scala legata al livello del sogno "
+     "\"mindspin\" che lo genera — 0% al primo livello, 10% al secondo, "
+     "20% al terzo (stessa scala del Dreamwraith gemello, sotto). Conferma "
+     "la categoria a parte, nessun cambio.",
+     "no — richiede un modello diverso, non un analogo", 1),
     ("Dreamwraith", 3,
      "8 DV, statistiche proprie fisse (a differenza del Dreamshadow "
-     "gemello): fascia media confermata.", "no", 1),
+     "gemello): fascia media confermata. LETTURA COMPLETA (compito 3): "
+     "MAGIC RESISTANCE \"See below\" e' la stessa scala 0/10/20% per "
+     "livello di sogno del Dreamshadow. Aggiunge tocco gelido 1d10, "
+     "bonus di iniziativa +1, e un sotto-tipo opzionale con capacita' di "
+     "\"disperazione\" (TS su incantesimi o il personaggio si unisce al "
+     "dreamwraith recitando la stessa litania, negabile solo con dispel "
+     "magic o un discorso di speranza, 30% di riuscita base). Condivide "
+     "con il Dreamshadow un intero sotto-sistema di \"disbelief\" (tempo di "
+     "concentrazione -> modificatore) che la 5e non ha: da RENDERE, non "
+     "da copiare 1:1, quando si convertira'.", "no", 1),
     ("Fire Minion", 3,
      "6 DV, immunita' al fuoco: fascia media confermata, l'analogo proposto "
-     "resta debole rispetto ai DV reali.", "parziale — Magmin, sottodimensionato", 1),
+     "resta debole rispetto ai DV reali. LETTURA COMPLETA (compito 3, "
+     "sesto segnale: SPECIAL ATTACKS \"Fire\" non catalogato): l'etichetta "
+     "nascondeva un'AURA passiva (1d6 danni automatici, nessun tiro per "
+     "colpire ne' TS, a chiunque entro 5 piedi) oltre alla spada 2d6. "
+     "Immunita' al fuoco totale (le fiamme magiche CURANO invece di ferire), "
+     "vulnerabilita' all'acqua (+1 danno/dado), e un vincolo ambientale: "
+     "puo' restare lontano dal fuoco solo 1d6+1d6 ore prima di iniziare a "
+     "subire 12 danni/turno finche' non torna o muore. Identitaria per "
+     "l'aura e il vincolo, non solo per l'immunita'.",
+     "parziale — Magmin, sottodimensionato", 1),
     ("Tylor", 3,
      "STRUTTURALMENTE COMPLESSA: la fonte da' una tabella di 6 categorie "
      "d'eta' con DV, CA e soffio diversi per ciascuna (da 1d6 DV/CA4 a "
      "5d10 DV/CA-1), sullo stesso modello degli age category dei draghi. "
      "Serve piu' di un GS, non uno: da trattare come una mini-famiglia "
-     "di statblock imparentati, non una singola conversione.",
+     "di statblock imparentati, non una singola conversione. LETTURA "
+     "COMPLETA (compito 3, sesto segnale: SPECIAL DEFENSES \"Special\" non "
+     "catalogato, il caso gemello dello Skrit): eredita UNA sola resistenza "
+     "elementare (fuoco O freddo, mai entrambe) dal genitore draconico — "
+     "scelta del DM alla creazione, non delle statistiche fisse. Nessun "
+     "soffio (\"Breath Weapon: Nil\" per tutte le otto categorie d'eta' "
+     "nella tabella): un tylor combatte solo con morso/coda e incantesimi.",
      "parziale — Chimera, solo per la categoria piu' alta", 1),
     ("Knight, Death", 3,
      "**Il Cavaliere della Morte**. CORREZIONE dopo la rilettura: la fonte "
@@ -536,20 +701,48 @@ PRIORITA = [
      "erroneamente allo Yaggol), non trattato come scheda unica di Soth. "
      "SotDQ ha lo statblock di Soth come PERSONAGGIO specifico: resta "
      "un riferimento per un'istanza particolarmente potente dello stesso "
-     "tipo, non la fonte di questa conversione.",
-     "parziale — stesso profilo dello Scheletro Guerriero: guardiano "
-     "d'elite a offesa singola", 1),
+     "tipo, non la fonte di questa conversione. CORREZIONE ULTERIORE dopo "
+     "lettura completa (compito 3, 20 agosto 2026): NON e' strutturalmente "
+     "\"quasi gemello dello Scheletro Guerriero\" come la nota precedente "
+     "diceva — quello ha un solo attacco con bonus fisso e nessun "
+     "incantesimo. Il Cavaliere della Morte e' anche un incantatore a "
+     "20° livello: aura di paura costante (5 piedi), detect magic/detect "
+     "invisibility/wall of ice a volonta', dispel magic 2/giorno, "
+     "power word blind/kill/stun 1/giorno (a scelta), symbol of fear o "
+     "symbol of pain 1/giorno, fireball da 20 dadi 1/giorno. La resistenza "
+     "magica al 75% RIFLETTE l'incantesimo addosso al lanciatore con un "
+     "tiro percentuale di 11 o meno (riverificato a ogni incantesimo "
+     "subito). Il grado reale e' quindi ben oltre GS7: la nota di priorita' "
+     "precedente lo sottostimava.",
+     "no — nessun mostro SRD combina guardiano corazzato e incantatore "
+     "a questo livello nello stesso statblock", 1),
     ("Haunt, Knight", 3,
      "8 DV, CA \"2 o migliore\" (molto protetta), non scacciabile dai "
      "chierici Legali Buoni: fascia media-alta confermata, coerente con la "
-     "collocazione precedente.", "no", 1),
+     "collocazione precedente. LETTURA COMPLETA (compito 3, sesto segnale: "
+     "SPECIAL ATTACKS \"Horror\" non catalogato): un vero e proprio "
+     "controllo di paura (1d20 <= Saggezza+livello del PG o -4 a tutti i "
+     "tiri per la durata dello scontro, ripetuto a ogni uccisione), "
+     "immunita' a sonno/charme/hold/paralisi/controllo mentale/freddo, "
+     "individuazione della magia entro 50 piedi (attacca il nemico piu' "
+     "magico), e un vincolo di rigenerazione: se non gli si versa acqua "
+     "santa addosso dopo averlo ucciso, si riforma intatto alla prossima "
+     "luna piena di Solinari. Identitario quanto un boss ricorrente, non "
+     "un guardiano generico.",
+     "no", 1),
     ("Phaethon, Elder", 3,
      "Variante piu' forte del Phaethon base (6 DV contro 4), con un "
      "accenno di resistenza magica (5%): identitario, da comporre insieme "
      "al Phaethon. Voce nuova.", "no", 1),
     ("Insect Swarm, Velvet Ant", 3,
      "Sciame con veleno e formula di dimensione variabile: meccanica piu' "
-     "complessa del semplice sciame. Voce nuova.",
+     "complessa del semplice sciame. Voce nuova. LETTURA COMPLETA (compito "
+     "3): dimensione 1d100x1.000, morso 80%/round per 1d4 danni, poi TS su "
+     "veleno o dolore intenso con -2 a tutti i tiri per colpire/danno per "
+     "2d4 turni. Ogni punto di danno inflitto allo sciame uccide 1d20 "
+     "insetti; a meta' sciame morto i superstiti si disperdono; se "
+     "sterminato per intero, 975 PE (non per singolo insetto). Fascia "
+     "confermata: identitaria per il debuff, non per la potenza bruta.",
      "parziale — Swarm of Insects, senza il veleno", 1),
     ("Yaggol", 3,
      "Sotto-razza degenerata dei mind flayer, con kit complesso (sei "
@@ -557,7 +750,15 @@ PRIORITA = [
      "magica NON e' la piu' alta del bestiario come diceva il rapporto — "
      "lo Scheletro Guerriero ne ha 90%, il Cavaliere della Morte 75%. "
      "Resta comunque identitario e costoso: nessun mostro SRD a GS 1/4-4 "
-     "replica un mind-flayer minore.",
+     "replica un mind-flayer minore. LETTURA COMPLETA (compito 3, sesto "
+     "segnale: SPECIAL ATTACKS \"Mind blast\" non catalogato, numeri mai "
+     "estratti prima): raggio 10 piedi, TS su bacchetta o 3d6 danni "
+     "psichici, immune ai propri simili (compresi gli illithid veri), "
+     "un'ora di ricarica, storna l'utilizzatore per il round successivo "
+     "(nessuna azione). I sei attacchi sono pugni + quattro tentacoli "
+     "prensili (mind-flayer-style: si aggrappano al cervello in 1d4 round, "
+     "poi 1d6 danni automatici/round; liberarsi costa una prova di Forza "
+     "e 1d10 danni per tentacolo agganciato).",
      "no — Mind Flayer vero e' GS 7, fuori target", 1),
     ("Tayling (+ Taylang)", 3,
      "Gemelli telepatici che nascono sempre in coppia: l'intelligente "
@@ -569,7 +770,19 @@ PRIORITA = [
      "da armi +1 o migliori, 20% di resistenza magica, e SEI varianti "
      "nominate con valori di PE diversi (Philosopher/Reveler/Searcher a "
      "975, Guardian/Warrior/Berserker a 1.400) sotto un'unica voce: piu' "
-     "vicina a una famiglia di sotto-tipi che a un singolo riempitivo.",
+     "vicina a una famiglia di sotto-tipi che a un singolo riempitivo. "
+     "LETTURA COMPLETA (compito 3, sesto segnale: SPECIAL ATTACKS \"See "
+     "below\" gia' noto dal quinto, qui risolto per intero): la fonte "
+     "dichiara esplicitamente che Dadi Vita, attacco e danno di UNO "
+     "spectral minion sono QUELLI DELLA SUA VITA PRECEDENTE — e' un "
+     "TEMPLATE applicato a un umano/demiumano morto, non uno statblock "
+     "fisso, come predetto dal precedente metodologico 7 sul Dreamshadow "
+     "(\"probabilmente non l'ultimo\" caso di regola di trasformazione). Le "
+     "sei varianti sono comportamenti (guardiano legato a un pegno, "
+     "filosofo che discute finche' non tocca terra e assale, ricercatore "
+     "in cerca di un oggetto, guerriero in duello eterno contro l'altra "
+     "fazione, festaiolo che drena livelli con la revelry, berserker "
+     "impazzito), non gradi di potenza diversi.",
      "sì per il profilo generale — Specter", 1),
     ("Wyndlass", 3,
      "SPOSTATA dalla quarta fascia (\"nicchia\") dopo la rilettura: 12 DV, "
@@ -605,18 +818,32 @@ PRIORITA = [
      "veleno, 10% di possibilita' di generare una copia di se stesso se "
      "colpito da un fulmine. La fascia \"nicchia\" descriveva "
      "l'ambientazione (il Mare di Sangue), non la meccanica: stesso "
-     "equivoco gia' corretto su Bear Ice/Disir/Eyewing nella direzione "
-     "opposta, qui va nella direzione di un identitario vero, non di un "
-     "riempitivo.",
+     "equivoco gia' corretto su Bear Ice/Eyewing nella direzione opposta "
+     "(erano niente-di-che sotto l'etichetta di nicchia), qui va nella "
+     "direzione di un identitario vero sotto la stessa etichetta.",
      "parziale — Imp/Quasit per il polimorfismo, ma nessuno replica la "
      "scissione da fulmine", 1),
+    ("Kalothagh (Prickleback)", 3,
+     "SPOSTATA dalla quarta fascia (\"nicchia\") dopo lettura completa "
+     "(compito 3, sesto segnale: SPECIAL ATTACKS \"Shoots spines\" non "
+     "catalogato, oltre a SPECIAL DEFENSES gia' \"See below\" dal quinto). "
+     "4+4 DV ma QUATTRO meccaniche distinte, non una: volata di aculei a "
+     "distanza (fino a 4/round, gittata 90 piedi, veleno debole con TS+4 "
+     "o 2 danni extra e -2 CA per 2d6 ore), 20% di possibilita' che "
+     "l'aculeo resti conficcato (1d4 danni extra a rimuoverlo), un "
+     "pericolo passivo per chi combatte in mischia (prova di Destrezza/ "
+     "round o impalato per 1-2 danni, 50%/round di liberarsi), e una "
+     "difesa \"fa il morto\" (si gonfia e galleggia a pancia in su sotto il "
+     "75% dei PF). Troppo stratificata per la seconda fascia, l'ambiente "
+     "acquatico descriveva la nicchia, non la semplicita'.",
+     "parziale — Manticore acquatico, nessun analogo replica tutti e "
+     "quattro gli effetti insieme", 1),
 
     ("Shimmerweed", 4,
      "1 punto ferita, immobile, un solo attacco (confusione): a malapena "
      "una creatura da combattimento, piu' vicina a un ostacolo ambientale "
      "che a un avversario. Resta di nicchia per questo, non perche' sia "
      "debole in senso convenzionale.", "parziale — Shrieker", 1),
-    ("Kalothagh (Prickleback)", 4, "4+4 DV, attacco a distanza con aculei: bestia acquatica di nicchia.", "sì — Reef Shark", 1),
     ("Hatori, Lesser", 4,
      "Predatore del deserto a Dadi Vita variabili (1-5): complesso da "
      "fissare a un singolo GS, ma il taglio piu' basso rientra nel target.",
@@ -665,7 +892,14 @@ FUORI_FASCIA = [
      "capacità magiche — una creatura sacra da incontro narrativo, non un "
      "avversario. Proposta: schedarlo quando esiste uno schema per "
      "creature uniche/da avventura (vicino allo schema Personaggio), non "
-     "forzarlo nel bestiario da combattimento."),
+     "forzarlo nel bestiario da combattimento. LETTURA COMPLETA (compito "
+     "3): SPECIAL DEFENSES \"See below\" si risolve in \"non puo' essere "
+     "catturato, combatte fino alla morte\" — se ucciso il corpo scompare "
+     "e chi lo ha ucciso resta maledetto (+1 alla propria Classe Armatura "
+     "nella scala 2e discendente, cioe' PEGGIORE, per sette giorni). Ha "
+     "anche find the path e speak with animals a volonta' e bless 3/"
+     "giorno. Conferma: fuori fascia, creatura da incontro narrativo, non "
+     "da arena."),
 ]
 
 # Le voci razziali dell'MC Appendix (razza_nostra + razza_altra): NON sono
@@ -752,6 +986,24 @@ def main():
     tab_segnale_5 = "\n".join(
         f"| {v} | {NOMI_FASCIA_5[f]} | {', '.join('`' + c + '`' for c in campi)} |"
         for v, f, campi in SEGNALE_5)
+
+    # --- sesto segnale: conteggio derivato da SEGNALE_6, mai scritto a mano
+    voci_segnale_5 = {v for v, _, _ in SEGNALE_5}
+    n_voci_nuove_6 = len({v for v, _, _, _, tipo in SEGNALE_6
+                           if tipo == "nuova voce"})
+    n_campi_nuovi_6 = len(SEGNALE_6)
+    tab_segnale_6 = "\n".join(
+        f"| {v} | {NOMI_FASCIA_5[f]} | `{campo}` | {valore} | {tipo} |"
+        for v, f, campo, valore, tipo in SEGNALE_6)
+
+    # --- compito 3: tabella e conteggio derivati da LETTURA_COMPLETA_3
+    def _et(f):
+        return NOMI_FASCIA_5[f] if f is not None else "fuori fascia"
+    n_cambiate_3 = sum(1 for _, pa, po, _ in LETTURA_COMPLETA_3 if pa != po)
+    tab_lettura_3 = "\n".join(
+        f"| {v} | {_et(pa)} | {_et(po)} "
+        f"{'(**cambiata**)' if pa != po else '(regge)'} | {cosa} |"
+        for v, pa, po, cosa in LETTURA_COMPLETA_3)
 
     tab_srd = []
     for n in D.ORDINE_5E:
@@ -1157,15 +1409,44 @@ c'è garanzia che siano finite.
    |---|---|---|
    {tab_segnale_5}
 
-**Un limite dichiarato del quinto segnale**: non cattura tutto cio' che
-richiede lettura completa. Lo Skrit (fascia 3, capacita' "jellification" mai
-quantificata in nessun campo) e il Tylor (`SPECIAL DEFENSES: Special`, sei
-categorie d'eta' con statistiche diverse) sono identitari quanto Wichtlin ma
-il loro campo critico non dice "See below": dice un nome ("jellification") o
-la parola "Special" senza rimando esplicito. Il quarto vincolo del metodo
-(leggere lo statblock intero prima di classificare, mai dedotto da un solo
-segnale) resta la rete di sicurezza; il quinto segnale e' un modo piu' economico
-di decidere DA DOVE cominciare a leggere, non un sostituto della lettura.
+   Un limite dichiarato, scoperto subito dopo aver registrato questa
+   tabella: il quinto segnale non cattura tutto cio' che richiede lettura
+   completa. Lo Skrit (fascia 3, capacita' "jellification" mai quantificata
+   in nessun campo) e il Tylor (`SPECIAL DEFENSES: Special`, sei categorie
+   d'eta' con statistiche diverse) sono identitari quanto Wichtlin ma il
+   loro campo critico non dice "See below": dice un nome inventato
+   ("jellification") o la parola "Special" senza rimando esplicito. Il
+   difetto e' nella formulazione — cercare una stringa specifica trova solo
+   quella variante — non nell'idea, ed e' quello che il sesto segnale
+   corregge.
+6. *Generalizzazione del quinto: non la stringa "See below", ma qualunque
+   valore che non e' un dato.* Per ogni campo della scheda 2e la forma
+   attesa e' nota — un numero, una formula di dadi, o un valore standard di
+   scala per quel campo (es. `INTELLIGENCE: Low (5-7)`) — quindi il
+   controllo e' meccanizzabile: segnalare ciò che non la rispetta. Applicato
+   ai campi di combattimento (non `TREASURE`/`NO. APPEARING`, salvo dove
+   restano privi di alternativa come `Haunt, Knight`) con un classificatore
+   a due livelli — sentinelle esplicite (`Special`, `Varies`/`Variable`,
+   `As creature or person mimicked`, oltre a `See below`) sui campi
+   numerici, e una lista di termini catalogati (nomi di stati/effetti
+   standard del gioco: veleno, paralisi, immunità, resistenza, ecc.) sulle
+   clausole di `SPECIAL ATTACKS`/`SPECIAL DEFENSES`, dove ogni clausola
+   senza una cifra propria e senza corrispondenza nella lista viene
+   segnalata. Il sesto segnale trova **{n_voci_nuove_6} voci nuove** che il
+   quinto non pescava (compreso lo Skrit, il caso che l'ha motivato) più
+   **{n_campi_nuovi_6 - n_voci_nuove_6} campi aggiuntivi** su voci già
+   segnalate dal quinto per un altro campo:
+
+   | voce | fascia | campo | valore | tipo |
+   |---|---|---|---|---|
+   {tab_segnale_6}
+
+   Il quinto segnale resta nell'elenco, non sostituito: la storia di come
+   un controllo si è affinato — da una stringa letterale a una lista di
+   sentinelle, da una lista di sentinelle a un criterio sulla forma del
+   valore — è più utile della sola versione finale, perché mostra il
+   pattern da applicare la prossima volta che un segnale si rivela troppo
+   stretto.
 
 **Segnali NON usati**, e quindi punti dove un ulteriore giro potrebbe ancora
 trovare qualcosa: nessun controllo automatico ha confrontato il numero di
@@ -1175,15 +1456,15 @@ controllo ha verificato che OGNI voce, non solo quelle già sospette, abbia un
 blocco statistiche internamente coerente (es. `NO. OF ATTACKS` e
 `DAMAGE/ATTACK` con lo stesso numero di elementi); e non è stata fatta una
 rilettura sistematica di TUTTE le pagine a immagine, solo di quelle già
-segnalate da un sintomo testuale, da un salto di pagina, o da un campo
-rimandato al testo — quindi un difetto che non lascia nessuno dei tre
-sintomi (un'intestazione corrotta ma su una pagina consecutiva, senza salto,
-senza "See below") resta strutturalmente invisibile a tutti e cinque i
-segnali usati finora.
+segnalate da un sintomo testuale, da un salto di pagina, o da un campo il
+cui valore non è un dato — quindi un difetto che non lascia nessuno di
+questi sintomi (un'intestazione corrotta ma su una pagina consecutiva,
+senza salto, con ogni campo dalla forma regolare) resta strutturalmente
+invisibile a tutti e sei i segnali usati finora.
 
 Il conteggio delle voci (48 creatura, {BS['creature']} creature) non e'
-cambiato con il quinto segnale: cerca dentro voci gia' contate, non ne
-aggiunge. Il rapporto deve comunque dirlo, non nasconderlo dietro un
+cambiato con il quinto o il sesto segnale: cercano dentro voci gia' contate,
+non ne aggiungono. Il rapporto deve comunque dirlo, non nasconderlo dietro un
 elenco di segnali che sembra chiuso.''')}
 
 ---
@@ -1254,14 +1535,30 @@ sopra, \"Il conteggio vero del bestiario\"):
 - **Imp, Blood Sea**: quarta fascia (\"nicchia\") → **terza** (identitaria,
   costosa). Polimorfismo fisico/nebbia, immunità multiple, scissione da
   fulmine: la fascia \"nicchia\" descriveva l'ambientazione (il Mare di
-  Sangue), non la meccanica — lo stesso equivoco di Bear Ice/Disir/Eyewing,
+  Sangue), non la meccanica — lo stesso equivoco di Bear Ice/Eyewing,
   ma nella direzione opposta.
 
 L'**Eyewing**, letto per intero nello stesso giro, e' rimasto in seconda
 fascia (il campo rimandato al testo si risolveva in una sola immunita' al
-freddo) ed e' stato **convertito**: vedi `dati/mostri/eyewing.json`.
+freddo) ed e' stato **convertito**: vedi `dati/mostri/eyewing.json`.''')}
 
-**2 voci hanno una correzione di lettura, non di fascia:**
+{interpretativo(f'''### Compito 3 — le restanti voci con campo rimandato, lette tutte prima di convertire altro
+
+| voce | fascia prima | fascia dopo | cosa nascondeva il campo rimandato |
+|---|---|---|---|
+{tab_lettura_3}
+
+{n_cambiate_3} fasce cambiate su {len(LETTURA_COMPLETA_3)} voci lette: **Disir**
+(seconda -> terza, veleno progressivo con paralisi) e **Kalothagh** (quarta ->
+terza, quattro meccaniche stratificate). Le altre {len(LETTURA_COMPLETA_3) - n_cambiate_3}
+confermano la fascia gia' assegnata: il campo rimandato aggiungeva dettaglio,
+non cambiava il giudizio. Un caso resta aperto — **Lizard Man**, "Squirt
+blood" dei bakali — perche' il testo estratto non lo spiega da nessuna
+parte: registrato `pending`, non inventato, da riverificare sull'immagine di
+pagina prima della conversione (vincolo 5, come i campi bloccati da
+filtro).''')}
+
+{interpretativo('''**2 voci hanno una correzione di lettura, non di fascia:**
 
 - **Yaggol**: il rapporto diceva che il suo 50% di resistenza magica fosse il
   più alto del bestiario. **Non lo è**: lo Scheletro Guerriero ne ha 90%, il
