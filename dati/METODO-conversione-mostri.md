@@ -177,7 +177,7 @@ una checklist burocratica.
 
 ## 5. Le categorie aperte
 
-Due tipi di voce che questo metodo non copre ancora, perché presuppongono
+Tre tipi di voce che questo metodo non copre ancora, perché presuppongono
 uno statblock fisso da convertire una volta sola:
 
 - **Creature-modello** (Dreamshadow, Spectral Minion): ogni campo della
@@ -189,9 +189,28 @@ uno statblock fisso da convertire una volta sola:
   categorie d'età con DV/CA/capacità diverse per ciascuna, sullo stesso
   modello degli age category dei draghi. Serve più di un GS: una mini-
   famiglia di statblock imparentati, non una conversione singola.
+- **Incantatore a scelta del master** (Tayling): il corpo ha uno statblock
+  fisso, ma il repertorio di incantesimi non è statuito dalla fonte —
+  "Taylings can cast spells either as wizards or priests varying in levels
+  from 1-10", scelta esplicitamente rimandata a chi conduce la partita. Non
+  è una lacuna da colmare per analogia (vincolo 2: non si inventa
+  meccanica 5e per riempire un vuoto che la fonte lascia deliberatamente
+  aperto) e non è nemmeno una creatura-modello (le statistiche fisiche sono
+  fisse, solo il repertorio magico è indeterminato) né una famiglia di
+  statblock (non ci sono categorie discrete, è un intervallo di livello con
+  scelta libera di scuola/sfera). Il GS assegnato in questi casi resta
+  PROVVISORIO ed esclude la capacità dal calcolo, con nota esplicita (vedi
+  `dati/mostri/tayling.json`, `mechanics_5e.challenge_rating.note`) —
+  finché non si decide come rendere in scheda un repertorio non fissato:
+  un pacchetto rappresentativo scelto da noi, una tabella di repertori
+  precompilati, o un campo esplicitamente aperto lasciato al tavolo.
+  Verificata la coda al 2026-08-21: nessun'altra voce restante condivide
+  questa forma (Wyndlass, Wichtlin, Imp Blood Sea, Kalothagh hanno tutte
+  statblock e capacità fissate dalla fonte) — resta un caso isolato, non
+  affrontarla come blocco prima di continuare la fascia 3.
 
-Entrambe restano `pending` di metodo, non solo di contenuto, finché non si
-decide la forma dello schema che le copre.
+Tutte e tre restano `pending` di metodo, non solo di contenuto, finché non
+si decide la forma dello schema che le copre.
 
 ## 6. Osservazioni XP2e → GS
 
@@ -247,17 +266,49 @@ difesa/offesa; se non tiene, qui resta comunque la cronologia di perché si
 | 975 | 3 | Servitore di Fuoco (Fire Minion) |
 | 1.400 | 2 | Draconico Bozak |
 | 1.400 | 1 | Kyrie |
+| 1.400 | 3 | Taylang |
 | 2.000 | 4 | Draconico Sivak |
 | 2.000 | 4 | Skrit |
 | 2.000 | 4 | Spettro Onirico (Dreamwraith) |
+| 2.000 | 1/2* | Tayling |
 | 3.000 | 6 | Fetch |
 | 4.000 | 7 | Scheletro Guerriero |
+| 4.000 | 7 | Yaggol |
+| 5.000 | 8 | Cavaliere della Morte |
 | 6.000 | 6 | Draconico Aurak |
+
+\* GS 1/2 del Tayling è PROVVISORIO, non chiuso come le altre righe: il
+repertorio di incantesimi "a scelta del master" (§5, terza categoria
+aperta) resta PENDING ed è escluso dal calcolo. Il GS del Tayling completo
+salirà probabilmente in linea con le altre voci a XP2e 2.000 (tutte GS4)
+una volta fissato un repertorio rappresentativo.
 
 Nota di lettura: la dispersione a bassa XP (120→GS che va da 1/8 a 2, 175→GS
 da 1/2 a 2) mostra che il rapporto non è affatto lineare nella fascia bassa,
 dove il rumore editoriale sui piccoli mostri pesa di più. Il pattern più
 netto è invece ai due estremi alti già osservati (975→3, 2.000→4): con
 XP2e più alto la fonte sembra aver già fatto, a modo suo, la stessa media
-difesa/offesa che la 5e formalizza. Da riverificare quando la fascia 3 sarà
-più popolata.
+difesa/offesa che la 5e formalizza. Yaggol e Scheletro Guerriero rafforzano
+il pattern con una prima corrispondenza esatta derivata in modo indipendente
+sullo stesso XP2e (4.000→GS7 per entrambi, non dedotta l'una dall'altra):
+insieme alle quattro voci già convergenti su 975→GS3, sono cinque
+corrispondenze su due valori distinti. Il Cavaliere della Morte (5.000→GS8)
+chiude la revisione aperta in un giro precedente: il confronto con Lord Soth
+ha portato ad abbassare la CA e a riscrivere l'incantesimo letale con una
+salvezza, non a spostare il GS — la riga in tabella non cambia.
+
+Il Taylang (1.400→GS3) è invece la prima voce dove il segnale punta nella
+direzione OPPOSTA al profilo letto per intero: la stessa fascia di XP2e che
+dà GS1-2 per Draconico Bozak e Kyrie non regge per lui — profilo martiale
+nudo, tre attacchi per ~34 danni/round, THAC0 basso. Registrata con la
+stessa evidenza delle convergenze: la smentita è un indizio quanto la
+conferma, non un errore da correggere alla cieca (regola 10 della
+procedura). Non invalida le corrispondenze già osservate agli estremi alti,
+ma ne fissa il limite: il segnale è affidabile quando DV e XP non divergono
+dalla fascia presunta (regola ferma, §3); sul Taylang divergono (HD8 alto
+contro XP1.400 medio-basso), ed è esattamente lì che smette di esserlo.
+
+Non è ancora una regola, ma non è più coincidenza: da riguardare quando le
+corrispondenze arriveranno a una decina, per capire se ne emerge una
+tabella di conversione utilizzabile prima ancora di leggere lo statblock.
+Da riverificare quando la fascia 3 sarà più popolata.
