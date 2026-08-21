@@ -79,65 +79,6 @@ le riorganizza per l'uso, non le sostituisce.
   proprio) su tutti i campi di combattimento — non su `TREASURE`/
   `NO. APPEARING`, che restano dati di mondo. Se presente, la lettura
   completa non è opzionale.
-- Il campo `raw` (e qualunque altro campo) può essere **omesso (null)** se
-  un filtro automatico ne blocca la scrittura: si aggiunge una nota con
-  voce e pagina per la riverifica, non si riformula per aggirare il filtro.
-  **Per i non morti con vincoli magici** (anime imprigionate, maledizioni,
-  controllo/possesso — Scheletro Guerriero, Cavaliere della Morte, Wichtlin e
-  Dreamwraith gia' convertiti cosi'; Spectral Minion resta in coda ma come
-  categoria aperta, §5, non come voce ordinaria) il campo `raw` si omette **per
-  default fin dall'inizio**, invece di tentarlo e ripiegare dopo: è la parte
-  che si blocca più spesso su questa famiglia (due casi su due finora), e la
-  trascrizione integrale non è comunque necessaria — `abilities_text` porta
-  già la meccanica. Se il blocco si presenta su un campo diverso da `raw`,
-  stessa regola: si scrive il valore convertito, si omette solo la
-  trascrizione letterale, e si segnala quale campo e perché — non è un
-  motivo per fermarsi, salvo che il blocco impedisca la scrittura della
-  scheda anche senza quel campo (vedi sotto, voce `bloccato`).
-  **Se il blocco si ripresenta a prescindere dal campo** (non è quindi un
-  problema del campo `raw` ma della voce stessa in quel momento), la voce si
-  segna `bloccato` in coda invece di `da_fare`, con nota che spiega che è un
-  filtro sull'output e non un limite del metodo, che la voce è leggibile e
-  analizzata ma non scrivibile in scheda, e si passa alla voce successiva —
-  non si spezza la scrittura in parti più piccole né si riformula il
-  contenuto per aggirarlo. Precedente: Haunt, Knight (Cavaliere Spettrale),
-  bloccata così dopo Cavaliere della Morte nello stesso giro.
-  **Tre varianti di blocco, tre fasi diverse, registrate finora**:
-
-  | voce | fase del blocco | contenuto |
-  |---|---|---|
-  | Haunt, Knight | in SCRITTURA, dopo lettura e analisi complete | non morto vincolato (Cavaliere Spettrale) |
-  | Wyndlass | in LETTURA/ANALISI, prima ancora di poter scrivere | non morto/mostro con molti tentacoli |
-  | Erba Scintillante (Shimmerweed) | DOPO la scrittura completa e valida (172 righe, 0 errori schema), durante la produzione del riepilogo di fine voce | pianta immobile, 1 pf, nessuna violenza — il contenuto piu' innocuo fra i tre |
-
-  Il terzo caso è il più informativo perché scarta un'ipotesi: le prime due
-  voci bloccate erano entrambe non morti/mostri minacciosi, il che poteva
-  suggerire che il filtro reagisse alla materia (morte, possessione,
-  violenza). L'Erba Scintillante smentisce quella lettura — una pianta
-  immobile e innocua non ha nulla di plausibilmente problematico nel
-  contenuto, eppure si è bloccata comunque, e in una fase diversa dalle
-  prime due (a scrittura già avvenuta e valida). Tre blocchi su tre materie
-  diverse e tre fasi diverse dell'unità di lavoro suggeriscono che la causa
-  non sia il soggetto della creatura.
-
-  **Ipotesi alternativa, più semplice, non ancora verificata**: il carico
-  della sessione al momento del blocco, non il contenuto. Il giro in cui
-  l'Erba Scintillante si è bloccata aveva già in contesto due letture
-  integrali di file lunghi (questo metodo, la coda), due immagini di pagina
-  renderizzate e lette, la ricerca di calibrazione per la voce successiva
-  (Hatori) e la scrittura di una scheda completa da 172 righe: un carico
-  sensibilmente più pesante di un giro breve. Se l'ipotesi regge, il rimedio
-  è un `/clear` più frequente fra una voce e l'altra, non una procedura di
-  eccezione per il filtro — ma richiede che sia l'utente a inviarlo (non è
-  un'azione che il modello può compiere su se stesso a metà turno): da
-  verificare nei prossimi giri, non ancora una regola.
-  **Diagnostica sui campi di trascrizione**: non stampare mai a schermo il
-  contenuto di `raw` (o di campi analoghi) per controllare se sono popolati
-  — un comando diagnostico che li stampa può da solo far scattare lo stesso
-  filtro che si sta cercando di aggirare scrivendo la scheda. Per verificare
-  se un campo è compilato, stampare un booleano o la sua lunghezza, mai il
-  testo. Vale anche a prescindere dal filtro: quel testo occupa contesto
-  per tutta la sessione senza motivo.
 - **Resistenza magica**: si registra in `magic_resistance_2e` con
   `applied: false` (decisione 27, gruppo C — rinviata alla Fase 2), mai
   applicata alla scheda.
@@ -164,6 +105,92 @@ le riorganizza per l'uso, non le sostituisce.
   morale (decisione 27, gruppo B). Un buco silenzioso qui è come un buco
   silenzioso su una capacità individuale: la regola ferma sulle capacità
   dichiarate (sopra) vale anche per i comportamenti collettivi.
+
+### 3.1 Blocchi da filtro sull'output
+
+**Procedura pratica — vale a prescindere dalla causa, che non è nota.**
+
+- Il campo `raw` (e qualunque altro campo) può essere **omesso (null)** se un
+  filtro automatico ne blocca la scrittura: si aggiunge una nota con voce e
+  pagina per la riverifica, non si riformula per aggirare il filtro. Se il
+  blocco si presenta su un campo diverso da `raw`, stessa regola: si scrive il
+  valore convertito, si omette solo la trascrizione letterale, e si segnala
+  quale campo e perché — non è un motivo per fermarsi, salvo che il blocco
+  impedisca la scrittura della scheda anche senza quel campo.
+- **Se il blocco si ripresenta a prescindere dal campo**, la voce si segna
+  `bloccato` in coda invece di `da_fare`, con nota che dice che è un filtro
+  sull'output e non un limite del metodo, che la voce è leggibile e analizzata
+  ma non scrivibile in scheda, e **si passa alla voce successiva** — non si
+  spezza la scrittura in parti più piccole né si riformula il contenuto per
+  aggirarlo. Precedente: Haunt, Knight (Cavaliere Spettrale), bloccata così
+  dopo Cavaliere della Morte nello stesso giro.
+- **Quando si registra un blocco, registrare anche la FASE del turno in cui è
+  arrivato**, non solo la voce: è l'unico dato che stiamo accumulando e che
+  potrebbe un giorno distinguere fra le spiegazioni aperte (sotto).
+
+Questa è una procedura di comportamento — funziona perché fa proseguire il
+lavoro, non perché discenda da un meccanismo compreso. Nessuna delle righe
+qui sopra presuppone di sapere cosa faccia scattare il filtro.
+
+**Cosa è OSSERVATO.** Quattro volte il turno si è interrotto con un errore di
+filtro sull'output. Il messaggio ("Output blocked by content filtering policy")
+viene dal sistema, non è una nostra lettura. Il dato disponibile è questo:
+l'errore, e il momento in cui è arrivato. Cosa lo abbia fatto scattare non è
+visibile.
+
+| # | occasione | fase del turno | contenuto in lavorazione |
+|---|---|---|---|
+| 1 | Haunt, Knight | in SCRITTURA, dopo lettura e analisi complete | non morto vincolato (Cavaliere Spettrale) |
+| 2 | Wyndlass | in LETTURA/ANALISI, prima ancora di poter scrivere | non morto con molti tentacoli |
+| 3 | Erba Scintillante (Shimmerweed) | a FINE TURNO, scheda già scritta e valida (172 righe, 0 errori schema), durante il riepilogo | pianta immobile, 1 pf, nessuna violenza |
+| 4 | giro dei commit (21/08/2026) | a FINE TURNO, durante il riepilogo | operazioni git, nessun contenuto di manuale |
+
+Due dei quattro (3 e 4) sono arrivati a turno praticamente concluso, con il
+lavoro già fatto e salvato: il blocco ha colpito il riepilogo, non la
+conversione.
+
+**Cosa è IPOTIZZATO, non verificato.** Che la causa sia il contenuto della
+creatura. È la lettura che veniva naturale dopo i primi due casi — entrambi
+non morti minacciosi — ma i casi 3 e 4 la contraddicono: una pianta inerte e
+una sequenza di comandi git non hanno nulla di plausibilmente problematico.
+
+Restano aperte almeno tre spiegazioni, **nessuna testata**:
+
+1. il modello in uso al momento del blocco;
+2. la lunghezza o il carico della sessione — il giro dell'Erba Scintillante
+   aveva già in contesto due letture integrali di file lunghi (questo metodo,
+   la coda), due immagini di pagina, la ricerca di calibrazione per la voce
+   successiva e una scheda da 172 righe;
+3. la fase di fine turno in sé, cioè la produzione del riepilogo, dove due dei
+   quattro blocchi sono arrivati.
+
+Non c'è una prova che isoli nessuna delle tre, e non se ne può escludere una
+quarta. Se fosse la (2), il rimedio sarebbe un `/clear` più frequente fra una
+voce e l'altra — ma va inviato dall'utente, non è un'azione che il modello può
+compiere su se stesso a metà turno. Indizio, non regola: da riverificare a
+ogni nuovo caso.
+
+**Ipotesi caduta — la "categoria dei non morti".** Un giro precedente aveva
+scritto qui che il filtro reagiva ai non morti con vincoli magici. Non regge:
+i casi 3 e 4 non sono creature, e il Dreamwraith — non morto vincolato — ha
+`raw` compilato (629 caratteri) e passato senza problemi, come il Fetch e lo
+Scheletro Guerriero che ce l'hanno a null e sono passati comunque. Non usare
+la materia della voce per prevedere dove il filtro scatterà.
+
+**Precauzione, non previsione.** Sui non morti con vincoli magici (Scheletro
+Guerriero, Cavaliere della Morte, Wichtlin) il campo `raw` si omette per
+default fin dall'inizio. Il motivo che regge questa scelta **non** è l'ipotesi
+caduta sopra, ma che la trascrizione integrale non serve comunque —
+`abilities_text` porta già la meccanica — e tentarla costa un giro se si
+blocca. È una scorciatoia a costo zero: se un giorno il `raw` di un non morto
+passasse liscio, non ci sarebbe nulla da spiegare.
+
+**Diagnostica sui campi di trascrizione**: non stampare mai a schermo il
+contenuto di `raw` (o di campi analoghi) per controllare se sono popolati. Per
+verificare se un campo è compilato, stampare un booleano o la sua lunghezza,
+mai il testo. La ragione solida è che quel testo occupa contesto per tutta la
+sessione senza motivo; che possa anche far scattare il filtro è solo una
+cautela in più, coerente con quanto poco ne sappiamo.
 
 ## 4. La procedura, passo per passo
 
