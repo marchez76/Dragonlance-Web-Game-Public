@@ -204,19 +204,22 @@ uno statblock fisso da convertire una volta sola:
   finché non si decide come rendere in scheda un repertorio non fissato:
   un pacchetto rappresentativo scelto da noi, una tabella di repertori
   precompilati, o un campo esplicitamente aperto lasciato al tavolo.
-  Verificata la coda al 2026-08-21: nessun'altra voce restante condivide
-  questa forma (Wyndlass, Wichtlin, Imp Blood Sea, Kalothagh hanno tutte
-  statblock e capacità fissate dalla fonte) — resta un caso isolato, non
-  affrontarla come blocco prima di continuare la fascia 3.
+  Verificata la coda al 2026-08-21: nessun'altra voce condivideva questa
+  forma (Wyndlass, Wichtlin, Imp Blood Sea, Kalothagh avevano tutte
+  statblock e capacità fissate dalla fonte — le ultime tre convertite nei
+  giri successivi con esito confermato, Wyndlass bloccata in lettura/analisi
+  prima di poter verificare) — resta un caso isolato. Fascia 3 ordinaria
+  esaurita al 21/08/2026: restano solo le due categorie aperte (Dreamshadow,
+  Tylor) e i due blocchi (Haunt Knight, Wyndlass).
 
 Tutte e tre restano `pending` di metodo, non solo di contenuto, finché non
 si decide la forma dello schema che le copre.
 
 ## 6. Osservazioni XP2e → GS
 
-Indizio, non regola: quattro voci indipendenti e molto diverse fra loro —
-Orso Glaciale, Phaethon Anziano, Disir, Servitore di Fuoco — condividono lo
-stesso XP2e (975) e sono tutte GS 3; altre tre — Draconico Sivak, Skrit,
+Indizio, non regola: cinque voci indipendenti e molto diverse fra loro —
+Orso Glaciale, Phaethon Anziano, Disir, Servitore di Fuoco, Imp del Mare di
+Sangue — condividono lo stesso XP2e (975) e sono tutte GS 3; altre tre — Draconico Sivak, Skrit,
 Spettro Onirico — condividono XP2e (2.000) e GS 4, pur avendo profili di
 danno per round molto diversi sulla carta (per lo Skrit è l'Enzima
 Paralizzante a giustificare il salto, per lo Spettro Onirico la precisione
@@ -258,12 +261,14 @@ difesa/offesa; se non tiene, qui resta comunque la cronologia di perché si
 | 270 | 1 | Jarak-Sinn |
 | 270 | 1 | Phaethon |
 | 270 | 1/2 | Skyfisher |
+| 270 | 1 | Kalothagh |
 | 650 | 3 | Draconico Kapak |
 | 650 | 1 | Occhialato (Eyewing) |
 | 975 | 3 | Orso Glaciale |
 | 975 | 3 | Phaethon Anziano |
 | 975 | 3 | Disir |
 | 975 | 3 | Servitore di Fuoco (Fire Minion) |
+| 975 | 3 | Imp del Mare di Sangue |
 | 1.400 | 2 | Draconico Bozak |
 | 1.400 | 1 | Kyrie |
 | 1.400 | 3 | Taylang |
@@ -331,3 +336,17 @@ essendo profili opposti in ogni altro senso. Il segnale conferma solo il
 obbligatoria per il "come" a prescindere da quanto la tabella torni pulita
 (regola ferma, §3). Non è una scoperta che indebolisce la tabella — è la
 sua natura, ora osservata due volte invece di presunta una.
+
+Imp del Mare di Sangue (975→GS3) e Kalothagh (270→GS1), convertiti nello
+stesso giro, mostrano i due lati della stessa medaglia. L'Imp ripete lo
+schema Wichtlin: nessun profilo martiale (un solo tocco, 1d6), ma un
+pacchetto difensivo pesante (resistenza alle armi non magiche, immunità
+multiple, forma di nebbia quasi invulnerabile) che lo tiene a GS3 nonostante
+l'offesa debole — sesta corrispondenza sui due valori alti della tabella. Il
+Kalothagh invece è il primo caso di questo giro in cui il segnale funziona
+SENZA una spiegazione nascosta da scoprire: nessuna resistenza magica
+(dichiarata "Nil"), nessuna resistenza alle armi, complessità di
+controllo/superficie tattica (quattro meccaniche distinte) ma non di
+potenza — il GS1 di XP2e270 regge per il motivo più semplice possibile, la
+voce non è più forte di quanto sembri. Utile da avere entrambi nello stesso
+giro: il segnale non nasconde sempre qualcosa, a volte è solo corretto.
