@@ -157,7 +157,10 @@
         "armor_class_note": { "type": ["string", "null"] },
         "movement": { "type": "string" },
         "hit_dice": { "type": "string" },
-        "thac0": { "type": "integer" },
+        "thac0": {
+          "type": ["integer", "null"],
+          "description": "null quando la fonte NON stampa un numero perche' dipende dai Dadi Vita del singolo esemplare (Hatori: \"Varies\"), stessa ragione per cui `xp_value` e' gia' nullable. Non usare 0 per questo caso: 0 sulla scala THAC0 significa 'colpisce CA 0 con un 1', l'opposto di 'non dato'. Il precedente dell'Anziano Venerato (thac0 0) e' un caso diverso: li' la fonte dichiara 'Nil', cioe' nessun profilo di combattimento."
+        },
         "no_of_attacks": { "type": "string" },
         "damage_per_attack": { "type": "string" },
         "special_attacks": { "type": "string" },

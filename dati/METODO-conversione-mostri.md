@@ -170,6 +170,19 @@ voce e l'altra — ma va inviato dall'utente, non è un'azione che il modello pu
 compiere su se stesso a metà turno. Indizio, non regola: da riverificare a
 ogni nuovo caso.
 
+**Primo giro con una variabile isolata di proposito (21/08/2026).** Il giro
+Hatori + Ragno Botola è stato condotto su un modello diverso (Opus invece di
+Sonnet), tenendo tutto il resto uguale: stesso metodo, stessa coda, due voci
+in un giro, due immagini di pagina, due schede lunghe, riepilogo finale.
+**Nessun blocco, in nessuna fase** — lettura, analisi, scrittura, validazione,
+commit, riepilogo. Va scritto per quello che è: un turno pulito su una prova
+sola. Non conferma l'ipotesi (1) — la maggior parte dei giri su Sonnet erano
+anch'essi puliti, quindi un singolo esito pulito non discrimina fra le
+spiegazioni — ma è la prima volta che una delle tre variabili viene mossa
+deliberatamente invece di essere osservata a posteriori, ed è così che la
+lista sopra potrà un giorno accorciarsi. Il valore sta nel disegno del test,
+non nel risultato di questa esecuzione.
+
 **Ipotesi caduta — la "categoria dei non morti".** Un giro precedente aveva
 scritto qui che il filtro reagiva ai non morti con vincoli magici. Non regge:
 i casi 3 e 4 non sono creature, e il Dreamwraith — non morto vincolato — ha
@@ -265,9 +278,12 @@ uno statblock fisso da convertire una volta sola:
   forma (Wyndlass, Wichtlin, Imp Blood Sea, Kalothagh avevano tutte
   statblock e capacità fissate dalla fonte — le ultime tre convertite nei
   giri successivi con esito confermato, Wyndlass bloccata in lettura/analisi
-  prima di poter verificare) — resta un caso isolato. Fascia 3 ordinaria
-  esaurita al 21/08/2026: restano solo le tre categorie aperte (Dreamshadow,
-  Spectral Minion, Tylor) e i due blocchi (Haunt Knight, Wyndlass).
+  prima di poter verificare) — resta un caso isolato. **Coda ordinaria
+  esaurita per intero al 21/08/2026** (fascia 4 chiusa con Hatori Minore e
+  Ragno Botola Gigante, dopo la fascia 3 nel giro precedente): restano solo
+  le tre categorie aperte (Dreamshadow, Spectral Minion, Tylor), i due
+  blocchi da filtro (Haunt Knight, Wyndlass) e il contenuto di
+  `fuori_fascia`.
   CORREZIONE: la coda aveva segnato Spectral Minion `da_fare` invece di
   `categoria_aperta` nonostante il metodo lo classificasse gia' qui come
   creatura-modello — allineata il 21/08/2026, `verifica_coda.py` ora
@@ -275,6 +291,29 @@ uno statblock fisso da convertire una volta sola:
 
 Tutte e tre restano `pending` di metodo, non solo di contenuto, finché non
 si decide la forma dello schema che le copre.
+
+**Cosa NON è una categoria aperta: lo statblock a Dadi Vita variabili.**
+L'Hatori Minore assomiglia a una famiglia di statblock e non lo è, e la
+distinzione va tenuta ferma perché la prossima voce di questa forma non
+finisca per sbaglio nella lista sopra. La colonna Lesser tiene **fissi** CA,
+movimento, numero di attacchi e danno su tutta la banda, e fa variare solo i
+Dadi Vita (1-5) — con THAC0 e XP che ne discendono e che infatti la fonte non
+stampa (`Varies`, `Variable`). Il Tylor è un'altra cosa: lì ogni categoria
+d'età ha CA e capacità **diverse**, cioè servono davvero più statblock. Qui
+lo statblock è uno solo e a variare è la sola quantità di punti ferita.
+
+La regola operativa che ne esce: **si fissa la scheda su un taglio della
+banda e si registra il resto della banda come tratto**, mai lasciando
+implicito quale taglio si sia scelto. Il taglio si prende, in quest'ordine:
+(a) un punto che la **fonte stessa nomini** — sull'Hatori è il 5 DV, l'unico
+citato nel testo (la soglia a cui i piccoli lasciano la madre) e per di più
+confine con la colonna successiva; (b) in mancanza, il taglio **coerente
+con le capacità fisse**, perché un danno fisso su tutta la banda descrive
+l'esemplare adulto e non il cucciolo — fissare l'Hatori a 1 DV avrebbe dato
+un mostro da sette punti ferita che morde per 3d6. Un punto intermedio scelto
+da noi è l'ultima risorsa, non la prima. Gli altri tagli non si buttano: sul
+`hatori-minore.json` stanno nel tratto "Crescita continua", con dadi e taglia
+derivati con lo stesso metodo del taglio principale.
 
 ## 6. Osservazioni XP2e → GS
 
@@ -323,6 +362,7 @@ difesa/offesa; se non tiene, qui resta comunque la cronologia di perché si
 | 270 | 1 | Phaethon |
 | 270 | 1/2 | Skyfisher |
 | 270 | 1 | Kalothagh |
+| 420 | 2 | Ragno Botola Gigante |
 | 650 | 3 | Draconico Kapak |
 | 650 | 1 | Occhialato (Eyewing) |
 | 975 | 3 | Orso Glaciale |
@@ -343,6 +383,7 @@ difesa/offesa; se non tiene, qui resta comunque la cronologia di perché si
 | 4.000 | 7 | Yaggol |
 | 5.000 | 8 | Cavaliere della Morte |
 | 6.000 | 6 | Draconico Aurak |
+| — | 5 | Hatori Minore |
 
 \* GS 1/2 del Tayling è PROVVISORIO, non chiuso come le altre righe: il
 repertorio di incantesimi "a scelta del master" (§5, terza categoria
@@ -424,3 +465,17 @@ esattamente quello che il passo 10 dice fin dall'inizio: un INVITO A
 CONTROLLARE, mai un annuncio che c'è un problema nascosto da trovare a ogni
 costo. Sapere che a volte non c'è nulla sotto è parte della sua definizione
 quanto sapere che a volte c'è: il controllo è dovuto sempre, la scoperta no.
+
+**Il terzo esito: il segnale può mancare del tutto.** L'Hatori Minore è la
+prima riga con `—` in colonna XP2e non perché il valore sia ignoto a noi, ma
+perché la fonte *rifiuta di stamparlo*: `XP VALUE: Variable`, con rimando
+alle Tabelle 31-32 del DMG 2e, perché dipende dai Dadi Vita del singolo
+esemplare — stessa ragione di `THAC0: Varies` sulla stessa riga. Il passo 10
+non aveva materiale su cui girare. Fin qui la casistica aveva due esiti (il
+segnale conferma, come sul Kalothagh; oppure diverge e rivela qualcosa, come
+su Taylang e Wichtlin): conviene scrivere il terzo prima che qualcuno lo
+scambi per una dimenticanza. **Assenza non è divergenza** — non chiede una
+spiegazione e non è un motivo per rileggere lo statblock. Le altre righe `—`
+della tabella sono cosa diversa: lì l'XP2e semplicemente non è stato
+riportato in scheda, qui è la fonte a dichiarare che un numero unico non
+esiste.
