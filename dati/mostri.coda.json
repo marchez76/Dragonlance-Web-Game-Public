@@ -1,6 +1,6 @@
 {
   "nota": "Coda di lavoro del bestiario di Krynn. Elenco ordinato per fascia di priorita' (dati/RAPPORTO-bestiario.md, Parte 5), con stato da_fare/fatto. Come convertire: dati/METODO-conversione-mostri.md. Perche' le fasce sono ordinate cosi': dati/RAPPORTO-bestiario.md. Generato a mano il 2026-08-21, non da uno script: da tenere sincronizzato manualmente a ogni conversione.",
-  "aggiornato": "2026-08-21 (Phaethon/Phaethon Anziano)",
+  "aggiornato": "2026-08-21 (Insect Swarm completata; riconciliazione con dati/_bestiario_mc.py: Insect Swarm, Hatori, Spider (of Krynn) ricomposte da voci sdoppiate — vedi dati/verifica_coda.py)",
 
   "convertite": [
     { "id": "traag", "name_it": "Traag", "challenge_rating": "1/4", "file": "mostri/traag.json" },
@@ -33,7 +33,9 @@
     { "id": "jarak-sinn", "name_it": "Jarak-Sinn", "challenge_rating": "1", "file": "mostri/jarak-sinn.json" },
     { "id": "bakali", "name_it": "Bakali", "challenge_rating": "1/2", "file": "mostri/bakali.json" },
     { "id": "phaethon", "name_it": "Phaethon", "challenge_rating": "1", "file": "mostri/phaethon.json" },
-    { "id": "phaethon-anziano", "name_it": "Phaethon Anziano", "challenge_rating": "3", "file": "mostri/phaethon-anziano.json" }
+    { "id": "phaethon-anziano", "name_it": "Phaethon Anziano", "challenge_rating": "3", "file": "mostri/phaethon-anziano.json" },
+    { "id": "sciame-cavallette-locuste", "name_it": "Sciame di Cavallette e Locuste", "challenge_rating": "1/2", "file": "mostri/sciame-cavallette-locuste.json" },
+    { "id": "sciame-formiche-velluto", "name_it": "Sciame di Formiche di Velluto", "challenge_rating": "1", "file": "mostri/sciame-formiche-velluto.json" }
   ],
 
   "coda": [
@@ -53,14 +55,14 @@
       "fascia": 2,
       "label": "Riempitivi di fascia bassa e media",
       "voci_totali": 8,
-      "creature_totali": 17,
+      "creature_totali": 18,
       "voci": [
         { "voce": "Centaur (of Krynn)", "creature": ["Centaur, Abanasinian", "Centaur, Crystalmir", "Centaur, Endscape", "Centaur, Wendle"], "stato": "fatto", "note": "4 DV, CA 5 (Wendle CA 4). Analogo SRD: Centaur (GS 2). Abanasiniano GS 2 (base), Crystalmir GS 1/2 (piu' debole, dichiarato dalla fonte), Endscape GS 2 (bonus al danno dichiarati), Wendle GS 1 (taglia Media, unica delle quattro).", "file": ["mostri/centauro-abanasiniano.json", "mostri/centauro-crystalmir.json", "mostri/centauro-endscape.json", "mostri/centauro-wendle.json"] },
         { "voce": "Avian", "creature": ["Emre", "Kingfisher", "Skyfisher", "'Wari"], "stato": "fatto", "note": "Voce completata in due giri (cambio di unita' di lavoro da creatura a voce dopo Emre/Kingfisher). Emre GS 1/8 (analogo Giant Owl), Kingfisher GS 0 (analogo Hawk), 'Wari GS 1/4 (nessun analogo pulito; Calpestio registrato come tratto di gregge, non contato nel danno del singolo), Skyfisher GS 1/2 (nessun analogo pulito; base PF da Giant Eagle, aggancio in volo e Picchiata editoriali — GS medio fra difesa bassa e offesa alta, come il Kapak). Gradazione: Kingfisher < Emre < 'Wari < Skyfisher, coerente con la fonte (\"the skyfisher is the most dangerous of these birds\").", "file": ["mostri/emre.json", "mostri/kingfisher.json", "mostri/wari.json", "mostri/skyfisher.json"] },
         { "voce": "Stag", "creature": ["Wild Stag", "Giant Stag"], "stato": "fatto", "note": "Wild Stag GS 1/4 (analogo Elk, taglia ridotta a Media per divergenza dichiarata dalla fonte). Giant Stag GS 1 (analogia composta Elk/Giant Elk: taglia Grande e CA identica al Wild Stag dall'Elk, budget di danno dal Giant Elk; primo caso esplicito della regola 'media difesa/offesa non e' un compromesso'). Gradazione Wild Stag < Giant Stag coerente con la fonte (XP 2e 65 < 175). Il White Stag della stessa voce resta fuori fascia (vedi sotto), non convertito.", "file": ["mostri/cervo-selvatico.json", "mostri/cervo-gigante.json"] },
         { "voce": "Lizard Man (of Krynn)", "creature": ["Jarak-Sinn", "Bakali"], "stato": "fatto", "note": "2+1 DV ciascuno, analogo Lizardfolk (GS 1/2). Jarak-Sinn GS 1 (coda distaccabile, Colpo di coda a sorpresa, Venom convertito su arma intinta con TS Costituzione); Bakali GS 1/2 (CA piu' bassa dichiarata dalla fonte, membrana nittitante -> vantaggio ai TS contro accecamento, nessuna infravisione negata esplicitamente). Gradazione Bakali < Jarak-Sinn coerente con la fonte (XP 175 < 270). 'Squirt blood' del Bakali confermato PENDING anche sull'immagine di pagina (pdftoppm 58-59): mai spiegato nel testo stampato, non un buco di estrazione.", "file": ["mostri/jarak-sinn.json", "mostri/bakali.json"] },
         { "voce": "Phaethon", "creature": ["Phaethon", "Elder Phaethon"], "stato": "fatto", "note": "CORREZIONE DI CODA: dati/_bestiario_mc.py registra Phaethon/Elder Phaethon come UNA voce a due colonne (pag. PDF 69), non due voci separate; questa coda le aveva sdoppiate fra fascia 2 e fascia 3 con una nota incrociata (\"comporre insieme\"). Convertite insieme in un solo giro, coerenti con la regola ferma sull'unita' di lavoro. Nessun analogo SRD singolo o composto pulito: 4+6 DV, umanoide con ali fiammeggianti a volonta' e presa che brucia round dopo round (Flame Hug). Phaethon GS 1 (CA14/PF26, danno sostenuto 21/round), Phaethon Anziano GS 3 (CA15/PF45, danno sostenuto 27/round, 5% resistenza magica) — media difesa/offesa in entrambi i casi, stesso schema del Kapak. Gradazione Phaethon < Phaethon Anziano coerente con la fonte (XP 270 < 975, rapporto ~3.6x molto vicino al rapporto GS3/GS1 in PE, 3.5x). Voce rimossa dalla fascia 3 (era duplicata li' come \"Phaethon, Elder\").", "file": ["mostri/phaethon.json", "mostri/phaethon-anziano.json"] },
-        { "voce": "Insect Swarm, Grasshopper and Locust", "creature": ["Grasshopper and Locust Swarm"], "stato": "da_fare", "note": "Formula di scala (dimensione 1d100), nessun veleno. Analogo: Swarm of Insects." },
+        { "voce": "Insect Swarm", "creature": ["Grasshopper and Locust Swarm", "Velvet Ant Swarm"], "stato": "fatto", "note": "CORREZIONE DI CODA: dati/_bestiario_mc.py registra Insect Swarm come UNA voce a due colonne (pag. PDF 50); questa coda la sdoppiava fra fascia 2 (Grasshopper and Locust) e fascia 3 (Velvet Ant). Ricomposta e convertita in un solo giro. Nessun analogo composto: entrambe adottano di peso Swarm of Insects (SRD, GS 1/2, CA12/PF22) come base. Grasshopper and Locust Swarm resta GS 1/2 (volo invece di arrampicata, Nuvola Offuscante come controllo d'area senza danno aggiuntivo). Velvet Ant Swarm sale a GS 1 (Morso Velenoso: stesso danno base + avvelenamento su TS Costituzione CD 11, media difesa/offesa come Kapak/Phaethon). Gradazione Grasshopper/Locust < Velvet Ant coerente con la frequenza/pericolosita' del morso (90% senza veleno < 80% con veleno), anche se l'XP-per-sterminio-intero della fonte va nella direzione opposta (2.000 > 975) per la sola dimensione dello sciame, dato di scala non di minaccia per round.", "file": ["mostri/sciame-cavallette-locuste.json", "mostri/sciame-formiche-velluto.json"] },
         { "voce": "Gurik Cha-ahl", "creature": ["Gurik Cha-ahl"], "stato": "da_fare", "note": "2 DV, riempitivo bassissimo. Nessun analogo SRD." },
         { "voce": "Kani Doll", "creature": ["Kani Doll"], "stato": "da_fare", "note": "2 DV, CA 10, costrutto senza morale. 'Continuous attacks' = idioma dell'Aggancio dell'Horax gia' convertito. Analogo parziale: Homunculus." }
       ]
@@ -68,8 +70,8 @@
     {
       "fascia": 3,
       "label": "Identitari ma senza analogo pulito",
-      "voci_totali": 16,
-      "creature_totali": 17,
+      "voci_totali": 15,
+      "creature_totali": 16,
       "voci": [
         { "voce": "Skrit", "stato": "da_fare", "note": "XP 2.000. Paralisi da veleno progressiva poi dissoluzione dei tessuti, curabile solo con rigenerazione/guarigione naturale. Nessun analogo SRD pulito." },
         { "voce": "Disir", "stato": "da_fare", "note": "Tre attacchi tutti avvelenati dal gel, TS con penalita' cumulativa fino a paralisi progressiva. Nessun analogo SRD pulito." },
@@ -79,7 +81,6 @@
         { "voce": "Tylor", "stato": "categoria_aperta", "note": "FAMIGLIA DI STATBLOCK: 6 categorie d'eta' con DV/CA/soffio propri. Vedi METODO-conversione-mostri.md §5. Nessun soffio in nessuna categoria; eredita una sola resistenza elementare dal genitore." },
         { "voce": "Knight, Death", "creature": ["Cavaliere della Morte"], "stato": "da_fare", "note": "TIPO ripetibile (decisione 32), non Lord Soth. 9 DV, 75% resistenza magica, incantatore a 20° livello. GS ben oltre 7, nessun analogo SRD combina guardiano corazzato e incantatore a questo livello." },
         { "voce": "Haunt, Knight", "stato": "da_fare", "note": "8 DV, CA molto protetta. Controllo di paura, immunita' multiple, rigenera senza acqua santa. Nessun analogo SRD." },
-        { "voce": "Insect Swarm, Velvet Ant", "stato": "da_fare", "note": "Dimensione 1d100x1.000, morso + TS veleno o -2 a tutti i tiri. Analogo parziale: Swarm of Insects, senza il veleno." },
         { "voce": "Yaggol", "stato": "da_fare", "note": "Sotto-razza mind flayer minore. Mind blast 10 ft/3d6/1h ricarica, sei attacchi (pugni + 4 tentacoli aggancianti). 50% resistenza magica. Mind Flayer vero e' GS 7, fuori target." },
         { "voce": "Tayling", "creature": ["Tayling", "Taylang"], "stato": "da_fare", "note": "Gemelli telepatici obbligati: Tayling (4 DV, intelligente), Taylang (8 DV, bestiale — fascia media, non sottostimare). Nessun analogo SRD per il legame telepatico." },
         { "voce": "Spectral Minion", "stato": "da_fare", "note": "TEMPLATE su statistiche della vita precedente (DV 'Varies'), non statblock fisso — come Dreamshadow. Sei varianti comportamentali (guardiano/filosofo/ricercatore/guerriero/festaiolo/berserker), non gradi di potenza. Colpibile solo da armi magiche, 20% resistenza magica. Analogo per il profilo generale: Specter." },
@@ -95,23 +96,21 @@
       "voci_totali": 3,
       "voci": [
         { "voce": "Shimmerweed", "stato": "da_fare", "note": "1 PF, immobile, un solo attacco (confusione). Piu' ostacolo ambientale che avversario. Analogo parziale: Shrieker." },
-        { "voce": "Hatori, Lesser", "stato": "da_fare", "note": "DV variabili 1-5. Complesso da fissare a un singolo GS; il taglio piu' basso rientra nel target." },
-        { "voce": "Spider, Giant Trap Door", "stato": "da_fare", "note": "4+4 DV, taglia Large, imboscatore. Analogo parziale: Giant Spider." }
+        { "voce": "Hatori", "creature": ["Lesser Hatori"], "stato": "da_fare", "note": "CORREZIONE DI CODA: dati/_bestiario_mc.py registra Hatori come UNA voce a due colonne (pag. PDF 46, stesso animale a stadi di crescita diversi, +1 DV ogni 10 anni); questa coda la sdoppiava fra fascia 4 (Lesser) e fascia 5 (Greater). Qui a differenza di Insect Swarm la seconda colonna e' davvero fuori target (Greater Hatori, 6-20 DV, potenza da drago): spostata in 'fuori_fascia' invece che ricomposta nella stessa voce, ma resta la STESSA voce da leggere per intero quando si convertira' Lesser Hatori (DV variabili 1-5, complesso da fissare a un singolo GS; il taglio piu' basso rientra nel target)." },
+        { "voce": "Spider (of Krynn)", "creature": ["Giant Trap Door Spider"], "stato": "da_fare", "note": "CORREZIONE DI CODA: dati/_bestiario_mc.py registra Spider (of Krynn) come UNA voce a due colonne (pag. PDF 77, due specie distinte, non varianti della stessa); questa coda la sdoppiava fra fascia 4 (Giant Trap Door) e fascia 5 (Whisper). Come per Hatori, la seconda colonna e' fuori target (Whisper Spider, 16 DV, potenza da drago): spostata in 'fuori_fascia', ma resta la STESSA voce da leggere per intero quando si convertira' Giant Trap Door Spider (4+4 DV, taglia Large, imboscatore, analogo parziale Giant Spider)." }
       ]
     },
     {
       "fascia": 5,
       "label": "Fuori target (draghi e alti Dadi Vita) — non serve alla Fase 2, priorita' bassa",
-      "voci_totali": 9,
-      "creature_totali": 10,
+      "voci_totali": 7,
+      "creature_totali": 9,
       "voci": [
         { "voce": "Dragon, Amphi", "stato": "da_fare", "note": "Drago. Analogo: draghi SRD." },
         { "voce": "Dragon, Kodragon", "stato": "da_fare", "note": "Drago. Analogo: draghi SRD." },
         { "voce": "Dragon, Sea", "stato": "da_fare", "note": "Drago. Analogo: draghi SRD." },
         { "voce": "Dragon, Astral", "creature": ["Astral Dragon (unmated)", "Astral Dragon (mated pair)"], "stato": "da_fare", "note": "Una specie in due stati (solitario, coppia da 35 DV): una riga, non due. Analogo: draghi SRD." },
-        { "voce": "Hatori, Greater", "stato": "da_fare", "note": "Variante adulta, 6-20 DV. Fuori target quanto un drago." },
         { "voce": "Beast, Undead", "creature": ["Stahnk", "Gholor"], "stato": "da_fare", "note": "24 DV (12+12) ciascuno. Fuori target quanto un drago." },
-        { "voce": "Spider, Whisper", "stato": "da_fare", "note": "16 DV (8+8). Fuori target quanto un drago." },
         { "voce": "Anemone, Giant", "stato": "da_fare", "note": "16 DV, THAC0 5, 12.000 PE — piu' del doppio dell'Aurak (6.000, il piu' forte dei cinque draconici ufficiali). Una delle creature piu' potenti del bestiario." },
         { "voce": "Fireshadow", "stato": "da_fare", "note": "13+3 DV (~16), Gargantuan, 11.000 PE — secondo valore piu' alto del bestiario. Evocabile solo da chierico malvagio 8°+." }
       ]
@@ -123,6 +122,16 @@
       "voce": "Stag, The White Stag",
       "stato": "rinviato",
       "note": "Unico, allineamento legale buono, 2.000 PE, capacita' magiche (find the path, speak with animals a volonta', bless 3/giorno). Creatura sacra da incontro narrativo, non un avversario da bestiario. Da schedare quando esiste uno schema per creature uniche/da avventura (vicino allo schema Personaggio), non forzare qui."
+    },
+    {
+      "voce": "Hatori, Greater",
+      "stato": "rinviato",
+      "note": "Stessa voce di 'Hatori' (fascia 4, coda), seconda colonna: variante adulta, 6-20 DV, fuori target quanto un drago. Va letta insieme quando si convertira' Lesser Hatori, non ristatuita in Fase 2."
+    },
+    {
+      "voce": "Spider, Whisper",
+      "stato": "rinviato",
+      "note": "Stessa voce di 'Spider (of Krynn)' (fascia 4, coda), seconda colonna: specie distinta, 16 DV (8+8), fuori target quanto un drago. Va letta insieme quando si convertira' Giant Trap Door Spider, non ristatuita in Fase 2."
     }
   ],
 
