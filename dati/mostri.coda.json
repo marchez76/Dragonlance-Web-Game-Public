@@ -1,6 +1,6 @@
 {
   "nota": "Coda di lavoro del bestiario di Krynn. Elenco ordinato per fascia di priorita' (dati/RAPPORTO-bestiario.md, Parte 5), con stato da_fare/fatto. Come convertire: dati/METODO-conversione-mostri.md. Perche' le fasce sono ordinate cosi': dati/RAPPORTO-bestiario.md. Generato a mano il 2026-08-21, non da uno script: da tenere sincronizzato manualmente a ogni conversione.",
-  "aggiornato": "2026-08-21 (Gurik Cha'ahl e Kani Doll completate; fascia 2 esaurita)",
+  "aggiornato": "2026-08-21 (Skrit e Disir completati; prime due voci di fascia 3)",
 
   "convertite": [
     { "id": "traag", "name_it": "Traag", "challenge_rating": "1/4", "file": "mostri/traag.json" },
@@ -37,7 +37,9 @@
     { "id": "sciame-cavallette-locuste", "name_it": "Sciame di Cavallette e Locuste", "challenge_rating": "1/2", "file": "mostri/sciame-cavallette-locuste.json" },
     { "id": "sciame-formiche-velluto", "name_it": "Sciame di Formiche di Velluto", "challenge_rating": "1", "file": "mostri/sciame-formiche-velluto.json" },
     { "id": "gurik-cha-ahl", "name_it": "Gurik Cha'ahl", "challenge_rating": "1/4", "file": "mostri/gurik-cha-ahl.json" },
-    { "id": "bambola-kani", "name_it": "Bambola Kani", "challenge_rating": "1/8", "file": "mostri/bambola-kani.json" }
+    { "id": "bambola-kani", "name_it": "Bambola Kani", "challenge_rating": "1/8", "file": "mostri/bambola-kani.json" },
+    { "id": "skrit", "name_it": "Skrit", "challenge_rating": "4", "file": "mostri/skrit.json" },
+    { "id": "disir", "name_it": "Disir", "challenge_rating": "3", "file": "mostri/disir.json" }
   ],
 
   "coda": [
@@ -75,8 +77,8 @@
       "voci_totali": 15,
       "creature_totali": 16,
       "voci": [
-        { "voce": "Skrit", "stato": "da_fare", "note": "XP 2.000. Paralisi da veleno progressiva poi dissoluzione dei tessuti, curabile solo con rigenerazione/guarigione naturale. Nessun analogo SRD pulito." },
-        { "voce": "Disir", "stato": "da_fare", "note": "Tre attacchi tutti avvelenati dal gel, TS con penalita' cumulativa fino a paralisi progressiva. Nessun analogo SRD pulito." },
+        { "voce": "Skrit", "stato": "fatto", "note": "XP2e 2.000, HD6: letta per intero come impone la regola (DV/XP non bastano da soli). Nessun analogo SRD singolo pulito: idioma della paralisi preso da Carrion Crawler (SRD), corpo/danno calibrati vicino al Draconico Sivak (stesso ordine di XP2e). GS4 — difesa modesta (AC14/PF58, fascia 3) media con un'offesa molto piu' alta per l'Enzima Paralizzante (paralisi totale finche' agganciato) e la Dissoluzione dei tessuti (10 PF/ora, curabile solo con guarigione naturale o rigenerazione). Ruolo assassino nonostante Intelligenza Animale: isola sempre un solo bersaglio.", "file": "mostri/skrit.json" },
+        { "voce": "Disir", "stato": "fatto", "note": "HD5, XP2e 975 (stesso valore gia' osservato su Orso Glaciale e Phaethon Anziano, entrambi GS3). Nessun analogo SRD pulito: statblock costruito da zero. GS3 — difesa AC14/PF52 media con danno raddoppiato su artigli/morso (vincolo 3) e il tratto Dolore (svantaggio ai colpire + sfinimento progressivo, reso con la scala 5e standard invece di un modificatore inventato). Morso riservato ai bersagli incapacitati, coerente con la preferenza per gli artigli dichiarata dalla fonte. Resistenza al fuoco dal gel corporeo.", "file": "mostri/disir.json" },
         { "voce": "Dreamshadow", "stato": "categoria_aperta", "note": "CREATURA-MODELLO: ogni campo 'as creature or person mimicked'. Vedi METODO-conversione-mostri.md §5, non convertire con la procedura standard." },
         { "voce": "Dreamwraith", "stato": "da_fare", "note": "8 DV, statistiche proprie fisse (a differenza del Dreamshadow gemello). Sotto-sistema di 'disbelief' condiviso, da rendere non copiare 1:1." },
         { "voce": "Fire Minion", "stato": "da_fare", "note": "6 DV. Aura passiva 1d6 senza TS, immunita' al fuoco totale, vulnerabilita' all'acqua, vincolo ambientale (danno se lontano dal fuoco). Analogo parziale: Magmin, sottodimensionato." },
