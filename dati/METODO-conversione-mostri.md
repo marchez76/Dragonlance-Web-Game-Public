@@ -267,6 +267,7 @@ difesa/offesa; se non tiene, qui resta comunque la cronologia di perché si
 | 1.400 | 2 | Draconico Bozak |
 | 1.400 | 1 | Kyrie |
 | 1.400 | 3 | Taylang |
+| 1.400 | 3 | Wichtlin |
 | 2.000 | 4 | Draconico Sivak |
 | 2.000 | 4 | Skrit |
 | 2.000 | 4 | Spettro Onirico (Dreamwraith) |
@@ -312,3 +313,14 @@ Non è ancora una regola, ma non è più coincidenza: da riguardare quando le
 corrispondenze arriveranno a una decina, per capire se ne emerge una
 tabella di conversione utilizzabile prima ancora di leggere lo statblock.
 Da riverificare quando la fascia 3 sarà più popolata.
+
+Il Wichtlin (1.400→GS3) raggiunge il Taylang sullo stesso XP2e, ma per una
+via opposta: non un profilo martiale nudo, bensì un pacchetto difensivo e
+di controllo (resistenza alle armi non magiche, blocco quasi garantito con
+paralisi 2d4 round, immunità multiple) che pesa più del danno grezzo
+(~5/round dal solo veleno). Due voci indipendenti sullo stesso XP2e,
+entrambe spinte a GS3 da un asse diverso da quello atteso — martiale una,
+difensivo/controllo l'altra — rafforzano la stessa lezione del Taylang: il
+segnale XP2e smette di essere affidabile quando la lettura completa rivela
+un pacchetto che i soli Dadi Vita non anticipano, indipendentemente da
+quale asse (offesa o difesa) lo spinga.

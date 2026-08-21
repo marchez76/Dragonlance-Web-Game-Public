@@ -33,6 +33,7 @@ dati/razze/
 dati/classi/
 dati/divinita/
 dati/mostri/
+dati/oggetti/
 dati/*.index.json
 
 # Moduli e dati di trascrizione: contengono i testi 2e verbatim.
