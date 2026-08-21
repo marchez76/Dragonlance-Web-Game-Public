@@ -102,6 +102,35 @@ le riorganizza per l'uso, non le sostituisce.
   non si spezza la scrittura in parti più piccole né si riformula il
   contenuto per aggirarlo. Precedente: Haunt, Knight (Cavaliere Spettrale),
   bloccata così dopo Cavaliere della Morte nello stesso giro.
+  **Tre varianti di blocco, tre fasi diverse, registrate finora**:
+
+  | voce | fase del blocco | contenuto |
+  |---|---|---|
+  | Haunt, Knight | in SCRITTURA, dopo lettura e analisi complete | non morto vincolato (Cavaliere Spettrale) |
+  | Wyndlass | in LETTURA/ANALISI, prima ancora di poter scrivere | non morto/mostro con molti tentacoli |
+  | Erba Scintillante (Shimmerweed) | DOPO la scrittura completa e valida (172 righe, 0 errori schema), durante la produzione del riepilogo di fine voce | pianta immobile, 1 pf, nessuna violenza — il contenuto piu' innocuo fra i tre |
+
+  Il terzo caso è il più informativo perché scarta un'ipotesi: le prime due
+  voci bloccate erano entrambe non morti/mostri minacciosi, il che poteva
+  suggerire che il filtro reagisse alla materia (morte, possessione,
+  violenza). L'Erba Scintillante smentisce quella lettura — una pianta
+  immobile e innocua non ha nulla di plausibilmente problematico nel
+  contenuto, eppure si è bloccata comunque, e in una fase diversa dalle
+  prime due (a scrittura già avvenuta e valida). Tre blocchi su tre materie
+  diverse e tre fasi diverse dell'unità di lavoro suggeriscono che la causa
+  non sia il soggetto della creatura.
+
+  **Ipotesi alternativa, più semplice, non ancora verificata**: il carico
+  della sessione al momento del blocco, non il contenuto. Il giro in cui
+  l'Erba Scintillante si è bloccata aveva già in contesto due letture
+  integrali di file lunghi (questo metodo, la coda), due immagini di pagina
+  renderizzate e lette, la ricerca di calibrazione per la voce successiva
+  (Hatori) e la scrittura di una scheda completa da 172 righe: un carico
+  sensibilmente più pesante di un giro breve. Se l'ipotesi regge, il rimedio
+  è un `/clear` più frequente fra una voce e l'altra, non una procedura di
+  eccezione per il filtro — ma richiede che sia l'utente a inviarlo (non è
+  un'azione che il modello può compiere su se stesso a metà turno): da
+  verificare nei prossimi giri, non ancora una regola.
   **Diagnostica sui campi di trascrizione**: non stampare mai a schermo il
   contenuto di `raw` (o di campi analoghi) per controllare se sono popolati
   — un comando diagnostico che li stampa può da solo far scattare lo stesso
