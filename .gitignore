@@ -123,6 +123,14 @@ CLAUDE.local.md
 !dati/RAPPORTO-*.md
 !dati/DOSSIER-*.md
 
+# Equipaggiamento ordinario (Fase 2): estratto dall'SRD 5.1 via
+# api.open5e.com, non da un manuale 2e — nessun testo di manuale in questi
+# tre file. dati/oggetti/ resta comunque escluso (regola sopra): contiene
+# anche il diadema, scritto a mano con source_2e dell'MC Appendix.
+!dati/_fonti/srd51_equipaggiamento.py
+!dati/build_oggetti.py
+!dati/valida_oggetti.py
+
 # --------------------------------------------------------------------------
 # ECCEZIONE DENTRO L'ECCEZIONE — le versioni "completo" dei RAPPORTO-*.md.
 # Alcuni generatori (analizza_bestiario.py, verifica_sfere.py,

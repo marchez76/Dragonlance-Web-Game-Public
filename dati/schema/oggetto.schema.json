@@ -2,9 +2,9 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://dragonlance-gdr.local/schema/oggetto.schema.json",
   "title": "Oggetto di Krynn",
-  "description": "Stesso doppio strato di razza, classe, divinità e mostro: `source_2e` fedele al manuale e immutabile, `mechanics_5e` con stato di conversione e provenienza su ogni elemento (decisione 33). Copre tre casi, non uno solo: equipaggiamento ordinario (armi, armature, attrezzatura d'avventura — il buco più urgente per l'arena, dove oggi mancano perfino i danni di una spada lunga), oggetti magici, e oggetti con una creatura legata come il diadema dello Scheletro Guerriero. Il diadema è il primo caso concreto che ha reso necessario questo schema, non il modello su cui è tagliato: un oggetto magico ordinario (senza creatura legata) e un'arma mondana (senza nulla di magico) devono starci comodi allo stesso modo. Nel mostro resta un riferimento all'oggetto (campo `oggetti_collegati` di mostro.schema.json), non l'oggetto stesso.",
+  "description": "Stesso doppio strato di razza, classe, divinità e mostro: `source_2e` fedele al manuale e immutabile, `mechanics_5e` con stato di conversione e provenienza su ogni elemento (decisione 33). Copre tre casi, non uno solo: equipaggiamento ordinario (armi, armature, attrezzatura d'avventura — il buco più urgente per l'arena, dove oggi mancano perfino i danni di una spada lunga), oggetti magici, e oggetti con una creatura legata come il diadema dello Scheletro Guerriero. Il diadema è il primo caso concreto che ha reso necessario questo schema, non il modello su cui è tagliato: un oggetto magico ordinario (senza creatura legata) e un'arma mondana (senza nulla di magico) devono starci comodi allo stesso modo. Nel mostro resta un riferimento all'oggetto (campo `oggetti_collegati` di mostro.schema.json), non l'oggetto stesso. Il doppio strato presuppone una conversione 2e→5e, ma l'equipaggiamento ordinario della Fase 2 nasce dall'SRD 5.1 (CC-BY 4.0, via api.open5e.com): non c'e' un manuale 2e da trascrivere ne' una conversione da fare, la meccanica e' gia' quella di arrivo. Per questi oggetti `source_2e` va OMESSO e si compila `source_srd` al suo posto (vedi sotto): sono alternative mutuamente esclusive, non entrambe obbligatorie ne' entrambe facoltative — quale delle due serve dipende da `source.source_edition`, verificato in dati/valida_oggetti.py perche' lo schema da solo non esprime l'esclusione reciproca.",
   "type": "object",
-  "required": ["id", "name", "categoria", "source", "source_2e", "mechanics_5e"],
+  "required": ["id", "name", "categoria", "source", "mechanics_5e"],
   "additionalProperties": false,
 
   "$defs": {
@@ -66,15 +66,18 @@
 
     "source": {
       "type": "object",
-      "required": ["source_edition", "source_book", "pages_pdf"],
+      "required": ["source_edition", "source_book"],
       "additionalProperties": false,
       "properties": {
-        "source_edition": { "const": "2e" },
+        "source_edition": {
+          "enum": ["2e", "SRD 5.1"],
+          "description": "'2e': trascritto da un manuale AD&D 2e, richiede source_2e e pages_pdf. 'SRD 5.1': estratto direttamente dall'SRD 5.1 via api.open5e.com, richiede source_srd al posto di source_2e; pages_pdf non si applica (non esiste un PDF nostro da cui e' stato letto, vedi source_srd.api_ref per come riverificarlo)."
+        },
         "source_book": { "type": "string" },
         "pages_pdf": {
           "type": "array",
           "items": { "type": "integer" },
-          "description": "Indici di pagina 0-based nel PDF sorgente (indice+1 per pdftoppm/lettore PDF 1-based). Vedi dati/LEGGIMI.md, sezione \"Indici di pagina\"."
+          "description": "Indici di pagina 0-based nel PDF sorgente (indice+1 per pdftoppm/lettore PDF 1-based). Vedi dati/LEGGIMI.md, sezione \"Indici di pagina\". Richiesto solo quando source_edition e' '2e'."
         },
         "pages_printed": {
           "type": "array",
@@ -160,6 +163,24 @@
           "type": ["string", "null"],
           "description": "Il testo della fonte come appare nell'estrazione, per poter riverificare senza riaprire il PDF. Comodita', non dato: se la trascrizione integrale non si lascia scrivere (stesso caso gia' visto su alcuni mostri non morti), il campo va OMESSO (null) con una nota in `notes` che rimanda a voce e pagina per la riverifica — non riformulato per aggirare il problema. Vedi mostro.schema.json, campo `raw`, per il precedente."
         }
+      }
+    },
+
+    "source_srd": {
+      "type": "object",
+      "description": "Alternativa a `source_2e` per l'equipaggiamento ordinario estratto dall'SRD 5.1 (CC-BY 4.0) invece che da un manuale 2e (vedi la nota in cima allo schema). Usato quando `source.source_edition` e' 'SRD 5.1': non c'e' conversione da documentare, solo la provenienza del dato per poterlo riverificare.",
+      "required": ["descrizione", "api_ref"],
+      "additionalProperties": false,
+      "properties": {
+        "descrizione": {
+          "type": "string",
+          "description": "La voce 'desc' dell'SRD quando esiste (attrezzatura), altrimenti una riga che identifica la tabella di provenienza (armi/armature del Player's Handbook)."
+        },
+        "api_ref": {
+          "type": "string",
+          "description": "Endpoint e slug/key di api.open5e.com usati per estrarre il dato, es. \"v1/weapons/battleaxe\" o \"v2/items/srd_torch\", per poter riverificare senza ripetere la query. Vedi dati/_fonti/srd51_equipaggiamento.py."
+        },
+        "note": { "type": ["array", "null"], "items": { "type": "string" } }
       }
     },
 
