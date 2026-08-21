@@ -83,8 +83,9 @@ le riorganizza per l'uso, non le sostituisce.
   un filtro automatico ne blocca la scrittura: si aggiunge una nota con
   voce e pagina per la riverifica, non si riformula per aggirare il filtro.
   **Per i non morti con vincoli magici** (anime imprigionate, maledizioni,
-  controllo/possesso — Scheletro Guerriero, Cavaliere della Morte, e in coda
-  Wichtlin, Dreamwraith, Spectral Minion) il campo `raw` si omette **per
+  controllo/possesso — Scheletro Guerriero, Cavaliere della Morte, Wichtlin e
+  Dreamwraith gia' convertiti cosi'; Spectral Minion resta in coda ma come
+  categoria aperta, §5, non come voce ordinaria) il campo `raw` si omette **per
   default fin dall'inizio**, invece di tentarlo e ripiegare dopo: è la parte
   che si blocca più spesso su questa famiglia (due casi su due finora), e la
   trascrizione integrale non è comunque necessaria — `abilities_text` porta
@@ -209,8 +210,12 @@ uno statblock fisso da convertire una volta sola:
   statblock e capacità fissate dalla fonte — le ultime tre convertite nei
   giri successivi con esito confermato, Wyndlass bloccata in lettura/analisi
   prima di poter verificare) — resta un caso isolato. Fascia 3 ordinaria
-  esaurita al 21/08/2026: restano solo le due categorie aperte (Dreamshadow,
-  Tylor) e i due blocchi (Haunt Knight, Wyndlass).
+  esaurita al 21/08/2026: restano solo le tre categorie aperte (Dreamshadow,
+  Spectral Minion, Tylor) e i due blocchi (Haunt Knight, Wyndlass).
+  CORREZIONE: la coda aveva segnato Spectral Minion `da_fare` invece di
+  `categoria_aperta` nonostante il metodo lo classificasse gia' qui come
+  creatura-modello — allineata il 21/08/2026, `verifica_coda.py` ora
+  controlla anche questo disallineamento (vedi commento nello script).
 
 Tutte e tre restano `pending` di metodo, non solo di contenuto, finché non
 si decide la forma dello schema che le copre.
@@ -350,3 +355,16 @@ controllo/superficie tattica (quattro meccaniche distinte) ma non di
 potenza — il GS1 di XP2e270 regge per il motivo più semplice possibile, la
 voce non è più forte di quanto sembri. Utile da avere entrambi nello stesso
 giro: il segnale non nasconde sempre qualcosa, a volte è solo corretto.
+
+**Cosa significa per l'uso del segnale (passo 10 della procedura)**: fino al
+Kalothagh, ogni voce dove si è guardata la tabella aveva poi rivelato
+qualcosa — lo Skrit (l'Enzima Paralizzante dietro il salto a GS4), il
+Taylang (il profilo martiale dietro la divergenza), il Wichtlin e l'Imp (il
+pacchetto difensivo dietro l'offesa debole). Sarebbe stato facile leggerne
+la regola sbagliata: che consultare la tabella significa aspettarsi una
+sorpresa. Il Kalothagh smentisce quella lettura — controllato, non ha
+rivelato nulla, il GS ovvio era quello giusto. Il segnale resta quindi
+esattamente quello che il passo 10 dice fin dall'inizio: un INVITO A
+CONTROLLARE, mai un annuncio che c'è un problema nascosto da trovare a ogni
+costo. Sapere che a volte non c'è nulla sotto è parte della sua definizione
+quanto sapere che a volte c'è: il controllo è dovuto sempre, la scoperta no.

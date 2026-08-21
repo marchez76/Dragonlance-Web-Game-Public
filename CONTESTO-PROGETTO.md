@@ -513,7 +513,31 @@ disponibile, non estratto.**
 
 ## Il bestiario — diagnostica
 
-Rapporto completo in `dati/RAPPORTO-bestiario.md`. **11 creature convertite** in `dati/mostri/` (le altre restano da fare: vedi "Il conteggio vero del bestiario" e "Parte 5" nel rapporto per il numero, che non è ancora definitivo).
+Rapporto completo in `dati/RAPPORTO-bestiario.md`. Come convertire:
+`dati/METODO-conversione-mostri.md`. Coda di lavoro (stato voce per voce):
+`dati/mostri.coda.json`.
+
+### Punto di ripresa — 21/08/2026
+
+**47 creature convertite** in `dati/mostri/` (validate contro
+`dati/schema/mostro.schema.json`, indicizzate in `dati/mostri.index.json`).
+Fascia 3 (identitari senza analogo pulito) **esaurita nella parte
+ordinaria**: quello che resta lì non è lavoro da fare col metodo standard,
+è lavoro rimandato per decisione.
+
+| stato | voci | dove |
+|---|---:|---|
+| convertite | 47 creature (23 voci) | fasce 1-3, vedi `convertite` in coda |
+| categorie aperte (bisogno di una decisione, non del metodo) | 3 | Dreamshadow, Spectral Minion (creature-modello), Tylor (famiglia di statblock) — fascia 3, `METODO-conversione-mostri.md` §5 |
+| bloccate (filtro d'output, non limite del metodo) | 2 | Haunt Knight (blocco in scrittura), Wyndlass (blocco in lettura/analisi) — fascia 3 |
+| in coda, fascia 4 (nicchia) | 3 voci | Shimmerweed, Hatori, Spider (of Krynn) — prossimo giro |
+| in coda, fascia 5 (fuori target, bassa priorità) | 7 voci | draghi e creature ad alti Dadi Vita, non serve alla Fase 2 |
+
+Per riprendere: `dati/mostri.coda.json` (stato per voce, sezione
+`categorie_aperte` per l'indice delle tre voci sopra) +
+`dati/METODO-conversione-mostri.md` (§4 procedura, §5 categorie aperte, §6
+tabella XP2e↔GS). `python3 dati/verifica_coda.py` controlla che le due fonti
+non si sfasino (sdoppiamenti voce/fascia e stato-vs-categorie-aperte).
 
 **La scheda mostro 2e ha 21 campi**: 2 passano diretti in 5e, 12 vanno
 convertiti, **7 non hanno alcun corrispettivo** — FREQUENCY, ORGANIZATION, ACTIVITY CYCLE, DIET, NO. APPEARING, MAGIC RESISTANCE, MORALE.
