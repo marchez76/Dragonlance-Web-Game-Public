@@ -320,7 +320,14 @@ di controllo (resistenza alle armi non magiche, blocco quasi garantito con
 paralisi 2d4 round, immunità multiple) che pesa più del danno grezzo
 (~5/round dal solo veleno). Due voci indipendenti sullo stesso XP2e,
 entrambe spinte a GS3 da un asse diverso da quello atteso — martiale una,
-difensivo/controllo l'altra — rafforzano la stessa lezione del Taylang: il
-segnale XP2e smette di essere affidabile quando la lettura completa rivela
-un pacchetto che i soli Dadi Vita non anticipano, indipendentemente da
-quale asse (offesa o difesa) lo spinga.
+difensivo/controllo l'altra.
+
+**Il limite del segnale, ora scritto esplicitamente**: XP2e↔GS regge come
+ORDINE DI GRANDEZZA (predice la fascia di GS con un margine ragionevole), ma
+non dice NULLA su come la creatura ci arriva — offesa nuda (Taylang) e
+difesa/controllo (Wichtlin) producono la stessa lettura di tabella pur
+essendo profili opposti in ogni altro senso. Il segnale conferma solo il
+"quanto", mai il "come": la lettura completa dello statblock resta
+obbligatoria per il "come" a prescindere da quanto la tabella torni pulita
+(regola ferma, §3). Non è una scoperta che indebolisce la tabella — è la
+sua natura, ora osservata due volte invece di presunta una.

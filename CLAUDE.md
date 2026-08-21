@@ -13,7 +13,7 @@ conversazione lo ha reso ovvio dal contesto.
 **Pubblico** (`.git`): documenti, script, schemi.
 **Privato** (`.git-private`, wrapper `git-privato.sh`): `Manuali/`, `Testi/`,
 `Estratti/`, `import/`, `Musica/`, `riscontro/`,
-`dati/razze|classi|divinita|mostri/`, `dati/RAPPORTO-*-completo.md`.
+`dati/razze|classi|divinita|mostri|oggetti/`, `dati/RAPPORTO-*-completo.md`.
 
 **Meccanismo.** `.git-private` è un secondo repository Git nella STESSA
 cartella di lavoro del pubblico, non un archivio a parte: stesso albero di
@@ -25,6 +25,17 @@ manuale nella storia pubblica. Se una sessione futura incontra la cartella
 `.git-private` senza questo contesto, il rischio è trattarla come residuo da
 ripulire o ricominciare a tracciarla dal pubblico: è esattamente l'incidente
 che l'uso del wrapper evita.
+
+**Cartella nuova sotto `dati/` che porterà `source_2e`: esclusione scritta
+alla nascita, non quando qualcuno se ne accorge.** Precedente: `dati/oggetti/`
+è nata con la decisione 33 (il diadema dello Scheletro Guerriero) ma non è
+stata aggiunta al `.gitignore` pubblico in quel momento — è rimasta protetta
+solo perché `git-privato.sh` la tracciava comunque (elenco `PERCORSI`), non
+per struttura. Scoperta e corretta il 21/08/2026. Quando arriverà
+l'equipaggiamento della Fase 2 ce ne saranno altre: il momento giusto per
+aggiungere la cartella al `.gitignore` pubblico (sopra) E all'elenco
+`PERCORSI` di `git-privato.sh` è quando si crea il primo file lì dentro, non
+un controllo a posteriori.
 
 Il testo dei manuali non va **mai** nel pubblico. Criterio da applicare prima
 di ogni commit pubblico, su ogni file toccato: **"questo file riproduce testo
