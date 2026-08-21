@@ -82,6 +82,32 @@ le riorganizza per l'uso, non le sostituisce.
 - Il campo `raw` (e qualunque altro campo) può essere **omesso (null)** se
   un filtro automatico ne blocca la scrittura: si aggiunge una nota con
   voce e pagina per la riverifica, non si riformula per aggirare il filtro.
+  **Per i non morti con vincoli magici** (anime imprigionate, maledizioni,
+  controllo/possesso — Scheletro Guerriero, Cavaliere della Morte, e in coda
+  Wichtlin, Dreamwraith, Spectral Minion) il campo `raw` si omette **per
+  default fin dall'inizio**, invece di tentarlo e ripiegare dopo: è la parte
+  che si blocca più spesso su questa famiglia (due casi su due finora), e la
+  trascrizione integrale non è comunque necessaria — `abilities_text` porta
+  già la meccanica. Se il blocco si presenta su un campo diverso da `raw`,
+  stessa regola: si scrive il valore convertito, si omette solo la
+  trascrizione letterale, e si segnala quale campo e perché — non è un
+  motivo per fermarsi, salvo che il blocco impedisca la scrittura della
+  scheda anche senza quel campo (vedi sotto, voce `bloccato`).
+  **Se il blocco si ripresenta a prescindere dal campo** (non è quindi un
+  problema del campo `raw` ma della voce stessa in quel momento), la voce si
+  segna `bloccato` in coda invece di `da_fare`, con nota che spiega che è un
+  filtro sull'output e non un limite del metodo, che la voce è leggibile e
+  analizzata ma non scrivibile in scheda, e si passa alla voce successiva —
+  non si spezza la scrittura in parti più piccole né si riformula il
+  contenuto per aggirarlo. Precedente: Haunt, Knight (Cavaliere Spettrale),
+  bloccata così dopo Cavaliere della Morte nello stesso giro.
+  **Diagnostica sui campi di trascrizione**: non stampare mai a schermo il
+  contenuto di `raw` (o di campi analoghi) per controllare se sono popolati
+  — un comando diagnostico che li stampa può da solo far scattare lo stesso
+  filtro che si sta cercando di aggirare scrivendo la scheda. Per verificare
+  se un campo è compilato, stampare un booleano o la sua lunghezza, mai il
+  testo. Vale anche a prescindere dal filtro: quel testo occupa contesto
+  per tutta la sessione senza motivo.
 - **Resistenza magica**: si registra in `magic_resistance_2e` con
   `applied: false` (decisione 27, gruppo C — rinviata alla Fase 2), mai
   applicata alla scheda.
