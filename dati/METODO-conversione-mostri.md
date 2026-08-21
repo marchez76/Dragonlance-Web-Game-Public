@@ -133,10 +133,19 @@ una checklist burocratica.
    un TS (vincolo 2) — mai se la fonte dichiara l'assenza dell'effetto.
 9. Registrare ogni capacità dichiarata con uno stato di conversione: mai un
    buco silenzioso.
-10. Compilare `morale_2e` (destinazione `ia_combattimento`) e
+10. **Controllo incrociato via XP2e.** Con il GS appena assegnato, confrontare
+    l'XP2e della voce con la tabella in §6: cercare le creature già
+    convertite con XP2e vicino e verificare che il loro GS sia nello stesso
+    ordine di grandezza. Non è un ricalcolo — il GS resta quello derivato
+    dalla media difesa/offesa (vincolo fermo, sopra) — ma una divergenza
+    forte (XP2e vicino a creature di GS molto diverso) è un motivo per
+    rileggere lo statblock prima di chiudere la scheda, non un errore
+    automatico da correggere alla cieca. Aggiungere la nuova coppia
+    (XP2e, GS) alla tabella una volta chiusa la scheda.
+11. Compilare `morale_2e` (destinazione `ia_combattimento`) e
     `world_data_2e` (destinazione `generatore_incontri`) dai gruppi A/B
     della decisione 27.
-11. Validare contro `dati/schema/mostro.schema.json`, poi rigenerare
+12. Validare contro `dati/schema/mostro.schema.json`, poi rigenerare
     `dati/mostri.index.json` con `python3 dati/build_mostri_index.py`
     (derivato dal contenuto di `dati/mostri/`, non tenuto a mano).
 
@@ -157,3 +166,72 @@ uno statblock fisso da convertire una volta sola:
 
 Entrambe restano `pending` di metodo, non solo di contenuto, finché non si
 decide la forma dello schema che le copre.
+
+## 6. Osservazioni XP2e → GS
+
+Indizio, non regola: quattro voci indipendenti e molto diverse fra loro —
+Orso Glaciale, Phaethon Anziano, Disir, Servitore di Fuoco — condividono lo
+stesso XP2e (975) e sono tutte GS 3; altre tre — Draconico Sivak, Skrit,
+Spettro Onirico — condividono XP2e (2.000) e GS 4, pur avendo profili di
+danno per round molto diversi sulla carta (per lo Skrit è l'Enzima
+Paralizzante a giustificare il salto, per lo Spettro Onirico la precisione
+e l'effetto Terrore Onirico, non le armi). Il caso piu' istruttivo finora è
+il Servitore di Fuoco: la fonte lo dichiara esplicitamente un elementale del
+fuoco, il che avrebbe suggerito di adottarne di peso l'analogo SRD (GS 5) —
+ma l'XP2e lo colloca chiaramente nel gruppo GS 3, ed è lì che è rimasto dopo
+la rilettura. Non basta a fare una regola (sette osservazioni su due valori
+soli), ma è coerente abbastanza da tenere una tabella e guardarla ogni volta
+(passo 10 della procedura, sopra): se dopo una decina di voci il rapporto
+tiene, l'XP2e diventa un secondo controllo indipendente dal calcolo
+difesa/offesa; se non tiene, qui resta comunque la cronologia di perché si
+è pensato che potesse tenere.
+
+| XP2e | GS | Creatura |
+|-----:|:--:|----------|
+| — | 0 | Anziano Venerato |
+| — | 1/2 | Sciame di Cavallette e Locuste |
+| — | 1 | Sciame di Formiche di Velluto |
+| — | 1/4 | 'Wari |
+| 35 | 1/8 | Bambola Kani |
+| 35 | 0 | Kingfisher |
+| 65 | 1/4 | Cervo Selvatico |
+| 65 | 1/4 | Gurik Cha'ahl |
+| 120 | 2 | Centauro Abanasiniano |
+| 120 | 1/2 | Centauro di Crystalmir |
+| 120 | 2 | Centauro di Endscape |
+| 120 | 1 | Centauro Wendle |
+| 120 | 1/8 | Emre |
+| 120 | 2 | Thanoi |
+| 120 | 1/4 | Traag |
+| 175 | 1/2 | Bakali |
+| 175 | 1 | Cervo Gigante |
+| 175 | 1/2 | Draconico Baaz |
+| 175 | 2 | Ogre di Krynn |
+| 175 | 1 | Orughi |
+| 175 | 2 | Ombrolo (Shadowperson) |
+| 270 | 1 | Horax |
+| 270 | 1 | Jarak-Sinn |
+| 270 | 1 | Phaethon |
+| 270 | 1/2 | Skyfisher |
+| 650 | 3 | Draconico Kapak |
+| 650 | 1 | Occhialato (Eyewing) |
+| 975 | 3 | Orso Glaciale |
+| 975 | 3 | Phaethon Anziano |
+| 975 | 3 | Disir |
+| 975 | 3 | Servitore di Fuoco (Fire Minion) |
+| 1.400 | 2 | Draconico Bozak |
+| 1.400 | 1 | Kyrie |
+| 2.000 | 4 | Draconico Sivak |
+| 2.000 | 4 | Skrit |
+| 2.000 | 4 | Spettro Onirico (Dreamwraith) |
+| 3.000 | 6 | Fetch |
+| 4.000 | 7 | Scheletro Guerriero |
+| 6.000 | 6 | Draconico Aurak |
+
+Nota di lettura: la dispersione a bassa XP (120→GS che va da 1/8 a 2, 175→GS
+da 1/2 a 2) mostra che il rapporto non è affatto lineare nella fascia bassa,
+dove il rumore editoriale sui piccoli mostri pesa di più. Il pattern più
+netto è invece ai due estremi alti già osservati (975→3, 2.000→4): con
+XP2e più alto la fonte sembra aver già fatto, a modo suo, la stessa media
+difesa/offesa che la 5e formalizza. Da riverificare quando la fascia 3 sarà
+più popolata.

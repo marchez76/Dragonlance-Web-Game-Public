@@ -1,6 +1,6 @@
 {
   "nota": "Coda di lavoro del bestiario di Krynn. Elenco ordinato per fascia di priorita' (dati/RAPPORTO-bestiario.md, Parte 5), con stato da_fare/fatto. Come convertire: dati/METODO-conversione-mostri.md. Perche' le fasce sono ordinate cosi': dati/RAPPORTO-bestiario.md. Generato a mano il 2026-08-21, non da uno script: da tenere sincronizzato manualmente a ogni conversione.",
-  "aggiornato": "2026-08-21 (Skrit e Disir completati; prime due voci di fascia 3)",
+  "aggiornato": "2026-08-21 (Dreamwraith e Fire Minion completati; quattro voci di fascia 3 fatte, metodo esteso col controllo incrociato XP2e -> GS in METODO-conversione-mostri.md §6)",
 
   "convertite": [
     { "id": "traag", "name_it": "Traag", "challenge_rating": "1/4", "file": "mostri/traag.json" },
@@ -39,7 +39,9 @@
     { "id": "gurik-cha-ahl", "name_it": "Gurik Cha'ahl", "challenge_rating": "1/4", "file": "mostri/gurik-cha-ahl.json" },
     { "id": "bambola-kani", "name_it": "Bambola Kani", "challenge_rating": "1/8", "file": "mostri/bambola-kani.json" },
     { "id": "skrit", "name_it": "Skrit", "challenge_rating": "4", "file": "mostri/skrit.json" },
-    { "id": "disir", "name_it": "Disir", "challenge_rating": "3", "file": "mostri/disir.json" }
+    { "id": "disir", "name_it": "Disir", "challenge_rating": "3", "file": "mostri/disir.json" },
+    { "id": "dreamwraith", "name_it": "Spettro Onirico", "challenge_rating": "4", "file": "mostri/dreamwraith.json" },
+    { "id": "servitore-di-fuoco", "name_it": "Servitore di Fuoco", "challenge_rating": "3", "file": "mostri/servitore-di-fuoco.json" }
   ],
 
   "coda": [
@@ -80,8 +82,8 @@
         { "voce": "Skrit", "stato": "fatto", "note": "XP2e 2.000, HD6: letta per intero come impone la regola (DV/XP non bastano da soli). Nessun analogo SRD singolo pulito: idioma della paralisi preso da Carrion Crawler (SRD), corpo/danno calibrati vicino al Draconico Sivak (stesso ordine di XP2e). GS4 — difesa modesta (AC14/PF58, fascia 3) media con un'offesa molto piu' alta per l'Enzima Paralizzante (paralisi totale finche' agganciato) e la Dissoluzione dei tessuti (10 PF/ora, curabile solo con guarigione naturale o rigenerazione). Ruolo assassino nonostante Intelligenza Animale: isola sempre un solo bersaglio.", "file": "mostri/skrit.json" },
         { "voce": "Disir", "stato": "fatto", "note": "HD5, XP2e 975 (stesso valore gia' osservato su Orso Glaciale e Phaethon Anziano, entrambi GS3). Nessun analogo SRD pulito: statblock costruito da zero. GS3 — difesa AC14/PF52 media con danno raddoppiato su artigli/morso (vincolo 3) e il tratto Dolore (svantaggio ai colpire + sfinimento progressivo, reso con la scala 5e standard invece di un modificatore inventato). Morso riservato ai bersagli incapacitati, coerente con la preferenza per gli artigli dichiarata dalla fonte. Resistenza al fuoco dal gel corporeo.", "file": "mostri/disir.json" },
         { "voce": "Dreamshadow", "stato": "categoria_aperta", "note": "CREATURA-MODELLO: ogni campo 'as creature or person mimicked'. Vedi METODO-conversione-mostri.md §5, non convertire con la procedura standard." },
-        { "voce": "Dreamwraith", "stato": "da_fare", "note": "8 DV, statistiche proprie fisse (a differenza del Dreamshadow gemello). Sotto-sistema di 'disbelief' condiviso, da rendere non copiare 1:1." },
-        { "voce": "Fire Minion", "stato": "da_fare", "note": "6 DV. Aura passiva 1d6 senza TS, immunita' al fuoco totale, vulnerabilita' all'acqua, vincolo ambientale (danno se lontano dal fuoco). Analogo parziale: Magmin, sottodimensionato." },
+        { "voce": "Dreamwraith", "stato": "fatto", "note": "HD8, XP2e 2.000 (stesso valore di Skrit e Draconico Sivak, controllo incrociato coerente: GS4 confermato senza rilettura). CA/DV fissi per dichiarazione di fonte (unico caso in cui 'as creature mimicked' non si applica alle statistiche di combattimento). Danno reale deliberatamente NON raddoppiato (eccezione al vincolo 3, dichiarata): la fonte separa danno illusorio alto da danno reale quasi nullo, il peso del GS viene da precisione (TAC0 13), vantaggio d'iniziativa e Terrore Onirico (spaventato + svantaggio), non dai PF tolti. L'incantesimo *mindspin* che lo genera, i Dragon Orbs e la procedura di Disbelief (condivisa col Dreamshadow) restano fuori scheda, registrati ma non convertiti: appartengono a schemi che non esistono ancora.", "file": "mostri/dreamwraith.json" },
+        { "voce": "Fire Minion", "stato": "fatto", "note": "HD6, XP2e 975 (stesso valore di Orso Glaciale/Phaethon Anziano/Disir). CASO CHIAVE per il controllo incrociato: la fonte si dichiara 'fire elemental' (indicazione diretta), che da sola avrebbe suggerito il Fire Elemental SRD di peso (GS5, 102 PF) — ma il controllo con l'XP2e ha confermato GS3, coerente col profilo reale (1 solo attacco/round, nessuna capacita' oltre spada+aura). Idioma elementale preso dal Fire Elemental SRD (immunita' al fuoco che guarisce, vulnerabilita' al freddo), numeri calibrati sulla fascia GS3 osservata. Corretto un errore di estrazione rilevante sull'immagine: '1-2 points per turn' di danno per assenza dal fuoco, non '12 points per turn'.", "file": "mostri/servitore-di-fuoco.json" },
         { "voce": "Tylor", "stato": "categoria_aperta", "note": "FAMIGLIA DI STATBLOCK: 6 categorie d'eta' con DV/CA/soffio propri. Vedi METODO-conversione-mostri.md §5. Nessun soffio in nessuna categoria; eredita una sola resistenza elementare dal genitore." },
         { "voce": "Knight, Death", "creature": ["Cavaliere della Morte"], "stato": "da_fare", "note": "TIPO ripetibile (decisione 32), non Lord Soth. 9 DV, 75% resistenza magica, incantatore a 20° livello. GS ben oltre 7, nessun analogo SRD combina guardiano corazzato e incantatore a questo livello." },
         { "voce": "Haunt, Knight", "stato": "da_fare", "note": "8 DV, CA molto protetta. Controllo di paura, immunita' multiple, rigenera senza acqua santa. Nessun analogo SRD." },
