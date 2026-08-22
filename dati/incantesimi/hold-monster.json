@@ -1,0 +1,37 @@
+{
+  "id": "hold-monster",
+  "name": {
+    "en": "Hold Monster",
+    "it": "Paralizzare Mostri"
+  },
+  "level": 5,
+  "school": "Enchantment",
+  "classes": [
+    "Bard",
+    "Cleric",
+    "Paladin",
+    "Sorcerer",
+    "Warlock",
+    "Wizard"
+  ],
+  "ritual_caster_feat": false,
+  "casting_time": "1 action",
+  "range": "90 feet",
+  "duration": "Up to 1 minute",
+  "ritual": false,
+  "concentration": true,
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "material_desc": "A small piece of iron."
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1)",
+    "api_ref": "v1/spells/hold-monster"
+  },
+  "descrizione": "Choose a creature you can see within range. The target must make a saving throw of Wisdom or be paralyzed for the duration of the spell. This spell has no effect against the undead. At the end of each round, the target can make a new saving throw of Wisdom. If successful, the spell ends for the creature.",
+  "a_livelli_superiori": "When you cast this spell using a level 6 or higher location, you can target an additional creature for each level of location beyond the fifth. The creatures must be within 30 feet o f each other when you target them.",
+  "note": []
+}

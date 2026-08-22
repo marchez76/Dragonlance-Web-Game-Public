@@ -1,0 +1,33 @@
+{
+  "id": "aid",
+  "name": {
+    "en": "Aid",
+    "it": "Aiuto"
+  },
+  "level": 2,
+  "school": "Abjuration",
+  "classes": [
+    "Cleric",
+    "Paladin"
+  ],
+  "ritual_caster_feat": false,
+  "casting_time": "1 action",
+  "range": "30 feet",
+  "duration": "8 hours",
+  "ritual": false,
+  "concentration": false,
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "material_desc": "A tiny strip of white cloth."
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1)",
+    "api_ref": "v1/spells/aid"
+  },
+  "descrizione": "Your spell bolsters your allies with toughness and resolve. Choose up to three creatures within range. Each target's hit point maximum and current hit points increase by 5 for the duration.",
+  "a_livelli_superiori": "When you cast this spell using a spell slot of 3rd level or higher, a target's hit points increase by an additional 5 for each slot level above 2nd.",
+  "note": []
+}

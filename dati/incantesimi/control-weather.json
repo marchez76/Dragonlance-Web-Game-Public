@@ -1,0 +1,34 @@
+{
+  "id": "control-weather",
+  "name": {
+    "en": "Control Weather",
+    "it": "Controllare il Tempo"
+  },
+  "level": 8,
+  "school": "Transmutation",
+  "classes": [
+    "Cleric",
+    "Druid",
+    "Wizard"
+  ],
+  "ritual_caster_feat": false,
+  "casting_time": "10 minutes",
+  "range": "Self",
+  "duration": "Up to 8 hours",
+  "ritual": false,
+  "concentration": true,
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "material_desc": "Burning incense and bits of earth and wood mixed in water."
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1)",
+    "api_ref": "v1/spells/control-weather"
+  },
+  "descrizione": "You take control of the weather within 5 miles of you for the duration. You must be outdoors to cast this spell. Moving to a place where you don't have a clear path to the sky ends the spell early. When you cast the spell, you change the current weather conditions, which are determined by the DM based on the climate and season. You can change precipitation, temperature, and wind. It takes 1d4 x 10 minutes for the new conditions to take effect. Once they do so, you can change the conditions again. When the spell ends, the weather gradually returns to normal. When you change the weather conditions, find a current condition on the following tables and change its stage by one, up or down. When changing the wind, you can change its direction.",
+  "a_livelli_superiori": null,
+  "note": []
+}

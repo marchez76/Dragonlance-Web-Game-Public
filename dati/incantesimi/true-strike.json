@@ -1,0 +1,35 @@
+{
+  "id": "true-strike",
+  "name": {
+    "en": "True Strike",
+    "it": "Vero Colpo"
+  },
+  "level": 0,
+  "school": "Divination",
+  "classes": [
+    "Bard",
+    "Sorcerer",
+    "Warlock",
+    "Wizard"
+  ],
+  "ritual_caster_feat": false,
+  "casting_time": "1 action",
+  "range": "30 feet",
+  "duration": "Up to 1 round",
+  "ritual": false,
+  "concentration": true,
+  "components": {
+    "verbal": false,
+    "somatic": true,
+    "material": false,
+    "material_desc": null
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1)",
+    "api_ref": "v1/spells/true-strike"
+  },
+  "descrizione": "You extend your hand and point a finger at a target in range. Your magic grants you a brief insight into the target's defenses. On your next turn, you gain advantage on your first attack roll against the target, provided that this spell hasn't ended.",
+  "a_livelli_superiori": null,
+  "note": []
+}

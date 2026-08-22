@@ -1,0 +1,33 @@
+{
+  "id": "false-life",
+  "name": {
+    "en": "False Life",
+    "it": "Falsa Vita"
+  },
+  "level": 1,
+  "school": "Necromancy",
+  "classes": [
+    "Sorcerer",
+    "Wizard"
+  ],
+  "ritual_caster_feat": false,
+  "casting_time": "1 action",
+  "range": "Self",
+  "duration": "1 hour",
+  "ritual": false,
+  "concentration": false,
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "material_desc": "A small amount of alcohol or distilled spirits."
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1)",
+    "api_ref": "v1/spells/false-life"
+  },
+  "descrizione": "Bolstering yourself with a necromantic facsimile of life, you gain 1d4 + 4 temporary hit points for the duration.",
+  "a_livelli_superiori": "When you cast this spell using a spell slot of 2nd level or higher, you gain 5 additional temporary hit points for each slot level above 1st.",
+  "note": []
+}

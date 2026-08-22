@@ -1,0 +1,33 @@
+{
+  "id": "chain-lightning",
+  "name": {
+    "en": "Chain Lightning",
+    "it": "Fulmine a Catena"
+  },
+  "level": 6,
+  "school": "Evocation",
+  "classes": [
+    "Sorcerer",
+    "Wizard"
+  ],
+  "ritual_caster_feat": false,
+  "casting_time": "1 action",
+  "range": "150 feet",
+  "duration": "Instantaneous",
+  "ritual": false,
+  "concentration": false,
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "material_desc": "A bit of fur; a piece of amber, glass, or a crystal rod; and three silver pins."
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1)",
+    "api_ref": "v1/spells/chain-lightning"
+  },
+  "descrizione": "You create a bolt of lightning that arcs toward a target of your choice that you can see within range. Three bolts then leap from that target to as many as three other targets, each of which must be within 30 feet of the first target. A target can be a creature or an object and can be targeted by only one of the bolts. A target must make a dexterity saving throw. The target takes 10d8 lightning damage on a failed save, or half as much damage on a successful one.",
+  "a_livelli_superiori": "When you cast this spell using a spell slot of 7th level or higher, one additional bolt leaps from the first target to another target for each slot level above 6th.",
+  "note": []
+}

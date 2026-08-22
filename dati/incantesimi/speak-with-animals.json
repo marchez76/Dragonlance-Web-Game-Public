@@ -1,0 +1,36 @@
+{
+  "id": "speak-with-animals",
+  "name": {
+    "en": "Speak with Animals",
+    "it": "Parlare con gli Animali"
+  },
+  "level": 1,
+  "school": "Divination",
+  "classes": [
+    "Bard",
+    "Cleric",
+    "Druid",
+    "Paladin",
+    "Ranger"
+  ],
+  "ritual_caster_feat": true,
+  "casting_time": "1 action",
+  "range": "Self",
+  "duration": "10 minutes",
+  "ritual": true,
+  "concentration": false,
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": false,
+    "material_desc": null
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1)",
+    "api_ref": "v1/spells/speak-with-animals"
+  },
+  "descrizione": "You gain the ability to comprehend and verbally communicate with beasts for the duration. The knowledge and awareness of many beasts is limited by their intelligence, but at a minimum, beasts can give you information about nearby locations and monsters, including whatever they can perceive or have perceived within the past day. You might be able to persuade a beast to perform a small favor for you, at the DM's discretion.",
+  "a_livelli_superiori": null,
+  "note": []
+}

@@ -1,0 +1,33 @@
+{
+  "id": "heroism",
+  "name": {
+    "en": "Heroism",
+    "it": "Eroismo"
+  },
+  "level": 1,
+  "school": "Enchantment",
+  "classes": [
+    "Bard",
+    "Paladin"
+  ],
+  "ritual_caster_feat": false,
+  "casting_time": "1 action",
+  "range": "Touch",
+  "duration": "Up to 1 minute",
+  "ritual": false,
+  "concentration": true,
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": false,
+    "material_desc": null
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1)",
+    "api_ref": "v1/spells/heroism"
+  },
+  "descrizione": "A willing creature you touch is imbued with bravery. Until the spell ends, the creature is immune to being frightened and gains temporary hit points equal to your spellcasting ability modifier at the start of each of its turns. When the spell ends, the target loses any remaining temporary hit points from this spell.",
+  "a_livelli_superiori": null,
+  "note": []
+}

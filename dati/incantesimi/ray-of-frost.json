@@ -1,0 +1,33 @@
+{
+  "id": "ray-of-frost",
+  "name": {
+    "en": "Ray of Frost",
+    "it": "Raggio di Gelo"
+  },
+  "level": 0,
+  "school": "Evocation",
+  "classes": [
+    "Sorcerer",
+    "Wizard"
+  ],
+  "ritual_caster_feat": false,
+  "casting_time": "1 action",
+  "range": "60 feet",
+  "duration": "Instantaneous",
+  "ritual": false,
+  "concentration": false,
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": false,
+    "material_desc": null
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1)",
+    "api_ref": "v1/spells/ray-of-frost"
+  },
+  "descrizione": "A frigid beam of blue-white light streaks toward a creature within range. Make a ranged spell attack against the target. On a hit, it takes 1d8 cold damage, and its speed is reduced by 10 feet until the start of your next turn.",
+  "a_livelli_superiori": "The spell's damage increases by 1d8 when you reach 5th level (2d8), 11th level (3d8), and 17th level (4d8).",
+  "note": []
+}

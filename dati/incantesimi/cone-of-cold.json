@@ -1,0 +1,34 @@
+{
+  "id": "cone-of-cold",
+  "name": {
+    "en": "Cone of Cold",
+    "it": "Cono di Gelo"
+  },
+  "level": 5,
+  "school": "Evocation",
+  "classes": [
+    "Druid",
+    "Sorcerer",
+    "Wizard"
+  ],
+  "ritual_caster_feat": false,
+  "casting_time": "1 action",
+  "range": "Self",
+  "duration": "Instantaneous",
+  "ritual": false,
+  "concentration": false,
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "material_desc": "A small crystal or glass cone."
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1)",
+    "api_ref": "v1/spells/cone-of-cold"
+  },
+  "descrizione": "A blast of cold air erupts from your hands. Each creature in a 60-foot cone must make a constitution saving throw. A creature takes 8d8 cold damage on a failed save, or half as much damage on a successful one. A creature killed by this spell becomes a frozen statue until it thaws.",
+  "a_livelli_superiori": "When you cast this spell using a spell slot of 6th level or higher, the damage increases by 1d8 for each slot level above 5th.",
+  "note": []
+}

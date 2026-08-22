@@ -1,0 +1,36 @@
+{
+  "id": "blindness-deafness",
+  "name": {
+    "en": "Blindness/Deafness",
+    "it": "Cecita'/Sordita'"
+  },
+  "level": 2,
+  "school": "Necromancy",
+  "classes": [
+    "Bard",
+    "Cleric",
+    "Sorcerer",
+    "Warlock",
+    "Wizard"
+  ],
+  "ritual_caster_feat": false,
+  "casting_time": "1 action",
+  "range": "30 feet",
+  "duration": "1 minute",
+  "ritual": false,
+  "concentration": false,
+  "components": {
+    "verbal": true,
+    "somatic": false,
+    "material": false,
+    "material_desc": null
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1)",
+    "api_ref": "v1/spells/blindnessdeafness"
+  },
+  "descrizione": "You can blind or deafen a foe. Choose one creature that you can see within range to make a constitution saving throw. If it fails, the target is either blinded or deafened (your choice) for the duration. At the end of each of its turns, the target can make a constitution saving throw. On a success, the spell ends.",
+  "a_livelli_superiori": "When you cast this spell using a spell slot of 3rd level or higher, you can target one additional creature for each slot level above 2nd.",
+  "note": []
+}

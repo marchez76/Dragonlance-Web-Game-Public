@@ -1,0 +1,33 @@
+{
+  "id": "acid-arrow",
+  "name": {
+    "en": "Acid Arrow",
+    "it": "Freccia Acida"
+  },
+  "level": 2,
+  "school": "Evocation",
+  "classes": [
+    "Druid",
+    "Wizard"
+  ],
+  "ritual_caster_feat": false,
+  "casting_time": "1 action",
+  "range": "90 feet",
+  "duration": "Instantaneous",
+  "ritual": false,
+  "concentration": false,
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "material_desc": "Powdered rhubarb leaf and an adder's stomach."
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1)",
+    "api_ref": "v1/spells/acid-arrow"
+  },
+  "descrizione": "A shimmering green arrow streaks toward a target within range and bursts in a spray of acid. Make a ranged spell attack against the target. On a hit, the target takes 4d4 acid damage immediately and 2d4 acid damage at the end of its next turn. On a miss, the arrow splashes the target with acid for half as much of the initial damage and no damage at the end of its next turn.",
+  "a_livelli_superiori": "When you cast this spell using a spell slot of 3rd level or higher, the damage (both initial and later) increases by 1d4 for each slot level above 2nd.",
+  "note": []
+}

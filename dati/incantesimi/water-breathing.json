@@ -1,0 +1,35 @@
+{
+  "id": "water-breathing",
+  "name": {
+    "en": "Water Breathing",
+    "it": "Respirare Sott'Acqua"
+  },
+  "level": 3,
+  "school": "Transmutation",
+  "classes": [
+    "Druid",
+    "Ranger",
+    "Sorcerer",
+    "Wizard"
+  ],
+  "ritual_caster_feat": true,
+  "casting_time": "1 action",
+  "range": "30 feet",
+  "duration": "24 hours",
+  "ritual": true,
+  "concentration": false,
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "material_desc": "A short piece of reed or straw."
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1)",
+    "api_ref": "v1/spells/water-breathing"
+  },
+  "descrizione": "This spell gives a maximum of ten willing creatures within range and you can see, the ability to breathe underwater until the end of its term. Affected creatures also retain their normal breathing pattern.",
+  "a_livelli_superiori": null,
+  "note": []
+}

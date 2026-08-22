@@ -1,0 +1,36 @@
+{
+  "id": "invisibility",
+  "name": {
+    "en": "Invisibility",
+    "it": "Invisibilita'"
+  },
+  "level": 2,
+  "school": "Illusion",
+  "classes": [
+    "Bard",
+    "Druid",
+    "Sorcerer",
+    "Warlock",
+    "Wizard"
+  ],
+  "ritual_caster_feat": false,
+  "casting_time": "1 action",
+  "range": "Touch",
+  "duration": "Up to 1 hour",
+  "ritual": false,
+  "concentration": true,
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "material_desc": "An eyelash encased in gum arabic."
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1)",
+    "api_ref": "v1/spells/invisibility"
+  },
+  "descrizione": "A creature you touch becomes invisible until the spell ends. Anything the target is wearing or carrying is invisible as long as it is on the target's person. The spell ends for a target that attacks or casts a spell.",
+  "a_livelli_superiori": "When you cast this spell using a spell slot of 3rd level or higher, you can target one additional creature for each slot level above 2nd.",
+  "note": []
+}

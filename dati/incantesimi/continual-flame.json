@@ -1,0 +1,33 @@
+{
+  "id": "continual-flame",
+  "name": {
+    "en": "Continual Flame",
+    "it": "Fiamma Perenne"
+  },
+  "level": 2,
+  "school": "Evocation",
+  "classes": [
+    "Cleric",
+    "Wizard"
+  ],
+  "ritual_caster_feat": false,
+  "casting_time": "1 action",
+  "range": "Touch",
+  "duration": "Until dispelled",
+  "ritual": false,
+  "concentration": false,
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "material_desc": "Ruby dust worth 50 gp, which the spell consumes."
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1)",
+    "api_ref": "v1/spells/continual-flame"
+  },
+  "descrizione": "A flame, equivalent in brightness to a torch, springs forth from an object that you touch. The effect looks like a regular flame, but it creates no heat and doesn't use oxygen. A continual flame can be covered or hidden but not smothered or quenched.",
+  "a_livelli_superiori": null,
+  "note": []
+}

@@ -1,0 +1,34 @@
+{
+  "id": "finger-of-death",
+  "name": {
+    "en": "Finger of Death",
+    "it": "Dito della Morte"
+  },
+  "level": 7,
+  "school": "Necromancy",
+  "classes": [
+    "Sorcerer",
+    "Warlock",
+    "Wizard"
+  ],
+  "ritual_caster_feat": false,
+  "casting_time": "1 action",
+  "range": "60 feet",
+  "duration": "Instantaneous",
+  "ritual": false,
+  "concentration": false,
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": false,
+    "material_desc": null
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1)",
+    "api_ref": "v1/spells/finger-of-death"
+  },
+  "descrizione": "You send negative energy coursing through a creature that you can see within range, causing it searing pain. The target must make a constitution saving throw. It takes 7d8 + 30 necrotic damage on a failed save, or half as much damage on a successful one. A humanoid killed by this spell rises at the start of your next turn as a zombie that is permanently under your command, following your verbal orders to the best of its ability.",
+  "a_livelli_superiori": null,
+  "note": []
+}

@@ -131,6 +131,19 @@ CLAUDE.local.md
 !dati/build_oggetti.py
 !dati/valida_oggetti.py
 
+# Lista incantesimi (Fase 2): stessa ragione dell'equipaggiamento sopra, ma
+# qui la cartella intera puo' restare pubblica, non solo i tre script — a
+# differenza di dati/oggetti/, dati/incantesimi/ non condivide spazio con
+# nessun caso a source_2e (incantesimo.schema.json non ne ha uno). Se un
+# giorno un incantesimo di Dragonlance senza equivalente SRD lo richiedesse,
+# quello sarebbe il momento di aggiungere qui un'esclusione, non prima.
+!dati/_fonti/srd51_incantesimi.py
+!dati/build_incantesimi.py
+!dati/valida_incantesimi.py
+!dati/incantesimi/
+!dati/incantesimi/*.json
+!dati/incantesimi.index.json
+
 # --------------------------------------------------------------------------
 # ECCEZIONE DENTRO L'ECCEZIONE — le versioni "completo" dei RAPPORTO-*.md.
 # Alcuni generatori (analizza_bestiario.py, verifica_sfere.py,

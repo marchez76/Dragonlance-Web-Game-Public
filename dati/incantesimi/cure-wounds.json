@@ -1,0 +1,36 @@
+{
+  "id": "cure-wounds",
+  "name": {
+    "en": "Cure Wounds",
+    "it": "Curare le Ferite"
+  },
+  "level": 1,
+  "school": "Evocation",
+  "classes": [
+    "Bard",
+    "Cleric",
+    "Druid",
+    "Paladin",
+    "Ranger"
+  ],
+  "ritual_caster_feat": false,
+  "casting_time": "1 action",
+  "range": "Touch",
+  "duration": "Instantaneous",
+  "ritual": false,
+  "concentration": false,
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": false,
+    "material_desc": null
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1)",
+    "api_ref": "v1/spells/cure-wounds"
+  },
+  "descrizione": "A creature you touch regains a number of hit points equal to 1d8 + your spellcasting ability modifier. This spell has no effect on undead or constructs.",
+  "a_livelli_superiori": "When you cast this spell using a spell slot of 2nd level or higher, the healing increases by 1d8 for each slot level above 1st.",
+  "note": []
+}

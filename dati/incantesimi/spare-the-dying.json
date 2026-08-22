@@ -1,0 +1,32 @@
+{
+  "id": "spare-the-dying",
+  "name": {
+    "en": "Spare the Dying",
+    "it": "Salvare dalla Morte"
+  },
+  "level": 0,
+  "school": "Necromancy",
+  "classes": [
+    "Cleric"
+  ],
+  "ritual_caster_feat": false,
+  "casting_time": "1 action",
+  "range": "Touch",
+  "duration": "Instantaneous",
+  "ritual": false,
+  "concentration": false,
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": false,
+    "material_desc": null
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1)",
+    "api_ref": "v1/spells/spare-the-dying"
+  },
+  "descrizione": "You touch a living creature that has 0 hit points. The creature becomes stable. This spell has no effect on undead or constructs.",
+  "a_livelli_superiori": null,
+  "note": []
+}

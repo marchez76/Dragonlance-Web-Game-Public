@@ -1,0 +1,32 @@
+{
+  "id": "compulsion",
+  "name": {
+    "en": "Compulsion",
+    "it": "Costrizione"
+  },
+  "level": 4,
+  "school": "Enchantment",
+  "classes": [
+    "Bard"
+  ],
+  "ritual_caster_feat": false,
+  "casting_time": "1 action",
+  "range": "30 feet",
+  "duration": "Up to 1 minute",
+  "ritual": false,
+  "concentration": true,
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": false,
+    "material_desc": null
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1)",
+    "api_ref": "v1/spells/compulsion"
+  },
+  "descrizione": "Creatures of your choice that you can see within range and that can hear you must make a Wisdom saving throw. A target automatically succeeds on this saving throw if it can't be charmed. On a failed save, a target is affected by this spell. Until the spell ends, you can use a bonus action on each of your turns to designate a direction that is horizontal to you. Each affected target must use as much of its movement as possible to move in that direction on its next turn. It can take its action before it moves. After moving in this way, it can make another Wisdom saving throw to try to end the effect. A target isn't compelled to move into an obviously deadly hazard, such as a fire or pit, but it will provoke opportunity attacks to move in the designated direction.",
+  "a_livelli_superiori": null,
+  "note": []
+}

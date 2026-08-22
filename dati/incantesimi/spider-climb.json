@@ -1,0 +1,35 @@
+{
+  "id": "spider-climb",
+  "name": {
+    "en": "Spider Climb",
+    "it": "Scalata del Ragno"
+  },
+  "level": 2,
+  "school": "Transmutation",
+  "classes": [
+    "Druid",
+    "Sorcerer",
+    "Warlock",
+    "Wizard"
+  ],
+  "ritual_caster_feat": false,
+  "casting_time": "1 action",
+  "range": "Touch",
+  "duration": "Up to 1 hour",
+  "ritual": false,
+  "concentration": true,
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "material_desc": "A drop of bitumen and a spider."
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1)",
+    "api_ref": "v1/spells/spider-climb"
+  },
+  "descrizione": "Until the spell ends, one willing creature you touch gains the ability to move up, down, and across vertical surfaces and upside down along ceilings, while leaving its hands free. The target also gains a climbing speed equal to its walking speed.",
+  "a_livelli_superiori": null,
+  "note": []
+}

@@ -1,0 +1,35 @@
+{
+  "id": "faerie-fire",
+  "name": {
+    "en": "Faerie Fire",
+    "it": "Fuoco Fatato"
+  },
+  "level": 1,
+  "school": "Evocation",
+  "classes": [
+    "Bard",
+    "Cleric",
+    "Druid",
+    "Warlock"
+  ],
+  "ritual_caster_feat": false,
+  "casting_time": "1 action",
+  "range": "60 feet",
+  "duration": "Up to 1 minute",
+  "ritual": false,
+  "concentration": true,
+  "components": {
+    "verbal": true,
+    "somatic": false,
+    "material": false,
+    "material_desc": null
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1)",
+    "api_ref": "v1/spells/faerie-fire"
+  },
+  "descrizione": "Each object in a 20-foot cube within range is outlined in blue, green, or violet light (your choice). Any creature in the area when the spell is cast is also outlined in light if it fails a dexterity saving throw. For the duration, objects and affected creatures shed dim light in a 10-foot radius. Any attack roll against an affected creature or object has advantage if the attacker can see it, and the affected creature or object can't benefit from being invisible.",
+  "a_livelli_superiori": null,
+  "note": []
+}

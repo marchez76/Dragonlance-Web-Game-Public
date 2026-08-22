@@ -1,0 +1,32 @@
+{
+  "id": "mass-heal",
+  "name": {
+    "en": "Mass Heal",
+    "it": "Guarigione di Massa"
+  },
+  "level": 9,
+  "school": "Conjuration",
+  "classes": [
+    "Cleric"
+  ],
+  "ritual_caster_feat": false,
+  "casting_time": "1 action",
+  "range": "60 feet",
+  "duration": "Instantaneous",
+  "ritual": false,
+  "concentration": false,
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": false,
+    "material_desc": null
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1)",
+    "api_ref": "v1/spells/mass-heal"
+  },
+  "descrizione": "A flood of healing energy flows from you into injured creatures around you. You restore up to 700 hit points, divided as you choose among any number of creatures that you can see within range. Creatures healed by this spell are also cured of all diseases and any effect making them blinded or deafened. This spell has no effect on undead or constructs.",
+  "a_livelli_superiori": null,
+  "note": []
+}

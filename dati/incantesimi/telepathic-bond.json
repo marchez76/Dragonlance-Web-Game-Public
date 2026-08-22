@@ -1,0 +1,32 @@
+{
+  "id": "telepathic-bond",
+  "name": {
+    "en": "Telepathic Bond",
+    "it": "Legame Telepatico"
+  },
+  "level": 5,
+  "school": "Divination",
+  "classes": [
+    "Wizard"
+  ],
+  "ritual_caster_feat": false,
+  "casting_time": "1 action",
+  "range": "30 feet",
+  "duration": "1 hour",
+  "ritual": true,
+  "concentration": false,
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "material_desc": "Pieces of eggshell from two different kinds of creatures"
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1)",
+    "api_ref": "v1/spells/telepathic-bond"
+  },
+  "descrizione": "You forge a telepathic link among up to eight willing creatures of your choice within range, psychically linking each creature to all the others for the duration. Creatures with Intelligence scores of 2 or less aren't affected by this spell. Until the spell ends, the targets can communicate telepathically through the bond whether or not they have a common language. The communication is possible over any distance, though it can't extend to other planes of existence.",
+  "a_livelli_superiori": null,
+  "note": []
+}

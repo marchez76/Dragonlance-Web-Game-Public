@@ -1,0 +1,34 @@
+{
+  "id": "hideous-laughter",
+  "name": {
+    "en": "Hideous Laughter",
+    "it": "Risata Orrenda"
+  },
+  "level": 1,
+  "school": "Enchantment",
+  "classes": [
+    "Bard",
+    "Warlock",
+    "Wizard"
+  ],
+  "ritual_caster_feat": false,
+  "casting_time": "1 action",
+  "range": "30 feet",
+  "duration": "Up to 1 minute",
+  "ritual": false,
+  "concentration": true,
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "material_desc": "Tiny tarts and a feather that is waved in the air."
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1)",
+    "api_ref": "v1/spells/hideous-laughter"
+  },
+  "descrizione": "A creature of your choice that you can see within range perceives everything as hilariously funny and falls into fits of laughter if this spell affects it. The target must succeed on a wisdom saving throw or fall prone, becoming incapacitated and unable to stand up for the duration. A creature with an Intelligence score of 4 or less isn't affected. At the end of each of its turns, and each time it takes damage, the target can make another wisdom saving throw. The target had advantage on the saving throw if it's triggered by damage. On a success, the spell ends.",
+  "a_livelli_superiori": null,
+  "note": []
+}

@@ -1,0 +1,35 @@
+{
+  "id": "longstrider",
+  "name": {
+    "en": "Longstrider",
+    "it": "Falcata Lunga"
+  },
+  "level": 1,
+  "school": "Transmutation",
+  "classes": [
+    "Bard",
+    "Druid",
+    "Ranger",
+    "Wizard"
+  ],
+  "ritual_caster_feat": false,
+  "casting_time": "1 action",
+  "range": "Touch",
+  "duration": "1 hour",
+  "ritual": false,
+  "concentration": false,
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "material_desc": "A pinch of dirt."
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1)",
+    "api_ref": "v1/spells/longstrider"
+  },
+  "descrizione": "You touch a creature. The target's speed increases by 10 feet until the spell ends.",
+  "a_livelli_superiori": "When you cast this spell using a spell slot of 2nd level or higher, you can target one additional creature for each spell slot above 1st.",
+  "note": []
+}

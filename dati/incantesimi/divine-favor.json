@@ -1,0 +1,33 @@
+{
+  "id": "divine-favor",
+  "name": {
+    "en": "Divine Favor",
+    "it": "Favore Divino"
+  },
+  "level": 1,
+  "school": "Evocation",
+  "classes": [
+    "Cleric",
+    "Paladin"
+  ],
+  "ritual_caster_feat": false,
+  "casting_time": "1 bonus action",
+  "range": "Self",
+  "duration": "Up to 1 minute",
+  "ritual": false,
+  "concentration": true,
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": false,
+    "material_desc": null
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1)",
+    "api_ref": "v1/spells/divine-favor"
+  },
+  "descrizione": "Your prayer empowers you with divine radiance. Until the spell ends, your weapon attacks deal an extra 1d4 radiant damage on a hit.",
+  "a_livelli_superiori": null,
+  "note": []
+}

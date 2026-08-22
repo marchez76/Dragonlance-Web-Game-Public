@@ -1,0 +1,33 @@
+{
+  "id": "shield-of-faith",
+  "name": {
+    "en": "Shield of Faith",
+    "it": "Scudo della Fede"
+  },
+  "level": 1,
+  "school": "Abjuration",
+  "classes": [
+    "Cleric",
+    "Paladin"
+  ],
+  "ritual_caster_feat": false,
+  "casting_time": "1 bonus action",
+  "range": "60 feet",
+  "duration": "Up to 10 minutes",
+  "ritual": false,
+  "concentration": true,
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "material_desc": "A small parchment with a bit of holy text written on it."
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1)",
+    "api_ref": "v1/spells/shield-of-faith"
+  },
+  "descrizione": "A shimmering field appears and surrounds a creature of your choice within range, granting it a +2 bonus to AC for the duration.",
+  "a_livelli_superiori": null,
+  "note": []
+}

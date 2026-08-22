@@ -1,0 +1,32 @@
+{
+  "id": "guardian-of-faith",
+  "name": {
+    "en": "Guardian of Faith",
+    "it": "Guardiano della Fede"
+  },
+  "level": 4,
+  "school": "Conjuration",
+  "classes": [
+    "Cleric"
+  ],
+  "ritual_caster_feat": false,
+  "casting_time": "1 action",
+  "range": "30 feet",
+  "duration": "8 hours",
+  "ritual": false,
+  "concentration": false,
+  "components": {
+    "verbal": true,
+    "somatic": false,
+    "material": false,
+    "material_desc": null
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1)",
+    "api_ref": "v1/spells/guardian-of-faith"
+  },
+  "descrizione": "A Large spectral guardian appears and hovers for the duration in an unoccupied space of your choice that you can see within range. The guardian occupies that space and is indistinct except for a gleaming sword and shield emblazoned with the symbol of your deity. Any creature hostile to you that moves to a space within 10 feet of the guardian for the first time on a turn must succeed on a Dexterity saving throw. The creature takes 20 radiant damage on a failed save, or half as much damage on a successful one. The guardian vanishes when it has dealt a total of 60 damage.",
+  "a_livelli_superiori": null,
+  "note": []
+}

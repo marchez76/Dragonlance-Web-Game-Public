@@ -1,0 +1,34 @@
+{
+  "id": "create-food-and-water",
+  "name": {
+    "en": "Create Food and Water",
+    "it": "Creare Cibo e Acqua"
+  },
+  "level": 3,
+  "school": "Conjuration",
+  "classes": [
+    "Cleric",
+    "Druid",
+    "Paladin"
+  ],
+  "ritual_caster_feat": false,
+  "casting_time": "1 action",
+  "range": "30 feet",
+  "duration": "Instantaneous",
+  "ritual": false,
+  "concentration": false,
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": false,
+    "material_desc": null
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1)",
+    "api_ref": "v1/spells/create-food-and-water"
+  },
+  "descrizione": "You create 45 pounds of food and 30 gallons of water on the ground or in containers within range, enough to sustain up to fifteen humanoids or five steeds for 24 hours. The food is bland but nourishing, and spoils if uneaten after 24 hours. The water is clean and doesn't go bad.",
+  "a_livelli_superiori": null,
+  "note": []
+}

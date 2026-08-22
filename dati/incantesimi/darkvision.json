@@ -1,0 +1,35 @@
+{
+  "id": "darkvision",
+  "name": {
+    "en": "Darkvision",
+    "it": "Scurovisione"
+  },
+  "level": 2,
+  "school": "Transmutation",
+  "classes": [
+    "Druid",
+    "Ranger",
+    "Sorcerer",
+    "Wizard"
+  ],
+  "ritual_caster_feat": false,
+  "casting_time": "1 action",
+  "range": "Touch",
+  "duration": "8 hours",
+  "ritual": false,
+  "concentration": false,
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "material_desc": "Either a pinch of dried carrot or an agate."
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1)",
+    "api_ref": "v1/spells/darkvision"
+  },
+  "descrizione": "You touch a willing creature to grant it the ability to see in the dark. For the duration, that creature has darkvision out to a range of 60 feet.",
+  "a_livelli_superiori": null,
+  "note": []
+}

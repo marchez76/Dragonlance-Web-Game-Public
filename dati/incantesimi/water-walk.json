@@ -1,0 +1,37 @@
+{
+  "id": "water-walk",
+  "name": {
+    "en": "Water Walk",
+    "it": "Camminare sull'Acqua"
+  },
+  "level": 3,
+  "school": "Transmutation",
+  "classes": [
+    "Cleric",
+    "Druid",
+    "Ranger",
+    "Sorcerer"
+  ],
+  "ritual_caster_feat": true,
+  "casting_time": "1 action",
+  "range": "30 feet",
+  "duration": "1 hour",
+  "ritual": true,
+  "concentration": false,
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "material_desc": null
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1)",
+    "api_ref": "v1/spells/water-walk"
+  },
+  "descrizione": "This spell grants the ability to move across any liquid surface-such as water, acid, mud, snow, quicksand, or lava-as if it were harmless solid ground (creatures crossing molten lava can still take damage from the heat). Up to ten willing creatures you can see within range gain this ability for the duration. If you target a creature submerged in a liquid, the spell carries the target to the surface of the liquid at a rate of 60 feet per round.",
+  "a_livelli_superiori": null,
+  "note": [
+    "components.material=true ma material_desc e' vuoto: gap dell'API (sia v1 sia v2 di api.open5e.com hanno il campo materiale vuoto per questo incantesimo), non un'omissione nostra. Non riempito a memoria: vedi dati/_fonti/srd51_incantesimi.py per la verifica incrociata fatta."
+  ]
+}

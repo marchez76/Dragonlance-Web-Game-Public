@@ -1,0 +1,33 @@
+{
+  "id": "fire-shield",
+  "name": {
+    "en": "Fire Shield",
+    "it": "Scudo di Fuoco"
+  },
+  "level": 4,
+  "school": "Evocation",
+  "classes": [
+    "Warlock",
+    "Wizard"
+  ],
+  "ritual_caster_feat": false,
+  "casting_time": "1 action",
+  "range": "Self",
+  "duration": "10 minutes",
+  "ritual": false,
+  "concentration": false,
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "material_desc": "A little phosphorus or a firefly."
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1)",
+    "api_ref": "v1/spells/fire-shield"
+  },
+  "descrizione": "Thin and vaporous flame surround your body for the duration of the spell, radiating a bright light bright light in a 10-foot radius and dim light for an additional 10 feet. You can end the spell using an action to make it disappear. The flames are around you a heat shield or cold, your choice. The heat shield gives you cold damage resistance and the cold resistance to fire damage. In addition, whenever a creature within 5 feet of you hits you with a melee attack, flames spring from the shield. The attacker then suffers 2d8 points of fire damage or cold, depending on the model.",
+  "a_livelli_superiori": null,
+  "note": []
+}

@@ -1,0 +1,33 @@
+{
+  "id": "resistance",
+  "name": {
+    "en": "Resistance",
+    "it": "Resistenza"
+  },
+  "level": 0,
+  "school": "Abjuration",
+  "classes": [
+    "Cleric",
+    "Druid"
+  ],
+  "ritual_caster_feat": false,
+  "casting_time": "1 action",
+  "range": "Touch",
+  "duration": "Up to 1 minute",
+  "ritual": false,
+  "concentration": true,
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "material_desc": "A miniature cloak."
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1)",
+    "api_ref": "v1/spells/resistance"
+  },
+  "descrizione": "You touch one willing creature. Once before the spell ends, the target can roll a d4 and add the number rolled to one saving throw of its choice. It can roll the die before or after making the saving throw. The spell then ends.",
+  "a_livelli_superiori": null,
+  "note": []
+}

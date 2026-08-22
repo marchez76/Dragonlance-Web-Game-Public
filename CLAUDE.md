@@ -37,6 +37,17 @@ aggiungere la cartella al `.gitignore` pubblico (sopra) E all'elenco
 `PERCORSI` di `git-privato.sh` è quando si crea il primo file lì dentro, non
 un controllo a posteriori.
 
+**Precedente in prevenzione, non solo in correzione: 21/08/2026, stessa
+sera.** Generando `dati/oggetti.index.json` (indice dell'equipaggiamento
+appena estratto), la stessa zona morta si sarebbe riformata in una forma
+nuova: il file rientra nell'esclusione pubblica generica (`dati/*.index.json`)
+ma nessuna riga di `PERCORSI` lo menziona per nome. Questa volta la voce è
+stata aggiunta a `PERCORSI` nello **stesso commit** che ha creato il file,
+non tre giorni dopo. La regola sopra non è cambiata: quello che conta è che
+la vigilanza descritta ha funzionato *prima* che il file restasse orfano,
+non solo *dopo*. Vale come conferma che la regola scritta funziona da sola,
+non come una regola nuova.
+
 Il testo dei manuali non va **mai** nel pubblico. Criterio da applicare prima
 di ogni commit pubblico, su ogni file toccato: **"questo file riproduce testo
 dei manuali?"**

@@ -1,0 +1,32 @@
+{
+  "id": "grease",
+  "name": {
+    "en": "Grease",
+    "it": "Untume"
+  },
+  "level": 1,
+  "school": "Conjuration",
+  "classes": [
+    "Wizard"
+  ],
+  "ritual_caster_feat": false,
+  "casting_time": "1 action",
+  "range": "60 feet",
+  "duration": "1 minute",
+  "ritual": false,
+  "concentration": false,
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "material_desc": "A bit of pork rind or butter."
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1)",
+    "api_ref": "v1/spells/grease"
+  },
+  "descrizione": "Slick grease covers the ground in a 10-foot square centered on a point within range and turns it into difficult terrain for the duration. When the grease appears, each creature standing in its area must succeed on a dexterity saving throw or fall prone. A creature that enters the area or ends its turn there must also succeed on a dexterity saving throw or fall prone.",
+  "a_livelli_superiori": null,
+  "note": []
+}

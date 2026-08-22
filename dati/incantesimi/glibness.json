@@ -1,0 +1,33 @@
+{
+  "id": "glibness",
+  "name": {
+    "en": "Glibness",
+    "it": "Parlantina"
+  },
+  "level": 8,
+  "school": "Transmutation",
+  "classes": [
+    "Bard",
+    "Warlock"
+  ],
+  "ritual_caster_feat": false,
+  "casting_time": "1 action",
+  "range": "Self",
+  "duration": "1 hour",
+  "ritual": false,
+  "concentration": false,
+  "components": {
+    "verbal": true,
+    "somatic": false,
+    "material": false,
+    "material_desc": null
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1)",
+    "api_ref": "v1/spells/glibness"
+  },
+  "descrizione": "Until the spell ends, when you make a Charisma check, you can replace the number you roll with a 15. Additionally, no matter what you say, magic that would determine if you are telling the truth indicates that you are being truthful.",
+  "a_livelli_superiori": null,
+  "note": []
+}

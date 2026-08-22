@@ -1,0 +1,32 @@
+{
+  "id": "mass-healing-word",
+  "name": {
+    "en": "Mass Healing Word",
+    "it": "Parola Curativa di Massa"
+  },
+  "level": 3,
+  "school": "Evocation",
+  "classes": [
+    "Cleric"
+  ],
+  "ritual_caster_feat": false,
+  "casting_time": "1 bonus action",
+  "range": "60 feet",
+  "duration": "Instantaneous",
+  "ritual": false,
+  "concentration": false,
+  "components": {
+    "verbal": true,
+    "somatic": false,
+    "material": false,
+    "material_desc": null
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1)",
+    "api_ref": "v1/spells/mass-healing-word"
+  },
+  "descrizione": "As you call out words of restoration, up to six creatures of your choice that you can see within range regain hit points equal to 1d4 + your spellcasting ability modifier. This spell has no effect on undead or constructs.",
+  "a_livelli_superiori": "When you cast this spell using a spell slot of 4th level or higher, the healing increases by 1d4 for each slot level above 3rd.",
+  "note": []
+}

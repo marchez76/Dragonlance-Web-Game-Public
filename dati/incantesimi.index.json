@@ -1,0 +1,3758 @@
+{
+  "count": 319,
+  "spells": [
+    {
+      "id": "acid-arrow",
+      "name_it": "Freccia Acida",
+      "level": 2,
+      "school": "Evocation",
+      "classes": [
+        "Druid",
+        "Wizard"
+      ],
+      "file": "incantesimi/acid-arrow.json"
+    },
+    {
+      "id": "acid-splash",
+      "name_it": "Spruzzo Acido",
+      "level": 0,
+      "school": "Conjuration",
+      "classes": [
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/acid-splash.json"
+    },
+    {
+      "id": "aid",
+      "name_it": "Aiuto",
+      "level": 2,
+      "school": "Abjuration",
+      "classes": [
+        "Cleric",
+        "Paladin"
+      ],
+      "file": "incantesimi/aid.json"
+    },
+    {
+      "id": "alarm",
+      "name_it": "Allarme",
+      "level": 1,
+      "school": "Abjuration",
+      "classes": [
+        "Ranger",
+        "Wizard"
+      ],
+      "file": "incantesimi/alarm.json"
+    },
+    {
+      "id": "alter-self",
+      "name_it": "Alterare Se Stessi",
+      "level": 2,
+      "school": "Transmutation",
+      "classes": [
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/alter-self.json"
+    },
+    {
+      "id": "animal-friendship",
+      "name_it": "Amicizia con gli Animali",
+      "level": 1,
+      "school": "Enchantment",
+      "classes": [
+        "Bard",
+        "Druid",
+        "Ranger"
+      ],
+      "file": "incantesimi/animal-friendship.json"
+    },
+    {
+      "id": "animal-messenger",
+      "name_it": "Messaggero Animale",
+      "level": 2,
+      "school": "Enchantment",
+      "classes": [
+        "Bard",
+        "Druid",
+        "Ranger"
+      ],
+      "file": "incantesimi/animal-messenger.json"
+    },
+    {
+      "id": "animal-shapes",
+      "name_it": "Forme Animali",
+      "level": 8,
+      "school": "Transmutation",
+      "classes": [
+        "Druid"
+      ],
+      "file": "incantesimi/animal-shapes.json"
+    },
+    {
+      "id": "animate-dead",
+      "name_it": "Animare i Morti",
+      "level": 3,
+      "school": "Necromancy",
+      "classes": [
+        "Cleric",
+        "Wizard"
+      ],
+      "file": "incantesimi/animate-dead.json"
+    },
+    {
+      "id": "animate-objects",
+      "name_it": "Animare Oggetti",
+      "level": 5,
+      "school": "Transmutation",
+      "classes": [
+        "Bard",
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/animate-objects.json"
+    },
+    {
+      "id": "antilife-shell",
+      "name_it": "Guscio Anti-vita",
+      "level": 5,
+      "school": "Abjuration",
+      "classes": [
+        "Druid"
+      ],
+      "file": "incantesimi/antilife-shell.json"
+    },
+    {
+      "id": "antimagic-field",
+      "name_it": "Campo Antimagico",
+      "level": 8,
+      "school": "Abjuration",
+      "classes": [
+        "Cleric",
+        "Wizard"
+      ],
+      "file": "incantesimi/antimagic-field.json"
+    },
+    {
+      "id": "antipathy-sympathy",
+      "name_it": "Antipatia/Simpatia",
+      "level": 8,
+      "school": "Enchantment",
+      "classes": [
+        "Druid",
+        "Wizard"
+      ],
+      "file": "incantesimi/antipathy-sympathy.json"
+    },
+    {
+      "id": "arcane-eye",
+      "name_it": "Occhio Arcano",
+      "level": 4,
+      "school": "Divination",
+      "classes": [
+        "Cleric",
+        "Wizard"
+      ],
+      "file": "incantesimi/arcane-eye.json"
+    },
+    {
+      "id": "arcane-hand",
+      "name_it": "Mano Arcana",
+      "level": 5,
+      "school": "Evocation",
+      "classes": [
+        "Wizard"
+      ],
+      "file": "incantesimi/arcane-hand.json"
+    },
+    {
+      "id": "arcane-lock",
+      "name_it": "Serratura Arcana",
+      "level": 2,
+      "school": "Abjuration",
+      "classes": [
+        "Wizard"
+      ],
+      "file": "incantesimi/arcane-lock.json"
+    },
+    {
+      "id": "arcane-sword",
+      "name_it": "Spada Arcana",
+      "level": 7,
+      "school": "Evocation",
+      "classes": [
+        "Bard",
+        "Wizard"
+      ],
+      "file": "incantesimi/arcane-sword.json"
+    },
+    {
+      "id": "arcanists-magic-aura",
+      "name_it": "Aura Magica dell'Arcanista",
+      "level": 2,
+      "school": "Illusion",
+      "classes": [
+        "Wizard"
+      ],
+      "file": "incantesimi/arcanists-magic-aura.json"
+    },
+    {
+      "id": "astral-projection",
+      "name_it": "Proiezione Astrale",
+      "level": 9,
+      "school": "Necromancy",
+      "classes": [
+        "Cleric",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/astral-projection.json"
+    },
+    {
+      "id": "augury",
+      "name_it": "Presagio",
+      "level": 2,
+      "school": "Divination",
+      "classes": [
+        "Cleric"
+      ],
+      "file": "incantesimi/augury.json"
+    },
+    {
+      "id": "awaken",
+      "name_it": "Risveglio",
+      "level": 5,
+      "school": "Transmutation",
+      "classes": [
+        "Bard",
+        "Druid"
+      ],
+      "file": "incantesimi/awaken.json"
+    },
+    {
+      "id": "bane",
+      "name_it": "Maledizione Minore",
+      "level": 1,
+      "school": "Enchantment",
+      "classes": [
+        "Bard",
+        "Cleric",
+        "Paladin"
+      ],
+      "file": "incantesimi/bane.json"
+    },
+    {
+      "id": "banishment",
+      "name_it": "Bando",
+      "level": 4,
+      "school": "Abjuration",
+      "classes": [
+        "Cleric",
+        "Paladin",
+        "Sorcerer",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/banishment.json"
+    },
+    {
+      "id": "barkskin",
+      "name_it": "Pelle di Corteccia",
+      "level": 2,
+      "school": "Transmutation",
+      "classes": [
+        "Cleric",
+        "Druid",
+        "Ranger"
+      ],
+      "file": "incantesimi/barkskin.json"
+    },
+    {
+      "id": "beacon-of-hope",
+      "name_it": "Faro di Speranza",
+      "level": 3,
+      "school": "Abjuration",
+      "classes": [
+        "Cleric",
+        "Paladin"
+      ],
+      "file": "incantesimi/beacon-of-hope.json"
+    },
+    {
+      "id": "bestow-curse",
+      "name_it": "Gettare una Maledizione",
+      "level": 3,
+      "school": "Necromancy",
+      "classes": [
+        "Bard",
+        "Cleric",
+        "Wizard"
+      ],
+      "file": "incantesimi/bestow-curse.json"
+    },
+    {
+      "id": "black-tentacles",
+      "name_it": "Tentacoli Neri",
+      "level": 4,
+      "school": "Conjuration",
+      "classes": [
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/black-tentacles.json"
+    },
+    {
+      "id": "blade-barrier",
+      "name_it": "Barriera di Lame",
+      "level": 6,
+      "school": "Evocation",
+      "classes": [
+        "Cleric"
+      ],
+      "file": "incantesimi/blade-barrier.json"
+    },
+    {
+      "id": "bless",
+      "name_it": "Benedizione",
+      "level": 1,
+      "school": "Enchantment",
+      "classes": [
+        "Cleric",
+        "Paladin"
+      ],
+      "file": "incantesimi/bless.json"
+    },
+    {
+      "id": "blight",
+      "name_it": "Piaga",
+      "level": 4,
+      "school": "Necromancy",
+      "classes": [
+        "Druid",
+        "Sorcerer",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/blight.json"
+    },
+    {
+      "id": "blindness-deafness",
+      "name_it": "Cecita'/Sordita'",
+      "level": 2,
+      "school": "Necromancy",
+      "classes": [
+        "Bard",
+        "Cleric",
+        "Sorcerer",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/blindness-deafness.json"
+    },
+    {
+      "id": "blink",
+      "name_it": "Sfarfallio",
+      "level": 3,
+      "school": "Transmutation",
+      "classes": [
+        "Cleric",
+        "Sorcerer",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/blink.json"
+    },
+    {
+      "id": "blur",
+      "name_it": "Offuscamento",
+      "level": 2,
+      "school": "Illusion",
+      "classes": [
+        "Druid",
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/blur.json"
+    },
+    {
+      "id": "branding-smite",
+      "name_it": "Colpo Marchiante",
+      "level": 2,
+      "school": "Evocation",
+      "classes": [
+        "Paladin"
+      ],
+      "file": "incantesimi/branding-smite.json"
+    },
+    {
+      "id": "burning-hands",
+      "name_it": "Mani Ardenti",
+      "level": 1,
+      "school": "Evocation",
+      "classes": [
+        "Cleric",
+        "Sorcerer",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/burning-hands.json"
+    },
+    {
+      "id": "call-lightning",
+      "name_it": "Richiamare i Fulmini",
+      "level": 3,
+      "school": "Conjuration",
+      "classes": [
+        "Cleric",
+        "Druid"
+      ],
+      "file": "incantesimi/call-lightning.json"
+    },
+    {
+      "id": "calm-emotions",
+      "name_it": "Calmare le Emozioni",
+      "level": 2,
+      "school": "Enchantment",
+      "classes": [
+        "Bard",
+        "Cleric",
+        "Warlock"
+      ],
+      "file": "incantesimi/calm-emotions.json"
+    },
+    {
+      "id": "chain-lightning",
+      "name_it": "Fulmine a Catena",
+      "level": 6,
+      "school": "Evocation",
+      "classes": [
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/chain-lightning.json"
+    },
+    {
+      "id": "charm-person",
+      "name_it": "Ammaliare Persone",
+      "level": 1,
+      "school": "Enchantment",
+      "classes": [
+        "Bard",
+        "Cleric",
+        "Druid",
+        "Sorcerer",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/charm-person.json"
+    },
+    {
+      "id": "chill-touch",
+      "name_it": "Tocco Gelido",
+      "level": 0,
+      "school": "Necromancy",
+      "classes": [
+        "Sorcerer",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/chill-touch.json"
+    },
+    {
+      "id": "circle-of-death",
+      "name_it": "Cerchio di Morte",
+      "level": 6,
+      "school": "Necromancy",
+      "classes": [
+        "Sorcerer",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/circle-of-death.json"
+    },
+    {
+      "id": "clairvoyance",
+      "name_it": "Chiaroveggenza",
+      "level": 3,
+      "school": "Divination",
+      "classes": [
+        "Bard",
+        "Cleric",
+        "Sorcerer",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/clairvoyance.json"
+    },
+    {
+      "id": "clone",
+      "name_it": "Clone",
+      "level": 8,
+      "school": "Necromancy",
+      "classes": [
+        "Wizard"
+      ],
+      "file": "incantesimi/clone.json"
+    },
+    {
+      "id": "cloudkill",
+      "name_it": "Nube Mortale",
+      "level": 5,
+      "school": "Conjuration",
+      "classes": [
+        "Druid",
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/cloudkill.json"
+    },
+    {
+      "id": "color-spray",
+      "name_it": "Spruzzo Colorato",
+      "level": 1,
+      "school": "Illusion",
+      "classes": [
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/color-spray.json"
+    },
+    {
+      "id": "command",
+      "name_it": "Comando",
+      "level": 1,
+      "school": "Enchantment",
+      "classes": [
+        "Cleric",
+        "Paladin",
+        "Warlock"
+      ],
+      "file": "incantesimi/command.json"
+    },
+    {
+      "id": "commune",
+      "name_it": "Comunione",
+      "level": 5,
+      "school": "Divination",
+      "classes": [
+        "Cleric",
+        "Paladin"
+      ],
+      "file": "incantesimi/commune.json"
+    },
+    {
+      "id": "commune-with-nature",
+      "name_it": "Comunione con la Natura",
+      "level": 5,
+      "school": "Divination",
+      "classes": [
+        "Druid",
+        "Paladin",
+        "Ranger"
+      ],
+      "file": "incantesimi/commune-with-nature.json"
+    },
+    {
+      "id": "comprehend-languages",
+      "name_it": "Comprendere i Linguaggi",
+      "level": 1,
+      "school": "Divination",
+      "classes": [
+        "Bard",
+        "Sorcerer",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/comprehend-languages.json"
+    },
+    {
+      "id": "compulsion",
+      "name_it": "Costrizione",
+      "level": 4,
+      "school": "Enchantment",
+      "classes": [
+        "Bard"
+      ],
+      "file": "incantesimi/compulsion.json"
+    },
+    {
+      "id": "cone-of-cold",
+      "name_it": "Cono di Gelo",
+      "level": 5,
+      "school": "Evocation",
+      "classes": [
+        "Druid",
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/cone-of-cold.json"
+    },
+    {
+      "id": "confusion",
+      "name_it": "Confusione",
+      "level": 4,
+      "school": "Enchantment",
+      "classes": [
+        "Bard",
+        "Cleric",
+        "Druid",
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/confusion.json"
+    },
+    {
+      "id": "conjure-animals",
+      "name_it": "Evocare Animali",
+      "level": 3,
+      "school": "Conjuration",
+      "classes": [
+        "Druid",
+        "Ranger"
+      ],
+      "file": "incantesimi/conjure-animals.json"
+    },
+    {
+      "id": "conjure-celestial",
+      "name_it": "Evocare un Celestiale",
+      "level": 7,
+      "school": "Conjuration",
+      "classes": [
+        "Cleric"
+      ],
+      "file": "incantesimi/conjure-celestial.json"
+    },
+    {
+      "id": "conjure-elemental",
+      "name_it": "Evocare un Elementale",
+      "level": 5,
+      "school": "Conjuration",
+      "classes": [
+        "Druid",
+        "Wizard"
+      ],
+      "file": "incantesimi/conjure-elemental.json"
+    },
+    {
+      "id": "conjure-fey",
+      "name_it": "Evocare un Fatato",
+      "level": 6,
+      "school": "Conjuration",
+      "classes": [
+        "Druid",
+        "Warlock"
+      ],
+      "file": "incantesimi/conjure-fey.json"
+    },
+    {
+      "id": "conjure-minor-elementals",
+      "name_it": "Evocare Elementali Minori",
+      "level": 4,
+      "school": "Conjuration",
+      "classes": [
+        "Druid",
+        "Wizard"
+      ],
+      "file": "incantesimi/conjure-minor-elementals.json"
+    },
+    {
+      "id": "conjure-woodland-beings",
+      "name_it": "Evocare Creature dei Boschi",
+      "level": 4,
+      "school": "Conjuration",
+      "classes": [
+        "Druid",
+        "Ranger"
+      ],
+      "file": "incantesimi/conjure-woodland-beings.json"
+    },
+    {
+      "id": "contact-other-plane",
+      "name_it": "Contattare un Altro Piano",
+      "level": 5,
+      "school": "Divination",
+      "classes": [
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/contact-other-plane.json"
+    },
+    {
+      "id": "contagion",
+      "name_it": "Contagio",
+      "level": 5,
+      "school": "Necromancy",
+      "classes": [
+        "Cleric",
+        "Druid"
+      ],
+      "file": "incantesimi/contagion.json"
+    },
+    {
+      "id": "contingency",
+      "name_it": "Contingenza",
+      "level": 6,
+      "school": "Evocation",
+      "classes": [
+        "Wizard"
+      ],
+      "file": "incantesimi/contingency.json"
+    },
+    {
+      "id": "continual-flame",
+      "name_it": "Fiamma Perenne",
+      "level": 2,
+      "school": "Evocation",
+      "classes": [
+        "Cleric",
+        "Wizard"
+      ],
+      "file": "incantesimi/continual-flame.json"
+    },
+    {
+      "id": "control-water",
+      "name_it": "Controllare l'Acqua",
+      "level": 4,
+      "school": "Transmutation",
+      "classes": [
+        "Cleric",
+        "Druid",
+        "Wizard"
+      ],
+      "file": "incantesimi/control-water.json"
+    },
+    {
+      "id": "control-weather",
+      "name_it": "Controllare il Tempo",
+      "level": 8,
+      "school": "Transmutation",
+      "classes": [
+        "Cleric",
+        "Druid",
+        "Wizard"
+      ],
+      "file": "incantesimi/control-weather.json"
+    },
+    {
+      "id": "counterspell",
+      "name_it": "Contro-incantesimo",
+      "level": 3,
+      "school": "Abjuration",
+      "classes": [
+        "Paladin",
+        "Sorcerer",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/counterspell.json"
+    },
+    {
+      "id": "create-food-and-water",
+      "name_it": "Creare Cibo e Acqua",
+      "level": 3,
+      "school": "Conjuration",
+      "classes": [
+        "Cleric",
+        "Druid",
+        "Paladin"
+      ],
+      "file": "incantesimi/create-food-and-water.json"
+    },
+    {
+      "id": "create-undead",
+      "name_it": "Creare Non Morti",
+      "level": 6,
+      "school": "Necromancy",
+      "classes": [
+        "Cleric",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/create-undead.json"
+    },
+    {
+      "id": "create-or-destroy-water",
+      "name_it": "Creare o Distruggere Acqua",
+      "level": 1,
+      "school": "Transmutation",
+      "classes": [
+        "Cleric",
+        "Druid"
+      ],
+      "file": "incantesimi/create-or-destroy-water.json"
+    },
+    {
+      "id": "creation",
+      "name_it": "Creazione",
+      "level": 5,
+      "school": "Illusion",
+      "classes": [
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/creation.json"
+    },
+    {
+      "id": "cure-wounds",
+      "name_it": "Curare le Ferite",
+      "level": 1,
+      "school": "Evocation",
+      "classes": [
+        "Bard",
+        "Cleric",
+        "Druid",
+        "Paladin",
+        "Ranger"
+      ],
+      "file": "incantesimi/cure-wounds.json"
+    },
+    {
+      "id": "dancing-lights",
+      "name_it": "Luci Danzanti",
+      "level": 0,
+      "school": "Evocation",
+      "classes": [
+        "Bard",
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/dancing-lights.json"
+    },
+    {
+      "id": "darkness",
+      "name_it": "Oscurita'",
+      "level": 2,
+      "school": "Evocation",
+      "classes": [
+        "Druid",
+        "Sorcerer",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/darkness.json"
+    },
+    {
+      "id": "darkvision",
+      "name_it": "Scurovisione",
+      "level": 2,
+      "school": "Transmutation",
+      "classes": [
+        "Druid",
+        "Ranger",
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/darkvision.json"
+    },
+    {
+      "id": "daylight",
+      "name_it": "Luce del Giorno",
+      "level": 3,
+      "school": "Evocation",
+      "classes": [
+        "Cleric",
+        "Druid",
+        "Paladin",
+        "Ranger",
+        "Sorcerer"
+      ],
+      "file": "incantesimi/daylight.json"
+    },
+    {
+      "id": "death-ward",
+      "name_it": "Protezione dalla Morte",
+      "level": 4,
+      "school": "Abjuration",
+      "classes": [
+        "Cleric",
+        "Paladin"
+      ],
+      "file": "incantesimi/death-ward.json"
+    },
+    {
+      "id": "delayed-blast-fireball",
+      "name_it": "Palla di Fuoco Ritardata",
+      "level": 7,
+      "school": "Evocation",
+      "classes": [
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/delayed-blast-fireball.json"
+    },
+    {
+      "id": "demiplane",
+      "name_it": "Semipiano",
+      "level": 8,
+      "school": "Conjuration",
+      "classes": [
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/demiplane.json"
+    },
+    {
+      "id": "detect-evil-and-good",
+      "name_it": "Individuare il Bene e il Male",
+      "level": 1,
+      "school": "Divination",
+      "classes": [
+        "Cleric",
+        "Paladin"
+      ],
+      "file": "incantesimi/detect-evil-and-good.json"
+    },
+    {
+      "id": "detect-magic",
+      "name_it": "Individuare la Magia",
+      "level": 1,
+      "school": "Divination",
+      "classes": [
+        "Bard",
+        "Cleric",
+        "Druid",
+        "Paladin",
+        "Ranger",
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/detect-magic.json"
+    },
+    {
+      "id": "detect-poison-and-disease",
+      "name_it": "Individuare Veleno e Malattia",
+      "level": 1,
+      "school": "Divination",
+      "classes": [
+        "Cleric",
+        "Druid",
+        "Paladin",
+        "Ranger"
+      ],
+      "file": "incantesimi/detect-poison-and-disease.json"
+    },
+    {
+      "id": "detect-thoughts",
+      "name_it": "Percepire i Pensieri",
+      "level": 2,
+      "school": "Divination",
+      "classes": [
+        "Bard",
+        "Sorcerer",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/detect-thoughts.json"
+    },
+    {
+      "id": "dimension-door",
+      "name_it": "Porta Dimensionale",
+      "level": 4,
+      "school": "Conjuration",
+      "classes": [
+        "Bard",
+        "Cleric",
+        "Paladin",
+        "Sorcerer",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/dimension-door.json"
+    },
+    {
+      "id": "disguise-self",
+      "name_it": "Travestimento",
+      "level": 1,
+      "school": "Illusion",
+      "classes": [
+        "Bard",
+        "Cleric",
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/disguise-self.json"
+    },
+    {
+      "id": "disintegrate",
+      "name_it": "Disintegrare",
+      "level": 6,
+      "school": "Transmutation",
+      "classes": [
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/disintegrate.json"
+    },
+    {
+      "id": "dispel-evil-and-good",
+      "name_it": "Dissolvere il Bene e il Male",
+      "level": 5,
+      "school": "Abjuration",
+      "classes": [
+        "Cleric",
+        "Paladin"
+      ],
+      "file": "incantesimi/dispel-evil-and-good.json"
+    },
+    {
+      "id": "dispel-magic",
+      "name_it": "Dissolvi Magia",
+      "level": 3,
+      "school": "Abjuration",
+      "classes": [
+        "Bard",
+        "Cleric",
+        "Druid",
+        "Paladin",
+        "Sorcerer",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/dispel-magic.json"
+    },
+    {
+      "id": "divination",
+      "name_it": "Divinazione",
+      "level": 4,
+      "school": "Divination",
+      "classes": [
+        "Cleric",
+        "Druid"
+      ],
+      "file": "incantesimi/divination.json"
+    },
+    {
+      "id": "divine-favor",
+      "name_it": "Favore Divino",
+      "level": 1,
+      "school": "Evocation",
+      "classes": [
+        "Cleric",
+        "Paladin"
+      ],
+      "file": "incantesimi/divine-favor.json"
+    },
+    {
+      "id": "divine-word",
+      "name_it": "Parola Divina",
+      "level": 7,
+      "school": "Evocation",
+      "classes": [
+        "Cleric"
+      ],
+      "file": "incantesimi/divine-word.json"
+    },
+    {
+      "id": "dominate-beast",
+      "name_it": "Dominare una Bestia",
+      "level": 4,
+      "school": "Enchantment",
+      "classes": [
+        "Cleric",
+        "Druid",
+        "Sorcerer",
+        "Warlock"
+      ],
+      "file": "incantesimi/dominate-beast.json"
+    },
+    {
+      "id": "dominate-monster",
+      "name_it": "Dominare un Mostro",
+      "level": 8,
+      "school": "Enchantment",
+      "classes": [
+        "Bard",
+        "Sorcerer",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/dominate-monster.json"
+    },
+    {
+      "id": "dominate-person",
+      "name_it": "Dominare una Persona",
+      "level": 5,
+      "school": "Enchantment",
+      "classes": [
+        "Bard",
+        "Cleric",
+        "Sorcerer",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/dominate-person.json"
+    },
+    {
+      "id": "dream",
+      "name_it": "Sogno",
+      "level": 5,
+      "school": "Illusion",
+      "classes": [
+        "Bard",
+        "Druid",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/dream.json"
+    },
+    {
+      "id": "druidcraft",
+      "name_it": "Arti Druidiche",
+      "level": 0,
+      "school": "Transmutation",
+      "classes": [
+        "Druid"
+      ],
+      "file": "incantesimi/druidcraft.json"
+    },
+    {
+      "id": "earthquake",
+      "name_it": "Terremoto",
+      "level": 8,
+      "school": "Evocation",
+      "classes": [
+        "Cleric",
+        "Druid",
+        "Sorcerer"
+      ],
+      "file": "incantesimi/earthquake.json"
+    },
+    {
+      "id": "eldritch-blast",
+      "name_it": "Esplosione Occulta",
+      "level": 0,
+      "school": "Evocation",
+      "classes": [
+        "Warlock"
+      ],
+      "file": "incantesimi/eldritch-blast.json"
+    },
+    {
+      "id": "enhance-ability",
+      "name_it": "Potenziare Caratteristica",
+      "level": 2,
+      "school": "Transmutation",
+      "classes": [
+        "Bard",
+        "Cleric",
+        "Druid",
+        "Sorcerer"
+      ],
+      "file": "incantesimi/enhance-ability.json"
+    },
+    {
+      "id": "enlarge-reduce",
+      "name_it": "Ingrandire/Rimpicciolire",
+      "level": 2,
+      "school": "Transmutation",
+      "classes": [
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/enlarge-reduce.json"
+    },
+    {
+      "id": "entangle",
+      "name_it": "Impigliare",
+      "level": 1,
+      "school": "Conjuration",
+      "classes": [
+        "Druid"
+      ],
+      "file": "incantesimi/entangle.json"
+    },
+    {
+      "id": "enthrall",
+      "name_it": "Soggiogare",
+      "level": 2,
+      "school": "Enchantment",
+      "classes": [
+        "Bard",
+        "Warlock"
+      ],
+      "file": "incantesimi/enthrall.json"
+    },
+    {
+      "id": "etherealness",
+      "name_it": "Eterealita'",
+      "level": 7,
+      "school": "Transmutation",
+      "classes": [
+        "Bard",
+        "Cleric",
+        "Sorcerer",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/etherealness.json"
+    },
+    {
+      "id": "expeditious-retreat",
+      "name_it": "Ritirata Rapida",
+      "level": 1,
+      "school": "Transmutation",
+      "classes": [
+        "Sorcerer",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/expeditious-retreat.json"
+    },
+    {
+      "id": "eyebite",
+      "name_it": "Sguardo Maligno",
+      "level": 6,
+      "school": "Necromancy",
+      "classes": [
+        "Bard",
+        "Sorcerer",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/eyebite.json"
+    },
+    {
+      "id": "fabricate",
+      "name_it": "Fabbricare",
+      "level": 4,
+      "school": "Transmutation",
+      "classes": [
+        "Wizard"
+      ],
+      "file": "incantesimi/fabricate.json"
+    },
+    {
+      "id": "faerie-fire",
+      "name_it": "Fuoco Fatato",
+      "level": 1,
+      "school": "Evocation",
+      "classes": [
+        "Bard",
+        "Cleric",
+        "Druid",
+        "Warlock"
+      ],
+      "file": "incantesimi/faerie-fire.json"
+    },
+    {
+      "id": "faithful-hound",
+      "name_it": "Cane Fedele",
+      "level": 4,
+      "school": "Conjuration",
+      "classes": [
+        "Wizard"
+      ],
+      "file": "incantesimi/faithful-hound.json"
+    },
+    {
+      "id": "false-life",
+      "name_it": "Falsa Vita",
+      "level": 1,
+      "school": "Necromancy",
+      "classes": [
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/false-life.json"
+    },
+    {
+      "id": "fear",
+      "name_it": "Paura",
+      "level": 3,
+      "school": "Illusion",
+      "classes": [
+        "Bard",
+        "Sorcerer",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/fear.json"
+    },
+    {
+      "id": "feather-fall",
+      "name_it": "Caduta Plumea",
+      "level": 1,
+      "school": "Transmutation",
+      "classes": [
+        "Bard",
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/feather-fall.json"
+    },
+    {
+      "id": "feeblemind",
+      "name_it": "Instupidire",
+      "level": 8,
+      "school": "Enchantment",
+      "classes": [
+        "Bard",
+        "Druid",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/feeblemind.json"
+    },
+    {
+      "id": "find-familiar",
+      "name_it": "Trova Famiglio",
+      "level": 1,
+      "school": "Conjuration",
+      "classes": [
+        "Wizard"
+      ],
+      "file": "incantesimi/find-familiar.json"
+    },
+    {
+      "id": "find-steed",
+      "name_it": "Trova Destriero",
+      "level": 2,
+      "school": "Conjuration",
+      "classes": [
+        "Paladin"
+      ],
+      "file": "incantesimi/find-steed.json"
+    },
+    {
+      "id": "find-traps",
+      "name_it": "Trova Trappole",
+      "level": 2,
+      "school": "Divination",
+      "classes": [
+        "Cleric",
+        "Druid",
+        "Ranger"
+      ],
+      "file": "incantesimi/find-traps.json"
+    },
+    {
+      "id": "find-the-path",
+      "name_it": "Trova la Via",
+      "level": 6,
+      "school": "Divination",
+      "classes": [
+        "Bard",
+        "Cleric",
+        "Druid"
+      ],
+      "file": "incantesimi/find-the-path.json"
+    },
+    {
+      "id": "finger-of-death",
+      "name_it": "Dito della Morte",
+      "level": 7,
+      "school": "Necromancy",
+      "classes": [
+        "Sorcerer",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/finger-of-death.json"
+    },
+    {
+      "id": "fire-bolt",
+      "name_it": "Dardo di Fuoco",
+      "level": 0,
+      "school": "Evocation",
+      "classes": [
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/fire-bolt.json"
+    },
+    {
+      "id": "fire-shield",
+      "name_it": "Scudo di Fuoco",
+      "level": 4,
+      "school": "Evocation",
+      "classes": [
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/fire-shield.json"
+    },
+    {
+      "id": "fire-storm",
+      "name_it": "Tempesta di Fuoco",
+      "level": 7,
+      "school": "Evocation",
+      "classes": [
+        "Cleric",
+        "Druid",
+        "Sorcerer"
+      ],
+      "file": "incantesimi/fire-storm.json"
+    },
+    {
+      "id": "fireball",
+      "name_it": "Palla di Fuoco",
+      "level": 3,
+      "school": "Evocation",
+      "classes": [
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/fireball.json"
+    },
+    {
+      "id": "flame-blade",
+      "name_it": "Lama Fiammeggiante",
+      "level": 2,
+      "school": "Evocation",
+      "classes": [
+        "Druid"
+      ],
+      "file": "incantesimi/flame-blade.json"
+    },
+    {
+      "id": "flame-strike",
+      "name_it": "Colpo di Fiamma",
+      "level": 5,
+      "school": "Evocation",
+      "classes": [
+        "Cleric",
+        "Paladin",
+        "Warlock"
+      ],
+      "file": "incantesimi/flame-strike.json"
+    },
+    {
+      "id": "flaming-sphere",
+      "name_it": "Sfera Fiammeggiante",
+      "level": 2,
+      "school": "Conjuration",
+      "classes": [
+        "Cleric",
+        "Druid",
+        "Wizard"
+      ],
+      "file": "incantesimi/flaming-sphere.json"
+    },
+    {
+      "id": "flesh-to-stone",
+      "name_it": "Carne in Pietra",
+      "level": 6,
+      "school": "Transmutation",
+      "classes": [
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/flesh-to-stone.json"
+    },
+    {
+      "id": "floating-disk",
+      "name_it": "Disco Fluttuante",
+      "level": 1,
+      "school": "Conjuration",
+      "classes": [
+        "Wizard"
+      ],
+      "file": "incantesimi/floating-disk.json"
+    },
+    {
+      "id": "fly",
+      "name_it": "Volare",
+      "level": 3,
+      "school": "Transmutation",
+      "classes": [
+        "Sorcerer",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/fly.json"
+    },
+    {
+      "id": "fog-cloud",
+      "name_it": "Nube di Nebbia",
+      "level": 1,
+      "school": "Conjuration",
+      "classes": [
+        "Cleric",
+        "Druid",
+        "Ranger",
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/fog-cloud.json"
+    },
+    {
+      "id": "forbiddance",
+      "name_it": "Interdizione",
+      "level": 6,
+      "school": "Abjuration",
+      "classes": [
+        "Cleric"
+      ],
+      "file": "incantesimi/forbiddance.json"
+    },
+    {
+      "id": "forcecage",
+      "name_it": "Gabbia di Forza",
+      "level": 7,
+      "school": "Evocation",
+      "classes": [
+        "Bard",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/forcecage.json"
+    },
+    {
+      "id": "foresight",
+      "name_it": "Preveggenza",
+      "level": 9,
+      "school": "Divination",
+      "classes": [
+        "Bard",
+        "Druid",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/foresight.json"
+    },
+    {
+      "id": "freedom-of-movement",
+      "name_it": "Liberta' di Movimento",
+      "level": 4,
+      "school": "Abjuration",
+      "classes": [
+        "Bard",
+        "Cleric",
+        "Druid",
+        "Paladin",
+        "Ranger"
+      ],
+      "file": "incantesimi/freedom-of-movement.json"
+    },
+    {
+      "id": "freezing-sphere",
+      "name_it": "Sfera Gelida",
+      "level": 6,
+      "school": "Evocation",
+      "classes": [
+        "Wizard"
+      ],
+      "file": "incantesimi/freezing-sphere.json"
+    },
+    {
+      "id": "gaseous-form",
+      "name_it": "Forma Gassosa",
+      "level": 3,
+      "school": "Transmutation",
+      "classes": [
+        "Druid",
+        "Sorcerer",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/gaseous-form.json"
+    },
+    {
+      "id": "gate",
+      "name_it": "Portale",
+      "level": 9,
+      "school": "Conjuration",
+      "classes": [
+        "Cleric",
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/gate.json"
+    },
+    {
+      "id": "geas",
+      "name_it": "Geas",
+      "level": 5,
+      "school": "Enchantment",
+      "classes": [
+        "Bard",
+        "Cleric",
+        "Druid",
+        "Paladin",
+        "Wizard"
+      ],
+      "file": "incantesimi/geas.json"
+    },
+    {
+      "id": "gentle-repose",
+      "name_it": "Riposo Placido",
+      "level": 2,
+      "school": "Necromancy",
+      "classes": [
+        "Cleric",
+        "Wizard"
+      ],
+      "file": "incantesimi/gentle-repose.json"
+    },
+    {
+      "id": "giant-insect",
+      "name_it": "Insetto Gigante",
+      "level": 4,
+      "school": "Transmutation",
+      "classes": [
+        "Druid"
+      ],
+      "file": "incantesimi/giant-insect.json"
+    },
+    {
+      "id": "glibness",
+      "name_it": "Parlantina",
+      "level": 8,
+      "school": "Transmutation",
+      "classes": [
+        "Bard",
+        "Warlock"
+      ],
+      "file": "incantesimi/glibness.json"
+    },
+    {
+      "id": "globe-of-invulnerability",
+      "name_it": "Globo di Invulnerabilita'",
+      "level": 6,
+      "school": "Abjuration",
+      "classes": [
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/globe-of-invulnerability.json"
+    },
+    {
+      "id": "glyph-of-warding",
+      "name_it": "Glifo di Protezione",
+      "level": 3,
+      "school": "Abjuration",
+      "classes": [
+        "Bard",
+        "Cleric",
+        "Wizard"
+      ],
+      "file": "incantesimi/glyph-of-warding.json"
+    },
+    {
+      "id": "goodberry",
+      "name_it": "Bacca Salutare",
+      "level": 1,
+      "school": "Transmutation",
+      "classes": [
+        "Druid",
+        "Ranger"
+      ],
+      "file": "incantesimi/goodberry.json"
+    },
+    {
+      "id": "grease",
+      "name_it": "Untume",
+      "level": 1,
+      "school": "Conjuration",
+      "classes": [
+        "Wizard"
+      ],
+      "file": "incantesimi/grease.json"
+    },
+    {
+      "id": "greater-invisibility",
+      "name_it": "Invisibilita' Superiore",
+      "level": 4,
+      "school": "Illusion",
+      "classes": [
+        "Bard",
+        "Druid",
+        "Sorcerer",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/greater-invisibility.json"
+    },
+    {
+      "id": "greater-restoration",
+      "name_it": "Ripristino Superiore",
+      "level": 5,
+      "school": "Abjuration",
+      "classes": [
+        "Bard",
+        "Cleric",
+        "Druid"
+      ],
+      "file": "incantesimi/greater-restoration.json"
+    },
+    {
+      "id": "guardian-of-faith",
+      "name_it": "Guardiano della Fede",
+      "level": 4,
+      "school": "Conjuration",
+      "classes": [
+        "Cleric"
+      ],
+      "file": "incantesimi/guardian-of-faith.json"
+    },
+    {
+      "id": "guards-and-wards",
+      "name_it": "Guardie e Sentinelle",
+      "level": 6,
+      "school": "Abjuration",
+      "classes": [
+        "Bard",
+        "Wizard"
+      ],
+      "file": "incantesimi/guards-and-wards.json"
+    },
+    {
+      "id": "guidance",
+      "name_it": "Guida",
+      "level": 0,
+      "school": "Divination",
+      "classes": [
+        "Cleric",
+        "Druid"
+      ],
+      "file": "incantesimi/guidance.json"
+    },
+    {
+      "id": "guiding-bolt",
+      "name_it": "Dardo di Guida",
+      "level": 1,
+      "school": "Evocation",
+      "classes": [
+        "Cleric"
+      ],
+      "file": "incantesimi/guiding-bolt.json"
+    },
+    {
+      "id": "gust-of-wind",
+      "name_it": "Raffica di Vento",
+      "level": 2,
+      "school": "Evocation",
+      "classes": [
+        "Cleric",
+        "Druid",
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/gust-of-wind.json"
+    },
+    {
+      "id": "hallow",
+      "name_it": "Consacrazione",
+      "level": 5,
+      "school": "Evocation",
+      "classes": [
+        "Cleric",
+        "Warlock"
+      ],
+      "file": "incantesimi/hallow.json"
+    },
+    {
+      "id": "hallucinatory-terrain",
+      "name_it": "Terreno Illusorio",
+      "level": 4,
+      "school": "Illusion",
+      "classes": [
+        "Bard",
+        "Druid",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/hallucinatory-terrain.json"
+    },
+    {
+      "id": "harm",
+      "name_it": "Nuocere",
+      "level": 6,
+      "school": "Necromancy",
+      "classes": [
+        "Cleric"
+      ],
+      "file": "incantesimi/harm.json"
+    },
+    {
+      "id": "haste",
+      "name_it": "Velocita'",
+      "level": 3,
+      "school": "Transmutation",
+      "classes": [
+        "Druid",
+        "Paladin",
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/haste.json"
+    },
+    {
+      "id": "heal",
+      "name_it": "Guarire",
+      "level": 6,
+      "school": "Evocation",
+      "classes": [
+        "Cleric",
+        "Druid"
+      ],
+      "file": "incantesimi/heal.json"
+    },
+    {
+      "id": "healing-word",
+      "name_it": "Parola Curativa",
+      "level": 1,
+      "school": "Evocation",
+      "classes": [
+        "Bard",
+        "Cleric",
+        "Druid"
+      ],
+      "file": "incantesimi/healing-word.json"
+    },
+    {
+      "id": "heat-metal",
+      "name_it": "Arroventare il Metallo",
+      "level": 2,
+      "school": "Transmutation",
+      "classes": [
+        "Bard",
+        "Druid"
+      ],
+      "file": "incantesimi/heat-metal.json"
+    },
+    {
+      "id": "hellish-rebuke",
+      "name_it": "Rimprovero Infernale",
+      "level": 1,
+      "school": "Evocation",
+      "classes": [
+        "Paladin",
+        "Warlock"
+      ],
+      "file": "incantesimi/hellish-rebuke.json"
+    },
+    {
+      "id": "heroes-feast",
+      "name_it": "Banchetto degli Eroi",
+      "level": 6,
+      "school": "Conjuration",
+      "classes": [
+        "Cleric",
+        "Druid"
+      ],
+      "file": "incantesimi/heroes-feast.json"
+    },
+    {
+      "id": "heroism",
+      "name_it": "Eroismo",
+      "level": 1,
+      "school": "Enchantment",
+      "classes": [
+        "Bard",
+        "Paladin"
+      ],
+      "file": "incantesimi/heroism.json"
+    },
+    {
+      "id": "hideous-laughter",
+      "name_it": "Risata Orrenda",
+      "level": 1,
+      "school": "Enchantment",
+      "classes": [
+        "Bard",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/hideous-laughter.json"
+    },
+    {
+      "id": "hold-monster",
+      "name_it": "Paralizzare Mostri",
+      "level": 5,
+      "school": "Enchantment",
+      "classes": [
+        "Bard",
+        "Cleric",
+        "Paladin",
+        "Sorcerer",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/hold-monster.json"
+    },
+    {
+      "id": "hold-person",
+      "name_it": "Paralizzare Persone",
+      "level": 2,
+      "school": "Enchantment",
+      "classes": [
+        "Bard",
+        "Cleric",
+        "Druid",
+        "Paladin",
+        "Sorcerer",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/hold-person.json"
+    },
+    {
+      "id": "holy-aura",
+      "name_it": "Aura Sacra",
+      "level": 8,
+      "school": "Abjuration",
+      "classes": [
+        "Cleric"
+      ],
+      "file": "incantesimi/holy-aura.json"
+    },
+    {
+      "id": "hunters-mark",
+      "name_it": "Marchio del Cacciatore",
+      "level": 1,
+      "school": "Divination",
+      "classes": [
+        "Paladin",
+        "Ranger"
+      ],
+      "file": "incantesimi/hunters-mark.json"
+    },
+    {
+      "id": "hypnotic-pattern",
+      "name_it": "Motivo Ipnotico",
+      "level": 3,
+      "school": "Illusion",
+      "classes": [
+        "Bard",
+        "Sorcerer",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/hypnotic-pattern.json"
+    },
+    {
+      "id": "ice-storm",
+      "name_it": "Tempesta di Ghiaccio",
+      "level": 4,
+      "school": "Evocation",
+      "classes": [
+        "Cleric",
+        "Druid",
+        "Paladin",
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/ice-storm.json"
+    },
+    {
+      "id": "identify",
+      "name_it": "Identificare",
+      "level": 1,
+      "school": "Divination",
+      "classes": [
+        "Bard",
+        "Cleric",
+        "Wizard"
+      ],
+      "file": "incantesimi/identify.json"
+    },
+    {
+      "id": "illusory-script",
+      "name_it": "Scrittura Illusoria",
+      "level": 1,
+      "school": "Illusion",
+      "classes": [
+        "Bard",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/illusory-script.json"
+    },
+    {
+      "id": "imprisonment",
+      "name_it": "Imprigionamento",
+      "level": 9,
+      "school": "Abjuration",
+      "classes": [
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/imprisonment.json"
+    },
+    {
+      "id": "incendiary-cloud",
+      "name_it": "Nube Incendiaria",
+      "level": 8,
+      "school": "Conjuration",
+      "classes": [
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/incendiary-cloud.json"
+    },
+    {
+      "id": "inflict-wounds",
+      "name_it": "Infliggere Ferite",
+      "level": 1,
+      "school": "Necromancy",
+      "classes": [
+        "Cleric"
+      ],
+      "file": "incantesimi/inflict-wounds.json"
+    },
+    {
+      "id": "insect-plague",
+      "name_it": "Piaga d'Insetti",
+      "level": 5,
+      "school": "Conjuration",
+      "classes": [
+        "Cleric",
+        "Druid",
+        "Sorcerer"
+      ],
+      "file": "incantesimi/insect-plague.json"
+    },
+    {
+      "id": "instant-summons",
+      "name_it": "Richiamo Istantaneo",
+      "level": 6,
+      "school": "Conjuration",
+      "classes": [
+        "Wizard"
+      ],
+      "file": "incantesimi/instant-summons.json"
+    },
+    {
+      "id": "invisibility",
+      "name_it": "Invisibilita'",
+      "level": 2,
+      "school": "Illusion",
+      "classes": [
+        "Bard",
+        "Druid",
+        "Sorcerer",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/invisibility.json"
+    },
+    {
+      "id": "irresistible-dance",
+      "name_it": "Danza Irresistibile",
+      "level": 6,
+      "school": "Enchantment",
+      "classes": [
+        "Bard",
+        "Wizard"
+      ],
+      "file": "incantesimi/irresistible-dance.json"
+    },
+    {
+      "id": "jump",
+      "name_it": "Salto",
+      "level": 1,
+      "school": "Transmutation",
+      "classes": [
+        "Druid",
+        "Ranger",
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/jump.json"
+    },
+    {
+      "id": "knock",
+      "name_it": "Scassinare",
+      "level": 2,
+      "school": "Transmutation",
+      "classes": [
+        "Bard",
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/knock.json"
+    },
+    {
+      "id": "legend-lore",
+      "name_it": "Sapienza Leggendaria",
+      "level": 5,
+      "school": "Divination",
+      "classes": [
+        "Bard",
+        "Cleric",
+        "Wizard"
+      ],
+      "file": "incantesimi/legend-lore.json"
+    },
+    {
+      "id": "lesser-restoration",
+      "name_it": "Ripristino Inferiore",
+      "level": 2,
+      "school": "Abjuration",
+      "classes": [
+        "Bard",
+        "Cleric",
+        "Druid",
+        "Paladin",
+        "Ranger"
+      ],
+      "file": "incantesimi/lesser-restoration.json"
+    },
+    {
+      "id": "levitate",
+      "name_it": "Levitare",
+      "level": 2,
+      "school": "Transmutation",
+      "classes": [
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/levitate.json"
+    },
+    {
+      "id": "light",
+      "name_it": "Luce",
+      "level": 0,
+      "school": "Evocation",
+      "classes": [
+        "Bard",
+        "Cleric",
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/light.json"
+    },
+    {
+      "id": "lightning-bolt",
+      "name_it": "Fulmine",
+      "level": 3,
+      "school": "Evocation",
+      "classes": [
+        "Druid",
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/lightning-bolt.json"
+    },
+    {
+      "id": "locate-animals-or-plants",
+      "name_it": "Localizzare Animali o Piante",
+      "level": 2,
+      "school": "Divination",
+      "classes": [
+        "Bard",
+        "Druid",
+        "Ranger"
+      ],
+      "file": "incantesimi/locate-animals-or-plants.json"
+    },
+    {
+      "id": "locate-creature",
+      "name_it": "Localizzare Creatura",
+      "level": 4,
+      "school": "Divination",
+      "classes": [
+        "Bard",
+        "Cleric",
+        "Druid",
+        "Paladin",
+        "Ranger",
+        "Wizard"
+      ],
+      "file": "incantesimi/locate-creature.json"
+    },
+    {
+      "id": "locate-object",
+      "name_it": "Localizzare Oggetto",
+      "level": 2,
+      "school": "Divination",
+      "classes": [
+        "Bard",
+        "Cleric",
+        "Druid",
+        "Paladin",
+        "Ranger",
+        "Wizard"
+      ],
+      "file": "incantesimi/locate-object.json"
+    },
+    {
+      "id": "longstrider",
+      "name_it": "Falcata Lunga",
+      "level": 1,
+      "school": "Transmutation",
+      "classes": [
+        "Bard",
+        "Druid",
+        "Ranger",
+        "Wizard"
+      ],
+      "file": "incantesimi/longstrider.json"
+    },
+    {
+      "id": "mage-armor",
+      "name_it": "Armatura del Mago",
+      "level": 1,
+      "school": "Abjuration",
+      "classes": [
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/mage-armor.json"
+    },
+    {
+      "id": "mage-hand",
+      "name_it": "Mano Magica",
+      "level": 0,
+      "school": "Conjuration",
+      "classes": [
+        "Bard",
+        "Sorcerer",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/mage-hand.json"
+    },
+    {
+      "id": "magic-circle",
+      "name_it": "Cerchio Magico",
+      "level": 3,
+      "school": "Abjuration",
+      "classes": [
+        "Cleric",
+        "Paladin",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/magic-circle.json"
+    },
+    {
+      "id": "magic-jar",
+      "name_it": "Vaso Magico",
+      "level": 6,
+      "school": "Necromancy",
+      "classes": [
+        "Wizard"
+      ],
+      "file": "incantesimi/magic-jar.json"
+    },
+    {
+      "id": "magic-missile",
+      "name_it": "Missile Incantato",
+      "level": 1,
+      "school": "Evocation",
+      "classes": [
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/magic-missile.json"
+    },
+    {
+      "id": "magic-mouth",
+      "name_it": "Bocca Magica",
+      "level": 2,
+      "school": "Illusion",
+      "classes": [
+        "Bard",
+        "Wizard"
+      ],
+      "file": "incantesimi/magic-mouth.json"
+    },
+    {
+      "id": "magic-weapon",
+      "name_it": "Arma Magica",
+      "level": 2,
+      "school": "Transmutation",
+      "classes": [
+        "Cleric",
+        "Paladin",
+        "Wizard"
+      ],
+      "file": "incantesimi/magic-weapon.json"
+    },
+    {
+      "id": "magnificent-mansion",
+      "name_it": "Magnifica Magione",
+      "level": 7,
+      "school": "Conjuration",
+      "classes": [
+        "Bard",
+        "Wizard"
+      ],
+      "file": "incantesimi/magnificent-mansion.json"
+    },
+    {
+      "id": "major-image",
+      "name_it": "Immagine Maggiore",
+      "level": 3,
+      "school": "Illusion",
+      "classes": [
+        "Bard",
+        "Sorcerer",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/major-image.json"
+    },
+    {
+      "id": "mass-cure-wounds",
+      "name_it": "Curare le Ferite di Massa",
+      "level": 5,
+      "school": "Conjuration",
+      "classes": [
+        "Bard",
+        "Cleric",
+        "Druid"
+      ],
+      "file": "incantesimi/mass-cure-wounds.json"
+    },
+    {
+      "id": "mass-heal",
+      "name_it": "Guarigione di Massa",
+      "level": 9,
+      "school": "Conjuration",
+      "classes": [
+        "Cleric"
+      ],
+      "file": "incantesimi/mass-heal.json"
+    },
+    {
+      "id": "mass-healing-word",
+      "name_it": "Parola Curativa di Massa",
+      "level": 3,
+      "school": "Evocation",
+      "classes": [
+        "Cleric"
+      ],
+      "file": "incantesimi/mass-healing-word.json"
+    },
+    {
+      "id": "mass-suggestion",
+      "name_it": "Suggestione di Massa",
+      "level": 6,
+      "school": "Enchantment",
+      "classes": [
+        "Bard",
+        "Sorcerer",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/mass-suggestion.json"
+    },
+    {
+      "id": "maze",
+      "name_it": "Labirinto",
+      "level": 8,
+      "school": "Conjuration",
+      "classes": [
+        "Wizard"
+      ],
+      "file": "incantesimi/maze.json"
+    },
+    {
+      "id": "meld-into-stone",
+      "name_it": "Fondersi nella Pietra",
+      "level": 3,
+      "school": "Transmutation",
+      "classes": [
+        "Cleric",
+        "Druid"
+      ],
+      "file": "incantesimi/meld-into-stone.json"
+    },
+    {
+      "id": "mending",
+      "name_it": "Riparazione",
+      "level": 0,
+      "school": "Transmutation",
+      "classes": [
+        "Cleric",
+        "Bard",
+        "Druid",
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/mending.json"
+    },
+    {
+      "id": "message",
+      "name_it": "Messaggio",
+      "level": 0,
+      "school": "Transmutation",
+      "classes": [
+        "Bard",
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/message.json"
+    },
+    {
+      "id": "meteor-swarm",
+      "name_it": "Sciame di Meteore",
+      "level": 9,
+      "school": "Evocation",
+      "classes": [
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/meteor-swarm.json"
+    },
+    {
+      "id": "mind-blank",
+      "name_it": "Mente Vuota",
+      "level": 8,
+      "school": "Abjuration",
+      "classes": [
+        "Bard",
+        "Wizard"
+      ],
+      "file": "incantesimi/mind-blank.json"
+    },
+    {
+      "id": "minor-illusion",
+      "name_it": "Illusione Minore",
+      "level": 0,
+      "school": "Illusion",
+      "classes": [
+        "Bard",
+        "Sorcerer",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/minor-illusion.json"
+    },
+    {
+      "id": "mirage-arcane",
+      "name_it": "Miraggio Arcano",
+      "level": 7,
+      "school": "Illusion",
+      "classes": [
+        "Bard",
+        "Druid",
+        "Wizard"
+      ],
+      "file": "incantesimi/mirage-arcane.json"
+    },
+    {
+      "id": "mirror-image",
+      "name_it": "Immagine Speculare",
+      "level": 2,
+      "school": "Illusion",
+      "classes": [
+        "Cleric",
+        "Druid",
+        "Sorcerer",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/mirror-image.json"
+    },
+    {
+      "id": "mislead",
+      "name_it": "Sviare",
+      "level": 5,
+      "school": "Illusion",
+      "classes": [
+        "Bard",
+        "Wizard"
+      ],
+      "file": "incantesimi/mislead.json"
+    },
+    {
+      "id": "misty-step",
+      "name_it": "Passo Nebbioso",
+      "level": 2,
+      "school": "Conjuration",
+      "classes": [
+        "Druid",
+        "Paladin",
+        "Sorcerer",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/misty-step.json"
+    },
+    {
+      "id": "modify-memory",
+      "name_it": "Modificare la Memoria",
+      "level": 5,
+      "school": "Enchantment",
+      "classes": [
+        "Bard",
+        "Cleric",
+        "Wizard"
+      ],
+      "file": "incantesimi/modify-memory.json"
+    },
+    {
+      "id": "moonbeam",
+      "name_it": "Raggio di Luna",
+      "level": 2,
+      "school": "Evocation",
+      "classes": [
+        "Druid",
+        "Paladin"
+      ],
+      "file": "incantesimi/moonbeam.json"
+    },
+    {
+      "id": "move-earth",
+      "name_it": "Muovere la Terra",
+      "level": 6,
+      "school": "Transmutation",
+      "classes": [
+        "Druid",
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/move-earth.json"
+    },
+    {
+      "id": "nondetection",
+      "name_it": "Non Individuazione",
+      "level": 3,
+      "school": "Abjuration",
+      "classes": [
+        "Bard",
+        "Cleric",
+        "Ranger",
+        "Wizard"
+      ],
+      "file": "incantesimi/nondetection.json"
+    },
+    {
+      "id": "pass-without-trace",
+      "name_it": "Passare Senza Lasciare Traccia",
+      "level": 2,
+      "school": "Abjuration",
+      "classes": [
+        "Cleric",
+        "Druid",
+        "Ranger"
+      ],
+      "file": "incantesimi/pass-without-trace.json"
+    },
+    {
+      "id": "passwall",
+      "name_it": "Passamuro",
+      "level": 5,
+      "school": "Transmutation",
+      "classes": [
+        "Druid",
+        "Wizard"
+      ],
+      "file": "incantesimi/passwall.json"
+    },
+    {
+      "id": "phantasmal-killer",
+      "name_it": "Uccisore Fantasmatico",
+      "level": 4,
+      "school": "Illusion",
+      "classes": [
+        "Wizard"
+      ],
+      "file": "incantesimi/phantasmal-killer.json"
+    },
+    {
+      "id": "phantom-steed",
+      "name_it": "Destriero Fantasma",
+      "level": 3,
+      "school": "Illusion",
+      "classes": [
+        "Wizard"
+      ],
+      "file": "incantesimi/phantom-steed.json"
+    },
+    {
+      "id": "planar-ally",
+      "name_it": "Alleato Planare",
+      "level": 6,
+      "school": "Conjuration",
+      "classes": [
+        "Cleric"
+      ],
+      "file": "incantesimi/planar-ally.json"
+    },
+    {
+      "id": "planar-binding",
+      "name_it": "Vincolo Planare",
+      "level": 5,
+      "school": "Abjuration",
+      "classes": [
+        "Bard",
+        "Cleric",
+        "Druid",
+        "Wizard"
+      ],
+      "file": "incantesimi/planar-binding.json"
+    },
+    {
+      "id": "plane-shift",
+      "name_it": "Spostamento Planare",
+      "level": 7,
+      "school": "Conjuration",
+      "classes": [
+        "Cleric",
+        "Sorcerer",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/plane-shift.json"
+    },
+    {
+      "id": "plant-growth",
+      "name_it": "Crescita delle Piante",
+      "level": 3,
+      "school": "Transmutation",
+      "classes": [
+        "Bard",
+        "Cleric",
+        "Druid",
+        "Paladin",
+        "Ranger",
+        "Warlock"
+      ],
+      "file": "incantesimi/plant-growth.json"
+    },
+    {
+      "id": "poison-spray",
+      "name_it": "Spruzzo Velenoso",
+      "level": 0,
+      "school": "Conjuration",
+      "classes": [
+        "Druid",
+        "Sorcerer",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/poison-spray.json"
+    },
+    {
+      "id": "polymorph",
+      "name_it": "Polimorfismo",
+      "level": 4,
+      "school": "Transmutation",
+      "classes": [
+        "Bard",
+        "Cleric",
+        "Druid",
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/polymorph.json"
+    },
+    {
+      "id": "power-word-kill",
+      "name_it": "Parola di Potere: Uccidi",
+      "level": 9,
+      "school": "Enchantment",
+      "classes": [
+        "Bard",
+        "Sorcerer",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/power-word-kill.json"
+    },
+    {
+      "id": "power-word-stun",
+      "name_it": "Parola di Potere: Stordisci",
+      "level": 8,
+      "school": "Enchantment",
+      "classes": [
+        "Bard",
+        "Sorcerer",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/power-word-stun.json"
+    },
+    {
+      "id": "prayer-of-healing",
+      "name_it": "Preghiera di Guarigione",
+      "level": 2,
+      "school": "Evocation",
+      "classes": [
+        "Cleric"
+      ],
+      "file": "incantesimi/prayer-of-healing.json"
+    },
+    {
+      "id": "prestidigitation",
+      "name_it": "Prestidigitazione",
+      "level": 0,
+      "school": "Transmutation",
+      "classes": [
+        "Bard",
+        "Sorcerer",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/prestidigitation.json"
+    },
+    {
+      "id": "prismatic-spray",
+      "name_it": "Raggio Prismatico",
+      "level": 7,
+      "school": "Evocation",
+      "classes": [
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/prismatic-spray.json"
+    },
+    {
+      "id": "prismatic-wall",
+      "name_it": "Muro Prismatico",
+      "level": 9,
+      "school": "Abjuration",
+      "classes": [
+        "Wizard"
+      ],
+      "file": "incantesimi/prismatic-wall.json"
+    },
+    {
+      "id": "private-sanctum",
+      "name_it": "Santuario Privato",
+      "level": 4,
+      "school": "Abjuration",
+      "classes": [
+        "Wizard"
+      ],
+      "file": "incantesimi/private-sanctum.json"
+    },
+    {
+      "id": "produce-flame",
+      "name_it": "Produrre Fiamma",
+      "level": 0,
+      "school": "Conjuration",
+      "classes": [
+        "Druid"
+      ],
+      "file": "incantesimi/produce-flame.json"
+    },
+    {
+      "id": "programmed-illusion",
+      "name_it": "Illusione Programmata",
+      "level": 6,
+      "school": "Illusion",
+      "classes": [
+        "Bard",
+        "Wizard"
+      ],
+      "file": "incantesimi/programmed-illusion.json"
+    },
+    {
+      "id": "project-image",
+      "name_it": "Proiettare Immagine",
+      "level": 7,
+      "school": "Illusion",
+      "classes": [
+        "Bard",
+        "Wizard"
+      ],
+      "file": "incantesimi/project-image.json"
+    },
+    {
+      "id": "protection-from-energy",
+      "name_it": "Protezione dall'Energia",
+      "level": 3,
+      "school": "Abjuration",
+      "classes": [
+        "Cleric",
+        "Druid",
+        "Paladin",
+        "Ranger",
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/protection-from-energy.json"
+    },
+    {
+      "id": "protection-from-evil-and-good",
+      "name_it": "Protezione dal Bene e dal Male",
+      "level": 1,
+      "school": "Abjuration",
+      "classes": [
+        "Cleric",
+        "Paladin",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/protection-from-evil-and-good.json"
+    },
+    {
+      "id": "protection-from-poison",
+      "name_it": "Protezione dal Veleno",
+      "level": 2,
+      "school": "Abjuration",
+      "classes": [
+        "Cleric",
+        "Druid",
+        "Paladin",
+        "Ranger"
+      ],
+      "file": "incantesimi/protection-from-poison.json"
+    },
+    {
+      "id": "purify-food-and-drink",
+      "name_it": "Purificare Cibo e Bevande",
+      "level": 1,
+      "school": "Transmutation",
+      "classes": [
+        "Cleric",
+        "Druid",
+        "Paladin"
+      ],
+      "file": "incantesimi/purify-food-and-drink.json"
+    },
+    {
+      "id": "raise-dead",
+      "name_it": "Resuscitare",
+      "level": 5,
+      "school": "Necromancy",
+      "classes": [
+        "Bard",
+        "Cleric",
+        "Paladin"
+      ],
+      "file": "incantesimi/raise-dead.json"
+    },
+    {
+      "id": "ray-of-enfeeblement",
+      "name_it": "Raggio di Debilitazione",
+      "level": 2,
+      "school": "Necromancy",
+      "classes": [
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/ray-of-enfeeblement.json"
+    },
+    {
+      "id": "ray-of-frost",
+      "name_it": "Raggio di Gelo",
+      "level": 0,
+      "school": "Evocation",
+      "classes": [
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/ray-of-frost.json"
+    },
+    {
+      "id": "regenerate",
+      "name_it": "Rigenerare",
+      "level": 7,
+      "school": "Transmutation",
+      "classes": [
+        "Bard",
+        "Cleric",
+        "Druid"
+      ],
+      "file": "incantesimi/regenerate.json"
+    },
+    {
+      "id": "reincarnate",
+      "name_it": "Reincarnare",
+      "level": 5,
+      "school": "Transmutation",
+      "classes": [
+        "Druid"
+      ],
+      "file": "incantesimi/reincarnate.json"
+    },
+    {
+      "id": "remove-curse",
+      "name_it": "Rimuovere Maledizione",
+      "level": 3,
+      "school": "Abjuration",
+      "classes": [
+        "Cleric",
+        "Paladin",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/remove-curse.json"
+    },
+    {
+      "id": "resilient-sphere",
+      "name_it": "Sfera Resiliente",
+      "level": 4,
+      "school": "Evocation",
+      "classes": [
+        "Wizard"
+      ],
+      "file": "incantesimi/resilient-sphere.json"
+    },
+    {
+      "id": "resistance",
+      "name_it": "Resistenza",
+      "level": 0,
+      "school": "Abjuration",
+      "classes": [
+        "Cleric",
+        "Druid"
+      ],
+      "file": "incantesimi/resistance.json"
+    },
+    {
+      "id": "resurrection",
+      "name_it": "Resurrezione",
+      "level": 7,
+      "school": "Necromancy",
+      "classes": [
+        "Bard",
+        "Cleric"
+      ],
+      "file": "incantesimi/resurrection.json"
+    },
+    {
+      "id": "reverse-gravity",
+      "name_it": "Invertire la Gravita'",
+      "level": 7,
+      "school": "Transmutation",
+      "classes": [
+        "Druid",
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/reverse-gravity.json"
+    },
+    {
+      "id": "revivify",
+      "name_it": "Rivivifica",
+      "level": 3,
+      "school": "Conjuration",
+      "classes": [
+        "Cleric",
+        "Paladin"
+      ],
+      "file": "incantesimi/revivify.json"
+    },
+    {
+      "id": "rope-trick",
+      "name_it": "Trucco della Corda",
+      "level": 2,
+      "school": "Transmutation",
+      "classes": [
+        "Wizard"
+      ],
+      "file": "incantesimi/rope-trick.json"
+    },
+    {
+      "id": "sacred-flame",
+      "name_it": "Fiamma Sacra",
+      "level": 0,
+      "school": "Evocation",
+      "classes": [
+        "Cleric"
+      ],
+      "file": "incantesimi/sacred-flame.json"
+    },
+    {
+      "id": "sanctuary",
+      "name_it": "Santuario",
+      "level": 1,
+      "school": "Abjuration",
+      "classes": [
+        "Cleric",
+        "Paladin"
+      ],
+      "file": "incantesimi/sanctuary.json"
+    },
+    {
+      "id": "scorching-ray",
+      "name_it": "Raggio Infuocato",
+      "level": 2,
+      "school": "Evocation",
+      "classes": [
+        "Cleric",
+        "Sorcerer",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/scorching-ray.json"
+    },
+    {
+      "id": "scrying",
+      "name_it": "Scrutare",
+      "level": 5,
+      "school": "Divination",
+      "classes": [
+        "Bard",
+        "Cleric",
+        "Druid",
+        "Paladin",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/scrying.json"
+    },
+    {
+      "id": "secret-chest",
+      "name_it": "Forziere Segreto",
+      "level": 4,
+      "school": "Conjuration",
+      "classes": [
+        "Wizard"
+      ],
+      "file": "incantesimi/secret-chest.json"
+    },
+    {
+      "id": "see-invisibility",
+      "name_it": "Vedere l'Invisibile",
+      "level": 2,
+      "school": "Divination",
+      "classes": [
+        "Bard",
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/see-invisibility.json"
+    },
+    {
+      "id": "seeming",
+      "name_it": "Sembianza",
+      "level": 5,
+      "school": "Illusion",
+      "classes": [
+        "Bard",
+        "Sorcerer",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/seeming.json"
+    },
+    {
+      "id": "sending",
+      "name_it": "Messaggio a Distanza",
+      "level": 3,
+      "school": "Evocation",
+      "classes": [
+        "Bard",
+        "Cleric",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/sending.json"
+    },
+    {
+      "id": "sequester",
+      "name_it": "Sequestro",
+      "level": 7,
+      "school": "Transmutation",
+      "classes": [
+        "Wizard"
+      ],
+      "file": "incantesimi/sequester.json"
+    },
+    {
+      "id": "shapechange",
+      "name_it": "Cambiaforma",
+      "level": 9,
+      "school": "Transmutation",
+      "classes": [
+        "Druid",
+        "Wizard"
+      ],
+      "file": "incantesimi/shapechange.json"
+    },
+    {
+      "id": "shatter",
+      "name_it": "Frantumare",
+      "level": 2,
+      "school": "Evocation",
+      "classes": [
+        "Bard",
+        "Cleric",
+        "Sorcerer",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/shatter.json"
+    },
+    {
+      "id": "shield",
+      "name_it": "Scudo",
+      "level": 1,
+      "school": "Abjuration",
+      "classes": [
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/shield.json"
+    },
+    {
+      "id": "shield-of-faith",
+      "name_it": "Scudo della Fede",
+      "level": 1,
+      "school": "Abjuration",
+      "classes": [
+        "Cleric",
+        "Paladin"
+      ],
+      "file": "incantesimi/shield-of-faith.json"
+    },
+    {
+      "id": "shillelagh",
+      "name_it": "Randello Magico",
+      "level": 0,
+      "school": "Transmutation",
+      "classes": [
+        "Druid"
+      ],
+      "file": "incantesimi/shillelagh.json"
+    },
+    {
+      "id": "shocking-grasp",
+      "name_it": "Presa Elettrica",
+      "level": 0,
+      "school": "Evocation",
+      "classes": [
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/shocking-grasp.json"
+    },
+    {
+      "id": "silence",
+      "name_it": "Silenzio",
+      "level": 2,
+      "school": "Illusion",
+      "classes": [
+        "Bard",
+        "Cleric",
+        "Druid",
+        "Ranger"
+      ],
+      "file": "incantesimi/silence.json"
+    },
+    {
+      "id": "silent-image",
+      "name_it": "Immagine Silenziosa",
+      "level": 1,
+      "school": "Illusion",
+      "classes": [
+        "Bard",
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/silent-image.json"
+    },
+    {
+      "id": "simulacrum",
+      "name_it": "Simulacro",
+      "level": 7,
+      "school": "Illusion",
+      "classes": [
+        "Wizard"
+      ],
+      "file": "incantesimi/simulacrum.json"
+    },
+    {
+      "id": "sleep",
+      "name_it": "Sonno",
+      "level": 1,
+      "school": "Enchantment",
+      "classes": [
+        "Bard",
+        "Sorcerer",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/sleep.json"
+    },
+    {
+      "id": "sleet-storm",
+      "name_it": "Tempesta di Nevischio",
+      "level": 3,
+      "school": "Conjuration",
+      "classes": [
+        "Cleric",
+        "Druid",
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/sleet-storm.json"
+    },
+    {
+      "id": "slow",
+      "name_it": "Lentezza",
+      "level": 3,
+      "school": "Transmutation",
+      "classes": [
+        "Druid",
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/slow.json"
+    },
+    {
+      "id": "spare-the-dying",
+      "name_it": "Salvare dalla Morte",
+      "level": 0,
+      "school": "Necromancy",
+      "classes": [
+        "Cleric"
+      ],
+      "file": "incantesimi/spare-the-dying.json"
+    },
+    {
+      "id": "speak-with-animals",
+      "name_it": "Parlare con gli Animali",
+      "level": 1,
+      "school": "Divination",
+      "classes": [
+        "Bard",
+        "Cleric",
+        "Druid",
+        "Paladin",
+        "Ranger"
+      ],
+      "file": "incantesimi/speak-with-animals.json"
+    },
+    {
+      "id": "speak-with-dead",
+      "name_it": "Parlare con i Morti",
+      "level": 3,
+      "school": "Necromancy",
+      "classes": [
+        "Bard",
+        "Cleric"
+      ],
+      "file": "incantesimi/speak-with-dead.json"
+    },
+    {
+      "id": "speak-with-plants",
+      "name_it": "Parlare con le Piante",
+      "level": 3,
+      "school": "Transmutation",
+      "classes": [
+        "Bard",
+        "Druid",
+        "Ranger"
+      ],
+      "file": "incantesimi/speak-with-plants.json"
+    },
+    {
+      "id": "spider-climb",
+      "name_it": "Scalata del Ragno",
+      "level": 2,
+      "school": "Transmutation",
+      "classes": [
+        "Druid",
+        "Sorcerer",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/spider-climb.json"
+    },
+    {
+      "id": "spike-growth",
+      "name_it": "Crescita di Spuntoni",
+      "level": 2,
+      "school": "Transmutation",
+      "classes": [
+        "Cleric",
+        "Druid",
+        "Ranger"
+      ],
+      "file": "incantesimi/spike-growth.json"
+    },
+    {
+      "id": "spirit-guardians",
+      "name_it": "Guardiani Spirituali",
+      "level": 3,
+      "school": "Conjuration",
+      "classes": [
+        "Cleric"
+      ],
+      "file": "incantesimi/spirit-guardians.json"
+    },
+    {
+      "id": "spiritual-weapon",
+      "name_it": "Arma Spirituale",
+      "level": 2,
+      "school": "Evocation",
+      "classes": [
+        "Cleric"
+      ],
+      "file": "incantesimi/spiritual-weapon.json"
+    },
+    {
+      "id": "stinking-cloud",
+      "name_it": "Nube Fetida",
+      "level": 3,
+      "school": "Conjuration",
+      "classes": [
+        "Bard",
+        "Druid",
+        "Sorcerer",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/stinking-cloud.json"
+    },
+    {
+      "id": "stone-shape",
+      "name_it": "Modellare la Pietra",
+      "level": 4,
+      "school": "Transmutation",
+      "classes": [
+        "Cleric",
+        "Druid",
+        "Wizard"
+      ],
+      "file": "incantesimi/stone-shape.json"
+    },
+    {
+      "id": "stoneskin",
+      "name_it": "Pelle di Pietra",
+      "level": 4,
+      "school": "Abjuration",
+      "classes": [
+        "Cleric",
+        "Druid",
+        "Paladin",
+        "Ranger",
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/stoneskin.json"
+    },
+    {
+      "id": "storm-of-vengeance",
+      "name_it": "Tempesta di Vendetta",
+      "level": 9,
+      "school": "Conjuration",
+      "classes": [
+        "Druid"
+      ],
+      "file": "incantesimi/storm-of-vengeance.json"
+    },
+    {
+      "id": "suggestion",
+      "name_it": "Suggestione",
+      "level": 2,
+      "school": "Enchantment",
+      "classes": [
+        "Bard",
+        "Cleric",
+        "Sorcerer",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/suggestion.json"
+    },
+    {
+      "id": "sunbeam",
+      "name_it": "Raggio di Sole",
+      "level": 6,
+      "school": "Evocation",
+      "classes": [
+        "Druid",
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/sunbeam.json"
+    },
+    {
+      "id": "sunburst",
+      "name_it": "Esplosione Solare",
+      "level": 8,
+      "school": "Evocation",
+      "classes": [
+        "Druid",
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/sunburst.json"
+    },
+    {
+      "id": "symbol",
+      "name_it": "Simbolo",
+      "level": 7,
+      "school": "Abjuration",
+      "classes": [
+        "Bard",
+        "Cleric",
+        "Wizard"
+      ],
+      "file": "incantesimi/symbol.json"
+    },
+    {
+      "id": "telekinesis",
+      "name_it": "Telecinesi",
+      "level": 5,
+      "school": "Transmutation",
+      "classes": [
+        "Sorcerer",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/telekinesis.json"
+    },
+    {
+      "id": "telepathic-bond",
+      "name_it": "Legame Telepatico",
+      "level": 5,
+      "school": "Divination",
+      "classes": [
+        "Wizard"
+      ],
+      "file": "incantesimi/telepathic-bond.json"
+    },
+    {
+      "id": "teleport",
+      "name_it": "Teletrasporto",
+      "level": 7,
+      "school": "Conjuration",
+      "classes": [
+        "Bard",
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/teleport.json"
+    },
+    {
+      "id": "teleportation-circle",
+      "name_it": "Cerchio di Teletrasporto",
+      "level": 5,
+      "school": "Conjuration",
+      "classes": [
+        "Bard",
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/teleportation-circle.json"
+    },
+    {
+      "id": "thaumaturgy",
+      "name_it": "Taumaturgia",
+      "level": 0,
+      "school": "Transmutation",
+      "classes": [
+        "Cleric"
+      ],
+      "file": "incantesimi/thaumaturgy.json"
+    },
+    {
+      "id": "thunderwave",
+      "name_it": "Onda Tonante",
+      "level": 1,
+      "school": "Evocation",
+      "classes": [
+        "Bard",
+        "Cleric",
+        "Druid",
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/thunderwave.json"
+    },
+    {
+      "id": "time-stop",
+      "name_it": "Fermare il Tempo",
+      "level": 9,
+      "school": "Transmutation",
+      "classes": [
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/time-stop.json"
+    },
+    {
+      "id": "tiny-hut",
+      "name_it": "Piccolo Rifugio",
+      "level": 3,
+      "school": "Evocation",
+      "classes": [
+        "Bard",
+        "Wizard"
+      ],
+      "file": "incantesimi/tiny-hut.json"
+    },
+    {
+      "id": "tongues",
+      "name_it": "Linguaggi",
+      "level": 3,
+      "school": "Divination",
+      "classes": [
+        "Bard",
+        "Cleric",
+        "Sorcerer",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/tongues.json"
+    },
+    {
+      "id": "transport-via-plants",
+      "name_it": "Trasporto tramite Piante",
+      "level": 6,
+      "school": "Conjuration",
+      "classes": [
+        "Druid"
+      ],
+      "file": "incantesimi/transport-via-plants.json"
+    },
+    {
+      "id": "tree-stride",
+      "name_it": "Passo dell'Albero",
+      "level": 5,
+      "school": "Conjuration",
+      "classes": [
+        "Cleric",
+        "Druid",
+        "Paladin",
+        "Ranger"
+      ],
+      "file": "incantesimi/tree-stride.json"
+    },
+    {
+      "id": "true-polymorph",
+      "name_it": "Polimorfismo Vero",
+      "level": 9,
+      "school": "Transmutation",
+      "classes": [
+        "Bard",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/true-polymorph.json"
+    },
+    {
+      "id": "true-resurrection",
+      "name_it": "Vera Resurrezione",
+      "level": 9,
+      "school": "Necromancy",
+      "classes": [
+        "Cleric",
+        "Druid"
+      ],
+      "file": "incantesimi/true-resurrection.json"
+    },
+    {
+      "id": "true-seeing",
+      "name_it": "Vera Vista",
+      "level": 6,
+      "school": "Divination",
+      "classes": [
+        "Bard",
+        "Cleric",
+        "Sorcerer",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/true-seeing.json"
+    },
+    {
+      "id": "true-strike",
+      "name_it": "Vero Colpo",
+      "level": 0,
+      "school": "Divination",
+      "classes": [
+        "Bard",
+        "Sorcerer",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/true-strike.json"
+    },
+    {
+      "id": "unseen-servant",
+      "name_it": "Servitore Invisibile",
+      "level": 1,
+      "school": "Conjuration",
+      "classes": [
+        "Bard",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/unseen-servant.json"
+    },
+    {
+      "id": "vampiric-touch",
+      "name_it": "Tocco Vampirico",
+      "level": 3,
+      "school": "Necromancy",
+      "classes": [
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/vampiric-touch.json"
+    },
+    {
+      "id": "vicious-mockery",
+      "name_it": "Scherno Micidiale",
+      "level": 0,
+      "school": "Enchantment",
+      "classes": [
+        "Bard"
+      ],
+      "file": "incantesimi/vicious-mockery.json"
+    },
+    {
+      "id": "wall-of-fire",
+      "name_it": "Muro di Fuoco",
+      "level": 4,
+      "school": "Evocation",
+      "classes": [
+        "Cleric",
+        "Druid",
+        "Sorcerer",
+        "Warlock",
+        "Wizard"
+      ],
+      "file": "incantesimi/wall-of-fire.json"
+    },
+    {
+      "id": "wall-of-force",
+      "name_it": "Muro di Forza",
+      "level": 5,
+      "school": "Evocation",
+      "classes": [
+        "Wizard"
+      ],
+      "file": "incantesimi/wall-of-force.json"
+    },
+    {
+      "id": "wall-of-ice",
+      "name_it": "Muro di Ghiaccio",
+      "level": 6,
+      "school": "Evocation",
+      "classes": [
+        "Wizard"
+      ],
+      "file": "incantesimi/wall-of-ice.json"
+    },
+    {
+      "id": "wall-of-stone",
+      "name_it": "Muro di Pietra",
+      "level": 5,
+      "school": "Evocation",
+      "classes": [
+        "Druid",
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/wall-of-stone.json"
+    },
+    {
+      "id": "wall-of-thorns",
+      "name_it": "Muro di Spine",
+      "level": 6,
+      "school": "Conjuration",
+      "classes": [
+        "Druid"
+      ],
+      "file": "incantesimi/wall-of-thorns.json"
+    },
+    {
+      "id": "warding-bond",
+      "name_it": "Vincolo Protettivo",
+      "level": 2,
+      "school": "Abjuration",
+      "classes": [
+        "Cleric"
+      ],
+      "file": "incantesimi/warding-bond.json"
+    },
+    {
+      "id": "water-breathing",
+      "name_it": "Respirare Sott'Acqua",
+      "level": 3,
+      "school": "Transmutation",
+      "classes": [
+        "Druid",
+        "Ranger",
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/water-breathing.json"
+    },
+    {
+      "id": "water-walk",
+      "name_it": "Camminare sull'Acqua",
+      "level": 3,
+      "school": "Transmutation",
+      "classes": [
+        "Cleric",
+        "Druid",
+        "Ranger",
+        "Sorcerer"
+      ],
+      "file": "incantesimi/water-walk.json"
+    },
+    {
+      "id": "web",
+      "name_it": "Ragnatela",
+      "level": 2,
+      "school": "Conjuration",
+      "classes": [
+        "Druid",
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/web.json"
+    },
+    {
+      "id": "weird",
+      "name_it": "Orrore Illusorio",
+      "level": 9,
+      "school": "Illusion",
+      "classes": [
+        "Wizard"
+      ],
+      "file": "incantesimi/weird.json"
+    },
+    {
+      "id": "wind-walk",
+      "name_it": "Camminare nel Vento",
+      "level": 6,
+      "school": "Transmutation",
+      "classes": [
+        "Druid"
+      ],
+      "file": "incantesimi/wind-walk.json"
+    },
+    {
+      "id": "wind-wall",
+      "name_it": "Muro di Vento",
+      "level": 3,
+      "school": "Evocation",
+      "classes": [
+        "Cleric",
+        "Druid",
+        "Ranger"
+      ],
+      "file": "incantesimi/wind-wall.json"
+    },
+    {
+      "id": "wish",
+      "name_it": "Desiderio",
+      "level": 9,
+      "school": "Conjuration",
+      "classes": [
+        "Sorcerer",
+        "Wizard"
+      ],
+      "file": "incantesimi/wish.json"
+    },
+    {
+      "id": "word-of-recall",
+      "name_it": "Parola di Richiamo",
+      "level": 6,
+      "school": "Conjuration",
+      "classes": [
+        "Cleric"
+      ],
+      "file": "incantesimi/word-of-recall.json"
+    },
+    {
+      "id": "zone-of-truth",
+      "name_it": "Zona di Verita'",
+      "level": 2,
+      "school": "Enchantment",
+      "classes": [
+        "Bard",
+        "Cleric",
+        "Paladin"
+      ],
+      "file": "incantesimi/zone-of-truth.json"
+    }
+  ]
+}

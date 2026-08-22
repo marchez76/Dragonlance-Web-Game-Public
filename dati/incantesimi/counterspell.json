@@ -1,0 +1,35 @@
+{
+  "id": "counterspell",
+  "name": {
+    "en": "Counterspell",
+    "it": "Contro-incantesimo"
+  },
+  "level": 3,
+  "school": "Abjuration",
+  "classes": [
+    "Paladin",
+    "Sorcerer",
+    "Warlock",
+    "Wizard"
+  ],
+  "ritual_caster_feat": false,
+  "casting_time": "1 reaction, which you take when you see a creature within 60 feet of you casting a spell",
+  "range": "60 feet",
+  "duration": "Instantaneous",
+  "ritual": false,
+  "concentration": false,
+  "components": {
+    "verbal": false,
+    "somatic": true,
+    "material": false,
+    "material_desc": null
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1)",
+    "api_ref": "v1/spells/counterspell"
+  },
+  "descrizione": "You attempt to interrupt a creature in the process of casting a spell. If the creature is casting a spell of 3rd level or lower, its spell fails and has no effect. If it is casting a spell of 4th level or higher, make an ability check using your spellcasting ability. The DC equals 10 + the spell's level. On a success, the creature's spell fails and has no effect.",
+  "a_livelli_superiori": "When you cast this spell using a spell slot of 4th level or higher, the interrupted spell has no effect if its level is less than or equal to the level of the spell slot you used.",
+  "note": []
+}

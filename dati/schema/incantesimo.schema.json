@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dragonlance-gdr.local/schema/incantesimo.schema.json",
+  "title": "Incantesimo (SRD 5.1)",
+  "description": "A differenza di razza/classe/divinita'/mostro/oggetto, questo schema NON ha il doppio strato source_2e/mechanics_5e: ogni incantesimo qui dentro nasce dall'SRD 5.1 (CC-BY 4.0, via api.open5e.com) e non da una conversione. dati/_fonti/incantesimi_2e.json (privato) sono le tabelle di slot per livello di mago/sacerdote/cavaliere-spada — un dato strutturale diverso, non il catalogo degli incantesimi stesso, e non confligge con questo schema. Se un giorno servira' un incantesimo genuinamente di Dragonlance (Vesti, Torri di Alta Stregoneria) senza equivalente SRD, sara' quello il primo caso concreto per aggiungere un source_2e qui — come il diadema lo e' stato per oggetto.schema.json — non prima.",
+  "type": "object",
+  "required": ["id", "name", "level", "school", "classes", "components", "source", "descrizione"],
+  "additionalProperties": false,
+
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+    "name": {
+      "type": "object",
+      "required": ["en", "it"],
+      "additionalProperties": false,
+      "properties": {
+        "en": { "type": "string" },
+        "it": { "type": "string" }
+      }
+    },
+
+    "level": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9,
+      "description": "0 = trucchetto."
+    },
+    "school": {
+      "enum": ["Abjuration", "Conjuration", "Divination", "Enchantment",
+               "Evocation", "Illusion", "Necromancy", "Transmutation"]
+    },
+    "classes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "enum": ["Bard", "Cleric", "Druid", "Paladin", "Ranger", "Sorcerer", "Warlock", "Wizard"]
+      },
+      "description": "Le classi SRD che hanno l'incantesimo nella propria lista, dal campo dnd_class dell'API (NON da spell_lists: vedi note in _fonti/srd51_incantesimi.py, il campo strutturato dell'API omette Paladin su 76/319 voci). Chiave di join naturale con classe.schema.json, mechanics_5e.chassis.srd_class — non duplicare qui gli id delle nostre classi Dragonlance."
+    },
+    "ritual_caster_feat": {
+      "type": "boolean",
+      "default": false,
+      "description": "true se l'API marca l'incantesimo con 'Ritual Caster' in dnd_class: accessibile tramite il talento Ritual Caster, non e' una classe con lista propria."
+    },
+
+    "casting_time": { "type": "string" },
+    "range": { "type": "string" },
+    "duration": { "type": "string" },
+    "ritual": { "type": "boolean", "default": false },
+    "concentration": { "type": "boolean", "default": false },
+    "components": {
+      "type": "object",
+      "required": ["verbal", "somatic", "material", "material_desc"],
+      "additionalProperties": false,
+      "properties": {
+        "verbal": { "type": "boolean" },
+        "somatic": { "type": "boolean" },
+        "material": { "type": "boolean" },
+        "material_desc": { "type": ["string", "null"] }
+      }
+    },
+
+    "source": {
+      "type": "object",
+      "required": ["source_edition", "source_book", "api_ref"],
+      "additionalProperties": false,
+      "properties": {
+        "source_edition": { "const": "SRD 5.1" },
+        "source_book": { "type": "string" },
+        "api_ref": {
+          "type": "string",
+          "description": "Endpoint e slug di api.open5e.com, es. \"v1/spells/fireball\", per poter riverificare senza ripetere la query."
+        }
+      }
+    },
+
+    "descrizione": {
+      "type": "string",
+      "description": "Il campo 'desc' dell'SRD, trascritto verbatim: e' gia' la meccanica giocabile, non c'e' altro da convertire."
+    },
+    "a_livelli_superiori": {
+      "type": ["string", "null"],
+      "description": "Il campo 'higher_level' dell'SRD, quando presente."
+    },
+
+    "note": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": []
+    }
+  }
+}

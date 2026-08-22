@@ -1,0 +1,35 @@
+{
+  "id": "silence",
+  "name": {
+    "en": "Silence",
+    "it": "Silenzio"
+  },
+  "level": 2,
+  "school": "Illusion",
+  "classes": [
+    "Bard",
+    "Cleric",
+    "Druid",
+    "Ranger"
+  ],
+  "ritual_caster_feat": true,
+  "casting_time": "1 action",
+  "range": "120 feet",
+  "duration": "Up to 10 minutes",
+  "ritual": true,
+  "concentration": true,
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": false,
+    "material_desc": null
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1)",
+    "api_ref": "v1/spells/silence"
+  },
+  "descrizione": "For the duration, no sound can be created within or pass through a 20-foot-radius sphere centered on a point you choose within range. Any creature or object entirely inside the sphere is immune to thunder damage, and creatures are deafened while entirely inside it. Casting a spell that includes a verbal component is impossible there.",
+  "a_livelli_superiori": null,
+  "note": []
+}

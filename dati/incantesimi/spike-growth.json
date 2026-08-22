@@ -1,0 +1,34 @@
+{
+  "id": "spike-growth",
+  "name": {
+    "en": "Spike Growth",
+    "it": "Crescita di Spuntoni"
+  },
+  "level": 2,
+  "school": "Transmutation",
+  "classes": [
+    "Cleric",
+    "Druid",
+    "Ranger"
+  ],
+  "ritual_caster_feat": false,
+  "casting_time": "1 action",
+  "range": "150 feet",
+  "duration": "Up to 10 minutes",
+  "ritual": false,
+  "concentration": true,
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "material_desc": "Seven sharp spines or seven twigs cut peak."
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1)",
+    "api_ref": "v1/spells/spike-growth"
+  },
+  "descrizione": "The ground in a 20-foot radius centered on a point within range twists and sprouts hard spikes and thorns. The area becomes difficult terrain for the duration. When a creature moves into or within the area, it takes 2d4 piercing damage for every 5 feet it travels. The development of land is camouflaged to look natural. Any creature that does not see the area when the spell is spell casts must make a Wisdom (Perception) check against your spell save DC to recognize the terrain as hazardous before entering it.",
+  "a_livelli_superiori": null,
+  "note": []
+}

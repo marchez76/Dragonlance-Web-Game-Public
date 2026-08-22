@@ -1,0 +1,33 @@
+{
+  "id": "revivify",
+  "name": {
+    "en": "Revivify",
+    "it": "Rivivifica"
+  },
+  "level": 3,
+  "school": "Conjuration",
+  "classes": [
+    "Cleric",
+    "Paladin"
+  ],
+  "ritual_caster_feat": false,
+  "casting_time": "1 action",
+  "range": "Touch",
+  "duration": "Instantaneous",
+  "ritual": false,
+  "concentration": false,
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "material_desc": "Diamonds worth 300gp, which the spell consumes."
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1)",
+    "api_ref": "v1/spells/revivify"
+  },
+  "descrizione": "You touch a creature that has died within the last minute. That creature returns to life with 1 hit point. This spell can't return to life a creature that has died of old age, nor can it restore any missing body parts.",
+  "a_livelli_superiori": null,
+  "note": []
+}

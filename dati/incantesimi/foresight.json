@@ -1,0 +1,35 @@
+{
+  "id": "foresight",
+  "name": {
+    "en": "Foresight",
+    "it": "Preveggenza"
+  },
+  "level": 9,
+  "school": "Divination",
+  "classes": [
+    "Bard",
+    "Druid",
+    "Warlock",
+    "Wizard"
+  ],
+  "ritual_caster_feat": false,
+  "casting_time": "1 minute",
+  "range": "Touch",
+  "duration": "8 hours",
+  "ritual": false,
+  "concentration": false,
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "material_desc": "A hummingbird feather."
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1)",
+    "api_ref": "v1/spells/foresight"
+  },
+  "descrizione": "You touch a willing creature and bestow a limited ability to see into the immediate future. For the duration, the target can't be surprised and has advantage on attack rolls, ability checks, and saving throws. Additionally, other creatures have disadvantage on attack rolls against the target for the duration. This spell immediately ends if you cast it again before its duration ends.",
+  "a_livelli_superiori": null,
+  "note": []
+}

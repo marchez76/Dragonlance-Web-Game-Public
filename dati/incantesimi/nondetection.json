@@ -1,0 +1,35 @@
+{
+  "id": "nondetection",
+  "name": {
+    "en": "Nondetection",
+    "it": "Non Individuazione"
+  },
+  "level": 3,
+  "school": "Abjuration",
+  "classes": [
+    "Bard",
+    "Cleric",
+    "Ranger",
+    "Wizard"
+  ],
+  "ritual_caster_feat": false,
+  "casting_time": "1 action",
+  "range": "Touch",
+  "duration": "8 hours",
+  "ritual": false,
+  "concentration": false,
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "material_desc": "A pinch of diamond dust worth 25 gp sprinkled over the target, which the spell consumes."
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1)",
+    "api_ref": "v1/spells/nondetection"
+  },
+  "descrizione": "For the duration, you hide a target that you touch from divination magic. The target can be a willing creature or a place or an object no larger than 10 feet in any dimension. The target can't be targeted by any divination magic or perceived through magical scrying sensors.",
+  "a_livelli_superiori": null,
+  "note": []
+}

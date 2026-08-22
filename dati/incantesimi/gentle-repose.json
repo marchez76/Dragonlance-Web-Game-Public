@@ -1,0 +1,33 @@
+{
+  "id": "gentle-repose",
+  "name": {
+    "en": "Gentle Repose",
+    "it": "Riposo Placido"
+  },
+  "level": 2,
+  "school": "Necromancy",
+  "classes": [
+    "Cleric",
+    "Wizard"
+  ],
+  "ritual_caster_feat": true,
+  "casting_time": "1 action",
+  "range": "Touch",
+  "duration": "10 days",
+  "ritual": true,
+  "concentration": false,
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "material_desc": "A pinch of salt and one copper piece placed on each of the corpse's eyes, which must remain there for the duration."
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1)",
+    "api_ref": "v1/spells/gentle-repose"
+  },
+  "descrizione": "You touch a corpse or other remains. For the duration, the target is protected from decay and can't become undead. The spell also effectively extends the time limit on raising the target from the dead, since days spent under the influence of this spell don't count against the time limit of spells such as raise dead.",
+  "a_livelli_superiori": null,
+  "note": []
+}

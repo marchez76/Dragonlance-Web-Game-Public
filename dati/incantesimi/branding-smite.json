@@ -1,0 +1,32 @@
+{
+  "id": "branding-smite",
+  "name": {
+    "en": "Branding Smite",
+    "it": "Colpo Marchiante"
+  },
+  "level": 2,
+  "school": "Evocation",
+  "classes": [
+    "Paladin"
+  ],
+  "ritual_caster_feat": false,
+  "casting_time": "1 bonus action",
+  "range": "Self",
+  "duration": "Up to 1 minute",
+  "ritual": false,
+  "concentration": true,
+  "components": {
+    "verbal": true,
+    "somatic": false,
+    "material": false,
+    "material_desc": null
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1)",
+    "api_ref": "v1/spells/branding-smite"
+  },
+  "descrizione": "The next time you hit a creature with a weapon attack before this spell ends, the weapon gleams with astral radiance as you strike. The attack deals an extra 2d6 radiant damage to the target, which becomes visible if it's invisible, and the target sheds dim light in a 5-­--foot radius and can't become invisible until the spell ends.",
+  "a_livelli_superiori": "When you cast this spell using a spell slot of 3rd level or higher, the extra damage increases by 1d6 for each slot level above 2nd.",
+  "note": []
+}

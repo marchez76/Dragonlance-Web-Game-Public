@@ -1,0 +1,33 @@
+{
+  "id": "mage-armor",
+  "name": {
+    "en": "Mage Armor",
+    "it": "Armatura del Mago"
+  },
+  "level": 1,
+  "school": "Abjuration",
+  "classes": [
+    "Sorcerer",
+    "Wizard"
+  ],
+  "ritual_caster_feat": false,
+  "casting_time": "1 action",
+  "range": "Touch",
+  "duration": "8 hours",
+  "ritual": false,
+  "concentration": false,
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "material_desc": "A piece of cured leather."
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1)",
+    "api_ref": "v1/spells/mage-armor"
+  },
+  "descrizione": "You touch a willing creature who isn't wearing armor, and a protective magical force surrounds it until the spell ends. The target's base AC becomes 13 + its Dexterity modifier. The spell ends if the target dons armor or if you dismiss the spell as an action.",
+  "a_livelli_superiori": null,
+  "note": []
+}

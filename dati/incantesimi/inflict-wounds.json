@@ -1,0 +1,32 @@
+{
+  "id": "inflict-wounds",
+  "name": {
+    "en": "Inflict Wounds",
+    "it": "Infliggere Ferite"
+  },
+  "level": 1,
+  "school": "Necromancy",
+  "classes": [
+    "Cleric"
+  ],
+  "ritual_caster_feat": false,
+  "casting_time": "1 action",
+  "range": "Touch",
+  "duration": "Instantaneous",
+  "ritual": false,
+  "concentration": false,
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": false,
+    "material_desc": null
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1)",
+    "api_ref": "v1/spells/inflict-wounds"
+  },
+  "descrizione": "Make a melee spell attack against a creature you can reach. On a hit, the target takes 3d10 necrotic damage.",
+  "a_livelli_superiori": "When you cast this spell using a spell slot of 2nd level or higher, the damage increases by 1d10 for each slot level above 1st.",
+  "note": []
+}

@@ -1,0 +1,34 @@
+{
+  "id": "see-invisibility",
+  "name": {
+    "en": "See Invisibility",
+    "it": "Vedere l'Invisibile"
+  },
+  "level": 2,
+  "school": "Divination",
+  "classes": [
+    "Bard",
+    "Sorcerer",
+    "Wizard"
+  ],
+  "ritual_caster_feat": false,
+  "casting_time": "1 action",
+  "range": "Self",
+  "duration": "1 hour",
+  "ritual": false,
+  "concentration": false,
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "material_desc": "A dash of talc and a small amount of silver powder."
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1)",
+    "api_ref": "v1/spells/see-invisibility"
+  },
+  "descrizione": "For the duration of the spell, you see invisible creatures and objects as if they were visible, and you can see through Ethereal. The ethereal objects and creatures appear ghostly translucent.",
+  "a_livelli_superiori": null,
+  "note": []
+}

@@ -1,0 +1,35 @@
+{
+  "id": "remove-curse",
+  "name": {
+    "en": "Remove Curse",
+    "it": "Rimuovere Maledizione"
+  },
+  "level": 3,
+  "school": "Abjuration",
+  "classes": [
+    "Cleric",
+    "Paladin",
+    "Warlock",
+    "Wizard"
+  ],
+  "ritual_caster_feat": false,
+  "casting_time": "1 action",
+  "range": "Touch",
+  "duration": "Instantaneous",
+  "ritual": false,
+  "concentration": false,
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": false,
+    "material_desc": null
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1)",
+    "api_ref": "v1/spells/remove-curse"
+  },
+  "descrizione": "At your touch, all curses affecting one creature or object end. If the object is a cursed magic item, its curse remains, but the spell breaks its owner's attunement to the object so it can be removed or discarded.",
+  "a_livelli_superiori": null,
+  "note": []
+}

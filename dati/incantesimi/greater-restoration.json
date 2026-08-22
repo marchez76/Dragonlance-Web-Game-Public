@@ -1,0 +1,34 @@
+{
+  "id": "greater-restoration",
+  "name": {
+    "en": "Greater Restoration",
+    "it": "Ripristino Superiore"
+  },
+  "level": 5,
+  "school": "Abjuration",
+  "classes": [
+    "Bard",
+    "Cleric",
+    "Druid"
+  ],
+  "ritual_caster_feat": false,
+  "casting_time": "1 action",
+  "range": "Touch",
+  "duration": "Instantaneous",
+  "ritual": false,
+  "concentration": false,
+  "components": {
+    "verbal": true,
+    "somatic": true,
+    "material": true,
+    "material_desc": "Diamond dust worth at least 100gp, which the spell consumes."
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1)",
+    "api_ref": "v1/spells/greater-restoration"
+  },
+  "descrizione": "You imbue a creature you touch with positive energy to undo a debilitating effect. You can reduce the target's exhaustion level by one, or end one of the following effects on the target: \n- One effect that charmed or petrified the target \n- One curse, including the target's attunement to a cursed magic item \n- Any reduction to one of the target's ability scores \n- One effect reducing the target's hit point maximum",
+  "a_livelli_superiori": null,
+  "note": []
+}
