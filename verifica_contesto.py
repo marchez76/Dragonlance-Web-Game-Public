@@ -12,7 +12,24 @@ PERCHE' ESISTE
 COSA FA
     Rilegge il documento generato, ne estrae ogni affermazione quantitativa
     con espressioni regolari e la confronta con i JSON e con i rapporti.
-    Ogni controllo che fallisce e' un'incoerenza vera, non un avviso.
+    Ogni controllo che fallisce e' un'incoerenza vera, non un avviso —
+    con l'unica eccezione registrata sotto in PUNTO NOTO APERTO.
+
+PUNTO NOTO APERTO (25/08/2026) — 1 incoerenza attesa, non un errore dei dati
+    "multi Centaur (of Krynn) elenco" fallisce sempre, ed e' un difetto DI
+    QUESTO SCRIPT, non del documento ne' dei dati. Le quattro culture si
+    chiamano "Centaur, Abanasinian", "Centaur, Crystalmir", ecc.: il nome
+    contiene una virgola, il documento le stampa separate da ", " e il
+    controllo qui sotto le rispezza con split(","), ottenendo otto pezzi
+    invece di quattro. Il documento e' giusto, il confronto no.
+    Verificato con `git stash` che precede il giro del 25/08/2026: non e'
+    una regressione di quel lavoro. Registrato e NON corretto per scelta —
+    la correzione tocca il formato con cui `genera_contesto.py` stampa la
+    riga (un separatore che non sia la virgola, o l'elenco in JSON), quindi
+    e' una modifica al documento generato e va fatta con la sua decisione,
+    non di straforo dentro un altro commit.
+    Finche' e' aperto: l'uscita attesa e' "1 incoerenze", e questa. Due o
+    piu' significano che c'e' dell'altro.
 
 ECCEZIONE UNICA, DICHIARATA
     0,248% — probabilita' analitica dell'Aghar barbaro, calcolata a mano e
@@ -371,6 +388,11 @@ def main():
     chk("voci multi-colonna", st["n_multi"], int(m.group(1)))
     m = re.search(r"\*\*(\d+) nomi di voce erano sbagliati\*\*", doc)
     chk("nomi sbagliati", st["nomi_sbagliati"], int(m.group(1)))
+    # PUNTO NOTO (25/08/2026, vedi docstring in testa): il controllo
+    # "multi ... elenco" qui sotto fallisce su Centaur (of Krynn) perche' i
+    # nomi delle quattro culture contengono gia' una virgola. Difetto dello
+    # splitter, non dei dati: aperto per scelta, non correggere qui senza
+    # cambiare anche come genera_contesto.py stampa la riga.
     righe_multi = re.findall(r"^\| \*\*(.+?)\*\* \| (\d+) \| (\d+) — (.+?) \|$",
                              doc, re.M)
     chk("righe multi-colonna", st["n_multi"], len(righe_multi))
