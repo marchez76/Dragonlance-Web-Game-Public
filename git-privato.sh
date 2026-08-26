@@ -40,6 +40,23 @@ export GIT_WORK_TREE=.
 
 # Percorsi tracciati dal repo privato. Aggiungerne uno e' una decisione:
 # scrivilo qui, non affidarti a una regola generica.
+#
+# DECISIONE 37 (25/08/2026) — dati/mostri.coda.json NON sta qui.
+#     Era l'unico file tracciato da ENTRAMBI i repository: rientra
+#     nell'elenco PERCORSI e insieme NON e' escluso dal .gitignore
+#     pubblico, quindi ogni giro lo committava due volte in due storie
+#     diverse. Il doppio tracciamento e' la trappola: lo stesso file in
+#     due repository diverge in silenzio.
+#     Sciolto tenendolo PUBBLICO: il contenuto e' analisi nostra piu'
+#     valori di statblock, che per il criterio di CLAUDE.md 1 sono fatti e
+#     non espressione, e le due citazioni brevi rientrano nello standard
+#     gia' accettato. La storia privata non e' stata riscritta: undici
+#     parole non valgono un rewrite.
+#     Controllo fatto il 25/08/2026 su tutto l'elenco (comm -12 fra le due
+#     liste di file tracciati): era l'unico caso, gli altri 25 percorsi
+#     sono tutti coperti dal .gitignore pubblico. Se un giorno un percorso
+#     nuovo compare qui SENZA essere escluso dal pubblico, e' lo stesso
+#     difetto che si riforma.
 PERCORSI=(
     dati/razze
     dati/classi
@@ -50,7 +67,6 @@ PERCORSI=(
     dati/classi.index.json
     dati/divinita.index.json
     dati/mostri.index.json
-    dati/mostri.coda.json
     dati/oggetti.index.json
     dati/_tratti_phb2e.py
     dati/_tratti_mc.py

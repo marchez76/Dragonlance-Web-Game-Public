@@ -247,52 +247,111 @@ una checklist burocratica.
 
 ## 5. Le categorie aperte
 
-Tre tipi di voce che questo metodo non copre ancora, perché presuppongono
-uno statblock fisso da convertire una volta sola:
+Tre tipi di voce che questo metodo non copriva, perché presuppongono uno
+statblock fisso da convertire una volta sola. **Al 25/08/2026 ne resta aperto
+uno**: le altre due sono chiuse dalle decisioni 34-36, e restano scritte qui
+sotto perché la forma va riconosciuta anche dopo che il problema è risolto —
+la prossima voce che la porta va inquadrata subito, non riscoperta.
 
-- **Creature-modello** (Dreamshadow, Spectral Minion): ogni campo della
-  scheda 2e è dichiarato "as creature or person mimicked" o "quelli della
-  vita precedente" — non ha statistiche proprie, le eredita da un
-  bersaglio. Serve un pacchetto di regole che copia un bersaglio, non un
-  singolo statblock: la conversione è di un meccanismo, non di un valore.
-- **Famiglie di statblock** (Tylor): la fonte dà una tabella di più
-  categorie d'età con DV/CA/capacità diverse per ciascuna, sullo stesso
-  modello degli age category dei draghi. Serve più di un GS: una mini-
-  famiglia di statblock imparentati, non una conversione singola.
-- **Incantatore a scelta del master** (Tayling): il corpo ha uno statblock
-  fisso, ma il repertorio di incantesimi non è statuito dalla fonte —
-  "Taylings can cast spells either as wizards or priests varying in levels
-  from 1-10", scelta esplicitamente rimandata a chi conduce la partita. Non
-  è una lacuna da colmare per analogia (vincolo 2: non si inventa
-  meccanica 5e per riempire un vuoto che la fonte lascia deliberatamente
-  aperto) e non è nemmeno una creatura-modello (le statistiche fisiche sono
-  fisse, solo il repertorio magico è indeterminato) né una famiglia di
-  statblock (non ci sono categorie discrete, è un intervallo di livello con
-  scelta libera di scuola/sfera). Il GS assegnato in questi casi resta
-  PROVVISORIO ed esclude la capacità dal calcolo, con nota esplicita (vedi
-  `dati/mostri/tayling.json`, `mechanics_5e.challenge_rating.note`) —
-  finché non si decide come rendere in scheda un repertorio non fissato:
-  un pacchetto rappresentativo scelto da noi, una tabella di repertori
-  precompilati, o un campo esplicitamente aperto lasciato al tavolo.
-  Verificata la coda al 2026-08-21: nessun'altra voce condivideva questa
-  forma (Wyndlass, Wichtlin, Imp Blood Sea, Kalothagh avevano tutte
-  statblock e capacità fissate dalla fonte — le ultime tre convertite nei
-  giri successivi con esito confermato, Wyndlass bloccata in lettura/analisi
-  prima di poter verificare) — resta un caso isolato. **Coda ordinaria
-  esaurita per intero al 21/08/2026** (fascia 4 chiusa con Hatori Minore e
-  Ragno Botola Gigante, dopo la fascia 3 nel giro precedente): restano solo
-  le tre categorie aperte (Dreamshadow, Spectral Minion, Tylor), i due
-  blocchi da filtro (Haunt Knight, Wyndlass) e il contenuto di
-  `fuori_fascia`.
-  CORREZIONE: la coda aveva segnato Spectral Minion `da_fare` invece di
-  `categoria_aperta` nonostante il metodo lo classificasse gia' qui come
-  creatura-modello — allineata il 21/08/2026, `verifica_coda.py` ora
-  controlla anche questo disallineamento (vedi commento nello script).
+### 5.1 Creature-modello — APERTA
 
-Tutte e tre restano `pending` di metodo, non solo di contenuto, finché non
-si decide la forma dello schema che le copre.
+Dreamshadow, Spectral Minion. Ogni campo della scheda 2e è dichiarato "as
+creature or person mimicked" o "quelli della vita precedente": non hanno
+statistiche proprie, le ereditano da un bersaglio. Serve un pacchetto di
+regole che copia un bersaglio, non un singolo statblock — la conversione è di
+un **meccanismo**, non di un valore. Restano `pending` di metodo, non solo di
+contenuto, finché non si decide la forma di schema che le copre.
 
-**Cosa NON è una categoria aperta: lo statblock a Dadi Vita variabili.**
+È l'unica delle tre che non si risolve con un filtro: lì la fonte dà un
+vincolo e tace sul campione (§5.3), qui non c'è nemmeno il vincolo, perché il
+campione è un'altra creatura scelta a runtime.
+
+### 5.2 Famiglie di statblock — RISOLTA (decisioni 34 e 36, 25/08/2026)
+
+Tylor, e con lui Dragon Amphi e Dragon Sea. La fonte non dà uno statblock ma
+una **tabella di categorie d'età** con DV, CA e capacità propri per riga, sul
+modello degli age category dei draghi. Il Tylor ne ha **otto**; Amphi e Sea
+**dodici ciascuno**. Convertirle tutte avrebbe voluto dire 32 schede per tre
+creature, quasi tutte inutilizzabili in arena.
+
+**Quante se ne convertono.** Solo le righe dentro la finestra dell'arena,
+indicativamente GS 1/4-4. Sul Tylor sono **due su otto**: la 3ª (Young → Tylor
+Giovane, GS 2) e la 4ª (Juvenile → Tylor Adolescente, GS 3). Le due schede si
+scrivono **nello stesso giro**, per la stessa ragione per cui le quattro
+culture di Centauro sono venute bene: le varianti si gradano meglio a
+confronto diretto.
+
+**Come si sceglie il taglio.** Due confini, e nessuno dei due è a piacere.
+
+- *In alto lo indica la fonte.* Si cerca un salto nei suoi stessi numeri. Sul
+  Tylor l'XP passa da 975 alla 4ª categoria a 9.000 alla 5ª: fattore nove in
+  un solo gradino. Il confine è quello, non un GS scelto da noi.
+- *In basso lo decide ciò che la tabella tiene FISSO.* Sul Tylor il danno
+  (1-10 coda / 1-20 morso) è identico su tutte e otto le categorie, cioè
+  descrive l'adulto: fissare la scheda sulla 1ª avrebbe dato un cucciolo da
+  1d6 punti ferita che morde per 1d20. È **esattamente la regola già ricavata
+  sull'Hatori** (§5.4, criterio *b*), applicata qui a una famiglia invece che
+  a una banda di Dadi Vita. È un argomento **osservato nella tabella**, non
+  inferito: la colonna del danno è lì e non varia.
+
+**Dove finisce il resto** (decisione 36): nel campo
+`source_2e.age_categories` di `mostro.schema.json`, tabellare e
+interrogabile, **non** riscritto in prosa dentro `abilities_text` — dodici
+righe per dodici colonne in prosa sono illeggibili e perdono la struttura. Il
+campo dichiara le colonne che *quella* voce usa (il Tylor non ha soffio, i
+draghi sì) e marca `inferita: true` le colonne di cui trascriviamo i numeri ma
+interpretiamo il significato — sul Tylor è `Hit Die Modifier`, che la fonte
+stampa senza dire se valga per Dado Vita o sul totale. Ogni scheda derivata
+porta la tabella **intera**, non solo la propria riga: la riga da sola non
+direbbe dove la creatura sta nella progressione. Destinazione delle righe non
+convertite: `generatore_incontri`, stesso trattamento dei dati di mondo del
+gruppo A della decisione 27.
+
+### 5.3 Incantatore a scelta del master — RISOLTA (decisione 35, 25/08/2026)
+
+Tayling, e con lui il repertorio del Tylor e la metà accoppiata del Dragon
+Astral. Il corpo ha uno statblock fisso, ma il repertorio di incantesimi non è
+statuito: "Taylings can cast spells either as wizards or priests varying in
+levels from 1-10", scelta rimandata a chi conduce la partita.
+
+**La lettura che ha sbloccato il caso: la fonte non tace, dà il FILTRO e non
+il campione.** Il Tayling fissa scuola (Alterazione) e sfera (Elementale) con
+banda di livello 1-10; il Tylor fissa i conteggi di slot e il carattere
+offensivo; il Dragon Astral fissa classe e livello. Sono specifiche precise a
+cui manca solo l'estrazione.
+
+Quindi **si modella come specifica di filtro, non come lista**: si registra
+l'insieme accessibile secondo i vincoli della fonte, e la scelta concreta
+avviene alla generazione dell'incontro. Non è invenzione di meccanica (vincolo
+2 salvo): l'insieme è quello che la fonte delimita. **Conseguenza operativa: il
+repertorio non resta `pending` e non è escluso dal calcolo del GS.** Entra come
+capacità con insieme definito, e il GS che ne esce è chiuso, non provvisorio.
+
+La macchina esisteva già e non è stata costruita per l'occasione: le sfere come
+filtro di preparazione sono la decisione 24, implementate in
+`dati/_sfere_5e.py`; la scuola è un campo indicizzato dei 319 incantesimi SRD
+in `dati/incantesimi.index.json`. Vale la pena dire perché questo è più facile
+nel nostro bersaglio che a tavolo: la 5e cartacea deve stampare una lista
+fissa, un motore software pesca dall'insieme filtrato ogni volta.
+
+Stessa forma per i **parametri non magici** lasciati aperti dalla fonte: la
+resistenza elementare del Tylor (una sola, la fonte dichiara che non se ne
+cumulano due ma non dice quale) è un parametro risolto alla generazione, non
+una moltiplicazione di schede — cinque tylor identici con una riga diversa
+sarebbero stati cinque file da mantenere.
+
+**Cosa ha rivelato il filtro una volta applicato, che il `pending` nascondeva.**
+Il GS del Tayling era 1/2 provvisorio, con la nota che prevedeva una salita a
+GS 3-4 una volta fissato un repertorio (l'XP2e 2.000 lo accosta a Sivak, Skrit
+e Spettro Onirico, tutti GS 4). Calcolato invece che presunto, **il GS resta
+1/2**: la scuola di Alterazione e la sfera Elementale, filtrate sull'SRD,
+selezionano utilità, movimento e controllo — non danno. La previsione era
+sbagliata, e solo modellare il filtro poteva dirlo. È il caso che giustifica la
+decisione 35 meglio di qualunque argomento di forma: un `pending` non è neutro,
+è una stima nascosta.
+
+### 5.4 Cosa NON è una categoria aperta: lo statblock a Dadi Vita variabili
+
 L'Hatori Minore assomiglia a una famiglia di statblock e non lo è, e la
 distinzione va tenuta ferma perché la prossima voce di questa forma non
 finisca per sbaglio nella lista sopra. La colonna Lesser tiene **fissi** CA,
@@ -314,6 +373,28 @@ un mostro da sette punti ferita che morde per 3d6. Un punto intermedio scelto
 da noi è l'ultima risorsa, non la prima. Gli altri tagli non si buttano: sul
 `hatori-minore.json` stanno nel tratto "Crescita continua", con dadi e taglia
 derivati con lo stesso metodo del taglio principale.
+
+**Il criterio (b) ha retto fuori dal caso che l'ha prodotto**, ed è la ragione
+per cui vale la pena averlo scritto: sul Tylor decide il confine basso della
+finestra (§5.2), su una tabella di categorie invece che su una banda di Dadi
+Vita. Stessa osservazione — un valore che la fonte tiene fisso descrive
+l'adulto — applicata a una forma diversa.
+
+### 5.5 Stato al 25/08/2026
+
+Coda ordinaria esaurita per intero dal 21/08/2026 (fascia 4 chiusa con Hatori
+Minore e Ragno Botola Gigante). Restano: **una** categoria aperta (§5.1, le
+due creature-modello), i due blocchi da filtro sull'output (Haunt Knight,
+Wyndlass — §3.1) e il contenuto di `fuori_fascia`.
+
+`dati/mostri.coda.json` tiene l'indice in **due** blocchi, `categorie_aperte`
+e `categorie_risolte`, e `verifica_coda.py` controlla che i tre luoghi che
+descrivono la stessa cosa — lo `stato` per-voce, l'indice, e il testo di
+questa sezione — non si sfasino: aperta → `stato: "categoria_aperta"`,
+risolta → `stato: "fatto"`, nessun nome in entrambi i blocchi. Il controllo
+esiste perché lo sfasamento è già successo (Spectral Minion, 21/08/2026:
+elencato come creatura-modello nell'indice e in questa sezione, ma `da_fare`
+nella propria fascia).
 
 ## 6. Osservazioni XP2e → GS
 
@@ -365,11 +446,13 @@ difesa/offesa; se non tiene, qui resta comunque la cronologia di perché si
 | 420 | 2 | Ragno Botola Gigante |
 | 650 | 3 | Draconico Kapak |
 | 650 | 1 | Occhialato (Eyewing) |
+| 650 | 2 | Tylor Giovane (3ª categoria) |
 | 975 | 3 | Orso Glaciale |
 | 975 | 3 | Phaethon Anziano |
 | 975 | 3 | Disir |
 | 975 | 3 | Servitore di Fuoco (Fire Minion) |
 | 975 | 3 | Imp del Mare di Sangue |
+| 975 | 3 | Tylor Adolescente (4ª categoria) |
 | 1.400 | 2 | Draconico Bozak |
 | 1.400 | 1 | Kyrie |
 | 1.400 | 3 | Taylang |
@@ -385,11 +468,21 @@ difesa/offesa; se non tiene, qui resta comunque la cronologia di perché si
 | 6.000 | 6 | Draconico Aurak |
 | — | 5 | Hatori Minore |
 
-\* GS 1/2 del Tayling è PROVVISORIO, non chiuso come le altre righe: il
-repertorio di incantesimi "a scelta del master" (§5, terza categoria
-aperta) resta PENDING ed è escluso dal calcolo. Il GS del Tayling completo
-salirà probabilmente in linea con le altre voci a XP2e 2.000 (tutte GS4)
-una volta fissato un repertorio rappresentativo.
+\* Il GS 1/2 del Tayling **era** provvisorio e ora è chiuso (decisione 35,
+25/08/2026): il repertorio non è più `pending` ed è entrato nel calcolo. La
+riga non è cambiata — è la previsione che c'era scritta qui a essere stata
+smentita. Diceva che il Tayling completo sarebbe salito in linea con le altre
+voci a XP2e 2.000, tutte GS 4; applicando davvero il filtro della fonte
+(scuola di Alterazione, sfera Elementale) sui 319 incantesimi SRD, l'insieme
+accessibile risulta di utilità, movimento e controllo, senza artiglieria: il
+GS resta 1/2. **L'asterisco resta perciò la riga più istruttiva della
+tabella**, ma per il motivo opposto a quello per cui era stato messo — lo
+scarto fra XP2e 2.000 e GS 1/2 è reale e permanente, non un segnaposto in
+attesa di chiudersi. La formula degli XP della 2e prezzava "incantatore fino
+al 10° livello" senza guardare quali incantesimi la stessa fonte gli
+concedesse. La lezione che se ne ricava è registrata in fondo a questa
+sezione, **"Il quarto esito"**: una divergenza può essere reale e permanente,
+e allora misura il limite del controllo, non un lavoro da finire.
 
 Nota di lettura: la dispersione a bassa XP (120→GS che va da 1/8 a 2, 175→GS
 da 1/2 a 2) mostra che il rapporto non è affatto lineare nella fascia bassa,
@@ -466,6 +559,22 @@ CONTROLLARE, mai un annuncio che c'è un problema nascosto da trovare a ogni
 costo. Sapere che a volte non c'è nulla sotto è parte della sua definizione
 quanto sapere che a volte c'è: il controllo è dovuto sempre, la scoperta no.
 
+**Le due categorie del Tylor, convertite lo stesso giorno, danno una conferma
+e un caso limite.** L'Adolescente (975 → GS 3) è la **sesta** corrispondenza
+sul valore più solido della tabella, e vale più delle precedenti per come è
+arrivata: il GS era già 3 dal calcolo difesa/offesa prima che si guardasse la
+tabella, quindi il passo 10 ha confermato senza influenzare. Il Giovane (650 →
+GS 2) cade invece sul valore più ambiguo che la tabella abbia: 650 porta già
+Draconico Kapak a GS 3 e Occhialato a GS 1, e il nuovo GS 2 si infila
+esattamente fra i due. Non è una smentita e non è una conferma — è la misura
+di quanto largo sia il margine a quel valore, che è l'informazione utile.
+Utile anche perché le due righe vengono dalla **stessa creatura**: due
+categorie d'età della stessa voce, con lo stesso danno e lo stesso ruolo,
+separate da un gradino di GS e da 325 punti esperienza di fonte. Fin qui la
+tabella aveva confrontato creature diverse fra loro; qui confronta una
+creatura con se stessa, ed è il caso in cui il rumore editoriale ha meno
+spazio per entrare.
+
 **Il terzo esito: il segnale può mancare del tutto.** L'Hatori Minore è la
 prima riga con `—` in colonna XP2e non perché il valore sia ignoto a noi, ma
 perché la fonte *rifiuta di stamparlo*: `XP VALUE: Variable`, con rimando
@@ -479,3 +588,31 @@ spiegazione e non è un motivo per rileggere lo statblock. Le altre righe `—`
 della tabella sono cosa diversa: lì l'XP2e semplicemente non è stato
 riportato in scheda, qui è la fonte a dichiarare che un numero unico non
 esiste.
+
+**Il quarto esito: la divergenza può essere REALE E PERMANENTE.** Il Tayling
+(2.000 → GS 1/2) è lo scarto più largo della tabella — quattro gradini sotto
+le altre tre voci con lo stesso XP2e, tutte GS 4 — e **non è un segnale da
+indagare: è già stato indagato**. Il repertorio non è più `pending`, è stato
+calcolato applicando davvero il filtro della fonte (§5.3), e il risultato è
+che il filtro stesso — scuola di Alterazione, sfera Elementale — seleziona
+utilità, movimento e controllo, non danno. Sotto non c'è niente da trovare: i
+due numeri misurano cose diverse. L'XP2e prezza la pericolosità complessiva
+secondo la 2e, che pesava il controllo tattico molto più di quanto faccia il
+calcolo del grado in 5e, e prezzava "incantatore fino al 10° livello" come
+categoria senza guardare quali incantesimi la stessa fonte gli concedesse.
+
+**Cosa lo distingue dal secondo esito**, ed è il punto per cui vale la pena
+scriverlo a parte: su Taylang, Wichtlin e Imp la divergenza si è *chiusa* — la
+lettura completa ha trovato l'asse che la spiegava (martiale, difensivo,
+difensivo) e i due numeri sono tornati a dire la stessa cosa per vie diverse.
+Qui la lettura completa è stata fatta e la divergenza **è rimasta**. È la
+differenza fra un segnale che nasconde qualcosa e un segnale che sta misurando
+un'altra grandezza.
+
+**Conseguenza operativa sul passo 10**: quando una divergenza sopravvive alla
+lettura completa si registra come definitiva e **non riapre la scheda**.
+L'asterisco in tabella non è un promemoria di lavoro da finire — è il limite
+del controllo XP2e↔GS, scritto dove si guarda la tabella invece che in una
+nota di metodo che nessuno rilegge. Fin qui il passo 10 aveva sempre chiesto
+qualcosa (controlla, e a volte correggi); questo è il primo caso in cui non
+chiede di correggere nulla e serve solo a dire fin dove il segnale arriva.

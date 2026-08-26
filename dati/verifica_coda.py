@@ -42,9 +42,8 @@ COSA CONTROLLA
 
     2. Coerenza `stato` vs categorie aperte: ogni voce elencata nel blocco
        `categorie_aperte` di questo file deve avere `stato: "categoria_aperta"`
-       nella propria fascia (eccetto le eccezioni gia' risolte in
-       ECCEZIONI_RISOLTE, es. Tayling — statblock fisico fisso, GS
-       provvisorio, `stato: "fatto"` per scelta esplicita di METODO §5).
+       nella propria fascia, e ogni voce di `categorie_risolte` deve avere
+       `stato: "fatto"`. Nessun nome puo' stare in entrambi i blocchi.
        Ogni voce con `stato: "categoria_aperta"` deve comparire nel blocco
        `categorie_aperte`, non solo nella propria fascia (altrimenti e' una
        categoria aperta non indicizzata). Infine ogni nome citato in
@@ -64,14 +63,19 @@ from _bestiario_mc import VOCI
 CODA_PATH = Path(__file__).parent / "mostri.coda.json"
 METODO_PATH = Path(__file__).parent / "METODO-conversione-mostri.md"
 
-# Voci elencate in "categorie_aperte" ma gia' risolte con una decisione
-# esplicita, quindi legittimamente `stato: "fatto"` invece di
-# `categoria_aperta`. Aggiungere qui SOLO quando METODO-conversione-mostri.md
-# §5 documenta la decisione presa (non basta che la voce sia stata scritta).
-ECCEZIONI_RISOLTE = {
-    "Tayling",  # incantatore a scelta del master: statblock fisico fisso,
-                # GS provvisorio — vedi METODO §5, terza categoria aperta.
-}
+# NOTA STORICA (25/08/2026). Qui c'era ECCEZIONI_RISOLTE, un insieme di nomi
+# scritti nel codice: voci elencate in "categorie_aperte" ma gia' risolte, e
+# quindi legittimamente `stato: "fatto"`. Conteneva un solo nome, "Tayling".
+# E' stato tolto perche' l'eccezione stava nel posto sbagliato: un nome nel
+# codice non puo' portare con se' la ragione per cui e' un'eccezione, e chi
+# leggeva la coda non vedeva nulla. Le decisioni 34-36 hanno chiuso due delle
+# tre categorie aperte in un colpo solo, il che avrebbe raddoppiato l'elenco:
+# il momento giusto per spostarlo nei dati.
+# Ora mostri.coda.json ha DUE blocchi invece di uno — `categorie_aperte` e
+# `categorie_risolte` — e ogni voce risolta porta scritta la decisione che
+# l'ha chiusa. Il controllo qui sotto vale su entrambi, con la regola
+# specchiata: aperta -> `stato: "categoria_aperta"`, risolta -> `stato:
+# "fatto"`. Una voce che compare in tutti e due i blocchi e' un errore.
 
 
 def carica_coda():
@@ -173,14 +177,6 @@ def verifica_categorie_aperte():
                     f"non ha una voce corrispondente in 'coda': impossibile "
                     f"verificarne lo stato."
                 )
-            elif nome in ECCEZIONI_RISOLTE:
-                if stato != "fatto":
-                    errori.append(
-                        f"'{nome}' e' in ECCEZIONI_RISOLTE (categoria aperta "
-                        f"gia' decisa) ma il suo stato in coda e' '{stato}', "
-                        f"non 'fatto': la risoluzione documentata in METODO "
-                        f"§5 non e' (piu'?) applicata alla coda."
-                    )
             elif stato != "categoria_aperta":
                 errori.append(
                     f"'{nome}' e' elencata in 'categorie_aperte' (gruppo "
@@ -188,6 +184,33 @@ def verifica_categorie_aperte():
                     f"'{stato}', non 'categoria_aperta': la coda contraddice "
                     f"la classificazione del metodo."
                 )
+
+    nomi_risolti = set()
+    for gruppo in coda.get("categorie_risolte", []):
+        for nome in gruppo["voci"]:
+            nomi_risolti.add(nome)
+            stato = stato_per_voce.get(nome)
+            if stato is None:
+                errori.append(
+                    f"CATEGORIA RISOLTA '{nome}' (gruppo '{gruppo['nome']}') "
+                    f"non ha una voce corrispondente in 'coda': impossibile "
+                    f"verificarne lo stato."
+                )
+            elif stato != "fatto":
+                errori.append(
+                    f"'{nome}' e' in 'categorie_risolte' (gruppo "
+                    f"'{gruppo['nome']}', decisione {gruppo.get('decisione')}) "
+                    f"ma il suo stato in coda e' '{stato}', non 'fatto': la "
+                    f"risoluzione e' dichiarata ma non applicata alla coda."
+                )
+
+    doppie = nomi_indicizzati & nomi_risolti
+    if doppie:
+        errori.append(
+            f"Voci presenti sia in 'categorie_aperte' sia in "
+            f"'categorie_risolte': {sorted(doppie)}. Una categoria e' aperta "
+            f"o e' chiusa, non entrambe."
+        )
 
     for nome, stato in stato_per_voce.items():
         if stato == "categoria_aperta" and nome not in nomi_indicizzati:
@@ -204,7 +227,8 @@ def verifica_categorie_aperte():
             f"{METODO_PATH.name}: controllo incrociato con la coda saltato."
         )
     else:
-        for gruppo in coda.get("categorie_aperte", []):
+        for gruppo in (coda.get("categorie_aperte", [])
+                       + coda.get("categorie_risolte", [])):
             for nome in gruppo["voci"]:
                 if nome not in sezione_metodo:
                     errori.append(

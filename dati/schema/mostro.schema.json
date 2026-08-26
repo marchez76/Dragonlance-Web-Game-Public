@@ -189,6 +189,86 @@
         },
         "notes": { "type": "array", "items": { "type": "string" } },
         "open_questions": { "type": "array", "items": { "type": "string" } },
+        "age_categories": {
+          "type": ["object", "null"],
+          "description": "DECISIONE 36 (25/08/2026). Alcune voci non danno UNO statblock ma una TABELLA di categorie d'eta' con valori propri per riga: il Tylor ne ha otto, Dragon Amphi e Dragon Sea dodici ciascuno. La decisione 34 stabilisce che solo le righe dentro la finestra dell'arena diventano schede; le altre non si buttano e non si riscrivono in prosa dentro `abilities_text`, dove la struttura si perderebbe e dodici righe per dodici colonne diventerebbero illeggibili. Restano qui, tabellari e interrogabili. Il campo e' generico di proposito: `colonne` dichiara le colonne che LA FONTE usa per quella voce (non un elenco fisso valido per tutti), `righe` porta i valori riga per riga. Estensione dello schema fatta con lo stesso criterio gia' applicato a `thac0` reso nullable per l'Hatori: si allarga la forma quando una voce reale la richiede, non prima. Ogni scheda derivata da una di queste tabelle porta la tabella INTERA, non solo la propria riga: la riga da sola non direbbe dove la creatura sta nella progressione.",
+          "required": ["colonne", "righe", "destinazione"],
+          "additionalProperties": false,
+          "properties": {
+            "nota": {
+              "type": ["string", "null"],
+              "description": "Come la fonte stampa la tabella e cosa si e' dovuto ricomporre per leggerla (il Tylor la stampa in quattro blocchi affiancati che condividono la colonna Eta')."
+            },
+            "fissi": {
+              "type": "array",
+              "items": { "type": "string" },
+              "description": "I campi dello statblock che la tabella NON fa variare, cioe' quelli validi per tutte le righe. Registrarli e' parte del dato: sul Tylor sono movimento, numero di attacchi e danno, ed e' proprio il danno fisso a decidere quali righe siano convertibili (METODO §5)."
+            },
+            "colonne": {
+              "type": "array",
+              "minItems": 1,
+              "description": "Le colonne che la fonte usa per QUESTA voce. Ogni scheda dichiara le sue: il Tylor non ha soffio, i draghi si'.",
+              "items": {
+                "type": "object",
+                "required": ["chiave", "etichetta_fonte"],
+                "additionalProperties": false,
+                "properties": {
+                  "chiave": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9]+(_[a-z0-9]+)*$",
+                    "description": "Chiave usata dentro `righe[].valori`."
+                  },
+                  "etichetta_fonte": {
+                    "type": "string",
+                    "description": "L'intestazione come e' stampata sul manuale."
+                  },
+                  "unita": { "type": ["string", "null"] },
+                  "inferita": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "true quando i valori della colonna sono trascritti dalla fonte ma il loro SIGNIFICATO e' una nostra lettura, non una dichiarazione del manuale. Caso concreto: `Hit Die Modifier` del Tylor — la fonte stampa i numeri e non dice se si applichino per Dado Vita o al totale. Marcare la colonna e' il modo di non far passare l'inferenza per trascrizione."
+                  },
+                  "nota": { "type": ["string", "null"] }
+                }
+              }
+            },
+            "righe": {
+              "type": "array",
+              "minItems": 2,
+              "items": {
+                "type": "object",
+                "required": ["categoria", "nome", "valori", "convertita"],
+                "additionalProperties": false,
+                "properties": {
+                  "categoria": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "description": "Il numero di categoria come lo stampa la fonte."
+                  },
+                  "nome": { "type": "string", "description": "Es. \"Young\", \"Juvenile\"." },
+                  "valori": {
+                    "type": "object",
+                    "description": "Chiave di colonna -> valore trascritto. null quando la cella e' vuota; la stringa \"Nil\" quando la fonte scrive Nil, che significa 'nessuno' e non 'non dato'.",
+                    "additionalProperties": { "type": ["string", "integer", "null"] }
+                  },
+                  "convertita": {
+                    "type": "boolean",
+                    "description": "NOSTRO, non della fonte: true se questa riga ha una scheda 5e propria. Rende la tabella interrogabile su cosa esiste e cosa no, invece di lasciarlo dedurre dai file presenti in dati/mostri/."
+                  },
+                  "file": {
+                    "type": ["string", "null"],
+                    "description": "NOSTRO: percorso della scheda, quando `convertita` e' true."
+                  },
+                  "nota": { "type": ["string", "null"] }
+                }
+              }
+            },
+            "destinazione": {
+              "const": "generatore_incontri",
+              "description": "Marcatore esplicito, come per `world_data_2e` e `morale_2e`: le righe non convertite non sono meccanica di scheda. Restano disponibili per incontri particolari e antagonisti nelle storie originali (decisione 34, stesso trattamento del gruppo A della decisione 27)."
+            }
+          }
+        },
         "raw": {
           "type": ["string", "null"],
           "description": "Il blocco statistiche come appare nel testo estratto, per poter riverificare senza riaprire il PDF. Comodita', non dato: se la trascrizione integrale di una voce (terminologia densa su non morti, anime imprigionate, controllo, ecc.) non si lascia scrivere per via di un filtro automatico che vede solo l'output senza il contesto della lettura e analisi gia' fatta, il campo va OMESSO (null), non riformulato per aggirare il filtro. Al suo posto, una nota in `notes` con il riferimento di voce e pagina basta per la riverifica: fonte, pagina e verified_on_image restano comunque compilati. Vale lo stesso principio per qualunque altro campo che risultasse impossibile da scrivere: si registra l'omissione, non si insiste a forzarla."

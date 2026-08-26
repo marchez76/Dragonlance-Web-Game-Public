@@ -58,7 +58,17 @@ VOCI = [
      "non e' una bestia ma una creatura sacra."),
     (79, "Tayling", ["Tayling", "Taylang"], "creatura", True,
      "DUE colonne: i gemelli telepatici, l'intelligente e il bestiale. "
-     "L'estrazione leggeva \"Tayland\": sull'immagine e' Taylang."),
+     "REFUSO DEL MANUALE, non dell'estrazione. La nota precedente diceva "
+     "che l'estrazione leggeva \"Tayland\" e che sull'immagine era "
+     "\"Taylang\": e' il contrario. Riverificato il 25/08/2026 su ritaglio "
+     "a 600 dpi dell'intestazione (pdftoppm 80): la seconda colonna dello "
+     "statblock e' stampata \"Tayland\", con la d, mentre la prosa della "
+     "voce scrive \"taylang\" ovunque. Citazione breve ammessa qui perche' "
+     "il punto e' la forma stampata (CLAUDE.md 1). Il nome della creatura "
+     "resta \"Taylang\", che e' quello che la fonte usa parlandone: e' "
+     "l'intestazione di colonna a essere sbagliata, non la prosa. La chiave "
+     "\"Tayling Tayland\" in ALIAS_VOCI resta corretta cosi' com'e' — "
+     "l'estrattore la d non l'aveva inventata."),
     (87, "Yaggol", ["Yaggol"], "creatura", True,
      "Colonna singola. Il titolo era stampato con le lettere spaziate e "
      "l'estrazione dava \"Y a g g o l\"."),

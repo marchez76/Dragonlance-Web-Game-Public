@@ -1,172 +1,703 @@
 {
-  "nota": "Coda di lavoro del bestiario di Krynn. Elenco ordinato per fascia di priorita' (dati/RAPPORTO-bestiario.md, Parte 5), con stato da_fare/fatto. Come convertire: dati/METODO-conversione-mostri.md. Perche' le fasce sono ordinate cosi': dati/RAPPORTO-bestiario.md. Generato a mano il 2026-08-21, non da uno script: da tenere sincronizzato manualmente a ogni conversione.",
-  "aggiornato": "2026-08-21 (Hatori Minore e Ragno Botola Gigante convertiti: la fascia 4 ordinaria e con essa la CODA ORDINARIA INTERA sono esaurite. Restano solo le tre categorie aperte (Dreamshadow, Spectral Minion, Tylor), i due blocchi da filtro (Haunt Knight, Wyndlass) e il contenuto di fuori_fascia. Entrambe le voci di questo giro erano a due colonne con la seconda meta' spostata in fuori_fascia durante la riconciliazione: verificato voce per voce che i due livelli erano tenuti separati correttamente, nessuna ricomposizione da rifare. Hatori: forma nuova (statblock unico a Dadi Vita variabili 1-5 con capacita' fisse), distinta sia dalle famiglie di statblock sia dalle creature-modello e registrata in METODO §5 come cosa che NON e' una categoria aperta, con la regola per scegliere il taglio della banda; primo caso senza XP2e stampato, quindi senza il controllo del passo 10 (METODO §6, terzo esito del segnale); schema esteso, `thac0` nullable per 'Varies'. Ragno Botola: analogo SRD Giant Spider verificato pezzo per pezzo invece che adottato in blocco; nuova coppia XP2e/GS in tabella (420->GS2). Nessun blocco da filtro sull'output in questo giro, in nessuna fase — lettura, analisi, scrittura, validazione, commit, riepilogo: turno filato liscio, primo giro condotto su Opus invece che su Sonnet come variabile mossa di proposito, registrato in METODO §3.1 sotto le ipotesi non verificate.)",
-
-  "convertite": [
-    { "id": "traag", "name_it": "Traag", "challenge_rating": "1/4", "file": "mostri/traag.json" },
-    { "id": "scheletro-guerriero", "name_it": "Scheletro Guerriero", "challenge_rating": "7", "file": "mostri/scheletro-guerriero.json" },
-    { "id": "thanoi", "name_it": "Thanoi", "challenge_rating": "2", "file": "mostri/thanoi.json" },
-    { "id": "kyrie", "name_it": "Kyrie", "challenge_rating": "1", "file": "mostri/kyrie.json" },
-    { "id": "ogre-krynn", "name_it": "Ogre di Krynn", "challenge_rating": "2", "file": "mostri/ogre-krynn.json" },
-    { "id": "orughi", "name_it": "Orughi", "challenge_rating": "1", "file": "mostri/orughi.json" },
-    { "id": "horax", "name_it": "Horax", "challenge_rating": "1", "file": "mostri/horax.json" },
-    { "id": "orso-glaciale", "name_it": "Orso Glaciale", "challenge_rating": "3", "file": "mostri/orso-glaciale.json" },
-    { "id": "fetch", "name_it": "Fetch", "challenge_rating": "6", "file": "mostri/fetch.json" },
-    { "id": "shadowperson", "name_it": "Ombrolo", "challenge_rating": "2", "file": "mostri/shadowperson.json" },
-    { "id": "anziano-venerato-ombrolo", "name_it": "Anziano Venerato", "challenge_rating": "0", "file": "mostri/anziano-venerato-ombrolo.json" },
-    { "id": "eyewing", "name_it": "Occhialato", "challenge_rating": "1", "file": "mostri/eyewing.json" },
-    { "id": "draconico-baaz", "name_it": "Draconico Baaz", "challenge_rating": "1/2", "file": "mostri/draconico-baaz.json" },
-    { "id": "draconico-bozak", "name_it": "Draconico Bozak", "challenge_rating": "2", "file": "mostri/draconico-bozak.json" },
-    { "id": "draconico-kapak", "name_it": "Draconico Kapak", "challenge_rating": "3", "file": "mostri/draconico-kapak.json" },
-    { "id": "draconico-sivak", "name_it": "Draconico Sivak", "challenge_rating": "4", "file": "mostri/draconico-sivak.json" },
-    { "id": "draconico-aurak", "name_it": "Draconico Aurak", "challenge_rating": "6", "file": "mostri/draconico-aurak.json" },
-    { "id": "centauro-abanasiniano", "name_it": "Centauro Abanasiniano", "challenge_rating": "2", "file": "mostri/centauro-abanasiniano.json" },
-    { "id": "centauro-crystalmir", "name_it": "Centauro di Crystalmir", "challenge_rating": "1/2", "file": "mostri/centauro-crystalmir.json" },
-    { "id": "centauro-endscape", "name_it": "Centauro di Endscape", "challenge_rating": "2", "file": "mostri/centauro-endscape.json" },
-    { "id": "centauro-wendle", "name_it": "Centauro Wendle", "challenge_rating": "1", "file": "mostri/centauro-wendle.json" },
-    { "id": "emre", "name_it": "Emre", "challenge_rating": "1/8", "file": "mostri/emre.json" },
-    { "id": "kingfisher", "name_it": "Kingfisher", "challenge_rating": "0", "file": "mostri/kingfisher.json" },
-    { "id": "wari", "name_it": "'Wari", "challenge_rating": "1/4", "file": "mostri/wari.json" },
-    { "id": "skyfisher", "name_it": "Skyfisher", "challenge_rating": "1/2", "file": "mostri/skyfisher.json" },
-    { "id": "cervo-selvatico", "name_it": "Cervo Selvatico", "challenge_rating": "1/4", "file": "mostri/cervo-selvatico.json" },
-    { "id": "cervo-gigante", "name_it": "Cervo Gigante", "challenge_rating": "1", "file": "mostri/cervo-gigante.json" },
-    { "id": "jarak-sinn", "name_it": "Jarak-Sinn", "challenge_rating": "1", "file": "mostri/jarak-sinn.json" },
-    { "id": "bakali", "name_it": "Bakali", "challenge_rating": "1/2", "file": "mostri/bakali.json" },
-    { "id": "phaethon", "name_it": "Phaethon", "challenge_rating": "1", "file": "mostri/phaethon.json" },
-    { "id": "phaethon-anziano", "name_it": "Phaethon Anziano", "challenge_rating": "3", "file": "mostri/phaethon-anziano.json" },
-    { "id": "sciame-cavallette-locuste", "name_it": "Sciame di Cavallette e Locuste", "challenge_rating": "1/2", "file": "mostri/sciame-cavallette-locuste.json" },
-    { "id": "sciame-formiche-velluto", "name_it": "Sciame di Formiche di Velluto", "challenge_rating": "1", "file": "mostri/sciame-formiche-velluto.json" },
-    { "id": "gurik-cha-ahl", "name_it": "Gurik Cha'ahl", "challenge_rating": "1/4", "file": "mostri/gurik-cha-ahl.json" },
-    { "id": "bambola-kani", "name_it": "Bambola Kani", "challenge_rating": "1/8", "file": "mostri/bambola-kani.json" },
-    { "id": "skrit", "name_it": "Skrit", "challenge_rating": "4", "file": "mostri/skrit.json" },
-    { "id": "disir", "name_it": "Disir", "challenge_rating": "3", "file": "mostri/disir.json" },
-    { "id": "dreamwraith", "name_it": "Spettro Onirico", "challenge_rating": "4", "file": "mostri/dreamwraith.json" },
-    { "id": "servitore-di-fuoco", "name_it": "Servitore di Fuoco", "challenge_rating": "3", "file": "mostri/servitore-di-fuoco.json" },
-    { "id": "cavaliere-della-morte", "name_it": "Cavaliere della Morte", "challenge_rating": "8", "file": "mostri/cavaliere-della-morte.json" },
-    { "id": "yaggol", "name_it": "Yaggol", "challenge_rating": "7", "file": "mostri/yaggol.json" },
-    { "id": "tayling", "name_it": "Tayling", "challenge_rating": "1/2 (provvisorio)", "file": "mostri/tayling.json" },
-    { "id": "taylang", "name_it": "Taylang", "challenge_rating": "3", "file": "mostri/taylang.json" },
-    { "id": "wichtlin", "name_it": "Wichtlin", "challenge_rating": "3", "file": "mostri/wichtlin.json" },
-    { "id": "cervo-selvatico-wichtlin", "name_it": "Cervo Selvatico Wichtlin", "challenge_rating": "1/2", "file": "mostri/cervo-selvatico-wichtlin.json" },
-    { "id": "imp-mare-di-sangue", "name_it": "Imp del Mare di Sangue", "challenge_rating": "3", "file": "mostri/imp-mare-di-sangue.json" },
-    { "id": "kalothagh", "name_it": "Kalothagh (Spinodorso)", "challenge_rating": "1", "file": "mostri/kalothagh.json" },
-    { "id": "erba-scintillante", "name_it": "Erba Scintillante", "challenge_rating": "0", "file": "mostri/erba-scintillante.json" },
-    { "id": "hatori-minore", "name_it": "Hatori Minore", "challenge_rating": "5", "file": "mostri/hatori-minore.json" },
-    { "id": "ragno-botola-gigante", "name_it": "Ragno Botola Gigante", "challenge_rating": "2", "file": "mostri/ragno-botola-gigante.json" }
-  ],
-
-  "coda": [
+ "nota": "Coda di lavoro del bestiario di Krynn. Elenco ordinato per fascia di priorita' (dati/RAPPORTO-bestiario.md, Parte 5), con stato da_fare/fatto. Come convertire: dati/METODO-conversione-mostri.md. Perche' le fasce sono ordinate cosi': dati/RAPPORTO-bestiario.md. Generato a mano il 2026-08-21, non da uno script: da tenere sincronizzato manualmente a ogni conversione.",
+ "aggiornato": "2026-08-25 (SECONDO GIRO DELLA GIORNATA — quattro decisioni chiuse, 34-37, e due schede scritte. TYLOR CONVERTITO: Tylor Giovane (3a categoria, GS 2) e Tylor Adolescente (4a, GS 3), scritte insieme per graduarle a confronto; le altre sei categorie d'eta' stanno complete nel campo nuovo `source_2e.age_categories` di entrambe le schede. La 'famiglia di statblock' smette di essere una categoria aperta. DECISIONE 35 — i repertori rinviati sono FILTRI, non liste: applicata al Tayling, il cui GS provvisorio e' stato ricalcolato col repertorio incluso e NON si e' mosso (resta 1/2), smentendo la previsione precedente che lo dava in salita verso GS 3-4 — la scuola di Alterazione e la sfera Elementale selezionano utilita' e controllo, non danno. Con questo anche 'incantatore a scelta del master' si chiude, e l'indice ha ora due blocchi: `categorie_aperte` (solo creature-modello) e `categorie_risolte`. DECISIONE 36 — campo strutturato `age_categories` in mostro.schema.json, progettato per reggere sia le otto righe del Tylor sia le dodici di Dragon Amphi e Dragon Sea, con le colonne che la fonte usa; la colonna 'Hit Die Modifier' e' marcata `inferita` perche' il suo significato (per Dado Vita, non totale) e' una nostra lettura. DECISIONE 37 — questo file e' PUBBLICO per scelta e non sta piu' in PERCORSI di git-privato.sh: era l'unico file tracciato da entrambi i repository, verificato con `comm -12` sulle due liste di file tracciati; gli altri 25 percorsi sono tutti coperti dal .gitignore pubblico e non hanno lo stesso difetto. Restano aperte solo Dreamshadow e Spectral Minion, piu' i due blocchi da filtro (Haunt Knight, Wyndlass) e il contenuto di fuori_fascia.)\n\n2026-08-25 (GIRO DI LETTURA E DECISIONE, nessuna scheda scritta. Lette per intero e verificate su immagine le quattro categorie aperte (Dreamshadow indice PDF 24, Spectral Minion 75-76, Tayling 79, Tylor 83). DUE CORREZIONI DI FATTO: (1) il Tylor ha OTTO categorie d'eta', non sei - questa coda ne registrava sei in due punti, voce di fascia 3 e indice categorie_aperte, entrambi corretti; (2) _bestiario_mc.py riga 59 diceva che l'estrazione leggeva 'Tayland' e l'immagine 'Taylang': e' il contrario, l'intestazione di colonna e' stampata 'Tayland' e la prosa scrive 'taylang' - refuso del manuale, non dell'estrazione, corretto li'. SCOPERTA DI STRUTTURA: Dragon, Amphi e Dragon, Sea (fascia 5) hanno la stessa forma del Tylor - famiglia di statblock a categorie d'eta', dodici ciascuno - e stavano in fascia 5 perche' classificati sui Dadi Vita, non sulla forma; la coincidenza non era mai stata registrata. Registrata ora sulle due voci di fascia 5, sulla voce Tylor e nell'indice categorie_aperte, cosi' quando la fascia si aprira' il problema e' gia' inquadrato. Dragon, Astral segnato come caso di confine da NON accorpare (due stati discreti, non una gradazione, per dichiarazione esplicita della fonte). DECISIONE 34: non si convertono tutte le categorie d'eta' (otto piu' dodici piu' dodici = 32 schede per tre creature, quasi tutte inutilizzabili in arena) ma solo le fasce dentro la finestra dell'arena, indicativamente GS 1/4-4; le altre restano in source_2e come dato completo, disponibili per incontri particolari e antagonisti nelle storie originali - stesso trattamento dei dati di mondo della decisione 27 gruppo A. Per il Tylor il confine e' dato dalla fonte: XP da 975 (4a categoria) a 9.000 (5a). Quali fasce del Tylor convertire: proposta presentata, scelta NON ancora chiusa - niente scritto. Dreamshadow, Spectral Minion e Tayling non toccati in questo giro, per scelta: sono tre problemi diversi e si affrontano separatamente. Da fare quando la decisione 34 sara' chiusa: aggiornare METODO §5, che descrive ancora il Tylor come categoria aperta senza numero di fasce ne' criterio di taglio, e registrare la decisione 34 in CONTESTO-PROGETTO.md.)\n\nGIRO PRECEDENTE — 2026-08-21 (Hatori Minore e Ragno Botola Gigante convertiti: la fascia 4 ordinaria e con essa la CODA ORDINARIA INTERA sono esaurite. Restano solo le tre categorie aperte (Dreamshadow, Spectral Minion, Tylor), i due blocchi da filtro (Haunt Knight, Wyndlass) e il contenuto di fuori_fascia. Entrambe le voci di questo giro erano a due colonne con la seconda meta' spostata in fuori_fascia durante la riconciliazione: verificato voce per voce che i due livelli erano tenuti separati correttamente, nessuna ricomposizione da rifare. Hatori: forma nuova (statblock unico a Dadi Vita variabili 1-5 con capacita' fisse), distinta sia dalle famiglie di statblock sia dalle creature-modello e registrata in METODO §5 come cosa che NON e' una categoria aperta, con la regola per scegliere il taglio della banda; primo caso senza XP2e stampato, quindi senza il controllo del passo 10 (METODO §6, terzo esito del segnale); schema esteso, `thac0` nullable per 'Varies'. Ragno Botola: analogo SRD Giant Spider verificato pezzo per pezzo invece che adottato in blocco; nuova coppia XP2e/GS in tabella (420->GS2). Nessun blocco da filtro sull'output in questo giro, in nessuna fase — lettura, analisi, scrittura, validazione, commit, riepilogo: turno filato liscio, primo giro condotto su Opus invece che su Sonnet come variabile mossa di proposito, registrato in METODO §3.1 sotto le ipotesi non verificate.)",
+ "convertite": [
+  {
+   "id": "traag",
+   "name_it": "Traag",
+   "challenge_rating": "1/4",
+   "file": "mostri/traag.json"
+  },
+  {
+   "id": "scheletro-guerriero",
+   "name_it": "Scheletro Guerriero",
+   "challenge_rating": "7",
+   "file": "mostri/scheletro-guerriero.json"
+  },
+  {
+   "id": "thanoi",
+   "name_it": "Thanoi",
+   "challenge_rating": "2",
+   "file": "mostri/thanoi.json"
+  },
+  {
+   "id": "kyrie",
+   "name_it": "Kyrie",
+   "challenge_rating": "1",
+   "file": "mostri/kyrie.json"
+  },
+  {
+   "id": "ogre-krynn",
+   "name_it": "Ogre di Krynn",
+   "challenge_rating": "2",
+   "file": "mostri/ogre-krynn.json"
+  },
+  {
+   "id": "orughi",
+   "name_it": "Orughi",
+   "challenge_rating": "1",
+   "file": "mostri/orughi.json"
+  },
+  {
+   "id": "horax",
+   "name_it": "Horax",
+   "challenge_rating": "1",
+   "file": "mostri/horax.json"
+  },
+  {
+   "id": "orso-glaciale",
+   "name_it": "Orso Glaciale",
+   "challenge_rating": "3",
+   "file": "mostri/orso-glaciale.json"
+  },
+  {
+   "id": "fetch",
+   "name_it": "Fetch",
+   "challenge_rating": "6",
+   "file": "mostri/fetch.json"
+  },
+  {
+   "id": "shadowperson",
+   "name_it": "Ombrolo",
+   "challenge_rating": "2",
+   "file": "mostri/shadowperson.json"
+  },
+  {
+   "id": "anziano-venerato-ombrolo",
+   "name_it": "Anziano Venerato",
+   "challenge_rating": "0",
+   "file": "mostri/anziano-venerato-ombrolo.json"
+  },
+  {
+   "id": "eyewing",
+   "name_it": "Occhialato",
+   "challenge_rating": "1",
+   "file": "mostri/eyewing.json"
+  },
+  {
+   "id": "draconico-baaz",
+   "name_it": "Draconico Baaz",
+   "challenge_rating": "1/2",
+   "file": "mostri/draconico-baaz.json"
+  },
+  {
+   "id": "draconico-bozak",
+   "name_it": "Draconico Bozak",
+   "challenge_rating": "2",
+   "file": "mostri/draconico-bozak.json"
+  },
+  {
+   "id": "draconico-kapak",
+   "name_it": "Draconico Kapak",
+   "challenge_rating": "3",
+   "file": "mostri/draconico-kapak.json"
+  },
+  {
+   "id": "draconico-sivak",
+   "name_it": "Draconico Sivak",
+   "challenge_rating": "4",
+   "file": "mostri/draconico-sivak.json"
+  },
+  {
+   "id": "draconico-aurak",
+   "name_it": "Draconico Aurak",
+   "challenge_rating": "6",
+   "file": "mostri/draconico-aurak.json"
+  },
+  {
+   "id": "centauro-abanasiniano",
+   "name_it": "Centauro Abanasiniano",
+   "challenge_rating": "2",
+   "file": "mostri/centauro-abanasiniano.json"
+  },
+  {
+   "id": "centauro-crystalmir",
+   "name_it": "Centauro di Crystalmir",
+   "challenge_rating": "1/2",
+   "file": "mostri/centauro-crystalmir.json"
+  },
+  {
+   "id": "centauro-endscape",
+   "name_it": "Centauro di Endscape",
+   "challenge_rating": "2",
+   "file": "mostri/centauro-endscape.json"
+  },
+  {
+   "id": "centauro-wendle",
+   "name_it": "Centauro Wendle",
+   "challenge_rating": "1",
+   "file": "mostri/centauro-wendle.json"
+  },
+  {
+   "id": "emre",
+   "name_it": "Emre",
+   "challenge_rating": "1/8",
+   "file": "mostri/emre.json"
+  },
+  {
+   "id": "kingfisher",
+   "name_it": "Kingfisher",
+   "challenge_rating": "0",
+   "file": "mostri/kingfisher.json"
+  },
+  {
+   "id": "wari",
+   "name_it": "'Wari",
+   "challenge_rating": "1/4",
+   "file": "mostri/wari.json"
+  },
+  {
+   "id": "skyfisher",
+   "name_it": "Skyfisher",
+   "challenge_rating": "1/2",
+   "file": "mostri/skyfisher.json"
+  },
+  {
+   "id": "cervo-selvatico",
+   "name_it": "Cervo Selvatico",
+   "challenge_rating": "1/4",
+   "file": "mostri/cervo-selvatico.json"
+  },
+  {
+   "id": "cervo-gigante",
+   "name_it": "Cervo Gigante",
+   "challenge_rating": "1",
+   "file": "mostri/cervo-gigante.json"
+  },
+  {
+   "id": "jarak-sinn",
+   "name_it": "Jarak-Sinn",
+   "challenge_rating": "1",
+   "file": "mostri/jarak-sinn.json"
+  },
+  {
+   "id": "bakali",
+   "name_it": "Bakali",
+   "challenge_rating": "1/2",
+   "file": "mostri/bakali.json"
+  },
+  {
+   "id": "phaethon",
+   "name_it": "Phaethon",
+   "challenge_rating": "1",
+   "file": "mostri/phaethon.json"
+  },
+  {
+   "id": "phaethon-anziano",
+   "name_it": "Phaethon Anziano",
+   "challenge_rating": "3",
+   "file": "mostri/phaethon-anziano.json"
+  },
+  {
+   "id": "sciame-cavallette-locuste",
+   "name_it": "Sciame di Cavallette e Locuste",
+   "challenge_rating": "1/2",
+   "file": "mostri/sciame-cavallette-locuste.json"
+  },
+  {
+   "id": "sciame-formiche-velluto",
+   "name_it": "Sciame di Formiche di Velluto",
+   "challenge_rating": "1",
+   "file": "mostri/sciame-formiche-velluto.json"
+  },
+  {
+   "id": "gurik-cha-ahl",
+   "name_it": "Gurik Cha'ahl",
+   "challenge_rating": "1/4",
+   "file": "mostri/gurik-cha-ahl.json"
+  },
+  {
+   "id": "bambola-kani",
+   "name_it": "Bambola Kani",
+   "challenge_rating": "1/8",
+   "file": "mostri/bambola-kani.json"
+  },
+  {
+   "id": "skrit",
+   "name_it": "Skrit",
+   "challenge_rating": "4",
+   "file": "mostri/skrit.json"
+  },
+  {
+   "id": "disir",
+   "name_it": "Disir",
+   "challenge_rating": "3",
+   "file": "mostri/disir.json"
+  },
+  {
+   "id": "dreamwraith",
+   "name_it": "Spettro Onirico",
+   "challenge_rating": "4",
+   "file": "mostri/dreamwraith.json"
+  },
+  {
+   "id": "servitore-di-fuoco",
+   "name_it": "Servitore di Fuoco",
+   "challenge_rating": "3",
+   "file": "mostri/servitore-di-fuoco.json"
+  },
+  {
+   "id": "cavaliere-della-morte",
+   "name_it": "Cavaliere della Morte",
+   "challenge_rating": "8",
+   "file": "mostri/cavaliere-della-morte.json"
+  },
+  {
+   "id": "yaggol",
+   "name_it": "Yaggol",
+   "challenge_rating": "7",
+   "file": "mostri/yaggol.json"
+  },
+  {
+   "id": "tayling",
+   "name_it": "Tayling",
+   "challenge_rating": "1/2",
+   "file": "mostri/tayling.json"
+  },
+  {
+   "id": "taylang",
+   "name_it": "Taylang",
+   "challenge_rating": "3",
+   "file": "mostri/taylang.json"
+  },
+  {
+   "id": "wichtlin",
+   "name_it": "Wichtlin",
+   "challenge_rating": "3",
+   "file": "mostri/wichtlin.json"
+  },
+  {
+   "id": "cervo-selvatico-wichtlin",
+   "name_it": "Cervo Selvatico Wichtlin",
+   "challenge_rating": "1/2",
+   "file": "mostri/cervo-selvatico-wichtlin.json"
+  },
+  {
+   "id": "imp-mare-di-sangue",
+   "name_it": "Imp del Mare di Sangue",
+   "challenge_rating": "3",
+   "file": "mostri/imp-mare-di-sangue.json"
+  },
+  {
+   "id": "kalothagh",
+   "name_it": "Kalothagh (Spinodorso)",
+   "challenge_rating": "1",
+   "file": "mostri/kalothagh.json"
+  },
+  {
+   "id": "erba-scintillante",
+   "name_it": "Erba Scintillante",
+   "challenge_rating": "0",
+   "file": "mostri/erba-scintillante.json"
+  },
+  {
+   "id": "hatori-minore",
+   "name_it": "Hatori Minore",
+   "challenge_rating": "5",
+   "file": "mostri/hatori-minore.json"
+  },
+  {
+   "id": "ragno-botola-gigante",
+   "name_it": "Ragno Botola Gigante",
+   "challenge_rating": "2",
+   "file": "mostri/ragno-botola-gigante.json"
+  },
+  {
+   "id": "tylor-giovane",
+   "name_it": "Tylor Giovane",
+   "challenge_rating": "2",
+   "file": "mostri/tylor-giovane.json"
+  },
+  {
+   "id": "tylor-adolescente",
+   "name_it": "Tylor Adolescente",
+   "challenge_rating": "3",
+   "file": "mostri/tylor-adolescente.json"
+  }
+ ],
+ "coda": [
+  {
+   "fascia": 1,
+   "label": "Draconici ufficiali — precedente 5e completo in SotDQ",
+   "nota": "Gli unici cinque con statblock 2e E 5e ufficiale (RAPPORTO-bestiario.md, Parti 2-4). Non convertire per analogia: trascrivere lo statblock SotDQ gia' noto, con source_2e dall'MC Appendix.",
+   "voci": [
     {
-      "fascia": 1,
-      "label": "Draconici ufficiali — precedente 5e completo in SotDQ",
-      "nota": "Gli unici cinque con statblock 2e E 5e ufficiale (RAPPORTO-bestiario.md, Parti 2-4). Non convertire per analogia: trascrivere lo statblock SotDQ gia' noto, con source_2e dall'MC Appendix.",
-      "voci": [
-        { "voce": "Draconian, Baaz", "stato": "fatto", "note": "SotDQ pag. 197 stampata. GS 1/2.", "file": "mostri/draconico-baaz.json" },
-        { "voce": "Draconian, Bozak", "stato": "fatto", "note": "SotDQ pag. 198 stampata. GS 2.", "file": "mostri/draconico-bozak.json" },
-        { "voce": "Draconian, Kapak", "stato": "fatto", "note": "SotDQ pag. 198 stampata. GS 3 — rompe GS=DV-2, vedi RAPPORTO-bestiario.md Parte 3.", "file": "mostri/draconico-kapak.json" },
-        { "voce": "Draconian, Sivak", "stato": "fatto", "note": "SotDQ pag. 199 stampata. GS 4.", "file": "mostri/draconico-sivak.json" },
-        { "voce": "Draconian, Aurak", "stato": "fatto", "note": "SotDQ pag. 196 stampata. GS 6.", "file": "mostri/draconico-aurak.json" }
-      ]
+     "voce": "Draconian, Baaz",
+     "stato": "fatto",
+     "note": "SotDQ pag. 197 stampata. GS 1/2.",
+     "file": "mostri/draconico-baaz.json"
     },
     {
-      "fascia": 2,
-      "label": "Riempitivi di fascia bassa e media",
-      "voci_totali": 8,
-      "creature_totali": 18,
-      "voci": [
-        { "voce": "Centaur (of Krynn)", "creature": ["Centaur, Abanasinian", "Centaur, Crystalmir", "Centaur, Endscape", "Centaur, Wendle"], "stato": "fatto", "note": "4 DV, CA 5 (Wendle CA 4). Analogo SRD: Centaur (GS 2). Abanasiniano GS 2 (base), Crystalmir GS 1/2 (piu' debole, dichiarato dalla fonte), Endscape GS 2 (bonus al danno dichiarati), Wendle GS 1 (taglia Media, unica delle quattro).", "file": ["mostri/centauro-abanasiniano.json", "mostri/centauro-crystalmir.json", "mostri/centauro-endscape.json", "mostri/centauro-wendle.json"] },
-        { "voce": "Avian", "creature": ["Emre", "Kingfisher", "Skyfisher", "'Wari"], "stato": "fatto", "note": "Voce completata in due giri (cambio di unita' di lavoro da creatura a voce dopo Emre/Kingfisher). Emre GS 1/8 (analogo Giant Owl), Kingfisher GS 0 (analogo Hawk), 'Wari GS 1/4 (nessun analogo pulito; Calpestio registrato come tratto di gregge, non contato nel danno del singolo), Skyfisher GS 1/2 (nessun analogo pulito; base PF da Giant Eagle, aggancio in volo e Picchiata editoriali — GS medio fra difesa bassa e offesa alta, come il Kapak). Gradazione: Kingfisher < Emre < 'Wari < Skyfisher, coerente con la fonte (\"the skyfisher is the most dangerous of these birds\").", "file": ["mostri/emre.json", "mostri/kingfisher.json", "mostri/wari.json", "mostri/skyfisher.json"] },
-        { "voce": "Stag", "creature": ["Wild Stag", "Giant Stag"], "stato": "fatto", "note": "Wild Stag GS 1/4 (analogo Elk, taglia ridotta a Media per divergenza dichiarata dalla fonte). Giant Stag GS 1 (analogia composta Elk/Giant Elk: taglia Grande e CA identica al Wild Stag dall'Elk, budget di danno dal Giant Elk; primo caso esplicito della regola 'media difesa/offesa non e' un compromesso'). Gradazione Wild Stag < Giant Stag coerente con la fonte (XP 2e 65 < 175). Il White Stag della stessa voce resta fuori fascia (vedi sotto), non convertito.", "file": ["mostri/cervo-selvatico.json", "mostri/cervo-gigante.json"] },
-        { "voce": "Lizard Man (of Krynn)", "creature": ["Jarak-Sinn", "Bakali"], "stato": "fatto", "note": "2+1 DV ciascuno, analogo Lizardfolk (GS 1/2). Jarak-Sinn GS 1 (coda distaccabile, Colpo di coda a sorpresa, Venom convertito su arma intinta con TS Costituzione); Bakali GS 1/2 (CA piu' bassa dichiarata dalla fonte, membrana nittitante -> vantaggio ai TS contro accecamento, nessuna infravisione negata esplicitamente). Gradazione Bakali < Jarak-Sinn coerente con la fonte (XP 175 < 270). 'Squirt blood' del Bakali confermato PENDING anche sull'immagine di pagina (pdftoppm 58-59): mai spiegato nel testo stampato, non un buco di estrazione.", "file": ["mostri/jarak-sinn.json", "mostri/bakali.json"] },
-        { "voce": "Phaethon", "creature": ["Phaethon", "Elder Phaethon"], "stato": "fatto", "note": "CORREZIONE DI CODA: dati/_bestiario_mc.py registra Phaethon/Elder Phaethon come UNA voce a due colonne (pag. PDF 69), non due voci separate; questa coda le aveva sdoppiate fra fascia 2 e fascia 3 con una nota incrociata (\"comporre insieme\"). Convertite insieme in un solo giro, coerenti con la regola ferma sull'unita' di lavoro. Nessun analogo SRD singolo o composto pulito: 4+6 DV, umanoide con ali fiammeggianti a volonta' e presa che brucia round dopo round (Flame Hug). Phaethon GS 1 (CA14/PF26, danno sostenuto 21/round), Phaethon Anziano GS 3 (CA15/PF45, danno sostenuto 27/round, 5% resistenza magica) — media difesa/offesa in entrambi i casi, stesso schema del Kapak. Gradazione Phaethon < Phaethon Anziano coerente con la fonte (XP 270 < 975, rapporto ~3.6x molto vicino al rapporto GS3/GS1 in PE, 3.5x). Voce rimossa dalla fascia 3 (era duplicata li' come \"Phaethon, Elder\").", "file": ["mostri/phaethon.json", "mostri/phaethon-anziano.json"] },
-        { "voce": "Insect Swarm", "creature": ["Grasshopper and Locust Swarm", "Velvet Ant Swarm"], "stato": "fatto", "note": "CORREZIONE DI CODA: dati/_bestiario_mc.py registra Insect Swarm come UNA voce a due colonne (pag. PDF 50); questa coda la sdoppiava fra fascia 2 (Grasshopper and Locust) e fascia 3 (Velvet Ant). Ricomposta e convertita in un solo giro. Nessun analogo composto: entrambe adottano di peso Swarm of Insects (SRD, GS 1/2, CA12/PF22) come base. Grasshopper and Locust Swarm resta GS 1/2 (volo invece di arrampicata, Nuvola Offuscante come controllo d'area senza danno aggiuntivo). Velvet Ant Swarm sale a GS 1 (Morso Velenoso: stesso danno base + avvelenamento su TS Costituzione CD 11, media difesa/offesa come Kapak/Phaethon). Gradazione Grasshopper/Locust < Velvet Ant coerente con la frequenza/pericolosita' del morso (90% senza veleno < 80% con veleno), anche se l'XP-per-sterminio-intero della fonte va nella direzione opposta (2.000 > 975) per la sola dimensione dello sciame, dato di scala non di minaccia per round.", "file": ["mostri/sciame-cavallette-locuste.json", "mostri/sciame-formiche-velluto.json"] },
-        { "voce": "Gurik Cha-ahl", "creature": ["Gurik Cha-ahl"], "stato": "fatto", "note": "2 DV, identita' dichiarata dalla fonte (\"look much like normal goblins\"): analogo Goblin SRD, con divergenze applicate (2 DV contro 1-1 del goblin standard, AC2e peggiore, Intelligenza piu' bassa). GS 1/4, ruolo assassino/imboscatore che colpisce e fugge (Lama a Tradimento: danno raddoppiato solo con vantaggio, non contato nel GS base, stesso trattamento dell'Aggancio dell'Horax).", "file": "mostri/gurik-cha-ahl.json" },
-        { "voce": "Kani Doll", "creature": ["Kani Doll"], "stato": "fatto", "note": "2 DV, CA 10, costrutto senza morale. Nessun analogo SRD pulito (l'Homunculus suggerito era troppo debole per 2 DV): PF calibrati per confronto diretto con Gurik Cha'ahl, altra voce HD2 dello stesso giro. 'Continuous attacks' reso con l'idioma dell'Aggancio dell'Horax gia' convertito (morso + afferrato + danno automatico/round). GS 1/8. Le dieci forme cosmetiche della fonte (Rabbit, Turtle, Hawk, ecc.) restano flavor, non statblock distinti.", "file": "mostri/bambola-kani.json" }
-      ]
+     "voce": "Draconian, Bozak",
+     "stato": "fatto",
+     "note": "SotDQ pag. 198 stampata. GS 2.",
+     "file": "mostri/draconico-bozak.json"
     },
     {
-      "fascia": 3,
-      "label": "Identitari ma senza analogo pulito",
-      "voci_totali": 15,
-      "creature_totali": 16,
-      "voci": [
-        { "voce": "Skrit", "stato": "fatto", "note": "XP2e 2.000, HD6: letta per intero come impone la regola (DV/XP non bastano da soli). Nessun analogo SRD singolo pulito: idioma della paralisi preso da Carrion Crawler (SRD), corpo/danno calibrati vicino al Draconico Sivak (stesso ordine di XP2e). GS4 — difesa modesta (AC14/PF58, fascia 3) media con un'offesa molto piu' alta per l'Enzima Paralizzante (paralisi totale finche' agganciato) e la Dissoluzione dei tessuti (10 PF/ora, curabile solo con guarigione naturale o rigenerazione). Ruolo assassino nonostante Intelligenza Animale: isola sempre un solo bersaglio.", "file": "mostri/skrit.json" },
-        { "voce": "Disir", "stato": "fatto", "note": "HD5, XP2e 975 (stesso valore gia' osservato su Orso Glaciale e Phaethon Anziano, entrambi GS3). Nessun analogo SRD pulito: statblock costruito da zero. GS3 — difesa AC14/PF52 media con danno raddoppiato su artigli/morso (vincolo 3) e il tratto Dolore (svantaggio ai colpire + sfinimento progressivo, reso con la scala 5e standard invece di un modificatore inventato). Morso riservato ai bersagli incapacitati, coerente con la preferenza per gli artigli dichiarata dalla fonte. Resistenza al fuoco dal gel corporeo.", "file": "mostri/disir.json" },
-        { "voce": "Dreamshadow", "stato": "categoria_aperta", "note": "CREATURA-MODELLO: ogni campo 'as creature or person mimicked'. Vedi METODO-conversione-mostri.md §5, non convertire con la procedura standard." },
-        { "voce": "Dreamwraith", "stato": "fatto", "note": "HD8, XP2e 2.000 (stesso valore di Skrit e Draconico Sivak, controllo incrociato coerente: GS4 confermato senza rilettura). CA/DV fissi per dichiarazione di fonte (unico caso in cui 'as creature mimicked' non si applica alle statistiche di combattimento). Danno reale deliberatamente NON raddoppiato (eccezione al vincolo 3, dichiarata): la fonte separa danno illusorio alto da danno reale quasi nullo, il peso del GS viene da precisione (TAC0 13), vantaggio d'iniziativa e Terrore Onirico (spaventato + svantaggio), non dai PF tolti. L'incantesimo *mindspin* che lo genera, i Dragon Orbs e la procedura di Disbelief (condivisa col Dreamshadow) restano fuori scheda, registrati ma non convertiti: appartengono a schemi che non esistono ancora.", "file": "mostri/dreamwraith.json" },
-        { "voce": "Fire Minion", "stato": "fatto", "note": "HD6, XP2e 975 (stesso valore di Orso Glaciale/Phaethon Anziano/Disir). CASO CHIAVE per il controllo incrociato: la fonte si dichiara 'fire elemental' (indicazione diretta), che da sola avrebbe suggerito il Fire Elemental SRD di peso (GS5, 102 PF) — ma il controllo con l'XP2e ha confermato GS3, coerente col profilo reale (1 solo attacco/round, nessuna capacita' oltre spada+aura). Idioma elementale preso dal Fire Elemental SRD (immunita' al fuoco che guarisce, vulnerabilita' al freddo), numeri calibrati sulla fascia GS3 osservata. Corretto un errore di estrazione rilevante sull'immagine: '1-2 points per turn' di danno per assenza dal fuoco, non '12 points per turn'.", "file": "mostri/servitore-di-fuoco.json" },
-        { "voce": "Tylor", "stato": "categoria_aperta", "note": "FAMIGLIA DI STATBLOCK: 6 categorie d'eta' con DV/CA/soffio propri. Vedi METODO-conversione-mostri.md §5. Nessun soffio in nessuna categoria; eredita una sola resistenza elementare dal genitore." },
-        { "voce": "Knight, Death", "creature": ["Cavaliere della Morte"], "stato": "fatto", "note": "Riletta sull'immagine (pag. PDF 55, pdftoppm 56): nessuna correzione necessaria oltre 'l0-sided'->'10-sided' (refuso OCR). TIPO ripetibile confermato (decisione 32), non Lord Soth. 9 DV, un solo attacco (+3 innato, come lo Scheletro Guerriero, stesso archetipo). GS8 con tensione dichiarata: mischia/difesa nude suggerirebbero GS5-6, ma il repertorio 1/giorno (parola potente, palla di fuoco 20d6, resistenza magica 75% con riflessione) porta la stima sopra lo Scheletro Guerriero (GS7). CONFRONTATO con lo statblock di Lord Soth (SotDQ Appendice B, CR19): mischia e palla di fuoco confermate nell'ordine di grandezza giusto (Cataclysmic Fire di Soth ha la stessa media danno, 70, della nostra palla di fuoco 20d6). DECISIONE PRESA in questo giro, in due parti: (1) CA scesa da 20 a 18, non un gradino di estrapolazione ma un tetto — Soth e' il cavaliere della morte di Krynn nell'unica resa ufficiale nota, la scheda di specie non puo' superarlo; (2) power word kill sostituito da 'Parola di Morte' sul modello del Word of Death di Soth (tiro salvezza su Costituzione, danno alto per meta'), con danno calibrato al nostro GS8 (12d10, media 66) e non copiato dai 100 danni di Soth (tarati per CR19) — applica il vincolo 2 e il precedente gia' osservato sui cinque draconici (la 5e aggiunge sistematicamente un tiro salvezza dove il 2e non lo aveva), non una valutazione di potenza. Il GS resta 8: con CA18 e l'incantesimo entro l'idioma la scheda torna coerente senza spostarlo. Dettaglio completo in dati/mostri/cavaliere-della-morte.json (mechanics_5e.challenge_rating.note e traits/'Repertorio magico innato'). Resistenza magica e immunita' allo scacciare restano in gruppo C/PENDING come per lo Scheletro Guerriero (stessa decisione non ancora presa, condivisa fra le due voci).", "file": "mostri/cavaliere-della-morte.json" },
-        { "voce": "Haunt, Knight", "stato": "bloccato", "note": "BLOCCO IN SCRITTURA (filtro di output, non limite del metodo): la voce e' stata letta e analizzata per intero (pag. PDF 47, pdftoppm 48, immagine verificata: NO. APPEARING corretto in '1-8' e DAMAGE/ATTACK in '1-8/1-8', trattini persi nell'estrazione), ma la scrittura della scheda JSON viene bloccata a prescindere dal contenuto del campo `raw` (testato sia con che senza). Non e' un limite di categoria (Dreamwraith ha `raw` compilato ed e' passato; Fetch e Scheletro Guerriero ce l'hanno a null e sono passati anche loro): il blocco sembra specifico a questa voce/momento, non alla famiglia 'non morti con vincoli'. Non riprovato ulteriormente per non rischiare di riformulare il contenuto per aggirare il filtro. Da riprendere in un giro successivo." },
-        { "voce": "Yaggol", "stato": "fatto", "note": "HD9, XP2e 4000 — stesso valore dello Scheletro Guerriero (GS7), controllo incrociato confermato senza rilettura. Nessun analogo SRD (mind flayer vero e' fuori target). Difesa sotto la mediana (CA14/PF85, nessuna resistenza ai danni) media con un'offesa molto sopra (sei attacchi/round: 2 pugni + fino a 4 tentacoli aggancianti, catena aggancio-cervello che uccide in 1d4 turni se non spezzata, piu' esplosione psichica ad area 1/riposo lungo) — divergenza normale fra gli assi, non tensione (stesso principio del Kapak). 50% resistenza magica in gruppo C/rinviata.", "file": "mostri/yaggol.json" },
-        { "voce": "Tayling", "creature": ["Tayling", "Taylang"], "stato": "fatto", "note": "Gemelli telepatici obbligati: Tayling (4 DV, XP2e2000, GS1/2 PROVVISORIO — il repertorio di incantesimi 'a scelta del master' (mago liv.1-10 Alterazione o chierico liv.1-10 Elementale) e' PENDING, non fissato dalla fonte, escluso dal GS; l'XP2e (stesso valore di Draconico Sivak/Skrit/Spettro Onirico, tutti GS4) suggerisce che il Tayling completo salira' molto piu' in alto). Taylang (8 DV, XP2e1400, GS3 — divergenza confermata: XP2e storicamente GS1-2, ma il profilo reale (tre attacchi, ~34 danni/round, THAC0 13) e' da GS3-4; prima voce dove il segnale XP2e-GS punta in direzione opposta al profilo letto per intero, non a conferma). Nessun analogo SRD per il legame telepatico; Furia Omicida del Taylang (attivata solo alla morte del gemello) resa con una soglia di PF negativi proporzionale, non contata nel GS base.", "file": ["mostri/tayling.json", "mostri/taylang.json"] },
-        { "voce": "Spectral Minion", "stato": "categoria_aperta", "note": "CREATURA-MODELLO: eredita le statistiche di chi imita, esattamente come il Dreamshadow (DV 'Varies', non statblock fisso). Vedi METODO-conversione-mostri.md §5, non convertire con la procedura standard. Sei varianti comportamentali (guardiano/filosofo/ricercatore/guerriero/festaiolo/berserker), non gradi di potenza. Colpibile solo da armi magiche, 20% resistenza magica. Analogo per il profilo generale: Specter." },
-        { "voce": "Wyndlass", "stato": "bloccato", "note": "BLOCCO IN LETTURA/ANALISI (filtro di output, non limite del metodo): fase diversa da Haunt Knight, dove il blocco era arrivato solo in fase di scrittura dopo lettura e analisi complete. Qui il filtro interviene prima ancora che la lettura/analisi della voce sia completata. Non riprovato, non riformulato, non spezzato in parti per non rischiare di aggirare il filtro (stessa cautela di Haunt Knight). Da riprendere in un giro successivo. Dati noti dal riscontro precedente: 12 DV, THAC0 9, undici attacchi (10 tentacoli + morso), 5.000 PE — ordine di grandezza del Cavaliere della Morte. Analogo parziale: Hydra per il numero di attacchi, senza rigenerazione." },
-        { "voce": "Wichtlin", "stato": "fatto", "note": "GS 3. Elfo non morto: due tocchi distinti (paralisi 2d4 round CD12, veleno 2d6 CD12 meta' danno), resistenza alle armi non magiche, immune a veleno/fascino/spossatezza/paralisi propria, contagio su elfi uccisi (diventano wichtlin in 7 giorni), sguardo suggestivo su elfi paralizzati. Variante montata Wichtlin Wild Stag convertita separatamente (GS 1/2, mostri/cervo-selvatico-wichtlin.json). Incantesimi residui da vita precedente lasciati pending (condizionali al singolo esemplare, non alla voce).", "file": "mostri/wichtlin.json" },
-        { "voce": "Imp, Blood Sea", "stato": "fatto", "note": "GS 3 (quinta corrispondenza XP2e975). Polimorfismo fisico/nebbia (forma di nebbia resa come profilo alternativo in un tratto, non scheda duplicata), resistenza alle armi non magiche, immunita' a veleno/fascino/spossatezza/paralisi/freddo, 10% (1d10=1) di scissione se colpito da fulmine. Non e' non morto: type Fiend.", "file": "mostri/imp-mare-di-sangue.json" },
-        { "voce": "Kalothagh (Prickleback)", "stato": "fatto", "note": "GS 1 (XP2e270, allineato a Horax/Jarak-Sinn/Phaethon). Nessun pacchetto difensivo (MAGIC RESISTANCE Nil, niente resistenza alle armi): la complessita' e' di controllo/superficie tattica (volley di 4 aculei velenosi a distanza, aculeo che puo' restare conficcato, impalamento passivo per chi le sta in mischia, 'fa il morto' sotto il 25% PF), non di potenza bruta.", "file": "mostri/kalothagh.json" }
-      ]
+     "voce": "Draconian, Kapak",
+     "stato": "fatto",
+     "note": "SotDQ pag. 198 stampata. GS 3 — rompe GS=DV-2, vedi RAPPORTO-bestiario.md Parte 3.",
+     "file": "mostri/draconico-kapak.json"
     },
     {
-      "fascia": 4,
-      "label": "Nicchia",
-      "voci_totali": 3,
-      "voci": [
-        { "voce": "Shimmerweed", "stato": "fatto", "note": "GS 0 (XP5e10). Erba Scintillante: 1 PF, CA10, immobile, nessuna azione propria. L'unico pericolo (Confusione, CD15 come incantatore 10°) e' un effetto dell'INTERO patch (1 Dado Vita di bersagli per pianta presente), registrato come tratto con destinazione generatore_incontri, non nel GS della singola pianta schedata. BLOCCO A FINE TURNO durante questo giro: non in lettura (Wyndlass) ne' in scrittura (Haunt Knight), ma DOPO la scrittura completa e valida (172 righe, 0 errori schema), durante la produzione del riepilogo. Contenuto innocuo (pianta immobile, nessuna violenza) a differenza delle prime due voci bloccate: la materia della creatura non spiega da sola dove il filtro scatta (osservato in METODO-conversione-mostri.md §3.1, causa non verificata).", "file": "mostri/erba-scintillante.json" },
-        { "voce": "Hatori", "creature": ["Lesser Hatori"], "stato": "fatto", "note": "GS 5 (XP5e 1.800). Voce a due colonne, seconda colonna (Greater Hatori) confermata fuori target e lasciata in 'fuori_fascia': la ricomposizione aveva tenuto i due livelli separati correttamente, letta insieme ma non convertita. FORMA NUOVA, non prevista dal metodo: la colonna Lesser tiene FISSI CA 2, MV 15, 2 attacchi e 3-18/1-12 su tutta la banda e fa variare solo i Dadi Vita (1-5), con THAC0 'Varies' e XP VALUE 'Variable' invece di numeri. Non e' una famiglia di statblock (niente categorie discrete con capacita' diverse, come il Tylor) ne' una creatura-modello: e' uno statblock unico a Dadi Vita variabili, e METODO §5 ora spiega perche' non va nella lista delle categorie aperte. Scheda fissata sul taglio a 5 DV, l'unico punto interno alla banda che la fonte nomini (la soglia a cui i piccoli lasciano la madre) e che e' anche il confine con la colonna Greater; i tagli piu' giovani sono registrati nel tratto 'Crescita continua'. PRIMO CASO IN CODA SENZA CONTROLLO XP2e: la fonte non stampa un XP, rimanda alle Tabelle 31-32 del DMG 2e perche' dipende dai DV. Il passo 10 della procedura non era eseguibile — mancanza del segnale, non divergenza (METODO §6). Schema: `thac0` allargato a nullable in questo giro per 'Varies'; 0 avrebbe significato l'opposto di 'non dato'.", "file": "mostri/hatori-minore.json" },
-        { "voce": "Spider (of Krynn)", "creature": ["Giant Trap Door Spider"], "stato": "fatto", "note": "GS 2 (XP5e 450). Voce a due colonne, seconda colonna (Whisper Spider) confermata fuori target e lasciata in 'fuori_fascia': la ricomposizione aveva tenuto i due livelli separati correttamente. Qui le due colonne sono due SPECIE distinte, non due stadi: in comune hanno solo l'aspetto e il paragrafo Ecology, scritto una volta per entrambe e usato anche nella scheda convertita. Analogo SRD Giant Spider (GS 1), adottato pezzo per pezzo e rifiutato pezzo per pezzo (elenco in mechanics_5e.note della scheda): presi CA 14, Camminatore su ragnatela e le statistiche della ragnatela come oggetto; rifiutati i punti ferita (6 dadi, non 4, per i due precedenti interni su HD 2e '4 + 4' — Wichtlin e Kalothagh), le velocita' (MV 3 di fonte -> 10 piedi, contro i 30 dell'analogo) e il veleno con meta' danno a TS riuscito (la fonte e' tutto-o-niente). GS un gradino sopra l'analogo per tre motivi dichiarati dalla fonte: presa che trascina la vittima fuori dallo scontro, percezione tellurica a 45 m, sorpresa quasi automatica. XP2e 420 e' un valore nuovo in tabella e cade fra il gruppo 270->GS1 e il 650 dove il segnale gia' si sfilaccia: conferma senza sorprese, secondo caso dopo il Kalothagh. NO. APPEARING assente dalla pagina stampata per entrambe le colonne, verificato sull'immagine: non 'Nil', non 'See below', riga proprio non stampata. TENSIONE DICHIARATA: il danno per round sta a x1,6 sulla fonte, il minimo osservato del corpus e non il raddoppio pieno del vincolo 3, perche' il veleno e' tutto-o-niente; scritta nella scheda invece di essere nascosta gonfiando i dadi. CONTRADDIZIONE DELLA FONTE in open_questions: MOVEMENT 3 nello statblock, mentre il testo di Combat giustifica il malus alla sorpresa dicendo che il ragno si muove rapido e silenzioso.", "file": "mostri/ragno-botola-gigante.json" }
-      ]
+     "voce": "Draconian, Sivak",
+     "stato": "fatto",
+     "note": "SotDQ pag. 199 stampata. GS 4.",
+     "file": "mostri/draconico-sivak.json"
     },
     {
-      "fascia": 5,
-      "label": "Fuori target (draghi e alti Dadi Vita) — non serve alla Fase 2, priorita' bassa",
-      "voci_totali": 7,
-      "creature_totali": 9,
-      "voci": [
-        { "voce": "Dragon, Amphi", "stato": "da_fare", "note": "Drago. Analogo: draghi SRD." },
-        { "voce": "Dragon, Kodragon", "stato": "da_fare", "note": "Drago. Analogo: draghi SRD." },
-        { "voce": "Dragon, Sea", "stato": "da_fare", "note": "Drago. Analogo: draghi SRD." },
-        { "voce": "Dragon, Astral", "creature": ["Astral Dragon (unmated)", "Astral Dragon (mated pair)"], "stato": "da_fare", "note": "Una specie in due stati (solitario, coppia da 35 DV): una riga, non due. Analogo: draghi SRD." },
-        { "voce": "Beast, Undead", "creature": ["Stahnk", "Gholor"], "stato": "da_fare", "note": "24 DV (12+12) ciascuno. Fuori target quanto un drago." },
-        { "voce": "Anemone, Giant", "stato": "da_fare", "note": "16 DV, THAC0 5, 12.000 PE — piu' del doppio dell'Aurak (6.000, il piu' forte dei cinque draconici ufficiali). Una delle creature piu' potenti del bestiario." },
-        { "voce": "Fireshadow", "stato": "da_fare", "note": "13+3 DV (~16), Gargantuan, 11.000 PE — secondo valore piu' alto del bestiario. Evocabile solo da chierico malvagio 8°+." }
-      ]
+     "voce": "Draconian, Aurak",
+     "stato": "fatto",
+     "note": "SotDQ pag. 196 stampata. GS 6.",
+     "file": "mostri/draconico-aurak.json"
     }
-  ],
-
-  "fuori_fascia": [
+   ]
+  },
+  {
+   "fascia": 2,
+   "label": "Riempitivi di fascia bassa e media",
+   "voci_totali": 8,
+   "creature_totali": 18,
+   "voci": [
     {
-      "voce": "Stag, The White Stag",
-      "stato": "rinviato",
-      "note": "Unico, allineamento legale buono, 2.000 PE, capacita' magiche (find the path, speak with animals a volonta', bless 3/giorno). Creatura sacra da incontro narrativo, non un avversario da bestiario. Da schedare quando esiste uno schema per creature uniche/da avventura (vicino allo schema Personaggio), non forzare qui."
+     "voce": "Centaur (of Krynn)",
+     "creature": [
+      "Centaur, Abanasinian",
+      "Centaur, Crystalmir",
+      "Centaur, Endscape",
+      "Centaur, Wendle"
+     ],
+     "stato": "fatto",
+     "note": "4 DV, CA 5 (Wendle CA 4). Analogo SRD: Centaur (GS 2). Abanasiniano GS 2 (base), Crystalmir GS 1/2 (piu' debole, dichiarato dalla fonte), Endscape GS 2 (bonus al danno dichiarati), Wendle GS 1 (taglia Media, unica delle quattro).",
+     "file": [
+      "mostri/centauro-abanasiniano.json",
+      "mostri/centauro-crystalmir.json",
+      "mostri/centauro-endscape.json",
+      "mostri/centauro-wendle.json"
+     ]
     },
     {
-      "voce": "Hatori, Greater",
-      "stato": "rinviato",
-      "note": "Stessa voce di 'Hatori' (fascia 4, coda), seconda colonna: variante adulta, 6-20 DV, fuori target quanto un drago. Va letta insieme quando si convertira' Lesser Hatori, non ristatuita in Fase 2."
+     "voce": "Avian",
+     "creature": [
+      "Emre",
+      "Kingfisher",
+      "Skyfisher",
+      "'Wari"
+     ],
+     "stato": "fatto",
+     "note": "Voce completata in due giri (cambio di unita' di lavoro da creatura a voce dopo Emre/Kingfisher). Emre GS 1/8 (analogo Giant Owl), Kingfisher GS 0 (analogo Hawk), 'Wari GS 1/4 (nessun analogo pulito; Calpestio registrato come tratto di gregge, non contato nel danno del singolo), Skyfisher GS 1/2 (nessun analogo pulito; base PF da Giant Eagle, aggancio in volo e Picchiata editoriali — GS medio fra difesa bassa e offesa alta, come il Kapak). Gradazione: Kingfisher < Emre < 'Wari < Skyfisher, coerente con la fonte (\"the skyfisher is the most dangerous of these birds\").",
+     "file": [
+      "mostri/emre.json",
+      "mostri/kingfisher.json",
+      "mostri/wari.json",
+      "mostri/skyfisher.json"
+     ]
     },
     {
-      "voce": "Spider, Whisper",
-      "stato": "rinviato",
-      "note": "Stessa voce di 'Spider (of Krynn)' (fascia 4, coda), seconda colonna: specie distinta, 16 DV (8+8), fuori target quanto un drago. Va letta insieme quando si convertira' Giant Trap Door Spider, non ristatuita in Fase 2."
+     "voce": "Stag",
+     "creature": [
+      "Wild Stag",
+      "Giant Stag"
+     ],
+     "stato": "fatto",
+     "note": "Wild Stag GS 1/4 (analogo Elk, taglia ridotta a Media per divergenza dichiarata dalla fonte). Giant Stag GS 1 (analogia composta Elk/Giant Elk: taglia Grande e CA identica al Wild Stag dall'Elk, budget di danno dal Giant Elk; primo caso esplicito della regola 'media difesa/offesa non e' un compromesso'). Gradazione Wild Stag < Giant Stag coerente con la fonte (XP 2e 65 < 175). Il White Stag della stessa voce resta fuori fascia (vedi sotto), non convertito.",
+     "file": [
+      "mostri/cervo-selvatico.json",
+      "mostri/cervo-gigante.json"
+     ]
+    },
+    {
+     "voce": "Lizard Man (of Krynn)",
+     "creature": [
+      "Jarak-Sinn",
+      "Bakali"
+     ],
+     "stato": "fatto",
+     "note": "2+1 DV ciascuno, analogo Lizardfolk (GS 1/2). Jarak-Sinn GS 1 (coda distaccabile, Colpo di coda a sorpresa, Venom convertito su arma intinta con TS Costituzione); Bakali GS 1/2 (CA piu' bassa dichiarata dalla fonte, membrana nittitante -> vantaggio ai TS contro accecamento, nessuna infravisione negata esplicitamente). Gradazione Bakali < Jarak-Sinn coerente con la fonte (XP 175 < 270). 'Squirt blood' del Bakali confermato PENDING anche sull'immagine di pagina (pdftoppm 58-59): mai spiegato nel testo stampato, non un buco di estrazione.",
+     "file": [
+      "mostri/jarak-sinn.json",
+      "mostri/bakali.json"
+     ]
+    },
+    {
+     "voce": "Phaethon",
+     "creature": [
+      "Phaethon",
+      "Elder Phaethon"
+     ],
+     "stato": "fatto",
+     "note": "CORREZIONE DI CODA: dati/_bestiario_mc.py registra Phaethon/Elder Phaethon come UNA voce a due colonne (pag. PDF 69), non due voci separate; questa coda le aveva sdoppiate fra fascia 2 e fascia 3 con una nota incrociata (\"comporre insieme\"). Convertite insieme in un solo giro, coerenti con la regola ferma sull'unita' di lavoro. Nessun analogo SRD singolo o composto pulito: 4+6 DV, umanoide con ali fiammeggianti a volonta' e presa che brucia round dopo round (Flame Hug). Phaethon GS 1 (CA14/PF26, danno sostenuto 21/round), Phaethon Anziano GS 3 (CA15/PF45, danno sostenuto 27/round, 5% resistenza magica) — media difesa/offesa in entrambi i casi, stesso schema del Kapak. Gradazione Phaethon < Phaethon Anziano coerente con la fonte (XP 270 < 975, rapporto ~3.6x molto vicino al rapporto GS3/GS1 in PE, 3.5x). Voce rimossa dalla fascia 3 (era duplicata li' come \"Phaethon, Elder\").",
+     "file": [
+      "mostri/phaethon.json",
+      "mostri/phaethon-anziano.json"
+     ]
+    },
+    {
+     "voce": "Insect Swarm",
+     "creature": [
+      "Grasshopper and Locust Swarm",
+      "Velvet Ant Swarm"
+     ],
+     "stato": "fatto",
+     "note": "CORREZIONE DI CODA: dati/_bestiario_mc.py registra Insect Swarm come UNA voce a due colonne (pag. PDF 50); questa coda la sdoppiava fra fascia 2 (Grasshopper and Locust) e fascia 3 (Velvet Ant). Ricomposta e convertita in un solo giro. Nessun analogo composto: entrambe adottano di peso Swarm of Insects (SRD, GS 1/2, CA12/PF22) come base. Grasshopper and Locust Swarm resta GS 1/2 (volo invece di arrampicata, Nuvola Offuscante come controllo d'area senza danno aggiuntivo). Velvet Ant Swarm sale a GS 1 (Morso Velenoso: stesso danno base + avvelenamento su TS Costituzione CD 11, media difesa/offesa come Kapak/Phaethon). Gradazione Grasshopper/Locust < Velvet Ant coerente con la frequenza/pericolosita' del morso (90% senza veleno < 80% con veleno), anche se l'XP-per-sterminio-intero della fonte va nella direzione opposta (2.000 > 975) per la sola dimensione dello sciame, dato di scala non di minaccia per round.",
+     "file": [
+      "mostri/sciame-cavallette-locuste.json",
+      "mostri/sciame-formiche-velluto.json"
+     ]
+    },
+    {
+     "voce": "Gurik Cha-ahl",
+     "creature": [
+      "Gurik Cha-ahl"
+     ],
+     "stato": "fatto",
+     "note": "2 DV, identita' dichiarata dalla fonte (\"look much like normal goblins\"): analogo Goblin SRD, con divergenze applicate (2 DV contro 1-1 del goblin standard, AC2e peggiore, Intelligenza piu' bassa). GS 1/4, ruolo assassino/imboscatore che colpisce e fugge (Lama a Tradimento: danno raddoppiato solo con vantaggio, non contato nel GS base, stesso trattamento dell'Aggancio dell'Horax).",
+     "file": "mostri/gurik-cha-ahl.json"
+    },
+    {
+     "voce": "Kani Doll",
+     "creature": [
+      "Kani Doll"
+     ],
+     "stato": "fatto",
+     "note": "2 DV, CA 10, costrutto senza morale. Nessun analogo SRD pulito (l'Homunculus suggerito era troppo debole per 2 DV): PF calibrati per confronto diretto con Gurik Cha'ahl, altra voce HD2 dello stesso giro. 'Continuous attacks' reso con l'idioma dell'Aggancio dell'Horax gia' convertito (morso + afferrato + danno automatico/round). GS 1/8. Le dieci forme cosmetiche della fonte (Rabbit, Turtle, Hawk, ecc.) restano flavor, non statblock distinti.",
+     "file": "mostri/bambola-kani.json"
     }
-  ],
-
-  "categorie_aperte": [
+   ]
+  },
+  {
+   "fascia": 3,
+   "label": "Identitari ma senza analogo pulito",
+   "voci_totali": 15,
+   "creature_totali": 16,
+   "voci": [
     {
-      "nome": "creature-modello",
-      "voci": ["Dreamshadow", "Spectral Minion"],
-      "nota": "Statistiche ereditate da un bersaglio ('as creature or person mimicked' / 'quelli della vita precedente'), non fisse. Serve un pacchetto di regole, non uno statblock. METODO-conversione-mostri.md §5."
+     "voce": "Skrit",
+     "stato": "fatto",
+     "note": "XP2e 2.000, HD6: letta per intero come impone la regola (DV/XP non bastano da soli). Nessun analogo SRD singolo pulito: idioma della paralisi preso da Carrion Crawler (SRD), corpo/danno calibrati vicino al Draconico Sivak (stesso ordine di XP2e). GS4 — difesa modesta (AC14/PF58, fascia 3) media con un'offesa molto piu' alta per l'Enzima Paralizzante (paralisi totale finche' agganciato) e la Dissoluzione dei tessuti (10 PF/ora, curabile solo con guarigione naturale o rigenerazione). Ruolo assassino nonostante Intelligenza Animale: isola sempre un solo bersaglio.",
+     "file": "mostri/skrit.json"
     },
     {
-      "nome": "famiglie di statblock",
-      "voci": ["Tylor"],
-      "nota": "Tabella di categorie d'eta' con DV/CA/capacita' propri per categoria, come gli age category dei draghi. Serve piu' di un GS. METODO-conversione-mostri.md §5."
+     "voce": "Disir",
+     "stato": "fatto",
+     "note": "HD5, XP2e 975 (stesso valore gia' osservato su Orso Glaciale e Phaethon Anziano, entrambi GS3). Nessun analogo SRD pulito: statblock costruito da zero. GS3 — difesa AC14/PF52 media con danno raddoppiato su artigli/morso (vincolo 3) e il tratto Dolore (svantaggio ai colpire + sfinimento progressivo, reso con la scala 5e standard invece di un modificatore inventato). Morso riservato ai bersagli incapacitati, coerente con la preferenza per gli artigli dichiarata dalla fonte. Resistenza al fuoco dal gel corporeo.",
+     "file": "mostri/disir.json"
     },
     {
-      "nome": "incantatore a scelta del master",
-      "voci": ["Tayling"],
-      "nota": "Statblock fisico fisso, ma il repertorio di incantesimi (mago liv.1-10 Alterazione o chierico liv.1-10 Elementale) e' rimandato esplicitamente al master, non fissato dalla fonte: ne' creatura-modello (il corpo e' fisso) ne' famiglia di statblock (nessuna categoria discreta). GS provvisorio, escluso dal calcolo finche' non si decide come rendere un repertorio non fissato. Verificata la coda al 2026-08-21: caso isolato, nessun'altra voce restante in fascia 3 ci ricade. METODO-conversione-mostri.md §5."
+     "voce": "Dreamshadow",
+     "stato": "categoria_aperta",
+     "note": "CREATURA-MODELLO: ogni campo 'as creature or person mimicked'. Vedi METODO-conversione-mostri.md §5, non convertire con la procedura standard."
+    },
+    {
+     "voce": "Dreamwraith",
+     "stato": "fatto",
+     "note": "HD8, XP2e 2.000 (stesso valore di Skrit e Draconico Sivak, controllo incrociato coerente: GS4 confermato senza rilettura). CA/DV fissi per dichiarazione di fonte (unico caso in cui 'as creature mimicked' non si applica alle statistiche di combattimento). Danno reale deliberatamente NON raddoppiato (eccezione al vincolo 3, dichiarata): la fonte separa danno illusorio alto da danno reale quasi nullo, il peso del GS viene da precisione (TAC0 13), vantaggio d'iniziativa e Terrore Onirico (spaventato + svantaggio), non dai PF tolti. L'incantesimo *mindspin* che lo genera, i Dragon Orbs e la procedura di Disbelief (condivisa col Dreamshadow) restano fuori scheda, registrati ma non convertiti: appartengono a schemi che non esistono ancora.",
+     "file": "mostri/dreamwraith.json"
+    },
+    {
+     "voce": "Fire Minion",
+     "stato": "fatto",
+     "note": "HD6, XP2e 975 (stesso valore di Orso Glaciale/Phaethon Anziano/Disir). CASO CHIAVE per il controllo incrociato: la fonte si dichiara 'fire elemental' (indicazione diretta), che da sola avrebbe suggerito il Fire Elemental SRD di peso (GS5, 102 PF) — ma il controllo con l'XP2e ha confermato GS3, coerente col profilo reale (1 solo attacco/round, nessuna capacita' oltre spada+aura). Idioma elementale preso dal Fire Elemental SRD (immunita' al fuoco che guarisce, vulnerabilita' al freddo), numeri calibrati sulla fascia GS3 osservata. Corretto un errore di estrazione rilevante sull'immagine: '1-2 points per turn' di danno per assenza dal fuoco, non '12 points per turn'.",
+     "file": "mostri/servitore-di-fuoco.json"
+    },
+    {
+     "voce": "Tylor",
+     "stato": "fatto",
+     "note": "FAMIGLIA DI STATBLOCK, RISOLTA il 25/08/2026 (decisioni 34, 35, 36). OTTO categorie d'eta' (1 Hatchling, 2 Very young, 3 Young, 4 Juvenile, 5 Young Adult, 6 Adult, 7 Mature Adult, 8 Old), non sei: correzione fatta sulla rilettura dell'immagine, indice PDF 83 / pdftoppm 84, dove la pagina stampa QUATTRO blocchi affiancati che condividono la colonna Age e che l'estrattore aveva spezzato male. CONVERTITE DUE: Tylor Giovane (3a categoria, GS 2) e Tylor Adolescente (4a, GS 3), scritte nello stesso giro per graduarle a confronto. IL TAGLIO: in alto lo indica la fonte (XP da 975 alla 4a a 9.000 alla 5a, fattore nove in un gradino); in basso lo decide il danno FISSO su tutte e otto le categorie (1-10 coda / 1-20 morso), che descrive l'adulto e su 1d6 punti ferita darebbe un cucciolo che morde per 1d20 - argomento OSSERVATO nella tabella, non inferito, e gia' ricavato sull'Hatori (METODO §5). LE ALTRE SEI non sono perse: stanno complete nel campo `source_2e.age_categories` delle due schede (decisione 36), tabellari e interrogabili, con destinazione generatore_incontri. I DUE VUOTI della fonte non sono piu' pending: la resistenza elementare ereditata (una sola, la fonte non dice quale) e il repertorio di incantesimi (conteggi di slot e carattere offensivo, senza scuola) sono parametri risolti alla generazione, decisione 35. Nessun soffio in nessuna categoria: colonna Breath Weapon 'Nil' su tutte e otto, assenza dichiarata e registrata come tratto `source_only`. Prima voce del bestiario con `type: Dragon`, per indicazione esplicita di fonte. NON ERA UN CASO ISOLATO: Dragon, Amphi e Dragon, Sea in fascia 5 hanno la stessa struttura con dodici categorie ciascuno, e ora hanno un campo e un metodo gia' pronti.",
+     "file": [
+      "mostri/tylor-giovane.json",
+      "mostri/tylor-adolescente.json"
+     ]
+    },
+    {
+     "voce": "Knight, Death",
+     "creature": [
+      "Cavaliere della Morte"
+     ],
+     "stato": "fatto",
+     "note": "Riletta sull'immagine (pag. PDF 55, pdftoppm 56): nessuna correzione necessaria oltre 'l0-sided'->'10-sided' (refuso OCR). TIPO ripetibile confermato (decisione 32), non Lord Soth. 9 DV, un solo attacco (+3 innato, come lo Scheletro Guerriero, stesso archetipo). GS8 con tensione dichiarata: mischia/difesa nude suggerirebbero GS5-6, ma il repertorio 1/giorno (parola potente, palla di fuoco 20d6, resistenza magica 75% con riflessione) porta la stima sopra lo Scheletro Guerriero (GS7). CONFRONTATO con lo statblock di Lord Soth (SotDQ Appendice B, CR19): mischia e palla di fuoco confermate nell'ordine di grandezza giusto (Cataclysmic Fire di Soth ha la stessa media danno, 70, della nostra palla di fuoco 20d6). DECISIONE PRESA in questo giro, in due parti: (1) CA scesa da 20 a 18, non un gradino di estrapolazione ma un tetto — Soth e' il cavaliere della morte di Krynn nell'unica resa ufficiale nota, la scheda di specie non puo' superarlo; (2) power word kill sostituito da 'Parola di Morte' sul modello del Word of Death di Soth (tiro salvezza su Costituzione, danno alto per meta'), con danno calibrato al nostro GS8 (12d10, media 66) e non copiato dai 100 danni di Soth (tarati per CR19) — applica il vincolo 2 e il precedente gia' osservato sui cinque draconici (la 5e aggiunge sistematicamente un tiro salvezza dove il 2e non lo aveva), non una valutazione di potenza. Il GS resta 8: con CA18 e l'incantesimo entro l'idioma la scheda torna coerente senza spostarlo. Dettaglio completo in dati/mostri/cavaliere-della-morte.json (mechanics_5e.challenge_rating.note e traits/'Repertorio magico innato'). Resistenza magica e immunita' allo scacciare restano in gruppo C/PENDING come per lo Scheletro Guerriero (stessa decisione non ancora presa, condivisa fra le due voci).",
+     "file": "mostri/cavaliere-della-morte.json"
+    },
+    {
+     "voce": "Haunt, Knight",
+     "stato": "bloccato",
+     "note": "BLOCCO IN SCRITTURA (filtro di output, non limite del metodo): la voce e' stata letta e analizzata per intero (pag. PDF 47, pdftoppm 48, immagine verificata: NO. APPEARING corretto in '1-8' e DAMAGE/ATTACK in '1-8/1-8', trattini persi nell'estrazione), ma la scrittura della scheda JSON viene bloccata a prescindere dal contenuto del campo `raw` (testato sia con che senza). Non e' un limite di categoria (Dreamwraith ha `raw` compilato ed e' passato; Fetch e Scheletro Guerriero ce l'hanno a null e sono passati anche loro): il blocco sembra specifico a questa voce/momento, non alla famiglia 'non morti con vincoli'. Non riprovato ulteriormente per non rischiare di riformulare il contenuto per aggirare il filtro. Da riprendere in un giro successivo."
+    },
+    {
+     "voce": "Yaggol",
+     "stato": "fatto",
+     "note": "HD9, XP2e 4000 — stesso valore dello Scheletro Guerriero (GS7), controllo incrociato confermato senza rilettura. Nessun analogo SRD (mind flayer vero e' fuori target). Difesa sotto la mediana (CA14/PF85, nessuna resistenza ai danni) media con un'offesa molto sopra (sei attacchi/round: 2 pugni + fino a 4 tentacoli aggancianti, catena aggancio-cervello che uccide in 1d4 turni se non spezzata, piu' esplosione psichica ad area 1/riposo lungo) — divergenza normale fra gli assi, non tensione (stesso principio del Kapak). 50% resistenza magica in gruppo C/rinviata.",
+     "file": "mostri/yaggol.json"
+    },
+    {
+     "voce": "Tayling",
+     "creature": [
+      "Tayling",
+      "Taylang"
+     ],
+     "stato": "fatto",
+     "note": "Gemelli telepatici obbligati: Tayling (4 DV, XP2e2000, GS1/2, ORA CHIUSO — il repertorio di incantesimi 'a scelta del master' (mago liv.1-10 Alterazione o chierico liv.1-10 Elementale) e' PENDING, non fissato dalla fonte, escluso dal GS; l'XP2e (stesso valore di Draconico Sivak/Skrit/Spettro Onirico, tutti GS4) suggerisce che il Tayling completo salira' molto piu' in alto). Taylang (8 DV, XP2e1400, GS3 — divergenza confermata: XP2e storicamente GS1-2, ma il profilo reale (tre attacchi, ~34 danni/round, THAC0 13) e' da GS3-4; prima voce dove il segnale XP2e-GS punta in direzione opposta al profilo letto per intero, non a conferma). Nessun analogo SRD per il legame telepatico; Furia Omicida del Taylang (attivata solo alla morte del gemello) resa con una soglia di PF negativi proporzionale, non contata nel GS base. AGGIORNAMENTO 25/08/2026 (decisione 35): il repertorio non e' piu' PENDING e non e' piu' escluso dal GS. Modellato come filtro sull'SRD (25 incantesimi di Mago Trasmutazione fra 1o e 5o livello per la via mago; 5 della sfera Elementale entro il 5o per quella chierico, via _sfere_5e.py) e ricalcolato: IL GS RESTA 1/2. La previsione della scheda precedente - che il Tayling completo salisse verso GS 3-4 per allinearsi alle altre voci a XP2e 2.000 - e' SMENTITA, perche' i due filtri che la fonte impone selezionano utilita' e controllo, non danno. Lo scarto con l'XP2e resta il piu' ampio del bestiario ma ora ha una causa, non un rimando.",
+     "file": [
+      "mostri/tayling.json",
+      "mostri/taylang.json"
+     ]
+    },
+    {
+     "voce": "Spectral Minion",
+     "stato": "categoria_aperta",
+     "note": "CREATURA-MODELLO: eredita le statistiche di chi imita, esattamente come il Dreamshadow (DV 'Varies', non statblock fisso). Vedi METODO-conversione-mostri.md §5, non convertire con la procedura standard. Sei varianti comportamentali (guardiano/filosofo/ricercatore/guerriero/festaiolo/berserker), non gradi di potenza. Colpibile solo da armi magiche, 20% resistenza magica. Analogo per il profilo generale: Specter."
+    },
+    {
+     "voce": "Wyndlass",
+     "stato": "bloccato",
+     "note": "BLOCCO IN LETTURA/ANALISI (filtro di output, non limite del metodo): fase diversa da Haunt Knight, dove il blocco era arrivato solo in fase di scrittura dopo lettura e analisi complete. Qui il filtro interviene prima ancora che la lettura/analisi della voce sia completata. Non riprovato, non riformulato, non spezzato in parti per non rischiare di aggirare il filtro (stessa cautela di Haunt Knight). Da riprendere in un giro successivo. Dati noti dal riscontro precedente: 12 DV, THAC0 9, undici attacchi (10 tentacoli + morso), 5.000 PE — ordine di grandezza del Cavaliere della Morte. Analogo parziale: Hydra per il numero di attacchi, senza rigenerazione."
+    },
+    {
+     "voce": "Wichtlin",
+     "stato": "fatto",
+     "note": "GS 3. Elfo non morto: due tocchi distinti (paralisi 2d4 round CD12, veleno 2d6 CD12 meta' danno), resistenza alle armi non magiche, immune a veleno/fascino/spossatezza/paralisi propria, contagio su elfi uccisi (diventano wichtlin in 7 giorni), sguardo suggestivo su elfi paralizzati. Variante montata Wichtlin Wild Stag convertita separatamente (GS 1/2, mostri/cervo-selvatico-wichtlin.json). Incantesimi residui da vita precedente lasciati pending (condizionali al singolo esemplare, non alla voce).",
+     "file": "mostri/wichtlin.json"
+    },
+    {
+     "voce": "Imp, Blood Sea",
+     "stato": "fatto",
+     "note": "GS 3 (quinta corrispondenza XP2e975). Polimorfismo fisico/nebbia (forma di nebbia resa come profilo alternativo in un tratto, non scheda duplicata), resistenza alle armi non magiche, immunita' a veleno/fascino/spossatezza/paralisi/freddo, 10% (1d10=1) di scissione se colpito da fulmine. Non e' non morto: type Fiend.",
+     "file": "mostri/imp-mare-di-sangue.json"
+    },
+    {
+     "voce": "Kalothagh (Prickleback)",
+     "stato": "fatto",
+     "note": "GS 1 (XP2e270, allineato a Horax/Jarak-Sinn/Phaethon). Nessun pacchetto difensivo (MAGIC RESISTANCE Nil, niente resistenza alle armi): la complessita' e' di controllo/superficie tattica (volley di 4 aculei velenosi a distanza, aculeo che puo' restare conficcato, impalamento passivo per chi le sta in mischia, 'fa il morto' sotto il 25% PF), non di potenza bruta.",
+     "file": "mostri/kalothagh.json"
     }
-  ]
+   ]
+  },
+  {
+   "fascia": 4,
+   "label": "Nicchia",
+   "voci_totali": 3,
+   "voci": [
+    {
+     "voce": "Shimmerweed",
+     "stato": "fatto",
+     "note": "GS 0 (XP5e10). Erba Scintillante: 1 PF, CA10, immobile, nessuna azione propria. L'unico pericolo (Confusione, CD15 come incantatore 10°) e' un effetto dell'INTERO patch (1 Dado Vita di bersagli per pianta presente), registrato come tratto con destinazione generatore_incontri, non nel GS della singola pianta schedata. BLOCCO A FINE TURNO durante questo giro: non in lettura (Wyndlass) ne' in scrittura (Haunt Knight), ma DOPO la scrittura completa e valida (172 righe, 0 errori schema), durante la produzione del riepilogo. Contenuto innocuo (pianta immobile, nessuna violenza) a differenza delle prime due voci bloccate: la materia della creatura non spiega da sola dove il filtro scatta (osservato in METODO-conversione-mostri.md §3.1, causa non verificata).",
+     "file": "mostri/erba-scintillante.json"
+    },
+    {
+     "voce": "Hatori",
+     "creature": [
+      "Lesser Hatori"
+     ],
+     "stato": "fatto",
+     "note": "GS 5 (XP5e 1.800). Voce a due colonne, seconda colonna (Greater Hatori) confermata fuori target e lasciata in 'fuori_fascia': la ricomposizione aveva tenuto i due livelli separati correttamente, letta insieme ma non convertita. FORMA NUOVA, non prevista dal metodo: la colonna Lesser tiene FISSI CA 2, MV 15, 2 attacchi e 3-18/1-12 su tutta la banda e fa variare solo i Dadi Vita (1-5), con THAC0 'Varies' e XP VALUE 'Variable' invece di numeri. Non e' una famiglia di statblock (niente categorie discrete con capacita' diverse, come il Tylor) ne' una creatura-modello: e' uno statblock unico a Dadi Vita variabili, e METODO §5 ora spiega perche' non va nella lista delle categorie aperte. Scheda fissata sul taglio a 5 DV, l'unico punto interno alla banda che la fonte nomini (la soglia a cui i piccoli lasciano la madre) e che e' anche il confine con la colonna Greater; i tagli piu' giovani sono registrati nel tratto 'Crescita continua'. PRIMO CASO IN CODA SENZA CONTROLLO XP2e: la fonte non stampa un XP, rimanda alle Tabelle 31-32 del DMG 2e perche' dipende dai DV. Il passo 10 della procedura non era eseguibile — mancanza del segnale, non divergenza (METODO §6). Schema: `thac0` allargato a nullable in questo giro per 'Varies'; 0 avrebbe significato l'opposto di 'non dato'.",
+     "file": "mostri/hatori-minore.json"
+    },
+    {
+     "voce": "Spider (of Krynn)",
+     "creature": [
+      "Giant Trap Door Spider"
+     ],
+     "stato": "fatto",
+     "note": "GS 2 (XP5e 450). Voce a due colonne, seconda colonna (Whisper Spider) confermata fuori target e lasciata in 'fuori_fascia': la ricomposizione aveva tenuto i due livelli separati correttamente. Qui le due colonne sono due SPECIE distinte, non due stadi: in comune hanno solo l'aspetto e il paragrafo Ecology, scritto una volta per entrambe e usato anche nella scheda convertita. Analogo SRD Giant Spider (GS 1), adottato pezzo per pezzo e rifiutato pezzo per pezzo (elenco in mechanics_5e.note della scheda): presi CA 14, Camminatore su ragnatela e le statistiche della ragnatela come oggetto; rifiutati i punti ferita (6 dadi, non 4, per i due precedenti interni su HD 2e '4 + 4' — Wichtlin e Kalothagh), le velocita' (MV 3 di fonte -> 10 piedi, contro i 30 dell'analogo) e il veleno con meta' danno a TS riuscito (la fonte e' tutto-o-niente). GS un gradino sopra l'analogo per tre motivi dichiarati dalla fonte: presa che trascina la vittima fuori dallo scontro, percezione tellurica a 45 m, sorpresa quasi automatica. XP2e 420 e' un valore nuovo in tabella e cade fra il gruppo 270->GS1 e il 650 dove il segnale gia' si sfilaccia: conferma senza sorprese, secondo caso dopo il Kalothagh. NO. APPEARING assente dalla pagina stampata per entrambe le colonne, verificato sull'immagine: non 'Nil', non 'See below', riga proprio non stampata. TENSIONE DICHIARATA: il danno per round sta a x1,6 sulla fonte, il minimo osservato del corpus e non il raddoppio pieno del vincolo 3, perche' il veleno e' tutto-o-niente; scritta nella scheda invece di essere nascosta gonfiando i dadi. CONTRADDIZIONE DELLA FONTE in open_questions: MOVEMENT 3 nello statblock, mentre il testo di Combat giustifica il malus alla sorpresa dicendo che il ragno si muove rapido e silenzioso.",
+     "file": "mostri/ragno-botola-gigante.json"
+    }
+   ]
+  },
+  {
+   "fascia": 5,
+   "label": "Fuori target (draghi e alti Dadi Vita) — non serve alla Fase 2, priorita' bassa",
+   "voci_totali": 7,
+   "creature_totali": 9,
+   "voci": [
+    {
+     "voce": "Dragon, Amphi",
+     "stato": "da_fare",
+     "note": "Drago. Analogo: draghi SRD. STESSA STRUTTURA DEL TYLOR, registrata il 25/08/2026: famiglia di statblock a categorie d'eta', qui DODICI (tabella con lunghezza del corpo, CA, soffio, RM, tipo di tesoro e XP per categoria), piu' capacita' che compaiono per soglia e prima non esistono - detect magic da Adulto, suggestion da Vecchio, darkness 15' da Wyrm - e un soffio (acido) il cui danno scala con la categoria. E' finita in questa fascia per i Dadi Vita, NON per la forma, e la coincidenza di forma col Tylor non era mai stata registrata: quando la fascia si aprira' il problema e' gia' inquadrato e la decisione 34 (convertire solo le fasce dentro la finestra dell'arena) si applica gia', senza riscoprirlo da capo. Da leggere insieme a Dragon, Sea, che ha la stessa struttura. AGGIORNAMENTO 25/08/2026: il problema non e' piu' solo inquadrato, e' risolto in linea di principio. La decisione 34 fissa il criterio di taglio, la 36 ha creato il campo `source_2e.age_categories` (progettato apposta per reggere dodici righe, non solo le otto del Tylor) e la 35 tratta soffio e capacita' rinviate come parametri. Quando la fascia si aprira' resta da fare la lettura della voce, non il metodo."
+    },
+    {
+     "voce": "Dragon, Kodragon",
+     "stato": "da_fare",
+     "note": "Drago. Analogo: draghi SRD."
+    },
+    {
+     "voce": "Dragon, Sea",
+     "stato": "da_fare",
+     "note": "Drago. Analogo: draghi SRD. STESSA STRUTTURA DEL TYLOR, registrata il 25/08/2026: famiglia di statblock a categorie d'eta', qui DODICI (tabella con diametro del corpo, CA, soffio, RM, tipo di tesoro e XP per categoria), piu' capacita' che compaiono per soglia - light da Adulto, entangle da Vecchio, suggestion da Wyrm - e due meccaniche che scalano con la categoria: il soffio (cono di vapore) e scaly command, il cui numero di creature controllate e' 4d10 moltiplicato per la categoria d'eta'. Come l'Amphi: in questa fascia per i Dadi Vita, non per la forma. Vale la decisione 34. Da leggere insieme a Dragon, Amphi. AGGIORNAMENTO 25/08/2026: il problema non e' piu' solo inquadrato, e' risolto in linea di principio. La decisione 34 fissa il criterio di taglio, la 36 ha creato il campo `source_2e.age_categories` (progettato apposta per reggere dodici righe, non solo le otto del Tylor) e la 35 tratta soffio e capacita' rinviate come parametri. Quando la fascia si aprira' resta da fare la lettura della voce, non il metodo."
+    },
+    {
+     "voce": "Dragon, Astral",
+     "creature": [
+      "Astral Dragon (unmated)",
+      "Astral Dragon (mated pair)"
+     ],
+     "stato": "da_fare",
+     "note": "Una specie in due stati (solitario, coppia da 35 DV): una riga, non due. Analogo: draghi SRD. CASO DI CONFINE rispetto alla forma del Tylor, registrato il 25/08/2026 perche' non venga accorpato per sbaglio ad Amphi e Sea: NON e' una famiglia per eta', e la fonte lo dichiara esplicitamente (il drago astrale non progredisce per categorie d'eta' come gli altri draghi, le sue statistiche non cambiano finche' non si accoppia). Sono due stati discreti, non una gradazione. La coppia accoppiata ha pero' 'le capacita' di un chierico di 35 livello', repertorio non elencato: quella meta' della voce ricade nella TERZA categoria aperta (incantatore a scelta del master, come il Tayling), non nella seconda. AGGIORNAMENTO 25/08/2026 (decisione 35): le 'capacita' di un chierico di 35o livello' della coppia accoppiata non sono piu' una categoria aperta. Sono un filtro - classe e livello sono dichiarati dalla fonte, manca il campione - e si registra l'insieme accessibile con la scelta concreta alla generazione, come per Tayling e Tylor. Resta vero che la voce NON va accorpata ad Amphi e Sea: due stati discreti, non una gradazione."
+    },
+    {
+     "voce": "Beast, Undead",
+     "creature": [
+      "Stahnk",
+      "Gholor"
+     ],
+     "stato": "da_fare",
+     "note": "24 DV (12+12) ciascuno. Fuori target quanto un drago."
+    },
+    {
+     "voce": "Anemone, Giant",
+     "stato": "da_fare",
+     "note": "16 DV, THAC0 5, 12.000 PE — piu' del doppio dell'Aurak (6.000, il piu' forte dei cinque draconici ufficiali). Una delle creature piu' potenti del bestiario."
+    },
+    {
+     "voce": "Fireshadow",
+     "stato": "da_fare",
+     "note": "13+3 DV (~16), Gargantuan, 11.000 PE — secondo valore piu' alto del bestiario. Evocabile solo da chierico malvagio 8°+."
+    }
+   ]
+  }
+ ],
+ "fuori_fascia": [
+  {
+   "voce": "Stag, The White Stag",
+   "stato": "rinviato",
+   "note": "Unico, allineamento legale buono, 2.000 PE, capacita' magiche (find the path, speak with animals a volonta', bless 3/giorno). Creatura sacra da incontro narrativo, non un avversario da bestiario. Da schedare quando esiste uno schema per creature uniche/da avventura (vicino allo schema Personaggio), non forzare qui."
+  },
+  {
+   "voce": "Hatori, Greater",
+   "stato": "rinviato",
+   "note": "Stessa voce di 'Hatori' (fascia 4, coda), seconda colonna: variante adulta, 6-20 DV, fuori target quanto un drago. Va letta insieme quando si convertira' Lesser Hatori, non ristatuita in Fase 2."
+  },
+  {
+   "voce": "Spider, Whisper",
+   "stato": "rinviato",
+   "note": "Stessa voce di 'Spider (of Krynn)' (fascia 4, coda), seconda colonna: specie distinta, 16 DV (8+8), fuori target quanto un drago. Va letta insieme quando si convertira' Giant Trap Door Spider, non ristatuita in Fase 2."
+  }
+ ],
+ "categorie_aperte": [
+  {
+   "nome": "creature-modello",
+   "voci": [
+    "Dreamshadow",
+    "Spectral Minion"
+   ],
+   "nota": "Statistiche ereditate da un bersaglio ('as creature or person mimicked' / 'quelli della vita precedente'), non fisse. Serve un pacchetto di regole che copia un bersaglio, non uno statblock: la conversione e' di un meccanismo, non di un valore. UNICA CATEGORIA ANCORA APERTA dal 25/08/2026, quando le altre due sono state chiuse (vedi `categorie_risolte`). METODO-conversione-mostri.md §5."
+  }
+ ],
+ "categorie_risolte": [
+  {
+   "nome": "famiglie di statblock",
+   "voci": [
+    "Tylor"
+   ],
+   "decisione": "34 + 36 (25/08/2026)",
+   "nota": "Tabella di categorie d'eta' con DV/CA/capacita' propri per riga. Risolta in due pezzi: la decisione 34 dice QUANTE righe diventano schede (solo quelle dentro la finestra dell'arena, indicativamente GS 1/4-4; il confine alto lo indica la fonte quando l'XP salta, quello basso il danno fisso che descrive l'adulto), la decisione 36 dice DOVE finiscono le altre (campo `source_2e.age_categories`, tabellare e interrogabile, non prosa in abilities_text). Applicata al Tylor: due schede su otto righe. Dragon, Amphi e Dragon, Sea (fascia 5, dodici righe ciascuno) useranno lo stesso metodo senza riaprirlo. METODO-conversione-mostri.md §5."
+  },
+  {
+   "nome": "incantatore a scelta del master",
+   "voci": [
+    "Tayling"
+   ],
+   "decisione": "35 (25/08/2026)",
+   "nota": "Non era una lacuna della fonte ma un FILTRO: la fonte da' i vincoli (scuola, sfera, livello, conteggi di slot, carattere) e non il campione. Si registra l'insieme accessibile e la scelta concreta avviene alla generazione dell'incontro; la capacita' non resta pending e non e' esclusa dal GS. La macchina esisteva gia': le sfere come filtro di preparazione sono la decisione 24 (_sfere_5e.py) e la scuola e' un campo indicizzato dei 319 incantesimi SRD. Applicata al Tayling (GS 1/2 confermato, non spostato), al Tylor (filtro piu' largo: solo slot e carattere) e alla meta' accoppiata del Dragon Astral. METODO-conversione-mostri.md §5."
+  }
+ ]
 }

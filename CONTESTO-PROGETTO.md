@@ -1,6 +1,6 @@
 # Dragonlance Web GDR — contesto di progetto
 
-*Generato da `genera_contesto.py` il 2026-08-20.*
+*Generato da `genera_contesto.py` il 2026-08-25.*
 
 > **Come leggere questo documento.** Ogni numero, tabella e percentuale è
 > **derivato dai JSON** al momento della generazione: se un dato cambia, cambia
@@ -22,7 +22,7 @@
 
 ---
 
-## Le 33 decisioni prese
+## Le 37 decisioni prese
 
 Ordine cronologico. Questa è la storia completa delle scelte: non serve
 ricostruirla dalle sezioni.
@@ -60,6 +60,10 @@ ricostruirla dalle sezioni.
 31. **Soglia degli incantesimi innati dei Dargonesti** — **Opzione C**: tre soglie scalate (3°, 5°, 7°) invece del 10° unico della fonte o di una soglia bassa unica. Il 10° livello 2e non era "tardi" — era metà carriera in un sistema che arrivava al 20° e oltre: copiarlo senza riscalarlo tradisce la sostanza pur conservando la cifra, lo stesso errore già segnalato per i valori XP del bestiario. Concentrare i tre incantesimi in un'unica soglia bassa perderebbe la gradualità che la fonte aveva scelto. Le tre soglie, leggermente più tarde del tiefling PHB 2014 (1°/3°/5°) per conservare lo scarto di "metà carriera" dentro la fascia giocabile, rientrano comunque nella decisione 16: dove la 5e ha già un equivalente per i tratti razziali con incantesimi, si copia quel modello. Il 10° livello della fonte resta intatto in `source_2e`, non riscritto.
 32. **Creatura contro entità nel bestiario** — **Riformulata** dopo un primo tentativo scorretto (che confondeva "legato a un oggetto" con "unico"). Il criterio è: ha un **nome proprio e una storia** → entità (es. il Cavaliere della Morte è, nella tradizione del setting, un individuo particolare — ma la voce dell'Appendice stessa descrive un **tipo** ripetibile, "a Knight of Solamnia, cursed...", non un nome). È un **tipo/procedura ripetibile**, anche se potente e vincolato a un oggetto magico → creatura, si converte come le altre al suo vero grado di sfida. Il Warrior Skeleton (uno stregone lega l'anima di un guerriero potente a un diadema: procedura ripetibile, diademi e guerrieri diversi) è quindi una creatura, non un'entità unica. Il diadema di controllo non va rimandato alla Fase 3: è materiale da arena giocabile (raggio, condizione di perdita, inseguimento a velocità doppia), non colore descrittivo. La categoria entità resta per ora **vuota**: nessuna delle 62 voci lette ci è ricaduta, il criterio ha retto respingendo l'unica candidata.
 33. **Schema oggetti a parte** — `dati/schema/oggetto.schema.json`, stessa architettura a doppio strato di razze/classi/mostri. Il diadema dello Scheletro Guerriero non poteva restare dentro il mostro: è riutilizzabile su guerrieri diversi (decisione 32), quindi appartiene a sé quanto una spada appartiene a chi la impugna. Lo schema copre tre casi, non uno: equipaggiamento ordinario (armi/armature/attrezzatura — il buco più urgente per l'arena, dove oggi mancano perfino i danni di una spada lunga), oggetti magici, e oggetti con una creatura legata. Il diadema è il primo caso concreto, non il modello: gli altri due casi restano da popolare. Nel mostro resta un riferimento all'oggetto (`mechanics_5e.oggetti_collegati` di mostro.schema.json), non l'oggetto stesso.
+34. **Non tutte le categorie d'età si convertono** — Alcune voci del bestiario non danno uno statblock ma una **tabella di categorie d'età** con DV, CA e capacità propri per riga: il Tylor ne ha otto, Dragon Amphi e Dragon Sea dodici ciascuno — 32 schede per tre creature, quasi tutte inutilizzabili in arena. Si convertono **solo le righe dentro la finestra dell'arena**, indicativamente GS 1/4-4; le altre restano come dato completo, disponibili per incontri particolari e antagonisti nelle storie originali, stesso trattamento dei dati di mondo del gruppo A della decisione 27. **Il taglio non è a piacere**: in alto lo indica la fonte con un salto nei propri numeri (sul Tylor l'XP passa da 975 alla 4ª categoria a 9.000 alla 5ª, fattore nove in un gradino); in basso lo decide ciò che la tabella tiene fisso, perché un danno identico su tutte le categorie descrive l'adulto e renderebbe incoerente il cucciolo — è la stessa regola già ricavata sull'Hatori Minore, che qui ha retto fuori dal caso che l'aveva prodotta. Applicata al Tylor: due schede su otto righe, la 3ª e la 4ª categoria, scritte nello stesso giro per graduarle a confronto.
+35. **I repertori rinviati sono filtri, non liste** — Quando la fonte rimanda una capacità "a scelta del master", **non tace: dà il filtro e non il campione**. Il Tayling fissa scuola (Alterazione) e sfera (Elementale) con banda di livello 1-10; il Tylor fissa i conteggi di slot e il carattere offensivo; la coppia accoppiata del Dragon Astral fissa classe e livello. Si modella quindi come **specifica di filtro**: si registra l'insieme accessibile secondo i vincoli della fonte, e la scelta concreta avviene alla generazione dell'incontro. Conseguenza operativa: il repertorio **non resta `pending` e non è escluso dal calcolo del Grado di Sfida** — entra come capacità con insieme definito. La macchina esisteva già: le sfere come filtro di preparazione sono la decisione 24 (`dati/_sfere_5e.py`), la scuola è un campo indicizzato dei 319 incantesimi SRD. Stesso trattamento per i parametri non magici lasciati aperti, come l'unica resistenza elementare del Tylor: un parametro risolto alla generazione, non una moltiplicazione di schede. È più facile nel nostro bersaglio che a tavolo — la 5e cartacea deve stampare una lista fissa, un motore software pesca dall'insieme filtrato ogni volta. **Il primo esito ha già smentito una previsione**: il GS provvisorio del Tayling era dato in salita verso 3-4, e applicando davvero il filtro resta 1/2, perché Alterazione ed Elementale selezionano utilità e controllo, non danno. Un `pending` non è neutro: è una stima nascosta.
+36. **Campo strutturato per le fasce non convertite** — Le righe che la decisione 34 non converte non vanno in `abilities_text`: la trascrizione in prosa perde la struttura, e Amphi e Sea arriveranno con dodici righe per una dozzina di colonne. Campo nuovo in `mostro.schema.json`, `source_2e.age_categories`, tabellare e interrogabile, dimensionato per reggere sia le otto righe del Tylor sia le dodici dei draghi. Dichiara le colonne che **quella** voce usa (il Tylor non ha soffio, i draghi sì) invece di fissarne un elenco valido per tutti, e marca `inferita: true` le colonne di cui trascriviamo i numeri ma interpretiamo il significato — sul Tylor è `Hit Die Modifier`, che la fonte stampa senza dire se valga per Dado Vita o sul totale. Ogni scheda derivata porta la tabella intera, non solo la propria riga. Stessa forma di estensione già fatta per `thac0` reso nullable sull'Hatori: lo schema si allarga quando una voce reale lo richiede, non prima.
+37. **`dati/mostri.coda.json` è pubblico per scelta** — Tolto da `PERCORSI` in `git-privato.sh`. Il contenuto è analisi nostra più valori di statblock — che per il criterio della decisione sul testo dei manuali sono **fatti, non espressione** — e le due citazioni brevi rientrano nello standard già accettato. Il vero problema non era la riservatezza ma il **doppio tracciamento**: era l'unico file dell'intero progetto tracciato da entrambi i repository, quindi lo stesso file in due storie che divergono in silenzio. Riscrivere la storia privata per undici parole non è proporzionato: si smette di tracciarlo da qui in avanti. Verifica fatta su tutto l'elenco (`comm -12` fra le due liste di file tracciati): era l'unico caso, gli altri 25 percorsi sono coperti dal `.gitignore` pubblico. Il difetto si riforma se un percorso nuovo entra in `PERCORSI` senza essere escluso dal pubblico — è la stessa zona morta già vista con `dati/oggetti/`.
 
 ---
 
@@ -108,7 +112,7 @@ caratteristica, conservata perché è del manuale:
 - Nano delle Colline (Neidar) (CAR -1, max 12)
 - Nano delle Montagne (Hylar / Daewar) (CAR -1, max 16)
 
-> **Lettura interpretativa** — registrata il 2026-08-20. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-08-25. Non e' derivata dai dati.
 >
 > Il netto va da +0 a +2: nessuna razza raggiunge il +3 che la 5e
 > 2014 assegna di norma. Non va pareggiato. Le razze di Krynn non vengono mescolate
@@ -142,7 +146,7 @@ La velocità è derivata dai **tassi MV della 2e**, non dalla taglia.
 | 9 | 25 ft | Irda (Alto Ogre), Kender |
 | 12 | 30 ft | Barbaro, Elfo Dargonesti (Elfo degli Abissi), Elfo Dimernesti (Elfo dei Bassifondi), Elfo Kagonesti, Elfo Qualinesti, Elfo Silvanesti, Mezzelfo, Minotauro, Umano |
 
-> **Lettura interpretativa** — registrata il 2026-08-20. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-08-25. Non e' derivata dai dati.
 >
 > Derivare la velocità dalla taglia invertiva l'ordinamento della fonte: i nani
 > finivano a 30 e i Kender a 25, cioè il nano correva più del Kender. La 5e stessa
@@ -224,7 +228,7 @@ ottengano.
 - **Nessuna classe ha una tabella di THAC0 o di tiri salvezza**: valgono quelle di
   gruppo del PHB 2e, che non sono ancora nei dati.
 
-> **Lettura interpretativa** — registrata il 2026-08-20. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-08-25. Non e' derivata dai dati.
 >
 > Le classi di Krynn non sono classi nel senso della 5e: sono profili di
 > restrizione appoggiati sulle classi base della 2e. Convertirle non è un lavoro di
@@ -285,7 +289,7 @@ come sottoclasse. Accesso minore: solo fino al 3° livello, come in 2e.
 - Delle 105 voci, 28 sono attribuzioni nostre e non ereditate da un
   antenato 2e: restano marcate `nostra` nel dato.
 
-> **Lettura interpretativa** — registrata il 2026-08-20. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-08-25. Non e' derivata dai dati.
 >
 > 1 sfera 2e non trova un solo incantesimo nella lista base del chierico 5e:
 > Plant. Animal ne trova 1, Weather 1. Non è un difetto della mappatura:
@@ -376,7 +380,7 @@ Combinazioni sotto l'1%:
 |---|---|---:|---:|
 | Nano Sozzo (Aghar) | `barbaro` | 0,249% | 1 ogni 402 |
 
-> **Lettura interpretativa** — registrata il 2026-08-20. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-08-25. Non e' derivata dai dati.
 >
 > **Perché si tira.** Sotto point-buy due percorsi erano matematicamente
 > impossibili — il Cavaliere e il Cavaliere della Rosa — e il Nano Sozzo non aveva
@@ -440,7 +444,7 @@ Combinazioni sotto l'1%:
 | Umano | 3 | 0 | 0 | 0 | 3 | 0 |
 | Barbaro | 2 | 0 | 2 | 0 | 0 | 0 |
 
-> **Lettura interpretativa** — registrata il 2026-08-20. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-08-25. Non e' derivata dai dati.
 >
 > Su 105 tratti, 70 vengono dal PHB 2e (67%) e
 > 32 dalle fonti di Krynn (30%). La densità apparente di una
@@ -513,31 +517,7 @@ disponibile, non estratto.**
 
 ## Il bestiario — diagnostica
 
-Rapporto completo in `dati/RAPPORTO-bestiario.md`. Come convertire:
-`dati/METODO-conversione-mostri.md`. Coda di lavoro (stato voce per voce):
-`dati/mostri.coda.json`.
-
-### Punto di ripresa — 21/08/2026
-
-**47 creature convertite** in `dati/mostri/` (validate contro
-`dati/schema/mostro.schema.json`, indicizzate in `dati/mostri.index.json`).
-Fascia 3 (identitari senza analogo pulito) **esaurita nella parte
-ordinaria**: quello che resta lì non è lavoro da fare col metodo standard,
-è lavoro rimandato per decisione.
-
-| stato | voci | dove |
-|---|---:|---|
-| convertite | 47 creature (23 voci) | fasce 1-3, vedi `convertite` in coda |
-| categorie aperte (bisogno di una decisione, non del metodo) | 3 | Dreamshadow, Spectral Minion (creature-modello), Tylor (famiglia di statblock) — fascia 3, `METODO-conversione-mostri.md` §5 |
-| bloccate (filtro d'output, non limite del metodo) | 2 | Haunt Knight (blocco in scrittura), Wyndlass (blocco in lettura/analisi) — fascia 3 |
-| in coda, fascia 4 (nicchia) | 3 voci | Shimmerweed, Hatori, Spider (of Krynn) — prossimo giro |
-| in coda, fascia 5 (fuori target, bassa priorità) | 7 voci | draghi e creature ad alti Dadi Vita, non serve alla Fase 2 |
-
-Per riprendere: `dati/mostri.coda.json` (stato per voce, sezione
-`categorie_aperte` per l'indice delle tre voci sopra) +
-`dati/METODO-conversione-mostri.md` (§4 procedura, §5 categorie aperte, §6
-tabella XP2e↔GS). `python3 dati/verifica_coda.py` controlla che le due fonti
-non si sfasino (sdoppiamenti voce/fascia e stato-vs-categorie-aperte).
+Rapporto completo in `dati/RAPPORTO-bestiario.md`. **52 creature convertite** in `dati/mostri/` (le altre restano da fare: vedi "Il conteggio vero del bestiario" e "Parte 5" nel rapporto per il numero, che non è ancora definitivo).
 
 **La scheda mostro 2e ha 21 campi**: 2 passano diretti in 5e, 12 vanno
 convertiti, **7 non hanno alcun corrispettivo** — FREQUENCY, ORGANIZATION, ACTIVITY CYCLE, DIET, NO. APPEARING, MAGIC RESISTANCE, MORALE.
@@ -567,7 +547,7 @@ attacco da 1-4.
 perché i dadi vita della 2e misurano solo la resistenza. **Il Kapak ha cambiato
 asse.**
 
-> **Lettura interpretativa** — registrata il 2026-08-20. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-08-25. Non e' derivata dai dati.
 >
 > **Non esiste una formula estraibile da cinque casi.** Una regolarità si
 > intravede — grado di sfida uguale ai dadi vita meno due — e tiene per quattro
@@ -648,7 +628,7 @@ pagina:
 
 **8 nomi di voce erano sbagliati** nel testo estratto, non i quattro noti.
 
-> **Lettura interpretativa** — registrata il 2026-08-20. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-08-25. Non e' derivata dai dati.
 >
 > **L'estrazione non ha solo sbagliato i nomi: ha perso dei dati.** In tre voci
 > le colonne di destra sono sparite del tutto — `Avian` aveva quattro uccelli e ne
@@ -710,7 +690,7 @@ I metadati ID3 non dichiarano né autore né etichetta né provenienza: l'unico 
 
 ### Richiedono una decisione
 
-> **Lettura interpretativa** — registrata il 2026-08-20. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-08-25. Non e' derivata dai dati.
 >
 > - **Il PHB 5e 2014 non è fra i PDF**: la cartella contiene solo edizioni 2024.
 >   Alternativa disponibile: `2014.5e.tools`, che espone il materiale 2014 come
