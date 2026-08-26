@@ -34,6 +34,13 @@ dati/classi/
 dati/divinita/
 dati/mostri/
 dati/oggetti/
+# Modelli applicabili a un ospite (decisione 38): dreamshadow, spectral-minion,
+# dreamwraith. Stesso motivo delle cartelle sopra — ogni file porta `source_2e`
+# con il blocco statistiche trascritto e le capacita' citate dalla fonte. La
+# cartella e' esclusa qui NELLO STESSO COMMIT che ha creato il primo file, e
+# aggiunta a PERCORSI in git-privato.sh nello stesso momento: e' la regola di
+# CLAUDE.md 1, applicata alla nascita e non a posteriori come per dati/oggetti/.
+dati/modelli/
 dati/*.index.json
 
 # Moduli e dati di trascrizione: contengono i testi 2e verbatim.
@@ -120,6 +127,7 @@ CLAUDE.local.md
 !dati/valida_classi.py
 !dati/valida_divinita.py
 !dati/valida_mostri.py
+!dati/valida_modelli.py
 !dati/RAPPORTO-*.md
 !dati/DOSSIER-*.md
 

@@ -1,8 +1,8 @@
 # Istruzioni di progetto
 
 Contratto di comportamento, non documentazione. Per il progetto vedi
-`CONTESTO-PROGETTO.md` (stato e le 33 decisioni). Se una regola qui sotto
-viene ignorata, il danno è reale, non stilistico.
+`CONTESTO-PROGETTO.md` (stato e l'elenco completo delle decisioni). Se una
+regola qui sotto viene ignorata, il danno è reale, non stilistico.
 
 La lingua di lavoro è l'ITALIANO: commit, rapporti, commenti, e le risposte
 in sessione. Vale da subito in ogni sessione nuova, non solo dopo che la
@@ -97,7 +97,9 @@ scansioni in coda e **non tocca git**. Dettaglio in `divisione-del-lavoro.md`.
 
 ## 6. Rimandi
 
-- `CONTESTO-PROGETTO.md` — stato del progetto e le 33 decisioni.
+- `CONTESTO-PROGETTO.md` — stato del progetto e le decisioni prese, in ordine
+  cronologico. Il numero cresce: il documento e' generato da `genera_contesto.py`,
+  quindi si legge li' e non si ricopia qui.
 - `dati/RAPPORTO-*.md` — diagnostiche generate.
 - `dati/LEGGIMI.md` — struttura dei dati e convenzione delle pagine.
 - `divisione-del-lavoro.md` — chi fa cosa.

@@ -1,6 +1,6 @@
 # Dragonlance Web GDR — contesto di progetto
 
-*Generato da `genera_contesto.py` il 2026-08-25.*
+*Generato da `genera_contesto.py` il 2026-08-26.*
 
 > **Come leggere questo documento.** Ogni numero, tabella e percentuale è
 > **derivato dai JSON** al momento della generazione: se un dato cambia, cambia
@@ -22,7 +22,7 @@
 
 ---
 
-## Le 37 decisioni prese
+## Le 41 decisioni prese
 
 Ordine cronologico. Questa è la storia completa delle scelte: non serve
 ricostruirla dalle sezioni.
@@ -64,6 +64,10 @@ ricostruirla dalle sezioni.
 35. **I repertori rinviati sono filtri, non liste** — Quando la fonte rimanda una capacità "a scelta del master", **non tace: dà il filtro e non il campione**. Il Tayling fissa scuola (Alterazione) e sfera (Elementale) con banda di livello 1-10; il Tylor fissa i conteggi di slot e il carattere offensivo; la coppia accoppiata del Dragon Astral fissa classe e livello. Si modella quindi come **specifica di filtro**: si registra l'insieme accessibile secondo i vincoli della fonte, e la scelta concreta avviene alla generazione dell'incontro. Conseguenza operativa: il repertorio **non resta `pending` e non è escluso dal calcolo del Grado di Sfida** — entra come capacità con insieme definito. La macchina esisteva già: le sfere come filtro di preparazione sono la decisione 24 (`dati/_sfere_5e.py`), la scuola è un campo indicizzato dei 319 incantesimi SRD. Stesso trattamento per i parametri non magici lasciati aperti, come l'unica resistenza elementare del Tylor: un parametro risolto alla generazione, non una moltiplicazione di schede. È più facile nel nostro bersaglio che a tavolo — la 5e cartacea deve stampare una lista fissa, un motore software pesca dall'insieme filtrato ogni volta. **Il primo esito ha già smentito una previsione**: il GS provvisorio del Tayling era dato in salita verso 3-4, e applicando davvero il filtro resta 1/2, perché Alterazione ed Elementale selezionano utilità e controllo, non danno. Un `pending` non è neutro: è una stima nascosta.
 36. **Campo strutturato per le fasce non convertite** — Le righe che la decisione 34 non converte non vanno in `abilities_text`: la trascrizione in prosa perde la struttura, e Amphi e Sea arriveranno con dodici righe per una dozzina di colonne. Campo nuovo in `mostro.schema.json`, `source_2e.age_categories`, tabellare e interrogabile, dimensionato per reggere sia le otto righe del Tylor sia le dodici dei draghi. Dichiara le colonne che **quella** voce usa (il Tylor non ha soffio, i draghi sì) invece di fissarne un elenco valido per tutti, e marca `inferita: true` le colonne di cui trascriviamo i numeri ma interpretiamo il significato — sul Tylor è `Hit Die Modifier`, che la fonte stampa senza dire se valga per Dado Vita o sul totale. Ogni scheda derivata porta la tabella intera, non solo la propria riga. Stessa forma di estensione già fatta per `thac0` reso nullable sull'Hatori: lo schema si allarga quando una voce reale lo richiede, non prima.
 37. **`dati/mostri.coda.json` è pubblico per scelta** — Tolto da `PERCORSI` in `git-privato.sh`. Il contenuto è analisi nostra più valori di statblock — che per il criterio della decisione sul testo dei manuali sono **fatti, non espressione** — e le due citazioni brevi rientrano nello standard già accettato. Il vero problema non era la riservatezza ma il **doppio tracciamento**: era l'unico file dell'intero progetto tracciato da entrambi i repository, quindi lo stesso file in due storie che divergono in silenzio. Riscrivere la storia privata per undici parole non è proporzionato: si smette di tracciarlo da qui in avanti. Verifica fatta su tutto l'elenco (`comm -12` fra le due liste di file tracciati): era l'unico caso, gli altri 25 percorsi sono coperti dal `.gitignore` pubblico. Il difetto si riforma se un percorso nuovo entra in `PERCORSI` senza essere escluso dal pubblico — è la stessa zona morta già vista con `dati/oggetti/`.
+38. **I modelli hanno schema proprio** — `dati/schema/modello.schema.json`, stesso criterio della decisione 33 sugli oggetti: quando una cosa è applicabile a bersagli diversi non appartiene a nessuno di loro e prende schema proprio. Un **modello** non è una creatura — è un pacchetto di regole che si applica a un **ospite** e descrive quattro cose: cosa **eredita** dall'ospite, cosa **sovrascrive** con valore proprio, cosa **aggiunge** di suo, e quale insieme di ospiti è **legale**. Non poteva stare in `mostro.schema.json`, che pretende CA, punti ferita e Grado di Sfida: un modello non ha nessuno dei tre finché non gli si dà un ospite. Tre casi coperti, ed è la loro distanza a dare la forma allo schema: **Dreamshadow** eredita tutto e non ha guscio; **Spectral Minion** eredita il solo profilo di combattimento (Dadi Vita, attacco, danno) e tiene un guscio proprio (CA 2, colpibile solo da armi +1, resistenza magica 20%); **Dreamwraith** eredita sei righe — tre delle quali arrivano alla scheda — con CA e Dadi Vita *dichiarati invarianti dalla fonte*, e ha perciò anche una scheda di mostro. **Il Dreamwraith è stato il collaudo**: scritto per primo su una conversione già chiusa, fatta senza conoscere questo schema, ha retto senza forzarla e ha prodotto quattro campi che nessuno dei due casi nuovi avrebbe richiesto — `monster_id` (un modello può avere anche una scheda, e allora non la duplica), `destinazione` sulle voci ereditate (sei righe ereditate, tre in scheda e tre al generatore di incontri), `origine: terzo` (la resistenza magica non viene né dal modello né dall'ospite ma dal livello del sogno) e la forma `proprio` del grado. La scheda referenzia il modello con `mechanics_5e.modelli_collegati`, come già fa con gli oggetti. Il controllo della decisione 37 sul doppio tracciamento è stato rifatto con `dati/modelli/` dentro: la cartella è esclusa dal `.gitignore` pubblico ed elencata in `PERCORSI` nello stesso commit che ha creato il primo file, come CLAUDE.md prescrive.
+39. **Il bersaglio legale è un filtro** — Si applica la decisione 35 senza aggiungere nulla. La fonte **dà il filtro e non il campione**: «umano o demiumano morto prima di aver compiuto un voto» per lo Spectral Minion, «creatura o persona nota al sognatore o a chiunque stia vivendo il sogno» per il Dreamshadow. Si registra l'insieme legale — in prosa e in criteri interrogabili — e la scelta concreta avviene alla generazione. Lo schema lo rende **strutturale invece che raccomandato**: i campi `campione` e `scelta_alla_generazione` accettano un solo valore ciascuno (`null` e `true`), quindi fissare qui un ospite scelto da noi è impossibile, non solo sconsigliato. Gli ospiti che la fonte nomina restano registrati a parte come `esempi_dalla_fonte`, che allargano il campo e non lo restringono.
+40. **Un modello non ha grado, ha uno scarto** — Era la domanda senza precedente, e la risposta è che **il grado non gli appartiene**. Il Dreamshadow con l'aspetto di un ratto e quello con l'aspetto di un ogre sono la stessa cosa su bersagli diversi: assegnargli un Grado di Sfida significherebbe fissare l'ospite, cioè decidere ciò che la fonte lascia aperto — lo stesso errore che la decisione 34 ha evitato moltiplicando le schede per età. Si registra quindi la **modifica** al grado dell'ospite, non un valore assoluto, in tre forme che i tre casi hanno prodotto da soli. **Delta** (Dreamshadow): la fonte stessa ragiona per scarto — delle ventuno righe del blocco statistiche, `XP VALUE` è l'unica che non rimanda all'ospite, e ci scrive sopra «+ 10%». Un +10% non arriva a un quarto del salto più stretto fra due valori XP2e osservati nel bestiario (1.400 → 2.000, circa +43%): lo scarto di grado è **0**, ed è un'affermazione, non un'incertezza. **Non derivabile** (Spectral Minion): i due valori XP2e (975 e 1.400) restano confrontabili con la tabella del passo 10 e **l'uso è registrato** — servono a confermare che le sei fasce di comportamento hanno pesi diversi e che il taglio della fonte è 3+3, non a derivare un grado, perché senza Dadi Vita non ci sono punti ferita e senza punti ferita non c'è grado. Il confronto dà anche un secondo motivo indipendente: la riga 975 della tabella è la più compatta del bestiario (ogni voce convertita con quell'XP è finita a GS 3), la riga 1.400 è fra le più larghe (GS 1, 2 e 3), quindi è proprio il valore alto dei due il meno informativo. **Proprio** (Dreamwraith): la fonte ha già chiuso il modello in una creatura, il grado è legittimo e abita la scheda. Il campo `usato_per_derivare_gs: false` obbliga a compilare `uso_dichiarato`, perché un valore di fonte registrato senza dire che uso se ne fa è una stima nascosta — la lezione della decisione 35, resa vincolo di schema.
+41. **La sconfessione è una regola condivisa** — La procedura di sconfessione delle illusioni (*Disbelieving Illusions*: quattro passi e una tabella di modificatori di concentrazione) è condivisa fra Dreamshadow e Dreamwraith, sta stampata nella voce del secondo, e il primo non si può scrivere senza. **Vive nel modello, non nelle due schede**: il Dreamwraith smette di portarla come rinvio aperto e la riferisce. È anche il motivo migliore per cui lo schema dei modelli deve esistere — è la prima cosa davvero condivisa fra due creature del bestiario. Si scrive una volta sola: un modello la porta come `definizione`, gli altri come `riferimento`, e il validatore rifiuta una seconda definizione dello stesso id. **Il modello porta un parametro, mai un valore fisso**: contro il Dreamwraith c'è una penalità di **−5** che contro il Dreamshadow non c'è, e i due differiscono anche su un secondo parametro (il Dreamshadow «cannot be disbelieved into non-existence», quindi sconfessarlo protegge chi ci riesce ma non lo elimina). Il −5 è stato riletto sull'immagine di pagina prima di scriverlo: l'OCR di quella voce perde i segni meno con regolarità, come già accaduto su `NO. APPEARING` e sul bonus d'iniziativa della stessa creatura. **Sede provvisoria, dichiarata**: la casa naturale di una regola di sistema è uno schema di regole che il progetto non ha ancora — lo stesso rinvio già registrato per il *mindspin* e i Dragon Orbs. Quando esisterà, la definizione trasloca e tutti i portatori diventano riferimenti: un blocco solo da spostare, non una riscrittura.
 
 ---
 
@@ -112,7 +116,7 @@ caratteristica, conservata perché è del manuale:
 - Nano delle Colline (Neidar) (CAR -1, max 12)
 - Nano delle Montagne (Hylar / Daewar) (CAR -1, max 16)
 
-> **Lettura interpretativa** — registrata il 2026-08-25. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-08-26. Non e' derivata dai dati.
 >
 > Il netto va da +0 a +2: nessuna razza raggiunge il +3 che la 5e
 > 2014 assegna di norma. Non va pareggiato. Le razze di Krynn non vengono mescolate
@@ -146,7 +150,7 @@ La velocità è derivata dai **tassi MV della 2e**, non dalla taglia.
 | 9 | 25 ft | Irda (Alto Ogre), Kender |
 | 12 | 30 ft | Barbaro, Elfo Dargonesti (Elfo degli Abissi), Elfo Dimernesti (Elfo dei Bassifondi), Elfo Kagonesti, Elfo Qualinesti, Elfo Silvanesti, Mezzelfo, Minotauro, Umano |
 
-> **Lettura interpretativa** — registrata il 2026-08-25. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-08-26. Non e' derivata dai dati.
 >
 > Derivare la velocità dalla taglia invertiva l'ordinamento della fonte: i nani
 > finivano a 30 e i Kender a 25, cioè il nano correva più del Kender. La 5e stessa
@@ -228,7 +232,7 @@ ottengano.
 - **Nessuna classe ha una tabella di THAC0 o di tiri salvezza**: valgono quelle di
   gruppo del PHB 2e, che non sono ancora nei dati.
 
-> **Lettura interpretativa** — registrata il 2026-08-25. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-08-26. Non e' derivata dai dati.
 >
 > Le classi di Krynn non sono classi nel senso della 5e: sono profili di
 > restrizione appoggiati sulle classi base della 2e. Convertirle non è un lavoro di
@@ -289,7 +293,7 @@ come sottoclasse. Accesso minore: solo fino al 3° livello, come in 2e.
 - Delle 105 voci, 28 sono attribuzioni nostre e non ereditate da un
   antenato 2e: restano marcate `nostra` nel dato.
 
-> **Lettura interpretativa** — registrata il 2026-08-25. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-08-26. Non e' derivata dai dati.
 >
 > 1 sfera 2e non trova un solo incantesimo nella lista base del chierico 5e:
 > Plant. Animal ne trova 1, Weather 1. Non è un difetto della mappatura:
@@ -380,7 +384,7 @@ Combinazioni sotto l'1%:
 |---|---|---:|---:|
 | Nano Sozzo (Aghar) | `barbaro` | 0,249% | 1 ogni 402 |
 
-> **Lettura interpretativa** — registrata il 2026-08-25. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-08-26. Non e' derivata dai dati.
 >
 > **Perché si tira.** Sotto point-buy due percorsi erano matematicamente
 > impossibili — il Cavaliere e il Cavaliere della Rosa — e il Nano Sozzo non aveva
@@ -444,7 +448,7 @@ Combinazioni sotto l'1%:
 | Umano | 3 | 0 | 0 | 0 | 3 | 0 |
 | Barbaro | 2 | 0 | 2 | 0 | 0 | 0 |
 
-> **Lettura interpretativa** — registrata il 2026-08-25. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-08-26. Non e' derivata dai dati.
 >
 > Su 105 tratti, 70 vengono dal PHB 2e (67%) e
 > 32 dalle fonti di Krynn (30%). La densità apparente di una
@@ -547,7 +551,7 @@ attacco da 1-4.
 perché i dadi vita della 2e misurano solo la resistenza. **Il Kapak ha cambiato
 asse.**
 
-> **Lettura interpretativa** — registrata il 2026-08-25. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-08-26. Non e' derivata dai dati.
 >
 > **Non esiste una formula estraibile da cinque casi.** Una regolarità si
 > intravede — grado di sfida uguale ai dadi vita meno due — e tiene per quattro
@@ -628,7 +632,7 @@ pagina:
 
 **8 nomi di voce erano sbagliati** nel testo estratto, non i quattro noti.
 
-> **Lettura interpretativa** — registrata il 2026-08-25. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-08-26. Non e' derivata dai dati.
 >
 > **L'estrazione non ha solo sbagliato i nomi: ha perso dei dati.** In tre voci
 > le colonne di destra sono sparite del tutto — `Avian` aveva quattro uccelli e ne
@@ -690,7 +694,7 @@ I metadati ID3 non dichiarano né autore né etichetta né provenienza: l'unico 
 
 ### Richiedono una decisione
 
-> **Lettura interpretativa** — registrata il 2026-08-25. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-08-26. Non e' derivata dai dati.
 >
 > - **Il PHB 5e 2014 non è fra i PDF**: la cartella contiene solo edizioni 2024.
 >   Alternativa disponibile: `2014.5e.tools`, che espone il materiale 2014 come

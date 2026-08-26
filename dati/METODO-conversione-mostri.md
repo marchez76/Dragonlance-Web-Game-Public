@@ -248,23 +248,69 @@ una checklist burocratica.
 ## 5. Le categorie aperte
 
 Tre tipi di voce che questo metodo non copriva, perché presuppongono uno
-statblock fisso da convertire una volta sola. **Al 25/08/2026 ne resta aperto
-uno**: le altre due sono chiuse dalle decisioni 34-36, e restano scritte qui
-sotto perché la forma va riconosciuta anche dopo che il problema è risolto —
-la prossima voce che la porta va inquadrata subito, non riscoperta.
+statblock fisso da convertire una volta sola. **Al 26/08/2026 sono chiuse
+tutte e tre** (decisioni 34-36 le prime due, decisioni 38-41 la terza), e
+restano scritte qui sotto perché la forma va riconosciuta anche dopo che il
+problema è risolto — la prossima voce che ne porta una va inquadrata subito,
+non riscoperta.
 
-### 5.1 Creature-modello — APERTA
+### 5.1 Creature-modello — RISOLTA (decisioni 38-41, 26/08/2026)
 
-Dreamshadow, Spectral Minion. Ogni campo della scheda 2e è dichiarato "as
-creature or person mimicked" o "quelli della vita precedente": non hanno
-statistiche proprie, le ereditano da un bersaglio. Serve un pacchetto di
-regole che copia un bersaglio, non un singolo statblock — la conversione è di
-un **meccanismo**, non di un valore. Restano `pending` di metodo, non solo di
-contenuto, finché non si decide la forma di schema che le copre.
+Dreamshadow, Spectral Minion, e — scoperto convertendole — anche il
+Dreamwraith, che era già una scheda. Ogni campo che pesa in combattimento è
+dichiarato "as creature or person mimicked" o "quelli della vita precedente":
+non hanno statistiche proprie, le ereditano da un bersaglio. Serve un
+pacchetto di regole che copia un bersaglio, non un singolo statblock — la
+conversione è di un **meccanismo**, non di un valore.
 
-È l'unica delle tre che non si risolve con un filtro: lì la fonte dà un
-vincolo e tace sul campione (§5.3), qui non c'è nemmeno il vincolo, perché il
-campione è un'altra creatura scelta a runtime.
+**Come si riconoscono.** Il segnale non è una parola ma una forma: le righe
+del blocco statistiche che dovrebbero portare un numero portano invece un
+rimando ("As creature or person mimicked", "Varies", "As the dreamer"). È il
+sesto segnale (§6 di questo documento) applicato a una voce intera invece che
+a un campo: quando il rimando riguarda `HIT DICE`, la voce non ha punti ferita,
+e senza punti ferita non c'è statblock da convertire.
+
+**Dove finiscono.** In `dati/modelli/`, schema proprio
+`dati/schema/modello.schema.json` (decisione 38), stesso criterio della
+decisione 33 sugli oggetti: applicabile a bersagli diversi → non appartiene a
+nessuno di loro. Il modello descrive quattro cose e nient'altro — cosa
+**eredita** dall'ospite, cosa **sovrascrive**, cosa **aggiunge** di suo, quale
+insieme di ospiti è **legale**.
+
+**Le tre cose da controllare su una voce nuova**, nell'ordine:
+
+1. *Che grado ha?* Nessuno, di norma: si registra lo **scarto** al grado
+   dell'ospite, non un valore (decisione 40). Tre forme, e la fonte suggerisce
+   quale guardando la sola riga `XP VALUE`: un **modificatore** ("+ 10%" sul
+   Dreamshadow) → `delta`; **valori assoluti** su un profilo che la fonte
+   dichiara invariante → `proprio`, e allora la voce merita anche una scheda di
+   mostro; **valori assoluti** su Dadi Vita "Varies" → `non_derivabile`, e
+   l'uso che se ne fa va **dichiarato** (`uso_dichiarato`), altrimenti è una
+   stima nascosta.
+2. *Quali ospiti sono legali?* Un **filtro**, mai un campione: si applica la
+   decisione 35 senza aggiungere nulla (decisione 39). Lo schema lo impone —
+   `campione` accetta solo `null`.
+3. *C'è qualcosa che condivide con un'altra voce?* Si scrive **una volta**, in
+   un modello, con i valori che cambiano come **parametri** (decisione 41). La
+   sconfessione delle illusioni è il primo caso: stessa procedura per
+   Dreamwraith e Dreamshadow, con una penalità di −5 che vale solo contro il
+   primo.
+
+**Il collaudo.** Lo schema è stato scritto e validato **prima** sul
+Dreamwraith, cioè su una scheda già chiusa e convertita senza conoscerlo, e
+solo dopo usato per le due voci nuove. Ha retto senza forzarla e ha prodotto
+quattro campi che i due casi nuovi non avrebbero richiesto (`monster_id`,
+`destinazione` sulle voci ereditate, `origine: "terzo"`, la forma `proprio` del
+grado). È una procedura da ripetere: **provare uno schema nuovo su un caso già
+risolto costa un giro e ne fa risparmiare tre**, perché su un caso già chiuso
+la forzatura si vede — se lo schema pretende un campo che la scheda non ha, è
+lo schema a essere sbagliato.
+
+Era l'unica delle tre categorie che non si risolveva con un filtro: lì la
+fonte dà un vincolo e tace sul campione (§5.3), qui — sull'ospite — non c'era
+nemmeno il vincolo, perché il campione è un'altra creatura scelta a runtime.
+La risposta non è stata trovare il vincolo mancante ma cambiare l'oggetto da
+convertire: non la creatura, il meccanismo.
 
 ### 5.2 Famiglie di statblock — RISOLTA (decisioni 34 e 36, 25/08/2026)
 
@@ -380,11 +426,12 @@ finestra (§5.2), su una tabella di categorie invece che su una banda di Dadi
 Vita. Stessa osservazione — un valore che la fonte tiene fisso descrive
 l'adulto — applicata a una forma diversa.
 
-### 5.5 Stato al 25/08/2026
+### 5.5 Stato al 26/08/2026
 
 Coda ordinaria esaurita per intero dal 21/08/2026 (fascia 4 chiusa con Hatori
-Minore e Ragno Botola Gigante). Restano: **una** categoria aperta (§5.1, le
-due creature-modello), i due blocchi da filtro sull'output (Haunt Knight,
+Minore e Ragno Botola Gigante). Categorie aperte: **nessuna** — la terza e
+ultima (§5.1, le creature-modello) è chiusa dalle decisioni 38-41 del
+26/08/2026. Restano i due blocchi da filtro sull'output (Haunt Knight,
 Wyndlass — §3.1) e il contenuto di `fuori_fascia`.
 
 `dati/mostri.coda.json` tiene l'indice in **due** blocchi, `categorie_aperte`

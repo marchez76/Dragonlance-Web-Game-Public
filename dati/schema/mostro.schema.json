@@ -484,6 +484,27 @@
               "note": { "type": ["string", "null"] }
             }
           }
+        },
+
+        "modelli_collegati": {
+          "type": "array",
+          "description": "DECISIONE 38. Riferimenti a modelli di dati/modelli/ (schema modello.schema.json) che si applicano a questa creatura, o di cui questa creatura e' la forma gia' chiusa. Come per `oggetti_collegati`, la scheda referenzia per id e NON duplica il modello: cosa la creatura eredita da un ospite, quale insieme di ospiti e' legale, cosa il modello sovrascrive e le regole che condivide con altre creature stanno la', non qui. Vuoto per la quasi totalita' del bestiario, che con i modelli non ha niente a che fare.",
+          "items": {
+            "type": "object",
+            "required": ["model_id", "ruolo"],
+            "additionalProperties": false,
+            "properties": {
+              "model_id": {
+                "type": "string",
+                "description": "id del modello in dati/modelli/, es. \"dreamwraith\"."
+              },
+              "ruolo": {
+                "type": "string",
+                "description": "Come la scheda si relaziona al modello, es. \"questa scheda e' la forma gia' chiusa del modello omonimo\", \"il modello si applica a questa creatura come ospite\"."
+              },
+              "note": { "type": ["string", "null"] }
+            }
+          }
         }
       }
     }

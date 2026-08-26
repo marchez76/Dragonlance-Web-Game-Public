@@ -1,0 +1,423 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dragonlance-gdr.local/schema/modello.schema.json",
+  "title": "Modello applicabile a un ospite",
+  "description": "DECISIONE 38. Stesso criterio della decisione 33 sugli oggetti: quando una cosa e' applicabile a bersagli diversi non appartiene a nessuno di loro e prende schema proprio. Un MODELLO non e' una creatura: e' un pacchetto di regole che si applica a un OSPITE (un'altra creatura, viva o morta) e ne produce una terza cosa. Descrive quattro cose e nient'altro: cosa EREDITA dall'ospite, cosa SOVRASCRIVE con valore proprio, cosa AGGIUNGE di suo, e quale insieme di ospiti e' LEGALE.\n\nPerche' non poteva stare in mostro.schema.json: quello schema presuppone uno statblock fisso da convertire una volta sola (CA, PF, GS sono campi obbligatori). Un modello non ha nessuno dei tre finche' non gli si da' un ospite — e il Dreamshadow con l'aspetto di un ratto e quello con l'aspetto di un ogre sono la stessa cosa su bersagli diversi, non due creature. Vedi `scarto_grado` per la conseguenza sul Grado di Sfida (decisione 40).\n\nUn modello PUO' avere anche una scheda di mostro propria (campo `monster_id`) quando la fonte gli fissa abbastanza statistiche da renderlo giocabile da solo: e' il caso del Dreamwraith, che eredita tre campi di scheda e dichiara CA e Dadi Vita invarianti. In quel caso i tratti stanno nella scheda, NON qui: il modello li referenzia e non li duplica, stesso principio di `oggetti_collegati` (decisione 33).\n\nDoppio strato come tutti gli altri schemi del progetto: `source_2e` fedele al manuale e immutabile, `mechanics_5e` con stato di conversione e provenienza su ogni elemento.",
+  "type": "object",
+  "required": ["id", "name", "source", "source_2e", "ospiti_legali", "mechanics_5e"],
+  "additionalProperties": false,
+
+  "$defs": {
+    "conversion_status": {
+      "enum": ["direct", "adapted", "pending", "source_only"],
+      "description": "Stessi quattro valori di mostro.schema.json, stesse due varianti di `direct` (a indicazione di fonte, la piu' solida, e per scelta nostra) da distinguere nel campo `note`."
+    },
+    "provenienza": {
+      "enum": [
+        "MC - Dragonlance Appendix",
+        "Tales of the Lance",
+        "SotDQ (ufficiale 5e)",
+        "SRD 5.1",
+        "conversione editoriale nostra"
+      ]
+    },
+    "elemento_5e": {
+      "type": "object",
+      "required": ["name", "conversion_status", "source"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string" },
+        "text_2e": { "type": ["string", "null"] },
+        "mechanics_5e": { "type": ["string", "null"] },
+        "conversion_status": { "$ref": "#/$defs/conversion_status" },
+        "source": { "$ref": "#/$defs/provenienza" },
+        "analogo_srd": { "type": ["string", "null"] },
+        "note": { "type": ["string", "null"] },
+        "editorial": { "type": "boolean", "default": false },
+        "provisional": { "type": ["string", "null"] }
+      }
+    },
+    "campo_scheda": {
+      "description": "Vocabolario dei campi che un modello puo' ereditare o sovrascrivere. I nomi in INGLESE sono le etichette stampate nel blocco statistiche 2e, riportate identiche a come le usa mostro.schema.json/source_2e — cosi' un confronto fra modello e scheda e' meccanico e non richiede una traduzione. I nomi in ITALIANO sono cose che la fonte dichiara nella PROSA e che non hanno una riga di tabella (l'equipaggiamento che il Dreamshadow copia dal suo originale, la personalita', la lingua della vita precedente dello Spectral Minion). La distinzione fra i due gruppi e' quindi la provenienza del dato, non un'incoerenza di lingua.",
+      "enum": [
+        "climate_terrain", "frequency", "organization", "activity_cycle", "diet",
+        "intelligence", "treasure", "alignment", "no_appearing",
+        "armor_class", "movement", "hit_dice", "thac0",
+        "no_of_attacks", "damage_per_attack", "special_attacks", "special_defenses",
+        "magic_resistance", "size", "morale", "xp_value",
+        "lingue", "equipaggiamento", "personalita", "tattica", "aspetto"
+      ]
+    },
+    "destinazione": {
+      "enum": ["scheda", "generatore_incontri", "ia_combattimento"],
+      "description": "Dove finisce il campo una volta applicato il modello. `scheda`: e' una statistica di combattimento e va nello statblock generato. `generatore_incontri`: e' un dato di mondo (decisione 27, gruppo A) e serve a chi costruisce l'incontro, non allo scontro. `ia_combattimento`: morale (gruppo B). Serve a non gonfiare il conto dei campi ereditati con righe che non toccano lo statblock: il Dreamwraith eredita SEI righe ma solo TRE arrivano alla scheda."
+    }
+  },
+
+  "properties": {
+    "id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+    "name": {
+      "type": "object",
+      "required": ["en", "it"],
+      "additionalProperties": false,
+      "properties": {
+        "en": { "type": "string" },
+        "it": { "type": "string" },
+        "variante_di": { "type": ["string", "null"] }
+      }
+    },
+
+    "monster_id": {
+      "type": ["string", "null"],
+      "description": "id in dati/mostri/ quando il modello ha ANCHE una scheda di mostro propria, perche' la fonte gli fissa abbastanza statistiche da renderlo giocabile senza ospite (Dreamwraith: CA e Dadi Vita dichiarati invarianti). null quando il modello non esiste senza ospite (Dreamshadow, Spectral Minion): in quel caso NON si scrive una scheda di mostro, perche' assegnarle un Grado di Sfida significherebbe fissare l'ospite, cioe' decidere cio' che la fonte lascia aperto (decisione 40). Quando e' valorizzato, i tratti convertiti stanno nella scheda e `mechanics_5e.aggiunge` resta vuoto con una nota che rimanda: il modello non duplica la scheda.",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
+    },
+
+    "source": {
+      "type": "object",
+      "required": ["source_edition", "source_book"],
+      "additionalProperties": false,
+      "properties": {
+        "source_edition": { "enum": ["2e", "SRD 5.1"] },
+        "source_book": { "type": "string" },
+        "pages_pdf": {
+          "type": "array",
+          "items": { "type": "integer" },
+          "description": "Indici di pagina 0-based nel PDF sorgente (indice+1 per pdftoppm/lettore PDF). Vedi dati/LEGGIMI.md, sezione \"Indici di pagina\"."
+        },
+        "pages_printed": { "type": "array", "items": { "type": "integer" } },
+        "verified_on_image": { "type": "boolean", "default": false }
+      }
+    },
+
+    "valid_eras": {
+      "type": ["array", "null"],
+      "items": {
+        "enum": ["pre_cataclysm", "age_of_despair", "war_of_lance",
+                 "age_of_mortals_post_chaos", "post_war_of_souls"]
+      },
+      "description": "Strato editoriale nostro, non dato di fonte (decisione 12)."
+    },
+
+    "source_2e": {
+      "type": "object",
+      "description": "Trascrizione fedele della fonte 2e, immutabile.",
+      "required": ["statblock", "abilities_text", "notes", "open_questions"],
+      "additionalProperties": false,
+      "properties": {
+        "statblock": {
+          "type": "object",
+          "description": "Il blocco statistiche riga per riga, come stampato. Le righe di un modello portano tipicamente un rimando ('As creature or person mimicked', 'Varies') invece di un valore: e' proprio quel rimando il dato, e va trascritto letterale, non risolto qui.",
+          "additionalProperties": { "type": ["string", "integer", "null"] }
+        },
+        "abilities_text": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Le capacita' come le dichiara la fonte, una per voce."
+        },
+        "notes": { "type": "array", "items": { "type": "string" } },
+        "open_questions": { "type": "array", "items": { "type": "string" } },
+        "raw": {
+          "type": ["string", "null"],
+          "description": "Il blocco statistiche come appare nell'estrazione. Comodita', non dato: se non si lascia scrivere per via di un filtro automatico, va OMESSO (null) con una nota in `notes` che rimanda a voce e pagina — non riformulato per aggirarlo. Stesso trattamento di mostro.schema.json."
+        }
+      }
+    },
+
+    "ospiti_legali": {
+      "type": "object",
+      "description": "DECISIONE 39. Si applica la decisione 35 senza aggiungere nulla: la fonte da' il FILTRO e non il campione ('umano o demiumano morto prima di aver compiuto un voto', 'creatura o persona nota al sognatore'). Si registra l'insieme legale; la scelta concreta avviene alla generazione dell'incontro. I due campi `campione` e `scelta_alla_generazione` sono vincolati a un solo valore APPOSTA: lo schema rende impossibile fissare qui un ospite scelto da noi, che e' l'errore che la decisione 39 evita.",
+      "required": ["testo_2e", "filtro", "criteri", "campione", "scelta_alla_generazione"],
+      "additionalProperties": false,
+      "properties": {
+        "testo_2e": { "type": "string", "description": "La frase della fonte che pone il vincolo, citata." },
+        "filtro": { "type": "string", "description": "Il vincolo in prosa nostra, per esteso e senza ammorbidirlo." },
+        "criteri": {
+          "type": "array",
+          "minItems": 1,
+          "description": "Lo stesso vincolo in forma interrogabile, perche' il generatore possa pescare senza rileggere la prosa.",
+          "items": {
+            "type": "object",
+            "required": ["campo", "operatore", "valori"],
+            "additionalProperties": false,
+            "properties": {
+              "campo": { "type": "string" },
+              "operatore": { "enum": ["in", "non_in", "uguale", "minore_uguale", "maggiore_uguale", "richiede", "esclude"] },
+              "valori": { "type": "array", "items": { "type": ["string", "number", "boolean"] } },
+              "note": { "type": ["string", "null"] }
+            }
+          }
+        },
+        "esempi_dalla_fonte": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Ospiti che la FONTE nomina come esempio. Sono dato di fonte, non nostra selezione: non restringono il filtro e non vanno usati come lista."
+        },
+        "campione": {
+          "const": null,
+          "description": "Sempre null. La fonte non da' il campione e non lo diamo noi: vedi decisione 35."
+        },
+        "scelta_alla_generazione": {
+          "const": true,
+          "description": "Sempre true. Se un giorno una fonte fissasse davvero l'ospite, quella non sarebbe piu' una creatura-modello ma una creatura, e andrebbe in mostro.schema.json."
+        },
+        "note": { "type": ["string", "null"] }
+      }
+    },
+
+    "mechanics_5e": {
+      "type": "object",
+      "required": ["conversion_status", "eredita", "sovrascrive", "aggiunge", "scarto_grado", "note"],
+      "additionalProperties": false,
+      "properties": {
+        "conversion_status": {
+          "enum": ["da_compilare", "in_corso", "compilato"],
+          "description": "Stato del modello nel suo insieme."
+        },
+
+        "eredita": {
+          "type": "array",
+          "description": "Cosa il modello prende dall'ospite senza toccarlo. Una voce per campo. Un modello che eredita TUTTO (Dreamshadow) elenca comunque i campi uno per uno invece di scrivere 'tutto': serve a rendere visibili le eccezioni, che ci sono sempre e sono la parte interessante.",
+          "items": {
+            "type": "object",
+            "required": ["campo", "testo_2e", "destinazione"],
+            "additionalProperties": false,
+            "properties": {
+              "campo": { "$ref": "#/$defs/campo_scheda" },
+              "testo_2e": { "type": "string", "description": "La riga o la frase della fonte che dichiara l'ereditarieta', letterale." },
+              "destinazione": { "$ref": "#/$defs/destinazione" },
+              "in_5e": {
+                "type": ["string", "null"],
+                "description": "Dove il campo atterra nello statblock 5e generato (es. hit_dice -> hit_points). null quando non ha corrispettivo 5e ed e' registrato come dato di fonte."
+              },
+              "qualificatore": {
+                "type": ["string", "null"],
+                "description": "Quando la fonte eredita il campo MA lo altera con una clausola breve, es. il Dreamshadow che eredita danno e tesoro '(but illusionary)'. La clausola sta qui, non va persa in una nota e non trasforma la voce in una sovrascrittura: il valore resta quello dell'ospite."
+              },
+              "note": { "type": ["string", "null"] }
+            }
+          }
+        },
+
+        "sovrascrive": {
+          "type": "array",
+          "description": "Cosa il modello fissa di suo, ignorando l'ospite. E' il GUSCIO del modello: quanto piu' e' lungo questo elenco, tanto piu' il modello e' una creatura e tanto meno e' un modello (il Dreamwraith sovrascrive quasi tutto, e infatti ha una scheda propria; il Dreamshadow quasi nulla).",
+          "items": {
+            "type": "object",
+            "required": ["campo", "valore", "testo_2e"],
+            "additionalProperties": false,
+            "properties": {
+              "campo": { "$ref": "#/$defs/campo_scheda" },
+              "valore": {
+                "type": ["string", "integer", "null"],
+                "description": "Il valore proprio del modello, come lo stampa la fonte. null solo quando `origine` e' 'terzo' e il valore non e' una costante."
+              },
+              "testo_2e": { "type": "string" },
+              "origine": {
+                "enum": ["modello", "terzo"],
+                "default": "modello",
+                "description": "'modello': il valore appartiene al modello ed e' costante. 'terzo': la fonte lo fa dipendere da qualcosa che NON e' ne' il modello ne' l'ospite — l'Intelligenza del Dreamshadow e' quella del SOGNATORE, la sua resistenza magica dipende dal LIVELLO DEL SOGNO in corso. E' una terza provenienza reale, non un caso limite: senza questo valore andrebbe archiviata come sovrascrittura costante, che e' falso."
+              },
+              "terzo": {
+                "type": ["string", "null"],
+                "description": "Chi o cosa fornisce il valore quando `origine` e' 'terzo'. Obbligatorio in quel caso (controllato in dati/valida_modelli.py)."
+              },
+              "invariante_dichiarata": {
+                "type": "boolean",
+                "default": false,
+                "description": "true quando la fonte non si limita a stampare un valore ma DICHIARA in prosa che quel campo non cambia mai con l'ospite ('the AC and Hit Dice of dreamwraiths are always the same', 'Regardless of their intelligence in their previous lives, all spectral minions are average intelligence'). E' la differenza fra un valore che noi leggiamo come fisso e un valore che la fonte garantisce fisso, e conta: e' cio' che permette al Dreamwraith di avere un Grado di Sfida proprio."
+              },
+              "destinazione": { "$ref": "#/$defs/destinazione" },
+              "note": { "type": ["string", "null"] }
+            }
+          }
+        },
+
+        "aggiunge": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/elemento_5e" },
+          "description": "Cosa il modello porta di suo che l'ospite non aveva: tratti, immunita', vincoli, condizioni di fine. Vuoto quando `monster_id` e' valorizzato — in quel caso i tratti stanno nella scheda del mostro e il modello non li duplica."
+        },
+
+        "varianti": {
+          "type": "array",
+          "description": "Forme diverse dello stesso modello. ATTENZIONE, e' la distinzione che la decisione 40 rende strutturale: qui stanno solo varianti che cambiano il COMPORTAMENTO (o il ruolo, o l'allineamento) applicando lo stesso modello — le sei fasce dello Spectral Minion, che la fonte stessa dichiara indistinguibili all'aspetto. Varianti che cambiano il GRADO di potenza NON sono varianti di modello: sono la forma 'famiglia di statblock' della decisione 34, si moltiplicano in schede di mostro separate e non passano da qui. L'enum di `asse` non ha il valore 'grado' per questo.",
+          "items": {
+            "type": "object",
+            "required": ["id", "name", "asse", "testo_2e"],
+            "additionalProperties": false,
+            "properties": {
+              "id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+              "name": {
+                "type": "object",
+                "required": ["en", "it"],
+                "additionalProperties": false,
+                "properties": { "en": { "type": "string" }, "it": { "type": "string" } }
+              },
+              "asse": { "enum": ["comportamento", "ruolo", "allineamento"] },
+              "testo_2e": { "type": "string" },
+              "sovrascrive": {
+                "type": "array",
+                "description": "Campi che la VARIANTE fissa, sopra a quanto il modello eredita o sovrascrive. Serve al caso reale dello Spectral Minion, dove l'allineamento e' ereditato dalla vita precedente ma il berserker e' sempre caotico malvagio per dichiarazione di fonte.",
+                "items": {
+                  "type": "object",
+                  "required": ["campo", "valore", "testo_2e"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "campo": { "$ref": "#/$defs/campo_scheda" },
+                    "valore": { "type": ["string", "integer", "null"] },
+                    "testo_2e": { "type": "string" },
+                    "note": { "type": ["string", "null"] }
+                  }
+                }
+              },
+              "aggiunge": { "type": "array", "items": { "$ref": "#/$defs/elemento_5e" } },
+              "xp_2e": {
+                "type": ["integer", "null"],
+                "description": "Il valore XP 2e che la fonte stampa per QUESTA variante, quando lo stampa. Registrato come dato; l'uso che se ne fa e' dichiarato in `scarto_grado.xp_2e` e non e' automaticamente la derivazione di un grado."
+              },
+              "note": { "type": ["string", "null"] }
+            }
+          }
+        },
+
+        "scarto_grado": {
+          "type": "object",
+          "description": "DECISIONE 40 — un modello non ha grado, ha uno scarto. Il grado appartiene all'ospite: assegnarne uno al modello significherebbe fissare l'ospite, cioe' decidere cio' che la fonte lascia aperto (lo stesso errore che la decisione 34 ha evitato moltiplicando le schede per eta'). Si registra quindi la MODIFICA al grado dell'ospite, non un valore assoluto. Il campo `gs_proprio` esiste solo per la forma 'proprio' — un modello che la fonte ha gia' chiuso in una creatura — e rimanda alla scheda, non porta un numero suo.",
+          "required": ["forma", "effetto_sul_grado_ospite", "xp_2e", "note"],
+          "additionalProperties": false,
+          "properties": {
+            "forma": {
+              "enum": ["delta", "proprio", "non_derivabile"],
+              "description": "'delta': la fonte da' esplicitamente un modificatore al valore dell'ospite (Dreamshadow: XP dell'ospite + 10%). 'proprio': la fonte fissa abbastanza del profilo di combattimento da chiudere il grado nella creatura, che ha percio' una scheda propria (Dreamwraith). 'non_derivabile': la fonte stampa valori assoluti ma il grado dipende comunque dall'ospite, quindi da quei valori non si ricava un grado del modello (Spectral Minion)."
+            },
+            "effetto_sul_grado_ospite": {
+              "type": "object",
+              "required": ["delta_gs", "descrizione"],
+              "additionalProperties": false,
+              "properties": {
+                "delta_gs": {
+                  "type": ["number", "null"],
+                  "description": "Di quanti gradini di Grado di Sfida il modello sposta l'ospite. 0 e' un'affermazione (non sposta), null e' un'altra cosa (non e' un numero fisso, o non si applica): non usarli come sinonimi."
+                },
+                "descrizione": { "type": "string" }
+              }
+            },
+            "gs_proprio": {
+              "type": ["string", "null"],
+              "description": "Solo per forma 'proprio': il Grado di Sfida della scheda di mostro corrispondente, ricopiato qui per comodita' di lettura. Non e' la sede del dato — quella e' `monster_id` — e va tenuto allineato a quella scheda."
+            },
+            "xp_2e": {
+              "type": "object",
+              "description": "Come la fonte tratta i Punti Esperienza di questo modello, e cosa ne facciamo. La forma del dato e' meta' del significato: un modificatore ('+10%') dice che la fonte stessa pensa in termini di scarto, valori assoluti no.",
+              "required": ["forma", "testo_2e", "usato_per_derivare_gs", "uso_dichiarato"],
+              "additionalProperties": false,
+              "properties": {
+                "forma": { "enum": ["modificatore", "assoluto", "assoluto_per_variante"] },
+                "testo_2e": { "type": "string" },
+                "modificatore": { "type": ["string", "null"], "description": "Es. \"+10%\". Solo per forma 'modificatore'." },
+                "valore": { "type": ["integer", "null"], "description": "Solo per forma 'assoluto'." },
+                "valori_per_variante": {
+                  "type": ["object", "null"],
+                  "description": "Solo per forma 'assoluto_per_variante': mappa id-variante -> XP 2e. Le chiavi devono corrispondere a `varianti[].id` (controllato in dati/valida_modelli.py).",
+                  "additionalProperties": { "type": "integer" }
+                },
+                "usato_per_derivare_gs": { "type": "boolean" },
+                "uso_dichiarato": {
+                  "type": ["string", "null"],
+                  "description": "A cosa serve allora il dato. OBBLIGATORIO quando `usato_per_derivare_gs` e' false (controllato in dati/valida_modelli.py): un valore di fonte registrato senza dire che uso se ne fa e' una stima nascosta, che e' esattamente cio' che la decisione 35 ha imparato a non lasciare in giro."
+                }
+              }
+            },
+            "note": { "type": "string" }
+          }
+        },
+
+        "regole_condivise": {
+          "type": "array",
+          "description": "DECISIONE 41. Regole che NON appartengono a un solo modello ne' a una sola creatura: la sconfessione delle illusioni vale per Dreamwraith e Dreamshadow insieme, e' scritta nella voce del primo, e il secondo non si puo' scrivere senza. Si scrive UNA volta: un modello la porta come `definizione`, gli altri come `riferimento`. Ogni portatore ha i PROPRI valori dei parametri, perche' la stessa regola non pesa uguale su tutti — contro il Dreamwraith la sconfessione ha una penalita' di -5 che contro il Dreamshadow non c'e'. Il modello porta quindi un parametro, mai un valore fisso incorporato nel testo.\n\nSEDE PROVVISORIA, dichiarata: la casa naturale di una regola di sistema e' uno schema di regole che questo progetto non ha ancora (come il *mindspin*, che resta fuori in attesa dello schema degli incantesimi). Finche' non esiste, la regola vive nel modello che la fonte stessa ospita. Quando esistera', la `definizione` si sposta li' e tutti i portatori diventano `riferimento`: e' un trasloco di un blocco solo, non una riscrittura.",
+          "items": {
+            "type": "object",
+            "required": ["id", "nome", "ruolo", "parametri"],
+            "additionalProperties": false,
+            "properties": {
+              "id": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+              "nome": { "type": "string" },
+              "ruolo": {
+                "enum": ["definizione", "riferimento"],
+                "description": "'definizione': questo modello ospita il testo della regola. Esattamente uno per id, in tutta dati/modelli/ (controllato in dati/valida_modelli.py). 'riferimento': la usa e la parametrizza, senza ricopiarla."
+              },
+              "definita_in": {
+                "type": ["string", "null"],
+                "description": "id del modello che porta la definizione. Obbligatorio per ruolo 'riferimento', null per 'definizione'."
+              },
+              "testo_2e": { "type": ["string", "null"], "description": "Solo per 'definizione': la regola come la stampa la fonte." },
+              "mechanics_5e": { "type": ["string", "null"], "description": "Solo per 'definizione': la resa 5e, o null se ancora non decisa." },
+              "conversion_status": { "$ref": "#/$defs/conversion_status" },
+              "source": { "$ref": "#/$defs/provenienza" },
+              "parametri_dichiarati": {
+                "type": "array",
+                "description": "Solo per 'definizione': quali parametri la regola accetta. E' il contratto che i riferimenti devono rispettare.",
+                "items": {
+                  "type": "object",
+                  "required": ["nome", "tipo", "descrizione"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "nome": { "type": "string", "pattern": "^[a-z0-9]+(_[a-z0-9]+)*$" },
+                    "tipo": { "enum": ["integer", "number", "string", "boolean"] },
+                    "descrizione": { "type": "string" }
+                  }
+                }
+              },
+              "parametri": {
+                "type": "object",
+                "description": "I valori che QUESTO modello da' ai parametri. Le chiavi devono coincidere con `parametri_dichiarati` della definizione (controllato in dati/valida_modelli.py). Un oggetto vuoto e' legittimo solo se la regola non dichiara parametri.",
+                "additionalProperties": { "type": ["integer", "number", "string", "boolean", "null"] }
+              },
+              "note": { "type": ["string", "null"] },
+              "provisional": { "type": ["string", "null"] }
+            }
+          }
+        },
+
+        "morale_2e": {
+          "type": ["object", "null"],
+          "additionalProperties": false,
+          "properties": {
+            "value": { "type": ["integer", "null"] },
+            "label": { "type": ["string", "null"] },
+            "ereditato": { "type": "boolean", "default": false },
+            "destinazione": { "const": "ia_combattimento" },
+            "note": { "type": ["string", "null"] }
+          },
+          "description": "Decisione 27, gruppo B. `ereditato` a true quando il morale viene dall'ospite invece che dal modello."
+        },
+        "magic_resistance_2e": {
+          "type": ["object", "null"],
+          "additionalProperties": false,
+          "properties": {
+            "percent": { "type": ["integer", "null"] },
+            "applied": { "type": "boolean", "default": false },
+            "note": { "type": ["string", "null"] }
+          },
+          "description": "Decisione 27, gruppo C: registrata, non applicata."
+        },
+        "world_data_2e": {
+          "type": ["object", "null"],
+          "additionalProperties": false,
+          "properties": {
+            "frequency": { "type": ["string", "null"] },
+            "no_appearing": { "type": ["string", "null"] },
+            "organization": { "type": ["string", "null"] },
+            "activity_cycle": { "type": ["string", "null"] },
+            "diet": { "type": ["string", "null"] },
+            "destinazione": { "const": "generatore_incontri" }
+          },
+          "description": "Decisione 27, gruppo A."
+        },
+
+        "note": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}
