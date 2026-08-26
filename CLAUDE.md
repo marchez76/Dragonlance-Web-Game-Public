@@ -101,3 +101,50 @@ scansioni in coda e **non tocca git**. Dettaglio in `divisione-del-lavoro.md`.
 - `dati/RAPPORTO-*.md` — diagnostiche generate.
 - `dati/LEGGIMI.md` — struttura dei dati e convenzione delle pagine.
 - `divisione-del-lavoro.md` — chi fa cosa.
+
+## tokenlean — CLI tools for AI agents
+
+Use `tl <command>` for all operations. One tool, many subcommands.
+
+### When to use tl vs. just reading the file
+
+- **<150 lines**: Just read it — tl overhead costs more than the file itself
+- **150-400 lines**: `tl symbols` first, then `tl snippet <name>` for specific functions
+- **400+ lines**: Always `tl symbols` first — never read the whole file unless you truly need it all
+- **Tests/builds/linters**: Always wrap with `tl run` — filters noise, saves hundreds of tokens
+
+### Core commands
+
+| Command | Purpose |
+|---------|---------|
+| `tl symbols <file>` | Function/class signatures without bodies |
+| `tl snippet <name> <file>` | Extract one function/class by name |
+| `tl impact <file>` | What depends on this file (run before modifying) |
+| `tl run "<cmd>"` | Token-efficient command output (tests, builds, linters) |
+| `tl guard` | Pre-commit check (secrets, TODOs, unused exports, circular deps) |
+| `tl structure` | Project overview with token estimates |
+| `tl browse <url>` | Fetch any URL as clean markdown |
+| `tl context7 <lib> [query] -t N` | Latest library/framework docs |
+| `tl component <file>` | React component profile (props, hooks, state) |
+| `tl analyze <file>` | Composite file profile (symbols + deps + impact + complexity) |
+
+### Rules
+
+- **Before reading a source file**, run `tl symbols <file>` first. Only read the full file if you need implementation details.
+- **Before modifying a file**, run `tl impact <file>` to understand what depends on it and what might break.
+- **Before committing**, run `tl guard` to catch secrets, new TODOs, unused exports, and circular deps.
+- **When running commands**, wrap with `tl run "<cmd>"` — it extracts only errors and key output.
+- **When exploring an unfamiliar codebase**, start with `tl structure` before diving into files.
+- **When you need library docs**, use `tl context7 <lib> [query] -t N` — your training data is stale.
+- All commands support `-j` (JSON), `-q` (quiet), `-l N` (limit lines), `-t N` (limit tokens), and `--help`.
+- Run `tl --help` for the full command list.
+
+### More commands
+
+**Understanding code:** `tl advise` Recommend the next tokenlean commands for a task | `tl api` Extract REST/GraphQL API endpoints | `tl blame` Compact per-line authorship | `tl context` Estimate token usage for files/directories | `tl deps` Show file imports and dependency tree | `tl docs` Extract JSDoc/TSDoc documentation | `tl entry` Find entry points (main, routes, handlers) | `tl env` Find environment variables used in codebase | `tl example` Find diverse usage examples of a symbol/pattern | `tl exports` Show public API surface of a module | `tl flow` Call graph: what calls this, what it calls | `tl history` Recent changes to a file (commits only) | `tl monorepo` Show monorepo package structure and cross-deps | `tl pack` Workflow context packs for review, debug, refactor, PRs, and onboarding | `tl quota` Check AI subscription quota usage | `tl routes` Extract routes from web frameworks | `tl schema` Extract database schema from ORMs | `tl scope` Show what symbols are in scope at a given line | `tl types` Extract full TypeScript type definitions
+
+**Before changing code:** `tl complexity` Code complexity metrics for functions | `tl coverage` Quick test coverage info for files | `tl errors` Map error types and throw points | `tl hotspots` Find frequently changed files (git churn) | `tl lint-config` Summarize lint/format/type config rules | `tl related` Find tests, types, and importers of a file | `tl risk-assess` Quick risk score combining blast radius + complexity + tests | `tl style` Detect coding conventions from actual code | `tl test-map` Map source files to their test files | `tl unused` Find unused exports and unreferenced files
+
+**Search and utilities:** `tl cache` Manage tokenlean cache (stats, clear) | `tl changelog` Generate changelog from commits | `tl commit-prep` Pre-commit context: status + diff stat + recent log | `tl diff` Summarize git changes with token estimates | `tl dupes` Find duplicate / near-duplicate functions across a codebase | `tl gh` Batch GitHub operations (issues, sub-issues, project boards) | `tl lookup` Find an existing function by name/intent before writing a new one | `tl name` Check name availability (npm, GitHub, domains) | `tl npm` Quick npm package lookup | `tl parallel` Run commands in parallel with structured results | `tl playwright` Extract content from JS-rendered pages via headless browser | `tl pr` Summarize PR/branch changes | `tl publish` Publish to npm, wait until installable, optionally reinstall globally | `tl push` Stage, commit, and push in one call | `tl reddit` Fetch Reddit post/comments as clean markdown | `tl search` Run pre-defined search patterns | `tl tail` Token-efficient log tailing and summarization | `tl test` Run tests relevant to changed files
+
+
