@@ -121,6 +121,7 @@ CLAUDE.local.md
 !dati/_bestiario_mc.py
 !dati/analizza_classi.py
 !dati/analizza_bestiario.py
+!dati/analizza_personaggio.py
 !dati/confronta_mostri.py
 !dati/verifica_sfere.py
 !dati/valida.py

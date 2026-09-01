@@ -38,6 +38,7 @@ import glob
 import json
 import os
 import re
+import sys
 from datetime import date
 
 BASE = os.path.dirname(os.path.abspath(__file__))
@@ -46,6 +47,12 @@ OGGI = date.today().isoformat()
 
 CAR_IT = {"str": "FOR", "dex": "DES", "con": "COS",
           "int": "INT", "wis": "SAG", "cha": "CAR"}
+
+# La sezione sul Personaggio riusa le misure di dati/analizza_personaggio.py
+# invece di ricalcolarle: due conteggi della stessa cosa sono due conteggi che
+# possono divergere (punto 3 di CLAUDE.md).
+sys.path.insert(0, DATI)
+import analizza_personaggio as AP   # noqa: E402
 
 
 def interpretativo(testo):
@@ -653,6 +660,39 @@ DECISIONI = [
 ]
 
 
+def d_personaggio(razze, classi, dei):
+    """Sintesi della diagnostica pre-schema. Rapporto pieno in
+    dati/RAPPORTO-personaggio.md, generato da dati/analizza_personaggio.py."""
+    incantesimi = AP.carica("incantesimi")
+    oggetti = AP.carica("oggetti")
+    mostri = AP.carica("mostri")
+    CL = AP.d_classi(classi)
+    TT = AP.d_tetti(razze)
+    AR = AP.d_arena(mostri, oggetti, razze, classi)
+    AC = AP.d_allowed(razze, classi)
+    COP = AP.d_copertura(razze, classi, dei, incantesimi, oggetti)
+    assenti = [r for r in COP if r[1] is None or r[2] == 0]
+    coperte = [r for r in COP if r[1] is not None and r[2] == r[3]]
+    return {
+        "n_assenti": len(assenti), "n_coperte": len(coperte),
+        "n_grandezze": len(COP),
+        "n_parziali": len(COP) - len(assenti) - len(coperte),
+        "senza_chassis": len(CL["senza"]), "tot_classi": CL["tot"],
+        "pending": CL["stati"].get("pending", 0), "tot_feat": CL["tot_feat"],
+        "srd_classi": len(AP._srd51.TABELLE),
+        "srd_campi": len(next(iter(AP._srd51.TABELLE.values()))),
+        "xp_non_applicata": CL["tot"] - CL["xp_applicata"],
+        "ricchezza": len(CL["ricchezza"]),
+        "prosa": AR["prosa_tot"], "prosa_mostri": AR["prosa_mostri"],
+        "prosa_razze": AR["prosa_razze"], "prosa_classi": AR["prosa_classi"],
+        "tetti_sotto": TT["n_sotto"], "tetti_celle": TT["tot_celle"],
+        "asi_max": TT["asi_max"], "asi_classe": TT["asi_classe_max"],
+        "etichette": len(AC["etichette"]), "combacia": len(AC["combacia"]),
+        "mb": AP.d_corpus()["_mb"],
+        "n_mutevoli": len(AP.MUTEVOLI), "n_turno": AP.N_TURNO,
+    }
+
+
 def d_decisioni():
     return "\n".join(f"{n}. **{titolo}** — {testo}" for n, titolo, testo in DECISIONI)
 
@@ -740,6 +780,7 @@ def main():
     MV, n_mv, n_ft = d_velocita(razze)
     TN, netto_max, netto_min, doppie = d_netti(razze)
     MC = d_montecarlo(razze)
+    PG = d_personaggio(razze, classi, dei)
     aperte = d_aperte(razze, "razza") + d_aperte(classi, "classe") + d_aperte(dei, "divinità")
 
     doc = f"""# Dragonlance Web GDR — contesto di progetto
@@ -1172,6 +1213,71 @@ più di una — allora è un corpus, non un documento.
 
 ---
 
+## Lo schema Personaggio — diagnostica pre-progetto
+
+Rapporto completo in `dati/RAPPORTO-personaggio.md`, generato da
+`dati/analizza_personaggio.py`. **Nessuno schema è stato scritto e nessuna
+delle tre decisioni sospese è stata sciolta**: questa è la misura del
+problema, non la soluzione.
+
+### La differenza rispetto alle altre sei entità
+
+Razza, classe, divinità, mostro, oggetto e modello descrivono dati immutabili.
+Un personaggio è **stato che evolve**, e la differenza si misura: delle
+{PG['n_mutevoli']} grandezze che cambiano durante il gioco, **{PG['n_turno']}
+cambiano entro un singolo turno** e nessuna ha oggi un campo in cui stare.
+Nessuna delle sei entità esistenti ha un solo campo che cambi in partita.
+
+Un personaggio non ha inoltre una fonte da cui essere convertito: **non esiste
+un `source_2e` di un personaggio**. Il doppio strato della decisione 7, riusato
+senza attriti per oggetto (33) e modello (38), qui per la prima volta non si
+applica.
+
+### Cosa manca per costruirne uno
+
+Su {PG['n_grandezze']} grandezze necessarie a giocare, **{PG['n_coperte']}
+sono coperte da un campo pieno, {PG['n_parziali']} solo in parte e
+{PG['n_assenti']} non hanno alcun campo in nessuno schema**.
+
+| buco | misura |
+|---|---|
+| Privilegi di classe `pending` | {PG['pending']} su {PG['tot_feat']} |
+| Privilegi del **chassis** SRD | `dati/_srd51.py` porta {PG['srd_classi']} classi × {PG['srd_campi']} campi: i *nomi* dei privilegi, non le regole |
+| Classi senza chassis | {PG['senza_chassis']} su {PG['tot_classi']} |
+| Tabella dei punti esperienza 5e | `xp_table.applied` è `false` in {PG['xp_non_applicata']}/{PG['tot_classi']}, e la sostituta non esiste |
+| Competenze 5e | né le 18 abilità, né quante ne concede una classe, né la categoria delle armi e delle armature |
+| Slot incantesimi 5e | assenti: le uniche tabelle di slot nel progetto sono 2e |
+| Effetto degli incantesimi | nessun campo per tiro salvezza, danno, area: sta in `descrizione`, in prosa |
+| Cambio fra le valute | {PG['ricchezza']}/{PG['tot_classi']} classi dichiarano una ricchezza in **stl**, gli oggetti costano in **gp**, nessun campo lega le due |
+| `allowed_classes` → classi | {PG['etichette']} etichette, di cui {PG['combacia']} coincidono con un `name.en`: il legame esiste come parola, non come chiave |
+
+### Le tre decisioni sospese
+
+Riportate nel rapporto con fonte e opzioni, **non decise**.
+
+1. **Barbaro razza o background** (decisione 20). Le quattro conseguenze già
+   elencate dalla decisione sono tutte verificabili nei dati.
+2. **Tetti di crescita** (decisione 10). {PG['tetti_sotto']} tetti su
+   {PG['tetti_celle']} stanno sotto il soffitto 20 della 5e, e il chassis più
+   generoso ({PG['asi_classe']}) concede {PG['asi_max']} aumenti di
+   caratteristica. La decisione dice *che* il tetto morde, non *cosa succede al
+   punto che lo supera* — e la fonte non può dirlo, perché in AD&D 2e il caso
+   non esisteva.
+3. **Generazione** (decisione 8). `motore/generazione.py` copre i tre metodi e
+   la soddisfacibilità; non assegna i valori, non compone il point-buy con le
+   formule razziali, e legge `source_2e` invece di `mechanics_5e`.
+
+### Il vincolo dell'arena
+
+Il corpus intero pesa **{PG['mb']} MB**: sta in memoria, e a ogni turno non
+serve leggere alcun file. Il vincolo non è la velocità — è che
+**{PG['prosa']} blocchi di meccanica sono prosa italiana** e non numeri:
+{PG['prosa_mostri']} fra azioni e tratti dei mostri, {PG['prosa_razze']} tratti
+razziali, {PG['prosa_classi']} privilegi di classe. Il motore può leggere CA,
+punti ferita, caratteristiche e Grado di Sfida; non può risolvere un attacco.
+
+---
+
 ## Questioni aperte
 
 ### Richiedono una decisione
@@ -1183,7 +1289,12 @@ più di una — allora è un corpus, non un documento.
   ufficiale su Krynn, e da essa dipende l'unico tratto ancora provvisorio.
 - **Il Barbaro ha doppia natura**: il manuale lo tratta sia come cultura umana
   sia come classe. La decisione 20 gli ha dato un tappo reversibile; la
-  conversione a background va decisa insieme allo schema Personaggio.
+  conversione a background va decisa insieme allo schema Personaggio. Le
+  quattro conseguenze sono ora misurate in `dati/RAPPORTO-personaggio.md`.
+- **Cosa succede a un aumento che sfonda un tetto razziale.** La decisione 10
+  applica i massimali anche in crescita ma non dice come si comporta l'aumento
+  respinto: si perde, si travasa, o il tetto cede. La fonte non ha una risposta
+  da trascrivere — in AD&D 2e il caso non si poneva.
 - **Il Qualinesti ha un tratto che registra un'assenza.** L'Appendice non
   dichiara alcuna capacità per quel ramo, e il posto è tenuto da una voce
   `source_only` senza meccanica. Nelle tabelle conta come un tratto

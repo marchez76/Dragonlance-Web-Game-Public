@@ -1,6 +1,6 @@
 # Dragonlance Web GDR — contesto di progetto
 
-*Generato da `genera_contesto.py` il 2026-08-26.*
+*Generato da `genera_contesto.py` il 2026-09-01.*
 
 > **Come leggere questo documento.** Ogni numero, tabella e percentuale è
 > **derivato dai JSON** al momento della generazione: se un dato cambia, cambia
@@ -116,7 +116,7 @@ caratteristica, conservata perché è del manuale:
 - Nano delle Colline (Neidar) (CAR -1, max 12)
 - Nano delle Montagne (Hylar / Daewar) (CAR -1, max 16)
 
-> **Lettura interpretativa** — registrata il 2026-08-26. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-01. Non e' derivata dai dati.
 >
 > Il netto va da +0 a +2: nessuna razza raggiunge il +3 che la 5e
 > 2014 assegna di norma. Non va pareggiato. Le razze di Krynn non vengono mescolate
@@ -150,7 +150,7 @@ La velocità è derivata dai **tassi MV della 2e**, non dalla taglia.
 | 9 | 25 ft | Irda (Alto Ogre), Kender |
 | 12 | 30 ft | Barbaro, Elfo Dargonesti (Elfo degli Abissi), Elfo Dimernesti (Elfo dei Bassifondi), Elfo Kagonesti, Elfo Qualinesti, Elfo Silvanesti, Mezzelfo, Minotauro, Umano |
 
-> **Lettura interpretativa** — registrata il 2026-08-26. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-01. Non e' derivata dai dati.
 >
 > Derivare la velocità dalla taglia invertiva l'ordinamento della fonte: i nani
 > finivano a 30 e i Kender a 25, cioè il nano correva più del Kender. La 5e stessa
@@ -232,7 +232,7 @@ ottengano.
 - **Nessuna classe ha una tabella di THAC0 o di tiri salvezza**: valgono quelle di
   gruppo del PHB 2e, che non sono ancora nei dati.
 
-> **Lettura interpretativa** — registrata il 2026-08-26. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-01. Non e' derivata dai dati.
 >
 > Le classi di Krynn non sono classi nel senso della 5e: sono profili di
 > restrizione appoggiati sulle classi base della 2e. Convertirle non è un lavoro di
@@ -293,7 +293,7 @@ come sottoclasse. Accesso minore: solo fino al 3° livello, come in 2e.
 - Delle 105 voci, 28 sono attribuzioni nostre e non ereditate da un
   antenato 2e: restano marcate `nostra` nel dato.
 
-> **Lettura interpretativa** — registrata il 2026-08-26. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-01. Non e' derivata dai dati.
 >
 > 1 sfera 2e non trova un solo incantesimo nella lista base del chierico 5e:
 > Plant. Animal ne trova 1, Weather 1. Non è un difetto della mappatura:
@@ -384,7 +384,7 @@ Combinazioni sotto l'1%:
 |---|---|---:|---:|
 | Nano Sozzo (Aghar) | `barbaro` | 0,249% | 1 ogni 402 |
 
-> **Lettura interpretativa** — registrata il 2026-08-26. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-01. Non e' derivata dai dati.
 >
 > **Perché si tira.** Sotto point-buy due percorsi erano matematicamente
 > impossibili — il Cavaliere e il Cavaliere della Rosa — e il Nano Sozzo non aveva
@@ -448,7 +448,7 @@ Combinazioni sotto l'1%:
 | Umano | 3 | 0 | 0 | 0 | 3 | 0 |
 | Barbaro | 2 | 0 | 2 | 0 | 0 | 0 |
 
-> **Lettura interpretativa** — registrata il 2026-08-26. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-01. Non e' derivata dai dati.
 >
 > Su 105 tratti, 70 vengono dal PHB 2e (67%) e
 > 32 dalle fonti di Krynn (30%). La densità apparente di una
@@ -551,7 +551,7 @@ attacco da 1-4.
 perché i dadi vita della 2e misurano solo la resistenza. **Il Kapak ha cambiato
 asse.**
 
-> **Lettura interpretativa** — registrata il 2026-08-26. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-01. Non e' derivata dai dati.
 >
 > **Non esiste una formula estraibile da cinque casi.** Una regolarità si
 > intravede — grado di sfida uguale ai dadi vita meno due — e tiene per quattro
@@ -632,7 +632,7 @@ pagina:
 
 **8 nomi di voce erano sbagliati** nel testo estratto, non i quattro noti.
 
-> **Lettura interpretativa** — registrata il 2026-08-26. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-01. Non e' derivata dai dati.
 >
 > **L'estrazione non ha solo sbagliato i nomi: ha perso dei dati.** In tre voci
 > le colonne di destra sono sparite del tutto — `Avian` aveva quattro uccelli e ne
@@ -690,11 +690,76 @@ I metadati ID3 non dichiarano né autore né etichetta né provenienza: l'unico 
 
 ---
 
+## Lo schema Personaggio — diagnostica pre-progetto
+
+Rapporto completo in `dati/RAPPORTO-personaggio.md`, generato da
+`dati/analizza_personaggio.py`. **Nessuno schema è stato scritto e nessuna
+delle tre decisioni sospese è stata sciolta**: questa è la misura del
+problema, non la soluzione.
+
+### La differenza rispetto alle altre sei entità
+
+Razza, classe, divinità, mostro, oggetto e modello descrivono dati immutabili.
+Un personaggio è **stato che evolve**, e la differenza si misura: delle
+14 grandezze che cambiano durante il gioco, **8
+cambiano entro un singolo turno** e nessuna ha oggi un campo in cui stare.
+Nessuna delle sei entità esistenti ha un solo campo che cambi in partita.
+
+Un personaggio non ha inoltre una fonte da cui essere convertito: **non esiste
+un `source_2e` di un personaggio**. Il doppio strato della decisione 7, riusato
+senza attriti per oggetto (33) e modello (38), qui per la prima volta non si
+applica.
+
+### Cosa manca per costruirne uno
+
+Su 27 grandezze necessarie a giocare, **9
+sono coperte da un campo pieno, 6 solo in parte e
+12 non hanno alcun campo in nessuno schema**.
+
+| buco | misura |
+|---|---|
+| Privilegi di classe `pending` | 40 su 43 |
+| Privilegi del **chassis** SRD | `dati/_srd51.py` porta 5 classi × 3 campi: i *nomi* dei privilegi, non le regole |
+| Classi senza chassis | 8 su 17 |
+| Tabella dei punti esperienza 5e | `xp_table.applied` è `false` in 17/17, e la sostituta non esiste |
+| Competenze 5e | né le 18 abilità, né quante ne concede una classe, né la categoria delle armi e delle armature |
+| Slot incantesimi 5e | assenti: le uniche tabelle di slot nel progetto sono 2e |
+| Effetto degli incantesimi | nessun campo per tiro salvezza, danno, area: sta in `descrizione`, in prosa |
+| Cambio fra le valute | 4/17 classi dichiarano una ricchezza in **stl**, gli oggetti costano in **gp**, nessun campo lega le due |
+| `allowed_classes` → classi | 17 etichette, di cui 5 coincidono con un `name.en`: il legame esiste come parola, non come chiave |
+
+### Le tre decisioni sospese
+
+Riportate nel rapporto con fonte e opzioni, **non decise**.
+
+1. **Barbaro razza o background** (decisione 20). Le quattro conseguenze già
+   elencate dalla decisione sono tutte verificabili nei dati.
+2. **Tetti di crescita** (decisione 10). 84 tetti su
+   90 stanno sotto il soffitto 20 della 5e, e il chassis più
+   generoso (Fighter) concede 7 aumenti di
+   caratteristica. La decisione dice *che* il tetto morde, non *cosa succede al
+   punto che lo supera* — e la fonte non può dirlo, perché in AD&D 2e il caso
+   non esisteva.
+3. **Generazione** (decisione 8). `motore/generazione.py` copre i tre metodi e
+   la soddisfacibilità; non assegna i valori, non compone il point-buy con le
+   formule razziali, e legge `source_2e` invece di `mechanics_5e`.
+
+### Il vincolo dell'arena
+
+Il corpus intero pesa **1,83 MB**: sta in memoria, e a ogni turno non
+serve leggere alcun file. Il vincolo non è la velocità — è che
+**405 blocchi di meccanica sono prosa italiana** e non numeri:
+257 fra azioni e tratti dei mostri, 105 tratti
+razziali, 43 privilegi di classe. Il motore può leggere CA,
+punti ferita, caratteristiche e Grado di Sfida; non può risolvere un attacco.
+
+---
+
 ## Questioni aperte
 
 ### Richiedono una decisione
 
-> **Lettura interpretativa** — registrata il 2026-08-26. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-01. Non e' derivata dai dati.
 >
 > - **Il PHB 5e 2014 non è fra i PDF**: la cartella contiene solo edizioni 2024.
 >   Alternativa disponibile: `2014.5e.tools`, che espone il materiale 2014 come
@@ -703,7 +768,12 @@ I metadati ID3 non dichiarano né autore né etichetta né provenienza: l'unico 
 >   ufficiale su Krynn, e da essa dipende l'unico tratto ancora provvisorio.
 > - **Il Barbaro ha doppia natura**: il manuale lo tratta sia come cultura umana
 >   sia come classe. La decisione 20 gli ha dato un tappo reversibile; la
->   conversione a background va decisa insieme allo schema Personaggio.
+>   conversione a background va decisa insieme allo schema Personaggio. Le
+>   quattro conseguenze sono ora misurate in `dati/RAPPORTO-personaggio.md`.
+> - **Cosa succede a un aumento che sfonda un tetto razziale.** La decisione 10
+>   applica i massimali anche in crescita ma non dice come si comporta l'aumento
+>   respinto: si perde, si travasa, o il tetto cede. La fonte non ha una risposta
+>   da trascrivere — in AD&D 2e il caso non si poneva.
 > - **Il Qualinesti ha un tratto che registra un'assenza.** L'Appendice non
 >   dichiara alcuna capacità per quel ramo, e il posto è tenuto da una voce
 >   `source_only` senza meccanica. Nelle tabelle conta come un tratto
