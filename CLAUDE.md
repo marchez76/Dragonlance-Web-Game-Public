@@ -28,7 +28,7 @@ che l'uso del wrapper evita.
 
 **Cartella nuova sotto `dati/` che porterà `source_2e`: esclusione scritta
 alla nascita, non quando qualcuno se ne accorge.** Precedente: `dati/oggetti/`
-è nata con la decisione 33 (il diadema dello Scheletro Guerriero) ma non è
+è nata con la decisione 33 (`schema-oggetti`, il diadema dello Scheletro Guerriero) ma non è
 stata aggiunta al `.gitignore` pubblico in quel momento — è rimasta protetta
 solo perché `git-privato.sh` la tracciava comunque (elenco `PERCORSI`), non
 per struttura. Scoperta e corretta il 21/08/2026. Quando arriverà
@@ -73,6 +73,28 @@ campo — non assunto.
 Ogni conteggio nella prosa dei documenti generati va interpolato dai dati.
 Un numero scritto a mano si sfasa alla prossima rigenerazione: è già
 costato quattro giri di incoerenze in questo progetto.
+
+**Il numero di una decisione è uno di quei derivati.** Vale ovunque, anche
+nei sorgenti scritti a mano e nei JSON di `dati/`, e per anni non è stato
+trattato così: 976 rimandi in 109 file portavano il numero a mano, e nella
+fascia bassa 32 di essi puntavano alla decisione sbagliata — senza scarto
+costante, perché scritti sotto numerazioni diverse. Sesta struttura del
+progetto a sfasarsi in silenzio, chiusa il 01/09/2026.
+
+Da allora l'elenco canonico sta in `decisioni.py` (unica sede: chi aggiunge
+una decisione tocca solo quel file) e ogni decisione ha un **`id` stabile che
+non cambia mai**, nemmeno se la decisione viene riformulata o l'elenco
+riordinato. La forma di un rimando è:
+
+    decisione 10 (`massimali-razziali`)
+
+L'id è la chiave, il numero gli sta accanto come derivato. Un numero senza
+id non è verificabile: oggi può essere giusto e domani sfasarsi senza che
+nessuno se ne accorga, che è esattamente com'è andata. Il controllo è
+`verifica_decisioni.py` — da eseguire **prima di ogni commit** che tocchi
+prosa o dati, insieme ai `valida_*.py`; con `--correggi` riscrive i numeri
+a partire dagli id, quindi rinumerare costa un comando e non sessanta file
+riletti a mano.
 
 ## 4. Convenzione delle pagine
 

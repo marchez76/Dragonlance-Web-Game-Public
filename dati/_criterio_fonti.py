@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-DECISIONE 26 — il criterio della tracciabilita'.
+DECISIONE 26 (`criterio-tracciabilita`) — il criterio della tracciabilita'.
 
     QUALSIASI MATERIALE ESTERNO CHE NON PORTI CON SE' FONTE E PAGINA E'
     INUTILIZZABILE, a prescindere dal resto della sua qualita'.

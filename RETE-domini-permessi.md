@@ -1,6 +1,6 @@
 # Domini di rete permessi
 
-*Generato da `genera_rete.py` il 2026-08-18. Non modificare a mano: la sorgente è
+*Generato da `genera_rete.py` il 2026-09-01. Non modificare a mano: la sorgente è
 il registro dentro lo script, da cui derivano sia questo documento sia
 `.claude/settings.json`.*
 
@@ -57,7 +57,7 @@ regola di comportamento e resta valida a prescindere.
 | dominio | perché no |
 |---|---|
 | `*` | Aperto a tutto. Scartato: il proxy decide in base al nome host dichiarato dal client e NON ispeziona il TLS, quindi con `*` qualunque cosa giri nel sandbox raggiunge qualunque host — compresi i pacchetti di terzi che `pip install` esegue, che hanno accesso in lettura a questa cartella. La differenza pratica con l'elenco sopra e' vicina a zero. |
-| `5e.tools` | Mirror comunitario di manuali protetti. La decisione 26 esclude gia' quel materiale come non tracciabile: non ha senso aprirgli la rete. |
+| `5e.tools` | Mirror comunitario di manuali protetti. La decisione 26 (`criterio-tracciabilita`) esclude gia' quel materiale come non tracciabile: non ha senso aprirgli la rete. |
 
 ---
 

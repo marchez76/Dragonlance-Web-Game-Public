@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-DECISIONE 25 — registro delle divergenze da Shadow of the Dragon Queen.
+DECISIONE 25 (`statuto-sotdq`) — registro delle divergenze da Shadow of the Dragon Queen.
 
 PERCHE' ESISTE
     SotDQ e' materiale ufficiale 5e su Krynn, ma NON e' la conversione
@@ -97,9 +97,9 @@ DIVERGENZE = [
                      "LIGNAGGIO, in cui i punteggi li assegna il giocatore.",
         "nostro": "DES +1, dal capitolo razziale di Tales of the Lance.",
         "decisione": "2",
-        "motivo": "Il modello lignaggio e' quello del PHB 2024, che la decisione 2 "
+        "motivo": "Il modello lignaggio e' quello del PHB 2024, che la decisione 2 (`edizione-phb-2014`) "
                   "ha respinto scegliendo il PHB 2014 perche' rende le specie "
-                  "numericamente neutre e quindi incompatibile con la decisione 3. "
+                  "numericamente neutre e quindi incompatibile con la decisione 3 (`vincoli-caratteristica`). "
                   "Incompatibile alla radice, non per un numero.",
         "reversibile": False,
     },
@@ -146,7 +146,7 @@ DIVERGENZE = [
         "decisione": "5",
         "motivo": "La forma ufficiale permette di diventare Cavaliere della Rosa "
                   "senza mai passare per Corona e Spada. E' precisamente cio' che "
-                  "la decisione 5 rifiuta: la sequenza obbligata E' il contenuto "
+                  "la decisione 5 (`cavalieri-solamnia`) rifiuta: la sequenza obbligata E' il contenuto "
                   "dell'ordine.",
         "reversibile": False,
     },
@@ -175,7 +175,7 @@ DIVERGENZE = [
         "ufficiale": "Le stesse 21 divinita', con `province` (ambito narrativo) e "
                      "`symbol`. Nessuna sfera, nessun rango.",
         "nostro": "Sfere maggiori e minori dalla 2e, piu' rango "
-                  "greater/intermediate/lesser. Il filtro della decisione 24 "
+                  "greater/intermediate/lesser. Il filtro della decisione 24 (`sfere-sacerdotali`) "
                   "poggia interamente su questo.",
         "decisione": "24",
         "motivo": "I nostri dati sono strettamente piu' ricchi. SotDQ vale come "

@@ -95,7 +95,7 @@ ESCLUSI = [
           "compresi i pacchetti di terzi che `pip install` esegue, che hanno "
           "accesso in lettura a questa cartella. La differenza pratica con "
           "l'elenco sopra e' vicina a zero."),
-    ("5e.tools", "Mirror comunitario di manuali protetti. La decisione 26 "
+    ("5e.tools", "Mirror comunitario di manuali protetti. La decisione 26 (`criterio-tracciabilita`) "
                  "esclude gia' quel materiale come non tracciabile: non ha "
                  "senso aprirgli la rete."),
 ]

@@ -97,7 +97,7 @@ VOCI = [
      "pacifisti, gli Endscape sono i piu' selvaggi). Categoria creatura, "
      "non razza_altra: schema monster-manual completo con tabella di "
      "incontro, non un clan riservato ai PNG (stesso principio della "
-     "decisione 28 sull'Ogre). Statistiche complete delle quattro "
+     "decisione 28 (`ogre-e-orughi-mostri`) sull'Ogre). Statistiche complete delle quattro "
      "sotto-specie non ancora estratte per intero: da fare in sede di "
      "conversione, non qui."),
     (6, "Beast, Undead", ["Stahnk", "Gholor"], "creatura", True,
@@ -127,7 +127,7 @@ VOCI = [
      "l'equivalenza dei due nomi. Corrisponde a nano-aghar in dati/razze/, ma finora "
      "nessuna voce dell'Appendice era collegata alla razza. Trovata nella "
      "seconda passata; da valutare se integrare tratti come per Minotauro "
-     "e Irda (decisione 18)."),
+     "e Irda (decisione 18, `minotauro-irda-appendice`)."),
     (29, "Dwarf, Hill (Neidar)", ["Hill Dwarf"], "razza_nostra", False, None),
     (30, "Dwarf, Mountain (Hylar)", ["Mountain Dwarf"], "razza_nostra", False, None),
     (31, "Dwarf, Theiwar", ["Theiwar"], "razza_altra", False,
@@ -175,7 +175,7 @@ VOCI = [
      "corrotto il nome, ha impedito al pattern-matching di trovare la voce "
      "del tutto. Sfuggita sia al primo ricontaggio sia al conteggio "
      "indipendente di confronta_mostri.py, per due ragioni diverse. "
-     "DECISIONE 28: categoria CREATURA, non razza_altra. A differenza di "
+     "DECISIONE 28 (`ogre-e-orughi-mostri`): categoria CREATURA, non razza_altra. A differenza di "
      "Theiwar/Zakhar (clan nanici riservati dal manuale ai PNG giocabili), "
      "gli ogre comuni non sono un clan riservato: sono avversari classici, "
      "e servono all'arena. La parentela con l'Irda (stirpe separatasi) resta "

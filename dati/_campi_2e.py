@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-DECISIONE 27 — i sette campi della scheda 2e senza corrispettivo in 5e.
+DECISIONE 27 (`sette-campi-2e`) — i sette campi della scheda 2e senza corrispettivo in 5e.
 
     Non sono un problema unico: si dividono in tre gruppi, e due si chiudono
     senza deliberare.
@@ -23,7 +23,7 @@ GRUPPO B — MORALE (1 campo)
 
 GRUPPO C — RESISTENZA MAGICA (1 campo)
     L'unica vera decisione, e si prende in Fase 2 con i numeri davanti.
-    Vedi NOTA_MR sotto per il motivo per cui la decisione 16 non si applica.
+    Vedi NOTA_MR sotto per il motivo per cui la decisione 16 (`nove-tratti-phb2e`) non si applica.
 """
 
 GRUPPO_A = {
@@ -63,7 +63,7 @@ GRUPPO_C = {
     "motivo": (
         "E' l'unica vera decisione dei sette, e va presa con i numeri davanti."),
     "perche_non_vale_la_16": (
-        "La decisione 16 dice che dove la 5e ha eliminato qualcosa "
+        "La decisione 16 (`nove-tratti-phb2e`) dice che dove la 5e ha eliminato qualcosa "
         "deliberatamente si ripristina dalla fonte. Qui non si applica, per "
         "un'asimmetria: quei ripristini riguardavano TRATTI RAZZIALI DI "
         "PERSONAGGI GIOCANTI, in un sistema chiuso dove conta solo l'equilibrio "

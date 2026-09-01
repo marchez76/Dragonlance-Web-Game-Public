@@ -3,7 +3,7 @@
 RAPPORTO DIAGNOSTICO — probabilita' di qualificarsi con 4d6 scarta il minore.
 
 DOMANDA (compito C, 12 agosto 2026)
-    Adottata la decisione 9, la domanda non e' piu' *se* una combinazione
+    Adottata la decisione 8 (`generazione-caratteristiche`), la domanda non e' piu' *se* una combinazione
     razza+classe sia possibile, ma **quanto e' rara**. In 2e qualificarsi come
     Cavalier era raro per design: serve sapere quali percorsi restano da eroe
     raro e quali sono ordinari.

@@ -229,7 +229,7 @@ sono un **tetto alla crescita**.
 ## Perche' questo e' dirimente
 
 Un tetto alla crescita e' esattamente la categoria di meccanica che la
-**decisione 3** ha gia' respinto per i limiti di livello, con tre motivazioni
+**decisione 4 (`limiti-di-livello`)** ha gia' respinto per i limiti di livello, con tre motivazioni
 che valgono identiche qui:
 
 1. e' la meccanica 2e piu' universalmente abbandonata dalle edizioni successive;
@@ -249,7 +249,7 @@ scheda razziale.** In concreto: `umano-barbaro` conserva i minimi (STR 10,
 CON 12, WIS 8, DEX 8) e le abilita' speciali culturali, ma non i tetti.
 
 Motivazione in una riga: i massimali sono tetti di crescita travestiti da
-requisiti d'accesso, e la decisione 3 ha gia' stabilito che i tetti di crescita
+requisiti d'accesso, e la decisione 4 (`limiti-di-livello`) ha gia' stabilito che i tetti di crescita
 non si applicano.
 
 ## Variante da considerare

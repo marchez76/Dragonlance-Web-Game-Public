@@ -183,14 +183,14 @@ def scheda(c, completo=False):
 
     # privilegi
     con_liv = sum(1 for b in P if livello_citato(b["text"]))
-    # chassis applicato dalla decisione 23
+    # chassis applicato dalla decisione 23 (`principio-del-clone`)
     ch = c["mechanics_5e"]["chassis"]
     if ch["srd_class"]:
-        righe.append(f"**Chassis 5e (decisione 23)**: clone di **{ch['srd_class']}** "
+        righe.append(f"**Chassis 5e (decisione 23, `principio-del-clone`)**: clone di **{ch['srd_class']}** "
                      f"(SRD 5.1), dado vita {ch['hit_die']}, tiri salvezza "
                      f"{', '.join(ch['saving_throws'])}. {ch['note'].split('. ', 1)[-1]}")
     else:
-        righe.append(f"**Chassis 5e (decisione 23)**: nessuno, lasciato indeciso. "
+        righe.append(f"**Chassis 5e (decisione 23, `principio-del-clone`)**: nessuno, lasciato indeciso. "
                      f"{ch['note'].split(': ', 1)[-1]}")
     righe.append("")
 
@@ -414,7 +414,7 @@ paragonabile a una classe 5e, e lo paga con il codice cavalleresco.
 
 All'estremo opposto ci sono {len(S['senza_priv'])} classi con zero privilegi. Popolano e Tinker
 sono del gruppo Normal e non dovrebbero averne; le tre Vesti sono vuote perché
-sono affiliazioni e non classi, il che è coerente con la decisione 6. Restano i due
+sono affiliazioni e non classi, il che è coerente con la decisione 6 (`maghi-delle-torri`). Restano i due
 sacerdoti e l'Handler, che invece dovrebbero avere un contenuto e non ce l'hanno:
 per i sacerdoti tutto il contenuto meccanico sta nelle sfere delle divinità, già
 estratte in `dati/divinita/`; per l'Handler il manuale spende tre impedimenti e
@@ -422,13 +422,13 @@ nessun beneficio, cioè definisce un ladro per ciò che non sa fare.
 
 La conseguenza pratica: convertire queste classi in 5e non è un lavoro di
 traduzione ma di **riempimento**. Non c'è quasi nulla da tradurre, e la fedeltà
-alla fonte (decisione 16) qui non basta a produrre una classe giocabile.''')}
+alla fonte (decisione 16, `nove-tratti-phb2e`) qui non basta a produrre una classe giocabile.''')}
 
 ---
 
 ## 2. Chassis 5e
 
-*Analisi svolta prima della decisione 23, che l'ha poi adottata. I chassis sono
+*Analisi svolta prima della decisione 23 (`principio-del-clone`), che l'ha poi adottata. I chassis sono
 ora applicati nei dati: vedi `mechanics_5e.chassis` in `dati/classi/*.json`.*
 
 Per ciascuna classe di Krynn, la classe base 5e più vicina come chassis.
@@ -443,7 +443,7 @@ Per ciascuna classe di Krynn, la classe base 5e più vicina come chassis.
 | Marinaio | Fighter/Rogue ibrido — **nessun candidato pulito** | Guerriero con quattro abilità da ladro. In 5e sarebbe multiclasse o una sottoclasse dedicata: entrambe le strade sono decisioni, non conversioni. |
 | Mago dell'Alta Stregoneria | Wizard | Corrispondenza diretta. Le fasi lunari non hanno equivalente e vanno inventate o scartate. |
 | Mago Rinnegato | Wizard | Stesso chassis, definito per sottrazione: è il Mago dell'Alta Stregoneria senza vincoli e senza bonus lunari. |
-| Vesti Bianche / Rosse / Nere | **nessuno — non sono classi** | Decisione 6: affiliazioni dichiarate al Test, al 3° livello, sopra la classe base. In 5e il posto naturale è la sottoclasse (Tradizione Arcana), che però in 5e si sceglie al 2°, non al 3°. |
+| Vesti Bianche / Rosse / Nere | **nessuno — non sono classi** | Decisione 6 (`maghi-delle-torri`): affiliazioni dichiarate al Test, al 3° livello, sopra la classe base. In 5e il posto naturale è la sottoclasse (Tradizione Arcana), che però in 5e si sceglie al 2°, non al 3°. |
 | Sacerdote degli Ordini Sacri | Cleric | Corrispondenza diretta, con le sfere già estratte da mappare sui Domini. |
 | Sacerdote Eretico | **nessuno** | Per definizione non ha potere reale. In 5e non esiste una classe che non faccia nulla: o diventa un background, o una variante di Cleric senza incantesimi, o sparisce. |
 | Truffatore | Rogue | Le quattro abilità potenziate diventano competenze ed Esperienza. |
@@ -463,7 +463,7 @@ quella sbagliata. L'Ira è un'invenzione della 3e, non un tratto del barbaro di
 Krynn né del kit del 1989. Chiamare Barbarian il Barbaro di Ansalon importerebbe
 in blocco una meccanica che la fonte non ha.
 
-Il secondo è il **conflitto sul livello delle Vesti**: la decisione 6 le colloca al
+Il secondo è il **conflitto sul livello delle Vesti**: la decisione 6 (`maghi-delle-torri`) le colloca al
 3° perché lì avviene il Test, ma la 5e assegna la sottoclasse del Wizard al 2°. Il
 disallineamento è di un livello solo, ma va deciso: si sposta il Test al 2°, si
 tiene la sottoclasse vuota per un livello, o si accetta uno scarto.''')}
@@ -575,7 +575,7 @@ disuguaglianza iniziale.
 **Opzioni.** (a) Pacchetti fissi 5e, con le regole di equipaggiamento della fonte
 convertite in vincoli sul pacchetto (il marinaio senza armature metalliche, il
 barbaro senza armature pesanti, il cavaliere obbligato all'armatura migliore).
-(b) Tiro 2e conservato, coerente con la decisione 8 che ha già scelto i dadi per
+(b) Tiro 2e conservato, coerente con la decisione 8 (`generazione-caratteristiche`) che ha già scelto i dadi per
 le caratteristiche. (c) Pacchetto fisso più tiro opzionale.
 
 **Da notare:** solo 4 classi su {n} dichiarano una ricchezza iniziale propria; le
@@ -621,7 +621,7 @@ aggiunge incantesimi sempre preparati. L'accesso non si nega più: si concede.
 **Opzioni.** (a) Mappare le sfere sui Domini 2014 (Conoscenza, Guerra, Vita, Luce,
 Natura, Tempesta, Inganno), con perdita di granularità. (b) Conservare le sfere
 come filtro sulla lista 5e, ripristinando la negazione di accesso — coerente con
-la decisione 16, che dà la precedenza alla fonte. (c) Ibrido: Dominio per gli
+la decisione 16 (`nove-tratti-phb2e`), che dà la precedenza alla fonte. (c) Ibrido: Dominio per gli
 incantesimi bonus, sfere per i divieti.
 
 **Materiale già pronto**: le sfere delle 21 divinità sono estratte in
@@ -631,7 +631,7 @@ incantesimi bonus, sfere per i divieti.
 
 **Cosa faceva.** Corona → Spada → Rosa, con ingresso al 1°, 3° e 4° livello.
 
-**Perché è un problema.** La decisione 5 lo ha già confermato come sequenza
+**Perché è un problema.** La decisione 5 (`cavalieri-solamnia`) lo ha già confermato come sequenza
 obbligata senza azzeramenti. In 5e non esiste un meccanismo di "grado" che cambi
 la classe a metà percorso: la struttura più vicina è la sottoclasse, ma se ne
 sceglie una sola.
@@ -666,8 +666,8 @@ sono decisioni ma estrazioni:
 
 Confronto fra le tre fonti disponibili in libreria. Serve a distinguere cosa dei
 tratti di Ansalon è specifico di Krynn e cosa è tradizione del barbaro 2e, come la
-decisione 16 ha fatto col PHB per elfi e nani. **Non riorganizza il Barbaro**: la
-decisione 20 resta in piedi e la conversione a background resta rimandata.
+decisione 16 (`nove-tratti-phb2e`) ha fatto col PHB per elfi e nani. **Non riorganizza il Barbaro**: la
+decisione 20 (`tappo-barbaro`) resta in piedi e la conversione a background resta rimandata.
 
 ### Le tre fonti
 
@@ -744,12 +744,12 @@ tabella di esperienza del guerriero, movimento normale e il +3/−3 alle reazion
 e la derivazione è completa. Tales of the Lance esce nel 1992, in mezzo alle due
 fonti, e usa quella che esisteva.
 
-Questo spiega la doppia natura che la decisione 12 aveva registrato come
+Questo spiega la doppia natura che la decisione 11 (`barbaro-vincoli`) aveva registrato come
 ambiguità della fonte: **non è un'ambiguità, è un residuo**. Il barbaro di Krynn è
 un kit del guerriero che il manuale ha collocato in due capitoli — cultura e
 classe — perché la 2e del 1992 non aveva ancora una classe barbaro da citare.
 Questo rafforza, senza deciderla, la strada del background già indicata dalla
-decisione 20: un kit non è una classe, ed è esattamente ciò che in 5e diventa un
+decisione 20 (`tappo-barbaro`): un kit non è una classe, ed è esattamente ciò che in 5e diventa un
 background più una sottoclasse.
 
 Due tratti sono **davvero di Krynn** e non hanno riscontro in nessuna delle due
@@ -760,7 +760,7 @@ anziché come massimale.
 
 E uno è **tradizione 2e travestita da Krynn**: il legame col terreno natio. Sia il
 manuale del 1995 sia Tales of the Lance concedono competenze gratuite nel proprio
-ambiente. Per la decisione 16, questo andrebbe convertito guardando alla forma
+ambiente. Per la decisione 16 (`nove-tratti-phb2e`), questo andrebbe convertito guardando alla forma
 generale del tratto, non a quella particolare di Krynn.
 
 **Una cosa che PHBR14 ha e noi no**: la *nostalgia del territorio* di Krynn dura
@@ -782,7 +782,7 @@ PHBR14 sarebbe la sostituzione naturale. Non è una proposta: è materiale.''')}
   Non contiene materiale su Krynn oltre a questo: non è una fonte di setting.
 - **PHBR14 cita i Kagonesti come esempio di elfi barbari**, insieme agli elfi
   silvani in generale. È una menzione di colore, senza meccanica: non incide
-  sulle decisioni 21 e 22.
+  sulle decisioni 21 (`tre-elfi-terrestri`) e 22 (`tratto-fantasma-qualinesti`).
 """
 
     classi_ord = sorted(classi, key=lambda x: (GRUPPI.index(x["group"]), x["id"]))

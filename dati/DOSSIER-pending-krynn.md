@@ -2,7 +2,7 @@
 
 *12 agosto 2026. Materiale per decidere, non decisioni prese.*
 
-Dopo la decisione 16 restano **13 tratti sospesi, uno per occorrenza**: nessuno
+Dopo la decisione 16 (`nove-tratti-phb2e`) restano **13 tratti sospesi, uno per occorrenza**: nessuno
 è condiviso fra razze, quindi ogni voce va decisa singolarmente.
 
 Nessuno ha un precedente nel PHB 2014, perché nessuno esiste nel PHB 2e: sono
@@ -62,11 +62,11 @@ con fionde e armi da lancio, per talento naturale.
 
 | # | forma | note |
 |---|---|---|
-| A | Competenza con fionda e armi da lancio | È la forma che il PHB 2014 ha usato per l'identico caso elfico (Elf Weapon Training). **Coerente con la decisione 16, gruppo A** |
-| B | +1 ai tiri per colpire con quelle armi | Ripristino fedele, come il gruppo C della decisione 16 |
+| A | Competenza con fionda e armi da lancio | È la forma che il PHB 2014 ha usato per l'identico caso elfico (Elf Weapon Training). **Coerente con la decisione 16 (`nove-tratti-phb2e`), gruppo A** |
+| B | +1 ai tiri per colpire con quelle armi | Ripristino fedele, come il gruppo C della decisione 16 (`nove-tratti-phb2e`) |
 
 **Raccomandazione: A.** Il caso è strutturalmente identico a «Maestria con
-archi e spade» degli elfi, che la decisione 16 ha già risolto seguendo la 5e e
+archi e spade» degli elfi, che la decisione 16 (`nove-tratti-phb2e`) ha già risolto seguendo la 5e e
 convertendo il +1 in competenza. Trattarlo diversamente creerebbe
 un'incoerenza fra due tratti gemelli.
 
@@ -80,7 +80,7 @@ sorpresa imposta agli avversari, per vigilanza innata.
 **3.5** — non verificato.
 
 **Proposta**: la stessa forma già scelta per la Sorpresa elfica nella decisione
-16, gruppo B — vantaggio a Furtività per nascondersi.
+16 (`nove-tratti-phb2e`), gruppo B — vantaggio a Furtività per nascondersi.
 
 **Ma attenzione, non è lo stesso tratto.** L'elfo ha condizioni stringenti
 (niente armatura metallica, essere solo o in compagnia di elfi e halfling). Il
@@ -301,7 +301,7 @@ livello di indebolimento è il calco quasi perfetto del -1 ai tiri. Il +1 di
 sollievo al rientro non ha equivalente: la 5e non ha buff da riposo prolungato,
 e un «vantaggio per 1d6 giorni» sarebbe sproporzionato.
 
-**Attenzione**: questo tratto interagisce con la decisione 12 (il Barbaro
+**Attenzione**: questo tratto interagisce con la decisione 11 (`barbaro-vincoli`, il Barbaro
 mantiene entrambi i set di vincoli) e con la variante «barbaro come background»
 rimasta accantonata. Se un giorno diventasse un background, questo tratto ne
 sarebbe la caratteristica distintiva.

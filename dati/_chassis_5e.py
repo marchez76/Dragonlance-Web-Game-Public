@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-DECISIONE 23 — il principio del clone.
+DECISIONE 23 (`principio-del-clone`) — il principio del clone.
 
     Per le classi la fedelta' alla fonte non basta. Le razze 2e sono ricche e
     la trascrizione integrale ha prodotto voci piene; le classi 2e sono povere,
@@ -16,7 +16,7 @@ DECISIONE 23 — il principio del clone.
 
 CINQUE CLASSI RESTANO SENZA CHASSIS
     Popolano, Tinker, Sacerdote Eretico, Handler e Marinaio. Il rapporto le
-    aveva segnalate come prive di candidato pulito e la decisione 23 le lascia
+    aveva segnalate come prive di candidato pulito e la decisione 23 (`principio-del-clone`) le lascia
     esplicitamente indecise. Restano `in_sospeso`: proposte nel rapporto,
     nessuna applicata.
 
@@ -28,7 +28,7 @@ LE SETTE INCOMPATIBILITA' STRUTTURALI
 
 import _srd51 as R
 
-DEC = "DECISIONE 23"
+DEC = "DECISIONE 23 (`principio-del-clone`)"
 
 # --------------------------------------------------------------------------
 # Chassis per classe. `None` = nessun candidato pulito, lasciato indeciso.
@@ -40,7 +40,7 @@ CHASSIS = {
                 "discende. Confermato dall'appendice di RAPPORTO-classi.md."),
     "cavaliere-corona": ("Fighter",
                          "Guerriero puro, nessuna magia al primo grado. La "
-                         "sequenza verso Spada e Rosa (decisione 5) si innesta "
+                         "sequenza verso Spada e Rosa (decisione 5, `cavalieri-solamnia`) si innesta "
                          "sopra il chassis."),
     "cavaliere-spada": ("Paladin",
                         "La fonte dice esplicitamente \"capacita' della classe "
@@ -58,17 +58,17 @@ CHASSIS = {
     "mago-rinnegato": ("Wizard",
                        "Stesso chassis, definito per sottrazione: e' il Mago "
                        "dell'Alta Stregoneria senza vincoli e senza bonus lunari."),
-    "mago-veste-bianca": (None, "AFFILIAZIONE, non classe (decisione 6)."),
-    "mago-veste-nera": (None, "AFFILIAZIONE, non classe (decisione 6)."),
-    "mago-veste-rossa": (None, "AFFILIAZIONE, non classe (decisione 6)."),
+    "mago-veste-bianca": (None, "AFFILIAZIONE, non classe (decisione 6, `maghi-delle-torri`)."),
+    "mago-veste-nera": (None, "AFFILIAZIONE, non classe (decisione 6, `maghi-delle-torri`)."),
+    "mago-veste-rossa": (None, "AFFILIAZIONE, non classe (decisione 6, `maghi-delle-torri`)."),
     "sacerdote-ordini-sacri": ("Cleric",
                                "Corrispondenza diretta. Le sfere gia' estratte "
-                               "diventano il filtro della decisione 24; il "
+                               "diventano il filtro della decisione 24 (`sfere-sacerdotali`); il "
                                "Dominio resta come sottoclasse."),
     "con-artist": ("Rogue",
                    "Le quattro abilita' potenziate diventano competenze ed "
                    "Esperienza."),
-    # ---- lasciate indecise dalla decisione 23 ----
+    # ---- lasciate indecise dalla decisione 23 (`principio-del-clone`) ----
     "commoner": (None, "Non e' una classe 5e. Da decidere."),
     "tinker": (None, "Non e' una classe 5e. Da decidere."),
     "sacerdote-eretico": (None, "Per definizione non ha potere. Da decidere."),
@@ -82,19 +82,19 @@ CHASSIS = {
 
 # --------------------------------------------------------------------------
 # Stato di conversione dei privilegi di fonte.
-# Default: `pending`. La decisione 23 autorizza il clone del chassis, non
+# Default: `pending`. La decisione 23 (`principio-del-clone`) autorizza il clone del chassis, non
 # l'invenzione di meccanica 5e per i privilegi: quella resta da fare.
 # --------------------------------------------------------------------------
 STATO_PRIVILEGI = {
     ("cavaliere-corona", "Specializzazione nelle armi"): (
         "source_only",
-        "Stesso criterio della decisione 17.10 sul Minotauro: la fonte non "
+        "Stesso criterio della decisione 17.10 (`pending-krynn`) sul Minotauro: la fonte non "
         "concede un beneficio ma un PERMESSO — la facolta' di usare un "
         "sottosistema 2e ristretto. In un sistema che quel sottosistema non ce "
         "l'ha, il permesso non vale nulla. CONSEGUENZA REGISTRATA: il grado "
         "d'ingresso dell'intero ordine solamnico resta a ZERO privilegi "
         "dichiarati dalla fonte. Non e' un errore da correggere: e' cio' che "
-        "dice il manuale, ed e' la ragione per cui serve la decisione 23."),
+        "dice il manuale, ed e' la ragione per cui serve la decisione 23 (`principio-del-clone`)."),
     ("cavaliere-spada", "Capacita' del paladino"): (
         "direct",
         "Assorbito dal chassis: se la classe E' un Paladino, il privilegio "
@@ -108,7 +108,7 @@ STATO_PRIVILEGI = {
 
 DEFAULT_PRIVILEGIO = (
     "pending",
-    "La decisione 23 autorizza il clone del chassis, non l'invenzione di "
+    "La decisione 23 (`principio-del-clone`) autorizza il clone del chassis, non l'invenzione di "
     "meccanica 5e per i privilegi della fonte. Da convertire.")
 
 

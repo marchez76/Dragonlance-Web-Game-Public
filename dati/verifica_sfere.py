@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Verifica di giocabilita' del filtro delle sfere (decisione 24).
+Verifica di giocabilita' del filtro delle sfere (decisione 24, `sfere-sacerdotali`).
 
 DA ESEGUIRE PRIMA DI ATTIVARE IL FILTRO.
     Il filtro nega l'accesso agli incantesimi fuori dalle sfere della divinita'.
@@ -158,7 +158,7 @@ def main():
 *Generato da `dati/verifica_sfere.py` il {OGGI}.*
 
 > **Cos'è.** Il conteggio richiesto prima di attivare il filtro della
-> decisione 24. Non risolve nulla: non aggiunge sfere, non ammorbidisce il
+> decisione 24 (`sfere-sacerdotali`). Non risolve nulla: non aggiunge sfere, non ammorbidisce il
 > filtro, non concede eccezioni. Conta e basta.
 >
 > Ogni numero è derivato da `dati/divinita/*.json` e da `dati/_sfere_5e.py`.

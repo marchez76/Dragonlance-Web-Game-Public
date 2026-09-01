@@ -395,7 +395,7 @@ ANALOGIE = {
 # "creatura" dell'Appendice (BM.VOCI, categoria creatura). Trovato cercando
 # la stringa su tutto il testo estratto e filtrando ai soli campi di
 # combattimento (esclusi TREASURE/NO. APPEARING quando sono dati di mondo,
-# gruppo A della decisione 27 — l'unica eccezione e' Haunt/Knight, dove
+# gruppo A della decisione 27 (`sette-campi-2e`) — l'unica eccezione e' Haunt/Knight, dove
 # TREASURE stesso resta "See below" e viene contato perche' non c'e' un
 # valore alternativo dichiarato altrove).
 #
@@ -691,7 +691,7 @@ PRIORITA = [
     ("Knight, Death", 3,
      "**Il Cavaliere della Morte**. CORREZIONE dopo la rilettura: la fonte "
      "descrive un TIPO ripetibile (\"a Knight of Solamnia, cursed by the "
-     "gods...\"), non un individuo nominato — coerente con la decisione 32 "
+     "gods...\"), non un individuo nominato — coerente con la decisione 32 (`creatura-contro-entita`) "
      "(criterio: nome proprio e storia, non vincolo a un oggetto). "
      "\"E' Lord Soth\" era un'identificazione della sessione precedente, non "
      "un dato della voce: la fonte non nomina Soth. Va convertito come "
@@ -1391,7 +1391,7 @@ c'è garanzia che siano finite.
    "creatura" dell'Appendice, **{n_flag} ({quota_flag}%)** hanno almeno un
    campo "See below" in un dato di combattimento (non nei campi di mondo
    `TREASURE`/`NO. APPEARING`, sempre esclusi dallo statblock per la
-   decisione 27 gruppo A — l'unica eccezione è `Haunt, Knight`, dove
+   decisione 27 (`sette-campi-2e`) gruppo A — l'unica eccezione è `Haunt, Knight`, dove
    `TREASURE` stesso resta "See below" senza un valore alternativo
    dichiarato altrove, e va comunque letto). Distribuzione sulle fasce
    attuali: {dist_5}. Tutte già lette per intero in questa sessione (elenco
@@ -1566,7 +1566,7 @@ filtro).''')}
 - **Cavaliere della Morte**: la sessione precedente lo identificava con Lord
   Soth. La voce dell'Appendice descrive però un **tipo** ("a Knight of
   Solamnia, cursed by the gods..."), non un individuo nominato — la fonte non
-  cita mai Soth. Applicando il criterio della decisione 32 (nome proprio e
+  cita mai Soth. Applicando il criterio della decisione 32 (`creatura-contro-entita`, nome proprio e
   storia, non vincolo a un oggetto), il Cavaliere della Morte è una
   **creatura**, non un'entità: si converte al suo grado reale come le altre,
   e il suo statblock è strutturalmente quasi gemello dello Scheletro
@@ -1578,7 +1578,7 @@ filtro).''')}
 **La categoria ENTITÀ, per ora, è vuota.** Fra le 62 voci lette non ce n'è
 una che abbia nome proprio e storia propria dichiarati dalla fonte stessa
 (il Cavaliere della Morte era l'unica candidata, ed è ricaduta in creatura).
-Non è un difetto della categoria: il criterio della decisione 32 ha retto al
+Non è un difetto della categoria: il criterio della decisione 32 (`creatura-contro-entita`) ha retto al
 primo caso a cui è stato applicato, respingendolo. Resta nello schema e nel
 metodo per il giorno in cui una voce ci ricadrà davvero — un nome proprio
 dichiarato dalla fonte, non un'identificazione fatta da noi.
@@ -1707,7 +1707,7 @@ Delle tre cose che mancavano, **sono fatte tutte e tre**.
 - ~~Schema del mostro~~ → `dati/schema/mostro.schema.json`, validato sui cinque
   draconici.
 - ~~Verifica degli {BS['nomi_sbagliati']} nomi corrotti~~ → tutti leggibili, vedi sopra.
-- ~~Decisione sui sette campi senza corrispettivo~~ → decisione 27, sotto: due
+- ~~Decisione sui sette campi senza corrispettivo~~ → decisione 27 (`sette-campi-2e`), sotto: due
   gruppi chiusi, uno rinviato con motivo.
 - ~~Conteggio vero delle creature dell'MC Appendix~~ → **{BS['voci']} voci,
   {BS['creature']} creature**, stabilito voce per voce sulle immagini di pagina —
@@ -1725,7 +1725,7 @@ non impedisce di cominciare a convertire: la prima fascia non dipende da lui.'''
 
 ---
 
-## Decisione 27 — i sette campi senza corrispettivo
+## Decisione 27 (`sette-campi-2e`) — i sette campi senza corrispettivo
 
 Non erano un problema unico. Si dividono in tre gruppi, e due si sono chiusi
 senza deliberare.
@@ -1755,7 +1755,7 @@ Nello schema è `mechanics_5e.morale_2e`, con valore, etichetta della fonte e
 
 {C27.GRUPPO_C['motivo']}
 
-**Perché la decisione 16 non si applica.** {C27.GRUPPO_C['perche_non_vale_la_16']}
+**Perché la decisione 16 (`nove-tratti-phb2e`) non si applica.** {C27.GRUPPO_C['perche_non_vale_la_16']}
 
 **Il problema di traduzione.** {C27.GRUPPO_C['problema_di_traduzione']}
 

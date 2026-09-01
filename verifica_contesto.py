@@ -223,7 +223,7 @@ def main():
     chk("somma privilegi in tabella", tot_p, sum(int(r[5]) for r in righe_cl))
     chk("somma impedimenti in tabella", tot_h, sum(int(r[6]) for r in righe_cl))
 
-    # --- decisione 23: chassis e stati dei privilegi ----------------------
+    # --- decisione 23 (`principio-del-clone`): chassis e stati dei privilegi ----------------------
     clonate = [c for c in classi if c["mechanics_5e"]["chassis"]["srd_class"]]
     m = re.search(r"\*\*(\d+) classi su (\d+)\*\* sono cloni meccanici di una classe "
                   r"SRD 5\.1: (.+?)\.\n\*\*(\d+) restano senza chassis\*\*, per "
@@ -250,7 +250,7 @@ def main():
     for n_, k in re.findall(r"\*\*(\d+)\*\* `(\w+)`", m.group(2)):
         chk(f"feature {k}", stati_f[k], int(n_))
 
-    # --- decisione 24: filtro delle sfere ---------------------------------
+    # --- decisione 24 (`sfere-sacerdotali`): filtro delle sfere ---------------------------------
     import importlib.util
     spec = importlib.util.spec_from_file_location(
         "_sfere_5e", os.path.join(DATI, "_sfere_5e.py"))
@@ -317,7 +317,7 @@ def main():
     chk("non lavorati", ps["non_lavorato"], int(m.group(7)))
     chk("somma stati manuali", ri["manuali_totali"], sum(ps.values()))
 
-    # --- bestiario (decisione 26 e diagnostica) ---------------------------
+    # --- bestiario (decisione 26 (`criterio-tracciabilita`) e diagnostica) ---------------------------
     spec = importlib.util.spec_from_file_location(
         "_draconici", os.path.join(DATI, "_draconici.py"))
     DR = importlib.util.module_from_spec(spec)
@@ -345,15 +345,15 @@ def main():
     chk("il massimo e' il Kapak", "Kapak", max(rap, key=rap.get))
 
 
-    # --- decisione 27: i sette campi senza corrispettivo ------------------
+    # --- decisione 27 (`sette-campi-2e`): i sette campi senza corrispettivo ------------------
     spec = importlib.util.spec_from_file_location(
         "_campi_2e", os.path.join(DATI, "_campi_2e.py"))
     C27 = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(C27)
     righe_27 = re.findall(r"^\| \*\*([ABC])\*\* \| (\d+) \| (.+?) \| (.+?) \| "
                           r"(.+?) \|$", doc, re.M)
-    chk("gruppi decisione 27", len(C27.GRUPPI), len(righe_27))
-    chk("campi decisione 27 in totale", C27.totale_campi(),
+    chk("gruppi decisione 27 (`sette-campi-2e`)", len(C27.GRUPPI), len(righe_27))
+    chk("campi decisione 27 (`sette-campi-2e`) in totale", C27.totale_campi(),
         sum(int(r[1]) for r in righe_27))
     chk("campi 27 = campi assenti", ass_c, sum(int(r[1]) for r in righe_27))
     for k, n_, quali, esito, dest in righe_27:
@@ -405,7 +405,7 @@ def main():
         sum(len(x[2]) for x in st["multi"]),
         sum(int(r[2]) for r in righe_multi))
 
-    # --- decisione 26: criterio della tracciabilita' ----------------------
+    # --- decisione 26 (`criterio-tracciabilita`): criterio della tracciabilita' ----------------------
     spec = importlib.util.spec_from_file_location(
         "_criterio_fonti", os.path.join(DATI, "_criterio_fonti.py"))
     CF = importlib.util.module_from_spec(spec)

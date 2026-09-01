@@ -68,7 +68,7 @@ METODO_PATH = Path(__file__).parent / "METODO-conversione-mostri.md"
 # quindi legittimamente `stato: "fatto"`. Conteneva un solo nome, "Tayling".
 # E' stato tolto perche' l'eccezione stava nel posto sbagliato: un nome nel
 # codice non puo' portare con se' la ragione per cui e' un'eccezione, e chi
-# leggeva la coda non vedeva nulla. Le decisioni 34-36 hanno chiuso due delle
+# leggeva la coda non vedeva nulla. Le decisioni 34-36 (da `categorie-eta` a `age-categories-strutturato`) hanno chiuso due delle
 # tre categorie aperte in un colpo solo, il che avrebbe raddoppiato l'elenco:
 # il momento giusto per spostarlo nei dati.
 # Ora mostri.coda.json ha DUE blocchi invece di uno — `categorie_aperte` e

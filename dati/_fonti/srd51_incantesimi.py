@@ -3,7 +3,7 @@
 SRD 5.1 (CC-BY 4.0) — lista incantesimi completa, tutte le classi.
 
 PERCHE' STA QUI
-    dati/_sfere_5e.py copre solo i 105 incantesimi del chierico (decisione 24,
+    dati/_sfere_5e.py copre solo i 105 incantesimi del chierico (decisione 24 (`sfere-sacerdotali`),
     filtro delle sfere). L'arena deve poter far scendere in campo anche un mago:
     il Mago dell'Alta Stregoneria e' clonato sullo chassis Wizard dell'SRD
     (dati/classi/mago-alta-stregoneria.json, mechanics_5e.chassis.srd_class),

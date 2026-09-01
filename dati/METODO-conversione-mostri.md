@@ -80,13 +80,13 @@ le riorganizza per l'uso, non le sostituisce.
   `NO. APPEARING`, che restano dati di mondo. Se presente, la lettura
   completa non è opzionale.
 - **Resistenza magica**: si registra in `magic_resistance_2e` con
-  `applied: false` (decisione 27, gruppo C — rinviata alla Fase 2), mai
+  `applied: false` (decisione 27 (`sette-campi-2e`), gruppo C — rinviata alla Fase 2), mai
   applicata alla scheda.
 - **Il riscontro 3.5** (`riscontro/3.5/`) è un indice, non una fonte: dice
   DOVE guardare per verificare una lettura già fatta sul 2e, non fornisce
   contenuto. Si consulta DOPO aver letto il 2e per intero, mai per copiarne
   la meccanica (spesso è più morbido del 2e).
-- **Creatura contro entità** (decisione 32): nome proprio e storia propria →
+- **Creatura contro entità** (decisione 32, `creatura-contro-entita`): nome proprio e storia propria →
   entità, fuori dal bestiario. Tipo/procedura ripetibile, anche se potente o
   legato a un oggetto magico → creatura, si converte come le altre.
   "Legato a un oggetto" non equivale a "unico".
@@ -102,7 +102,7 @@ le riorganizza per l'uso, non le sostituisce.
   Un'azione che la creatura fa solo in stormo/branco (es. il Calpestio del
   'Wari) va esclusa dal calcolo del GS del singolo — è corretto — ma
   registrata con destinazione `generatore_incontri`, stesso trattamento del
-  morale (decisione 27, gruppo B). Un buco silenzioso qui è come un buco
+  morale (decisione 27 (`sette-campi-2e`), gruppo B). Un buco silenzioso qui è come un buco
   silenzioso su una capacità individuale: la regola ferma sulle capacità
   dichiarate (sopra) vale anche per i comportamenti collettivi.
 
@@ -240,7 +240,7 @@ una checklist burocratica.
     (XP2e, GS) alla tabella una volta chiusa la scheda.
 11. Compilare `morale_2e` (destinazione `ia_combattimento`) e
     `world_data_2e` (destinazione `generatore_incontri`) dai gruppi A/B
-    della decisione 27.
+    della decisione 27 (`sette-campi-2e`).
 12. Validare contro `dati/schema/mostro.schema.json`, poi rigenerare
     `dati/mostri.index.json` con `python3 dati/build_mostri_index.py`
     (derivato dal contenuto di `dati/mostri/`, non tenuto a mano).
@@ -249,12 +249,12 @@ una checklist burocratica.
 
 Tre tipi di voce che questo metodo non copriva, perché presuppongono uno
 statblock fisso da convertire una volta sola. **Al 26/08/2026 sono chiuse
-tutte e tre** (decisioni 34-36 le prime due, decisioni 38-41 la terza), e
+tutte e tre** (decisioni 34-36 (da `categorie-eta` a `age-categories-strutturato`) le prime due, decisioni 38-41 (da `schema-modelli` a `sconfessione-condivisa`) la terza), e
 restano scritte qui sotto perché la forma va riconosciuta anche dopo che il
 problema è risolto — la prossima voce che ne porta una va inquadrata subito,
 non riscoperta.
 
-### 5.1 Creature-modello — RISOLTA (decisioni 38-41, 26/08/2026)
+### 5.1 Creature-modello — RISOLTA (decisioni 38-41 (da `schema-modelli` a `sconfessione-condivisa`), 26/08/2026)
 
 Dreamshadow, Spectral Minion, e — scoperto convertendole — anche il
 Dreamwraith, che era già una scheda. Ogni campo che pesa in combattimento è
@@ -271,8 +271,8 @@ a un campo: quando il rimando riguarda `HIT DICE`, la voce non ha punti ferita,
 e senza punti ferita non c'è statblock da convertire.
 
 **Dove finiscono.** In `dati/modelli/`, schema proprio
-`dati/schema/modello.schema.json` (decisione 38), stesso criterio della
-decisione 33 sugli oggetti: applicabile a bersagli diversi → non appartiene a
+`dati/schema/modello.schema.json` (decisione 38, `schema-modelli`), stesso criterio della
+decisione 33 (`schema-oggetti`) sugli oggetti: applicabile a bersagli diversi → non appartiene a
 nessuno di loro. Il modello descrive quattro cose e nient'altro — cosa
 **eredita** dall'ospite, cosa **sovrascrive**, cosa **aggiunge** di suo, quale
 insieme di ospiti è **legale**.
@@ -280,7 +280,7 @@ insieme di ospiti è **legale**.
 **Le tre cose da controllare su una voce nuova**, nell'ordine:
 
 1. *Che grado ha?* Nessuno, di norma: si registra lo **scarto** al grado
-   dell'ospite, non un valore (decisione 40). Tre forme, e la fonte suggerisce
+   dell'ospite, non un valore (decisione 40, `modello-scarto-di-grado`). Tre forme, e la fonte suggerisce
    quale guardando la sola riga `XP VALUE`: un **modificatore** ("+ 10%" sul
    Dreamshadow) → `delta`; **valori assoluti** su un profilo che la fonte
    dichiara invariante → `proprio`, e allora la voce merita anche una scheda di
@@ -288,10 +288,10 @@ insieme di ospiti è **legale**.
    l'uso che se ne fa va **dichiarato** (`uso_dichiarato`), altrimenti è una
    stima nascosta.
 2. *Quali ospiti sono legali?* Un **filtro**, mai un campione: si applica la
-   decisione 35 senza aggiungere nulla (decisione 39). Lo schema lo impone —
+   decisione 35 (`repertori-sono-filtri`) senza aggiungere nulla (decisione 39, `bersaglio-legale-filtro`). Lo schema lo impone —
    `campione` accetta solo `null`.
 3. *C'è qualcosa che condivide con un'altra voce?* Si scrive **una volta**, in
-   un modello, con i valori che cambiano come **parametri** (decisione 41). La
+   un modello, con i valori che cambiano come **parametri** (decisione 41, `sconfessione-condivisa`). La
    sconfessione delle illusioni è il primo caso: stessa procedura per
    Dreamwraith e Dreamshadow, con una penalità di −5 che vale solo contro il
    primo.
@@ -312,7 +312,7 @@ nemmeno il vincolo, perché il campione è un'altra creatura scelta a runtime.
 La risposta non è stata trovare il vincolo mancante ma cambiare l'oggetto da
 convertire: non la creatura, il meccanismo.
 
-### 5.2 Famiglie di statblock — RISOLTA (decisioni 34 e 36, 25/08/2026)
+### 5.2 Famiglie di statblock — RISOLTA (decisioni 34 (`categorie-eta`) e 36 (`age-categories-strutturato`), 25/08/2026)
 
 Tylor, e con lui Dragon Amphi e Dragon Sea. La fonte non dà uno statblock ma
 una **tabella di categorie d'età** con DV, CA e capacità propri per riga, sul
@@ -340,7 +340,7 @@ confronto diretto.
   a una banda di Dadi Vita. È un argomento **osservato nella tabella**, non
   inferito: la colonna del danno è lì e non varia.
 
-**Dove finisce il resto** (decisione 36): nel campo
+**Dove finisce il resto** (decisione 36, `age-categories-strutturato`): nel campo
 `source_2e.age_categories` di `mostro.schema.json`, tabellare e
 interrogabile, **non** riscritto in prosa dentro `abilities_text` — dodici
 righe per dodici colonne in prosa sono illeggibili e perdono la struttura. Il
@@ -351,9 +351,9 @@ stampa senza dire se valga per Dado Vita o sul totale. Ogni scheda derivata
 porta la tabella **intera**, non solo la propria riga: la riga da sola non
 direbbe dove la creatura sta nella progressione. Destinazione delle righe non
 convertite: `generatore_incontri`, stesso trattamento dei dati di mondo del
-gruppo A della decisione 27.
+gruppo A della decisione 27 (`sette-campi-2e`).
 
-### 5.3 Incantatore a scelta del master — RISOLTA (decisione 35, 25/08/2026)
+### 5.3 Incantatore a scelta del master — RISOLTA (decisione 35 (`repertori-sono-filtri`), 25/08/2026)
 
 Tayling, e con lui il repertorio del Tylor e la metà accoppiata del Dragon
 Astral. Il corpo ha uno statblock fisso, ma il repertorio di incantesimi non è
@@ -374,7 +374,7 @@ repertorio non resta `pending` e non è escluso dal calcolo del GS.** Entra come
 capacità con insieme definito, e il GS che ne esce è chiuso, non provvisorio.
 
 La macchina esisteva già e non è stata costruita per l'occasione: le sfere come
-filtro di preparazione sono la decisione 24, implementate in
+filtro di preparazione sono la decisione 24 (`sfere-sacerdotali`), implementate in
 `dati/_sfere_5e.py`; la scuola è un campo indicizzato dei 319 incantesimi SRD
 in `dati/incantesimi.index.json`. Vale la pena dire perché questo è più facile
 nel nostro bersaglio che a tavolo: la 5e cartacea deve stampare una lista
@@ -393,7 +393,7 @@ e Spettro Onirico, tutti GS 4). Calcolato invece che presunto, **il GS resta
 1/2**: la scuola di Alterazione e la sfera Elementale, filtrate sull'SRD,
 selezionano utilità, movimento e controllo — non danno. La previsione era
 sbagliata, e solo modellare il filtro poteva dirlo. È il caso che giustifica la
-decisione 35 meglio di qualunque argomento di forma: un `pending` non è neutro,
+decisione 35 (`repertori-sono-filtri`) meglio di qualunque argomento di forma: un `pending` non è neutro,
 è una stima nascosta.
 
 ### 5.4 Cosa NON è una categoria aperta: lo statblock a Dadi Vita variabili
@@ -430,7 +430,7 @@ l'adulto — applicata a una forma diversa.
 
 Coda ordinaria esaurita per intero dal 21/08/2026 (fascia 4 chiusa con Hatori
 Minore e Ragno Botola Gigante). Categorie aperte: **nessuna** — la terza e
-ultima (§5.1, le creature-modello) è chiusa dalle decisioni 38-41 del
+ultima (§5.1, le creature-modello) è chiusa dalle decisioni 38-41 (da `schema-modelli` a `sconfessione-condivisa`) del
 26/08/2026. Restano i due blocchi da filtro sull'output (Haunt Knight,
 Wyndlass — §3.1) e il contenuto di `fuori_fascia`.
 
@@ -515,7 +515,7 @@ difesa/offesa; se non tiene, qui resta comunque la cronologia di perché si
 | 6.000 | 6 | Draconico Aurak |
 | — | 5 | Hatori Minore |
 
-\* Il GS 1/2 del Tayling **era** provvisorio e ora è chiuso (decisione 35,
+\* Il GS 1/2 del Tayling **era** provvisorio e ora è chiuso (decisione 35 (`repertori-sono-filtri`),
 25/08/2026): il repertorio non è più `pending` ed è entrato nel calcolo. La
 riga non è cambiata — è la previsione che c'era scritta qui a essere stata
 smentita. Diceva che il Tayling completo sarebbe salito in linea con le altre

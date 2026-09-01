@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://dragonlance-gdr.local/schema/modello.schema.json",
   "title": "Modello applicabile a un ospite",
-  "description": "DECISIONE 38. Stesso criterio della decisione 33 sugli oggetti: quando una cosa e' applicabile a bersagli diversi non appartiene a nessuno di loro e prende schema proprio. Un MODELLO non e' una creatura: e' un pacchetto di regole che si applica a un OSPITE (un'altra creatura, viva o morta) e ne produce una terza cosa. Descrive quattro cose e nient'altro: cosa EREDITA dall'ospite, cosa SOVRASCRIVE con valore proprio, cosa AGGIUNGE di suo, e quale insieme di ospiti e' LEGALE.\n\nPerche' non poteva stare in mostro.schema.json: quello schema presuppone uno statblock fisso da convertire una volta sola (CA, PF, GS sono campi obbligatori). Un modello non ha nessuno dei tre finche' non gli si da' un ospite — e il Dreamshadow con l'aspetto di un ratto e quello con l'aspetto di un ogre sono la stessa cosa su bersagli diversi, non due creature. Vedi `scarto_grado` per la conseguenza sul Grado di Sfida (decisione 40).\n\nUn modello PUO' avere anche una scheda di mostro propria (campo `monster_id`) quando la fonte gli fissa abbastanza statistiche da renderlo giocabile da solo: e' il caso del Dreamwraith, che eredita tre campi di scheda e dichiara CA e Dadi Vita invarianti. In quel caso i tratti stanno nella scheda, NON qui: il modello li referenzia e non li duplica, stesso principio di `oggetti_collegati` (decisione 33).\n\nDoppio strato come tutti gli altri schemi del progetto: `source_2e` fedele al manuale e immutabile, `mechanics_5e` con stato di conversione e provenienza su ogni elemento.",
+  "description": "DECISIONE 38 (`schema-modelli`). Stesso criterio della decisione 33 (`schema-oggetti`) sugli oggetti: quando una cosa e' applicabile a bersagli diversi non appartiene a nessuno di loro e prende schema proprio. Un MODELLO non e' una creatura: e' un pacchetto di regole che si applica a un OSPITE (un'altra creatura, viva o morta) e ne produce una terza cosa. Descrive quattro cose e nient'altro: cosa EREDITA dall'ospite, cosa SOVRASCRIVE con valore proprio, cosa AGGIUNGE di suo, e quale insieme di ospiti e' LEGALE.\n\nPerche' non poteva stare in mostro.schema.json: quello schema presuppone uno statblock fisso da convertire una volta sola (CA, PF, GS sono campi obbligatori). Un modello non ha nessuno dei tre finche' non gli si da' un ospite — e il Dreamshadow con l'aspetto di un ratto e quello con l'aspetto di un ogre sono la stessa cosa su bersagli diversi, non due creature. Vedi `scarto_grado` per la conseguenza sul Grado di Sfida (decisione 40, `modello-scarto-di-grado`).\n\nUn modello PUO' avere anche una scheda di mostro propria (campo `monster_id`) quando la fonte gli fissa abbastanza statistiche da renderlo giocabile da solo: e' il caso del Dreamwraith, che eredita tre campi di scheda e dichiara CA e Dadi Vita invarianti. In quel caso i tratti stanno nella scheda, NON qui: il modello li referenzia e non li duplica, stesso principio di `oggetti_collegati` (decisione 33, `schema-oggetti`).\n\nDoppio strato come tutti gli altri schemi del progetto: `source_2e` fedele al manuale e immutabile, `mechanics_5e` con stato di conversione e provenienza su ogni elemento.",
   "type": "object",
   "required": ["id", "name", "source", "source_2e", "ospiti_legali", "mechanics_5e"],
   "additionalProperties": false,
@@ -50,7 +50,7 @@
     },
     "destinazione": {
       "enum": ["scheda", "generatore_incontri", "ia_combattimento"],
-      "description": "Dove finisce il campo una volta applicato il modello. `scheda`: e' una statistica di combattimento e va nello statblock generato. `generatore_incontri`: e' un dato di mondo (decisione 27, gruppo A) e serve a chi costruisce l'incontro, non allo scontro. `ia_combattimento`: morale (gruppo B). Serve a non gonfiare il conto dei campi ereditati con righe che non toccano lo statblock: il Dreamwraith eredita SEI righe ma solo TRE arrivano alla scheda."
+      "description": "Dove finisce il campo una volta applicato il modello. `scheda`: e' una statistica di combattimento e va nello statblock generato. `generatore_incontri`: e' un dato di mondo (decisione 27 (`sette-campi-2e`), gruppo A) e serve a chi costruisce l'incontro, non allo scontro. `ia_combattimento`: morale (gruppo B). Serve a non gonfiare il conto dei campi ereditati con righe che non toccano lo statblock: il Dreamwraith eredita SEI righe ma solo TRE arrivano alla scheda."
     }
   },
 
@@ -69,7 +69,7 @@
 
     "monster_id": {
       "type": ["string", "null"],
-      "description": "id in dati/mostri/ quando il modello ha ANCHE una scheda di mostro propria, perche' la fonte gli fissa abbastanza statistiche da renderlo giocabile senza ospite (Dreamwraith: CA e Dadi Vita dichiarati invarianti). null quando il modello non esiste senza ospite (Dreamshadow, Spectral Minion): in quel caso NON si scrive una scheda di mostro, perche' assegnarle un Grado di Sfida significherebbe fissare l'ospite, cioe' decidere cio' che la fonte lascia aperto (decisione 40). Quando e' valorizzato, i tratti convertiti stanno nella scheda e `mechanics_5e.aggiunge` resta vuoto con una nota che rimanda: il modello non duplica la scheda.",
+      "description": "id in dati/mostri/ quando il modello ha ANCHE una scheda di mostro propria, perche' la fonte gli fissa abbastanza statistiche da renderlo giocabile senza ospite (Dreamwraith: CA e Dadi Vita dichiarati invarianti). null quando il modello non esiste senza ospite (Dreamshadow, Spectral Minion): in quel caso NON si scrive una scheda di mostro, perche' assegnarle un Grado di Sfida significherebbe fissare l'ospite, cioe' decidere cio' che la fonte lascia aperto (decisione 40, `modello-scarto-di-grado`). Quando e' valorizzato, i tratti convertiti stanno nella scheda e `mechanics_5e.aggiunge` resta vuoto con una nota che rimanda: il modello non duplica la scheda.",
       "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$"
     },
 
@@ -96,7 +96,7 @@
         "enum": ["pre_cataclysm", "age_of_despair", "war_of_lance",
                  "age_of_mortals_post_chaos", "post_war_of_souls"]
       },
-      "description": "Strato editoriale nostro, non dato di fonte (decisione 12)."
+      "description": "Strato editoriale nostro, non dato di fonte (decisione 12, `valid-eras`)."
     },
 
     "source_2e": {
@@ -126,7 +126,7 @@
 
     "ospiti_legali": {
       "type": "object",
-      "description": "DECISIONE 39. Si applica la decisione 35 senza aggiungere nulla: la fonte da' il FILTRO e non il campione ('umano o demiumano morto prima di aver compiuto un voto', 'creatura o persona nota al sognatore'). Si registra l'insieme legale; la scelta concreta avviene alla generazione dell'incontro. I due campi `campione` e `scelta_alla_generazione` sono vincolati a un solo valore APPOSTA: lo schema rende impossibile fissare qui un ospite scelto da noi, che e' l'errore che la decisione 39 evita.",
+      "description": "DECISIONE 39 (`bersaglio-legale-filtro`). Si applica la decisione 35 (`repertori-sono-filtri`) senza aggiungere nulla: la fonte da' il FILTRO e non il campione ('umano o demiumano morto prima di aver compiuto un voto', 'creatura o persona nota al sognatore'). Si registra l'insieme legale; la scelta concreta avviene alla generazione dell'incontro. I due campi `campione` e `scelta_alla_generazione` sono vincolati a un solo valore APPOSTA: lo schema rende impossibile fissare qui un ospite scelto da noi, che e' l'errore che la decisione 39 (`bersaglio-legale-filtro`) evita.",
       "required": ["testo_2e", "filtro", "criteri", "campione", "scelta_alla_generazione"],
       "additionalProperties": false,
       "properties": {
@@ -155,7 +155,7 @@
         },
         "campione": {
           "const": null,
-          "description": "Sempre null. La fonte non da' il campione e non lo diamo noi: vedi decisione 35."
+          "description": "Sempre null. La fonte non da' il campione e non lo diamo noi: vedi decisione 35 (`repertori-sono-filtri`)."
         },
         "scelta_alla_generazione": {
           "const": true,
@@ -241,7 +241,7 @@
 
         "varianti": {
           "type": "array",
-          "description": "Forme diverse dello stesso modello. ATTENZIONE, e' la distinzione che la decisione 40 rende strutturale: qui stanno solo varianti che cambiano il COMPORTAMENTO (o il ruolo, o l'allineamento) applicando lo stesso modello — le sei fasce dello Spectral Minion, che la fonte stessa dichiara indistinguibili all'aspetto. Varianti che cambiano il GRADO di potenza NON sono varianti di modello: sono la forma 'famiglia di statblock' della decisione 34, si moltiplicano in schede di mostro separate e non passano da qui. L'enum di `asse` non ha il valore 'grado' per questo.",
+          "description": "Forme diverse dello stesso modello. ATTENZIONE, e' la distinzione che la decisione 40 (`modello-scarto-di-grado`) rende strutturale: qui stanno solo varianti che cambiano il COMPORTAMENTO (o il ruolo, o l'allineamento) applicando lo stesso modello — le sei fasce dello Spectral Minion, che la fonte stessa dichiara indistinguibili all'aspetto. Varianti che cambiano il GRADO di potenza NON sono varianti di modello: sono la forma 'famiglia di statblock' della decisione 34 (`categorie-eta`), si moltiplicano in schede di mostro separate e non passano da qui. L'enum di `asse` non ha il valore 'grado' per questo.",
           "items": {
             "type": "object",
             "required": ["id", "name", "asse", "testo_2e"],
@@ -283,7 +283,7 @@
 
         "scarto_grado": {
           "type": "object",
-          "description": "DECISIONE 40 — un modello non ha grado, ha uno scarto. Il grado appartiene all'ospite: assegnarne uno al modello significherebbe fissare l'ospite, cioe' decidere cio' che la fonte lascia aperto (lo stesso errore che la decisione 34 ha evitato moltiplicando le schede per eta'). Si registra quindi la MODIFICA al grado dell'ospite, non un valore assoluto. Il campo `gs_proprio` esiste solo per la forma 'proprio' — un modello che la fonte ha gia' chiuso in una creatura — e rimanda alla scheda, non porta un numero suo.",
+          "description": "DECISIONE 40 (`modello-scarto-di-grado`) — un modello non ha grado, ha uno scarto. Il grado appartiene all'ospite: assegnarne uno al modello significherebbe fissare l'ospite, cioe' decidere cio' che la fonte lascia aperto (lo stesso errore che la decisione 34 (`categorie-eta`) ha evitato moltiplicando le schede per eta'). Si registra quindi la MODIFICA al grado dell'ospite, non un valore assoluto. Il campo `gs_proprio` esiste solo per la forma 'proprio' — un modello che la fonte ha gia' chiuso in una creatura — e rimanda alla scheda, non porta un numero suo.",
           "required": ["forma", "effetto_sul_grado_ospite", "xp_2e", "note"],
           "additionalProperties": false,
           "properties": {
@@ -325,7 +325,7 @@
                 "usato_per_derivare_gs": { "type": "boolean" },
                 "uso_dichiarato": {
                   "type": ["string", "null"],
-                  "description": "A cosa serve allora il dato. OBBLIGATORIO quando `usato_per_derivare_gs` e' false (controllato in dati/valida_modelli.py): un valore di fonte registrato senza dire che uso se ne fa e' una stima nascosta, che e' esattamente cio' che la decisione 35 ha imparato a non lasciare in giro."
+                  "description": "A cosa serve allora il dato. OBBLIGATORIO quando `usato_per_derivare_gs` e' false (controllato in dati/valida_modelli.py): un valore di fonte registrato senza dire che uso se ne fa e' una stima nascosta, che e' esattamente cio' che la decisione 35 (`repertori-sono-filtri`) ha imparato a non lasciare in giro."
                 }
               }
             },
@@ -335,7 +335,7 @@
 
         "regole_condivise": {
           "type": "array",
-          "description": "DECISIONE 41. Regole che NON appartengono a un solo modello ne' a una sola creatura: la sconfessione delle illusioni vale per Dreamwraith e Dreamshadow insieme, e' scritta nella voce del primo, e il secondo non si puo' scrivere senza. Si scrive UNA volta: un modello la porta come `definizione`, gli altri come `riferimento`. Ogni portatore ha i PROPRI valori dei parametri, perche' la stessa regola non pesa uguale su tutti — contro il Dreamwraith la sconfessione ha una penalita' di -5 che contro il Dreamshadow non c'e'. Il modello porta quindi un parametro, mai un valore fisso incorporato nel testo.\n\nSEDE PROVVISORIA, dichiarata: la casa naturale di una regola di sistema e' uno schema di regole che questo progetto non ha ancora (come il *mindspin*, che resta fuori in attesa dello schema degli incantesimi). Finche' non esiste, la regola vive nel modello che la fonte stessa ospita. Quando esistera', la `definizione` si sposta li' e tutti i portatori diventano `riferimento`: e' un trasloco di un blocco solo, non una riscrittura.",
+          "description": "DECISIONE 41 (`sconfessione-condivisa`). Regole che NON appartengono a un solo modello ne' a una sola creatura: la sconfessione delle illusioni vale per Dreamwraith e Dreamshadow insieme, e' scritta nella voce del primo, e il secondo non si puo' scrivere senza. Si scrive UNA volta: un modello la porta come `definizione`, gli altri come `riferimento`. Ogni portatore ha i PROPRI valori dei parametri, perche' la stessa regola non pesa uguale su tutti — contro il Dreamwraith la sconfessione ha una penalita' di -5 che contro il Dreamshadow non c'e'. Il modello porta quindi un parametro, mai un valore fisso incorporato nel testo.\n\nSEDE PROVVISORIA, dichiarata: la casa naturale di una regola di sistema e' uno schema di regole che questo progetto non ha ancora (come il *mindspin*, che resta fuori in attesa dello schema degli incantesimi). Finche' non esiste, la regola vive nel modello che la fonte stessa ospita. Quando esistera', la `definizione` si sposta li' e tutti i portatori diventano `riferimento`: e' un trasloco di un blocco solo, non una riscrittura.",
           "items": {
             "type": "object",
             "required": ["id", "nome", "ruolo", "parametri"],
@@ -390,7 +390,7 @@
             "destinazione": { "const": "ia_combattimento" },
             "note": { "type": ["string", "null"] }
           },
-          "description": "Decisione 27, gruppo B. `ereditato` a true quando il morale viene dall'ospite invece che dal modello."
+          "description": "Decisione 27 (`sette-campi-2e`), gruppo B. `ereditato` a true quando il morale viene dall'ospite invece che dal modello."
         },
         "magic_resistance_2e": {
           "type": ["object", "null"],
@@ -400,7 +400,7 @@
             "applied": { "type": "boolean", "default": false },
             "note": { "type": ["string", "null"] }
           },
-          "description": "Decisione 27, gruppo C: registrata, non applicata."
+          "description": "Decisione 27 (`sette-campi-2e`), gruppo C: registrata, non applicata."
         },
         "world_data_2e": {
           "type": ["object", "null"],
@@ -413,7 +413,7 @@
             "diet": { "type": ["string", "null"] },
             "destinazione": { "const": "generatore_incontri" }
           },
-          "description": "Decisione 27, gruppo A."
+          "description": "Decisione 27 (`sette-campi-2e`), gruppo A."
         },
 
         "note": { "type": "array", "items": { "type": "string" } }

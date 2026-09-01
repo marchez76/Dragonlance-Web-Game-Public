@@ -44,6 +44,7 @@ sys.path.insert(0, RADICE)
 
 import _srd51                      # noqa: E402
 import _sfere_5e as SF             # noqa: E402
+from decisioni import PER_NUMERO   # noqa: E402
 from motore import generazione     # noqa: E402
 
 CAR = ["str", "dex", "con", "int", "wis", "cha"]
@@ -276,24 +277,32 @@ def d_barbaro(razze, classi):
 
 
 def d_numerazione():
-    """Quante volte i dati citano una decisione per numero.
+    """Stato dei rimandi alle decisioni, chiesto al controllo che li verifica.
 
-    Serve alla sezione 3: le tre questioni sospese stanno tutte nella fascia
-    bassa della numerazione, che e' anche quella dove le citazioni non
-    combaciano con l'elenco corrente."""
+    Non riconta per conto proprio: `verifica_decisioni.py` e' la sede del
+    conteggio, e un secondo conteggio qui sarebbe la stessa struttura doppia
+    che la sezione 4 di questo rapporto argomenta contro."""
+    import verifica_decisioni as VD
+
+    conta = collections.Counter()
     per_numero = collections.Counter()
     file_con = set()
-    for sub in ("razze", "classi", "divinita", "mostri", "oggetti", "modelli"):
-        for f in glob.glob(os.path.join(BASE, sub, "*.json")):
-            testo = open(f, encoding="utf-8").read()
-            trovati = re.findall(r"[Dd]ecisione (\d+)|DECISIONE (\d+)", testo)
-            for a, b in trovati:
-                per_numero[int(a or b)] += 1
-            if trovati:
-                file_con.add(f)
-    return {"per_numero": per_numero, "tot": sum(per_numero.values()),
+    for percorso in VD.file_da_leggere():
+        try:
+            _, esiti = VD.analizza(percorso)
+        except (UnicodeDecodeError, OSError):
+            continue
+        if not esiti:
+            continue
+        file_con.add(percorso)
+        for e in esiti:
+            conta[e["esito"]] += 1
+            per_numero[e["numero"]] += 1
+    return {"per_numero": per_numero, "tot": sum(conta.values()),
             "file": len(file_con),
-            "bassa": sum(v for k, v in per_numero.items() if k <= 12)}
+            "bassa": sum(v for k, v in per_numero.items() if k <= 12),
+            "ok": conta["ok"], "sfasati": conta["numero-sfasato"],
+            "nudi": conta["non-qualificata"], "ignoti": conta["id-ignoto"]}
 
 
 def d_scelte(razze):
@@ -502,8 +511,8 @@ def _tutti_i_testi(nodo):
 # possono sfasarsi (CLAUDE.md, punto 3).
 MUTEVOLI = [
     ("Punti esperienza e livello", "sessione", "no"),
-    ("Grado cavalleresco raggiunto", "sessione", "no (decisione 5)"),
-    ("Veste giurata", "una volta, al 3°", "no (decisione 6)"),
+    ("Grado cavalleresco raggiunto", "sessione", "no (decisione 5, `cavalieri-solamnia`)"),
+    ("Veste giurata", "una volta, al 3°", "no (decisione 6, `maghi-delle-torri`)"),
     ("Inventario, equipaggiato, sintonizzato", "sessione", "no"),
     ("Incantesimi preparati", "riposo lungo", "no"),
     ("Dadi vita spesi", "riposo breve", "no"),
@@ -604,7 +613,7 @@ Tre insiemi, distinti da **chi scrive il valore e quando**.
 ### 1.1 Scelto in creazione — scritto una volta dal giocatore
 
 Sono le decisioni che nessun file può contenere, perché sono la risposta a un
-filtro che i file lasciano aperto. La decisione 35 ha già dato il nome alla
+filtro che i file lasciano aperto. La decisione 35 (`repertori-sono-filtri`) ha già dato il nome alla
 cosa: *la fonte dà il filtro e non il campione*. Il personaggio è il posto
 dove i filtri vengono **risolti**.
 
@@ -624,7 +633,7 @@ dove i filtri vengono **risolti**.
          "`generazione.genera()` → `assegnazione_libera`"),
         ("Aggiustamenti fissi",
          f"{len(BB['razze_editoriali'])} razza con `editorial_values` "
-         f"({', '.join(BB['razze_editoriali'])}, decisione 20)",
+         f"({', '.join(BB['razze_editoriali'])}, decisione 20, `tappo-barbaro`)",
          "`razze/*.json` → `mechanics_5e.ability_adjustments`"),
         ("Scelte lasciate aperte dai tratti",
          f"{SC['n']} tratti su {len(razze)} razze ({', '.join(SC['razze'])})",
@@ -636,7 +645,7 @@ dove i filtri vengono **risolti**.
          "`divinita.index.json`"),
         ("Veste", "3 (Bianca, Rossa, Nera), giurata al 3° livello",
          "`classi/mago-veste-*.json` → `prerequisite_class`"),
-        ("Epoca", "5 valori di `valid_eras`", "strato editoriale, decisione 12"),
+        ("Epoca", "5 valori di `valid_eras`", "strato editoriale, decisione 12 (`valid-eras`)"),
         ("Competenze di abilità", "—",
          "**nessun filtro esiste**: le 18 abilità 5e non sono nei dati"),
         ("Equipaggiamento iniziale",
@@ -696,8 +705,8 @@ non sono modellate affatto. Tutte e sei le entità esistenti sono state scritte
 per essere *lette*.
 
 La conseguenza pratica è che lo schema Personaggio non può essere derivato per
-analogia dagli altri cinque, come è stato fatto per oggetto (decisione 33) e
-modello (decisione 38). Quei due riusavano l'architettura a doppio strato
+analogia dagli altri cinque, come è stato fatto per oggetto (decisione 33, `schema-oggetti`) e
+modello (decisione 38, `schema-modelli`). Quei due riusavano l'architettura a doppio strato
 perché descrivevano, come gli altri, materiale di fonte convertito. Un
 personaggio non ha una fonte da cui essere convertito: **non c'è un
 `source_2e` di un personaggio**. Il doppio strato, qui, per la prima volta non
@@ -720,7 +729,7 @@ Dei **{CL['tot_feat']} fra privilegi e impedimenti** delle {CL['tot']} classi:
 **{CL['stati'].get('pending', 0)}** `pending`,
 **{CL['stati'].get('direct', 0)}** `direct`,
 **{CL['stati'].get('source_only', 0)}** `source_only`.
-La decisione 23 autorizza il clone del chassis, **non** l'invenzione di
+La decisione 23 (`principio-del-clone`) autorizza il clone del chassis, **non** l'invenzione di
 meccanica 5e per i privilegi: il numero non scende scrivendoli.
 
 Ma il buco vero sta un livello più sotto. Il chassis è in `dati/_srd51.py`, che
@@ -770,14 +779,14 @@ progetto dice a quanti punti esperienza.
 
 Nei dati ci sono **{CL['wp']} voci** di competenza in armi e **{CL['nwp']}** di
 competenza non-d'arma, tutte in inglese e tutte dal sistema **a slot** della 2e
-che l'incompatibilità 4 della decisione 23 ha abolito. Del sistema che l'ha
+che l'incompatibilità 4 della decisione 23 (`principio-del-clone`) ha abolito. Del sistema che l'ha
 sostituito — competenza per categoria, più le 18 abilità della 5e — nei dati
 non c'è nulla: né l'elenco delle abilità, né quante ne concede una classe, né
 quali. E gli oggetti non portano la categoria su cui la competenza si
 appoggerebbe: `weapon_5e` non ha un campo categoria (semplice / da guerra) e
 `armor_5e` non ha leggera / media / pesante.
 
-Il caso più netto è l'Umano. La decisione 19 lo compensa con tre tratti che
+Il caso più netto è l'Umano. La decisione 19 (`compensazione-umano`) lo compensa con tre tratti che
 sono tutti **scelte**: un +1 a due caratteristiche, una competenza di abilità,
 un linguaggio. Sono {SC['n']} in tutto i tratti razziali che lasciano una
 scelta al giocatore ({', '.join(SC['razze'])}), e per nessuno dei tre
@@ -827,7 +836,7 @@ Tre legami esistono come intenzione ma non come chiave.
   `mechanics_5e.chassis.srd_class`, che però è `null` per
   {len(CL['senza'])} classi.
 - **divinità → incantesimi.** Tutte e {len(dei)} le divinità hanno
-  `mechanics_5e` a **`null`**: il filtro delle sfere (decisione 24) vive
+  `mechanics_5e` a **`null`**: il filtro delle sfere (decisione 24, `sfere-sacerdotali`) vive
   interamente in `dati/_sfere_5e.py`, cioè in codice, non nei dati.
 
 {interpretativo("""
@@ -842,7 +851,7 @@ casi. Su `allowed_classes` non manca un campo: manca **una decisione**. Alcune
 etichette denotano una nostra classe scritta in altro modo, altre nominano
 classi generiche della 2e che il progetto non ha e per le quali non esiste
 nulla da agganciare. Stabilire quale sia quale è lavoro di conversione, e
-scriverlo qui al posto tuo sarebbe la stessa scorciatoia che la decisione 26
+scriverlo qui al posto tuo sarebbe la stessa scorciatoia che la decisione 26 (`criterio-tracciabilita`)
 respinge altrove: un dato non verificabile che entra perché sembra ovvio.
 """)}
 
@@ -861,7 +870,7 @@ scheda razziale dichiara
 ({', '.join(f"{CAR_IT[k]} " + '/'.join(f'{kk} {vv}' for kk, vv in v.items() if vv is not None) for k, v in sorted(BB['req_razza'].items()))}),
 la voce di classe dichiara {len(BB['min_classe'])} minimi
 ({', '.join(f'{CAR_IT[k]} {v}' for k, v in sorted(BB['min_classe'].items()))}).
-La decisione 11 ha applicato l'**unione** dei due set. Il manuale registra
+La decisione 11 (`barbaro-vincoli`) ha applicato l'**unione** dei due set. Il manuale registra
 {BB['n_ambiguita']} ambiguità dichiarata su questa classe.
 
 **Lo stato attuale.** `umano-barbaro` è l'unica razza il cui blocco
@@ -872,7 +881,7 @@ con `source_values` {'vuoto' if not BB['fonte_valori'] else BB['fonte_valori']}
 — cioè **nessun aggiustamento viene dalla fonte**. Porta
 {BB['n_tratti']} tratti.
 
-**Cosa resta aperto.** La decisione 20 elenca già le quattro conseguenze del
+**Cosa resta aperto.** La decisione 20 (`tappo-barbaro`) elenca già le quattro conseguenze del
 passaggio a background, e sono tutte verificabili nei dati:
 
 {tabella(["conseguenza", "misura oggi"], [
@@ -959,8 +968,8 @@ razza + classe; la validazione; la soddisfacibilità (`esiste_assegnazione`,
      "dict, lista, o dict di due chiavi, con un terzo stato `parziale`: chi chiama deve ramificare"),
     ("Copre un passo su molti",
      "punti ferita, competenze, equipaggiamento, incantesimi, denaro iniziale: nessuno di questi passa di qui"),
-    ("La numerazione delle decisioni è sfasata",
-     f"il modulo cita le decisioni {', '.join(str(n) for n in GN['decisioni_citate'])}; nell'elenco corrente gli stessi contenuti portano il numero precedente — vedi §3.4"),
+    ("La numerazione delle decisioni era sfasata — CHIUSA",
+     f"il modulo cita ora le decisioni {', '.join(f'{x} (`' + PER_NUMERO[x].id + '`)' for x in GN['decisioni_citate'])}, verificate da `verifica_decisioni.py` — vedi §3.4"),
 ])}
 
 {interpretativo(f'''
@@ -979,37 +988,45 @@ rivedibile — il motore continuerà a leggere il valore vecchio senza segnalare
 niente.
 ''')}
 
-### 3.4 Una nota che riguarda tutte e tre: la numerazione
+### 3.4 Una nota che riguarda tutte e tre: la numerazione — CHIUSA
 
-Le tre questioni sospese si citano per numero, e i numeri non sono stabili.
-I dati contengono **{NU['tot']} citazioni di decisione in {NU['file']} file**,
-di cui **{NU['bassa']} nella fascia 1-12** — che è esattamente dove stanno le
-tre questioni di questa sezione.
+Le tre questioni sospese si citano per numero, e i numeri **non erano
+stabili**. Il progetto contiene **{NU['tot']} rimandi a una decisione in
+{NU['file']} file**, di cui **{NU['bassa']} nella fascia 1-12** — che è
+esattamente dove stavano le tre questioni di questa sezione.
 
-{interpretativo("""
-**Verificato a mano leggendo le citazioni, il 2026-09-01.** Nella fascia bassa
-le citazioni non puntano alla decisione che nominano, e **non con uno scarto
-costante**:
+Erano sfasati perché il numero è un ordinale dell'elenco, e l'elenco è
+cambiato: file scritti in momenti diversi hanno continuato a citare il numero
+della propria vintage, senza che nulla li riallineasse. Lette una per una, le
+{NU['bassa']} citazioni della fascia bassa hanno dato questa corrispondenza —
+**senza uno scarto costante**, e con lo stesso numero giusto in un file e
+sbagliato in un altro:
 
-| citazione nei dati | contenuto citato | numero nell'elenco corrente |
-|---|---|---|
-| «Decisione 2» | i minimi di caratteristica sono vincoli meccanici | **3** |
-| «Decisione 4» | i limiti di livello aboliti | **4** — coincide |
-| «Decisione 9» | il default è 4d6 scarta il minore | **8** |
-| «Decisione 10» | gli aggiustamenti negativi si tengono | **9** |
-| «Decisione 11» | i massimali valgono anche in crescita | **10** |
-| «Decisione 23» | il principio del clone | **23** — coincide |
+| numero citato allora | contenuto citato | id | numero vero |
+|---|---|---|:-:|
+| «2» | i minimi di caratteristica sono vincoli meccanici | `vincoli-caratteristica` | **3** |
+| «3» | i limiti di livello aboliti | `limiti-di-livello` | **4** |
+| «4» | i limiti di livello aboliti | `limiti-di-livello` | **4** — coincideva |
+| «9» | il default è 4d6 scarta il minore | `generazione-caratteristiche` | **8** |
+| «10» | gli aggiustamenti negativi si tengono | `aggiustamenti-negativi` | **9** |
+| «11» | i massimali valgono anche in crescita | `massimali-razziali` | **10** |
+| «12» | il Barbaro tiene entrambi i set di vincoli | `barbaro-vincoli` | **11** |
+| «23» | il principio del clone | `principio-del-clone` | **23** — coincideva |
 
-Non è un difetto cosmetico e non è nemmeno un errore di trascrizione: sono
-file scritti in momenti diversi, sotto numerazioni diverse, e nulla li
-riallinea perché l'elenco è generato mentre le citazioni sono incorporate nei
-testi. Nella fascia alta (dalla 13 in su) le citazioni campionate coincidono.
+**Chiusa il 2026-09-01, e non correggendo i numeri.** Correggerli sarebbe
+stato il quinto giro di vigilanza su una struttura che si sfasa da sola. La
+causa è che il numero di un rimando è un **derivato scritto a mano**, cioè
+esattamente ciò che il punto 3 di CLAUDE.md vieta ovunque tranne che qui.
 
-Riguarda direttamente questo rapporto: le tre questioni sospese stanno ai
-numeri 20, 10 e 8 dell'elenco corrente, ma nei dati e nel codice sono citate
-come 20, 11 e 9. Prima di scrivere in uno schema «decisione N» conviene
-sapere quale delle due numerazioni si sta usando.
-""")}
+Quindi: l'elenco canonico è passato in `decisioni.py`, ogni decisione ha preso
+un `id` stabile che non cambierà mai, e la forma di un rimando è ora
+«decisione 10 (`massimali-razziali`)» — l'id è la chiave, il numero gli sta
+accanto come derivato. `verifica_decisioni.py` verifica la coppia in tutto il
+progetto e con `--correggi` riscrive i numeri a partire dagli id.
+
+Stato oggi: **{NU['ok']} rimandi verificati, {NU['sfasati']} sfasati,
+{NU['ignoti']} con id ignoto, {NU['nudi']} ancora senza id**. Rinumerare
+adesso costa un comando.
 
 ---
 
@@ -1068,7 +1085,7 @@ progetto:
    e il giocatore ne sceglie un elemento, quella scelta **non esiste in nessun
    file** e deve stare sul personaggio: l'assegnazione dei sei punteggi, il
    +1/+1 dell'umano, l'arma scelta fra "Sword (any)", le competenze. È la
-   decisione 39 applicata al PG: *il bersaglio legale è un filtro*, e il
+   decisione 39 (`bersaglio-legale-filtro`) applicata al PG: *il bersaglio legale è un filtro*, e il
    campione si fissa alla generazione. Non è una copia dei dati — è il
    complemento dei dati.
 3. **I derivati non si scrivono.** Nessun campo `ca`, `pf_max`, `bonus_attacco`
@@ -1146,7 +1163,7 @@ Anche dove il dato è strutturato, il numero è spesso **dentro** una stringa:
 
 I {len(AR['ruoli'])} ruoli già assegnati
 ({', '.join(f'{k} {v}' for k, v in AR['ruoli'].most_common())}) e il morale
-della decisione 27 sono, oggi, la parte dell'arena messa meglio: l'IA sa cosa
+della decisione 27 (`sette-campi-2e`) sono, oggi, la parte dell'arena messa meglio: l'IA sa cosa
 vuole fare una creatura molto prima che il motore sappia risolverne l'attacco.
 
 {interpretativo(f'''

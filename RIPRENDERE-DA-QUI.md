@@ -43,7 +43,7 @@ rifare tutto da pulito.
 
 ## Domande aperte che aspettano una tua decisione
 
-1. **PHB 5e 2014 o 2024** — vedi sopra.
+1 (`motore-5e`). **PHB 5e 2014 o 2024** — vedi sopra.
 2. **Requisiti di caratteristica come vincolo di classe.** In 2e le restrizioni
    sono codificate nei numeri: i Kagonesti hanno Int massima 12 e infatti non
    hanno classi da mago; i minotauri non hanno classi da ladro. Da decidere se

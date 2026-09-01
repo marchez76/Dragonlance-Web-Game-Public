@@ -1,6 +1,6 @@
 # Rapporto diagnostico sulle 17 classi di Krynn
 
-*Generato da `dati/analizza_classi.py` il 2026-08-19.*
+*Generato da `dati/analizza_classi.py` il 2026-09-01.*
 
 > **Cos'è.** Una diagnosi, non una conversione. Serve a vedere la forma del
 > problema prima di compilare `mechanics_5e`, come `RAPPORTO-soddisfacibilita.md`
@@ -127,7 +127,7 @@ Dado vita: 1d8 contro 1d8. Tiri salvezza Cleric: Wisdom, Charisma.
 Livelli a cui Sacerdote degli Ordini Sacri delle Stelle concede qualcosa: **1**, contro **11** del Cleric. Privilegi totali: **0** contro **16** (piu' 5 aumenti di caratteristica, che la 2e non ha).
 
 
-> **Lettura interpretativa** — registrata il 2026-08-19. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-01. Non e' derivata dai dati.
 >
 > Le classi di Krynn non sono classi nel senso della 5e: sono **profili di
 > restrizione** appoggiati sulle classi base della 2e. Su 19 privilegi totali solo
@@ -147,7 +147,7 @@ Livelli a cui Sacerdote degli Ordini Sacri delle Stelle concede qualcosa: **1**,
 >
 > All'estremo opposto ci sono 8 classi con zero privilegi. Popolano e Tinker
 > sono del gruppo Normal e non dovrebbero averne; le tre Vesti sono vuote perché
-> sono affiliazioni e non classi, il che è coerente con la decisione 6. Restano i due
+> sono affiliazioni e non classi, il che è coerente con la decisione 6 (`maghi-delle-torri`). Restano i due
 > sacerdoti e l'Handler, che invece dovrebbero avere un contenuto e non ce l'hanno:
 > per i sacerdoti tutto il contenuto meccanico sta nelle sfere delle divinità, già
 > estratte in `dati/divinita/`; per l'Handler il manuale spende tre impedimenti e
@@ -155,13 +155,13 @@ Livelli a cui Sacerdote degli Ordini Sacri delle Stelle concede qualcosa: **1**,
 >
 > La conseguenza pratica: convertire queste classi in 5e non è un lavoro di
 > traduzione ma di **riempimento**. Non c'è quasi nulla da tradurre, e la fedeltà
-> alla fonte (decisione 16) qui non basta a produrre una classe giocabile.
+> alla fonte (decisione 16, `nove-tratti-phb2e`) qui non basta a produrre una classe giocabile.
 
 ---
 
 ## 2. Chassis 5e
 
-*Analisi svolta prima della decisione 23, che l'ha poi adottata. I chassis sono
+*Analisi svolta prima della decisione 23 (`principio-del-clone`), che l'ha poi adottata. I chassis sono
 ora applicati nei dati: vedi `mechanics_5e.chassis` in `dati/classi/*.json`.*
 
 Per ciascuna classe di Krynn, la classe base 5e più vicina come chassis.
@@ -176,7 +176,7 @@ Per ciascuna classe di Krynn, la classe base 5e più vicina come chassis.
 | Marinaio | Fighter/Rogue ibrido — **nessun candidato pulito** | Guerriero con quattro abilità da ladro. In 5e sarebbe multiclasse o una sottoclasse dedicata: entrambe le strade sono decisioni, non conversioni. |
 | Mago dell'Alta Stregoneria | Wizard | Corrispondenza diretta. Le fasi lunari non hanno equivalente e vanno inventate o scartate. |
 | Mago Rinnegato | Wizard | Stesso chassis, definito per sottrazione: è il Mago dell'Alta Stregoneria senza vincoli e senza bonus lunari. |
-| Vesti Bianche / Rosse / Nere | **nessuno — non sono classi** | Decisione 6: affiliazioni dichiarate al Test, al 3° livello, sopra la classe base. In 5e il posto naturale è la sottoclasse (Tradizione Arcana), che però in 5e si sceglie al 2°, non al 3°. |
+| Vesti Bianche / Rosse / Nere | **nessuno — non sono classi** | Decisione 6 (`maghi-delle-torri`): affiliazioni dichiarate al Test, al 3° livello, sopra la classe base. In 5e il posto naturale è la sottoclasse (Tradizione Arcana), che però in 5e si sceglie al 2°, non al 3°. |
 | Sacerdote degli Ordini Sacri | Cleric | Corrispondenza diretta, con le sfere già estratte da mappare sui Domini. |
 | Sacerdote Eretico | **nessuno** | Per definizione non ha potere reale. In 5e non esiste una classe che non faccia nulla: o diventa un background, o una variante di Cleric senza incantesimi, o sparisce. |
 | Truffatore | Rogue | Le quattro abilità potenziate diventano competenze ed Esperienza. |
@@ -184,7 +184,7 @@ Per ciascuna classe di Krynn, la classe base 5e più vicina come chassis.
 | Popolano | **nessuno** | Non è una classe 5e. O PNG, o background. |
 | Tinker | **nessuno** | Stessa situazione del Popolano, con in più il tema tecnologico gnomesco. Artificer esiste ma non è nel PHB 2014. |
 
-> **Lettura interpretativa** — registrata il 2026-08-19. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-01. Non e' derivata dai dati.
 >
 > Su quindici voci, sei hanno un chassis pulito (i due maghi, il Cleric, i due gradi
 > paladinici, il Rogue truffatore); tre non hanno alcun candidato perché non sono
@@ -198,7 +198,7 @@ Per ciascuna classe di Krynn, la classe base 5e più vicina come chassis.
 > Krynn né del kit del 1989. Chiamare Barbarian il Barbaro di Ansalon importerebbe
 > in blocco una meccanica che la fonte non ha.
 >
-> Il secondo è il **conflitto sul livello delle Vesti**: la decisione 6 le colloca al
+> Il secondo è il **conflitto sul livello delle Vesti**: la decisione 6 (`maghi-delle-torri`) le colloca al
 > 3° perché lì avviene il Test, ma la 5e assegna la sottoclasse del Wizard al 2°. Il
 > disallineamento è di un livello solo, ma va deciso: si sposta il Test al 2°, si
 > tiene la sottoclasse vuota per un livello, o si accetta uno scarto.
@@ -310,7 +310,7 @@ disuguaglianza iniziale.
 **Opzioni.** (a) Pacchetti fissi 5e, con le regole di equipaggiamento della fonte
 convertite in vincoli sul pacchetto (il marinaio senza armature metalliche, il
 barbaro senza armature pesanti, il cavaliere obbligato all'armatura migliore).
-(b) Tiro 2e conservato, coerente con la decisione 8 che ha già scelto i dadi per
+(b) Tiro 2e conservato, coerente con la decisione 8 (`generazione-caratteristiche`) che ha già scelto i dadi per
 le caratteristiche. (c) Pacchetto fisso più tiro opzionale.
 
 **Da notare:** solo 4 classi su 17 dichiarano una ricchezza iniziale propria; le
@@ -356,7 +356,7 @@ aggiunge incantesimi sempre preparati. L'accesso non si nega più: si concede.
 **Opzioni.** (a) Mappare le sfere sui Domini 2014 (Conoscenza, Guerra, Vita, Luce,
 Natura, Tempesta, Inganno), con perdita di granularità. (b) Conservare le sfere
 come filtro sulla lista 5e, ripristinando la negazione di accesso — coerente con
-la decisione 16, che dà la precedenza alla fonte. (c) Ibrido: Dominio per gli
+la decisione 16 (`nove-tratti-phb2e`), che dà la precedenza alla fonte. (c) Ibrido: Dominio per gli
 incantesimi bonus, sfere per i divieti.
 
 **Materiale già pronto**: le sfere delle 21 divinità sono estratte in
@@ -366,7 +366,7 @@ incantesimi bonus, sfere per i divieti.
 
 **Cosa faceva.** Corona → Spada → Rosa, con ingresso al 1°, 3° e 4° livello.
 
-**Perché è un problema.** La decisione 5 lo ha già confermato come sequenza
+**Perché è un problema.** La decisione 5 (`cavalieri-solamnia`) lo ha già confermato come sequenza
 obbligata senza azzeramenti. In 5e non esiste un meccanismo di "grado" che cambi
 la classe a metà percorso: la struttura più vicina è la sottoclasse, ma se ne
 sceglie una sola.
@@ -379,7 +379,7 @@ più un sistema di gradi d'ordine separato dalla classe.
 
 ## Cosa manca ai dati
 
-> **Lettura interpretativa** — registrata il 2026-08-19. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-01. Non e' derivata dai dati.
 >
 > Prima di poter compilare `mechanics_5e` per le classi mancano tre cose che non
 > sono decisioni ma estrazioni:
@@ -403,8 +403,8 @@ più un sistema di gradi d'ordine separato dalla classe.
 
 Confronto fra le tre fonti disponibili in libreria. Serve a distinguere cosa dei
 tratti di Ansalon è specifico di Krynn e cosa è tradizione del barbaro 2e, come la
-decisione 16 ha fatto col PHB per elfi e nani. **Non riorganizza il Barbaro**: la
-decisione 20 resta in piedi e la conversione a background resta rimandata.
+decisione 16 (`nove-tratti-phb2e`) ha fatto col PHB per elfi e nani. **Non riorganizza il Barbaro**: la
+decisione 20 (`tappo-barbaro`) resta in piedi e la conversione a background resta rimandata.
 
 ### Le tre fonti
 
@@ -472,7 +472,7 @@ Il fighter ha:
 | Immunità al freddo | assente | assente | **barbari del ghiaccio** | **specifico di Krynn** |
 | Quattro gruppi culturali | assente | terreno a scelta libera | montagna, pianura, ghiaccio, mare | **specifico di Krynn** |
 
-> **Lettura interpretativa** — registrata il 2026-08-19. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-01. Non e' derivata dai dati.
 >
 > **Il Barbaro di Krynn discende dal kit del 1989, non dalla classe del 1995.**
 > La prova non è un'impressione: Tales of the Lance obbliga alle **stesse due armi**
@@ -483,12 +483,12 @@ Il fighter ha:
 > e la derivazione è completa. Tales of the Lance esce nel 1992, in mezzo alle due
 > fonti, e usa quella che esisteva.
 >
-> Questo spiega la doppia natura che la decisione 12 aveva registrato come
+> Questo spiega la doppia natura che la decisione 11 (`barbaro-vincoli`) aveva registrato come
 > ambiguità della fonte: **non è un'ambiguità, è un residuo**. Il barbaro di Krynn è
 > un kit del guerriero che il manuale ha collocato in due capitoli — cultura e
 > classe — perché la 2e del 1992 non aveva ancora una classe barbaro da citare.
 > Questo rafforza, senza deciderla, la strada del background già indicata dalla
-> decisione 20: un kit non è una classe, ed è esattamente ciò che in 5e diventa un
+> decisione 20 (`tappo-barbaro`): un kit non è una classe, ed è esattamente ciò che in 5e diventa un
 > background più una sottoclasse.
 >
 > Due tratti sono **davvero di Krynn** e non hanno riscontro in nessuna delle due
@@ -499,7 +499,7 @@ Il fighter ha:
 >
 > E uno è **tradizione 2e travestita da Krynn**: il legame col terreno natio. Sia il
 > manuale del 1995 sia Tales of the Lance concedono competenze gratuite nel proprio
-> ambiente. Per la decisione 16, questo andrebbe convertito guardando alla forma
+> ambiente. Per la decisione 16 (`nove-tratti-phb2e`), questo andrebbe convertito guardando alla forma
 > generale del tratto, non a quella particolare di Krynn.
 >
 > **Una cosa che PHBR14 ha e noi no**: la *nostalgia del territorio* di Krynn dura
@@ -521,7 +521,7 @@ Il fighter ha:
   Non contiene materiale su Krynn oltre a questo: non è una fonte di setting.
 - **PHBR14 cita i Kagonesti come esempio di elfi barbari**, insieme agli elfi
   silvani in generale. È una menzione di colore, senza meccanica: non incide
-  sulle decisioni 21 e 22.
+  sulle decisioni 21 (`tre-elfi-terrestri`) e 22 (`tratto-fantasma-qualinesti`).
 
 ---
 
@@ -548,7 +548,7 @@ Il fighter ha:
 
 **Incantesimi**: nessuna progressione propria.
 
-**Chassis 5e (decisione 23)**: clone di **Fighter** (SRD 5.1), dado vita 1d10, tiri salvezza Strength, Constitution. NON Barbarian: l'Ira e' un'invenzione della 3e, assente sia da Krynn sia dal kit del 1989 da cui il Barbaro di Ansalon discende. Confermato dall'appendice di RAPPORTO-classi.md.
+**Chassis 5e (decisione 23, `principio-del-clone`)**: clone di **Fighter** (SRD 5.1), dado vita 1d10, tiri salvezza Strength, Constitution. NON Barbarian: l'Ira e' un'invenzione della 3e, assente sia da Krynn sia dal kit del 1989 da cui il Barbaro di Ansalon discende. Confermato dall'appendice di RAPPORTO-classi.md.
 
 **Privilegi**: 2, di cui 0 agganciati a un livello esplicito. **Impedimenti**: 1. Da convertire: 3.
 
@@ -592,7 +592,7 @@ Il fighter ha:
 
 **Incantesimi**: nessuna progressione propria.
 
-**Chassis 5e (decisione 23)**: clone di **Fighter** (SRD 5.1), dado vita 1d10, tiri salvezza Strength, Constitution. Sei privilegi tutti di combattimento montato e reputazione. In SRD l'unico archetipo marziale e' il Campione: il montato resta scoperto e il codice comportamentale pure.
+**Chassis 5e (decisione 23, `principio-del-clone`)**: clone di **Fighter** (SRD 5.1), dado vita 1d10, tiri salvezza Strength, Constitution. Sei privilegi tutti di combattimento montato e reputazione. In SRD l'unico archetipo marziale e' il Campione: il montato resta scoperto e il codice comportamentale pure.
 
 **Privilegi**: 6, di cui 3 agganciati a un livello esplicito. **Impedimenti**: 4. Da convertire: 10.
 
@@ -645,7 +645,7 @@ Titoli di livello: 11 su 25 (fino al 11°).
 
 **Incantesimi**: nessuna progressione propria.
 
-**Chassis 5e (decisione 23)**: clone di **Fighter** (SRD 5.1), dado vita 1d10, tiri salvezza Strength, Constitution. Guerriero puro, nessuna magia al primo grado. La sequenza verso Spada e Rosa (decisione 5) si innesta sopra il chassis.
+**Chassis 5e (decisione 23, `principio-del-clone`)**: clone di **Fighter** (SRD 5.1), dado vita 1d10, tiri salvezza Strength, Constitution. Guerriero puro, nessuna magia al primo grado. La sequenza verso Spada e Rosa (decisione 5, `cavalieri-solamnia`) si innesta sopra il chassis.
 
 **Privilegi**: 1, di cui 0 agganciati a un livello esplicito. **Impedimenti**: 1. Da convertire: 1.
 
@@ -685,7 +685,7 @@ Titoli di livello: 12 su 22 (fino al 15°).
 
 **Incantesimi**: nessuna progressione propria.
 
-**Chassis 5e (decisione 23)**: clone di **Paladin** (SRD 5.1), dado vita 1d10, tiri salvezza Wisdom, Charisma. Prosegue il grado precedente. L'immunita' alla paura e' gia' un privilegio del Paladino (Aura di Coraggio).
+**Chassis 5e (decisione 23, `principio-del-clone`)**: clone di **Paladin** (SRD 5.1), dado vita 1d10, tiri salvezza Wisdom, Charisma. Prosegue il grado precedente. L'immunita' alla paura e' gia' un privilegio del Paladino (Aura di Coraggio).
 
 **Privilegi**: 1, di cui 0 agganciati a un livello esplicito. **Impedimenti**: 0. Da convertire: 0.
 
@@ -723,7 +723,7 @@ Titoli di livello: 11 su 23 (fino al 13°).
 
 **Incantesimi**: tabella presente, dal 6° al 18° livello di classe, fino al 7° grado di incantesimo.
 
-**Chassis 5e (decisione 23)**: clone di **Paladin** (SRD 5.1), dado vita 1d10, tiri salvezza Wisdom, Charisma. La fonte dice esplicitamente "capacita' della classe Paladino al proprio livello" e concede incantesimi sacerdotali dal 6°. E' l'accoppiamento piu' pulito del roster.
+**Chassis 5e (decisione 23, `principio-del-clone`)**: clone di **Paladin** (SRD 5.1), dado vita 1d10, tiri salvezza Wisdom, Charisma. La fonte dice esplicitamente "capacita' della classe Paladino al proprio livello" e concede incantesimi sacerdotali dal 6°. E' l'accoppiamento piu' pulito del roster.
 
 **Privilegi**: 3, di cui 1 agganciati a un livello esplicito. **Impedimenti**: 0. Da convertire: 2.
 
@@ -763,7 +763,7 @@ Titoli di livello: 11 su 23 (fino al 13°).
 
 **Incantesimi**: nessuna progressione propria.
 
-**Chassis 5e (decisione 23)**: nessuno, lasciato indeciso. Ibrido Fighter/Rogue: nessun candidato pulito. Da decidere.
+**Chassis 5e (decisione 23, `principio-del-clone`)**: nessuno, lasciato indeciso. Ibrido Fighter/Rogue: nessun candidato pulito. Da decidere.
 
 **Privilegi**: 1, di cui 1 agganciati a un livello esplicito. **Impedimenti**: 1. Da convertire: 2.
 
@@ -803,7 +803,7 @@ Titoli di livello: 1 su 25 (fino al 18°).
 
 **Incantesimi**: tabella presente, dal 1° al 25° livello di classe, fino al 9° grado di incantesimo.
 
-**Chassis 5e (decisione 23)**: clone di **Wizard** (SRD 5.1), dado vita 1d6, tiri salvezza Intelligence, Wisdom. Corrispondenza diretta.
+**Chassis 5e (decisione 23, `principio-del-clone`)**: clone di **Wizard** (SRD 5.1), dado vita 1d6, tiri salvezza Intelligence, Wisdom. Corrispondenza diretta.
 
 **Privilegi**: 3, di cui 2 agganciati a un livello esplicito. **Impedimenti**: 4. Da convertire: 7.
 
@@ -850,7 +850,7 @@ Titoli di livello: 1 su 25 (fino al 18°).
 
 **Incantesimi**: tabella presente, dal 1° al 25° livello di classe, fino al 9° grado di incantesimo.
 
-**Chassis 5e (decisione 23)**: clone di **Wizard** (SRD 5.1), dado vita 1d6, tiri salvezza Intelligence, Wisdom. Stesso chassis, definito per sottrazione: e' il Mago dell'Alta Stregoneria senza vincoli e senza bonus lunari.
+**Chassis 5e (decisione 23, `principio-del-clone`)**: clone di **Wizard** (SRD 5.1), dado vita 1d6, tiri salvezza Intelligence, Wisdom. Stesso chassis, definito per sottrazione: e' il Mago dell'Alta Stregoneria senza vincoli e senza bonus lunari.
 
 **Privilegi**: 1, di cui 0 agganciati a un livello esplicito. **Impedimenti**: 2. Da convertire: 3.
 
@@ -892,7 +892,7 @@ Titoli di livello: 1 su 25 (fino al 18°).
 
 **Incantesimi**: nessuna progressione propria.
 
-**Chassis 5e (decisione 23)**: nessuno, lasciato indeciso. AFFILIAZIONE, non classe (decisione 6).
+**Chassis 5e (decisione 23, `principio-del-clone`)**: nessuno, lasciato indeciso. AFFILIAZIONE, non classe (decisione 6, `maghi-delle-torri`).
 
 **Privilegi**: 0, di cui 0 agganciati a un livello esplicito. **Impedimenti**: 1. Da convertire: 1.
 
@@ -926,7 +926,7 @@ Titoli di livello: 1 su 25 (fino al 18°).
 
 **Incantesimi**: nessuna progressione propria.
 
-**Chassis 5e (decisione 23)**: nessuno, lasciato indeciso. AFFILIAZIONE, non classe (decisione 6).
+**Chassis 5e (decisione 23, `principio-del-clone`)**: nessuno, lasciato indeciso. AFFILIAZIONE, non classe (decisione 6, `maghi-delle-torri`).
 
 **Privilegi**: 0, di cui 0 agganciati a un livello esplicito. **Impedimenti**: 1. Da convertire: 1.
 
@@ -960,7 +960,7 @@ Titoli di livello: 1 su 25 (fino al 18°).
 
 **Incantesimi**: nessuna progressione propria.
 
-**Chassis 5e (decisione 23)**: nessuno, lasciato indeciso. AFFILIAZIONE, non classe (decisione 6).
+**Chassis 5e (decisione 23, `principio-del-clone`)**: nessuno, lasciato indeciso. AFFILIAZIONE, non classe (decisione 6, `maghi-delle-torri`).
 
 **Privilegi**: 0, di cui 0 agganciati a un livello esplicito. **Impedimenti**: 1. Da convertire: 1.
 
@@ -995,7 +995,7 @@ Titoli di livello: 16 su 25 (fino al 18°).
 
 **Incantesimi**: nessuna progressione propria.
 
-**Chassis 5e (decisione 23)**: nessuno, lasciato indeciso. Per definizione non ha potere. Da decidere.
+**Chassis 5e (decisione 23, `principio-del-clone`)**: nessuno, lasciato indeciso. Per definizione non ha potere. Da decidere.
 
 **Privilegi**: 0, di cui 0 agganciati a un livello esplicito. **Impedimenti**: 2. Da convertire: 2.
 
@@ -1034,7 +1034,7 @@ Titoli di livello: 16 su 25 (fino al 18°).
 
 **Incantesimi**: tabella presente, dal 1° al 25° livello di classe, fino al 7° grado di incantesimo.
 
-**Chassis 5e (decisione 23)**: clone di **Cleric** (SRD 5.1), dado vita 1d8, tiri salvezza Wisdom, Charisma. Corrispondenza diretta. Le sfere gia' estratte diventano il filtro della decisione 24; il Dominio resta come sottoclasse.
+**Chassis 5e (decisione 23, `principio-del-clone`)**: clone di **Cleric** (SRD 5.1), dado vita 1d8, tiri salvezza Wisdom, Charisma. Corrispondenza diretta. Le sfere gia' estratte diventano il filtro della decisione 24 (`sfere-sacerdotali`); il Dominio resta come sottoclasse.
 
 **Privilegi**: 0, di cui 0 agganciati a un livello esplicito. **Impedimenti**: 1. Da convertire: 1.
 
@@ -1071,7 +1071,7 @@ Titoli di livello: 16 su 25 (fino al 18°).
 
 **Incantesimi**: nessuna progressione propria.
 
-**Chassis 5e (decisione 23)**: clone di **Rogue** (SRD 5.1), dado vita 1d8, tiri salvezza Dexterity, Intelligence. Le quattro abilita' potenziate diventano competenze ed Esperienza.
+**Chassis 5e (decisione 23, `principio-del-clone`)**: clone di **Rogue** (SRD 5.1), dado vita 1d8, tiri salvezza Dexterity, Intelligence. Le quattro abilita' potenziate diventano competenze ed Esperienza.
 
 **Privilegi**: 1, di cui 0 agganciati a un livello esplicito. **Impedimenti**: 1. Da convertire: 2.
 
@@ -1109,7 +1109,7 @@ Titoli di livello: 16 su 25 (fino al 18°).
 
 **Incantesimi**: nessuna progressione propria.
 
-**Chassis 5e (decisione 23)**: nessuno, lasciato indeciso. Rogue senza attacco furtivo: il chassis c'e' ma svuotato. Da decidere.
+**Chassis 5e (decisione 23, `principio-del-clone`)**: nessuno, lasciato indeciso. Rogue senza attacco furtivo: il chassis c'e' ma svuotato. Da decidere.
 
 **Privilegi**: 0, di cui 0 agganciati a un livello esplicito. **Impedimenti**: 3. Da convertire: 3.
 
@@ -1145,7 +1145,7 @@ Titoli di livello: 16 su 25 (fino al 18°).
 
 **Incantesimi**: nessuna progressione propria.
 
-**Chassis 5e (decisione 23)**: nessuno, lasciato indeciso. Non e' una classe 5e. Da decidere.
+**Chassis 5e (decisione 23, `principio-del-clone`)**: nessuno, lasciato indeciso. Non e' una classe 5e. Da decidere.
 
 **Privilegi**: 0, di cui 0 agganciati a un livello esplicito. **Impedimenti**: 0. Da convertire: 0.
 
@@ -1175,7 +1175,7 @@ Titoli di livello: 16 su 25 (fino al 18°).
 
 **Incantesimi**: nessuna progressione propria.
 
-**Chassis 5e (decisione 23)**: nessuno, lasciato indeciso. Non e' una classe 5e. Da decidere.
+**Chassis 5e (decisione 23, `principio-del-clone`)**: nessuno, lasciato indeciso. Non e' una classe 5e. Da decidere.
 
 **Privilegi**: 0, di cui 0 agganciati a un livello esplicito. **Impedimenti**: 1. Da convertire: 1.
 

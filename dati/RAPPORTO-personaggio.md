@@ -7,7 +7,7 @@
 > sospese, non tocca `dati/`. Ogni numero è derivato dai JSON; le letture sono
 > marcate con un blocco citato e datato.
 >
-> Il corpus letto è di **506 file** per **1,83 MB**:
+> Il corpus letto è di **506 file** per **1,84 MB**:
 > 15 razze, 17 classi, 21 divinità,
 > 319 incantesimi, 79 oggetti,
 > 52 mostri, 3 modelli.
@@ -39,7 +39,7 @@ Tre insiemi, distinti da **chi scrive il valore e quando**.
 ### 1.1 Scelto in creazione — scritto una volta dal giocatore
 
 Sono le decisioni che nessun file può contenere, perché sono la risposta a un
-filtro che i file lasciano aperto. La decisione 35 ha già dato il nome alla
+filtro che i file lasciano aperto. La decisione 35 (`repertori-sono-filtri`) ha già dato il nome alla
 cosa: *la fonte dà il filtro e non il campione*. Il personaggio è il posto
 dove i filtri vengono **risolti**.
 
@@ -49,12 +49,12 @@ dove i filtri vengono **risolti**.
 | Classe di partenza | 12 su 17 (le altre 5 hanno `entry_level` > 1) | `classi/*.json` → `mechanics_5e.entry_level` |
 | Sei punteggi grezzi | 3 metodi, default `4d6-scarta-minore` | `motore/generazione.py` |
 | Assegnazione dei punteggi | libera, fissata o parziale a seconda della razza | `generazione.genera()` → `assegnazione_libera` |
-| Aggiustamenti fissi | 1 razza con `editorial_values` (umano-barbaro, decisione 20) | `razze/*.json` → `mechanics_5e.ability_adjustments` |
+| Aggiustamenti fissi | 1 razza con `editorial_values` (umano-barbaro, decisione 20, `tappo-barbaro`) | `razze/*.json` → `mechanics_5e.ability_adjustments` |
 | Scelte lasciate aperte dai tratti | 4 tratti su 15 razze (elfo-dargonesti, umano) | **nessun campo**: la scelta è descritta in prosa dentro il tratto |
 | Allineamento | vincolato in 10 classi su 17 | `classi/*.json` → `source_2e.alignment_restriction` (prosa libera) |
 | Divinità | 21 voci, solo per le classi sacerdotali | `divinita.index.json` |
 | Veste | 3 (Bianca, Rossa, Nera), giurata al 3° livello | `classi/mago-veste-*.json` → `prerequisite_class` |
-| Epoca | 5 valori di `valid_eras` | strato editoriale, decisione 12 |
+| Epoca | 5 valori di `valid_eras` | strato editoriale, decisione 12 (`valid-eras`) |
 | Competenze di abilità | — | **nessun filtro esiste**: le 18 abilità 5e non sono nei dati |
 | Equipaggiamento iniziale | 7 vincoli dichiarati su 17 classi | `mechanics_5e.structural.starting_equipment.constraints` |
 
@@ -87,8 +87,8 @@ progetto: è il ritmo con cui i valori cambiano.
 | dato | cambia ogni | esiste in qualche file oggi? |
 |---|---|---|
 | Punti esperienza e livello | sessione | no |
-| Grado cavalleresco raggiunto | sessione | no (decisione 5) |
-| Veste giurata | una volta, al 3° | no (decisione 6) |
+| Grado cavalleresco raggiunto | sessione | no (decisione 5, `cavalieri-solamnia`) |
+| Veste giurata | una volta, al 3° | no (decisione 6, `maghi-delle-torri`) |
 | Inventario, equipaggiato, sintonizzato | sessione | no |
 | Incantesimi preparati | riposo lungo | no |
 | Dadi vita spesi | riposo breve | no |
@@ -116,8 +116,8 @@ progetto: è il ritmo con cui i valori cambiano.
 > per essere *lette*.
 >
 > La conseguenza pratica è che lo schema Personaggio non può essere derivato per
-> analogia dagli altri cinque, come è stato fatto per oggetto (decisione 33) e
-> modello (decisione 38). Quei due riusavano l'architettura a doppio strato
+> analogia dagli altri cinque, come è stato fatto per oggetto (decisione 33, `schema-oggetti`) e
+> modello (decisione 38, `schema-modelli`). Quei due riusavano l'architettura a doppio strato
 > perché descrivevano, come gli altri, materiale di fonte convertito. Un
 > personaggio non ha una fonte da cui essere convertito: **non c'è un
 > `source_2e` di un personaggio**. Il doppio strato, qui, per la prima volta non
@@ -166,7 +166,7 @@ Dei **43 fra privilegi e impedimenti** delle 17 classi:
 **40** `pending`,
 **2** `direct`,
 **1** `source_only`.
-La decisione 23 autorizza il clone del chassis, **non** l'invenzione di
+La decisione 23 (`principio-del-clone`) autorizza il clone del chassis, **non** l'invenzione di
 meccanica 5e per i privilegi: il numero non scende scrivendoli.
 
 Ma il buco vero sta un livello più sotto. Il chassis è in `dati/_srd51.py`, che
@@ -216,14 +216,14 @@ progetto dice a quanti punti esperienza.
 
 Nei dati ci sono **42 voci** di competenza in armi e **66** di
 competenza non-d'arma, tutte in inglese e tutte dal sistema **a slot** della 2e
-che l'incompatibilità 4 della decisione 23 ha abolito. Del sistema che l'ha
+che l'incompatibilità 4 della decisione 23 (`principio-del-clone`) ha abolito. Del sistema che l'ha
 sostituito — competenza per categoria, più le 18 abilità della 5e — nei dati
 non c'è nulla: né l'elenco delle abilità, né quante ne concede una classe, né
 quali. E gli oggetti non portano la categoria su cui la competenza si
 appoggerebbe: `weapon_5e` non ha un campo categoria (semplice / da guerra) e
 `armor_5e` non ha leggera / media / pesante.
 
-Il caso più netto è l'Umano. La decisione 19 lo compensa con tre tratti che
+Il caso più netto è l'Umano. La decisione 19 (`compensazione-umano`) lo compensa con tre tratti che
 sono tutti **scelte**: un +1 a due caratteristiche, una competenza di abilità,
 un linguaggio. Sono 4 in tutto i tratti razziali che lasciano una
 scelta al giocatore (elfo-dargonesti, umano), e per nessuno dei tre
@@ -273,7 +273,7 @@ Tre legami esistono come intenzione ma non come chiave.
   `mechanics_5e.chassis.srd_class`, che però è `null` per
   8 classi.
 - **divinità → incantesimi.** Tutte e 21 le divinità hanno
-  `mechanics_5e` a **`null`**: il filtro delle sfere (decisione 24) vive
+  `mechanics_5e` a **`null`**: il filtro delle sfere (decisione 24, `sfere-sacerdotali`) vive
   interamente in `dati/_sfere_5e.py`, cioè in codice, non nei dati.
 
 > **Lettura interpretativa** — registrata il 2026-09-01. Non è derivata dai dati.
@@ -289,7 +289,7 @@ Tre legami esistono come intenzione ma non come chiave.
 > etichette denotano una nostra classe scritta in altro modo, altre nominano
 > classi generiche della 2e che il progetto non ha e per le quali non esiste
 > nulla da agganciare. Stabilire quale sia quale è lavoro di conversione, e
-> scriverlo qui al posto tuo sarebbe la stessa scorciatoia che la decisione 26
+> scriverlo qui al posto tuo sarebbe la stessa scorciatoia che la decisione 26 (`criterio-tracciabilita`)
 > respinge altrove: un dato non verificabile che entra perché sembra ovvio.
 
 ---
@@ -307,7 +307,7 @@ scheda razziale dichiara
 (COS min 12, DES min 8/max 16, INT max 18, FOR min 10, SAG min 8),
 la voce di classe dichiara 4 minimi
 (COS 12, DES 8, FOR 10, SAG 8).
-La decisione 11 ha applicato l'**unione** dei due set. Il manuale registra
+La decisione 11 (`barbaro-vincoli`) ha applicato l'**unione** dei due set. Il manuale registra
 1 ambiguità dichiarata su questa classe.
 
 **Lo stato attuale.** `umano-barbaro` è l'unica razza il cui blocco
@@ -318,7 +318,7 @@ con `source_values` vuoto
 — cioè **nessun aggiustamento viene dalla fonte**. Porta
 2 tratti.
 
-**Cosa resta aperto.** La decisione 20 elenca già le quattro conseguenze del
+**Cosa resta aperto.** La decisione 20 (`tappo-barbaro`) elenca già le quattro conseguenze del
 passaggio a background, e sono tutte verificabili nei dati:
 
 | conseguenza | misura oggi |
@@ -410,7 +410,7 @@ razza + classe; la validazione; la soddisfacibilità (`esiste_assegnazione`,
 | Nessun aggancio ai tetti di conversione | il modulo legge `source_2e` 6 volte e `mechanics_5e` 0: scavalca lo strato di conversione e va dritto alla fonte |
 | `genera()` restituisce tre forme diverse | dict, lista, o dict di due chiavi, con un terzo stato `parziale`: chi chiama deve ramificare |
 | Copre un passo su molti | punti ferita, competenze, equipaggiamento, incantesimi, denaro iniziale: nessuno di questi passa di qui |
-| La numerazione delle decisioni è sfasata | il modulo cita le decisioni 9, 10, 11, 12; nell'elenco corrente gli stessi contenuti portano il numero precedente — vedi §3.4 |
+| La numerazione delle decisioni era sfasata — CHIUSA | il modulo cita ora le decisioni 8 (`generazione-caratteristiche`), 9 (`aggiustamenti-negativi`), 10 (`massimali-razziali`), 11 (`barbaro-vincoli`), verificate da `verifica_decisioni.py` — vedi §3.4 |
 
 > **Lettura interpretativa** — registrata il 2026-09-01. Non è derivata dai dati.
 >
@@ -428,37 +428,45 @@ razza + classe; la validazione; la soddisfacibilità (`esiste_assegnazione`,
 > rivedibile — il motore continuerà a leggere il valore vecchio senza segnalare
 > niente.
 
-### 3.4 Una nota che riguarda tutte e tre: la numerazione
+### 3.4 Una nota che riguarda tutte e tre: la numerazione — CHIUSA
 
-Le tre questioni sospese si citano per numero, e i numeri non sono stabili.
-I dati contengono **431 citazioni di decisione in 60 file**,
-di cui **170 nella fascia 1-12** — che è esattamente dove stanno le
-tre questioni di questa sezione.
+Le tre questioni sospese si citano per numero, e i numeri **non erano
+stabili**. Il progetto contiene **976 rimandi a una decisione in
+109 file**, di cui **287 nella fascia 1-12** — che è
+esattamente dove stavano le tre questioni di questa sezione.
 
-> **Lettura interpretativa** — registrata il 2026-09-01. Non è derivata dai dati.
->
-> **Verificato a mano leggendo le citazioni, il 2026-09-01.** Nella fascia bassa
-> le citazioni non puntano alla decisione che nominano, e **non con uno scarto
-> costante**:
->
-> | citazione nei dati | contenuto citato | numero nell'elenco corrente |
-> |---|---|---|
-> | «Decisione 2» | i minimi di caratteristica sono vincoli meccanici | **3** |
-> | «Decisione 4» | i limiti di livello aboliti | **4** — coincide |
-> | «Decisione 9» | il default è 4d6 scarta il minore | **8** |
-> | «Decisione 10» | gli aggiustamenti negativi si tengono | **9** |
-> | «Decisione 11» | i massimali valgono anche in crescita | **10** |
-> | «Decisione 23» | il principio del clone | **23** — coincide |
->
-> Non è un difetto cosmetico e non è nemmeno un errore di trascrizione: sono
-> file scritti in momenti diversi, sotto numerazioni diverse, e nulla li
-> riallinea perché l'elenco è generato mentre le citazioni sono incorporate nei
-> testi. Nella fascia alta (dalla 13 in su) le citazioni campionate coincidono.
->
-> Riguarda direttamente questo rapporto: le tre questioni sospese stanno ai
-> numeri 20, 10 e 8 dell'elenco corrente, ma nei dati e nel codice sono citate
-> come 20, 11 e 9. Prima di scrivere in uno schema «decisione N» conviene
-> sapere quale delle due numerazioni si sta usando.
+Erano sfasati perché il numero è un ordinale dell'elenco, e l'elenco è
+cambiato: file scritti in momenti diversi hanno continuato a citare il numero
+della propria vintage, senza che nulla li riallineasse. Lette una per una, le
+287 citazioni della fascia bassa hanno dato questa corrispondenza —
+**senza uno scarto costante**, e con lo stesso numero giusto in un file e
+sbagliato in un altro:
+
+| numero citato allora | contenuto citato | id | numero vero |
+|---|---|---|:-:|
+| «2» | i minimi di caratteristica sono vincoli meccanici | `vincoli-caratteristica` | **3** |
+| «3» | i limiti di livello aboliti | `limiti-di-livello` | **4** |
+| «4» | i limiti di livello aboliti | `limiti-di-livello` | **4** — coincideva |
+| «9» | il default è 4d6 scarta il minore | `generazione-caratteristiche` | **8** |
+| «10» | gli aggiustamenti negativi si tengono | `aggiustamenti-negativi` | **9** |
+| «11» | i massimali valgono anche in crescita | `massimali-razziali` | **10** |
+| «12» | il Barbaro tiene entrambi i set di vincoli | `barbaro-vincoli` | **11** |
+| «23» | il principio del clone | `principio-del-clone` | **23** — coincideva |
+
+**Chiusa il 2026-09-01, e non correggendo i numeri.** Correggerli sarebbe
+stato il quinto giro di vigilanza su una struttura che si sfasa da sola. La
+causa è che il numero di un rimando è un **derivato scritto a mano**, cioè
+esattamente ciò che il punto 3 di CLAUDE.md vieta ovunque tranne che qui.
+
+Quindi: l'elenco canonico è passato in `decisioni.py`, ogni decisione ha preso
+un `id` stabile che non cambierà mai, e la forma di un rimando è ora
+«decisione 10 (`massimali-razziali`)» — l'id è la chiave, il numero gli sta
+accanto come derivato. `verifica_decisioni.py` verifica la coppia in tutto il
+progetto e con `--correggi` riscrive i numeri a partire dagli id.
+
+Stato oggi: **976 rimandi verificati, 0 sfasati,
+0 con id ignoto, 0 ancora senza id**. Rinumerare
+adesso costa un comando.
 
 ---
 
@@ -517,7 +525,7 @@ progetto:
    e il giocatore ne sceglie un elemento, quella scelta **non esiste in nessun
    file** e deve stare sul personaggio: l'assegnazione dei sei punteggi, il
    +1/+1 dell'umano, l'arma scelta fra "Sword (any)", le competenze. È la
-   decisione 39 applicata al PG: *il bersaglio legale è un filtro*, e il
+   decisione 39 (`bersaglio-legale-filtro`) applicata al PG: *il bersaglio legale è un filtro*, e il
    campione si fissa alla generazione. Non è una copia dei dati — è il
    complemento dei dati.
 3. **I derivati non si scrivono.** Nessun campo `ca`, `pf_max`, `bonus_attacco`
@@ -536,7 +544,7 @@ il totale. Lo stesso vale per la ricchezza iniziale, se tirata.
 
 ### 5.1 Non è un problema di velocità
 
-Il corpus intero è **506 file per 1,83 MB**. Caricato una
+Il corpus intero è **506 file per 1,84 MB**. Caricato una
 volta all'avvio e indicizzato per id, ci sta in memoria senza discussione: gli
 indici `*.index.json` esistono già e fanno esattamente questo mestiere.
 **A ogni turno non va letto nessun file.** La domanda "quanto velocemente" ha
@@ -593,7 +601,7 @@ Anche dove il dato è strutturato, il numero è spesso **dentro** una stringa:
 
 I 9 ruoli già assegnati
 (bruto 13, fante 10, bestia 10, assassino 8, incantatore 3, artiglieria 3, non-combattente 2, sciame 2, comandante 1) e il morale
-della decisione 27 sono, oggi, la parte dell'arena messa meglio: l'IA sa cosa
+della decisione 27 (`sette-campi-2e`) sono, oggi, la parte dell'arena messa meglio: l'IA sa cosa
 vuole fare una creatura molto prima che il motore sappia risolverne l'attacco.
 
 > **Lettura interpretativa** — registrata il 2026-09-01. Non è derivata dai dati.
@@ -631,7 +639,7 @@ vuole fare una creatura molto prima che il motore sappia risolverne l'attacco.
 | 2. Cosa manca | i privilegi del chassis (non contati fra i 40 `pending`), la tabella PE 5e (17/17 non applicata), le competenze 5e, gli slot 5e, l'effetto degli incantesimi, il cambio stl/gp |
 | 3. Le tre sospese | riportate con fonte e opzioni, non sciolte |
 | 4. Riferimento o copia | riferimento per id, più impronta del corpus, più le sole scelte che risolvono un filtro; i derivati non si scrivono |
-| 5. Arena | 1,83 MB stanno in memoria: il vincolo non è la velocità ma che 405 blocchi di meccanica sono prosa |
+| 5. Arena | 1,84 MB stanno in memoria: il vincolo non è la velocità ma che 405 blocchi di meccanica sono prosa |
 
 ---
 

@@ -28,7 +28,7 @@ def coerenza_file(d, err):
     """Controlli interni a un singolo modello."""
     m = d["mechanics_5e"]
 
-    # --- decisione 38: un campo o si eredita o si sovrascrive, mai entrambi.
+    # --- decisione 38 (`schema-modelli`): un campo o si eredita o si sovrascrive, mai entrambi.
     er = {v["campo"] for v in m["eredita"]}
     so = {v["campo"] for v in m["sovrascrive"]}
     for c in sorted(er & so):
@@ -41,12 +41,12 @@ def coerenza_file(d, err):
         if v.get("origine", "modello") == "modello" and v.get("terzo"):
             err(f"sovrascrive['{v['campo']}']: `terzo` valorizzato ma origine non e' 'terzo'")
 
-    # --- decisione 33/38: un modello con scheda propria non duplica i tratti.
+    # --- decisioni 33 (`schema-oggetti`) e 38 (`schema-modelli`): un modello con scheda propria non duplica i tratti.
     if d.get("monster_id") and m["aggiunge"]:
         err("monster_id e' valorizzato ma `aggiunge` non e' vuoto: i tratti stanno "
             "nella scheda del mostro, il modello la referenzia e non la ricopia")
 
-    # --- decisione 40, forma e conseguenze.
+    # --- decisione 40 (`modello-scarto-di-grado`), forma e conseguenze.
     sg = m["scarto_grado"]
     xp = sg["xp_2e"]
     if sg["forma"] == "proprio":
@@ -63,7 +63,7 @@ def coerenza_file(d, err):
             err(f"monster_id valorizzato ma scarto_grado.forma e' '{sg['forma']}': "
                 "se esiste una scheda, il grado e' 'proprio'")
 
-    # --- decisione 35/40: un valore di fonte registrato senza uso dichiarato
+    # --- decisioni 35 (`repertori-sono-filtri`) e 40 (`modello-scarto-di-grado`): un valore di fonte registrato senza uso dichiarato
     #     e' una stima nascosta.
     if not xp["usato_per_derivare_gs"] and not xp["uso_dichiarato"]:
         err("scarto_grado.xp_2e: usato_per_derivare_gs e' false ma uso_dichiarato e' vuoto")

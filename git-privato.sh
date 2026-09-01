@@ -41,7 +41,7 @@ export GIT_WORK_TREE=.
 # Percorsi tracciati dal repo privato. Aggiungerne uno e' una decisione:
 # scrivilo qui, non affidarti a una regola generica.
 #
-# DECISIONE 37 (25/08/2026) — dati/mostri.coda.json NON sta qui.
+# DECISIONE 37 (`coda-mostri-pubblica`, 25/08/2026) — dati/mostri.coda.json NON sta qui.
 #     Era l'unico file tracciato da ENTRAMBI i repository: rientra
 #     nell'elenco PERCORSI e insieme NON e' escluso dal .gitignore
 #     pubblico, quindi ogni giro lo committava due volte in due storie

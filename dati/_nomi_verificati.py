@@ -29,7 +29,7 @@ VERIFICATE = [
         "nota": "Sotto-razza degenerata dei mind flayer. Statblock unico e "
                 "leggibile (MC Dragonlance Appendix, pag. 87). "
                 "E' la creatura con la resistenza magica piu' alta del "
-                "bestiario: rilevante per la decisione 27 gruppo C.",
+                "bestiario: rilevante per la decisione 27 (`sette-campi-2e`) gruppo C.",
     },
     {
         "estratto": "Tayling Tayland",

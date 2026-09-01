@@ -2,7 +2,7 @@
 """
 Generazione delle caratteristiche — modulo isolato.
 
-DECISIONE 9 (12 agosto 2026)
+DECISIONE 8 (`generazione-caratteristiche`, 12 agosto 2026)
     Metodo di default: **4d6 scarta il minore**, ufficiale in 5e 2014.
     Array standard e point-buy restano disponibili come alternative.
 
@@ -13,9 +13,9 @@ DECISIONE 9 (12 agosto 2026)
     Avendo scelto vincoli rigidi in stile 2e, si adotta anche la generazione
     che li rende sensati.
 
-DECISIONE 11
+DECISIONE 10 (`massimali-razziali`)
     I massimali razziali si applicano sia in creazione sia come tetti di
-    crescita. NON sono i limiti di livello (decisione 4, non applicati): un
+    crescita. NON sono i limiti di livello (decisione 4 (`limiti-di-livello`), non applicati): un
     massimale limita quanto puo' salire un punteggio, non a che livello si
     ferma il personaggio.
 
@@ -137,7 +137,7 @@ def valida_pointbuy(assegnazione):
 # ------------------------------------------------------------- aggiustamenti
 
 def applica_aggiustamenti(punteggi, razza):
-    """Somma gli aggiustamenti razziali. DECISIONE 10: i negativi si tengono."""
+    """Somma gli aggiustamenti razziali. DECISIONE 9 (`aggiustamenti-negativi`): i negativi si tengono."""
     adj = razza["source_2e"].get("ability_adjustments") or {}
     return {c: punteggi[c] + adj.get(c, 0) for c in CAR}
 
@@ -145,7 +145,7 @@ def applica_aggiustamenti(punteggi, razza):
 def intervalli(razza, classe=None):
     """Intervallo ammesso per ciascuna caratteristica, DOPO gli aggiustamenti.
 
-    Unisce i requisiti razziali con i minimi di classe. DECISIONE 12: per il
+    Unisce i requisiti razziali con i minimi di classe. DECISIONE 11 (`barbaro-vincoli`): per il
     Barbaro vale l'unione dei due set, non l'uno o l'altro."""
     req = razza["source_2e"]["ability_requirements"]
     lo = {c: (req[c]["min"] or 3) for c in CAR}
@@ -172,8 +172,8 @@ def valida(punteggi_finali, razza, classe=None):
 def tetto_crescita(razza, caratteristica):
     """Massimale oltre il quale la caratteristica non puo' salire.
 
-    DECISIONE 11: i massimali valgono anche in avanzamento. Non vanno confusi
-    con i limiti di livello, che restano non applicati (decisione 4)."""
+    DECISIONE 10 (`massimali-razziali`): i massimali valgono anche in avanzamento. Non vanno confusi
+    con i limiti di livello, che restano non applicati (decisione 4, `limiti-di-livello`)."""
     mx = razza["source_2e"]["ability_requirements"][caratteristica]["max"]
     return mx if mx is not None else 20
 
@@ -204,7 +204,7 @@ def metodi_praticabili(razza, classe=None):
     """Quali metodi possono produrre un personaggio valido.
 
     Serve alla creazione PG: se il metodo scelto non e' praticabile il sistema
-    lo segnala e propone il tiro, senza bloccare (decisione 9)."""
+    lo segnala e propone il tiro, senza bloccare (decisione 8, `generazione-caratteristiche`)."""
     lo, hi = intervalli(razza, classe)
     adj = razza["source_2e"].get("ability_adjustments") or {}
     # gli intervalli sono sui punteggi finali: si riportano ai grezzi

@@ -1,6 +1,6 @@
 # Il bestiario di Krynn — diagnostica
 
-*Generato da `dati/analizza_bestiario.py` il 2026-08-20.*
+*Generato da `dati/analizza_bestiario.py` il 2026-09-01.*
 
 > **Diagnostica, non conversione.** Serve a vedere la forma del problema prima
 > di cominciare, come `RAPPORTO-classi.md` per le classi. Nessuno statblock è
@@ -44,7 +44,7 @@ reale del **Baaz**.
 
 I 7 senza corrispettivo: `FREQUENCY`, `ORGANIZATION`, `ACTIVITY CYCLE`, `DIET`, `NO. APPEARING`, `MAGIC RESISTANCE`, `MORALE`.
 
-> **Lettura interpretativa** — registrata il 2026-08-20. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-01. Non e' derivata dai dati.
 >
 > Un terzo abbondante della scheda 2e — 7 campi su 21 — non ha dove andare.
 > Ma le due metà del problema non si somigliano.
@@ -251,7 +251,7 @@ identitarie di Krynn, quindi il campione non è casuale: è il migliore possibil
 | — | **aggiunto** | `Aura of Command`: aura di comando sugli altri draconici. In 2e l'Aurak era un comandante nel testo, non nelle regole. |
 
 
-> **Lettura interpretativa** — registrata il 2026-08-20. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-01. Non e' derivata dai dati.
 >
 > Tre regolarità nel modo di rendere, che valgono per tutti e cinque.
 >
@@ -328,7 +328,7 @@ ma non c'è una formula: Baaz e Kapak hanno la stessa CA 2e (4) e finiscono a 14
 | Sivak | 14.0 | 34.0 | ×2.4 |
 | Aurak | 13.0 | 24.0 | ×1.8 |
 
-> **Lettura interpretativa** — registrata il 2026-08-20. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-01. Non e' derivata dai dati.
 >
 > **La risposta alla domanda è no: cinque casi non bastano.**
 >
@@ -402,7 +402,7 @@ il danno la tira su da sola.
 | Sivak | 4 | 57 | 85 | 67% | 34 | ×2.4 |
 | Aurak | 6 | 67 | 114 | 59% | 24 | ×1.8 |
 
-> **Lettura interpretativa** — registrata il 2026-08-20. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-01. Non e' derivata dai dati.
 >
 > **Il Kapak ha 39 punti ferita contro una mediana di 58 al suo grado: il 67%.**
 > Sta *sotto* la mediana in difesa e ci arriva col danno — 24 per round. È un
@@ -425,7 +425,7 @@ il danno la tira su da sola.
 > offensivo rispetto alla propria fonte**: ×9.6 contro il ×1.6–×4.0 degli altri
 > quattro. Gli altri sono stati riscalati; lui è stato **ripensato**.
 
-> **Lettura interpretativa** — registrata il 2026-08-20. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-01. Non e' derivata dai dati.
 >
 > **Sopra la mediana in armatura, sotto in punti ferita.** È lo stesso profilo
 > visto sopra, letto sui due assi: la CA dei draconici sta sempre a pari o sopra
@@ -482,7 +482,7 @@ immagini di pagina lo ha rifatto voce per voce.
 verificati per primi. Il dettaglio completo — testo estratto, nome reale, pagina,
 causa — è nella tabella più sotto.
 
-> **Lettura interpretativa** — registrata il 2026-08-20. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-01. Non e' derivata dai dati.
 >
 > **L'estrazione non ha solo sbagliato i nomi: ha perso dei dati.** In tre voci
 > le colonne di destra sono sparite del tutto — `Avian` aveva quattro uccelli e
@@ -501,7 +501,7 @@ causa — è nella tabella più sotto.
 > specie sola in due stati, il solitario e la coppia accoppiata da 35 dadi vita
 > che il manuale tratta come singola creatura.
 
-> **Lettura interpretativa** — registrata il 2026-08-20. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-01. Non e' derivata dai dati.
 >
 > **Questo numero non è un fatto acquisito: è la stima migliore ottenuta finora,
 > e va detto invece di presentare 87 come definitivo.** Il conteggio "definitivo"
@@ -564,7 +564,7 @@ causa — è nella tabella più sotto.
 >    "creatura" dell'Appendice, **19 (40%)** hanno almeno un
 >    campo "See below" in un dato di combattimento (non nei campi di mondo
 >    `TREASURE`/`NO. APPEARING`, sempre esclusi dallo statblock per la
->    decisione 27 gruppo A — l'unica eccezione è `Haunt, Knight`, dove
+>    decisione 27 (`sette-campi-2e`) gruppo A — l'unica eccezione è `Haunt, Knight`, dove
 >    `TREASURE` stesso resta "See below" senza un valore alternativo
 >    dichiarato altrove, e va comunque letto). Distribuzione sulle fasce
 >    attuali: 1 in prima, 6 in seconda, 8 in terza, 3 in quinta, 1 in fuori fascia. Tutte già lette per intero in questa sessione (elenco
@@ -714,7 +714,7 @@ cinque fasce, più il Cervo Bianco fuori fascia.
 | Dreamwraith | 8 DV, statistiche proprie fisse (a differenza del Dreamshadow gemello): fascia media confermata. LETTURA COMPLETA (compito 3): MAGIC RESISTANCE "See below" e' la stessa scala 0/10/20% per livello di sogno del Dreamshadow. Aggiunge tocco gelido 1d10, bonus di iniziativa +1, e un sotto-tipo opzionale con capacita' di "disperazione" (TS su incantesimi o il personaggio si unisce al dreamwraith recitando la stessa litania, negabile solo con dispel magic o un discorso di speranza, 30% di riuscita base). Condivide con il Dreamshadow un intero sotto-sistema di "disbelief" (tempo di concentrazione -> modificatore) che la 5e non ha: da RENDERE, non da copiare 1:1, quando si convertira'. | no |
 | Fire Minion | 6 DV, immunita' al fuoco: fascia media confermata, l'analogo proposto resta debole rispetto ai DV reali. LETTURA COMPLETA (compito 3, sesto segnale: SPECIAL ATTACKS "Fire" non catalogato): l'etichetta nascondeva un'AURA passiva (1d6 danni automatici, nessun tiro per colpire ne' TS, a chiunque entro 5 piedi) oltre alla spada 2d6. Immunita' al fuoco totale (le fiamme magiche CURANO invece di ferire), vulnerabilita' all'acqua (+1 danno/dado), e un vincolo ambientale: puo' restare lontano dal fuoco solo 1d6+1d6 ore prima di iniziare a subire 12 danni/turno finche' non torna o muore. Identitaria per l'aura e il vincolo, non solo per l'immunita'. | parziale — Magmin, sottodimensionato |
 | Tylor | STRUTTURALMENTE COMPLESSA: la fonte da' una tabella di 6 categorie d'eta' con DV, CA e soffio diversi per ciascuna (da 1d6 DV/CA4 a 5d10 DV/CA-1), sullo stesso modello degli age category dei draghi. Serve piu' di un GS, non uno: da trattare come una mini-famiglia di statblock imparentati, non una singola conversione. LETTURA COMPLETA (compito 3, sesto segnale: SPECIAL DEFENSES "Special" non catalogato, il caso gemello dello Skrit): eredita UNA sola resistenza elementare (fuoco O freddo, mai entrambe) dal genitore draconico — scelta del DM alla creazione, non delle statistiche fisse. Nessun soffio ("Breath Weapon: Nil" per tutte le otto categorie d'eta' nella tabella): un tylor combatte solo con morso/coda e incantesimi. | parziale — Chimera, solo per la categoria piu' alta |
-| Knight, Death | **Il Cavaliere della Morte**. CORREZIONE dopo la rilettura: la fonte descrive un TIPO ripetibile ("a Knight of Solamnia, cursed by the gods..."), non un individuo nominato — coerente con la decisione 32 (criterio: nome proprio e storia, non vincolo a un oggetto). "E' Lord Soth" era un'identificazione della sessione precedente, non un dato della voce: la fonte non nomina Soth. Va convertito come CREATURA al suo grado reale (9 DV, 75% di resistenza magica — la seconda piu' alta del bestiario dopo il 90% dello Scheletro Guerriero, correzione al primato che il rapporto attribuiva erroneamente allo Yaggol), non trattato come scheda unica di Soth. SotDQ ha lo statblock di Soth come PERSONAGGIO specifico: resta un riferimento per un'istanza particolarmente potente dello stesso tipo, non la fonte di questa conversione. CORREZIONE ULTERIORE dopo lettura completa (compito 3, 20 agosto 2026): NON e' strutturalmente "quasi gemello dello Scheletro Guerriero" come la nota precedente diceva — quello ha un solo attacco con bonus fisso e nessun incantesimo. Il Cavaliere della Morte e' anche un incantatore a 20° livello: aura di paura costante (5 piedi), detect magic/detect invisibility/wall of ice a volonta', dispel magic 2/giorno, power word blind/kill/stun 1/giorno (a scelta), symbol of fear o symbol of pain 1/giorno, fireball da 20 dadi 1/giorno. La resistenza magica al 75% RIFLETTE l'incantesimo addosso al lanciatore con un tiro percentuale di 11 o meno (riverificato a ogni incantesimo subito). Il grado reale e' quindi ben oltre GS7: la nota di priorita' precedente lo sottostimava. | no — nessun mostro SRD combina guardiano corazzato e incantatore a questo livello nello stesso statblock |
+| Knight, Death | **Il Cavaliere della Morte**. CORREZIONE dopo la rilettura: la fonte descrive un TIPO ripetibile ("a Knight of Solamnia, cursed by the gods..."), non un individuo nominato — coerente con la decisione 32 (`creatura-contro-entita`) (criterio: nome proprio e storia, non vincolo a un oggetto). "E' Lord Soth" era un'identificazione della sessione precedente, non un dato della voce: la fonte non nomina Soth. Va convertito come CREATURA al suo grado reale (9 DV, 75% di resistenza magica — la seconda piu' alta del bestiario dopo il 90% dello Scheletro Guerriero, correzione al primato che il rapporto attribuiva erroneamente allo Yaggol), non trattato come scheda unica di Soth. SotDQ ha lo statblock di Soth come PERSONAGGIO specifico: resta un riferimento per un'istanza particolarmente potente dello stesso tipo, non la fonte di questa conversione. CORREZIONE ULTERIORE dopo lettura completa (compito 3, 20 agosto 2026): NON e' strutturalmente "quasi gemello dello Scheletro Guerriero" come la nota precedente diceva — quello ha un solo attacco con bonus fisso e nessun incantesimo. Il Cavaliere della Morte e' anche un incantatore a 20° livello: aura di paura costante (5 piedi), detect magic/detect invisibility/wall of ice a volonta', dispel magic 2/giorno, power word blind/kill/stun 1/giorno (a scelta), symbol of fear o symbol of pain 1/giorno, fireball da 20 dadi 1/giorno. La resistenza magica al 75% RIFLETTE l'incantesimo addosso al lanciatore con un tiro percentuale di 11 o meno (riverificato a ogni incantesimo subito). Il grado reale e' quindi ben oltre GS7: la nota di priorita' precedente lo sottostimava. | no — nessun mostro SRD combina guardiano corazzato e incantatore a questo livello nello stesso statblock |
 | Haunt, Knight | 8 DV, CA "2 o migliore" (molto protetta), non scacciabile dai chierici Legali Buoni: fascia media-alta confermata, coerente con la collocazione precedente. LETTURA COMPLETA (compito 3, sesto segnale: SPECIAL ATTACKS "Horror" non catalogato): un vero e proprio controllo di paura (1d20 <= Saggezza+livello del PG o -4 a tutti i tiri per la durata dello scontro, ripetuto a ogni uccisione), immunita' a sonno/charme/hold/paralisi/controllo mentale/freddo, individuazione della magia entro 50 piedi (attacca il nemico piu' magico), e un vincolo di rigenerazione: se non gli si versa acqua santa addosso dopo averlo ucciso, si riforma intatto alla prossima luna piena di Solinari. Identitario quanto un boss ricorrente, non un guardiano generico. | no |
 | Phaethon, Elder | Variante piu' forte del Phaethon base (6 DV contro 4), con un accenno di resistenza magica (5%): identitario, da comporre insieme al Phaethon. Voce nuova. | no |
 | Insect Swarm, Velvet Ant | Sciame con veleno e formula di dimensione variabile: meccanica piu' complessa del semplice sciame. Voce nuova. LETTURA COMPLETA (compito 3): dimensione 1d100x1.000, morso 80%/round per 1d4 danni, poi TS su veleno o dolore intenso con -2 a tutti i tiri per colpire/danno per 2d4 turni. Ogni punto di danno inflitto allo sciame uccide 1d20 insetti; a meta' sciame morto i superstiti si disperdono; se sterminato per intero, 975 PE (non per singolo insetto). Fascia confermata: identitaria per il debuff, non per la potenza bruta. | parziale — Swarm of Insects, senza il veleno |
@@ -753,7 +753,7 @@ cinque fasce, più il Cervo Bianco fuori fascia.
 **The White Stag.** Il terzo abitante della voce Stag (pag. 78). Non è una bestia: è unico, allineamento legale buono, 2.000 PE, con capacità magiche — una creatura sacra da incontro narrativo, non un avversario. Proposta: schedarlo quando esiste uno schema per creature uniche/da avventura (vicino allo schema Personaggio), non forzarlo nel bestiario da combattimento. LETTURA COMPLETA (compito 3): SPECIAL DEFENSES "See below" si risolve in "non puo' essere catturato, combatte fino alla morte" — se ucciso il corpo scompare e chi lo ha ucciso resta maledetto (+1 alla propria Classe Armatura nella scala 2e discendente, cioe' PEGGIORE, per sette giorni). Ha anche find the path e speak with animals a volonta' e bless 3/giorno. Conferma: fuori fascia, creatura da incontro narrativo, non da arena.
 
 
-> **Lettura interpretativa** — registrata il 2026-08-20. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-01. Non e' derivata dai dati.
 >
 > **Le fasce sono state ricostruite leggendo i 62 blocchi statistiche, non i
 > nomi delle voci.** La versione precedente aveva scelto la prima fascia (compresi
@@ -804,7 +804,7 @@ cinque fasce, più il Cervo Bianco fuori fascia.
 > fascia (il campo rimandato al testo si risolveva in una sola immunita' al
 > freddo) ed e' stato **convertito**: vedi `dati/mostri/eyewing.json`.
 
-> **Lettura interpretativa** — registrata il 2026-08-20. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-01. Non e' derivata dai dati.
 >
 > ### Compito 3 — le restanti voci con campo rimandato, lette tutte prima di convertire altro
 >
@@ -837,7 +837,7 @@ cinque fasce, più il Cervo Bianco fuori fascia.
 > pagina prima della conversione (vincolo 5, come i campi bloccati da
 > filtro).
 
-> **Lettura interpretativa** — registrata il 2026-08-20. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-01. Non e' derivata dai dati.
 >
 > **2 voci hanno una correzione di lettura, non di fascia:**
 >
@@ -847,7 +847,7 @@ cinque fasce, più il Cervo Bianco fuori fascia.
 > - **Cavaliere della Morte**: la sessione precedente lo identificava con Lord
 >   Soth. La voce dell'Appendice descrive però un **tipo** ("a Knight of
 >   Solamnia, cursed by the gods..."), non un individuo nominato — la fonte non
->   cita mai Soth. Applicando il criterio della decisione 32 (nome proprio e
+>   cita mai Soth. Applicando il criterio della decisione 32 (`creatura-contro-entita`, nome proprio e
 >   storia, non vincolo a un oggetto), il Cavaliere della Morte è una
 >   **creatura**, non un'entità: si converte al suo grado reale come le altre,
 >   e il suo statblock è strutturalmente quasi gemello dello Scheletro
@@ -859,7 +859,7 @@ cinque fasce, più il Cervo Bianco fuori fascia.
 > **La categoria ENTITÀ, per ora, è vuota.** Fra le 62 voci lette non ce n'è
 > una che abbia nome proprio e storia propria dichiarati dalla fonte stessa
 > (il Cavaliere della Morte era l'unica candidata, ed è ricaduta in creatura).
-> Non è un difetto della categoria: il criterio della decisione 32 ha retto al
+> Non è un difetto della categoria: il criterio della decisione 32 (`creatura-contro-entita`) ha retto al
 > primo caso a cui è stato applicato, respingendolo. Resta nello schema e nel
 > metodo per il giorno in cui una voce ci ricadrà davvero — un nome proprio
 > dichiarato dalla fonte, non un'identificazione fatta da noi.
@@ -965,7 +965,7 @@ ricontaggio voce per voce ne ha trovati altri quattro con la stessa causa.
 | `Tayling Tayland` | **Tayling** (+1 varianti) | 79 | statblock a due colonne |
 | `Y a g g o l` | **Yaggol** | 87 | titolo con spaziatura fra le lettere nel layout |
 
-> **Lettura interpretativa** — registrata il 2026-08-20. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-01. Non e' derivata dai dati.
 >
 > **La causa è quasi sempre una sola, e non è un difetto delle pagine.**
 > 14 casi su 8 sono voci con statblock a **più colonne**: una sola
@@ -997,13 +997,13 @@ Delle tre cose che mancavano, **sono fatte tutte e tre**.
 - ~~Schema del mostro~~ → `dati/schema/mostro.schema.json`, validato sui cinque
   draconici.
 - ~~Verifica degli 8 nomi corrotti~~ → tutti leggibili, vedi sopra.
-- ~~Decisione sui sette campi senza corrispettivo~~ → decisione 27, sotto: due
+- ~~Decisione sui sette campi senza corrispettivo~~ → decisione 27 (`sette-campi-2e`), sotto: due
   gruppi chiusi, uno rinviato con motivo.
 - ~~Conteggio vero delle creature dell'MC Appendix~~ → **66 voci,
   87 creature**, stabilito voce per voce sulle immagini di pagina —
   vedi "Il conteggio vero del bestiario" sopra.
 
-> **Lettura interpretativa** — registrata il 2026-08-20. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-01. Non e' derivata dai dati.
 >
 > Nessuna delle tre resta aperta. Quello che resta, e non è bloccante per
 > cominciare a convertire, è un disallineamento scoperto per strada: il
@@ -1017,7 +1017,7 @@ Delle tre cose che mancavano, **sono fatte tutte e tre**.
 
 ---
 
-## Decisione 27 — i sette campi senza corrispettivo
+## Decisione 27 (`sette-campi-2e`) — i sette campi senza corrispettivo
 
 Non erano un problema unico. Si dividono in tre gruppi, e due si sono chiusi
 senza deliberare.
@@ -1049,7 +1049,7 @@ Nello schema è `mechanics_5e.morale_2e`, con valore, etichetta della fonte e
 
 E' l'unica vera decisione dei sette, e va presa con i numeri davanti.
 
-**Perché la decisione 16 non si applica.** La decisione 16 dice che dove la 5e ha eliminato qualcosa deliberatamente si ripristina dalla fonte. Qui non si applica, per un'asimmetria: quei ripristini riguardavano TRATTI RAZZIALI DI PERSONAGGI GIOCANTI, in un sistema chiuso dove conta solo l'equilibrio interno. La resistenza magica riguarda invece OGNI draconico di OGNI scontro, e i Gradi di Sfida su cui stiamo calibrando presuppongono che non ci sia. Aggiungerla significa che ogni incontro pesa piu' di quanto il suo GS dichiari, sistematicamente.
+**Perché la decisione 16 (`nove-tratti-phb2e`) non si applica.** La decisione 16 (`nove-tratti-phb2e`) dice che dove la 5e ha eliminato qualcosa deliberatamente si ripristina dalla fonte. Qui non si applica, per un'asimmetria: quei ripristini riguardavano TRATTI RAZZIALI DI PERSONAGGI GIOCANTI, in un sistema chiuso dove conta solo l'equilibrio interno. La resistenza magica riguarda invece OGNI draconico di OGNI scontro, e i Gradi di Sfida su cui stiamo calibrando presuppongono che non ci sia. Aggiungerla significa che ogni incontro pesa piu' di quanto il suo GS dichiari, sistematicamente.
 
 **Il problema di traduzione.** Il 20% della 2e negava l'incantesimo DEL TUTTO, inclusi quelli senza tiro salvezza. Il tratto 5e piu' vicino, Magic Resistance, da' vantaggio ai tiri salvezza contro magia: piu' debole in un senso (non annulla nulla), molto piu' forte in un altro (vale su ogni incantesimo con TS, sempre). Non sono equivalenti. Non e' il caso del Kender, dove il +4 della fonte e il vantaggio 5e valevano davvero lo stesso.
 

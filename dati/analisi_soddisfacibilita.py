@@ -111,7 +111,7 @@ def analizza():
             if c["order"] == "cavaliere-solamnia":
                 nomi_classe.add("Knight of Solamnia")
             if nomi_tab and not (nomi_classe & nomi_tab):
-                # la tabella non la elenca: gia' preclusa per decisione 2,
+                # la tabella non la elenca: gia' preclusa per decisione 3 (`vincoli-caratteristica`),
                 # non e' un'impossibilita' matematica
                 continue
             mc = c["source_2e"].get("ability_minimums") or {}

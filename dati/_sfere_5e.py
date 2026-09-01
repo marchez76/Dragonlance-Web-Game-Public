@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-DECISIONE 24 — mappatura fra le sfere sacerdotali 2e e la lista incantesimi
+DECISIONE 24 (`sfere-sacerdotali`) — mappatura fra le sfere sacerdotali 2e e la lista incantesimi
 del chierico 5e (SRD 5.1, CC-BY).
 
 COME FUNZIONA IL FILTRO
@@ -249,7 +249,7 @@ DOMINI_SRD = {
 }
 
 # --------------------------------------------------------------------------
-# DECISIONE 24 — Dominio 5e associato a ciascuna divinita'.
+# DECISIONE 24 (`sfere-sacerdotali`) — Dominio 5e associato a ciascuna divinita'.
 # Il Dominio non sostituisce le sfere: fornisce Incanalare Divinita' e i
 # privilegi di sottoclasse, senza i quali il chierico 5e non ha nulla ai
 # livelli 1, 2, 6, 8 e 17.

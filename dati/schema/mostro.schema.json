@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://dragonlance-gdr.local/schema/mostro.schema.json",
   "title": "Mostro di Krynn",
-  "description": "Schema a doppio strato, come razza e classe. `source_2e` accoglie TUTTI i 21 campi della scheda dell'MC Dragonlance Appendix, compresi i sette che in 5e non hanno corrispettivo: e' trascrizione fedele e immutabile. `mechanics_5e` ha la forma di uno statblock 5e, ogni elemento con il proprio stato di conversione e la propria provenienza. Due campi non esistevano negli altri schemi: `ruolo`, che serve alla conversione per analogia e all'IA di combattimento, e `morale_2e`, che la decisione 27 destina al comportamento in arena invece che allo statblock.",
+  "description": "Schema a doppio strato, come razza e classe. `source_2e` accoglie TUTTI i 21 campi della scheda dell'MC Dragonlance Appendix, compresi i sette che in 5e non hanno corrispettivo: e' trascrizione fedele e immutabile. `mechanics_5e` ha la forma di uno statblock 5e, ogni elemento con il proprio stato di conversione e la propria provenienza. Due campi non esistevano negli altri schemi: `ruolo`, che serve alla conversione per analogia e all'IA di combattimento, e `morale_2e`, che la decisione 27 (`sette-campi-2e`) destina al comportamento in arena invece che allo statblock.",
   "type": "object",
   "required": ["id", "name", "ruolo", "source", "source_2e", "mechanics_5e"],
   "additionalProperties": false,
@@ -120,12 +120,12 @@
         "enum": ["pre_cataclysm", "age_of_despair", "war_of_lance",
                  "age_of_mortals_post_chaos", "post_war_of_souls"]
       },
-      "description": "Strato editoriale nostro, non dato di fonte (decisione 12)."
+      "description": "Strato editoriale nostro, non dato di fonte (decisione 12, `valid-eras`)."
     },
 
     "source_2e": {
       "type": "object",
-      "description": "Tutti e 21 i campi della scheda dell'MC Appendix, nell'ordine di stampa. Trascrizione fedele: non si normalizza, non si corregge, non si omette. I sette campi senza corrispettivo 5e stanno qui come tutti gli altri (decisione 27).",
+      "description": "Tutti e 21 i campi della scheda dell'MC Appendix, nell'ordine di stampa. Trascrizione fedele: non si normalizza, non si corregge, non si omette. I sette campi senza corrispettivo 5e stanno qui come tutti gli altri (decisione 27, `sette-campi-2e`).",
       "required": [
         "climate_terrain", "frequency", "organization", "activity_cycle",
         "diet", "intelligence", "treasure", "alignment", "no_appearing",
@@ -138,7 +138,7 @@
         "climate_terrain": { "type": "string" },
         "frequency": {
           "type": "string",
-          "description": "GRUPPO A della decisione 27: dato di mondo. Resta qui e alimenta il generatore di incontri in Fase 3."
+          "description": "GRUPPO A della decisione 27 (`sette-campi-2e`): dato di mondo. Resta qui e alimenta il generatore di incontri in Fase 3."
         },
         "organization": { "type": "string", "description": "Gruppo A." },
         "activity_cycle": { "type": "string", "description": "Gruppo A." },
@@ -167,12 +167,12 @@
         "special_defenses": { "type": "string" },
         "magic_resistance": {
           "type": "string",
-          "description": "GRUPPO C della decisione 27: RINVIATO. Il valore percentuale resta qui e non si converte finche' l'arena non dira' se i draconici senza resistenza risultano troppo fragili."
+          "description": "GRUPPO C della decisione 27 (`sette-campi-2e`): RINVIATO. Il valore percentuale resta qui e non si converte finche' l'arena non dira' se i draconici senza resistenza risultano troppo fragili."
         },
         "size": { "type": "string" },
         "morale": {
           "type": "string",
-          "description": "GRUPPO B della decisione 27: non e' un campo di scheda ma un parametro di comportamento. Il valore resta qui e viene letto da `mechanics_5e.morale_2e`."
+          "description": "GRUPPO B della decisione 27 (`sette-campi-2e`): non e' un campo di scheda ma un parametro di comportamento. Il valore resta qui e viene letto da `mechanics_5e.morale_2e`."
         },
         "xp_value": {
           "type": ["integer", "null"],
@@ -191,7 +191,7 @@
         "open_questions": { "type": "array", "items": { "type": "string" } },
         "age_categories": {
           "type": ["object", "null"],
-          "description": "DECISIONE 36 (25/08/2026). Alcune voci non danno UNO statblock ma una TABELLA di categorie d'eta' con valori propri per riga: il Tylor ne ha otto, Dragon Amphi e Dragon Sea dodici ciascuno. La decisione 34 stabilisce che solo le righe dentro la finestra dell'arena diventano schede; le altre non si buttano e non si riscrivono in prosa dentro `abilities_text`, dove la struttura si perderebbe e dodici righe per dodici colonne diventerebbero illeggibili. Restano qui, tabellari e interrogabili. Il campo e' generico di proposito: `colonne` dichiara le colonne che LA FONTE usa per quella voce (non un elenco fisso valido per tutti), `righe` porta i valori riga per riga. Estensione dello schema fatta con lo stesso criterio gia' applicato a `thac0` reso nullable per l'Hatori: si allarga la forma quando una voce reale la richiede, non prima. Ogni scheda derivata da una di queste tabelle porta la tabella INTERA, non solo la propria riga: la riga da sola non direbbe dove la creatura sta nella progressione.",
+          "description": "DECISIONE 36 (`age-categories-strutturato`, 25/08/2026). Alcune voci non danno UNO statblock ma una TABELLA di categorie d'eta' con valori propri per riga: il Tylor ne ha otto, Dragon Amphi e Dragon Sea dodici ciascuno. La decisione 34 (`categorie-eta`) stabilisce che solo le righe dentro la finestra dell'arena diventano schede; le altre non si buttano e non si riscrivono in prosa dentro `abilities_text`, dove la struttura si perderebbe e dodici righe per dodici colonne diventerebbero illeggibili. Restano qui, tabellari e interrogabili. Il campo e' generico di proposito: `colonne` dichiara le colonne che LA FONTE usa per quella voce (non un elenco fisso valido per tutti), `righe` porta i valori riga per riga. Estensione dello schema fatta con lo stesso criterio gia' applicato a `thac0` reso nullable per l'Hatori: si allarga la forma quando una voce reale la richiede, non prima. Ogni scheda derivata da una di queste tabelle porta la tabella INTERA, non solo la propria riga: la riga da sola non direbbe dove la creatura sta nella progressione.",
           "required": ["colonne", "righe", "destinazione"],
           "additionalProperties": false,
           "properties": {
@@ -265,7 +265,7 @@
             },
             "destinazione": {
               "const": "generatore_incontri",
-              "description": "Marcatore esplicito, come per `world_data_2e` e `morale_2e`: le righe non convertite non sono meccanica di scheda. Restano disponibili per incontri particolari e antagonisti nelle storie originali (decisione 34, stesso trattamento del gruppo A della decisione 27)."
+              "description": "Marcatore esplicito, come per `world_data_2e` e `morale_2e`: le righe non convertite non sono meccanica di scheda. Restano disponibili per incontri particolari e antagonisti nelle storie originali (decisione 34 (`categorie-eta`), stesso trattamento del gruppo A della decisione 27, `sette-campi-2e`)."
             }
           }
         },
@@ -416,7 +416,7 @@
 
         "morale_2e": {
           "type": "object",
-          "description": "DECISIONE 27, GRUPPO B. Il morale non entra nello statblock ma non si butta: in un gioco in solitario il DM e' il motore, e senza morale ogni scontro finisce con tutti i nemici morti fino all'ultimo. Questo blocco e' l'input dell'IA del mostro in Fase 2.",
+          "description": "DECISIONE 27 (`sette-campi-2e`), GRUPPO B. Il morale non entra nello statblock ma non si butta: in un gioco in solitario il DM e' il motore, e senza morale ogni scontro finisce con tutti i nemici morti fino all'ultimo. Questo blocco e' l'input dell'IA del mostro in Fase 2.",
           "required": ["value", "label", "destinazione"],
           "additionalProperties": false,
           "properties": {
@@ -435,7 +435,7 @@
 
         "magic_resistance_2e": {
           "type": ["object", "null"],
-          "description": "DECISIONE 27, GRUPPO C. RINVIATA alla Fase 2. Il valore resta registrato ma non e' convertito: i Gradi di Sfida su cui stiamo calibrando presuppongono che la resistenza magica non ci sia, e il 20% della 2e negava l'incantesimo del tutto mentre il tratto 5e piu' vicino da' solo vantaggio ai tiri salvezza. Non sono equivalenti.",
+          "description": "DECISIONE 27 (`sette-campi-2e`), GRUPPO C. RINVIATA alla Fase 2. Il valore resta registrato ma non e' convertito: i Gradi di Sfida su cui stiamo calibrando presuppongono che la resistenza magica non ci sia, e il 20% della 2e negava l'incantesimo del tutto mentre il tratto 5e piu' vicino da' solo vantaggio ai tiri salvezza. Non sono equivalenti.",
           "required": ["percent", "applied", "note"],
           "additionalProperties": false,
           "properties": {
@@ -447,7 +447,7 @@
 
         "world_data_2e": {
           "type": ["object", "null"],
-          "description": "DECISIONE 27, GRUPPO A. I cinque campi che la 5e ha spostato dalle schede alle tabelle d'incontro. Non sono conversione: sono l'input del generatore di incontri in Fase 3. Riportati qui per comodita' di lettura; la fonte resta `source_2e`.",
+          "description": "DECISIONE 27 (`sette-campi-2e`), GRUPPO A. I cinque campi che la 5e ha spostato dalle schede alle tabelle d'incontro. Non sono conversione: sono l'input del generatore di incontri in Fase 3. Riportati qui per comodita' di lettura; la fonte resta `source_2e`.",
           "required": ["destinazione"],
           "additionalProperties": false,
           "properties": {
@@ -467,7 +467,7 @@
 
         "oggetti_collegati": {
           "type": "array",
-          "description": "DECISIONE 33. Riferimenti a oggetti di dati/oggetti/ (schema oggetto.schema.json) che il mostro usa, indossa, o a cui e' legato — un'arma, un'armatura, o un oggetto con creatura legata come il diadema dello Scheletro Guerriero. Il mostro referenzia l'oggetto per id: non duplica la sua meccanica qui. Un oggetto vuoto o assente (la maggior parte dei mostri, che non hanno equipaggiamento nominato dalla fonte) lascia questo campo a [].",
+          "description": "DECISIONE 33 (`schema-oggetti`). Riferimenti a oggetti di dati/oggetti/ (schema oggetto.schema.json) che il mostro usa, indossa, o a cui e' legato — un'arma, un'armatura, o un oggetto con creatura legata come il diadema dello Scheletro Guerriero. Il mostro referenzia l'oggetto per id: non duplica la sua meccanica qui. Un oggetto vuoto o assente (la maggior parte dei mostri, che non hanno equipaggiamento nominato dalla fonte) lascia questo campo a [].",
           "items": {
             "type": "object",
             "required": ["object_id", "ruolo"],
@@ -488,7 +488,7 @@
 
         "modelli_collegati": {
           "type": "array",
-          "description": "DECISIONE 38. Riferimenti a modelli di dati/modelli/ (schema modello.schema.json) che si applicano a questa creatura, o di cui questa creatura e' la forma gia' chiusa. Come per `oggetti_collegati`, la scheda referenzia per id e NON duplica il modello: cosa la creatura eredita da un ospite, quale insieme di ospiti e' legale, cosa il modello sovrascrive e le regole che condivide con altre creature stanno la', non qui. Vuoto per la quasi totalita' del bestiario, che con i modelli non ha niente a che fare.",
+          "description": "DECISIONE 38 (`schema-modelli`). Riferimenti a modelli di dati/modelli/ (schema modello.schema.json) che si applicano a questa creatura, o di cui questa creatura e' la forma gia' chiusa. Come per `oggetti_collegati`, la scheda referenzia per id e NON duplica il modello: cosa la creatura eredita da un ospite, quale insieme di ospiti e' legale, cosa il modello sovrascrive e le regole che condivide con altre creature stanno la', non qui. Vuoto per la quasi totalita' del bestiario, che con i modelli non ha niente a che fare.",
           "items": {
             "type": "object",
             "required": ["model_id", "ruolo"],

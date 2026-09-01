@@ -16,7 +16,7 @@ COSA VERIFICA
     2. copertura: quali campi restano vuoti, e se restano vuoti perche' la
        fonte 2e non li ha (allora e' un limite noto) o perche' lo schema e'
        sbagliato (allora va corretto);
-    3. che i campi della decisione 27 finiscano dove devono.
+    3. che i campi della decisione 27 (`sette-campi-2e`) finiscano dove devono.
 
 Uso:  python3 dati/valida_mostri.py
 Esce con codice 1 se trova errori.
@@ -91,7 +91,7 @@ MORALE_VAL = {"Baaz": 13, "Bozak": 13, "Kapak": 13, "Sivak": 14, "Aurak": 15}
 PAGINE_2E = {"Baaz": 64, "Bozak": 69, "Kapak": 74, "Sivak": 78, "Aurak": 59}
 
 NOTA_MR = (
-    "DECISIONE 27, gruppo C: RINVIATA alla Fase 2. Il 20-30% della 2e negava "
+    "DECISIONE 27 (`sette-campi-2e`), gruppo C: RINVIATA alla Fase 2. Il 20-30% della 2e negava "
     "l'incantesimo del tutto, inclusi quelli senza tiro salvezza; il tratto 5e "
     "piu' vicino da' vantaggio ai tiri salvezza contro magia — piu' debole in "
     "un senso, molto piu' forte in un altro, e comunque non equivalente. "
@@ -212,7 +212,7 @@ def costruisci(n):
         "morale_2e": {
             "value": MORALE_VAL[n], "label": a["morale"],
             "destinazione": "ia_combattimento",
-            "note": ("DECISIONE 27, gruppo B. Senza morale ogni scontro finisce "
+            "note": ("DECISIONE 27 (`sette-campi-2e`), gruppo B. Senza morale ogni scontro finisce "
                      "con tutti i nemici morti fino all'ultimo: in un gioco in "
                      "solitario il DM e' il motore, e questo parametro gli "
                      "serve."),
@@ -296,7 +296,7 @@ def main():
     for c in sorted(comuni):
         print(f"    {c}")
     print()
-    print("Verifiche della decisione 27:")
+    print("Verifiche della decisione 27 (`sette-campi-2e`):")
     d = costruisci("Baaz")
     b = d["mechanics_5e"]
     print(f"    gruppo A -> {b['world_data_2e']['destinazione']} "
