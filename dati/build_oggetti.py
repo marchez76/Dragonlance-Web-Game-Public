@@ -62,6 +62,68 @@ def base_doc(id_, name_en, name_it, categoria, descrizione, api_ref):
     }
 
 
+# --------------------------------------------------------------------------
+# DA PROSA A NUMERI — le proprieta' delle armi e la formula di CA.
+#
+# Il RAPPORTO-personaggio (§2, §5.2) misura il buco: la categoria dell'arma
+# e' assente su 37 armi su 37, la gittata pure, e 10 proprieta' distinte
+# portano un numero annegato nel testo ("versatile (1d10)", "ammunition
+# (range 150/600)") per 21 occorrenze. La gittata di un'arma a distanza si
+# poteva ottenere solo con un'espressione regolare a runtime, cioe' il motore
+# avrebbe dovuto interpretare la prosa a ogni turno.
+#
+# La conversione avviene QUI, nel generatore, e non a valle sui JSON gia'
+# scritti: e' il punto 2 di CLAUDE.md, ed e' gia' costato tre sfasamenti al
+# progetto. La lista `properties` della fonte NON viene rimossa — resta la
+# trascrizione fedele dell'SRD, e `dati/valida_effetti.py` la rilegge per
+# verificare che la struttura qui sotto continui a dire la stessa cosa.
+# --------------------------------------------------------------------------
+
+CATEGORIA_ARMA = {
+    "Simple Melee Weapons": ("semplice", "mischia"),
+    "Simple Ranged Weapons": ("semplice", "distanza"),
+    "Martial Melee Weapons": ("da_guerra", "mischia"),
+    "Martial Ranged Weapons": ("da_guerra", "distanza"),
+}
+
+_GITTATA = re.compile(r"\(range\s+(\d+)\s*/\s*(\d+)\)")
+_VERSATILE = re.compile(r"versatile\s*\((\d+d\d+)\)")
+
+PORTATA_BASE_FT = 5.0
+PORTATA_REACH_FT = 10.0
+
+
+def proprieta_strutturate(props, tipo):
+    """Le `properties` dell'SRD in campi. La prosa resta accanto, intatta."""
+    testo = " ".join(props).lower()
+    g = _GITTATA.search(testo)
+    v = _VERSATILE.search(testo)
+    ha = lambda k: any(p.lower().startswith(k) for p in props)
+
+    reach = ha("reach")
+    return {
+        "finesse": ha("finesse"),
+        "leggera": ha("light"),
+        "pesante": ha("heavy"),
+        "due_mani": ha("two-handed"),
+        "portata_estesa": reach,
+        "ricarica": ha("loading"),
+        "munizioni": ha("ammunition"),
+        "lanciabile": ha("thrown"),
+        "speciale": ha("special"),
+        "versatile_dadi": v.group(1) if v else None,
+        # La gittata appartiene sia alle armi da lancio sia a quelle a
+        # munizioni: la stessa parentesi, due proprieta' diverse.
+        "gittata_ft": ({"normale": float(g.group(1)), "lunga": float(g.group(2))}
+                       if g else None),
+        # Portata solo per la mischia. 5 piedi e' il valore implicito della
+        # 5e, che la tabella non stampa perche' e' il default: reso esplicito
+        # qui perche' un motore non puo' leggere un valore che non c'e'.
+        "portata_ft": (None if tipo != "mischia"
+                       else (PORTATA_REACH_FT if reach else PORTATA_BASE_FT)),
+    }
+
+
 def build_armi():
     docs = []
     for name_en, name_it, cat_2014, dice, dtype, props, cost, weight, api_ref in SRD.ARMI:
@@ -82,10 +144,14 @@ def build_armi():
             f"Arma dell'SRD 5.1, tabella Equipaggiamento del Player's Handbook ({cat_2014}).",
             api_ref,
         )
+        categoria, tipo = CATEGORIA_ARMA[cat_2014]
         d["mechanics_5e"]["weapon_5e"] = {
+            "categoria": categoria,
+            "tipo": tipo,
             "damage_dice": dice,
             "damage_type": dtype if dtype is not None else "nessuno",
             "properties": props,
+            "proprieta_5e": proprieta_strutturate(props, tipo),
             "weight_lb": weight,
             "cost_gp": cost,
             "conversion_status": "direct",
@@ -94,6 +160,37 @@ def build_armi():
         }
         docs.append((id_, d))
     return docs
+
+
+_CA_BASE = re.compile(r"^(\d+)")
+_CA_MAXDEX = re.compile(r"max\s+(\d+)")
+_CA_BONUS = re.compile(r"^\+(\d+)$")
+
+
+def ca_strutturata(ac_string, categoria):
+    """`ac_formula` in campi. Delle 13 voci solo 4 portano un numero secco:
+    8 sono formule da interpretare ("14 + Dex modifier (max 2)") e lo scudo
+    e' un modificatore ("+2"). Interpretarle a ogni turno era il difetto
+    misurato in RAPPORTO-personaggio §5.2."""
+    testo = ac_string.strip()
+    bonus = _CA_BONUS.match(testo)
+    if bonus:
+        # Lo scudo non ha una CA propria: somma alla CA di chi lo porta.
+        return {"ca_base": None, "bonus_ca": int(bonus.group(1)),
+                "applica_mod_dex": False, "mod_dex_max": None}
+    base = _CA_BASE.match(testo)
+    if not base:
+        raise ValueError(f"ac_formula non riconosciuta: {ac_string!r}")
+    dex = "dex modifier" in testo.lower()
+    cap = _CA_MAXDEX.search(testo.lower())
+    return {
+        "ca_base": int(base.group(1)),
+        "bonus_ca": None,
+        "applica_mod_dex": dex,
+        # None con applica_mod_dex true = nessun tetto (armature leggere).
+        # E' una distinzione vera: 0 significherebbe "il Dex non conta".
+        "mod_dex_max": int(cap.group(1)) if cap else None,
+    }
 
 
 def build_armature():
@@ -107,7 +204,9 @@ def build_armature():
             api_ref,
         )
         d["mechanics_5e"]["armor_5e"] = {
+            "categoria": cat,
             "ac_formula": ac_string,
+            "ca_5e": ca_strutturata(ac_string, cat),
             "strength_requirement": str_req,
             "stealth_disadvantage": stealth_dis,
             "weight_lb": weight,

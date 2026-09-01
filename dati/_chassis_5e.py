@@ -145,6 +145,8 @@ def incompatibilita(c):
         "Normal": ["dex", "con"],
     }
     wp = s.get("weapon_proficiencies") or {}
+    srd, _ = CHASSIS[c["id"]]
+    comp = R.COMPETENZE.get(srd) if srd else None
 
     return {
         "xp_table": {
@@ -172,9 +174,40 @@ def incompatibilita(c):
         "weapon_proficiencies": {
             "system": "categorie_5e",
             "forced_equipment": wp.get("required") or [],
+            # Le categorie sono la parte che questa nota annunciava dal
+            # giorno uno senza mai scriverla: "competenza per categoria" e
+            # poi nessuna categoria in nessun campo. Vengono dal chassis,
+            # perche' e' il chassis a concedere le competenze 5e (la fonte
+            # 2e concedeva slot, che qui non esistono piu').
+            "categorie": comp["armi"] if comp else None,
             "note": "INCOMPATIBILITA' 4. Gli slot di competenza spariscono: "
                     "competenza per categoria. Le armi obbligate della fonte "
-                    "diventano equipaggiamento iniziale imposto, non slot.",
+                    "diventano equipaggiamento iniziale imposto, non slot."
+                    + ("" if comp else
+                       " Senza chassis non ci sono categorie da concedere: "
+                       "questa classe non ha competenze 5e."),
+        },
+        "armor_proficiencies": {
+            "system": "categorie_5e",
+            "categorie": comp["armature"] if comp else None,
+            "note": "Stessa incompatibilita' 4, lato armature. Le categorie "
+                    "nominate qui sono quelle di armor_5e.categoria in "
+                    "dati/oggetti/: valida_effetti.py verifica che i due "
+                    "estremi combacino, perche' una competenza che nominasse "
+                    "una categoria inesistente sarebbe una competenza in "
+                    "niente.",
+        },
+        "skill_proficiencies": {
+            "system": "scelta_5e",
+            "scelta": comp["abilita"] if comp else None,
+            "note": "La fonte 2e dava competenze non-d'arma a slot; la 5e da' "
+                    "un numero di abilita' da scegliere dentro una lista. E' "
+                    "un FILTRO, non una lista risolta "
+                    "(decisione 35, `repertori-sono-filtri`): la scelta vive "
+                    "sul personaggio. "
+                    "Le 18 abilita' della 5e non hanno ancora una sede "
+                    "propria nei dati — RAPPORTO-personaggio §2.4 — quindi "
+                    "qui sono nomi italiani, non id.",
         },
         "starting_equipment": {
             "system": "pacchetto_fisso_5e",
@@ -200,6 +233,82 @@ def incompatibilita(c):
                     f"meccanico. {len(titoli)} titoli trascritti.",
         },
     }
+
+
+def features_chassis(c):
+    """I privilegi che vengono dal CHASSIS, non dalla fonte di Krynn.
+
+    Stanno in una lista separata da `features` per una ragione che il
+    RAPPORTO-personaggio §2.1 ha misurato: i due insiemi hanno provenienza
+    diversa e si contano diversamente. I 40 privilegi `pending` sono quelli
+    della fonte 2e, in attesa di una resa 5e; questi non sono `pending` —
+    non erano mai stati contati affatto, perche' esistevano solo come nomi
+    in una colonna di tabella. Mescolarli farebbe sparire proprio la
+    distinzione che serve: quanti privilegi restano da CONVERTIRE (fonte) e
+    quanti da TRASCRIVERE (chassis).
+
+    Vuota per le classi senza chassis, che e' il modo giusto di dire che
+    quelle otto non hanno privilegi 5e di nessun tipo."""
+    srd, _ = CHASSIS[c["id"]]
+    if srd is None:
+        return []
+    out = []
+    for nome, d in sorted(R.privilegi_chassis(srd).items(),
+                          key=lambda kv: (kv[1]["livello"], kv[0])):
+        out.append({
+            "name": d["nome_it"],
+            "name_srd": nome,
+            "kind": "privilegio_chassis",
+            "source": f"SRD 5.1 — {srd}",
+            "level": d["livello"],
+            "conversion_status": "direct",
+            "mechanics_5e": d["prosa"],
+            "effetto": d["effetto"],
+            "note": None,
+        })
+        # Le opzioni di una scelta stanno accanto al privilegio che le offre,
+        # non altrove: un `fra: [sei id]` che non risolve a niente e' un
+        # filtro senza insieme. Le due che hanno un effetto entrano; le
+        # altre quattro restano nomi dentro la scelta, e la differenza si
+        # vede confrontando i due elenchi invece di doverla ricordare.
+        for oid in (d.get("effetto", {}).get("scelta", {}) or {}).get("fra", []):
+            st = R.STILI_COMBATTIMENTO.get(oid)
+            if not st:
+                continue
+            out.append({
+                "name": st["nome_it"],
+                "name_srd": oid,
+                "kind": "opzione_chassis",
+                "opzione_di": d["nome_it"],
+                "source": f"SRD 5.1 — {srd}",
+                "level": d["livello"],
+                "conversion_status": "direct",
+                "mechanics_5e": st["prosa"],
+                "effetto": st["effetto"],
+                "note": None,
+            })
+    return out
+
+
+def privilegi_chassis_non_trascritti(c):
+    """Quanti privilegi il chassis concede senza che se ne abbia la meccanica.
+
+    E' il numero che mancava: `features_pending` contava solo la fonte, e un
+    Cavaliere della Corona con zero pending sarebbe rimasto ingiocabile lo
+    stesso. Contarli qui li rende visibili nella scheda invece che in una
+    lettura del rapporto."""
+    srd, _ = CHASSIS[c["id"]]
+    if srd is None or srd not in R.TABELLE:
+        return None
+    scritti = set(R.privilegi_chassis(srd))
+    mancanti = []
+    for liv, riga in sorted(R.TABELLE[srd]["features"].items()):
+        for nome in [x.strip() for x in riga.split(",") if x.strip()]:
+            base = nome.split(" (")[0].strip()
+            if base == R.ASI or base in scritti:
+                continue
+            mancanti.append({"level": liv, "name": nome})
+    return mancanti
 
 
 def chassis(c):

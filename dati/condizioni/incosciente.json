@@ -1,0 +1,43 @@
+{
+  "id": "incosciente",
+  "name": {
+    "en": "Unconscious",
+    "it": "Incosciente"
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1), Appendix A: Conditions",
+    "api_ref": "srd/conditions/unconscious"
+  },
+  "mechanics_5e": "Una creatura incosciente e' incapacitata, non puo' muoversi ne' parlare ed e' inconsapevole di cio' che la circonda. Lascia cadere quello che tiene e cade prona. Fallisce automaticamente i tiri salvezza su Forza e Destrezza. Gli attacchi contro di lei hanno vantaggio, e ogni attacco che la colpisce da entro 1,5 metri e' un colpo critico.",
+  "effetti": [
+    {
+      "clausola": "inconsapevole"
+    },
+    {
+      "clausola": "velocita_zero"
+    },
+    {
+      "clausola": "lascia_cadere_oggetti"
+    },
+    {
+      "clausola": "fallisce_tiri_salvezza",
+      "caratteristiche": [
+        "str",
+        "dex"
+      ]
+    },
+    {
+      "clausola": "vantaggio_attacchi_contro"
+    },
+    {
+      "clausola": "colpo_critico_entro_5ft"
+    }
+  ],
+  "implica": [
+    "incapacitato",
+    "prono"
+  ],
+  "fine": "Recuperare almeno 1 punto ferita, o essere stabilizzata e riprendere i sensi.",
+  "note": "E' lo stato in cui un personaggio entra a 0 punti ferita, quindi la porta d'ingresso dei tiri salvezza contro morte. I tiri salvezza contro morte NON sono modellati qui: sono una procedura del personaggio, non una clausola di questa condizione, e restano scoperti finche' lo schema Personaggio non esiste."
+}

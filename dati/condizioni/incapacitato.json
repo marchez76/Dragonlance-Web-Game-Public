@@ -1,0 +1,24 @@
+{
+  "id": "incapacitato",
+  "name": {
+    "en": "Incapacitated",
+    "it": "Incapacitato"
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1), Appendix A: Conditions",
+    "api_ref": "srd/conditions/incapacitated"
+  },
+  "mechanics_5e": "Una creatura incapacitata non puo' compiere azioni ne' reazioni.",
+  "effetti": [
+    {
+      "clausola": "non_puo_agire"
+    },
+    {
+      "clausola": "non_puo_reagire"
+    }
+  ],
+  "implica": [],
+  "fine": null,
+  "note": "La piu' piccola delle tre e la piu' riferita: non si applica quasi mai da sola, ma paralizzato, stordito e incosciente la comportano tutte. E' esattamente il caso per cui serve una sede unica — scritta dentro ciascuna delle tre, sarebbe la stessa regola in tre copie."
+}

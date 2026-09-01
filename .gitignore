@@ -153,6 +153,30 @@ CLAUDE.local.md
 !dati/incantesimi/*.json
 !dati/incantesimi.index.json
 
+# Condizioni della 5e (Fase 2): stessa posizione di dati/incantesimi/ sopra,
+# stessa ragione. Vengono dall'Appendice A dell'SRD 5.1, CC-BY: nessun testo
+# 2e, nessun source_2e — condizione.schema.json non ne prevede uno, e la
+# prosa italiana e' nostra. La decisione e' scritta QUI, nello stesso commit
+# che ha creato il primo file, invece di essere lasciata al fatto che nessuna
+# regola sopra le catturi: e' la differenza fra una cartella pubblica per
+# scelta e una pubblica per distrazione, ed e' il senso della regola di
+# CLAUDE.md 1. Non vanno in PERCORSI di git-privato.sh: il doppio
+# tracciamento e' la trappola documentata li'. Se un giorno servisse una
+# condizione propria di Krynn, con testo di manuale, quello sara' il momento
+# di rivedere questa scelta, non prima.
+!dati/build_condizioni.py
+!dati/valida_condizioni.py
+!dati/condizioni/
+!dati/condizioni/*.json
+
+# Confronto fra i due strati (source_2e contro mechanics_5e) e validatore
+# degli effetti strutturati: codice nostro, nessun testo di fonte. Leggono i
+# dati privati e non ne riproducono niente — stampano solo divergenze.
+!dati/verifica_strati.py
+!dati/valida_effetti.py
+!dati/schema/effetto.schema.json
+!dati/schema/condizione.schema.json
+
 # --------------------------------------------------------------------------
 # ECCEZIONE DENTRO L'ECCEZIONE — le versioni "completo" dei RAPPORTO-*.md.
 # Alcuni generatori (analizza_bestiario.py, verifica_sfere.py,

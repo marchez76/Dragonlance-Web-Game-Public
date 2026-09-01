@@ -1,6 +1,6 @@
 # Dragonlance Web GDR — contesto di progetto
 
-*Generato da `genera_contesto.py` il 2026-09-01.*
+*Generato da `genera_contesto.py` il 2026-09-02.*
 
 > **Come leggere questo documento.** Ogni numero, tabella e percentuale è
 > **derivato dai JSON** al momento della generazione: se un dato cambia, cambia
@@ -22,7 +22,7 @@
 
 ---
 
-## Le 41 decisioni prese
+## Le 44 decisioni prese
 
 Ordine cronologico. Questa è la storia completa delle scelte: non serve
 ricostruirla dalle sezioni.
@@ -68,6 +68,9 @@ ricostruirla dalle sezioni.
 39. **Il bersaglio legale è un filtro** — Si applica la decisione 35 (`repertori-sono-filtri`) senza aggiungere nulla. La fonte **dà il filtro e non il campione**: «umano o demiumano morto prima di aver compiuto un voto» per lo Spectral Minion, «creatura o persona nota al sognatore o a chiunque stia vivendo il sogno» per il Dreamshadow. Si registra l'insieme legale — in prosa e in criteri interrogabili — e la scelta concreta avviene alla generazione. Lo schema lo rende **strutturale invece che raccomandato**: i campi `campione` e `scelta_alla_generazione` accettano un solo valore ciascuno (`null` e `true`), quindi fissare qui un ospite scelto da noi è impossibile, non solo sconsigliato. Gli ospiti che la fonte nomina restano registrati a parte come `esempi_dalla_fonte`, che allargano il campo e non lo restringono.
 40. **Un modello non ha grado, ha uno scarto** — Era la domanda senza precedente, e la risposta è che **il grado non gli appartiene**. Il Dreamshadow con l'aspetto di un ratto e quello con l'aspetto di un ogre sono la stessa cosa su bersagli diversi: assegnargli un Grado di Sfida significherebbe fissare l'ospite, cioè decidere ciò che la fonte lascia aperto — lo stesso errore che la decisione 34 (`categorie-eta`) ha evitato moltiplicando le schede per età. Si registra quindi la **modifica** al grado dell'ospite, non un valore assoluto, in tre forme che i tre casi hanno prodotto da soli. **Delta** (Dreamshadow): la fonte stessa ragiona per scarto — delle ventuno righe del blocco statistiche, `XP VALUE` è l'unica che non rimanda all'ospite, e ci scrive sopra «+ 10%». Un +10% non arriva a un quarto del salto più stretto fra due valori XP2e osservati nel bestiario (1.400 → 2.000, circa +43%): lo scarto di grado è **0**, ed è un'affermazione, non un'incertezza. **Non derivabile** (Spectral Minion): i due valori XP2e (975 e 1.400) restano confrontabili con la tabella del passo 10 e **l'uso è registrato** — servono a confermare che le sei fasce di comportamento hanno pesi diversi e che il taglio della fonte è 3+3, non a derivare un grado, perché senza Dadi Vita non ci sono punti ferita e senza punti ferita non c'è grado. Il confronto dà anche un secondo motivo indipendente: la riga 975 della tabella è la più compatta del bestiario (ogni voce convertita con quell'XP è finita a GS 3), la riga 1.400 è fra le più larghe (GS 1, 2 e 3), quindi è proprio il valore alto dei due il meno informativo. **Proprio** (Dreamwraith): la fonte ha già chiuso il modello in una creatura, il grado è legittimo e abita la scheda. Il campo `usato_per_derivare_gs: false` obbliga a compilare `uso_dichiarato`, perché un valore di fonte registrato senza dire che uso se ne fa è una stima nascosta — la lezione della decisione 35 (`repertori-sono-filtri`), resa vincolo di schema.
 41. **La sconfessione è una regola condivisa** — La procedura di sconfessione delle illusioni (*Disbelieving Illusions*: quattro passi e una tabella di modificatori di concentrazione) è condivisa fra Dreamshadow e Dreamwraith, sta stampata nella voce del secondo, e il primo non si può scrivere senza. **Vive nel modello, non nelle due schede**: il Dreamwraith smette di portarla come rinvio aperto e la riferisce. È anche il motivo migliore per cui lo schema dei modelli deve esistere — è la prima cosa davvero condivisa fra due creature del bestiario. Si scrive una volta sola: un modello la porta come `definizione`, gli altri come `riferimento`, e il validatore rifiuta una seconda definizione dello stesso id. **Il modello porta un parametro, mai un valore fisso**: contro il Dreamwraith c'è una penalità di **−5** che contro il Dreamshadow non c'è, e i due differiscono anche su un secondo parametro (il Dreamshadow «cannot be disbelieved into non-existence», quindi sconfessarlo protegge chi ci riesce ma non lo elimina). Il −5 è stato riletto sull'immagine di pagina prima di scriverlo: l'OCR di quella voce perde i segni meno con regolarità, come già accaduto su `NO. APPEARING` e sul bonus d'iniziativa della stessa creatura. **Sede provvisoria, dichiarata**: la casa naturale di una regola di sistema è uno schema di regole che il progetto non ha ancora — lo stesso rinvio già registrato per il *mindspin* e i Dragon Orbs. Quando esisterà, la definizione trasloca e tutti i portatori diventano riferimenti: un blocco solo da spostare, non una riscrittura.
+42. **Acciaio e oro: due campi, non una conversione** — Le fonti dichiarano **due regole distinte** che rispondono a domande diverse, e vanno registrate come **due campi separati**, non riconciliate in un numero solo. `cambio_monete` = **40:1** (un pezzo d'acciaio vale 40 monete d'oro, *Tales of the Lance*): e' il lore e l'economia interna di Krynn dopo il Cataclisma, dove l'acciaio e' il metallo scarso e l'oro l'ornamento. `fattore_listino` = **1:1**: e' la lettura di un listino importato, e sei moduli d'avventura sono concordi nel trattare il prezzo in oro della fonte come prezzo in acciaio. Due numeri diversi non sono una contraddizione da sciogliere: **collidono solo se si confondono i due usi.** E' il trattamento della decisione 27 (`sette-campi-2e`) — un dato di fonte si registra con la **destinazione dichiarata**, mai come valore nudo. L'accordo di sei moduli rende l'1:1 una **regola editoriale stabile**, non una incoerenza isolata di un singolo modulo. Si registra anche il terzo numero visto nelle fonti — **10:1** in DLC2/DLC3 — come **variante nota** e non come errore, insieme alla clausola del manuale sulle **variazioni regionali** del cambio. CONSEGUENZA OPERATIVA: i nostri `cost_gp` vengono dall'SRD 5.1, cioe' da un listino importato, quindi si leggono con `fattore_listino` e **non si fa nessuna aritmetica** sul borsello iniziale in acciaio. Il 40:1 non entra mai in un prezzo: serve al tesoro, alla ricompensa e alla descrizione del mondo.
+43. **Il Barbaro resta razza: rimandato, non respinto** — L'Umano Barbaro **non si converte a background** adesso. Il motivo e' di forma, non di merito: convertirlo richiederebbe uno schema dei background che il progetto **non ha**, e crearne uno ora per una razza sola significherebbe progettarlo **su un caso invece che sui casi** — lo stesso difetto che la decisione 38 (`schema-modelli`) ha evitato aspettando di avere tre creature da modellare. I background serviranno davvero con la **Fase 3**, insieme ai talenti che oggi mancano del tutto: allora ci sara' materiale su cui disegnare lo schema, e la questione si riapre. Fino ad allora il Barbaro resta una voce di `dati/razze/` con i suoi tetti dichiarati. **La decisione e' rimandata per mancanza di uno schema, non respinta nel merito**: l'osservazione che il Barbaro sia piu' un percorso culturale che una razza resta valida e va ripresa, non archiviata.
+44. **Tetti di crescita: il punto si perde** — Un aumento di caratteristica che sfonderebbe il massimale razziale e' **perduto**. Non travasato su un'altra caratteristica, non convertito in altro, non ammorbidito. E' la lettura fedele della fonte — un massimale e' un tetto, e sfondarlo non e' previsto — ed e' coerente con aver tenuto gli aggiustamenti negativi e le doppie penalita' della decisione 9 (`aggiustamenti-negativi`): il sistema e' **chiuso**, le razze di Krynn non si mescolano con quelle del PHB, e conta solo l'equilibrio interno. Le alternative rompono ciascuna qualcosa di dichiarato: il **travaso** premia chi ha i tetti bassi, cioe' trasforma una penalita' in un vantaggio; il **tetto morbido** annulla la decisione 10 (`massimali-razziali`) invece di applicarla; la **compensazione con un talento** richiede un catalogo dei talenti che non esiste. VINCOLO DI INTERFACCIA: il giocatore deve **vedere il tetto prima di spendere l'aumento**, non scoprirlo dopo averlo speso. Il sistema **segnala, non blocca in silenzio** — stessa forma della decisione 8 (`generazione-caratteristiche`) sui metodi di generazione irraggiungibili. Le caratteristiche per cui il manuale **non dichiara un massimale** non ereditano un tetto razziale: restano al **20** della 5e.
 
 ---
 
@@ -116,7 +119,7 @@ caratteristica, conservata perché è del manuale:
 - Nano delle Colline (Neidar) (CAR -1, max 12)
 - Nano delle Montagne (Hylar / Daewar) (CAR -1, max 16)
 
-> **Lettura interpretativa** — registrata il 2026-09-01. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-02. Non e' derivata dai dati.
 >
 > Il netto va da +0 a +2: nessuna razza raggiunge il +3 che la 5e
 > 2014 assegna di norma. Non va pareggiato. Le razze di Krynn non vengono mescolate
@@ -150,7 +153,7 @@ La velocità è derivata dai **tassi MV della 2e**, non dalla taglia.
 | 9 | 25 ft | Irda (Alto Ogre), Kender |
 | 12 | 30 ft | Barbaro, Elfo Dargonesti (Elfo degli Abissi), Elfo Dimernesti (Elfo dei Bassifondi), Elfo Kagonesti, Elfo Qualinesti, Elfo Silvanesti, Mezzelfo, Minotauro, Umano |
 
-> **Lettura interpretativa** — registrata il 2026-09-01. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-02. Non e' derivata dai dati.
 >
 > Derivare la velocità dalla taglia invertiva l'ordinamento della fonte: i nani
 > finivano a 30 e i Kender a 25, cioè il nano correva più del Kender. La 5e stessa
@@ -232,7 +235,7 @@ ottengano.
 - **Nessuna classe ha una tabella di THAC0 o di tiri salvezza**: valgono quelle di
   gruppo del PHB 2e, che non sono ancora nei dati.
 
-> **Lettura interpretativa** — registrata il 2026-09-01. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-02. Non e' derivata dai dati.
 >
 > Le classi di Krynn non sono classi nel senso della 5e: sono profili di
 > restrizione appoggiati sulle classi base della 2e. Convertirle non è un lavoro di
@@ -293,7 +296,7 @@ come sottoclasse. Accesso minore: solo fino al 3° livello, come in 2e.
 - Delle 105 voci, 28 sono attribuzioni nostre e non ereditate da un
   antenato 2e: restano marcate `nostra` nel dato.
 
-> **Lettura interpretativa** — registrata il 2026-09-01. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-02. Non e' derivata dai dati.
 >
 > 1 sfera 2e non trova un solo incantesimo nella lista base del chierico 5e:
 > Plant. Animal ne trova 1, Weather 1. Non è un difetto della mappatura:
@@ -384,7 +387,7 @@ Combinazioni sotto l'1%:
 |---|---|---:|---:|
 | Nano Sozzo (Aghar) | `barbaro` | 0,249% | 1 ogni 402 |
 
-> **Lettura interpretativa** — registrata il 2026-09-01. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-02. Non e' derivata dai dati.
 >
 > **Perché si tira.** Sotto point-buy due percorsi erano matematicamente
 > impossibili — il Cavaliere e il Cavaliere della Rosa — e il Nano Sozzo non aveva
@@ -448,7 +451,7 @@ Combinazioni sotto l'1%:
 | Umano | 3 | 0 | 0 | 0 | 3 | 0 |
 | Barbaro | 2 | 0 | 2 | 0 | 0 | 0 |
 
-> **Lettura interpretativa** — registrata il 2026-09-01. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-02. Non e' derivata dai dati.
 >
 > Su 105 tratti, 70 vengono dal PHB 2e (67%) e
 > 32 dalle fonti di Krynn (30%). La densità apparente di una
@@ -551,7 +554,7 @@ attacco da 1-4.
 perché i dadi vita della 2e misurano solo la resistenza. **Il Kapak ha cambiato
 asse.**
 
-> **Lettura interpretativa** — registrata il 2026-09-01. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-02. Non e' derivata dai dati.
 >
 > **Non esiste una formula estraibile da cinque casi.** Una regolarità si
 > intravede — grado di sfida uguale ai dadi vita meno due — e tiene per quattro
@@ -632,7 +635,7 @@ pagina:
 
 **8 nomi di voce erano sbagliati** nel testo estratto, non i quattro noti.
 
-> **Lettura interpretativa** — registrata il 2026-09-01. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-02. Non e' derivata dai dati.
 >
 > **L'estrazione non ha solo sbagliato i nomi: ha perso dei dati.** In tre voci
 > le colonne di destra sono sparite del tutto — `Avian` aveva quattro uccelli e ne
@@ -712,9 +715,9 @@ applica.
 
 ### Cosa manca per costruirne uno
 
-Su 27 grandezze necessarie a giocare, **9
+Su 27 grandezze necessarie a giocare, **11
 sono coperte da un campo pieno, 6 solo in parte e
-12 non hanno alcun campo in nessuno schema**.
+10 non hanno alcun campo in nessuno schema**.
 
 | buco | misura |
 |---|---|
@@ -746,7 +749,7 @@ Riportate nel rapporto con fonte e opzioni, **non decise**.
 
 ### Il vincolo dell'arena
 
-Il corpus intero pesa **1,84 MB**: sta in memoria, e a ogni turno non
+Il corpus intero pesa **1,89 MB**: sta in memoria, e a ogni turno non
 serve leggere alcun file. Il vincolo non è la velocità — è che
 **405 blocchi di meccanica sono prosa italiana** e non numeri:
 257 fra azioni e tratti dei mostri, 105 tratti
@@ -759,7 +762,7 @@ punti ferita, caratteristiche e Grado di Sfida; non può risolvere un attacco.
 
 ### Richiedono una decisione
 
-> **Lettura interpretativa** — registrata il 2026-09-01. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-02. Non e' derivata dai dati.
 >
 > - **Il PHB 5e 2014 non è fra i PDF**: la cartella contiene solo edizioni 2024.
 >   Alternativa disponibile: `2014.5e.tools`, che espone il materiale 2014 come

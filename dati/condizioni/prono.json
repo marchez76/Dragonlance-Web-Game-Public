@@ -1,0 +1,30 @@
+{
+  "id": "prono",
+  "name": {
+    "en": "Prone",
+    "it": "Prono"
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1), Appendix A: Conditions",
+    "api_ref": "srd/conditions/prone"
+  },
+  "mechanics_5e": "Una creatura prona puo' muoversi solo strisciando, a meno che non si rialzi ponendo fine alla condizione. Ha svantaggio ai propri tiri per colpire. Un attacco contro di lei ha vantaggio se chi attacca e' entro 1,5 metri, svantaggio altrimenti.",
+  "effetti": [
+    {
+      "clausola": "movimento_strisciando"
+    },
+    {
+      "clausola": "svantaggio_attacchi_propri"
+    },
+    {
+      "clausola": "attacchi_contro_entro_5ft_vantaggio"
+    },
+    {
+      "clausola": "attacchi_contro_oltre_5ft_svantaggio"
+    }
+  ],
+  "implica": [],
+  "fine": "Rialzarsi, spendendo meta' del proprio movimento.",
+  "note": "La condizione che un combattimento ordinario produce piu' spesso, e la sola delle tre che non passi da un tiro salvezza contro morte."
+}

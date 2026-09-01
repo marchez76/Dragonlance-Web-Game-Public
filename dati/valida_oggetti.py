@@ -59,6 +59,40 @@ def coerenza(d, err):
     if d["categoria"] in ("armatura", "scudo") and not m.get("armor_5e"):
         err(f"categoria '{d['categoria']}' ma mechanics_5e.armor_5e e' vuoto")
 
+    # I campi su cui si appoggia la competenza. Lo schema non li puo' rendere
+    # obbligatori senza rendere obbligatori anche i campi storici di
+    # weapon_5e, quindi il controllo sta qui: un'arma senza `categoria` non
+    # e' un'arma con un campo in meno, e' un'arma con cui nessun personaggio
+    # puo' sapere se e' competente — cioe' senza bonus d'attacco.
+    if w:
+        for campo in ("categoria", "tipo", "proprieta_5e"):
+            if w.get(campo) is None:
+                err(f"weapon_5e.{campo} mancante: senza, la competenza in armi "
+                    f"non ha su cosa appoggiarsi")
+        pr = w.get("proprieta_5e") or {}
+        if w.get("tipo") == "distanza" and pr.get("portata_ft") is not None:
+            err("weapon_5e: arma a distanza con portata_ft non nulla")
+        if w.get("tipo") == "mischia" and pr.get("portata_ft") is None:
+            err("weapon_5e: arma da mischia senza portata_ft")
+        if pr.get("munizioni") and not pr.get("gittata_ft"):
+            err("weapon_5e: arma a munizioni senza gittata_ft")
+
+    a = m.get("armor_5e")
+    if a:
+        for campo in ("categoria", "ca_5e"):
+            if a.get(campo) is None:
+                err(f"armor_5e.{campo} mancante: senza, la competenza in "
+                    f"armature non ha su cosa appoggiarsi")
+        ca = a.get("ca_5e") or {}
+        e_scudo = a.get("categoria") == "scudo"
+        if e_scudo and ca.get("bonus_ca") is None:
+            err("armor_5e: scudo senza bonus_ca")
+        if not e_scudo and ca.get("ca_base") is None:
+            err("armor_5e: armatura senza ca_base")
+        if ca.get("mod_dex_max") is not None and not ca.get("applica_mod_dex"):
+            err("armor_5e: mod_dex_max su un'armatura che non applica il "
+                "modificatore di Destrezza")
+
     if d["magico"] and m.get("rarity") is None:
         err("magico=true ma rarity e' null")
 

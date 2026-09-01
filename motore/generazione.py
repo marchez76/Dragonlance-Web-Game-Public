@@ -19,9 +19,37 @@ DECISIONE 10 (`massimali-razziali`)
     massimale limita quanto puo' salire un punteggio, non a che livello si
     ferma il personaggio.
 
+DECISIONE 44 (`tetto-punto-perduto`)
+    Un aumento che sfonderebbe il tetto e' PERDUTO: non travasato, non
+    ammorbidito. Il giocatore deve pero' VEDERE il tetto prima di spendere,
+    non scoprirlo dopo: `anteprima_aumento()` esiste per questo.
+
 COMPORTAMENTO IN CREAZIONE
     Se il metodo scelto rende irraggiungibile una combinazione razza+classe,
     il sistema **segnala e propone il tiro**. Non blocca.
+
+DA QUALE STRATO LEGGE QUESTO MODULO
+    Da `mechanics_5e`, sempre. Mai da `source_2e`.
+
+    Fino al 02/09/2026 leggeva `source_2e`, e non si vedeva: `build_razze.py`
+    scrive i due strati dalla stessa fonte nella stessa passata, quindi oggi
+    i valori coincidono. Ma `mechanics_5e` e' lo strato **rivedibile** per
+    definizione (decisione 7, `doppio-strato`): il giorno che una revisione
+    tocca un tetto li' dentro, un motore che legge `source_2e` usa il valore
+    vecchio **senza segnalare nulla**. E' la forma esatta delle cinque
+    divergenze gia' costate al progetto: due strutture allineate il giorno
+    uno che nessuno riconfronta il giorno due.
+
+    Le due letture non sono nemmeno intercambiabili nella forma. `source_2e`
+    porta sempre sei caratteristiche con `min`/`max` eventualmente `null`;
+    `mechanics_5e.ability_constraints.limits` **omette** le caratteristiche
+    prive di vincoli e `ability_caps.caps` porta **solo i massimali
+    dichiarati dal manuale** (l'Umano Barbaro ne ha 2 su 6). La chiave
+    assente non e' un buco: e' la caratteristica libera, che per la
+    decisione 44 (`tetto-punto-perduto`) resta al 20 della 5e.
+
+    Il controllo che i due strati non divergano e' `dati/verifica_strati.py`,
+    da eseguire come i `valida_*.py`.
 
 Uso come libreria:
     from motore.generazione import genera, valida, METODI
@@ -46,13 +74,58 @@ BUDGET_POINTBUY = 27
 METODI = ("4d6-scarta-minore", "array-standard", "point-buy")
 METODO_DEFAULT = "4d6-scarta-minore"
 
-# Le voci "all: 3d6" nei dati non sono una regola speciale: sono il default
+# Le voci "all: 3d6" della fonte non sono una regola speciale: sono il default
 # generico della 2e, riportato dal manuale ("Create all abilities by rolling
-# 3d6"). Il default di casa e' ora 4d6 scarta il minore, quindi vengono
-# ignorate. Restano invece valide le formule dichiarate per singola
-# caratteristica, che sono regole vere: i dadi propri dell'Aghar e la Forza
-# del Kender (2d6+4).
-CHIAVE_GENERICA = "all"
+# 3d6"). Il default di casa e' ora 4d6 scarta il minore, quindi lo strato di
+# conversione non le riporta affatto: `generation.dice_formulas` contiene solo
+# le formule per singola caratteristica, che sono regole vere — i dadi propri
+# dell'Aghar e la Forza del Kender (2d6+4).
+
+# Tetto di crescita di una caratteristica che il manuale non massimalizza.
+# decisione 44 (`tetto-punto-perduto`): la casella non dichiarata non eredita
+# un tetto razziale, resta al 20 della 5e.
+TETTO_5E = 20
+
+
+# ---------------------------------------------------- lettura dello strato 5e
+
+class StratoMancante(KeyError):
+    """`mechanics_5e` assente o non compilato.
+
+    Errore esplicito e non fallback silenzioso su `source_2e`: ripiegare
+    sulla fonte e' proprio il difetto corretto il 02/09/2026 (vedi
+    l'intestazione). Meglio fermarsi che generare un personaggio con i
+    numeri dello strato sbagliato senza dirlo a nessuno."""
+
+
+def strato(entita, cosa=""):
+    """`mechanics_5e` di una razza o di una classe, o StratoMancante.
+
+    Controlla che lo strato ci sia, NON che sia completo. Il completamento
+    si misura sul blocco che serve, non su uno stato globale: le razze sono
+    tutte `compilato`, ma le classi usano `clonato` (ha un chassis SRD) e
+    `in_sospeso` (non ce l'ha), e una classe senza chassis ha comunque i
+    suoi minimi di caratteristica scritti e verificabili. Confondere "non ha
+    un chassis" con "non se ne puo' leggere niente" farebbe fallire meta'
+    del roster su una domanda a cui i dati rispondono. Chi ha bisogno del
+    chassis lo chiede a `senza_chassis()`."""
+    m = entita.get("mechanics_5e")
+    if not m:
+        raise StratoMancante(
+            f"{entita.get('id', '?')}: mechanics_5e assente"
+            + (f" (serviva {cosa})" if cosa else "")
+            + " — il motore legge lo strato di conversione, non source_2e")
+    return m
+
+
+def senza_chassis(classe):
+    """La classe ha un chassis SRD su cui poggiare, o no?
+
+    Le 8 classi `in_sospeso` non hanno dado vita 5e ne' tiri salvezza ne'
+    progressione: se ne possono leggere i vincoli di creazione, ma non ci si
+    puo' costruire sopra un personaggio giocabile."""
+    ch = strato(classe, "il chassis").get("chassis") or {}
+    return not ch.get("srd_class")
 
 
 # --------------------------------------------------------------------- dadi
@@ -80,10 +153,11 @@ def tira_4d6_scarta_minore(rng=random):
 # ---------------------------------------------------------------- generazione
 
 def formule_razziali(razza):
-    """Formule per singola caratteristica dichiarate dal manuale, escluse le
-    voci generiche. Restituisce {} se la razza usa il metodo standard."""
-    gen = (razza["source_2e"].get("ability_generation") or {})
-    return {k: v for k, v in gen.items() if k != CHIAVE_GENERICA and k in CAR}
+    """Formule per singola caratteristica, dallo strato di conversione.
+    Restituisce {} se la razza usa il metodo standard."""
+    gen = (strato(razza, "le formule di generazione").get("generation") or {})
+    df = gen.get("dice_formulas") or {}
+    return {k: v for k, v in df.items() if k in CAR}
 
 
 def genera(razza, metodo=METODO_DEFAULT, rng=random):
@@ -136,9 +210,24 @@ def valida_pointbuy(assegnazione):
 
 # ------------------------------------------------------------- aggiustamenti
 
+def aggiustamenti(razza):
+    """Aggiustamenti razziali NETTI, dallo strato di conversione.
+
+    `values` e' il netto applicato: la somma di `source_values` (quello che
+    dice il manuale) e `editorial_values` (quello che abbiamo aggiunto noi).
+    Il motore vuole il netto — leggere `source_2e.ability_adjustments` non
+    era equivalente e su una razza gia' non lo e': l'Umano Barbaro porta un
+    +1 a Forza e Costituzione che esiste **solo** nello strato 5e, il tappo
+    della decisione 20 (`tappo-barbaro`), confermato come tappo dalla
+    decisione 43 (`barbaro-rimandato`). Letto da `source_2e` valeva zero, e
+    il motore lo scartava in silenzio."""
+    adj = strato(razza, "gli aggiustamenti razziali").get("ability_adjustments")
+    return (adj or {}).get("values") or {}
+
+
 def applica_aggiustamenti(punteggi, razza):
     """Somma gli aggiustamenti razziali. DECISIONE 9 (`aggiustamenti-negativi`): i negativi si tengono."""
-    adj = razza["source_2e"].get("ability_adjustments") or {}
+    adj = aggiustamenti(razza)
     return {c: punteggi[c] + adj.get(c, 0) for c in CAR}
 
 
@@ -147,12 +236,21 @@ def intervalli(razza, classe=None):
 
     Unisce i requisiti razziali con i minimi di classe. DECISIONE 11 (`barbaro-vincoli`): per il
     Barbaro vale l'unione dei due set, non l'uno o l'altro."""
-    req = razza["source_2e"]["ability_requirements"]
-    lo = {c: (req[c]["min"] or 3) for c in CAR}
-    hi = {c: (req[c]["max"] or 99) for c in CAR}
+    # `limits` omette le caratteristiche senza vincoli e conserva i null
+    # interni: la chiave assente e' la caratteristica libera, non un buco.
+    lim = (strato(razza, "i vincoli di creazione").get("ability_constraints")
+           or {}).get("limits") or {}
+    lo, hi = {}, {}
+    for c in CAR:
+        v = lim.get(c) or {}
+        lo[c] = v.get("min") or 3
+        hi[c] = v.get("max") or 99
     if classe:
-        for c, v in (classe["source_2e"].get("ability_minimums") or {}).items():
-            lo[c] = max(lo[c], v)
+        minimi = (strato(classe, "i minimi di classe").get("ability_minimums")
+                  or {})
+        for c, v in (minimi.get("values") or {}).items():
+            if c in lo:
+                lo[c] = max(lo[c], v)
     return lo, hi
 
 
@@ -174,8 +272,52 @@ def tetto_crescita(razza, caratteristica):
 
     DECISIONE 10 (`massimali-razziali`): i massimali valgono anche in avanzamento. Non vanno confusi
     con i limiti di livello, che restano non applicati (decisione 4, `limiti-di-livello`)."""
-    mx = razza["source_2e"]["ability_requirements"][caratteristica]["max"]
-    return mx if mx is not None else 20
+    caps = (strato(razza, "i tetti di crescita").get("ability_caps")
+            or {}).get("caps") or {}
+    mx = caps.get(caratteristica)
+    return mx if mx is not None else TETTO_5E
+
+
+def anteprima_aumento(punteggi, razza, spesa):
+    """Cosa succede DAVVERO spendendo `spesa` = {caratteristica: punti}.
+
+    DECISIONE 44 (`tetto-punto-perduto`). Il punto che sfonda il tetto e'
+    perduto: non travasa altrove, non alza il tetto. Ma il giocatore deve
+    vederlo **prima** di spendere, non scoprirlo dopo — quindi questa
+    funzione non applica niente, calcola e basta, e chi la chiama ha in mano
+    l'avviso da mostrare. Il sistema segnala, non blocca in silenzio: se il
+    giocatore vuole comunque buttare il punto, e' una sua scelta informata.
+
+    Restituisce (nuovi_punteggi, avvisi, punti_perduti)."""
+    nuovi, avvisi, perduti = dict(punteggi), [], 0
+    for c, punti in spesa.items():
+        if c not in CAR:
+            raise ValueError(f"caratteristica sconosciuta: {c!r}")
+        tetto = tetto_crescita(razza, c)
+        prima = nuovi[c]
+        dopo = min(prima + punti, tetto)
+        perso = (prima + punti) - dopo
+        nuovi[c] = dopo
+        if perso:
+            perduti += perso
+            avvisi.append(
+                f"{NOMI_CAR[c]}: {prima} + {punti} sfonda il massimale "
+                f"razziale di {tetto}. "
+                f"{'Il punto e\' perduto' if perso == 1 else f'{perso} punti sono perduti'}"
+                f": non si travasa su un'altra caratteristica "
+                f"(decisione 44, `tetto-punto-perduto`).")
+    return nuovi, avvisi, perduti
+
+
+def caratteristiche_al_tetto(punteggi, razza):
+    """Quali caratteristiche non possono piu' salire, e a che tetto.
+
+    Serve all'interfaccia di avanzamento: e' l'informazione che la
+    decisione 44 (`tetto-punto-perduto`) impone di mostrare PRIMA della
+    spesa, cosi' che spendere su una casella chiusa sia una scelta e non
+    una sorpresa."""
+    return {c: tetto_crescita(razza, c) for c in CAR
+            if punteggi[c] >= tetto_crescita(razza, c)}
 
 
 # ------------------------------------------------- supporto alla creazione PG
@@ -206,7 +348,7 @@ def metodi_praticabili(razza, classe=None):
     Serve alla creazione PG: se il metodo scelto non e' praticabile il sistema
     lo segnala e propone il tiro, senza bloccare (decisione 8, `generazione-caratteristiche`)."""
     lo, hi = intervalli(razza, classe)
-    adj = razza["source_2e"].get("ability_adjustments") or {}
+    adj = aggiustamenti(razza)
     # gli intervalli sono sui punteggi finali: si riportano ai grezzi
     lo_g = {c: lo[c] - adj.get(c, 0) for c in CAR}
     hi_g = {c: hi[c] - adj.get(c, 0) for c in CAR}

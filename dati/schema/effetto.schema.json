@@ -1,0 +1,225 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "effetto.schema.json",
+  "title": "Effetto — la meccanica di un blocco, in numeri",
+
+  "description": "CAMPO FRATELLO DELLA PROSA, NON UNA CARTELLA A PARTE. `effetto` sta accanto a `mechanics_5e` dentro lo stesso blocco: la prosa resta la forma leggibile e autoritativa per una persona, `effetto` e' la stessa cosa in campi che un motore puo' leggere. Una cartella `dati/effetti/` separata ripeterebbe il difetto gia' visto sei volte nel progetto — due strutture che descrivono la stessa cosa e che nessuno riconfronta. Qui il riconfronto e' obbligatorio e automatico: `dati/valida_effetti.py` estrae i numeri dalla prosa e li mette contro la struttura. E' il pezzo che paga il costo di questo schema, e senza di esso il campo non andava aggiunto. NON SI SCRIVONO I DERIVATI (CLAUDE.md punto 3): niente campo `media` del danno, niente totali. La media di 1d6+3 si calcola, e scritta a mano si sfasa alla prima revisione dei dadi. MINIMO PER COSTRUZIONE: questa forma copre cio' che serve alla prima fetta verticale (un attacco con arma, un tiro salvezza, una risorsa a usi, una scelta, un modificatore). Non copre tutti i 405 blocchi di meccanica del corpus e non pretende di farlo: si allarga sui casi che si incontrano, non per anticipazione — la lezione della decisione 43 (`barbaro-rimandato`), che rifiuta di progettare uno schema su un caso solo.",
+
+  "$defs": {
+    "caratteristica": {
+      "type": "string",
+      "enum": ["str", "dex", "con", "int", "wis", "cha"]
+    },
+
+    "dadi": {
+      "type": "string",
+      "pattern": "^\\d+d\\d+$",
+      "description": "Solo i dadi, senza bonus: il bonus sta nel suo campo. `1d6`, non `1d6+3`."
+    },
+
+    "danno": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tipo"],
+      "properties": {
+        "dadi": {
+          "anyOf": [{"$ref": "#/$defs/dadi"}, {"type": "null"}],
+          "description": "null per un danno fisso (la cerbottana dell'SRD fa 1 danno secco)."
+        },
+        "fisso": {
+          "type": ["integer", "null"],
+          "description": "Danno senza tiro. Alternativo a `dadi`, non aggiuntivo."
+        },
+        "bonus": {
+          "type": ["integer", "null"],
+          "description": "Modificatore sommato al tiro. Su un'arma di un personaggio e' derivato dalla caratteristica e NON va scritto qui: si scrive solo dove la fonte lo fissa, come nel blocco di un mostro."
+        },
+        "tipo": {
+          "type": "string",
+          "description": "Tipo di danno in italiano: perforante, tagliente, contundente, da fuoco, da veleno, ... `nessuno` dove la fonte non ne dichiara uno (la Rete)."
+        },
+        "meta_se_salvato": {
+          "type": "boolean",
+          "default": false,
+          "description": "true se un tiro salvezza riuscito dimezza invece di annullare."
+        }
+      }
+    },
+
+    "attacco": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tipo", "danno"],
+      "properties": {
+        "tipo": {
+          "type": "string",
+          "enum": ["mischia_arma", "distanza_arma", "mischia_incantesimo", "distanza_incantesimo"]
+        },
+        "bonus_colpire": {
+          "type": ["integer", "null"],
+          "description": "Fissato solo dove la fonte lo fissa (i mostri). Su un personaggio e' derivato — competenza piu' caratteristica — e resta null: scriverlo sarebbe un derivato scritto a mano."
+        },
+        "portata_ft": {"type": ["number", "null"]},
+        "gittata_ft": {
+          "type": ["object", "null"],
+          "additionalProperties": false,
+          "required": ["normale", "lunga"],
+          "properties": {
+            "normale": {"type": "number"},
+            "lunga": {"type": ["number", "null"]}
+          }
+        },
+        "bersagli": {"type": ["integer", "string"], "default": 1},
+        "danno": {
+          "type": "array",
+          "items": {"$ref": "#/$defs/danno"},
+          "description": "Piu' voci per un attacco che infligge due tipi di danno insieme."
+        }
+      }
+    },
+
+    "tiro_salvezza": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["caratteristica", "cd"],
+      "properties": {
+        "caratteristica": {"$ref": "#/$defs/caratteristica"},
+        "cd": {"type": "integer"},
+        "cd_derivata_da": {
+          "type": ["string", "null"],
+          "description": "Come la CD e' stata ottenuta, quando non e' un dato di fonte: `8 + competenza + Costituzione`, o il precedente su cui e' stata stimata. Serve a distinguere una CD letta da una CD scelta — la stessa distinzione fra osservato e ipotizzato del metodo di conversione."
+        },
+        "fallimento": {"$ref": "#/$defs/esito"},
+        "successo": {"$ref": "#/$defs/esito"},
+        "ripetibile": {
+          "type": ["string", "null"],
+          "description": "Quando il tiro si ripete, se si ripete: `fine del proprio turno`."
+        }
+      }
+    },
+
+    "esito": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "danno": {"type": "array", "items": {"$ref": "#/$defs/danno"}},
+        "condizioni": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["id"],
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "Id di una condizione di dati/condizioni/. Riferimento, mai una copia della sua definizione: la sede unica e' quella cartella, come per la sconfessione della decisione 41 (`sconfessione-condivisa`)."
+              },
+              "durata": {"type": ["string", "null"]}
+            }
+          }
+        },
+        "nessuno": {
+          "type": "boolean",
+          "description": "true dove l'esito e' esplicitamente nulla. Distingue `non succede niente` da `non e' stato ancora scritto`, che e' la differenza fra un dato e un buco."
+        }
+      }
+    },
+
+    "risorsa": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["usi", "ricarica"],
+      "properties": {
+        "usi": {
+          "anyOf": [
+            {"type": "integer"},
+            {"type": "object",
+             "additionalProperties": false,
+             "required": ["per_livello"],
+             "properties": {
+               "per_livello": {
+                 "type": "object",
+                 "patternProperties": {"^([1-9]|1[0-9]|20)$": {"type": "integer"}},
+                 "additionalProperties": false
+               }
+             }}
+          ],
+          "description": "Un numero, oppure la tabella per livello quando gli usi crescono (Action Surge passa a 2 al 17°)."
+        },
+        "ricarica": {
+          "type": "string",
+          "enum": ["riposo_breve", "riposo_lungo", "giornaliera", "a_volonta", "ricarica_dado"]
+        },
+        "nota": {"type": ["string", "null"]}
+      }
+    },
+
+    "guarigione": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "dadi": {"anyOf": [{"$ref": "#/$defs/dadi"}, {"type": "null"}]},
+        "piu_livello_classe": {
+          "type": "boolean",
+          "default": false,
+          "description": "true dove si somma il livello nella classe (Second Wind)."
+        },
+        "bonus": {"type": ["integer", "null"]}
+      }
+    },
+
+    "modificatore": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["bersaglio", "valore"],
+      "properties": {
+        "bersaglio": {
+          "type": "string",
+          "description": "Cosa modifica: `ca`, `tiro_per_colpire`, `danno`, `velocita`, ..."
+        },
+        "valore": {"type": ["integer", "string"]},
+        "condizione_di_applicazione": {"type": ["string", "null"]}
+      }
+    },
+
+    "scelta": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["quante", "fra"],
+      "description": "Un privilegio che non da' un effetto ma un insieme da cui pescare. La decisione 35 (`repertori-sono-filtri`) ha gia' nominato la cosa: la fonte da' il filtro, non il campione. Qui si registra il filtro; il campione lo sceglie il giocatore e vive sul personaggio.",
+      "properties": {
+        "quante": {"type": "integer"},
+        "fra": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Gli id fra cui si sceglie."
+        },
+        "ripetibile": {"type": "boolean", "default": false}
+      }
+    },
+
+    "effetto": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Almeno una chiave. Le chiavi si combinano: un attacco che impone anche un tiro salvezza porta `attacco` e `tiro_salvezza` insieme.",
+      "minProperties": 1,
+      "properties": {
+        "attacco": {"$ref": "#/$defs/attacco"},
+        "tiro_salvezza": {"$ref": "#/$defs/tiro_salvezza"},
+        "risorsa": {"$ref": "#/$defs/risorsa"},
+        "guarigione": {"$ref": "#/$defs/guarigione"},
+        "modificatori": {"type": "array", "items": {"$ref": "#/$defs/modificatore"}},
+        "scelta": {"$ref": "#/$defs/scelta"},
+        "azione": {
+          "type": ["string", "null"],
+          "enum": ["azione", "azione_bonus", "reazione", "nessuna", null],
+          "description": "Che tipo di azione costa usarlo."
+        },
+        "condizioni_immuni": {"type": "array", "items": {"type": "string"}},
+        "nota": {"type": ["string", "null"]}
+      }
+    }
+  },
+
+  "$ref": "#/$defs/effetto"
+}

@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "condizione.schema.json",
+  "title": "Condizione — sede unica di una regola di stato",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "name", "source", "effetti", "mechanics_5e"],
+
+  "description": "SEDE UNICA, PER LO STESSO MOTIVO DELLA SCONFESSIONE. La decisione 41 (`sconfessione-condivisa`) ha stabilito che una regola condivisa fra piu' portatori si scrive una volta sola e gli altri la riferiscono, e ha registrato che la casa naturale di una regola di sistema e' uno schema di regole che il progetto non aveva ancora. Le condizioni sono il secondo caso della stessa forma, e stavolta i portatori sono molti: `spaventato`, `avvelenato`, `paralizzato` e `afferrato` sono gia' citati in prosa dentro le schede dei mostri, ciascuno con parole proprie. Scritte una volta per portatore divergono — e' il difetto gia' costato sei volte al progetto. Qui ognuna ha un `id` stabile e i blocchi la RIFERISCONO per id, mai per copia. NESSUN `source_2e`: le condizioni sono un istituto della 5e, non della 2e — la 2e le esprimeva come penalita' numeriche sparse. Vengono dall'SRD 5.1 (CC-BY, vedi LICENSE-SRD.md), quindi questa cartella e' pubblica come `dati/incantesimi/` e per la stessa ragione. Se un giorno servisse una condizione propria di Krynn senza equivalente SRD, quello sara' il momento di rivedere l'esclusione, non prima.",
+
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$",
+      "description": "Chiave stabile. Non cambia mai, nemmeno se la resa italiana del nome cambia: e' la stessa regola dell'id delle decisioni."
+    },
+    "name": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["en", "it"],
+      "properties": {
+        "en": {"type": "string"},
+        "it": {"type": "string"}
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_edition", "source_book"],
+      "properties": {
+        "source_edition": {"type": "string", "const": "SRD 5.1"},
+        "source_book": {"type": "string"},
+        "api_ref": {"type": ["string", "null"]}
+      }
+    },
+    "mechanics_5e": {
+      "type": "string",
+      "description": "La regola in prosa italiana. Resta la forma autoritativa per una persona; `effetti` e' la stessa cosa in campi, e valida_effetti.py li tiene allineati."
+    },
+    "effetti": {
+      "type": "array",
+      "description": "Le clausole della condizione, una per voce, nella forma che un motore puo' applicare.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["clausola"],
+        "properties": {
+          "clausola": {
+            "type": "string",
+            "enum": [
+              "svantaggio_attacchi_propri",
+              "vantaggio_attacchi_contro",
+              "svantaggio_attacchi_contro",
+              "svantaggio_prove_caratteristica",
+              "fallisce_tiri_salvezza",
+              "velocita_zero",
+              "non_puo_agire",
+              "non_puo_reagire",
+              "incapacitato",
+              "movimento_strisciando",
+              "attacchi_contro_entro_5ft_vantaggio",
+              "attacchi_contro_oltre_5ft_svantaggio",
+              "colpo_critico_entro_5ft",
+              "lascia_cadere_oggetti",
+              "inconsapevole"
+            ]
+          },
+          "caratteristiche": {
+            "type": "array",
+            "items": {"type": "string", "enum": ["str", "dex", "con", "int", "wis", "cha"]},
+            "description": "Limita la clausola ad alcune caratteristiche (paralizzato fallisce solo i tiri su Forza e Destrezza)."
+          },
+          "vincolo": {
+            "type": ["string", "null"],
+            "description": "Restrizione in prosa breve quando la clausola non vale sempre: `solo verso la fonte della paura`."
+          }
+        }
+      }
+    },
+    "implica": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Altre condizioni che questa comporta, per id. Paralizzato implica incapacitato. Si riferisce, non si ricopiano le clausole: il motore risolve la catena."
+    },
+    "fine": {
+      "type": ["string", "null"],
+      "description": "Come si esce dalla condizione, quando la condizione stessa lo dichiara."
+    },
+    "note": {"type": ["string", "null"]}
+  }
+}

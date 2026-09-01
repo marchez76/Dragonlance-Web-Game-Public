@@ -476,6 +476,73 @@ DECISIONI = [
         'già registrato per il *mindspin* e i Dragon Orbs. Quando esisterà, '
         'la definizione trasloca e tutti i portatori diventano riferimenti: '
         'un blocco solo da spostare, non una riscrittura.'),
+    Decisione(
+        42, 'cambio-acciaio-oro',
+        'Acciaio e oro: due campi, non una conversione',
+        'Le fonti dichiarano **due regole distinte** che rispondono a '
+        'domande diverse, e vanno registrate come **due campi separati**, '
+        'non riconciliate in un numero solo. `cambio_monete` = **40:1** '
+        "(un pezzo d'acciaio vale 40 monete d'oro, *Tales of the Lance*): "
+        "e' il lore e l'economia interna di Krynn dopo il Cataclisma, dove "
+        "l'acciaio e' il metallo scarso e l'oro l'ornamento. "
+        '`fattore_listino` = **1:1**: e\' la lettura di un listino '
+        'importato, e sei moduli d\'avventura sono concordi nel trattare '
+        'il prezzo in oro della fonte come prezzo in acciaio. Due numeri '
+        'diversi non sono una contraddizione da sciogliere: **collidono '
+        'solo se si confondono i due usi.** E\' il trattamento della '
+        'decisione 27 (`sette-campi-2e`) — un dato di fonte si registra con '
+        'la **destinazione dichiarata**, mai come valore nudo. '
+        'L\'accordo di sei moduli rende l\'1:1 una **regola editoriale '
+        'stabile**, non una incoerenza isolata di un singolo modulo. Si '
+        'registra anche il terzo numero visto nelle fonti — **10:1** in '
+        'DLC2/DLC3 — come **variante nota** e non come errore, insieme alla '
+        'clausola del manuale sulle **variazioni regionali** del cambio. '
+        'CONSEGUENZA OPERATIVA: i nostri `cost_gp` vengono dall\'SRD 5.1, '
+        'cioe\' da un listino importato, quindi si leggono con '
+        '`fattore_listino` e **non si fa nessuna aritmetica** sul borsello '
+        'iniziale in acciaio. Il 40:1 non entra mai in un prezzo: serve al '
+        'tesoro, alla ricompensa e alla descrizione del mondo.'),
+    Decisione(
+        43, 'barbaro-rimandato',
+        'Il Barbaro resta razza: rimandato, non respinto',
+        'L\'Umano Barbaro **non si converte a background** adesso. Il '
+        'motivo e\' di forma, non di merito: convertirlo richiederebbe uno '
+        'schema dei background che il progetto **non ha**, e crearne uno '
+        'ora per una razza sola significherebbe progettarlo **su un caso '
+        'invece che sui casi** — lo stesso difetto che la '
+        'decisione 38 (`schema-modelli`) ha evitato aspettando di avere tre '
+        'creature da modellare. I background serviranno davvero con la '
+        '**Fase 3**, insieme ai talenti che oggi mancano del tutto: allora '
+        'ci sara\' materiale su cui disegnare lo schema, e la questione si '
+        'riapre. Fino ad allora il Barbaro resta una voce di `dati/razze/` '
+        'con i suoi tetti dichiarati. **La decisione e\' rimandata per '
+        'mancanza di uno schema, non respinta nel merito**: '
+        'l\'osservazione che il Barbaro sia piu\' un percorso culturale '
+        'che una razza resta valida e va ripresa, non archiviata.'),
+    Decisione(
+        44, 'tetto-punto-perduto',
+        'Tetti di crescita: il punto si perde',
+        'Un aumento di caratteristica che sfonderebbe il massimale '
+        'razziale e\' **perduto**. Non travasato su un\'altra '
+        'caratteristica, non convertito in altro, non ammorbidito. E\' la '
+        'lettura fedele della fonte — un massimale e\' un tetto, e '
+        'sfondarlo non e\' previsto — ed e\' coerente con aver tenuto gli '
+        'aggiustamenti negativi e le doppie penalita\' della '
+        'decisione 9 (`aggiustamenti-negativi`): il sistema e\' **chiuso**, '
+        'le razze di Krynn non si mescolano con quelle del PHB, e conta '
+        'solo l\'equilibrio interno. Le alternative rompono ciascuna '
+        'qualcosa di dichiarato: il **travaso** premia chi ha i tetti '
+        'bassi, cioe\' trasforma una penalita\' in un vantaggio; il **tetto '
+        'morbido** annulla la decisione 10 (`massimali-razziali`) invece di '
+        'applicarla; la **compensazione con un talento** richiede un '
+        'catalogo dei talenti che non esiste. VINCOLO DI INTERFACCIA: il '
+        'giocatore deve **vedere il tetto prima di spendere l\'aumento**, '
+        'non scoprirlo dopo averlo speso. Il sistema **segnala, non blocca '
+        'in silenzio** — stessa forma della '
+        'decisione 8 (`generazione-caratteristiche`) sui metodi di '
+        'generazione irraggiungibili. Le caratteristiche per cui il manuale '
+        '**non dichiara un massimale** non ereditano un tetto razziale: '
+        'restano al **20** della 5e.'),
 ]
 
 PER_ID = {d.id: d for d in DECISIONI}
