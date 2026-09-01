@@ -25,6 +25,36 @@ distinguibili nel dato.
 
 ---
 
+## Allineamento con il catalogo degli incantesimi
+
+`_sfere_5e.LISTA_BASE` e `dati/incantesimi/` descrivono le stesse voci e si
+incrociano **per nome inglese**, non per id. Confronto rifatto a ogni
+esecuzione, su 105 voci comuni e 3 campi ciascuna:
+
+| controllo | esito |
+|---|:-:|
+| voci di `LISTA_BASE` presenti nel catalogo | **105/105** |
+| divergenze di livello | **0** |
+| divergenze di scuola | **0** |
+| marcati `Cleric` fuori da `LISTA_BASE` | **37**, contro 37 dichiarati esclusi di Dominio |
+
+**Allineate.** 0 divergenze.
+
+> **Lettura interpretativa** — registrata il 2026-09-01. Non e' derivata dai dati.
+>
+> L'allineamento perfetto e' il dato interessante, non quello rassicurante: e'
+> lo stato in cui erano anche le quattro strutture doppie che poi sono
+> divergute in questo progetto. Fino al 01/09/2026 nessuno confrontava queste
+> due — questo file leggeva `LISTA_BASE` e `dati/divinita/` senza mai aprire il
+> catalogo — e la quinta coppia stava al giorno uno.
+>
+> Il quarto controllo e' quello che vale la pena guardare: verifica un
+> **insieme** e non un conteggio. Un incantesimo che entra fra gli esclusi di
+> Dominio mentre un altro ne esce lascia il numero fermo, ed e' esattamente la
+> forma che passerebbe inosservata.
+
+---
+
 ## Sintesi
 
 | divinità | famiglia | sfere | incant. | truc. | livelli vuoti | sotto soglia | guarigione | offesa | Dominio |

@@ -431,14 +431,14 @@ razza + classe; la validazione; la soddisfacibilità (`esiste_assegnazione`,
 ### 3.4 Una nota che riguarda tutte e tre: la numerazione — CHIUSA
 
 Le tre questioni sospese si citano per numero, e i numeri **non erano
-stabili**. Il progetto contiene **976 rimandi a una decisione in
-109 file**, di cui **287 nella fascia 1-12** — che è
+stabili**. Il progetto contiene **977 rimandi a una decisione in
+109 file**, di cui **288 nella fascia 1-12** — che è
 esattamente dove stavano le tre questioni di questa sezione.
 
 Erano sfasati perché il numero è un ordinale dell'elenco, e l'elenco è
 cambiato: file scritti in momenti diversi hanno continuato a citare il numero
 della propria vintage, senza che nulla li riallineasse. Lette una per una, le
-287 citazioni della fascia bassa hanno dato questa corrispondenza —
+288 citazioni della fascia bassa hanno dato questa corrispondenza —
 **senza uno scarto costante**, e con lo stesso numero giusto in un file e
 sbagliato in un altro:
 
@@ -464,7 +464,7 @@ un `id` stabile che non cambierà mai, e la forma di un rimando è ora
 accanto come derivato. `verifica_decisioni.py` verifica la coppia in tutto il
 progetto e con `--correggi` riscrive i numeri a partire dagli id.
 
-Stato oggi: **976 rimandi verificati, 0 sfasati,
+Stato oggi: **977 rimandi verificati, 0 sfasati,
 0 con id ignoto, 0 ancora senza id**. Rinumerare
 adesso costa un comando.
 
@@ -487,16 +487,25 @@ Confronto fatto adesso, su 3 campi per voce:
 `LISTA_BASE` sono esattamente gli incantesimi di Dominio, che il modulo
 dichiara di escludere.
 
-I due insiemi sono dunque **perfettamente allineati**. E nessuno lo verifica:
-`verifica_sfere.py` legge `LISTA_BASE` e `dati/divinita/`, e non apre mai
-`dati/incantesimi/`.
+I due insiemi sono dunque **perfettamente allineati** — e fino al
+01/09/2026 **nessuno lo verificava**: `verifica_sfere.py` leggeva
+`LISTA_BASE` e `dati/divinita/`, e non apriva mai `dati/incantesimi/`.
+
+Ora lo verifica. Il confronto sta in `verifica_sfere.confronta_catalogo()`,
+è **bloccante**, e questa sezione non lo rifà: ne riporta l'esito
+(0 divergenze). Il quarto controllo è sull'**insieme** degli
+esclusi di Dominio — 37 nomi dichiarati in
+`_sfere_5e.ESCLUSI_DI_DOMINIO` — e non sul loro numero, perché un
+incantesimo che entra mentre un altro esce lascerebbe il conteggio fermo.
 
 > **Lettura interpretativa** — registrata il 2026-09-01. Non è derivata dai dati.
 >
 > **L'allineamento perfetto è il dato interessante, non quello rassicurante.**
 > Le quattro divergenze già viste in questo progetto non sono nate da distrazione:
 > sono nate da strutture che combaciavano il giorno in cui sono state scritte.
-> Questa è la quinta di quelle strutture, oggi al giorno uno.
+> Questa era la quinta di quelle strutture, e stava al giorno uno: per questo
+> il confronto è stato aggiunto invece di limitarsi a registrare che oggi
+> combaciano.
 >
 > Da qui viene l'argomento sulla domanda posta, e non da una preferenza di stile.
 

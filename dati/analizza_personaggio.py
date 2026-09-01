@@ -365,27 +365,26 @@ def d_coerenza_strati(razze):
 def d_sfere_vs_catalogo(incantesimi):
     """Le stesse voci descritte in due strutture: si incrociano per NOME.
 
-    Materiale per la sezione 4. Il confronto e' quantitativo: nessun
-    validatore del progetto lo esegue oggi."""
-    cat = {i["name"]["en"].lower(): i for i in incantesimi}
-    assenti, div_liv, div_scuola = [], [], []
-    for v in SF.LISTA_BASE:
-        n = v["name"].lower()
-        if n not in cat:
-            assenti.append(v["name"])
-            continue
-        if cat[n]["level"] != v["level"]:
-            div_liv.append(v["name"])
-        if cat[n]["school"] != v["school"]:
-            div_scuola.append(v["name"])
-    nomi_lb = {v["name"].lower() for v in SF.LISTA_BASE}
-    nomi_cl = {i["name"]["en"].lower() for i in incantesimi
-               if "Cleric" in i["classes"]}
+    NON RICONFRONTA: chiede l'esito a `verifica_sfere.confronta_catalogo()`,
+    che dal 01/09/2026 e' la sede del confronto. Un secondo confronto scritto
+    qui sarebbe una sesta struttura doppia dentro la sezione che argomenta
+    contro le strutture doppie."""
+    import verifica_sfere as VS
+
+    cat = {i["name"]["en"]: i for i in incantesimi}
+    div, mis = VS.confronta_catalogo(cat)
+    per_tipo = collections.defaultdict(list)
+    for tipo, nome, _ in div:
+        per_tipo[tipo].append(nome)
+    nomi_lb = {v["name"] for v in SF.LISTA_BASE}
+    nomi_cl = {i["name"]["en"] for i in incantesimi if "Cleric" in i["classes"]}
     return {
-        "n_lista": len(SF.LISTA_BASE), "n_cat": len(incantesimi),
-        "n_cleric": len(nomi_cl), "assenti": assenti,
-        "div_liv": div_liv, "div_scuola": div_scuola,
-        "campi_confrontati": 3,
+        "n_lista": mis["base"], "n_cat": mis["catalogo"],
+        "n_cleric": mis["marcati_cleric"],
+        "assenti": per_tipo["assente-dal-catalogo"],
+        "div_liv": per_tipo["livello"], "div_scuola": per_tipo["scuola"],
+        "campi_confrontati": 3, "divergenze": mis["divergenze"],
+        "dichiarati": mis["dichiarati"],
         "solo_catalogo": sorted(nomi_cl - nomi_lb),
         "solo_lista": sorted(nomi_lb - nomi_cl),
     }
@@ -1047,15 +1046,24 @@ Confronto fatto adesso, su {SV['campi_confrontati']} campi per voce:
 `LISTA_BASE` sono esattamente gli incantesimi di Dominio, che il modulo
 dichiara di escludere.
 
-I due insiemi sono dunque **perfettamente allineati**. E nessuno lo verifica:
-`verifica_sfere.py` legge `LISTA_BASE` e `dati/divinita/`, e non apre mai
-`dati/incantesimi/`.
+I due insiemi sono dunque **perfettamente allineati** — e fino al
+01/09/2026 **nessuno lo verificava**: `verifica_sfere.py` leggeva
+`LISTA_BASE` e `dati/divinita/`, e non apriva mai `dati/incantesimi/`.
+
+Ora lo verifica. Il confronto sta in `verifica_sfere.confronta_catalogo()`,
+è **bloccante**, e questa sezione non lo rifà: ne riporta l'esito
+({SV['divergenze']} divergenze). Il quarto controllo è sull'**insieme** degli
+esclusi di Dominio — {SV['dichiarati']} nomi dichiarati in
+`_sfere_5e.ESCLUSI_DI_DOMINIO` — e non sul loro numero, perché un
+incantesimo che entra mentre un altro esce lascerebbe il conteggio fermo.
 
 {interpretativo('''
 **L'allineamento perfetto è il dato interessante, non quello rassicurante.**
 Le quattro divergenze già viste in questo progetto non sono nate da distrazione:
 sono nate da strutture che combaciavano il giorno in cui sono state scritte.
-Questa è la quinta di quelle strutture, oggi al giorno uno.
+Questa era la quinta di quelle strutture, e stava al giorno uno: per questo
+il confronto è stato aggiunto invece di limitarsi a registrare che oggi
+combaciano.
 
 Da qui viene l'argomento sulla domanda posta, e non da una preferenza di stile.
 ''')}

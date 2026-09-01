@@ -25,6 +25,7 @@ import collections
 import glob
 import json
 import os
+import sys
 from datetime import date
 
 import _sfere_5e as S
@@ -57,6 +58,76 @@ OFFESA_DIRETTA = {"Sacred Flame", "Guiding Bolt", "Inflict Wounds",
 def carica():
     return [json.load(open(p, encoding="utf-8"))
             for p in sorted(glob.glob(os.path.join(BASE, "divinita", "*.json")))]
+
+
+def carica_catalogo():
+    """Il catalogo degli incantesimi, indicizzato per nome inglese.
+
+    E' la chiave su cui le due strutture si incrociano: `LISTA_BASE` non
+    porta gli id del catalogo, quindi il ponte e' il nome. Un nome che
+    cambia da una parte sola e' proprio il modo in cui questo confronto
+    fallisce, ed e' il motivo per cui esiste."""
+    cat = {}
+    for f in sorted(glob.glob(os.path.join(BASE, "incantesimi", "*.json"))):
+        d = json.load(open(f, encoding="utf-8"))
+        cat[d["name"]["en"]] = d
+    return cat
+
+
+def confronta_catalogo(cat=None):
+    """`_sfere_5e.LISTA_BASE` contro `dati/incantesimi/`: le stesse voci,
+    descritte due volte.
+
+    QUINTA STRUTTURA DOPPIA DEL PROGETTO. Le due descrivono lo stesso
+    insieme — nome, livello, scuola — e nessuno le confrontava: questo file
+    leggeva `LISTA_BASE` e `dati/divinita/` e non apriva mai il catalogo.
+    Zero divergenze il giorno uno non dice niente sul giorno due: e' come
+    sono cominciate anche le quattro divergenze gia' viste nel progetto.
+
+    Quattro controlli, che e' il minimo per cui una modifica da una parte
+    sola non passi inosservata:
+      1. ogni voce di LISTA_BASE esiste nel catalogo (per nome inglese);
+      2. i livelli coincidono;
+      3. le scuole coincidono;
+      4. le voci che il catalogo marca `Cleric` e che non stanno in
+         LISTA_BASE sono **esattamente** gli esclusi di Dominio dichiarati
+         in `_sfere_5e.ESCLUSI_DI_DOMINIO`. Sull'insieme e non sul conteggio:
+         un incantesimo che entra mentre un altro esce lascia il numero
+         fermo, e sarebbe il caso che passa in silenzio.
+
+    Restituisce (divergenze, misure). Divergenze vuote = allineati."""
+    cat = carica_catalogo() if cat is None else cat
+    base = {i["name"]: i for i in S.LISTA_BASE}
+    div = []
+
+    assenti = sorted(n for n in base if n not in cat)
+    for n in assenti:
+        div.append(("assente-dal-catalogo", n,
+                    f"in LISTA_BASE (liv. {base[n]['level']}), non nel catalogo"))
+
+    comuni = [n for n in sorted(base) if n in cat]
+    for n in comuni:
+        if base[n]["level"] != cat[n]["level"]:
+            div.append(("livello", n,
+                        f"LISTA_BASE {base[n]['level']} / catalogo {cat[n]['level']}"))
+        if base[n]["school"] != cat[n]["school"]:
+            div.append(("scuola", n,
+                        f"LISTA_BASE {base[n]['school']} / catalogo {cat[n]['school']}"))
+
+    marcati = {n for n, d in cat.items() if "Cleric" in (d.get("classes") or [])}
+    fuori = marcati - set(base)
+    for n in sorted(fuori - S.ESCLUSI_DI_DOMINIO):
+        div.append(("escluso-non-dichiarato", n,
+                    "marcato Cleric, fuori da LISTA_BASE e non in ESCLUSI_DI_DOMINIO"))
+    for n in sorted(S.ESCLUSI_DI_DOMINIO - fuori):
+        div.append(("escluso-sparito", n,
+                    "dichiarato escluso di Dominio, ma il catalogo non lo marca "
+                    "piu' Cleric o l'ha portato in LISTA_BASE"))
+
+    misure = {"base": len(base), "catalogo": len(cat), "comuni": len(comuni),
+              "marcati_cleric": len(marcati), "fuori": len(fuori),
+              "dichiarati": len(S.ESCLUSI_DI_DOMINIO), "divergenze": len(div)}
+    return div, misure
 
 
 def analizza(d):
@@ -114,6 +185,7 @@ def interpretativo(testo):
 
 def main():
     dei = carica()
+    DIV, MIS = confronta_catalogo()
     A = sorted((analizza(d) for d in dei), key=lambda x: x["tot"])
     n = len(A)
     tot_base = len(S.LISTA_BASE)
@@ -177,6 +249,38 @@ incantesimi **fino al 3° livello**. È applicata.
 **Attribuzioni**: {tot_base - nostre} incantesimi ereditano la sfera da un antenato 2e diretto
 (`fonte`); **{nostre} sono attribuzioni nostre** (`nostra`), classificate per effetto e
 distinguibili nel dato.
+
+---
+
+## Allineamento con il catalogo degli incantesimi
+
+`_sfere_5e.LISTA_BASE` e `dati/incantesimi/` descrivono le stesse voci e si
+incrociano **per nome inglese**, non per id. Confronto rifatto a ogni
+esecuzione, su {MIS['comuni']} voci comuni e 3 campi ciascuna:
+
+| controllo | esito |
+|---|:-:|
+| voci di `LISTA_BASE` presenti nel catalogo | **{MIS['comuni']}/{MIS['base']}** |
+| divergenze di livello | **{sum(1 for d in DIV if d[0] == 'livello')}** |
+| divergenze di scuola | **{sum(1 for d in DIV if d[0] == 'scuola')}** |
+| marcati `Cleric` fuori da `LISTA_BASE` | **{MIS['fuori']}**, contro {MIS['dichiarati']} dichiarati esclusi di Dominio |
+
+{("**Allineate.** " + str(MIS['divergenze']) + " divergenze.") if not DIV else
+ ("**DIVERGENTI: " + str(MIS['divergenze']) + ".**\n\n" +
+  "\n".join(f"- `{t}` — **{n}**: {d}" for t, n, d in DIV))}
+
+{interpretativo('''
+L'allineamento perfetto e' il dato interessante, non quello rassicurante: e'
+lo stato in cui erano anche le quattro strutture doppie che poi sono
+divergute in questo progetto. Fino al 01/09/2026 nessuno confrontava queste
+due — questo file leggeva `LISTA_BASE` e `dati/divinita/` senza mai aprire il
+catalogo — e la quinta coppia stava al giorno uno.
+
+Il quarto controllo e' quello che vale la pena guardare: verifica un
+**insieme** e non un conteggio. Un incantesimo che entra fra gli esclusi di
+Dominio mentre un altro ne esce lascia il numero fermo, ed e' esattamente la
+forma che passerebbe inosservata.
+''')}
 
 ---
 
@@ -306,8 +410,14 @@ o compensare col Dominio. Non ne ho scelta nessuna.''')}
           f"| con livelli vuoti: {len(con_vuoti)} | sotto soglia: {len(con_scarsi)}")
     for a in A[:6]:
         print(f"   {a['nome']:12} {a['tot']:3} inc.  vuoti={a['vuoti']}  scarsi={a['scarsi']}")
-    return A
+
+    print(f"catalogo: {MIS['comuni']}/{MIS['base']} voci comuni, "
+          f"{MIS['fuori']} marcati Cleric fuori da LISTA_BASE "
+          f"({MIS['dichiarati']} dichiarati) -> {MIS['divergenze']} divergenze")
+    for t, n, d in DIV:
+        print(f"   KO {t}  {n}: {d}")
+    return A, DIV
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(1 if main()[1] else 0)

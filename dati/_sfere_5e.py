@@ -23,8 +23,19 @@ DERIVAZIONE, il campo che va conservato
 FONTE DELLA LISTA
     SRD 5.1 via api.open5e.com (document__slug=wotc-srd). Lista base del
     chierico: 105 voci, 7 trucchetti piu' 98 incantesimi dal 1° al 9°.
-    Gli incantesimi di dominio (37 nell'SRD) NON sono nella lista base: si
-    ottengono col Dominio e non passano dal filtro delle sfere.
+    Gli incantesimi di dominio NON sono nella lista base: si ottengono col
+    Dominio e non passano dal filtro delle sfere. Sono elencati in fondo,
+    in `ESCLUSI_DI_DOMINIO`.
+
+LA STESSA COSA DESCRITTA DUE VOLTE
+    `LISTA_BASE` e il catalogo `dati/incantesimi/` descrivono le stesse 105
+    voci — nome, livello, scuola — e si incrociano per **nome inglese**, non
+    per id. Sono la quinta coppia di strutture doppie del progetto, e le
+    quattro precedenti non sono divergute per distrazione: combaciavano il
+    giorno in cui erano state scritte, come questa.
+
+    Il confronto e' in `verifica_sfere.confronta_catalogo()` ed e' bloccante.
+    Va eseguito dopo ogni modifica a `LISTA_BASE` o al catalogo.
 """
 
 # --------------------------------------------------------------------------
@@ -288,6 +299,35 @@ DOMINIO = {
 
 # Domini citati sopra che NON stanno nell'SRD 5.1.
 DOMINI_FUORI_SRD = {"Death": "DMG 2014", "Forge": "Xanathar's Guide"}
+
+# --------------------------------------------------------------------------
+# Gli incantesimi che il catalogo marca `Cleric` e che NON stanno in
+# LISTA_BASE: un chierico li ottiene dal Dominio, non dalla lista di classe,
+# e per questo non passano dal filtro delle sfere.
+#
+# PERCHE' SCRITTI QUI E NON CONTATI AL VOLO. L'intestazione di questo modulo
+# dichiarava «gli incantesimi di dominio (37 nell'SRD) NON sono nella lista
+# base»: un'affermazione vera e non verificabile, perche' nessun campo del
+# catalogo distingue un incantesimo di dominio (sono marcati `Cleric` come
+# gli altri) e "sta anche su un'altra lista di classe" non discrimina —
+# Cure Wounds sta su cinque liste ed e' in LISTA_BASE. Senza l'elenco, il
+# confronto potrebbe solo contare, e un incantesimo che entra mentre un
+# altro esce lascerebbe il conto invariato.
+#
+# Scritto cosi', `verifica_sfere.confronta_catalogo()` verifica l'insieme e
+# non il numero, e il numero nella prosa torna a essere un derivato.
+# --------------------------------------------------------------------------
+ESCLUSI_DI_DOMINIO = frozenset({
+    "Arcane Eye", "Barkskin", "Blink", "Burning Hands", "Call Lightning",
+    "Charm Person", "Confusion", "Dimension Door", "Disguise Self",
+    "Divine Favor", "Dominate Beast", "Dominate Person", "Faerie Fire",
+    "Flaming Sphere", "Fog Cloud", "Gust of Wind", "Hold Monster",
+    "Ice Storm", "Identify", "Magic Weapon", "Mirror Image", "Modify Memory",
+    "Nondetection", "Pass without Trace", "Plant Growth", "Polymorph",
+    "Scorching Ray", "Shatter", "Sleet Storm", "Speak with Animals",
+    "Spike Growth", "Stoneskin", "Suggestion", "Thunderwave", "Tree Stride",
+    "Wall of Fire", "Wind Wall",
+})
 
 
 def accessibili(sfere_divinita):
