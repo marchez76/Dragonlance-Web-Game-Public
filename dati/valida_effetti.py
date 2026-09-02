@@ -131,7 +131,7 @@ def numeri_struttura(eff):
     ts = eff.get("tiro_salvezza") or {}
     if ts.get("cd") is not None:
         cd.add(int(ts["cd"]))
-    for esito in ("fallimento", "successo"):
+    for esito in ("fallimento", "successo", "fallimento_ripetuto"):
         danni((ts.get(esito) or {}).get("danno"))
     gua = eff.get("guarigione") or {}
     if gua.get("dadi"):
@@ -166,6 +166,14 @@ def confronta_prosa(prosa, eff, err):
             if segno not in prosa and str(abs(v)) not in prosa:
                 err(f"modificatore {m['bersaglio']} {segno}: la prosa non lo nomina")
 
+    # Il multiattacco: quante volte, e quale azione ripete.
+    ma = eff.get("multiattacco") or {}
+    if ma:
+        n = ma["quanti"]
+        parole = {2: ("due", "2"), 3: ("tre", "3"), 4: ("quattro", "4")}
+        if not any(w in prosa.lower() for w in parole.get(n, (str(n),))):
+            err(f"multiattacco da {n}: la prosa non lo dice")
+
     # Gli usi di una risorsa a numero fisso.
     ris = eff.get("risorsa") or {}
     if isinstance(ris.get("usi"), int):
@@ -181,7 +189,10 @@ def confronta_prosa(prosa, eff, err):
 def condizioni_citate(eff):
     out = set()
     ts = eff.get("tiro_salvezza") or {}
-    for esito in ("fallimento", "successo"):
+    # `fallimento_ripetuto` va incluso o la condizione del secondo tempo non
+    # verrebbe mai controllata: e' il campo nuovo, ed e' esattamente dove un
+    # controllo dimenticato lascia passare un id inesistente.
+    for esito in ("fallimento", "successo", "fallimento_ripetuto"):
         for c in ((ts.get(esito) or {}).get("condizioni") or []):
             out.add(c["id"])
     return out
@@ -208,6 +219,18 @@ def controlla_condizioni(err_globale):
                             f"gia' portata da '{altro}' che implica. La sede "
                             f"unica serve proprio a non ripeterla")
     return cond
+
+
+def nomi_dei_blocchi(portatore):
+    """I `name` di tutti i blocchi del portatore, per risolvere un rimando."""
+    m = portatore.get("mechanics_5e") or {}
+    fuori = set()
+    for k in ("traits", "actions", "bonus_actions", "reactions",
+              "legendary_actions", "features", "chassis_features"):
+        for b in (m.get(k) or []):
+            if isinstance(b, dict) and b.get("name"):
+                fuori.add(b["name"])
+    return fuori
 
 
 # ---------------------------------------------- 4. i due estremi della competenza
@@ -319,6 +342,11 @@ def main(argv):
             if cid not in cond:
                 err(f"cita la condizione '{cid}', che non esiste in "
                     f"dati/condizioni/")
+
+        ma = eff.get("multiattacco") or {}
+        if ma and ma.get("azione") not in nomi_dei_blocchi(portatore):
+            err(f"il multiattacco ripete l'azione '{ma['azione']}', che il "
+                f"portatore non ha: un riferimento a niente")
 
     # Anche le condizioni stesse hanno prosa e clausole da tenere allineate.
 

@@ -399,6 +399,19 @@ def d_arena(mostri, oggetti, razze, classi):
                   "legendary_actions"))
     prosa_razze = sum(len(r["mechanics_5e"]["traits"]) for r in razze)
     prosa_classi = sum(len(c["mechanics_5e"]["features"]) for c in classi)
+    # Quanti di quei blocchi portano ANCHE la struttura. Finche' e' zero la
+    # frase "sono prosa e non numeri" e' vera; appena non lo e' piu', dirla
+    # senza questo numero e' un derivato scritto a mano che si e' sfasato.
+    con_effetto = sum(
+        1
+        for insieme, chiavi in ((mostri, ("actions", "traits", "reactions",
+                                          "bonus_actions", "legendary_actions")),
+                                (razze, ("traits",)),
+                                (classi, ("features", "chassis_features")))
+        for d in insieme
+        for k in chiavi
+        for b in (d["mechanics_5e"].get(k) or [])
+        if b.get("effetto"))
     numerici_mostro = ["armor_class.value", "hit_points.average",
                        "abilities", "speed.walk",
                        "challenge_rating.value", "passive_perception"]
@@ -423,6 +436,7 @@ def d_arena(mostri, oggetti, razze, classi):
         "prosa_mostri": prosa_mostri, "prosa_razze": prosa_razze,
         "prosa_classi": prosa_classi,
         "prosa_tot": prosa_mostri + prosa_razze + prosa_classi,
+        "con_effetto": con_effetto,
         "numerici": cop, "n_mostri": len(mostri),
         "ca": ca, "prop_distinte": len(prop), "prop_con_numero": con_numero,
         "prop_occ_numero": occ_numero,
@@ -1134,8 +1148,12 @@ Quello che è prosa: **{AR['prosa_tot']} blocchi di meccanica in tutto** —
 {AR['prosa_razze']} tratti razziali, {AR['prosa_classi']} privilegi di classe.
 Il campo si chiama `mechanics_5e` ed è una **stringa in italiano**: un'azione
 di attacco è scritta nella forma *"+N a colpire, portata N piedi, un bersaglio,
-N (NdN+N) danni di un certo tipo"*. Tutto quello che serve c'è; nulla di quello
-che serve è un campo. Leggibile da una persona, non da un motore.
+N (NdN+N) danni di un certo tipo"*. Leggibile da una persona, non da un motore.
+
+Di quei blocchi, **{AR['con_effetto']} portano ora anche un campo `effetto`**
+accanto alla prosa: i privilegi del chassis Fighter e le azioni dei due mostri
+della fetta verticale. Restano **{AR['prosa_tot'] - AR['con_effetto']}** in cui
+tutto quello che serve c'è e nulla di quello che serve è un campo.
 
 Anche dove il dato è strutturato, il numero è spesso **dentro** una stringa:
 
@@ -1193,7 +1211,7 @@ valore può essere ricalcolato dai file, è una proiezione e va rigenerata; se
 non può, è stato ed è del personaggio.
 
 Va detto anche il rovescio, perché è il costo dell'intera sezione: finché i
-{AR['prosa_tot']} blocchi di meccanica restano prosa, **nessuna proiezione può
+{AR['prosa_tot'] - AR['con_effetto']} blocchi di meccanica restano prosa, **nessuna proiezione può
 derivarli**. Trasformarli in numeri non è un lavoro di formato, è la stessa
 conversione dei `pending` vista da un'altra angolazione — e riguarda anche i
 {AR['prosa_mostri']} blocchi dei mostri, che oggi risultano "convertiti".
@@ -1219,7 +1237,8 @@ conversione dei `pending` vista da un'altra angolazione — e riguarda anche i
      "che risolvono un filtro; i derivati non si scrivono"),
     ("5. Arena",
      f"{CP['_mb']} MB stanno in memoria: il vincolo non è la velocità ma che "
-     f"{AR['prosa_tot']} blocchi di meccanica sono prosa"),
+     f"{AR['prosa_tot'] - AR['con_effetto']} blocchi di meccanica su "
+     f"{AR['prosa_tot']} sono ancora solo prosa"),
 ])}
 
 ---

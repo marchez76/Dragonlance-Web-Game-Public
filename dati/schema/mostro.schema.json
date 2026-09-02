@@ -36,6 +36,10 @@
           "type": ["string", "null"],
           "description": "La forma 5e. null quando lo stato e' `pending` o `source_only`."
         },
+        "effetto": {
+          "type": ["object", "null"],
+          "description": "La stessa meccanica in campi, accanto alla prosa. Stessa forma e stessa ragione del campo omonimo in classe.schema.json: la prosa resta autoritativa per una persona, `effetto` e' cio' che un motore legge, e dati/valida_effetti.py li tiene allineati. Validato a parte contro effetto.schema.json — qui non si puo' fare un $ref a un altro file senza cambiare come i validatori caricano gli schemi. APERTO SULLA FETTA VERTICALE, NON SUL BESTIARIO: oggi lo portano i due mostri dello scontro di collaudo. Gli altri 50 restano prosa finche' non c'e' un motore che li legga davvero — la lezione della decisione 43 (`barbaro-rimandato`), che vieta di progettare su un caso solo, vale anche al contrario: non si compila un corpus per uno schema che nessuno ha ancora esercitato."
+        },
         "conversion_status": { "$ref": "#/$defs/conversion_status" },
         "source": { "$ref": "#/$defs/provenienza" },
         "analogo_srd": {

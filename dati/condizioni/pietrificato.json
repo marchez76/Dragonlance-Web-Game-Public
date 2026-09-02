@@ -1,0 +1,48 @@
+{
+  "id": "pietrificato",
+  "name": {
+    "en": "Petrified",
+    "it": "Pietrificato"
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1), Appendix A: Conditions",
+    "api_ref": "srd/conditions/petrified"
+  },
+  "mechanics_5e": "Una creatura pietrificata e' trasformata, insieme agli oggetti non magici che indossa o trasporta, in una sostanza solida inanimata: il peso decuplica e la creatura smette di invecchiare. E' incapacitata, non puo' muoversi ne' parlare, ed e' inconsapevole di cio' che la circonda. Gli attacchi contro di lei hanno vantaggio. Fallisce automaticamente i tiri salvezza su Forza e Destrezza. Ha resistenza a tutti i danni ed e' immune a veleni e malattie, anche se un veleno o una malattia gia' in corso restano sospesi e non neutralizzati.",
+  "effetti": [
+    {
+      "clausola": "sostanza_inanimata"
+    },
+    {
+      "clausola": "velocita_zero"
+    },
+    {
+      "clausola": "non_puo_parlare"
+    },
+    {
+      "clausola": "inconsapevole"
+    },
+    {
+      "clausola": "vantaggio_attacchi_contro"
+    },
+    {
+      "clausola": "fallisce_tiri_salvezza",
+      "caratteristiche": [
+        "str",
+        "dex"
+      ]
+    },
+    {
+      "clausola": "resistenza_a_tutti_i_danni"
+    },
+    {
+      "clausola": "immune_veleno_e_malattia"
+    }
+  ],
+  "implica": [
+    "incapacitato"
+  ],
+  "fine": "Dipende dall'effetto che l'ha imposta: il Death Throes del Baaz la fissa a 1 minuto.",
+  "note": "Il secondo tempo del Death Throes del Baaz, e la prima condizione della cartella che toglie una creatura dallo scontro senza ucciderla. Per un motore e' il caso che distingue 'fuori combattimento' da 'morto': una creatura pietrificata ha ancora i suoi punti ferita e resiste a tutti i danni, quindi la condizione di fine scontro non puo' essere 'ogni avversario a 0 punti ferita'."
+}

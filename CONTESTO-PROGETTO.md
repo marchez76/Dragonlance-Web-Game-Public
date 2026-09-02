@@ -749,12 +749,15 @@ Riportate nel rapporto con fonte e opzioni, **non decise**.
 
 ### Il vincolo dell'arena
 
-Il corpus intero pesa **1,89 MB**: sta in memoria, e a ogni turno non
+Il corpus intero pesa **1,9 MB**: sta in memoria, e a ogni turno non
 serve leggere alcun file. Il vincolo non è la velocità — è che
-**405 blocchi di meccanica sono prosa italiana** e non numeri:
+**385 blocchi di meccanica su 405 sono
+ancora solo prosa italiana** e non numeri, su un totale di
 257 fra azioni e tratti dei mostri, 105 tratti
-razziali, 43 privilegi di classe. Il motore può leggere CA,
-punti ferita, caratteristiche e Grado di Sfida; non può risolvere un attacco.
+razziali e 43 privilegi di classe. I 20 che
+portano anche un campo `effetto` sono la fetta verticale: i privilegi del
+chassis Fighter e le azioni dei due mostri con cui l'arena gira davvero
+(`motore/arena.py`, `dati/RAPPORTO-arena.md`).
 
 ---
 

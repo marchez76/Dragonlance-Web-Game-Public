@@ -94,6 +94,10 @@
         "ripetibile": {
           "type": ["string", "null"],
           "description": "Quando il tiro si ripete, se si ripete: `fine del proprio turno`."
+        },
+        "fallimento_ripetuto": {
+          "$ref": "#/$defs/esito",
+          "description": "L'esito quando ANCHE il tiro ripetuto fallisce, dove il secondo fallimento non ripete il primo ma peggiora. Aggiunto sul Death Throes del Baaz, che e' un effetto a due tempi: il primo fallimento trattiene mentre la pietrificazione comincia, il secondo la compie. Senza questo campo `ripetibile` dice QUANDO si ritira e non dice COSA succede, e le due condizioni di quel tratto diventano una sola. Campo facoltativo: si scrive solo dove `ripetibile` c'e' e il secondo tempo e' diverso dal primo."
         }
       }
     },
@@ -182,6 +186,19 @@
       }
     },
 
+    "multiattacco": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["quanti", "azione"],
+      "description": "Il blocco Attacchi Multipli: quante volte si ripete quale altra azione dello stesso statblock. NON ripete i numeri dell'attacco — quelli stanno nell'azione riferita, che e' la sede unica. Aggiunto sulla fetta verticale: senza, il blocco `Attacchi Multipli` di Traag e Baaz e' l'unica azione del corpus che dice una cosa meccanica e non ha nessun campo in cui dirla, e un motore che lo ignori dimezza il danno per round di tutti i mostri che ce l'hanno.",
+      "properties": {
+        "quanti": {"type": "integer", "minimum": 2},
+        "azione": {
+          "type": "string",
+          "description": "Il `name` dell'azione ripetuta, dentro lo stesso statblock. Riferimento, non copia."
+        }
+      }
+    },
     "scelta": {
       "type": "object",
       "additionalProperties": false,
@@ -210,6 +227,7 @@
         "guarigione": {"$ref": "#/$defs/guarigione"},
         "modificatori": {"type": "array", "items": {"$ref": "#/$defs/modificatore"}},
         "scelta": {"$ref": "#/$defs/scelta"},
+        "multiattacco": {"$ref": "#/$defs/multiattacco"},
         "azione": {
           "type": ["string", "null"],
           "enum": ["azione", "azione_bonus", "reazione", "nessuna", null],

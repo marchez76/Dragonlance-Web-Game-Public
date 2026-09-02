@@ -1,0 +1,36 @@
+{
+  "id": "trattenuto",
+  "name": {
+    "en": "Restrained",
+    "it": "Trattenuto"
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1), Appendix A: Conditions",
+    "api_ref": "srd/conditions/restrained"
+  },
+  "mechanics_5e": "Una creatura trattenuta ha velocita' 0 e non beneficia di alcun bonus alla velocita'. Gli attacchi contro di lei hanno vantaggio, e i suoi tiri per colpire hanno svantaggio. Ha svantaggio ai tiri salvezza su Destrezza.",
+  "effetti": [
+    {
+      "clausola": "velocita_zero"
+    },
+    {
+      "clausola": "nessun_bonus_velocita"
+    },
+    {
+      "clausola": "vantaggio_attacchi_contro"
+    },
+    {
+      "clausola": "svantaggio_attacchi_propri"
+    },
+    {
+      "clausola": "svantaggio_tiri_salvezza",
+      "caratteristiche": [
+        "dex"
+      ]
+    }
+  ],
+  "implica": [],
+  "fine": "Dipende dall'effetto che l'ha imposta: la condizione non dichiara una propria uscita.",
+  "note": "Il primo tempo del Death Throes del Baaz. E' l'unica delle cinque condizioni della cartella che non toglie l'azione: una creatura trattenuta combatte ancora, peggio. Serve a distinguerla dal secondo tempo (pietrificato), che invece la toglie del tutto — se le due fossero rese con la stessa condizione, come farebbe uno statblock scritto in prosa, il tratto a due tempi diventerebbe un tratto a un tempo."
+}

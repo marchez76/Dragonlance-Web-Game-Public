@@ -62,7 +62,13 @@
               "attacchi_contro_oltre_5ft_svantaggio",
               "colpo_critico_entro_5ft",
               "lascia_cadere_oggetti",
-              "inconsapevole"
+              "inconsapevole",
+              "svantaggio_tiri_salvezza",
+              "nessun_bonus_velocita",
+              "non_puo_parlare",
+              "sostanza_inanimata",
+              "resistenza_a_tutti_i_danni",
+              "immune_veleno_e_malattia"
             ]
           },
           "caratteristiche": {

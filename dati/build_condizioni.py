@@ -23,13 +23,22 @@ PERCHE' PUBBLICA
     posizione di `dati/incantesimi/`, per la stessa ragione.
 
 QUANTE CE NE SONO QUI, E PERCHE' NON TUTTE
-    Tre, non le quindici dell'SRD: quelle che servono alla prima fetta
-    verticale, piu' quella che le due implicano. Strutturare le altre dodici
+    Cinque, non le quindici dell'SRD: quelle che un blocco convertito
+    riferisce davvero, piu' quelle che esse implicano. Strutturare le altre
     adesso significherebbe scriverle senza un caso che le eserciti, che e'
-    il modo in cui un dato entra senza essere verificato. Le altre si
-    aggiungono quando un blocco convertito le riferisce davvero — a partire
-    da `spaventato`, `avvelenato`, `paralizzato` e `afferrato`, che i mostri
-    gia' citano in prosa e che sono percio' le prime della coda.
+    il modo in cui un dato entra senza essere verificato.
+
+    Le prime tre (incapacitato, prono, incosciente) sono nate con la fetta.
+    `trattenuto` e `pietrificato` si sono aggiunte quando il Death Throes del
+    Baaz e' stato strutturato: sono i suoi due tempi, e senza di esse il
+    tratto non era esprimibile — la condizione della struttura, non
+    un'anticipazione. E' esattamente il criterio dichiarato sopra che si
+    applica per la prima volta.
+
+    Restano in coda `spaventato`, `avvelenato`, `paralizzato` e `afferrato`,
+    che i mostri gia' citano in prosa. `spaventato` e' il piu' vicino: la
+    Furia cieca del Traag da' vantaggio ai tiri salvezza contro di esso, e
+    quel tratto resta prosa finche' la condizione non c'e'.
 
 Uso:  python3 dati/build_condizioni.py
 """
@@ -113,6 +122,69 @@ CONDIZIONI = [
                 "una procedura del personaggio, non una clausola di questa "
                 "condizione, e restano scoperti finche' lo schema Personaggio "
                 "non esiste.",
+    },
+    {
+        "id": "trattenuto",
+        "name": {"en": "Restrained", "it": "Trattenuto"},
+        "api_ref": "srd/conditions/restrained",
+        "mechanics_5e": "Una creatura trattenuta ha velocita' 0 e non "
+                        "beneficia di alcun bonus alla velocita'. Gli attacchi "
+                        "contro di lei hanno vantaggio, e i suoi tiri per "
+                        "colpire hanno svantaggio. Ha svantaggio ai tiri "
+                        "salvezza su Destrezza.",
+        "effetti": [
+            {"clausola": "velocita_zero"},
+            {"clausola": "nessun_bonus_velocita"},
+            {"clausola": "vantaggio_attacchi_contro"},
+            {"clausola": "svantaggio_attacchi_propri"},
+            {"clausola": "svantaggio_tiri_salvezza", "caratteristiche": ["dex"]},
+        ],
+        "implica": [],
+        "fine": "Dipende dall'effetto che l'ha imposta: la condizione non "
+                "dichiara una propria uscita.",
+        "note": "Il primo tempo del Death Throes del Baaz. E' l'unica delle "
+                "cinque condizioni della cartella che non toglie l'azione: "
+                "una creatura trattenuta combatte ancora, peggio. Serve a "
+                "distinguerla dal secondo tempo (pietrificato), che invece la "
+                "toglie del tutto — se le due fossero rese con la stessa "
+                "condizione, come farebbe uno statblock scritto in prosa, il "
+                "tratto a due tempi diventerebbe un tratto a un tempo.",
+    },
+    {
+        "id": "pietrificato",
+        "name": {"en": "Petrified", "it": "Pietrificato"},
+        "api_ref": "srd/conditions/petrified",
+        "mechanics_5e": "Una creatura pietrificata e' trasformata, insieme "
+                        "agli oggetti non magici che indossa o trasporta, in "
+                        "una sostanza solida inanimata: il peso decuplica e la "
+                        "creatura smette di invecchiare. E' incapacitata, non "
+                        "puo' muoversi ne' parlare, ed e' inconsapevole di "
+                        "cio' che la circonda. Gli attacchi contro di lei "
+                        "hanno vantaggio. Fallisce automaticamente i tiri "
+                        "salvezza su Forza e Destrezza. Ha resistenza a tutti "
+                        "i danni ed e' immune a veleni e malattie, anche se un "
+                        "veleno o una malattia gia' in corso restano sospesi e "
+                        "non neutralizzati.",
+        "effetti": [
+            {"clausola": "sostanza_inanimata"},
+            {"clausola": "velocita_zero"},
+            {"clausola": "non_puo_parlare"},
+            {"clausola": "inconsapevole"},
+            {"clausola": "vantaggio_attacchi_contro"},
+            {"clausola": "fallisce_tiri_salvezza", "caratteristiche": ["str", "dex"]},
+            {"clausola": "resistenza_a_tutti_i_danni"},
+            {"clausola": "immune_veleno_e_malattia"},
+        ],
+        "implica": ["incapacitato"],
+        "fine": "Dipende dall'effetto che l'ha imposta: il Death Throes del "
+                "Baaz la fissa a 1 minuto.",
+        "note": "Il secondo tempo del Death Throes del Baaz, e la prima "
+                "condizione della cartella che toglie una creatura dallo "
+                "scontro senza ucciderla. Per un motore e' il caso che "
+                "distingue 'fuori combattimento' da 'morto': una creatura "
+                "pietrificata ha ancora i suoi punti ferita e resiste a tutti "
+                "i danni, quindi la condizione di fine scontro non puo' essere "
+                "'ogni avversario a 0 punti ferita'.",
     },
 ]
 

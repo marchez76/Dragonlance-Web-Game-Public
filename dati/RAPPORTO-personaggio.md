@@ -1,13 +1,13 @@
 # Lo schema Personaggio — rapporto diagnostico
 
-*Generato da `dati/analizza_personaggio.py` il 2026-09-01.*
+*Generato da `dati/analizza_personaggio.py` il 2026-09-02.*
 
 > **Diagnostico.** Misura la forma del problema prima di progettarlo. **Non
 > decide niente**: non propone uno schema, non scioglie le tre decisioni
 > sospese, non tocca `dati/`. Ogni numero è derivato dai JSON; le letture sono
 > marcate con un blocco citato e datato.
 >
-> Il corpus letto è di **506 file** per **1,84 MB**:
+> Il corpus letto è di **506 file** per **1,9 MB**:
 > 15 razze, 17 classi, 21 divinità,
 > 319 incantesimi, 79 oggetti,
 > 52 mostri, 3 modelli.
@@ -22,9 +22,9 @@ delle nostre revisioni, non della partita. Un personaggio è la prima entità de
 progetto la cui vita è **dentro** la partita.
 
 La differenza si misura, e il numero è netto. Delle grandezze che servono a far
-combattere un personaggio, 9 su 27 sono coperte da un
+combattere un personaggio, 11 su 27 sono coperte da un
 campo pieno, 6 da un campo compilato solo
-in parte, e **12 non hanno alcun campo in nessuno schema**
+in parte, e **10 non hanno alcun campo in nessuno schema**
 (tabella in §2). Ma la
 divisione interessante non è quella: è che **nessuna delle sei entità esistenti
 ha un solo campo che cambi durante una partita**. Non è una lacuna da riempire:
@@ -101,7 +101,7 @@ progetto: è il ritmo con cui i valori cambiano.
 | Posizione e ordine di iniziativa | **turno** | no |
 | Tiri salvezza contro morte | **turno** | no |
 
-> **Lettura interpretativa** — registrata il 2026-09-01. Non è derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-02. Non è derivata dai dati.
 >
 > **Cosa i dati impongono, prima di qualunque scelta di progetto.** La colonna
 > "cambia ogni" si divide in due gruppi senza che nessuno l'abbia deciso:
@@ -152,10 +152,10 @@ entità reale.
 | Lista incantesimi per classe | `classes` | **319/319** | incantesimi |
 | Filtro delle sfere per divinità | `mechanics_5e` | **assente** (0/21) | divinità |
 | Danno delle armi | `damage_dice` | **37/37** | armi |
-| Categoria dell'arma (semplice/da guerra, mischia/distanza) | `categoria` | **assente** (0/37) | armi |
+| Categoria dell'arma (semplice/da guerra, mischia/distanza) | `categoria` | **37/37** | armi |
 | Gittata dell'arma | `range_ft` | **assente** (0/37) | armi |
 | Classe armatura dell'armatura | `ac_formula` | **13/13** | armature e scudi |
-| Categoria dell'armatura (leggera/media/pesante) | `categoria` | **assente** (0/13) | armature e scudi |
+| Categoria dell'armatura (leggera/media/pesante) | `categoria` | **13/13** | armature e scudi |
 | Tiro salvezza di un incantesimo | `saving_throw` | **assente** (0/319) | incantesimi |
 | Danno di un incantesimo | `damage` | **assente** (0/319) | incantesimi |
 | Concentrazione | `concentration` | **319/319** | incantesimi |
@@ -177,7 +177,7 @@ livello per livello. Non c'è una riga di meccanica: nessuna descrizione di
 Second Wind, nessuna tabella di slot, nessuna lista di competenze, nessuna
 sottoclasse, nessun pacchetto d'equipaggiamento.
 
-> **Lettura interpretativa** — registrata il 2026-09-01. Non è derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-02. Non è derivata dai dati.
 >
 > "Clonato" oggi vuol dire **abbiamo registrato quali privilegi ha il Fighter**,
 > non **abbiamo le regole del Fighter**. È esattamente il rapporto che c'è fra un
@@ -276,7 +276,7 @@ Tre legami esistono come intenzione ma non come chiave.
   `mechanics_5e` a **`null`**: il filtro delle sfere (decisione 24, `sfere-sacerdotali`) vive
   interamente in `dati/_sfere_5e.py`, cioè in codice, non nei dati.
 
-> **Lettura interpretativa** — registrata il 2026-09-01. Non è derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-02. Non è derivata dai dati.
 >
 > I tre giunti hanno la stessa forma e non è un caso: il legame è sempre scritto
 > come **etichetta leggibile**, mai come chiave. Finché i dati servivano a essere
@@ -391,8 +391,8 @@ alcun catalogo di talenti.
 
 ### 3.3 La generazione delle caratteristiche
 
-`motore/generazione.py` esiste: **267 righe**, **13
-funzioni pubbliche** (`applica_aggiustamenti()`, `carica_classe()`, `carica_razza()`, `esiste_assegnazione()`, `formule_razziali()`, `genera()`, `intervalli()`, `metodi_praticabili()`, `tetto_crescita()`, `tira_4d6_scarta_minore()`, `tira_formula()`, `valida()`, `valida_pointbuy()`).
+`motore/generazione.py` esiste: **409 righe**, **18
+funzioni pubbliche** (`aggiustamenti()`, `anteprima_aumento()`, `applica_aggiustamenti()`, `caratteristiche_al_tetto()`, `carica_classe()`, `carica_razza()`, `esiste_assegnazione()`, `formule_razziali()`, `genera()`, `intervalli()`, `metodi_praticabili()`, `senza_chassis()`, `strato()`, `tetto_crescita()`, `tira_4d6_scarta_minore()`, `tira_formula()`, `valida()`, `valida_pointbuy()`).
 
 **Cosa copre.** I 3 metodi
 (`4d6-scarta-minore`, `array-standard`, `point-buy`) con default
@@ -407,12 +407,12 @@ razza + classe; la validazione; la soddisfacibilità (`esiste_assegnazione`,
 |---|---|
 | Nessuna funzione **assegna** i valori | `esiste_assegnazione` dice *se* una disposizione legale esiste, poi la butta via |
 | Il point-buy non si compone con le formule razziali | `genera()` solleva un'eccezione per il point-buy; il Kender ha la FOR fissata da formula e non c'è una via che le combini |
-| Nessun aggancio ai tetti di conversione | il modulo legge `source_2e` 6 volte e `mechanics_5e` 0: scavalca lo strato di conversione e va dritto alla fonte |
+| Nessun aggancio ai tetti di conversione | il modulo legge `source_2e` 0 volte e `mechanics_5e` 0: scavalca lo strato di conversione e va dritto alla fonte |
 | `genera()` restituisce tre forme diverse | dict, lista, o dict di due chiavi, con un terzo stato `parziale`: chi chiama deve ramificare |
 | Copre un passo su molti | punti ferita, competenze, equipaggiamento, incantesimi, denaro iniziale: nessuno di questi passa di qui |
-| La numerazione delle decisioni era sfasata — CHIUSA | il modulo cita ora le decisioni 8 (`generazione-caratteristiche`), 9 (`aggiustamenti-negativi`), 10 (`massimali-razziali`), 11 (`barbaro-vincoli`), verificate da `verifica_decisioni.py` — vedi §3.4 |
+| La numerazione delle decisioni era sfasata — CHIUSA | il modulo cita ora le decisioni 8 (`generazione-caratteristiche`), 9 (`aggiustamenti-negativi`), 10 (`massimali-razziali`), 11 (`barbaro-vincoli`), 44 (`tetto-punto-perduto`), verificate da `verifica_decisioni.py` — vedi §3.4 |
 
-> **Lettura interpretativa** — registrata il 2026-09-01. Non è derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-02. Non è derivata dai dati.
 >
 > Sul terzo punto vale la pena fermarsi, perché è l'unico che sia un difetto e
 > non un lavoro non ancora fatto. Il modulo legge `source_2e` e non
@@ -431,14 +431,14 @@ razza + classe; la validazione; la soddisfacibilità (`esiste_assegnazione`,
 ### 3.4 Una nota che riguarda tutte e tre: la numerazione — CHIUSA
 
 Le tre questioni sospese si citano per numero, e i numeri **non erano
-stabili**. Il progetto contiene **977 rimandi a una decisione in
-109 file**, di cui **288 nella fascia 1-12** — che è
+stabili**. Il progetto contiene **1065 rimandi a una decisione in
+124 file**, di cui **298 nella fascia 1-12** — che è
 esattamente dove stavano le tre questioni di questa sezione.
 
 Erano sfasati perché il numero è un ordinale dell'elenco, e l'elenco è
 cambiato: file scritti in momenti diversi hanno continuato a citare il numero
 della propria vintage, senza che nulla li riallineasse. Lette una per una, le
-288 citazioni della fascia bassa hanno dato questa corrispondenza —
+298 citazioni della fascia bassa hanno dato questa corrispondenza —
 **senza uno scarto costante**, e con lo stesso numero giusto in un file e
 sbagliato in un altro:
 
@@ -464,7 +464,7 @@ un `id` stabile che non cambierà mai, e la forma di un rimando è ora
 accanto come derivato. `verifica_decisioni.py` verifica la coppia in tutto il
 progetto e con `--correggi` riscrive i numeri a partire dagli id.
 
-Stato oggi: **977 rimandi verificati, 0 sfasati,
+Stato oggi: **1065 rimandi verificati, 0 sfasati,
 0 con id ignoto, 0 ancora senza id**. Rinumerare
 adesso costa un comando.
 
@@ -498,7 +498,7 @@ esclusi di Dominio — 37 nomi dichiarati in
 `_sfere_5e.ESCLUSI_DI_DOMINIO` — e non sul loro numero, perché un
 incantesimo che entra mentre un altro esce lascerebbe il conteggio fermo.
 
-> **Lettura interpretativa** — registrata il 2026-09-01. Non è derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-02. Non è derivata dai dati.
 >
 > **L'allineamento perfetto è il dato interessante, non quello rassicurante.**
 > Le quattro divergenze già viste in questo progetto non sono nate da distrazione:
@@ -553,7 +553,7 @@ il totale. Lo stesso vale per la ricchezza iniziale, se tirata.
 
 ### 5.1 Non è un problema di velocità
 
-Il corpus intero è **506 file per 1,84 MB**. Caricato una
+Il corpus intero è **506 file per 1,9 MB**. Caricato una
 volta all'avvio e indicizzato per id, ci sta in memoria senza discussione: gli
 indici `*.index.json` esistono già e fanno esattamente questo mestiere.
 **A ogni turno non va letto nessun file.** La domanda "quanto velocemente" ha
@@ -580,8 +580,12 @@ Quello che è prosa: **405 blocchi di meccanica in tutto** —
 105 tratti razziali, 43 privilegi di classe.
 Il campo si chiama `mechanics_5e` ed è una **stringa in italiano**: un'azione
 di attacco è scritta nella forma *"+N a colpire, portata N piedi, un bersaglio,
-N (NdN+N) danni di un certo tipo"*. Tutto quello che serve c'è; nulla di quello
-che serve è un campo. Leggibile da una persona, non da un motore.
+N (NdN+N) danni di un certo tipo"*. Leggibile da una persona, non da un motore.
+
+Di quei blocchi, **20 portano ora anche un campo `effetto`**
+accanto alla prosa: i privilegi del chassis Fighter e le azioni dei due mostri
+della fetta verticale. Restano **385** in cui
+tutto quello che serve c'è e nulla di quello che serve è un campo.
 
 Anche dove il dato è strutturato, il numero è spesso **dentro** una stringa:
 
@@ -613,7 +617,7 @@ I 9 ruoli già assegnati
 della decisione 27 (`sette-campi-2e`) sono, oggi, la parte dell'arena messa meglio: l'IA sa cosa
 vuole fare una creatura molto prima che il motore sappia risolverne l'attacco.
 
-> **Lettura interpretativa** — registrata il 2026-09-01. Non è derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-02. Non è derivata dai dati.
 >
 > **La scheda non è progettata male: è progettata per un altro uso.** Tutte e sei
 > le entità sono documenti di conversione — devono mostrare cosa dice la fonte,
@@ -633,7 +637,7 @@ vuole fare una creatura molto prima che il motore sappia risolverne l'attacco.
 > non può, è stato ed è del personaggio.
 >
 > Va detto anche il rovescio, perché è il costo dell'intera sezione: finché i
-> 405 blocchi di meccanica restano prosa, **nessuna proiezione può
+> 385 blocchi di meccanica restano prosa, **nessuna proiezione può
 > derivarli**. Trasformarli in numeri non è un lavoro di formato, è la stessa
 > conversione dei `pending` vista da un'altra angolazione — e riguarda anche i
 > 257 blocchi dei mostri, che oggi risultano "convertiti".
@@ -644,11 +648,11 @@ vuole fare una creatura molto prima che il motore sappia risolverne l'attacco.
 
 | domanda | risposta breve |
 |---|---|
-| 1. Cosa serve | su 27 grandezze: 9 coperte, 6 parziali, 12 senza alcun campo; e nessuna entità esistente ha un campo che cambi in partita |
+| 1. Cosa serve | su 27 grandezze: 11 coperte, 6 parziali, 10 senza alcun campo; e nessuna entità esistente ha un campo che cambi in partita |
 | 2. Cosa manca | i privilegi del chassis (non contati fra i 40 `pending`), la tabella PE 5e (17/17 non applicata), le competenze 5e, gli slot 5e, l'effetto degli incantesimi, il cambio stl/gp |
 | 3. Le tre sospese | riportate con fonte e opzioni, non sciolte |
 | 4. Riferimento o copia | riferimento per id, più impronta del corpus, più le sole scelte che risolvono un filtro; i derivati non si scrivono |
-| 5. Arena | 1,84 MB stanno in memoria: il vincolo non è la velocità ma che 405 blocchi di meccanica sono prosa |
+| 5. Arena | 1,9 MB stanno in memoria: il vincolo non è la velocità ma che 385 blocchi di meccanica su 405 sono ancora solo prosa |
 
 ---
 

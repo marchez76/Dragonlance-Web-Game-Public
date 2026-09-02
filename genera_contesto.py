@@ -645,6 +645,7 @@ def d_personaggio(razze, classi, dei):
         "xp_non_applicata": CL["tot"] - CL["xp_applicata"],
         "ricchezza": len(CL["ricchezza"]),
         "prosa": AR["prosa_tot"], "prosa_mostri": AR["prosa_mostri"],
+        "con_effetto": AR["con_effetto"],
         "prosa_razze": AR["prosa_razze"], "prosa_classi": AR["prosa_classi"],
         "tetti_sotto": TT["n_sotto"], "tetti_celle": TT["tot_celle"],
         "asi_max": TT["asi_max"], "asi_classe": TT["asi_classe_max"],
@@ -1232,10 +1233,13 @@ Riportate nel rapporto con fonte e opzioni, **non decise**.
 
 Il corpus intero pesa **{PG['mb']} MB**: sta in memoria, e a ogni turno non
 serve leggere alcun file. Il vincolo non è la velocità — è che
-**{PG['prosa']} blocchi di meccanica sono prosa italiana** e non numeri:
+**{PG['prosa'] - PG['con_effetto']} blocchi di meccanica su {PG['prosa']} sono
+ancora solo prosa italiana** e non numeri, su un totale di
 {PG['prosa_mostri']} fra azioni e tratti dei mostri, {PG['prosa_razze']} tratti
-razziali, {PG['prosa_classi']} privilegi di classe. Il motore può leggere CA,
-punti ferita, caratteristiche e Grado di Sfida; non può risolvere un attacco.
+razziali e {PG['prosa_classi']} privilegi di classe. I {PG['con_effetto']} che
+portano anche un campo `effetto` sono la fetta verticale: i privilegi del
+chassis Fighter e le azioni dei due mostri con cui l'arena gira davvero
+(`motore/arena.py`, `dati/RAPPORTO-arena.md`).
 
 ---
 
