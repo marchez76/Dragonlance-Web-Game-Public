@@ -543,6 +543,145 @@ DECISIONI = [
         'generazione irraggiungibili. Le caratteristiche per cui il manuale '
         '**non dichiara un massimale** non ereditano un tetto razziale: '
         'restano al **20** della 5e.'),
+    Decisione(
+        45, 'effetto-sul-blocco-mostro',
+        'Lo strato strutturato vive sul blocco, anche sul mostro',
+        '`effetto` sta accanto alla prosa **dentro il blocco**, e questo '
+        'vale sul mostro come sulla classe. Non e\' una scelta nuova — '
+        'effetto.schema.json la dichiarava gia\' per le classi — ma sui '
+        'mostri non era nemmeno **esprimibile**: `mostro.schema.json` aveva '
+        '`additionalProperties: false` su `elemento_5e` e nessun campo '
+        '`effetto`, quindi lo strato che il progetto aveva scelto era '
+        'vietato proprio dove sta il grosso della meccanica. Scoperto '
+        'usando i dati, non ispezionandoli: la prima fetta verticale non '
+        'poteva leggere l\'attacco di un mostro perche\' non c\'era dove '
+        'scriverlo. **L\'alternativa respinta e\' una cartella '
+        '`dati/effetti/`**: ripeterebbe il difetto gia\' visto sette volte '
+        'nel progetto — due strutture che dicono la stessa cosa e che '
+        'nessuno riconfronta. Qui il riconfronto e\' obbligatorio e '
+        'automatico (`dati/valida_effetti.py`, controllo 2), ed e\' il '
+        'pezzo che paga il costo del campo. **Non e\' un allargamento**: '
+        'dei 9 blocchi dei due mostri della fetta ne hanno `effetto` 5, e '
+        'gli altri 50 mostri restano prosa. Si struttura cio\' che un caso '
+        'esercita.'),
+    Decisione(
+        46, 'multiattacco-riferisce',
+        'Il multiattacco riferisce, non ricopia',
+        'Il blocco *Attacchi Multipli* prende un campo suo, `multiattacco`, '
+        'che dice **quante volte** si ripete **quale altra azione dello '
+        'stesso statblock** — per nome, senza ricopiarne i numeri. Prima '
+        'non aveva nessun campo: la sua unica forma era la frase «effettua '
+        'due attacchi con X», e un motore che la ignori **dimezza il danno '
+        'per round** di ogni mostro che ce l\'ha, senza che nessun '
+        'controllo se ne accorga. Sono 18 blocchi su 128 azioni del '
+        'bestiario, quindi non e\' un caso isolato. **Riferimento e non '
+        'copia** per la stessa ragione della '
+        'decisione 41 (`sconfessione-condivisa`): i numeri dell\'attacco '
+        'hanno una sede sola, l\'azione riferita. `valida_effetti.py` '
+        'verifica che il nome riferito esista davvero nello stesso '
+        'statblock — un rimando che non risolve e\' peggio di una copia.'),
+    Decisione(
+        47, 'salvezza-a-due-tempi',
+        'Un tiro salvezza ripetuto puo\' peggiorare, e allora ha un campo',
+        '`tiro_salvezza.fallimento_ripetuto` registra l\'esito del secondo '
+        'fallimento **dove e\' diverso dal primo**. Lo schema aveva gia\' '
+        '`ripetibile`, che dice **quando** si ritira e non **cosa '
+        'succede**: il Death Throes del Baaz e\' a due tempi — il primo '
+        'fallimento trattiene mentre la pietrificazione comincia, il '
+        'secondo la compie — e senza il campo nuovo le sue due condizioni '
+        'diventano una sola, cioe\' il tratto perde meta\' di se\' senza '
+        'che nessun controllo lo veda. **Campo facoltativo**: si scrive '
+        'solo dove `ripetibile` c\'e\' e il secondo tempo differisce dal '
+        'primo, altrimenti sarebbe una ripetizione. Il campo ha portato con '
+        'se\' un punto cieco, chiuso nello stesso giro: '
+        '`condizioni_citate()` non lo guardava, quindi la condizione del '
+        'secondo tempo non sarebbe mai stata controllata.'),
+    Decisione(
+        48, 'condizioni-a-consumo',
+        'Le condizioni si aggiungono quando un blocco le riferisce',
+        'Il criterio era gia\' scritto in `dati/build_condizioni.py` e '
+        'questa e\' la prima volta che **si applica** invece di essere '
+        'enunciato: `trattenuto` e `pietrificato` sono nate perche\' il '
+        'Death Throes del Baaz le riferisce davvero, non perche\' '
+        'l\'appendice della 5e ne elenca quindici. Sono **cinque, non '
+        'quindici**, e il numero e\' il punto: una cartella riempita per '
+        'anticipazione e\' una cartella di dati che nessun caso ha mai '
+        'messo alla prova. Le **sei clausole nuove** di '
+        '`condizione.schema.json` sono parte della stessa decisione e non '
+        'una decisione a parte: sono esattamente quelle che le due '
+        'condizioni richiedevano, e nessuna in piu\'. `pietrificato` ha '
+        'portato con se\' una domanda che nessun dato dichiarava — una '
+        'creatura pietrificata **non e\' morta**, ha ancora i suoi punti '
+        'ferita — e che ha costretto a riscrivere la condizione di fine '
+        'scontro nel motore. E\' il segno che il criterio funziona: una '
+        'condizione aggiunta a consumo porta con se\' il caso che la '
+        'giustifica.'),
+    Decisione(
+        49, 'vocabolario-italiano',
+        'I vocabolari condivisi hanno una sede sola, e la lingua e\' l\'italiano',
+        'Un termine che compare in **due schemi** e che un motore deve '
+        'confrontare non e\' una convenzione: e\' una struttura doppia in '
+        'attesa di sfasarsi. L\'ottava del progetto sono stati i **tipi di '
+        'danno** — `dati/oggetti/` diceva `slashing` (inglese, dall\'SRD) e '
+        '`dati/mostri/` diceva `perforante`, nessuno dei due schemi li '
+        'vincolava e **nessuno dei due era sbagliato dal proprio lato**, '
+        'quindi nessun validatore poteva vederlo. Trovata **usando** i '
+        'dati, non ispezionandoli: un motore che confronti il danno di '
+        'un\'arma con la resistenza di un mostro li manca tutti. '
+        'SEDE: `dati/schema/vocabolari.schema.json`, riferito con `$ref` '
+        'dagli schemi che lo usano — **mai ricopiato**, perche\' un enum '
+        'duplicato in tre schemi sarebbe una struttura doppia nuova, creata '
+        'mentre si chiude l\'ottava. Il codice Python non lo ridigita: '
+        '`dati/_vocabolari.py` legge quel file. '
+        'LINGUA: **italiano**, e non per gusto. Ogni altro enum che il '
+        'progetto possiede nello strato `mechanics_5e` e\' gia\' italiano '
+        '(`mischia_arma`, `da_guerra`, `leggera`, `riposo_breve`, gli id di '
+        '`dati/condizioni/`), e `mechanics_5e` e\' lo **strato nostro** '
+        'della decisione 7 (`doppio-strato`): l\'inglese li\' dentro non '
+        'era una scelta, era una stringa di fonte che `build_oggetti.py` '
+        'copiava senza tradurre. La traduzione avviene **nel generatore**, '
+        'una volta sola (CLAUDE.md 2), e l\'originale inglese resta dov\'e\' '
+        'la fonte, in `dati/_fonti/srd51_equipaggiamento.py`. '
+        'CONSEGUENZA CHE NON ERA UN ENUM: dal lato del mostro le '
+        'resistenze non erano un vocabolario ma **prosa** — «bludgeoning, '
+        'piercing, and slashing from nonmagical attacks» era **un** '
+        'elemento di un array di stringhe. Vincolare solo la lingua avrebbe '
+        'lasciato il confronto impossibile per forma invece che per lingua, '
+        'quindi `damage_resistances`, `damage_immunities` e '
+        '`damage_vulnerabilities` diventano voci `{tipo, solo_se}` e la '
+        'clausola e\' anch\'essa un enum. '
+        'NON CHIUSE, E DICHIARATE TALI: `condition_immunities` porta i nomi '
+        'delle condizioni in inglese mentre `dati/condizioni/` li ha in '
+        'italiano — stesso difetto, e chiuderlo obbliga a scegliere fra due '
+        'strade che riguardano la decisione 48 (`condizioni-a-consumo`), '
+        'quindi e\' una decisione a se\'. Misura e alternative in '
+        '`dati/RAPPORTO-vocabolari.md`.'),
+    Decisione(
+        50, 'cd-origine-dichiarata',
+        'Da dove viene una CD si dichiara, la derivabilita\' si calcola',
+        'Un campo con due significati e\' inaffidabile da entrambi i lati, '
+        'e `cd_derivata_da` ne aveva due: la sua descrizione diceva «come '
+        'la CD e\' stata ottenuta, **quando non e\' un dato di fonte**», '
+        'mentre il controllo 5 di `valida_effetti.py` pretendeva di '
+        'riempirlo proprio per una CD **di fonte** non derivabile. Al suo '
+        'posto due campi: **`cd_origine`** (`fonte` | `derivata` | '
+        '`stimata`), obbligatorio ovunque ci sia una CD, e '
+        '**`cd_derivazione`**, la prosa breve che dice da quale blocco e\' '
+        'letta, con quale caratteristica torna il conto, o su quale '
+        'precedente e\' stata stimata. La **derivabilita\' non e\' un '
+        'campo**: e\' calcolabile, e il controllo la calcola invece di '
+        'credere a cio\' che il dato ne afferma. '
+        'IL CASO CHE LO DIMOSTRA. La CD 11 del Death Throes del Baaz e\' '
+        'stampata nel blocco ufficiale SotDQ, e **combacia col conto**: 8 + '
+        'il bonus di competenza + il modificatore di Costituzione del Baaz '
+        'da\' esattamente 11, e proprio sulla caratteristica del tiro. Il '
+        'vecchio controllo '
+        'quindi **non l\'avrebbe mai segnalata** — non perche\' fosse a '
+        'posto, ma perche\' una CD letta e una CD derivata erano '
+        'indistinguibili quando i numeri coincidono. `cd_origine` registra '
+        'che la coincidenza e\' una coincidenza. Il controllo la conta e '
+        'non la segnala: sapere quante CD di fonte tornano col conto dice '
+        'quanto vale il conto come prova, e la risposta e\' poco.'),
 ]
 
 PER_ID = {d.id: d for d in DECISIONI}

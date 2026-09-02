@@ -131,7 +131,7 @@ def ha_clausola(ids, nome, caratteristica=None):
 # ------------------------------------------------------------- combattenti
 class Combattente:
     def __init__(self, nome, ca, pf, abilities, azioni, tratti,
-                 squadra, competenza, giocante=False):
+                 squadra, competenza, giocante=False, difese=None):
         self.nome = nome
         self.ca = ca
         self.pf_max = pf
@@ -143,6 +143,10 @@ class Combattente:
         self.competenza = competenza
         self.giocante = giocante
         self.condizioni = set()
+        # {"resistenze": [...], "immunita": [...], "vulnerabilita": [...]},
+        # ogni voce {"tipo", "solo_se"} del vocabolario condiviso.
+        self.difese = difese or {"resistenze": [], "immunita": [],
+                                 "vulnerabilita": []}
         self.salvezze_in_sospeso = []  # [(descrizione, effetto_ts, fonte)]
         self.risorse = {}
         self.morto = False
@@ -199,7 +203,10 @@ def da_mostro(ident, squadra, reg):
         ca=m["armor_class"]["value"],
         pf=m["hit_points"]["average"],
         abilities=dict(m["abilities"]),
-        azioni=azioni, tratti=tratti, squadra=squadra, competenza=cr)
+        azioni=azioni, tratti=tratti, squadra=squadra, competenza=cr,
+        difese={"resistenze": m.get("damage_resistances") or [],
+                "immunita": m.get("damage_immunities") or [],
+                "vulnerabilita": m.get("damage_vulnerabilities") or []})
 
 
 def pg_fetta(razza_id, classe_id, livello, punteggi, arma_id, armatura_id,
@@ -216,7 +223,8 @@ def pg_fetta(razza_id, classe_id, livello, punteggi, arma_id, armatura_id,
     razza = generazione.carica_razza(razza_id)
     classe = generazione.carica_classe(classe_id)
     c5 = classe["mechanics_5e"]
-    arma = carica("oggetti", arma_id)["mechanics_5e"]["weapon_5e"]
+    doc_arma = carica("oggetti", arma_id)
+    arma = doc_arma["mechanics_5e"]["weapon_5e"]
     armatura = carica("oggetti", armatura_id)["mechanics_5e"]["armor_5e"]
     scudo = carica("oggetti", scudo_id)["mechanics_5e"]["armor_5e"]
 
@@ -293,15 +301,6 @@ def pg_fetta(razza_id, classe_id, livello, punteggi, arma_id, armatura_id,
                    "bonus": mod(ab[car_att]) + bonus_danno,
                    "tipo": arma["damage_type"]}],
     }
-    if attacco["danno"][0]["tipo"] not in ("perforante", "tagliente",
-                                          "contundente"):
-        reg.lacuna("vocabolario-tipi-di-danno",
-                   f"il danno dell'arma e' di tipo «{attacco['danno'][0]['tipo']}»",
-                   "dati/oggetti/ porta i tipi di danno in inglese (SRD), "
-                   "dati/mostri/ in italiano. Due vocabolari per la stessa "
-                   "cosa, e nessuno dei due schemi li vincola: un motore che "
-                   "confronti un tipo di danno con una resistenza li manca "
-                   "tutti")
     reg.lacuna("nessuna-posizione",
                "portata e gittata sono campi popolati e mai letti",
                "il motore non ha una griglia ne' distanze: ogni combattente "
@@ -320,10 +319,19 @@ def pg_fetta(razza_id, classe_id, livello, punteggi, arma_id, armatura_id,
         if eff.get("guarigione") or eff.get("risorsa"):
             tratti.append((nome_p, eff))
 
+    reg.lacuna("difese-del-pg",
+               "resistenze e immunita' del personaggio",
+               "il mostro le porta in `damage_resistances`, "
+               "`damage_immunities`, `damage_vulnerabilities`; il "
+               "personaggio non ha nessun campo dove averle, e nessuna "
+               "regola che le componga da razza e classe. Qui e' senza "
+               "difese, che oggi e' vero per un Cavaliere della Corona "
+               "umano ma lo e' per assenza di dato, non per verifica")
     pg = Combattente(nome=nome, ca=ca, pf=pf, abilities=ab, azioni=azioni,
                      tratti=tratti, squadra="eroi", competenza=comp,
                      giocante=True)
     pg.arma = arma
+    pg.arma_magica = doc_arma["magico"]
     pg.razza = razza
     pg.livello = livello
     for nome_p, eff in tratti:
@@ -343,7 +351,59 @@ def _srd51_competenza(livello):
 
 
 # ------------------------------------------------------------------ attacco
-def risolvi_attacco(chi, contro, eff, reg, rng, etichetta):
+def applica_difese(contro, grezzi, reg, magico=None):
+    """Il danno per tipo contro resistenze, immunita' e vulnerabilita'.
+
+    E' il primo punto in cui il motore CONFRONTA un tipo di danno con una
+    difesa, ed e' il confronto che fino al 02/09/2026 non poteva riuscire:
+    l'arma diceva `slashing` (inglese, dall'SRD) e la scheda del mostro
+    diceva `bludgeoning, piercing, and slashing from nonmagical attacks` —
+    una frase dentro un array di stringhe. Ora i due lati parlano lo stesso
+    vocabolario (dati/schema/vocabolari.schema.json) e la clausola e' un
+    campo (`solo_se`), quindi il confronto e' un `==`.
+
+    Torna (totale, righe_di_registro)."""
+
+    def vale(voce):
+        """La difesa si applica a questo colpo?"""
+        if not voce.get("solo_se"):
+            return True
+        if magico is None:
+            reg.lacuna(
+                "attacco-magico-non-dichiarato",
+                f"la difesa vale solo «{voce['solo_se']}» e non si sa se "
+                f"l'attacco e' magico",
+                "nessun campo dice se un attacco e' magico: sull'arma di un "
+                "personaggio c'e' `magico`, sull'azione di un mostro non "
+                "c'e' niente. Il motore assume NON magico, cioe' la "
+                "condizione soddisfatta, che e' l'assunzione favorevole al "
+                "difensore e va detta")
+            return True
+        return not magico
+
+    def cerca(elenco, tipo):
+        return any(v["tipo"] == tipo and vale(v) for v in elenco)
+
+    totale, righe = 0, []
+    for n, tipo in grezzi:
+        d = contro.difese
+        if cerca(d["immunita"], tipo):
+            righe.append(f"{n} {tipo} annullati (immune)")
+            continue
+        nota = ""
+        if cerca(d["vulnerabilita"], tipo):
+            n *= 2
+            nota = ", vulnerabile"
+        if cerca(d["resistenze"], tipo):
+            n //= 2
+            nota += ", resistente"
+        righe.append(f"{n} {tipo}{nota}")
+        totale += n
+    return totale, righe
+
+
+def risolvi_attacco(chi, contro, eff, reg, rng, etichetta,
+                    magico=None):
     att = eff["attacco"]
     reg.lacuna("regole-di-sistema",
                "la procedura di risoluzione di un attacco",
@@ -365,15 +425,15 @@ def risolvi_attacco(chi, contro, eff, reg, rng, etichetta):
                  f"{totale} contro CA {contro.ca} — manca")
         return 0
 
-    danno = 0
-    pezzi = []
+    grezzi = []
     for d in att["danno"]:
         n = tira(d["dadi"], rng)
         if critico:
             n += tira(d["dadi"], rng)
         n += d.get("bonus") or 0
-        pezzi.append(f"{n} {d['tipo']}")
-        danno += n
+        grezzi.append((n, d["tipo"]))
+
+    danno, pezzi = applica_difese(contro, grezzi, reg, magico=magico)
 
     if ha_clausola(contro.condizioni, "resistenza_a_tutti_i_danni"):
         danno //= 2
@@ -564,10 +624,12 @@ def agisci(chi, bersaglio, reg, rng):
         for _ in range(ma["quanti"]):
             if not bersaglio.in_gioco():
                 break
-            risolvi_attacco(chi, bersaglio, sotto, reg, rng, ma["azione"])
+            risolvi_attacco(chi, bersaglio, sotto, reg, rng, ma["azione"],
+                            magico=getattr(chi, "arma_magica", None))
     else:
         reg.riga(f"   {chi.nome} — {nome} contro {bersaglio.nome}")
-        risolvi_attacco(chi, bersaglio, eff, reg, rng, nome)
+        risolvi_attacco(chi, bersaglio, eff, reg, rng, nome,
+                        magico=getattr(chi, "arma_magica", None))
 
 
 def fine_turno(chi, reg, rng):

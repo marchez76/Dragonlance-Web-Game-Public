@@ -35,8 +35,8 @@
           "description": "Modificatore sommato al tiro. Su un'arma di un personaggio e' derivato dalla caratteristica e NON va scritto qui: si scrive solo dove la fonte lo fissa, come nel blocco di un mostro."
         },
         "tipo": {
-          "type": "string",
-          "description": "Tipo di danno in italiano: perforante, tagliente, contundente, da fuoco, da veleno, ... `nessuno` dove la fonte non ne dichiara uno (la Rete)."
+          "$ref": "vocabolari.schema.json#/$defs/tipo_danno",
+          "description": "Il tipo di danno, dal vocabolario condiviso. Era una stringa libera con l'elenco scritto nella descrizione, cioe' una convenzione: dall'altra parte del confronto `dati/oggetti/` portava `slashing` e nessuno dei due schemi lo vietava. L'elenco ora sta in dati/schema/vocabolari.schema.json e non e' ricopiato qui."
         },
         "meta_se_salvato": {
           "type": "boolean",
@@ -81,13 +81,18 @@
     "tiro_salvezza": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["caratteristica", "cd"],
+      "required": ["caratteristica", "cd", "cd_origine"],
       "properties": {
         "caratteristica": {"$ref": "#/$defs/caratteristica"},
         "cd": {"type": "integer"},
-        "cd_derivata_da": {
+        "cd_origine": {
+          "type": "string",
+          "enum": ["fonte", "derivata", "stimata"],
+          "description": "DA DOVE VIENE LA CD. `fonte`: e' stampata nel blocco d'origine e si trascrive (la CD 11 del Death Throes del Baaz, dal blocco ufficiale SotDQ). `derivata`: e' 8 + competenza + il modificatore di una caratteristica del portatore, e il controllo 5 di dati/valida_effetti.py verifica che il conto torni. `stimata`: l'abbiamo scelta noi su un precedente, e allora `cd_derivazione` deve dire quale. E' la distinzione fra osservato e ipotizzato del metodo di conversione, resa campo. Sostituisce `cd_derivata_da`, che portava DUE informazioni in una: la sua descrizione diceva «quando non e' un dato di fonte» e il controllo 5 pretendeva di riempirlo proprio per una CD di fonte non derivabile — quella del Baaz. Un campo con due significati e' inaffidabile da entrambi i lati."
+        },
+        "cd_derivazione": {
           "type": ["string", "null"],
-          "description": "Come la CD e' stata ottenuta, quando non e' un dato di fonte: `8 + competenza + Costituzione`, o il precedente su cui e' stata stimata. Serve a distinguere una CD letta da una CD scelta — la stessa distinzione fra osservato e ipotizzato del metodo di conversione."
+          "description": "COME, in prosa breve. Con `fonte`: da quale blocco e' letta. Con `derivata`: quale caratteristica del portatore — il conto puo' tornare con piu' d'una, quindi non e' un derivato riscritto a mano ma l'unica informazione che il conto non da'. Con `stimata`: il precedente su cui e' stata scelta. Obbligatorio con `fonte` e con `stimata`: una CD non derivabile che non dice da dove viene e' una stima nascosta."
         },
         "fallimento": {"$ref": "#/$defs/esito"},
         "successo": {"$ref": "#/$defs/esito"},

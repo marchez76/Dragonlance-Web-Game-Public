@@ -457,7 +457,8 @@
               "type": "string"
             },
             "damage_type": {
-              "type": "string"
+              "$ref": "vocabolari.schema.json#/$defs/tipo_danno",
+              "description": "Il tipo di danno dell'arma, dal vocabolario condiviso di dati/schema/vocabolari.schema.json, in italiano. Fino al 02/09/2026 era il termine SRD inglese copiato tale e quale (`slashing`) dentro `mechanics_5e`, cioe' strato di fonte finito nello strato nostro: l'inglese resta in dati/_fonti/srd51_equipaggiamento.py, dov'e' la fonte, e `dati/_vocabolari.py` fa la traduzione una volta sola dentro il generatore."
             },
             "properties": {
               "type": "array",

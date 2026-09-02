@@ -27,12 +27,26 @@ I CINQUE CONTROLLI
     4. I DUE ESTREMI DELLA COMPETENZA. Le categorie nominate dalle competenze
        di classe esistono davvero come `categoria` in dati/oggetti/. Una
        competenza in una categoria inesistente e' una competenza in niente.
-    5. LE CD DICHIARATE DEVONO ESSERE SPIEGATE. Una CD in `effetto` deve
-       essere derivabile da 8 + competenza + modificatore di una
-       caratteristica del portatore, oppure dichiarare in `cd_derivata_da`
-       perche' non lo e'. E' la distinzione fra una CD letta e una CD
-       scelta: il metodo di conversione la impone gia' per i mostri
-       (osservato contro ipotizzato) e qui diventa un campo.
+    5. LE CD DICHIARATE DEVONO ESSERE SPIEGATE. Ogni CD in `effetto` porta
+       `cd_origine` — `fonte`, `derivata` o `stimata` — e il controllo si
+       comporta diversamente per ognuna: una `derivata` deve tornare col
+       conto 8 + competenza + una caratteristica del portatore, una `fonte`
+       e una `stimata` no ma devono dire in `cd_derivazione` da dove
+       vengono. E' la distinzione fra una CD letta e una CD scelta: il
+       metodo di conversione la impone gia' per i mostri (osservato contro
+       ipotizzato) e qui diventa un campo.
+
+       DUE INFORMAZIONI, DUE CAMPI. Fino al 02/09/2026 ce n'era uno solo,
+       `cd_derivata_da`, e portava una contraddizione: la sua descrizione
+       diceva «come la CD e' stata ottenuta, QUANDO NON E' UN DATO DI
+       FONTE», mentre questo controllo pretendeva di riempirlo proprio per
+       una CD di fonte non derivabile. La CD 11 del Death Throes del Baaz e'
+       quel caso: stampata nel blocco ufficiale SotDQ e non derivabile dal
+       conto, quindi o si violava la descrizione o si violava il controllo.
+       Un campo con due significati e' inaffidabile da entrambi i lati.
+       `cd_origine` dice DA COSA viene la CD; la derivabilita' non e' un
+       campo perche' e' calcolabile, e questo controllo la calcola invece di
+       fidarsi di quello che il dato ne afferma.
 
        Il controllo vale sui blocchi che hanno gia' una struttura, non su
        tutto il bestiario in prosa. La misura, presa il 02/09/2026 sui 52
@@ -41,10 +55,16 @@ I CINQUE CONTROLLI
        Ragno Botola e lo Skyfisher. Non sono errori: sono CD dichiarate
        dalla fonte o stimate, e le rispettive note lo dicono. Ma lo dicono
        in prosa, dove nessun controllo le legge — ed e' esattamente il buco
-       che `cd_derivata_da` chiude man mano che quei blocchi si
-       strutturano. Renderlo bloccante adesso su blocchi ancora in prosa
-       segnalerebbe sei casi corretti, e un controllo che grida al lupo
-       viene spento.
+       che `cd_origine` chiude man mano che quei blocchi si strutturano.
+       Renderlo bloccante adesso su blocchi ancora in prosa segnalerebbe
+       sei casi corretti, e un controllo che grida al lupo viene spento.
+
+       LA COINCIDENZA E' UN'INFORMAZIONE, NON UN ERRORE. Una CD di fonte
+       puo' tornare col conto per caso: 29 delle 35 CD in prosa lo fanno, e
+       fra quelle ce ne sono certamente di stampate. Il controllo la
+       registra e non la segnala — una CD `fonte` che coincide non e'
+       sbagliata, ma sapere quante sono dice quanto vale il conto come
+       prova, e la risposta e' poco.
 
 QUANTO VALE OGNI CONTROLLO — detto per non sopravvalutarlo
     Sui blocchi generati da un build_*.py, prosa e struttura escono dalla
@@ -59,20 +79,18 @@ Uso:  python3 dati/valida_effetti.py       # esce != 0 se trova divergenze
       python3 dati/valida_effetti.py -v    # elenca anche cosa ha confrontato
 """
 
+import collections
 import glob
 import json
 import os
 import re
 import sys
 
-import jsonschema
-
 BASE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, BASE)
 
+import _schemi as S  # noqa: E402
 import _srd51 as R  # noqa: E402
-
-Validator = getattr(jsonschema, "Draft202012Validator", None) or jsonschema.Draft7Validator
 
 DADO = re.compile(r"\b(\d+d\d+)\b")
 CD = re.compile(r"\bCD\s*(\d+)\b")
@@ -288,38 +306,59 @@ def cd_attese(portatore):
 
 
 def controlla_cd(eff, portatore, err):
-    """Controllo 5, su un blocco che ha gia' la struttura."""
+    """Controllo 5, su un blocco che ha gia' la struttura.
+
+    Torna l'origine dichiarata e se la CD combacia col conto, per la
+    misura finale: la coincidenza fra una CD di fonte e il conto e' un
+    dato sul valore del conto, non un errore."""
     ts = eff.get("tiro_salvezza") or {}
     cd = ts.get("cd")
     if cd is None:
-        return
+        return None
+    origine = ts.get("cd_origine")
+    if not origine:
+        err(f"CD {cd} senza `cd_origine`: da dove viene una CD non si "
+            f"deduce, si dichiara")
+        return None
+
+    if origine in ("fonte", "stimata") and not ts.get("cd_derivazione"):
+        err(f"CD {cd} dichiarata `{origine}` e `cd_derivazione` vuoto: una "
+            f"CD che non si deriva dal conto e non dice da dove viene e' "
+            f"una stima nascosta")
+
     attese = cd_attese(portatore)
     if attese is None:
-        return
-    if cd not in attese and not ts.get("cd_derivata_da"):
-        err(f"CD {cd} non derivabile da 8 + competenza + una caratteristica "
-            f"del portatore (attese: {sorted(attese)}), e cd_derivata_da e' "
-            f"vuoto: una CD scelta va dichiarata scelta")
+        return (origine, None)
+    combacia = cd in attese
+    if origine == "derivata" and not combacia:
+        err(f"CD {cd} dichiarata `derivata` ma non e' 8 + competenza + una "
+            f"caratteristica del portatore (attese: {sorted(attese)}): "
+            f"o l'origine e' un'altra, o il numero e' sbagliato")
+    return (origine, combacia)
 
 
 # --------------------------------------------------------------------- report
 
 def main(argv):
     verbose = "-v" in argv
-    schema = json.load(open(os.path.join(BASE, "schema", "effetto.schema.json"),
-                            encoding="utf-8"))
-    Validator.check_schema(schema)
-    v = Validator(schema)
+    v = S.validatore("effetto.schema.json")
 
     errori = []
     def err_globale(m):
         errori.append(m)
+
+    # Il vocabolario condiviso e' applicato solo se il `$ref` fra file
+    # risolve davvero: provato, non assunto.
+    for m in S.verifica_riferimenti():
+        err_globale(m)
 
     cond = controlla_condizioni(err_globale)
     n_armi, n_armature = controlla_competenze(err_globale)
 
     con_effetto = 0
     con_cd = 0
+    origini = collections.Counter()
+    coincidenze = 0
     for origine, b, portatore in blocchi_con_effetto():
         eff = b.get("effetto")
         if not eff:
@@ -336,7 +375,11 @@ def main(argv):
         confronta_prosa(b.get("mechanics_5e"), eff, err)
         if (eff.get("tiro_salvezza") or {}).get("cd") is not None:
             con_cd += 1
-            controlla_cd(eff, portatore, err)
+            esito = controlla_cd(eff, portatore, err)
+            if esito:
+                origini[esito[0]] += 1
+                if esito[0] == "fonte" and esito[1]:
+                    coincidenze += 1
 
         for cid in sorted(condizioni_citate(eff)):
             if cid not in cond:
@@ -354,7 +397,10 @@ def main(argv):
     print(f"\n{con_effetto} blocchi con `effetto` confrontati con la loro prosa.")
     print(f"{len(cond)} condizioni, {n_armi} categorie d'arma e "
           f"{n_armature} d'armatura incrociate con le competenze.")
-    print(f"{con_cd} CD dichiarate nella struttura, verificate derivabili.")
+    per_origine = ", ".join(f"{n} {o}" for o, n in sorted(origini.items())) or "nessuna"
+    print(f"{con_cd} CD dichiarate nella struttura ({per_origine}); "
+          f"{coincidenze} di fonte combaciano comunque col conto "
+          f"8 + competenza + caratteristica.")
 
     if errori:
         print(f"\n{len(errori)} DIVERGENZE fra prosa e struttura:")

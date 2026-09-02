@@ -15,10 +15,11 @@ import os
 import re
 import sys
 
-import jsonschema
 
 BASE = os.path.dirname(os.path.abspath(__file__))
-Validator = getattr(jsonschema, "Draft202012Validator", None) or jsonschema.Draft7Validator
+sys.path.insert(0, BASE)
+
+import _schemi as S  # noqa: E402
 
 DADO = re.compile(r"^\d+d\d+([+-]\d+)?$")
 DADO_O_FISSO = re.compile(r"^(\d+d\d+([+-]\d+)?|\d+)$")
@@ -98,16 +99,21 @@ def coerenza(d, err):
 
 
 def main():
-    schema = json.load(open(os.path.join(BASE, "schema", "oggetto.schema.json")))
-    Validator.check_schema(schema)
-    v = Validator(schema)
+    v = S.validatore("oggetto.schema.json")
+
+    # Il vocabolario dei tipi di danno sta in un altro file e ci arriva per
+    # `$ref`: se il riferimento non risolve, `damage_type` torna a essere
+    # una stringa libera e l'inglese rientrerebbe senza che nulla lo dica.
+    riferimenti = S.verifica_riferimenti()
+    for m in riferimenti:
+        print(f"  {m}")
 
     files = sorted(glob.glob(os.path.join(BASE, "oggetti", "*.json")))
     if not files:
         print("nessun file in dati/oggetti/ — esegui prima build_oggetti.py")
         return 1
 
-    ids, totale_errori = set(), 0
+    ids, totale_errori = set(), len(riferimenti)
     for p in files:
         nome = os.path.basename(p)
         d = json.load(open(p, encoding="utf-8"))

@@ -17,10 +17,12 @@ import os
 import re
 import sys
 
-sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "_fonti"))
-import srd51_equipaggiamento as SRD
-
 BASE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(BASE, "_fonti"))
+sys.path.insert(0, BASE)
+import srd51_equipaggiamento as SRD  # noqa: E402
+import _vocabolari as VOC  # noqa: E402
+
 OUT = os.path.join(BASE, "oggetti")
 
 SOURCE_BOOK = "Player's Handbook (SRD 5.1)"
@@ -139,6 +141,12 @@ def build_armi():
                 "damage_type 'nessuno' e' un segnaposto nostro: la fonte non ne dichiara "
                 "uno per quest'arma (Net, arma di controllo senza danno)."
             )
+        # La traduzione avviene QUI, nel generatore, una volta sola. Prima il
+        # termine SRD finiva tale e quale in `mechanics_5e` — inglese dentro
+        # lo strato nostro, mentre dati/mostri/ diceva la stessa cosa in
+        # italiano: l'ottava struttura doppia del progetto. Correggerla a
+        # valle si sfaserebbe alla prima rigenerazione (CLAUDE.md 2).
+        tipo_danno = "nessuno" if dtype is None else VOC.tipo_danno(dtype)
         d = base_doc(
             id_, name_en, name_it, "arma",
             f"Arma dell'SRD 5.1, tabella Equipaggiamento del Player's Handbook ({cat_2014}).",
@@ -149,7 +157,7 @@ def build_armi():
             "categoria": categoria,
             "tipo": tipo,
             "damage_dice": dice,
-            "damage_type": dtype if dtype is not None else "nessuno",
+            "damage_type": tipo_danno,
             "properties": props,
             "proprieta_5e": proprieta_strutturate(props, tipo),
             "weight_lb": weight,

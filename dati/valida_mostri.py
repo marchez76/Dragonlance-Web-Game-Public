@@ -26,12 +26,12 @@ import json
 import os
 import sys
 
-import jsonschema
 
 BASE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, BASE)
 
 import _draconici as D
+import _schemi as S
 
 SCHEMA = os.path.join(BASE, "schema", "mostro.schema.json")
 LIBRO_2E = "MC - Dragonlance Appendix"
@@ -81,7 +81,7 @@ ABILITA = {
     "Aurak": [("Perception", 3, None)],
 }
 
-IMMUNITA_DANNO = {"Kapak": ["poison"]}
+IMMUNITA_DANNO = {"Kapak": [{"tipo": "da_veleno", "solo_se": None}]}
 IMMUNITA_COND = {"Kapak": ["poisoned"], "Aurak": ["charmed"]}
 
 MR = {"Baaz": 20, "Bozak": 20, "Kapak": 20, "Sivak": 20, "Aurak": 30}
@@ -266,9 +266,11 @@ def copertura(doc, schema):
 
 
 def main():
-    schema = json.load(open(SCHEMA, encoding="utf-8"))
-    val = jsonschema.Draft7Validator(schema)
-    errori = 0
+    schema = S.carica("mostro.schema.json")
+    val = S.validatore("mostro.schema.json", schema)
+    errori = len(S.verifica_riferimenti())
+    for m in S.verifica_riferimenti():
+        print(f"✗ {m}")
     tutti_vuoti = {}
 
     for n in D.ORDINE_5E:

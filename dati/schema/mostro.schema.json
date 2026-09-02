@@ -8,6 +8,23 @@
   "additionalProperties": false,
 
   "$defs": {
+    "voce_danno": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tipo"],
+      "description": "Una voce di resistenza, immunita' o vulnerabilita': un tipo di danno del vocabolario condiviso, piu' l'eventuale clausola che la restringe. NON e' una stringa. Fino al 02/09/2026 lo era, e portava l'inglese della fonte insieme alla clausola dentro la frase: «bludgeoning, piercing, and slashing from nonmagical attacks» era UN elemento di array, cioe' tre tipi di danno e una condizione scritti in prosa dentro un campo che sembrava un vocabolario. Un motore che confronti il tipo di danno di un'arma con questa lista non poteva riuscirci da nessun lato — ne' la lingua ne' la forma coincidevano.",
+      "properties": {
+        "tipo": { "$ref": "vocabolari.schema.json#/$defs/tipo_danno" },
+        "solo_se": {
+          "anyOf": [
+            { "$ref": "vocabolari.schema.json#/$defs/qualificatore_danno" },
+            { "type": "null" }
+          ],
+          "description": "La clausola che restringe la voce, `null` dove non c'e'."
+        }
+      }
+    },
+
     "conversion_status": {
       "enum": ["direct", "adapted", "pending", "source_only"],
       "description": "direct: il 5e ha gia' un equivalente e si copia quello — DUE varianti, da distinguere nel `note`: (a) conversione A INDICAZIONE DI FONTE, la piu' solida delle due, quando il testo 2e stesso nomina o descrive l'equivalente 5e da usare (es. Horax: la fonte dice che il freddo \"ha l'effetto di un incantesimo slow\", si copia *slow* dall'SRD; Ogre di Krynn: la fonte dichiara che gli ogre di Krynn sono fisicamente identici agli ogre standard, si adotta l'Ogre SRD di peso) — non e' analogia nostra, e' il testo che indica dove guardare, e va cercata PRIMA di ripiegare sull'analogo SRD scelto da noi; (b) conversione diretta per SCELTA NOSTRA, quando riconosciamo che il 5e ha gia' un idioma adatto ma la fonte non lo nomina esplicitamente (es. \"colpibile solo da armi magiche\" -> resistenza alle armi non magiche, idioma standard ma non citato dalla fonte con quelle parole). adapted: convertito da noi con una scelta di forma, senza che la fonte indichi l'equivalente (analogia SRD, invenzione editoriale minima, ecc.). pending: da convertire, la meccanica 5e non e' ancora decisa. source_only: registrato dalla fonte ma senza effetto in 5e, per scelta motivata."
@@ -386,9 +403,9 @@
             }
           }
         },
-        "damage_resistances": { "type": "array", "items": { "type": "string" } },
-        "damage_immunities": { "type": "array", "items": { "type": "string" } },
-        "damage_vulnerabilities": { "type": "array", "items": { "type": "string" } },
+        "damage_resistances": { "type": "array", "items": { "$ref": "#/$defs/voce_danno" } },
+        "damage_immunities": { "type": "array", "items": { "$ref": "#/$defs/voce_danno" } },
+        "damage_vulnerabilities": { "type": "array", "items": { "$ref": "#/$defs/voce_danno" } },
         "condition_immunities": { "type": "array", "items": { "type": "string" } },
         "senses": { "type": "array", "items": { "type": "string" } },
         "passive_perception": { "type": ["integer", "null"] },

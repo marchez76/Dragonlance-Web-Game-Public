@@ -49,7 +49,7 @@ in `classe.schema.json`.
 motore. Gli altri 4 restano prosa — ed è già un risultato, perché
 prima della fetta erano prosa tutti e 9, su 257 del bestiario.
 
-### Due estensioni di schema, entrambe imposte da un caso
+### Due estensioni di schema, entrambe imposte da un caso — ora decisione 46 (`multiattacco-riferisce`) e decisione 47 (`salvezza-a-due-tempi`)
 
 `multiattacco` — il blocco *Attacchi Multipli* dice una cosa meccanica e non
 aveva nessun campo in cui dirla: la sua sola forma era la frase «effettua due
@@ -66,7 +66,7 @@ si ritira e non *cosa succede*. Senza il campo nuovo, le due condizioni di quel
 tratto diventano una sola — cioè il tratto perde metà di sé senza che nessun
 controllo se ne accorga.
 
-### Due condizioni nuove, per lo stesso motivo
+### Due condizioni nuove, per lo stesso motivo — decisione 48 (`condizioni-a-consumo`)
 
 `trattenuto` e `pietrificato` non esistevano. `build_condizioni.py` dichiarava
 il criterio — *si aggiungono quando un blocco convertito le riferisce davvero* —
@@ -108,17 +108,17 @@ questa prova.
 
 > «arma da mischia in una mano sola, nessun'altra arma impugnata» — il motore la considera sempre vera perché non c'è nessun campo che dica come verificarla
 
-**3. `vocabolario-tipi-di-danno`** — il danno dell'arma e' di tipo «slashing»
-
-> dati/oggetti/ porta i tipi di danno in inglese (SRD), dati/mostri/ in italiano. Due vocabolari per la stessa cosa, e nessuno dei due schemi li vincola: un motore che confronti un tipo di danno con una resistenza li manca tutti
-
-**4. `nessuna-posizione`** — portata e gittata sono campi popolati e mai letti
+**3. `nessuna-posizione`** — portata e gittata sono campi popolati e mai letti
 
 > il motore non ha una griglia ne' distanze: ogni combattente e' a portata di ogni altro. `portata_ft` e `gittata_ft` esistono nei dati e questo scontro non li usa — un'arma a distanza e una da mischia si comportano uguale
 
-**5. `attacco-del-pg`** — l'attacco del personaggio non esiste come dato
+**4. `attacco-del-pg`** — l'attacco del personaggio non esiste come dato
 
 > composto qui da arma + caratteristica + competenza + stile. Sul mostro `attacco` e' un campo; sul personaggio e' una funzione di questo modulo, e vive solo qui
+
+**5. `difese-del-pg`** — resistenze e immunita' del personaggio
+
+> il mostro le porta in `damage_resistances`, `damage_immunities`, `damage_vulnerabilities`; il personaggio non ha nessun campo dove averle, e nessuna regola che le componga da razza e classe. Qui e' senza difese, che oggi e' vero per un Cavaliere della Corona umano ma lo e' per assenza di dato, non per verifica
 
 **6. `blocco-senza-effetto:traag:Dissoluzione post mortem`** — Traag: il blocco «Dissoluzione post mortem» non ha `effetto`
 
@@ -213,17 +213,43 @@ legge, e i mostri combattono fino alla morte — «irrealistico, e macchinoso da
 giocare», dice quella stessa decisione. Il Traag è il caso peggiore: il suo
 morale ha due stati, e ignorarlo cancella il suo tratto identitario.
 
-**Due vocabolari per i tipi di danno.** `dati/oggetti/` li porta in inglese
-(`slashing`, dall'SRD), `dati/mostri/` in italiano (`perforante`). Nessuno dei
-due schemi li vincola. Un motore che confronti un tipo di danno con una
-resistenza li manca tutti, e nessun validatore lo vede perché nessuno dei due
-è sbagliato dal proprio lato. È una struttura doppia della stessa famiglia
-delle sei già chiuse, e non è stata trovata ispezionando i dati: è stata
-trovata usandoli.
+**Due vocabolari per i tipi di danno — chiusa.** Alla prima esecuzione
+`dati/oggetti/` li portava in inglese (`slashing`, dall'SRD) e `dati/mostri/`
+in italiano (`perforante`), nessuno dei due schemi li vincolava e nessun
+validatore poteva vederlo perché nessuno dei due era sbagliato dal proprio
+lato. Era l'ottava struttura doppia del progetto, e non è stata trovata
+ispezionando i dati: è stata trovata usandoli. Chiusa con
+decisione 49 (`vocabolario-italiano`) — vocabolario unico in
+`dati/schema/vocabolari.schema.json`, riferito per `$ref` e mai ricopiato — e
+il motore adesso **confronta davvero** il tipo di danno con resistenze,
+immunità e vulnerabilità (`applica_difese`).
+
+**Nessuno dei tre scenari lo esercita**, e va detto invece che lasciato
+credere: né il Traag né il Baaz hanno difese per tipo, e il personaggio non ha
+un campo dove averne. Il ramo esiste e in questa arena non si prende, che è
+un'altra cosa dall'aver funzionato. Provato quindi a parte, e non su casi
+costruiti: le schede sono cercate nel bestiario, una per forma
+(Bakali, Bambola Kani, Cervo Selvatico Wichtlin).
+
+| scheda e difesa | 10 danni diventano | come è stato letto |
+|---|---|---|
+| Cervo Selvatico Wichtlin — resistenza a `contundente` (da_attacchi_non_magici) | arma non magica: **5** | 5 contundente, resistente |
+| Cervo Selvatico Wichtlin — resistenza a `contundente` (da_attacchi_non_magici) | arma magica: **10** | 10 contundente |
+| Bambola Kani — immunità a `da_veleno` | 10 danni: **0** | 10 da_veleno annullati (immune) |
+| Bakali — vulnerabilità a `da_freddo` | 10 danni: **20** | 20 da_freddo, vulnerabile |
+
+Le due righe che contano sono le prime: la stessa arma, se magica, passa la
+resistenza. E lì c'è la lacuna nuova che ha preso il posto di quella chiusa —
+**nessun campo dice se un attacco è magico**. Sull'arma di un personaggio c'è
+`magico`; sull'azione di un mostro non c'è niente, e il motore assume *non
+magico*, cioè l'assunzione favorevole al difensore.
 
 ---
 
-*Nessuna decisione è presa in questo documento. Le due estensioni di schema e
-le due condizioni nuove sono la condizione perché lo scontro esistesse, non
-una scelta di progetto: senza, il Death Throes non era esprimibile e il
-multiattacco non era leggibile.*
+*Le quattro estensioni sono ora registrate come decisioni —
+decisione 45 (`effetto-sul-blocco-mostro`), decisione 46 (`multiattacco-riferisce`),
+decisione 47 (`salvezza-a-due-tempi`), decisione 48 (`condizioni-a-consumo`) — insieme alle
+due che questa esecuzione ha imposto: decisione 49 (`vocabolario-italiano`) e
+decisione 50 (`cd-origine-dichiarata`). Erano la condizione perché lo scontro
+esistesse; restano scelte di progetto, e senza un id fra sei mesi nessuno
+saprebbe perché `effetto` sta su `elemento_5e` invece che altrove.*

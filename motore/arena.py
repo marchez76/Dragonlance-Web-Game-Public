@@ -49,6 +49,7 @@ BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, BASE)
 
 from motore import combattimento as C   # noqa: E402
+from decisioni import cita  # noqa: E402
 
 # Il personaggio della fetta. I punteggi sono l'array standard assegnato a
 # mano; la scelta e' nostra, non un dato — un personaggio non ha ancora una
@@ -172,6 +173,55 @@ def blocchi_strutturati():
     return fuori
 
 
+def prova_delle_difese():
+    """Il confronto fra tipo di danno e difesa, provato su casi veri.
+
+    Serve perche' nessuno dei tre scenari lo esercita: ne' il Traag ne' il
+    Baaz hanno difese per tipo, quindi `applica_difese` gira sempre sul ramo
+    vuoto e "l'arena passa" non direbbe niente.
+
+    Le schede NON sono scelte a mano: si cercano nel bestiario quelle che
+    portano ciascuna forma — resistenza con clausola, immunita',
+    vulnerabilita' — perche' una prova costruita su un caso inventato prova
+    il codice e non i dati. Torna (righe, schede usate)."""
+    import glob
+    import json
+
+    trovate = {"resistenze": None, "immunita": None, "vulnerabilita": None}
+    for f in sorted(glob.glob(os.path.join(BASE, "dati", "mostri", "*.json"))):
+        d = json.load(open(f, encoding="utf-8"))
+        m = d["mechanics_5e"]
+        for chiave, campo in (("resistenze", "damage_resistances"),
+                              ("immunita", "damage_immunities"),
+                              ("vulnerabilita", "damage_vulnerabilities")):
+            if trovate[chiave] is None and (m.get(campo) or []):
+                trovate[chiave] = (os.path.splitext(os.path.basename(f))[0],
+                                   m[campo][0])
+
+    reg = C.Registro()
+    righe = []
+    usate = []
+    for chiave, etichetta in (("resistenze", "resistenza"),
+                              ("immunita", "immunità"),
+                              ("vulnerabilita", "vulnerabilità")):
+        if trovate[chiave] is None:
+            righe.append([etichetta, "—", "nessuna scheda del bestiario la porta"])
+            continue
+        ident, voce = trovate[chiave]
+        chi = C.da_mostro(ident, "mostri", reg)
+        usate.append(chi.nome)
+        clausola = voce.get("solo_se")
+        for magico in ((False, True) if clausola else (False,)):
+            tot, lette = C.applica_difese(chi, [(10, voce["tipo"])], reg,
+                                          magico=magico)
+            arma = ("arma magica" if magico else "arma non magica") if clausola \
+                else "10 danni"
+            righe.append([f"{chi.nome} — {etichetta} a `{voce['tipo']}`"
+                          + (f" ({clausola})" if clausola else ""),
+                          f"{arma}: **{tot}**", "; ".join(lette)])
+    return righe, sorted(set(usate))
+
+
 def tabella(intestazioni, righe, allin=None):
     allin = allin or ["---"] * len(intestazioni)
     return "\n".join(
@@ -186,6 +236,7 @@ def rapporto(scenari, lacune, completo):
     n_multi, n_azioni = conta_multiattacchi()
     con = [b for b in blocchi if b[3]]
     senza = [b for b in blocchi if not b[3]]
+    righe_difese, schede_difese = prova_delle_difese()
 
     esiti = []
     for s in scenari:
@@ -241,7 +292,7 @@ in `classe.schema.json`.
 motore. Gli altri {len(senza)} restano prosa — ed è già un risultato, perché
 prima della fetta erano prosa tutti e {len(blocchi)}, su 257 del bestiario.
 
-### Due estensioni di schema, entrambe imposte da un caso
+### Due estensioni di schema, entrambe imposte da un caso — ora {cita('multiattacco-riferisce')} e {cita('salvezza-a-due-tempi')}
 
 `multiattacco` — il blocco *Attacchi Multipli* dice una cosa meccanica e non
 aveva nessun campo in cui dirla: la sua sola forma era la frase «effettua due
@@ -258,7 +309,7 @@ si ritira e non *cosa succede*. Senza il campo nuovo, le due condizioni di quel
 tratto diventano una sola — cioè il tratto perde metà di sé senza che nessun
 controllo se ne accorga.
 
-### Due condizioni nuove, per lo stesso motivo
+### Due condizioni nuove, per lo stesso motivo — {cita('condizioni-a-consumo')}
 
 `trattenuto` e `pietrificato` non esistevano. `build_condizioni.py` dichiarava
 il criterio — *si aggiungono quando un blocco convertito le riferisce davvero* —
@@ -307,7 +358,7 @@ questa prova.
     for i, (codice, (cosa, ass)) in enumerate(lacune.lacune.items(), 1):
         testa += f"**{i}. `{codice}`** — {cosa}\n\n> {ass}\n\n"
 
-    testa += """---
+    testa += f"""---
 
 ## 4. Cosa si è rotto, in ordine di peso
 
@@ -352,20 +403,41 @@ legge, e i mostri combattono fino alla morte — «irrealistico, e macchinoso da
 giocare», dice quella stessa decisione. Il Traag è il caso peggiore: il suo
 morale ha due stati, e ignorarlo cancella il suo tratto identitario.
 
-**Due vocabolari per i tipi di danno.** `dati/oggetti/` li porta in inglese
-(`slashing`, dall'SRD), `dati/mostri/` in italiano (`perforante`). Nessuno dei
-due schemi li vincola. Un motore che confronti un tipo di danno con una
-resistenza li manca tutti, e nessun validatore lo vede perché nessuno dei due
-è sbagliato dal proprio lato. È una struttura doppia della stessa famiglia
-delle sei già chiuse, e non è stata trovata ispezionando i dati: è stata
-trovata usandoli.
+**Due vocabolari per i tipi di danno — chiusa.** Alla prima esecuzione
+`dati/oggetti/` li portava in inglese (`slashing`, dall'SRD) e `dati/mostri/`
+in italiano (`perforante`), nessuno dei due schemi li vincolava e nessun
+validatore poteva vederlo perché nessuno dei due era sbagliato dal proprio
+lato. Era l'ottava struttura doppia del progetto, e non è stata trovata
+ispezionando i dati: è stata trovata usandoli. Chiusa con
+{cita('vocabolario-italiano')} — vocabolario unico in
+`dati/schema/vocabolari.schema.json`, riferito per `$ref` e mai ricopiato — e
+il motore adesso **confronta davvero** il tipo di danno con resistenze,
+immunità e vulnerabilità (`applica_difese`).
+
+**Nessuno dei tre scenari lo esercita**, e va detto invece che lasciato
+credere: né il Traag né il Baaz hanno difese per tipo, e il personaggio non ha
+un campo dove averne. Il ramo esiste e in questa arena non si prende, che è
+un'altra cosa dall'aver funzionato. Provato quindi a parte, e non su casi
+costruiti: le schede sono cercate nel bestiario, una per forma
+({", ".join(schede_difese)}).
+
+{tabella(["scheda e difesa", "10 danni diventano", "come è stato letto"], righe_difese, ["---", "---", "---"])}
+
+Le due righe che contano sono le prime: la stessa arma, se magica, passa la
+resistenza. E lì c'è la lacuna nuova che ha preso il posto di quella chiusa —
+**nessun campo dice se un attacco è magico**. Sull'arma di un personaggio c'è
+`magico`; sull'azione di un mostro non c'è niente, e il motore assume *non
+magico*, cioè l'assunzione favorevole al difensore.
 
 ---
 
-*Nessuna decisione è presa in questo documento. Le due estensioni di schema e
-le due condizioni nuove sono la condizione perché lo scontro esistesse, non
-una scelta di progetto: senza, il Death Throes non era esprimibile e il
-multiattacco non era leggibile.*
+*Le quattro estensioni sono ora registrate come decisioni —
+{cita('effetto-sul-blocco-mostro')}, {cita('multiattacco-riferisce')},
+{cita('salvezza-a-due-tempi')}, {cita('condizioni-a-consumo')} — insieme alle
+due che questa esecuzione ha imposto: {cita('vocabolario-italiano')} e
+{cita('cd-origine-dichiarata')}. Erano la condizione perché lo scontro
+esistesse; restano scelte di progetto, e senza un id fra sei mesi nessuno
+saprebbe perché `effetto` sta su `elemento_5e` invece che altrove.*
 """
     return testa
 

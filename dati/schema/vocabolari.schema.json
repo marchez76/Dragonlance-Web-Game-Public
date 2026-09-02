@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dragonlance-gdr.local/schema/vocabolari.schema.json",
+  "title": "Vocabolari condivisi — la sede unica dei termini che due schemi confrontano",
+
+  "description": "PERCHE' ESISTE. Un termine che compare in DUE schemi e che un motore deve confrontare non e' una convenzione: e' una struttura doppia in attesa di sfasarsi, e questo progetto ne ha gia' viste sette. L'ottava e' stata trovata USANDO i dati e non ispezionandoli — dati/oggetti/ portava i tipi di danno in inglese (`slashing`, copiati dall'SRD) e dati/mostri/ in italiano (`perforante`), nessuno dei due schemi li vincolava e nessuno dei due era sbagliato dal proprio lato. Un motore che confronti un tipo di danno con una resistenza li mancava tutti. Qui il vocabolario e' UNO, sta in UN file, e gli schemi che lo usano lo RIFERISCONO con `$ref` invece di ricopiarlo: ricopiare un enum in tre schemi sarebbe una struttura doppia nuova, creata mentre si chiude l'ottava. Il codice Python non lo ridigita: `dati/_vocabolari.py` legge questo file. LINGUA: italiano, come ogni altro enum che il progetto possiede nello strato `mechanics_5e` (`mischia_arma`, `da_guerra`, `leggera`, `riposo_breve`, gli id di dati/condizioni/). L'inglese in `weapon_5e.damage_type` non era una scelta: era una stringa di fonte che `build_oggetti.py` copiava senza tradurre, cioe' strato di fonte finito nello strato nostro — l'opposto della decisione 7 (`doppio-strato`). L'originale inglese resta dov'e' la fonte, in `dati/_fonti/srd51_equipaggiamento.py`.",
+
+  "$defs": {
+    "tipo_danno": {
+      "type": "string",
+      "enum": [
+        "contundente",
+        "perforante",
+        "tagliente",
+        "da_acido",
+        "da_freddo",
+        "da_fulmine",
+        "da_fuoco",
+        "da_forza",
+        "da_tuono",
+        "da_veleno",
+        "necrotico",
+        "psichico",
+        "radiante",
+        "nessuno"
+      ],
+      "description": "I tredici tipi di danno della 5e, piu' `nessuno`. `nessuno` e' un segnaposto NOSTRO, non un tipo della 5e: serve dove la fonte non ne dichiara uno (la Rete dell'SRD, arma di controllo che non infligge danno) e distingue `la fonte non lo dice` da `non e' stato ancora scritto`, la stessa distinzione di `esito.nessuno` in effetto.schema.json."
+    },
+
+    "qualificatore_danno": {
+      "type": "string",
+      "enum": ["da_attacchi_non_magici", "da_armi_non_magiche_non_argentate"],
+      "description": "La clausola che restringe una resistenza o un'immunita' a una parte degli attacchi di quel tipo. Esiste perche' senza di essa la clausola resta dentro la stringa — «bludgeoning, piercing, and slashing from nonmagical attacks» era UN elemento di un array di stringhe, cioe' prosa in un campo che sembrava un vocabolario. Enum e non testo libero: e' la differenza fra un dato e una frase, e la frase e' gia' quello che c'era."
+    }
+  }
+}
