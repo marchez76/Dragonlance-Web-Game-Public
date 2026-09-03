@@ -469,14 +469,31 @@ LIMITI = [
     "regolare, e fingere il contrario darebbe un controllo che rassicura.",
     "un'altra lingua: il giorno in cui il motore avra' un lato web, la "
     "stessa formula in JavaScript passera' inosservata. I sorgenti scanditi "
-    "sono quelli di SORGENTI, cioe' Python.",
+    "sono quelli di SORGENTI, cioe' Python. "
+    "E' L'UNICO DEI CINQUE LIMITI CHE RIGUARDA LA FASE 2, ed e' il primo "
+    "vincolo del progetto a guardare avanti invece che indietro: gli altri "
+    "quattro dicono cosa questo controllo non vede oggi, questo dice quando "
+    "smettera' di vedere abbastanza. LA CONDIZIONE, scritta perche' non "
+    "venga riletta troppo tardi: quando si scrivera' il primo codice fuori "
+    "da Python, questa riga va riletta PRIMA di scriverlo e non dopo. "
+    "Riletta dopo non e' una rilettura: e' una struttura doppia gia' nata, "
+    "e per giunta la decima, in una lingua dove nessuno dei controlli "
+    "esistenti arriva. Non si risolve ora — non c'e' ancora una riga di "
+    "JavaScript da scandire, e un rilevatore scritto contro codice che non "
+    "esiste e' un rilevatore mai messo alla prova, che e' il difetto che "
+    "COPIE_PIANTATE esiste per evitare.",
     "la prosa: una formula scritta a parole dentro un `description` di "
     "schema, dentro una nota di un JSON o dentro un documento non e' un "
     "letterale e non viene letta.",
     "un derivato precalcolato nei DATI: un mostro che si porti gia' sommato "
     "il proprio bonus di attacco non ripete nessuna formula, e questo "
     "controllo non se ne accorge — e' esattamente la lacuna che "
-    "`attacco_di()` misura dall'altro lato.",
+    "`attacco_di()` misura dall'altro lato. Chiusa in parte il 03/09/2026 "
+    "dalla decisione 54 (`origine-e-un-dato`): il valore precalcolato resta "
+    "invisibile a QUESTO controllo, ma adesso deve dichiarare se e' letto o "
+    "calcolato, e quella dichiarazione un altro controllo la verifica. Due "
+    "controlli che guardano lo stesso difetto da due lati, nessuno dei due "
+    "sufficiente da solo.",
     "una tabella copiata parzialmente: sotto i "
     f"{CORSA_MINIMA} valori consecutivi la corsa non scatta. E' una soglia "
     "scelta, e le soglie scelte sbagliano da un lato: qui sbagliano "

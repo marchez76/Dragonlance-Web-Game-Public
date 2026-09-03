@@ -57,7 +57,16 @@
         },
         "bonus_colpire": {
           "type": ["integer", "null"],
-          "description": "Fissato solo dove la fonte lo fissa (i mostri). Su un personaggio e' derivato — competenza piu' caratteristica — e resta null: scriverlo sarebbe un derivato scritto a mano."
+          "description": "Fissato solo dove la fonte lo fissa (i mostri). Su un personaggio e' derivato — competenza piu' caratteristica — e resta null: scriverlo sarebbe un derivato scritto a mano. Quando NON e' null deve portare `bonus_origine`: vedi li'."
+        },
+        "bonus_origine": {
+          "type": "string",
+          "enum": ["fonte", "derivata", "stimata"],
+          "description": "DA DOVE VIENE IL BONUS DI ATTACCO. Stesso campo di `cd_origine`, stessa ragione, altro numero: decisione 54 (`origine-e-un-dato`), di cui questa e' la seconda applicazione. `fonte`: e' stampato nel blocco d'origine e si trascrive (il +3 della Spada corta del Baaz, dal blocco ufficiale SotDQ). `derivata`: e' competenza + il modificatore di una caratteristica del portatore, e il controllo 6 di dati/valida_effetti.py verifica che il conto torni. `stimata`: l'abbiamo scelto noi, e allora `bonus_derivazione` deve dire su cosa. OBBLIGATORIO ovunque `bonus_colpire` non sia null, e per una ragione misurata: dei 94 bonus di attacco che il bestiario scrive in prosa 85 tornano col conto, quindi un bonus letto e uno rifatto col conto si scrivono identici quasi sempre. La coincidenza non e' una conferma — il +3 del Baaz e' stampato dalla fonte E torna col conto, esattamente come la sua CD 11."
+        },
+        "bonus_derivazione": {
+          "type": ["string", "null"],
+          "description": "COME, in prosa breve. Con `fonte`: da quale blocco e' letto, e quale addendo la fonte dichiara oltre al conto (il +3 innato del Cavaliere della Morte, il +1 con l'arco dei centauri). Con `derivata`: quale caratteristica del portatore — il conto puo' tornare con piu' d'una, quindi non e' un derivato riscritto a mano ma l'unica informazione che il conto non da'. Con `stimata`: il precedente su cui e' stato scelto. Obbligatorio con `fonte` e con `stimata`, come per le CD: un bonus non derivabile che non dice da dove viene e' una stima nascosta."
         },
         "portata_ft": {"type": ["number", "null"]},
         "gittata_ft": {
@@ -75,7 +84,17 @@
           "items": {"$ref": "#/$defs/danno"},
           "description": "Piu' voci per un attacco che infligge due tipi di danno insieme."
         }
-      }
+      },
+      "allOf": [
+        {
+          "$comment": "Un bonus di attacco scritto DEVE dire da dove viene. Sul personaggio `bonus_colpire` e' null o assente e la clausola non scatta: li' il numero non esiste, quindi non ha un'origine da dichiarare.",
+          "if": {
+            "required": ["bonus_colpire"],
+            "properties": {"bonus_colpire": {"type": "integer"}}
+          },
+          "then": {"required": ["bonus_origine"]}
+        }
+      ]
     },
 
     "tiro_salvezza": {

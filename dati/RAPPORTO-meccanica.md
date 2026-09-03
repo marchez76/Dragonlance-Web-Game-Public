@@ -63,7 +63,7 @@ Applicato a cio' che vive nel codice, il criterio taglia cosi':
 |---|---|---|---|---|
 | PROCEDURA | 11 | 8 | 3 | codice |
 | TABELLA | 6 | 6 | 0 | `dati/sistema/` |
-| VARIABILE | 3 | 0 | 3 | dato di contenuto — il campo non esiste ancora |
+| VARIABILE | 3 | 1 | 2 | dato di contenuto — il campo non esiste ancora |
 
 Riga per riga:
 
@@ -88,12 +88,12 @@ Riga per riga:
 | soglie del 20 e dell'1 naturale | `dati/_sistema.py` → `CRITICO_NATURALE` | TABELLA | `dati/sistema/soglie-d20.json` | chiusa |
 | quali tratti scattano alla morte del portatore | `motore/combattimento.py` → `TRATTI_ALLA_MORTE` | VARIABILE | DATO — un campo `innesco` sul blocco | aperta — lacuna `innesco-non-dichiarato` |
 | quando usare una risorsa (sotto meta' dei punti ferita) | `motore/combattimento.py` → `def agisci` | VARIABILE | DATO — IA di combattimento, la casella di decisione 27 (`sette-campi-2e`) | aperta — lacuna `quando-usare-una-risorsa` |
-| da dove viene il bonus di attacco di un mostro | `motore/combattimento.py` → `def attacco_di` | VARIABILE | DATO — un `bonus_origine` accanto a `bonus_colpire` | aperta — lacuna `attacco-origine-non-dichiarata` |
+| da dove viene il bonus di attacco di un mostro | `motore/combattimento.py` → `def attacco_di` | VARIABILE | DATO — `bonus_origine` accanto a `bonus_colpire`, decisione 54 (`origine-e-un-dato`) | chiusa |
 
-Le 6 righe aperte non sono un difetto del criterio: sono il criterio che le ha
-**nominate**. 3 di esse dicono la stessa cosa — un dato che dovrebbe esistere
+Le 5 righe aperte non sono un difetto del criterio: sono il criterio che le ha
+**nominate**. 2 di esse dicono la stessa cosa — un dato che dovrebbe esistere
 e non esiste: l'innesco di un tratto, la politica d'uso di una risorsa,
-l'origine del bonus d'attacco di un mostro — e nessuna delle 3 si chiude
+l'origine del bonus d'attacco di un mostro — e nessuna delle 2 si chiude
 scrivendo codice.
 
 ---
@@ -167,14 +167,28 @@ leggono la sede adesso.
   e fingere il contrario darebbe un controllo che rassicura.
 - un'altra lingua: il giorno in cui il motore avra' un lato web, la stessa
   formula in JavaScript passera' inosservata. I sorgenti scanditi sono quelli
-  di SORGENTI, cioe' Python.
+  di SORGENTI, cioe' Python. E' L'UNICO DEI CINQUE LIMITI CHE RIGUARDA LA FASE
+  2, ed e' il primo vincolo del progetto a guardare avanti invece che
+  indietro: gli altri quattro dicono cosa questo controllo non vede oggi,
+  questo dice quando smettera' di vedere abbastanza. LA CONDIZIONE, scritta
+  perche' non venga riletta troppo tardi: quando si scrivera' il primo codice
+  fuori da Python, questa riga va riletta PRIMA di scriverlo e non dopo.
+  Riletta dopo non e' una rilettura: e' una struttura doppia gia' nata, e per
+  giunta la decima, in una lingua dove nessuno dei controlli esistenti arriva.
+  Non si risolve ora — non c'e' ancora una riga di JavaScript da scandire, e
+  un rilevatore scritto contro codice che non esiste e' un rilevatore mai
+  messo alla prova, che e' il difetto che COPIE_PIANTATE esiste per evitare.
 - la prosa: una formula scritta a parole dentro un `description` di schema,
   dentro una nota di un JSON o dentro un documento non e' un letterale e non
   viene letta.
 - un derivato precalcolato nei DATI: un mostro che si porti gia' sommato il
   proprio bonus di attacco non ripete nessuna formula, e questo controllo non
   se ne accorge — e' esattamente la lacuna che `attacco_di()` misura
-  dall'altro lato.
+  dall'altro lato. Chiusa in parte il 03/09/2026 dalla decisione 54
+  (`origine-e-un-dato`): il valore precalcolato resta invisibile a QUESTO
+  controllo, ma adesso deve dichiarare se e' letto o calcolato, e quella
+  dichiarazione un altro controllo la verifica. Due controlli che guardano lo
+  stesso difetto da due lati, nessuno dei due sufficiente da solo.
 - una tabella copiata parzialmente: sotto i 10 valori consecutivi la corsa non
   scatta. E' una soglia scelta, e le soglie scelte sbagliano da un lato: qui
   sbagliano lasciando passare, che e' il lato giusto per un controllo che deve
@@ -216,7 +230,8 @@ funzione `attacco_di(combattente, azione)` che torna quella forma: sul mostro
 la legge, sul personaggio la compone, e chi la chiama non sa quale dei due
 casi ha davanti.
 
-Il registro delle lacune e' passato da **17 a 16**: due chiuse, una aperta.
+Il registro delle lacune e' passato da **17 a 15**: tre chiuse, una aperta e
+richiusa nello stesso giro.
 
 - **Chiusa `attacco-del-pg`** — il personaggio non calcola piu' l'attacco in
   una funzione del motore: lo compone dagli ingressi, con la stessa lettura
@@ -225,12 +240,17 @@ Il registro delle lacune e' passato da **17 a 16**: due chiuse, una aperta.
   moltiplicatori delle difese, il modificatore e la competenza vengono da
   `dati/sistema/`. La sede che decisione 41 (`sconfessione-condivisa`) aveva
   promesso e mai costruito ha smesso di essere una lista d'attesa.
-- **Aperta `attacco-origine-non-dichiarata`** — ed e' informazione, non un
-  passo indietro. Guardando i due lati insieme si vede una cosa che prima
-  nessuno guardava: un `bonus_colpire` **letto dalla scheda** e uno che
-  **tornerebbe col conto** oggi si scrivono uguali. E' lo stesso difetto che
-  decisione 50 (`cd-origine-dichiarata`) ha chiuso per la CD, sull'altro
-  campo.
+- **`attacco-origine-non-dichiarata`: aperta guardando i due lati insieme,
+  chiusa nello stesso giro** — ed e' il modo giusto di leggerla. Un
+  `bonus_colpire` **letto dalla scheda** e uno che **tornerebbe col conto** si
+  scrivono uguali, che e' lo stesso difetto che decisione 50
+  (`cd-origine-dichiarata`) aveva chiuso per la CD. Al secondo caso in due
+  giri la regola e' stata scritta una volta per tutte invece di essere
+  riapplicata: decisione 54 (`origine-e-un-dato`), di cui `cd_origine` e
+  `bonus_origine` sono le due applicazioni. La lacuna del motore non e'
+  sparita: e' diventata **condizionata al dato**, e scatta esattamente sugli
+  attacchi che non dichiarano l'origine. Oggi nessuno dei due strutturati,
+  domani il terzo se lo si struttura senza compilarla.
 
 L'arena misura quanto pesa: dei 94 bonus d'attacco che il bestiario scrive in
 prosa, 85 tornano col conto e 9 no. Il numero che conta non e' 85: e' che **85
@@ -239,7 +259,15 @@ coincidenze non sono 85 conferme**. La CD 11 del Baaz e' stampata dalla fonte
 l'avrebbe mai segnalata — non perche' fosse corretta, ma perche' letto e
 derivato sono indistinguibili quando coincidono. Contare le coincidenze invece
 di fidarsene e' la differenza fra verificare e credere, ed e' la ragione per
-cui la lacuna nuova chiede un `bonus_origine` e non un controllo piu' furbo.
+cui il rimedio e' un `bonus_origine` e non un controllo piu' furbo: nessun
+controllo puo' essere abbastanza furbo da distinguere due numeri uguali.
+
+E la domanda giusta non era se 85 su 94 bastasse: era **quanti altri campi
+hanno questa forma**. Sono quattro ancora scoperti — il bonus di danno, i
+bonus di abilita', la percezione passiva, e le CD ancora in prosa — misurati
+nella sezione 4 di `RAPPORTO-arena.md`. Il caso che insegna di piu' e' la
+**percezione passiva**, dove il conto torna il **cento per cento** delle
+volte: e' il campo dove fidarsi del conto e' piu' pericoloso, non meno.
 
 ---
 
@@ -278,7 +306,7 @@ due lezioni non si contraddicono se si separa **disegnare** da **convertire in
 volume**: si disegna quando ci sono abbastanza casi, si converte in volume
 dopo che la forma e' ferma.
 
-E' la ragione per cui la forma e' stata decisa adesso, con 16 lacune misurate
+E' la ragione per cui la forma e' stata decisa adesso, con 15 lacune misurate
 e due mostri strutturati, invece che dopo: oggi il costo di sbagliare forma e'
 5 blocchi; fra trenta schede sarebbe 153, e la differenza non e' recuperabile
 con nessuno script.

@@ -130,8 +130,9 @@ REGOLE_NEL_CODICE = [
      "aperta — lacuna `quando-usare-una-risorsa`"),
     ("da dove viene il bonus di attacco di un mostro",
      "motore/combattimento.py", "def attacco_di", "VARIABILE",
-     "DATO — un `bonus_origine` accanto a `bonus_colpire`",
-     "aperta — lacuna `attacco-origine-non-dichiarata`"),
+     "DATO — `bonus_origine` accanto a `bonus_colpire`, "
+     "decisione 54 (`origine-e-un-dato`)",
+     "chiusa"),
 ]
 
 
@@ -267,8 +268,13 @@ def copie_di_sistema():
     return copie, marcite, provate, len(SIS.COPIE_FINTE)
 
 
+# Gli `\s+` al posto degli spazi non sono pigrizia: il rapporto dell'arena
+# e' prosa a capo fisso con dentro numeri interpolati, quindi la stessa
+# frase cambia punto di a capo appena una cifra cresce. Tollerare il ritorno
+# a capo evita un allarme che non riguarda il dato; NON tollerare il testo
+# diverso resta il punto, e la frase deve restare quella.
 COINCIDENZE = re.compile(
-    r"dei \*\*(\d+) bonus di\s+attacco\*\*.*?"
+    r"dei\s+\*\*(\d+) bonus di\s+attacco\*\*.*?"
     r"\*\*(\d+) tornano col conto\*\*\s+e\s+(\d+) no", re.S)
 
 
@@ -572,8 +578,8 @@ non solo sconsigliato fissare un ospite. Il **motore** ha una funzione
 legge, sul personaggio la compone, e chi la chiama non sa quale dei due casi
 ha davanti.
 
-Il registro delle lacune e' passato da **17 a {len(lac)}**: due chiuse, una
-aperta.
+Il registro delle lacune e' passato da **17 a {len(lac)}**: tre chiuse, una
+aperta e richiusa nello stesso giro.
 
 - **Chiusa `attacco-del-pg`** — il personaggio non calcola piu' l'attacco in
   una funzione del motore: lo compone dagli ingressi, con la stessa lettura
@@ -582,11 +588,17 @@ aperta.
   moltiplicatori delle difese, il modificatore e la competenza vengono da
   `dati/sistema/`. La sede che {cita('sconfessione-condivisa')} aveva
   promesso e mai costruito ha smesso di essere una lista d'attesa.
-- **Aperta `attacco-origine-non-dichiarata`** — ed e' informazione, non un
-  passo indietro. Guardando i due lati insieme si vede una cosa che prima
-  nessuno guardava: un `bonus_colpire` **letto dalla scheda** e uno che
-  **tornerebbe col conto** oggi si scrivono uguali. E' lo stesso difetto che
-  {cita('cd-origine-dichiarata')} ha chiuso per la CD, sull'altro campo.
+- **`attacco-origine-non-dichiarata`: aperta guardando i due lati insieme,
+  chiusa nello stesso giro** — ed e' il modo giusto di leggerla. Un
+  `bonus_colpire` **letto dalla scheda** e uno che **tornerebbe col conto**
+  si scrivono uguali, che e' lo stesso difetto che
+  {cita('cd-origine-dichiarata')} aveva chiuso per la CD. Al secondo caso in
+  due giri la regola e' stata scritta una volta per tutte invece di essere
+  riapplicata: {cita('origine-e-un-dato')}, di cui `cd_origine` e
+  `bonus_origine` sono le due applicazioni. La lacuna del motore non e'
+  sparita: e' diventata **condizionata al dato**, e scatta esattamente sugli
+  attacchi che non dichiarano l'origine. Oggi nessuno dei due strutturati,
+  domani il terzo se lo si struttura senza compilarla.
 
 L'arena misura quanto pesa: dei {coinc[0]} bonus d'attacco che il bestiario
 scrive in prosa, {coinc[1]} tornano col conto e {coinc[2]} no. Il numero che
@@ -595,8 +607,17 @@ conta non e' {coinc[1]}: e' che **{coinc[1]} coincidenze non sono
 col conto, quindi un controllo che confronta letto e derivato non l'avrebbe
 mai segnalata — non perche' fosse corretta, ma perche' letto e derivato sono
 indistinguibili quando coincidono. Contare le coincidenze invece di fidarsene
-e' la differenza fra verificare e credere, ed e' la ragione per cui la lacuna
-nuova chiede un `bonus_origine` e non un controllo piu' furbo.
+e' la differenza fra verificare e credere, ed e' la ragione per cui il rimedio
+e' un `bonus_origine` e non un controllo piu' furbo: nessun controllo puo'
+essere abbastanza furbo da distinguere due numeri uguali.
+
+E la domanda giusta non era se {coinc[0] - coinc[2]} su {coinc[0]} bastasse:
+era **quanti altri campi hanno questa forma**. Sono quattro ancora scoperti —
+il bonus di danno, i bonus di abilita', la percezione passiva, e le CD ancora
+in prosa — misurati nella sezione 4 di `RAPPORTO-arena.md`. Il caso che
+insegna di piu' e' la **percezione passiva**, dove il conto torna il **cento
+per cento** delle volte: e' il campo dove fidarsi del conto e' piu'
+pericoloso, non meno.
 
 ---
 

@@ -374,6 +374,57 @@ def controlla_cd(eff, portatore, err):
     return (origine, combacia)
 
 
+
+# ---------------------------------- 6. i bonus di attacco dichiarati vanno spiegati
+
+def bonus_attesi(portatore):
+    """I bonus di attacco che le caratteristiche del portatore generano.
+
+    Stessa forma di `cd_attese` e stessa provenienza delle tabelle
+    (`dati/sistema/`), un addendo in meno: competenza + modificatore,
+    senza la base 8."""
+    m = portatore.get("mechanics_5e") or {}
+    ab = m.get("abilities") or {}
+    if not ab:
+        return None
+    pb = SIS.competenza_da_grado_sfida(
+        (m.get("challenge_rating") or {}).get("value"))
+    if pb is None:
+        return None
+    return {pb + SIS.modificatore(v) for v in ab.values()}
+
+
+def controlla_bonus(eff, portatore, err):
+    """Controllo 6: `bonus_colpire` deve dire da dove viene.
+
+    Gemello del controllo 5 — decisione 54 (`origine-e-un-dato`) li rende
+    due applicazioni della stessa regola e non due controlli imparentati.
+    Torna (origine, combacia) per la misura finale."""
+    at = eff.get("attacco") or {}
+    bonus = at.get("bonus_colpire")
+    if bonus is None:
+        return None
+    origine = at.get("bonus_origine")
+    if not origine:
+        err(f"bonus di attacco +{bonus} senza `bonus_origine`: da dove "
+            f"viene un bonus non si deduce, si dichiara")
+        return None
+
+    if origine in ("fonte", "stimata") and not at.get("bonus_derivazione"):
+        err(f"bonus +{bonus} dichiarato `{origine}` e `bonus_derivazione` "
+            f"vuoto: un bonus che non si deriva dal conto e non dice da "
+            f"dove viene e' una stima nascosta")
+
+    attesi = bonus_attesi(portatore)
+    if attesi is None:
+        return (origine, None)
+    combacia = bonus in attesi
+    if origine == "derivata" and not combacia:
+        err(f"bonus +{bonus} dichiarato `derivata` ma non e' competenza + "
+            f"una caratteristica del portatore (attesi: {sorted(attesi)}): "
+            f"o l'origine e' un'altra, o il numero e' sbagliato")
+    return (origine, combacia)
+
 # --------------------------------------------------------------------- report
 
 def main(argv):
@@ -397,6 +448,9 @@ def main(argv):
     con_cd = 0
     origini = collections.Counter()
     coincidenze = 0
+    con_bonus = 0
+    origini_bonus = collections.Counter()
+    coincidenze_bonus = 0
     for origine, b, portatore in blocchi_con_effetto():
         eff = b.get("effetto")
         if not eff:
@@ -418,6 +472,14 @@ def main(argv):
                 origini[esito[0]] += 1
                 if esito[0] == "fonte" and esito[1]:
                     coincidenze += 1
+
+        if (eff.get("attacco") or {}).get("bonus_colpire") is not None:
+            con_bonus += 1
+            esito = controlla_bonus(eff, portatore, err)
+            if esito:
+                origini_bonus[esito[0]] += 1
+                if esito[0] == "fonte" and esito[1]:
+                    coincidenze_bonus += 1
 
         for cid in sorted(condizioni_citate(eff)):
             if cid not in cond:
@@ -444,6 +506,11 @@ def main(argv):
     print(f"{con_cd} CD dichiarate nella struttura ({per_origine}); "
           f"{coincidenze} di fonte combaciano comunque col conto "
           f"8 + competenza + caratteristica.")
+    per_origine_b = ", ".join(f"{n} {o}" for o, n in
+                              sorted(origini_bonus.items())) or "nessuno"
+    print(f"{con_bonus} bonus di attacco dichiarati nella struttura "
+          f"({per_origine_b}); {coincidenze_bonus} di fonte combaciano "
+          f"comunque col conto competenza + caratteristica.")
 
     if errori:
         print(f"\n{len(errori)} DIVERGENZE fra prosa e struttura:")

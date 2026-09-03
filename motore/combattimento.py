@@ -463,15 +463,25 @@ def attacco_di(combattente, azione=None, reg=None):
                 eff = e
                 break
     att = (eff or {}).get("attacco")
-    if att is not None and reg is not None:
+    # L'ORIGINE SI LEGGE, NON SI DEDUCE. Decisione 54 (`origine-e-un-dato`):
+    # un bonus letto dalla scheda e uno rifatto col conto si scrivono
+    # identici, quindi il motore non puo' ricavarla dai numeri. La lacuna
+    # resta, ma adesso e' CONDIZIONATA AL DATO: scatta esattamente sugli
+    # attacchi che non la dichiarano, non su tutti. Cosi' il conteggio delle
+    # lacune misura quanto bestiario e' ancora scoperto invece di segnalare
+    # per sempre un difetto gia' chiuso.
+    if (att is not None and reg is not None
+            and att.get("bonus_colpire") is not None
+            and not att.get("bonus_origine")):
         reg.lacuna(
             "attacco-origine-non-dichiarata",
             "il bonus di attacco del mostro non dice da dove viene",
             "letto dalla scheda o rifatto col conto (competenza + "
-            "modificatore) si scrivono uguali, esattamente come accadeva "
-            "alle CD prima della decisione 50 (`cd-origine-dichiarata`): "
-            "manca un `bonus_origine` accanto a `bonus_colpire`. Quante "
-            "volte i due coincidano e' una misura, ed e' in "
+            "modificatore) si scrivono uguali, e nessun controllo puo' "
+            "distinguerli quando coincidono. Il campo esiste dalla "
+            "decisione 54 (`origine-e-un-dato`) — `bonus_origine` accanto a "
+            "`bonus_colpire` — e questo attacco non lo porta. Quanto "
+            "bestiario sia ancora scoperto e' una misura, ed e' in "
             "`motore/arena.py` → `coincidenze_di_attacco()`")
     return att
 

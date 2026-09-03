@@ -234,17 +234,28 @@ def coincidenze_di_attacco():
     """Quanti bonus di attacco del bestiario tornano col conto, e quanti no.
 
     E' la stessa misura che la decisione 50 (`cd-origine-dichiarata`) ha
-    imposto per le CD, applicata all'altro numero che `attacco_di()` legge. Serve perche' un
-    `bonus_colpire` LETTO dalla scheda e uno RIFATTO col conto (bonus di
-    competenza + modificatore di caratteristica) si scrivono identici, e
-    quando coincidono nessun controllo puo' distinguerli — e' esattamente la
-    ragione per cui la CD 11 del Baaz era invisibile.
+    imposto per le CD, applicata all'altro numero che `attacco_di()` legge.
+    Serve perche' un `bonus_colpire` LETTO dalla scheda e uno RIFATTO col
+    conto (bonus di competenza + modificatore di caratteristica) si scrivono
+    identici, e quando coincidono nessun controllo puo' distinguerli — e'
+    esattamente la ragione per cui la CD 11 del Baaz era invisibile, ed e' il
+    principio della decisione 54 (`origine-e-un-dato`).
 
     Contare le coincidenze e' quindi l'unica cosa onesta da fare: dice quanto
     vale il conto come prova, e la risposta e' che vale poco.
 
-    Torna (totale, coincidenti, non_coincidenti) sui blocchi ancora in prosa,
-    perche' e' li' che sta il bestiario: due soli attacchi sono strutturati."""
+    I NOVE FUORI CONTO NON SONO NOVE ERRORI, e per la stessa ragione per cui
+    gli 85 dentro non sono 85 conferme. Questa funzione li nomina e riporta
+    il numero accanto ai numeri attesi; NON li classifica, perche'
+    classificarli richiede di leggere da dove viene il bonus, e leggerlo da
+    un dato e' precisamente cio' che il campo `bonus_origine` esiste per
+    permettere. Dedurlo dalla prosa sarebbe la deduzione che la
+    decisione 54 (`origine-e-un-dato`) vieta, travestita da controllo.
+
+    Torna (totale, coincidenti, fuori, dichiarati) sui blocchi ancora in
+    prosa, perche' e' li' che sta il bestiario: due soli attacchi sono
+    strutturati, e `dichiarati` conta quelli che portano gia'
+    `bonus_origine`."""
     import glob
     import json
     import sys as _sys
@@ -252,7 +263,7 @@ def coincidenze_di_attacco():
     import _sistema
 
     pat = re.compile(r"\+(\d+)\s*(?:a colpire|to hit)", re.I)
-    tot, coincidenti, fuori = 0, 0, []
+    tot, coincidenti, fuori, dichiarati = 0, 0, [], 0
     for f in sorted(glob.glob(os.path.join(BASE, "dati", "mostri", "*.json"))):
         d = json.load(open(f, encoding="utf-8"))
         m = d["mechanics_5e"]
@@ -263,18 +274,123 @@ def coincidenze_di_attacco():
             pb = _sistema.competenza_da_grado_sfida(cr.get("value"))
         for gruppo in ("actions", "traits", "reactions", "legendary_actions"):
             for b in (m.get(gruppo) or []):
+                att = (b.get("effetto") or {}).get("attacco") or {}
+                if att.get("bonus_origine"):
+                    dichiarati += 1
                 for n in pat.findall(b.get("mechanics_5e") or ""):
                     tot += 1
-                    if not ab or pb is None:
-                        fuori.append(d["name"]["it"])
-                        continue
-                    attese = {pb + _sistema.modificatore(v)
-                              for v in ab.values()}
+                    attese = ({pb + _sistema.modificatore(v)
+                               for v in ab.values()}
+                              if ab and pb is not None else set())
                     if int(n) in attese:
                         coincidenti += 1
                     else:
-                        fuori.append(d["name"]["it"])
-    return tot, coincidenti, sorted(set(fuori))
+                        fuori.append((d["name"]["it"], b.get("name") or "?",
+                                      int(n), sorted(attese)))
+    return tot, coincidenti, fuori, dichiarati
+
+
+def campi_con_la_stessa_forma():
+    """Gli ALTRI campi in cui un valore letto e uno calcolato si scrivono uguali.
+
+    La decisione 54 (`origine-e-un-dato`) e' generale, quindi la domanda
+    giusta non e' «`bonus_colpire` e' a posto adesso?» ma «quanti altri campi
+    hanno questa forma?». Questa funzione la misura invece di stimarla.
+
+    Un campo entra nell'elenco se soddisfa DUE condizioni: il suo valore puo'
+    venire sia dalla fonte sia da una formula del sistema, e le due strade
+    producono lo stesso numero abbastanza spesso da rendere il difetto
+    invisibile. Un campo che porta solo INGRESSI non ha il problema —
+    `saving_throws` ne e' l'esempio: dichiara quali competenze il portatore
+    ha e non il numero che ne segue, quindi non c'e' niente da confondere.
+
+    Torna righe (campo, dove, totale, torna, dichiara_gia_origine)."""
+    import glob
+    import json
+    import sys as _sys
+    _sys.path.insert(0, os.path.join(BASE, "dati"))
+    import _sistema
+
+    files = sorted(glob.glob(os.path.join(BASE, "dati", "mostri", "*.json")))
+    schede = [json.load(open(f, encoding="utf-8")) for f in files]
+
+    def contesto(d):
+        m = d["mechanics_5e"]
+        ab = m.get("abilities") or {}
+        cr = m.get("challenge_rating") or {}
+        pb = cr.get("proficiency_bonus")
+        if pb is None:
+            pb = _sistema.competenza_da_grado_sfida(cr.get("value"))
+        return m, ab, pb
+
+    dado = re.compile(r"\((\d+)d(\d+)\s*([+-]\s*\d+)?\)")
+    colpire = re.compile(r"\+\d+\s*(?:a colpire|to hit)", re.I)
+
+    # bonus di danno in prosa: stessa forma del bonus di attacco, un addendo
+    # in meno (il modificatore di caratteristica da solo, senza competenza).
+    dan_tot = dan_ok = 0
+    for d in schede:
+        m, ab, pb = contesto(d)
+        if not ab:
+            continue
+        mods = {_sistema.modificatore(v) for v in ab.values()} | {0}
+        for gruppo in ("actions", "traits", "reactions", "legendary_actions"):
+            for b in (m.get(gruppo) or []):
+                txt = b.get("mechanics_5e") or ""
+                if not colpire.search(txt):
+                    continue
+                for mm in dado.finditer(txt):
+                    dan_tot += 1
+                    dan_ok += int((mm.group(3) or "0").replace(" ", "")) in mods
+
+    # percezione passiva: 10 + Saggezza, con o senza competenza.
+    pp_tot = pp_ok = 0
+    for d in schede:
+        m, ab, pb = contesto(d)
+        pp = m.get("passive_perception")
+        if pp is None or not ab or pb is None:
+            continue
+        pp_tot += 1
+        base = 10 + _sistema.modificatore(ab["wis"])
+        pp_ok += pp in (base, base + pb, base + 2 * pb)
+
+    # bonus di abilita': competenza (o doppia competenza) + caratteristica.
+    ab_tot = ab_ok = 0
+    for d in schede:
+        m, ab, pb = contesto(d)
+        if not ab or pb is None:
+            continue
+        attesi = ({pb + _sistema.modificatore(v) for v in ab.values()}
+                  | {2 * pb + _sistema.modificatore(v) for v in ab.values()})
+        for s in (m.get("skills") or []):
+            if s.get("bonus") is None:
+                continue
+            ab_tot += 1
+            ab_ok += s["bonus"] in attesi
+
+    # punti ferita: la media dichiarata contro la formula di dadi scritta
+    # accanto. Qui le due sedi sono nello STESSO campo, ed e' il caso in cui
+    # il progetto la sua dichiarazione di origine ce l'ha gia'.
+    pf_tot = pf_ok = 0
+    for d in schede:
+        hp = d["mechanics_5e"].get("hit_points") or {}
+        av, fo = hp.get("average"), hp.get("formula")
+        mm = re.match(r"(\d+)d(\d+)\s*([+-]\s*\d+)?$", (fo or "").replace(" ", ""))
+        if av is None or not mm:
+            continue
+        pf_tot += 1
+        n, faccia = int(mm.group(1)), int(mm.group(2))
+        pf_ok += av == n * (faccia + 1) // 2 + int(mm.group(3) or 0)
+
+    att_tot, att_ok, _fuori, _dich = coincidenze_di_attacco()
+    return [
+        ("`bonus_colpire`", "prosa dei blocchi", att_tot, att_ok, "no"),
+        ("bonus di danno", "prosa dei blocchi", dan_tot, dan_ok, "no"),
+        ("`skills[].bonus`", "scheda", ab_tot, ab_ok, "no"),
+        ("`passive_perception`", "scheda", pp_tot, pp_ok, "no"),
+        ("`hit_points.average`", "scheda", pf_tot, pf_ok,
+         "si', con altro nome"),
+    ]
 
 
 def prova_delle_immunita():
@@ -354,7 +470,10 @@ def rapporto(scenari, lacune, completo):
     con = [b for b in blocchi if b[3]]
     senza = [b for b in blocchi if not b[3]]
     righe_difese, schede_difese = prova_delle_difese()
-    att_tot, att_coin, att_fuori = coincidenze_di_attacco()
+    att_tot, att_coin, att_fuori, att_dich = coincidenze_di_attacco()
+    forma = campi_con_la_stessa_forma()
+    scoperti = [r for r in forma if r[4] == "no"]
+    pp = [r for r in forma if "passive" in r[0]][0]
     righe_imm, (imm_schede, imm_voci, imm_fuori, n_mod, n_voc) = \
         prova_delle_immunita()
 
@@ -478,6 +597,28 @@ questa prova.
     for i, (codice, (cosa, ass)) in enumerate(lacune.lacune.items(), 1):
         testa += f"**{i}. `{codice}`** — {cosa}\n\n> {ass}\n\n"
 
+    # I NOVE, per nome e per numero: solo nel privato. Sono bonus di attacco
+    # di schede di mostro, cioe' esattamente il materiale che CLAUDE.md 1
+    # tiene fuori dal pubblico; il pubblico ne porta il CONTEGGIO e il
+    # metodo, che sono analisi nostra. La riduzione e' un parametro di questo
+    # generatore, non un taglio a valle (CLAUDE.md 2).
+    nove = ""
+    if completo and att_fuori:
+        nove = ("\nI {n} che non tornano col conto, per nome:\n\n".format(
+            n=len(att_fuori)) + tabella(
+            ["scheda", "blocco", "in prosa", "attesi dal conto"],
+            [[nome, blocco, f"+{b}",
+              ", ".join(f"+{x}" for x in attesi) or "—"]
+             for nome, blocco, b, attesi in att_fuori],
+            ["---", "---", "--:", "---"]) + "\n\nNessuno dei {n} e' per questo un errore, come "
+            "nessuno degli {c} dentro il conto e' per questo una conferma: "
+            "sono i casi in cui il conto NON basta a spiegare il numero, e "
+            "quello che manca — un addendo dichiarato dalla fonte, una "
+            "stima nostra — sta scritto nella prosa accanto, dove nessun "
+            "controllo lo legge. E' il buco che `bonus_origine` chiude man "
+            "mano che quei blocchi si strutturano.\n".format(
+                n=len(att_fuori), c=att_coin))
+
     testa += f"""---
 
 ## 4. Cosa si è rotto, in ordine di peso
@@ -496,18 +637,55 @@ costruttore solleva. Classe Armatura, punti ferita, bonus di attacco e danno
 restano composti dal motore, ma adesso sono composti **una volta sola e per
 tutti e due**.
 
-**Il numero che nessuno può verificare — lacuna nuova.** Un `bonus_colpire`
-letto dalla scheda e uno rifatto col conto (competenza + modificatore) si
-scrivono identici, e `attacco_di()` non ha modo di sapere quale dei due sta
-leggendo: manca un `bonus_origine` accanto a `bonus_colpire`, cioè
-esattamente ciò che {cita('cd-origine-dichiarata')} ha dovuto aggiungere alle
-CD. Non è una questione teorica, ed è misurata: dei **{att_tot} bonus di
-attacco** che il bestiario scrive in prosa, **{att_coin} tornano col conto** e
-{att_tot - att_coin} no. Le coincidenze non sono conferme — la CD 11 del Baaz
-è stampata dalla fonte *e* torna col conto, e per questo il vecchio controllo
-non l'avrebbe mai segnalata. Contarle è l'unica cosa onesta: dicono quanto
-vale il conto come prova, e la risposta è poco.
+**Il numero che nessuno può verificare — chiusa, e generalizzata.** Un
+`bonus_colpire` letto dalla scheda e uno rifatto col conto (competenza +
+modificatore) si scrivono identici, e `attacco_di()` non aveva modo di sapere
+quale dei due stesse leggendo. È misurato, non supposto: dei **{att_tot} bonus di
+attacco** che il bestiario scrive in prosa, **{att_coin} tornano col conto**
+e {att_tot - att_coin} no. Le coincidenze non sono conferme — il
+bonus della Spada corta del Baaz è **stampato dalla fonte** *e* torna col
+conto, esattamente come la sua CD 11, e nessun controllo poteva vederlo.
 
+Al secondo caso in due giri la regola è stata scritta una volta per tutte
+invece di essere riapplicata a mano: {cita('origine-e-un-dato')}. Quando un
+valore può essere **sia letto dalla fonte sia calcolato dal sistema**, la sua
+origine è un **campo**, non una deduzione. `cd_origine` e `bonus_origine` ne
+sono le due applicazioni, non due decisioni imparentate. Il campo è nello
+schema, il controllo 6 di `dati/valida_effetti.py` lo pretende ovunque
+`bonus_colpire` non sia nullo, e la lacuna del motore non è sparita: è
+diventata **condizionata al dato**, e scatta esattamente sugli attacchi che
+non la dichiarano. Oggi sono zero perché i due strutturati la portano
+({att_dich} su {att_dich}), e tornerà da sola quando si strutturerà il terzo
+senza compilarla.
+
+**Quanti altri campi hanno questa forma — la misura, non la stima.** La
+domanda che conta non è se `bonus_colpire` sia a posto adesso, ma quanti altri
+valori si scrivono uguali che siano letti o calcolati. Sono **{len(scoperti)}
+ancora scoperti**, e il quinto è il caso che insegna di più:
+
+{tabella(["campo", "dove", "casi", "tornano col conto", "dichiara l'origine"],
+         [[r[0], r[1], str(r[2]), f"{r[3]} ({100 * r[3] // r[2]}%)", r[4]]
+          for r in forma], ["---", "---", "--:", "--:", "---"])}
+
+`passive_perception` è il caso che spiega perché la percentuale non è una
+diagnosi: **{pp[3]} su {pp[2]}** tornano col conto, il cento per cento, e
+proprio per questo di nessuna si sa se sia stata letta o calcolata. Un campo dove il conto torna sempre è il posto **peggiore** in cui
+fidarsi del conto, non il migliore.
+
+`hit_points.average` è l'altro estremo, e va detto perché è la scoperta più
+utile del giro: l'origine lì **è già dichiarata**, sotto un altro nome —
+`conversion_status` e `source`, che `armor_class` e `challenge_rating` portano
+allo stesso modo. Il progetto aveva già inventato questo campo **tre volte**
+senza accorgersi che era lo stesso campo, e la {cita('origine-e-un-dato')}
+lo scrive come una regola sola. Unificare i tre nomi è un rinominare che tocca 52
+schede e uno schema già committato: **non fatto ora, e dichiarato aperto**.
+
+`saving_throws` non è nell'elenco e non è una dimenticanza: porta solo
+`proficient`, cioè **quali competenze** il portatore ha e non il numero che ne
+segue. Un campo che porta ingressi non può avere questo difetto — ed è la
+stessa forma che la {cita('attacco-unica-lettura')} ha imposto al
+personaggio.
+{nove}
 **Non c'è una sede per le regole di sistema — chiusa.** *d20 + bonus contro la
 Classe Armatura, 20 naturale critico, 1 naturale mancato d'ufficio* stava in
 un file Python e in nessun dato. Il criterio a tre domande

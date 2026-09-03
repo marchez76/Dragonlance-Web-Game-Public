@@ -22,7 +22,7 @@ perché ogni valore assente diventa uno zero e ogni regola assente diventa un
 ramo che non si prende. È la stessa forma del difetto che la categoria d'arma
 ha reso visibile — un buco che sembra un dato.
 
-> **Lo scontro gira. Con 16 lacune dichiarate.**
+> **Lo scontro gira. Con 15 lacune dichiarate.**
 
 ---
 
@@ -95,7 +95,7 @@ classificare.
 
 ---
 
-## 3. Le 16 lacune
+## 3. Le 15 lacune
 
 Ognuna è un punto in cui il motore ha supplito ai dati. Sono l'esito vero di
 questa prova.
@@ -132,35 +132,31 @@ questa prova.
 
 > la decisione 27 (`sette-campi-2e`) lo destina all'IA di combattimento e ogni mostro lo porta in `morale_2e`; qui nessuno lo legge, e i mostri combattono fino alla morte. Il Traag e' il caso peggiore: il suo morale ha due stati (8 prima dello scontro, nessun controllo dopo), e ignorarlo cancella il suo tratto identitario
 
-**9. `attacco-origine-non-dichiarata`** — il bonus di attacco del mostro non dice da dove viene
-
-> letto dalla scheda o rifatto col conto (competenza + modificatore) si scrivono uguali, esattamente come accadeva alle CD prima della decisione 50 (`cd-origine-dichiarata`): manca un `bonus_origine` accanto a `bonus_colpire`. Quante volte i due coincidano e' una misura, ed e' in `motore/arena.py` → `coincidenze_di_attacco()`
-
-**10. `nessuna-posizione`** — portata e gittata sono campi popolati e mai letti
+**9. `nessuna-posizione`** — portata e gittata sono campi popolati e mai letti
 
 > il motore non ha una griglia ne' distanze: ogni combattente e' a portata di ogni altro. `portata_ft` e `gittata_ft` esistono nei dati e questo scontro non li usa — un'arma a distanza e una da mischia si comportano uguale
 
-**11. `quando-usare-una-risorsa`** — «Recuperare il fiato»: i dati dicono cosa fa e quanti usi ha
+**10. `quando-usare-una-risorsa`** — «Recuperare il fiato»: i dati dicono cosa fa e quanti usi ha
 
 > non dicono QUANDO usarlo. La politica («sotto meta' dei punti ferita») e' del motore, non dei dati: e' materia dell'IA di combattimento, la stessa casella in cui la decisione 27 (`sette-campi-2e`) ha messo il morale
 
-**12. `tiri-salvezza-contro-morte`** — il personaggio a 0 punti ferita
+**11. `tiri-salvezza-contro-morte`** — il personaggio a 0 punti ferita
 
 > resta incosciente e fuori dallo scontro. I tiri salvezza contro morte non sono modellati: la nota di dati/condizioni/incosciente.json lo dichiara gia' — sono una procedura del Personaggio, e il Personaggio non c'e'
 
-**13. `blocco-senza-effetto:draconico-baaz:Controlled Fall`** — Draconico Baaz: il blocco «Controlled Fall» non ha `effetto`
+**12. `blocco-senza-effetto:draconico-baaz:Controlled Fall`** — Draconico Baaz: il blocco «Controlled Fall» non ha `effetto`
 
 > il motore lo ignora. L'assenza di `effetto` non distingue «non ha meccanica» da «non e' ancora strutturato»: sono due cose diverse e nei dati si scrivono uguali
 
-**14. `blocco-senza-effetto:draconico-baaz:Draconic Devotion`** — Draconico Baaz: il blocco «Draconic Devotion» non ha `effetto`
+**13. `blocco-senza-effetto:draconico-baaz:Draconic Devotion`** — Draconico Baaz: il blocco «Draconic Devotion» non ha `effetto`
 
 > il motore lo ignora. L'assenza di `effetto` non distingue «non ha meccanica» da «non e' ancora strutturato»: sono due cose diverse e nei dati si scrivono uguali
 
-**15. `innesco-non-dichiarato`** — «Death Throes» si innesca alla morte del portatore
+**14. `innesco-non-dichiarato`** — «Death Throes» si innesca alla morte del portatore
 
 > nessun campo lo dice: `azione: nessuna` significa «non costa un'azione», non «scatta a 0 punti ferita». Il motore riconosce il tratto DAL NOME, che e' l'unico appiglio che i dati offrono
 
-**16. `bersagli-dell-area`** — «Death Throes» colpisce «ogni creatura entro 5 piedi»
+**15. `bersagli-dell-area`** — «Death Throes» colpisce «ogni creatura entro 5 piedi»
 
 > il motore lo applica a tutti gli AVVERSARI: non c'e' posizione, non c'e' distanza, e l'area non ha un campo (la prosa dice 5 piedi, `effetto` non ha dove metterlo). Ne segue un errore di regola dichiarato: la fonte dice «ogni creatura», quindi anche gli alleati del Baaz, e qui non li colpisce
 
@@ -182,17 +178,58 @@ costruttore solleva. Classe Armatura, punti ferita, bonus di attacco e danno
 restano composti dal motore, ma adesso sono composti **una volta sola e per
 tutti e due**.
 
-**Il numero che nessuno può verificare — lacuna nuova.** Un `bonus_colpire`
-letto dalla scheda e uno rifatto col conto (competenza + modificatore) si
-scrivono identici, e `attacco_di()` non ha modo di sapere quale dei due sta
-leggendo: manca un `bonus_origine` accanto a `bonus_colpire`, cioè
-esattamente ciò che decisione 50 (`cd-origine-dichiarata`) ha dovuto aggiungere alle
-CD. Non è una questione teorica, ed è misurata: dei **94 bonus di
-attacco** che il bestiario scrive in prosa, **85 tornano col conto** e
-9 no. Le coincidenze non sono conferme — la CD 11 del Baaz
-è stampata dalla fonte *e* torna col conto, e per questo il vecchio controllo
-non l'avrebbe mai segnalata. Contarle è l'unica cosa onesta: dicono quanto
-vale il conto come prova, e la risposta è poco.
+**Il numero che nessuno può verificare — chiusa, e generalizzata.** Un
+`bonus_colpire` letto dalla scheda e uno rifatto col conto (competenza +
+modificatore) si scrivono identici, e `attacco_di()` non aveva modo di sapere
+quale dei due stesse leggendo. È misurato, non supposto: dei **94 bonus di
+attacco** che il bestiario scrive in prosa, **85 tornano col conto**
+e 9 no. Le coincidenze non sono conferme — il
+bonus della Spada corta del Baaz è **stampato dalla fonte** *e* torna col
+conto, esattamente come la sua CD 11, e nessun controllo poteva vederlo.
+
+Al secondo caso in due giri la regola è stata scritta una volta per tutte
+invece di essere riapplicata a mano: decisione 54 (`origine-e-un-dato`). Quando un
+valore può essere **sia letto dalla fonte sia calcolato dal sistema**, la sua
+origine è un **campo**, non una deduzione. `cd_origine` e `bonus_origine` ne
+sono le due applicazioni, non due decisioni imparentate. Il campo è nello
+schema, il controllo 6 di `dati/valida_effetti.py` lo pretende ovunque
+`bonus_colpire` non sia nullo, e la lacuna del motore non è sparita: è
+diventata **condizionata al dato**, e scatta esattamente sugli attacchi che
+non la dichiarano. Oggi sono zero perché i due strutturati la portano
+(2 su 2), e tornerà da sola quando si strutturerà il terzo
+senza compilarla.
+
+**Quanti altri campi hanno questa forma — la misura, non la stima.** La
+domanda che conta non è se `bonus_colpire` sia a posto adesso, ma quanti altri
+valori si scrivono uguali che siano letti o calcolati. Sono **4
+ancora scoperti**, e il quinto è il caso che insegna di più:
+
+| campo | dove | casi | tornano col conto | dichiara l'origine |
+|---|---|--:|--:|---|
+| `bonus_colpire` | prosa dei blocchi | 94 | 85 (90%) | no |
+| bonus di danno | prosa dei blocchi | 110 | 96 (87%) | no |
+| `skills[].bonus` | scheda | 18 | 16 (88%) | no |
+| `passive_perception` | scheda | 52 | 52 (100%) | no |
+| `hit_points.average` | scheda | 51 | 48 (94%) | si', con altro nome |
+
+`passive_perception` è il caso che spiega perché la percentuale non è una
+diagnosi: **52 su 52** tornano col conto, il cento per cento, e
+proprio per questo di nessuna si sa se sia stata letta o calcolata. Un campo dove il conto torna sempre è il posto **peggiore** in cui
+fidarsi del conto, non il migliore.
+
+`hit_points.average` è l'altro estremo, e va detto perché è la scoperta più
+utile del giro: l'origine lì **è già dichiarata**, sotto un altro nome —
+`conversion_status` e `source`, che `armor_class` e `challenge_rating` portano
+allo stesso modo. Il progetto aveva già inventato questo campo **tre volte**
+senza accorgersi che era lo stesso campo, e la decisione 54 (`origine-e-un-dato`)
+lo scrive come una regola sola. Unificare i tre nomi è un rinominare che tocca 52
+schede e uno schema già committato: **non fatto ora, e dichiarato aperto**.
+
+`saving_throws` non è nell'elenco e non è una dimenticanza: porta solo
+`proficient`, cioè **quali competenze** il portatore ha e non il numero che ne
+segue. Un campo che porta ingressi non può avere questo difetto — ed è la
+stessa forma che la decisione 52 (`attacco-unica-lettura`) ha imposto al
+personaggio.
 
 **Non c'è una sede per le regole di sistema — chiusa.** *d20 + bonus contro la
 Classe Armatura, 20 naturale critico, 1 naturale mancato d'ufficio* stava in
