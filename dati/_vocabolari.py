@@ -22,6 +22,7 @@ COSA CONTIENE INVECE
     da un altro lato, e va colta all'import e non a valle.
 """
 
+import glob
 import json
 import os
 
@@ -33,6 +34,7 @@ with open(SCHEMA, encoding="utf-8") as _f:
 
 TIPI_DANNO = tuple(_VOC["tipo_danno"]["enum"])
 QUALIFICATORI_DANNO = tuple(_VOC["qualificatore_danno"]["enum"])
+CONDIZIONI = tuple(_VOC["condizione"]["enum"])
 
 # Segnaposto nostri: stanno nell'enum e NON hanno un termine SRD che li
 # generi, quindi vanno esclusi dal controllo di copertura sotto.
@@ -104,6 +106,82 @@ def leggi_resistenza(riga):
 
 
 # --------------------------------------------------------------------------
+# LE CONDIZIONI: un insieme chiuso, e un catalogo che lo copre in parte.
+#
+# `dati/mostri/` dichiarava le immunita' a condizione con i nomi inglesi
+# della 5e mentre `dati/condizioni/` — che la
+# decisione 48 (`condizioni-a-consumo`) dichiara sede unica — ha id
+# italiani. Stesso
+# difetto dei tipi di danno, e piu' grave: li' erano due trascrizioni, qui
+# una delle due e' una SEDE DICHIARATA che l'altra ignorava.
+#
+# Tradurre e basta non bastava: delle dieci condizioni citate dalle
+# immunita' solo tre esistono in `dati/condizioni/`, e creare le altre sette
+# per anticipazione avrebbe sconfessato la
+# decisione 48 (`condizioni-a-consumo`) tre giorni dopo averla presa. Restringere l'enum alle esistenti era peggio: le schede
+# perdevano informazione vera di fonte.
+#
+# La strada e' quella dei repertori (decisione 35, `repertori-sono-filtri`):
+# l'insieme delle condizioni SRD e' CHIUSO e NOTO, quindi il vocabolario e'
+# completo — quindici — e le sette mancanti non sono condizioni inesistenti,
+# sono una LACUNA DEL NOSTRO CATALOGO. Che e' cosa diversa, e si misura.
+# --------------------------------------------------------------------------
+
+CONDIZIONE_DA_SRD = {
+    "blinded": "accecato",
+    "charmed": "affascinato",
+    "deafened": "assordato",
+    "exhaustion": "sfinimento",
+    "frightened": "spaventato",
+    "grappled": "afferrato",
+    "incapacitated": "incapacitato",
+    "invisible": "invisibile",
+    "paralyzed": "paralizzato",
+    "petrified": "pietrificato",
+    "poisoned": "avvelenato",
+    "prone": "prono",
+    "restrained": "trattenuto",
+    "stunned": "stordito",
+    "unconscious": "incosciente",
+}
+
+
+def condizione(termine_srd):
+    """L'id italiano a partire dal termine SRD. Solleva se non lo conosce.
+
+    Stessa regola di `tipo_danno()`: una traduzione mancante ferma il
+    generatore invece di passare come stringa inglese dentro lo strato
+    italiano, che e' esattamente come il difetto e' nato."""
+    chiave = (termine_srd or "").strip().lower()
+    if chiave not in CONDIZIONE_DA_SRD:
+        raise KeyError(
+            f"condizione SRD sconosciuta: {termine_srd!r}. Se e' davvero una "
+            f"delle quindici, aggiungila a CONDIZIONE_DA_SRD; se non lo e', "
+            f"non e' una condizione della 5e e va guardata due volte.")
+    return CONDIZIONE_DA_SRD[chiave]
+
+
+def condizioni_modellate():
+    """Le condizioni che il catalogo `dati/condizioni/` porta davvero.
+
+    DERIVATA dalla cartella, mai scritta a mano: un elenco a mano accanto a
+    una cartella e' una struttura doppia, e questo file esiste per chiuderne
+    una."""
+    return tuple(sorted(
+        os.path.splitext(os.path.basename(f))[0]
+        for f in glob.glob(os.path.join(BASE, "condizioni", "*.json"))))
+
+
+def condizioni_non_modellate():
+    """I termini che il vocabolario nomina e il catalogo non converte ancora.
+
+    Non e' un errore ed e' importante che non lo sia: e' la distanza fra
+    NOMINARE e CONVERTIRE, e la decisione 48 (`condizioni-a-consumo`) vuole
+    che si accorci quando un blocco convertito lo impone, non prima."""
+    return tuple(x for x in CONDIZIONI if x not in condizioni_modellate())
+
+
+# --------------------------------------------------------------------------
 # Invarianti, verificate all'import.
 # --------------------------------------------------------------------------
 assert set(DA_SRD.values()) <= set(TIPI_DANNO), (
@@ -116,3 +194,13 @@ assert set(TIPI_DANNO) - set(SEGNAPOSTO) == set(DA_SRD.values()), (
 
 assert set(QUALIFICATORE_DA_SRD.values()) == set(QUALIFICATORI_DANNO), (
     "i qualificatori dello schema e quelli tradotti non coincidono")
+
+assert set(CONDIZIONE_DA_SRD.values()) == set(CONDIZIONI), (
+    "l'enum delle condizioni e la traduzione non si coprono. Fuori dalla "
+    f"traduzione: {sorted(set(CONDIZIONI) - set(CONDIZIONE_DA_SRD.values()))}; "
+    f"fuori dall'enum: {sorted(set(CONDIZIONE_DA_SRD.values()) - set(CONDIZIONI))}")
+
+assert set(condizioni_modellate()) <= set(CONDIZIONI), (
+    "dati/condizioni/ porta un id che il vocabolario non nomina: "
+    f"{sorted(set(condizioni_modellate()) - set(CONDIZIONI))}. Il catalogo "
+    "puo' essere piu' POVERO del vocabolario, mai diverso")

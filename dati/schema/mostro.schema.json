@@ -406,7 +406,11 @@
         "damage_resistances": { "type": "array", "items": { "$ref": "#/$defs/voce_danno" } },
         "damage_immunities": { "type": "array", "items": { "$ref": "#/$defs/voce_danno" } },
         "damage_vulnerabilities": { "type": "array", "items": { "$ref": "#/$defs/voce_danno" } },
-        "condition_immunities": { "type": "array", "items": { "type": "string" } },
+        "condition_immunities": {
+          "type": "array",
+          "description": "Le condizioni a cui la creatura e' immune, per id italiano dal vocabolario condiviso. Il vocabolario e' l'insieme CHIUSO delle quindici condizioni SRD, non l'elenco di quelle che il progetto ha convertito: un mostro puo' dichiarare immunita' a una condizione che `dati/condizioni/` non modella ancora, ed e' giusto che possa — l'immunita' e' un fatto della sua scheda, la conversione e' lavoro nostro. Quel divario e' una lacuna del nostro catalogo, si deriva dalla cartella (mai si scrive) e il motore la dichiara invece di ignorarla. Prima del 02/09/2026 questo campo era un array di stringhe libere con i nomi inglesi (`charmed`, `poisoned`): la stessa struttura doppia dei tipi di danno, con l'aggravante che una delle due sedi era gia' dichiarata unica.",
+          "items": { "$ref": "vocabolari.schema.json#/$defs/condizione" }
+        },
         "senses": { "type": "array", "items": { "type": "string" } },
         "passive_perception": { "type": ["integer", "null"] },
         "languages": { "type": "array", "items": { "type": "string" } },

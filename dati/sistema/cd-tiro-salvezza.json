@@ -1,0 +1,17 @@
+{
+  "id": "cd-tiro-salvezza",
+  "name": {
+    "en": "Saving Throw DC",
+    "it": "CD di un tiro salvezza"
+  },
+  "genere": "formula",
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "SRD 5.1, Spellcasting — Spell save DC",
+    "api_ref": null
+  },
+  "mechanics_5e": "La CD di un tiro salvezza imposto da una creatura vale 8 piu' il suo bonus di competenza piu' il modificatore della caratteristica pertinente.",
+  "base": 8,
+  "addendi": ["bonus-competenza", "modificatore-caratteristica"],
+  "note": "Gli addendi sono RIFERITI per id, non ricopiati: e' la regola del `$ref` fra schemi applicata fra dati. Attenzione a cosa questa formula NON e': non e' il modo in cui una CD viene decisa, e' solo il conto che a volte torna. La decisione 50 (`cd-origine-dichiarata`) esiste perche' una CD letta e una CD derivata sono indistinguibili quando coincidono — la CD 11 del Death Throes del Baaz e' stampata dalla fonte E torna col conto, quindi il vecchio controllo non l'avrebbe mai segnalata. Questa formula serve a CONTARE le coincidenze, non a fidarsene."
+}

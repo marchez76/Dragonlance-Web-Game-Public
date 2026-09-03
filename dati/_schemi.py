@@ -90,13 +90,23 @@ def verifica_riferimenti():
         ("mostro.schema.json", "damage_resistances[].tipo",
          {"mechanics_5e": {"damage_resistances": [{"tipo": "slashing"}]}}),
     ]
+    # Le condizioni hanno la stessa forma di difetto e quindi la stessa
+    # sonda, con il termine che i dati portavano prima del 02/09/2026:
+    # `charmed`. Il vocabolario delle condizioni e' l'insieme SRD completo,
+    # quindi rifiutare l'inglese e' esattamente cio' che deve fare — un
+    # riferimento non risolto lo lascerebbe passare e l'enum sembrerebbe
+    # applicato senza esserlo.
+    sonde.append(
+        ("mostro.schema.json", "condition_immunities[]",
+         {"mechanics_5e": {"condition_immunities": ["charmed"]}}))
     errori = []
     for nome, dove, documento in sonde:
         v = validatore(nome)
         messaggi = [e.message for e in v.iter_errors(documento)]
-        if not any("slashing" in m for m in messaggi):
+        atteso = "charmed" if "charmed" in json.dumps(documento) else "slashing"
+        if not any(atteso in m for m in messaggi):
             errori.append(
-                f"{nome}: '{dove}' non ha rifiutato 'slashing'. Il $ref a "
+                f"{nome}: '{dove}' non ha rifiutato '{atteso}'. Il $ref a "
                 f"vocabolari.schema.json non e' stato risolto: il "
                 f"vocabolario sembra applicato e non lo e'")
     return errori

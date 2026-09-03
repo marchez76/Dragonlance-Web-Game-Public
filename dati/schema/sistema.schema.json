@@ -1,0 +1,160 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://dragonlance-gdr.local/schema/sistema.schema.json",
+  "title": "Dato di sistema — una tabella o una costante che non varia da portatore a portatore",
+
+  "description": "PERCHE' ESISTE. Il criterio a tre domande (decisione 51, `criterio-meccanica`) taglia cosi': cio' che varia da portatore a portatore e' un dato di contenuto; cio' che non varia ed e' un VALORE o una TABELLA che la fonte stampa e' un dato di SISTEMA e vive qui; cio' che non varia ed e' una PROCEDURA resta codice. Questa cartella e' la sede dichiarata della seconda categoria, e nasce da una misura, non da un gusto: `dati/RAPPORTO-meccanica.md` ha trovato la NONA struttura doppia del progetto — il modificatore di caratteristica scritto in `dati/valida_effetti.py` e in `motore/combattimento.py`, il bonus di competenza in `dati/_srd51.py` e in `dati/valida_effetti.py`. Le otto precedenti erano fra file di DATI, dove arrivano schemi e validatori; questa e' la prima che vive nel CODICE, dove non arrivava niente. Una tabella che diventa un dato porta con se' gli strumenti che il progetto gia' ha: uno schema che la vincola, un validatore che la riconfronta, e un controllo anti-duplicazione (`dati/valida_sistema.py`) che rifiuta la stessa formula riscritta altrove. NESSUN `source_2e`: sono regole della 5e, prese dall'SRD 5.1 (CC-BY, vedi LICENSE-SRD.md), quindi questa cartella e' pubblica come `dati/condizioni/` e per la stessa ragione. LINGUA: italiano negli id e negli enum, come ogni altro vocabolario nostro (decisione 49, `vocabolario-italiano`).",
+
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "name", "genere", "source", "mechanics_5e"],
+
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$",
+      "description": "Chiave stabile, uguale al nome del file. Non cambia mai: e' la stessa regola dell'id delle decisioni e di quello delle condizioni."
+    },
+
+    "name": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["en", "it"],
+      "properties": {
+        "en": { "type": "string" },
+        "it": { "type": "string" }
+      }
+    },
+
+    "genere": {
+      "type": "string",
+      "enum": ["tabella", "formula", "moltiplicatori", "soglie"],
+      "description": "Che forma ha il dato. `tabella`: un ingresso intero da' un valore, per fasce. `formula`: una base piu' addendi nominati, dove gli addendi sono ALTRI dati di sistema riferiti per id. `moltiplicatori`: quanto un danno viene moltiplicato da una difesa. `soglie`: un valore del dado che ha un esito d'ufficio."
+    },
+
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_edition", "source_book"],
+      "properties": {
+        "source_edition": { "type": "string", "const": "SRD 5.1" },
+        "source_book": { "type": "string" },
+        "api_ref": { "type": ["string", "null"] }
+      }
+    },
+
+    "mechanics_5e": {
+      "type": "string",
+      "description": "La regola in prosa italiana. Resta la forma autoritativa per una persona; la struttura accanto e' la stessa cosa in campi, e `valida_sistema.py` le tiene allineate — ogni numero della struttura deve comparire nella prosa, che e' il controllo 2 di `valida_effetti.py` applicato qui."
+    },
+
+    "fasce": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Le fasce della tabella, `da` e `a` inclusi. Devono coprire il dominio di ogni lettura senza buchi e senza sovrapposizioni: `valida_sistema.py` lo verifica invece di fidarsi.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["da", "a", "valore"],
+        "properties": {
+          "da": { "type": "integer" },
+          "a": { "type": "integer" },
+          "valore": { "type": "integer" }
+        }
+      }
+    },
+
+    "letture": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Le letture della STESSA tabella. Il bonus di competenza ne ha due — per livello del personaggio e per grado sfida del mostro — e sono due letture, non due tabelle: scriverle come due tabelle sarebbe la struttura doppia rimessa in piedi da un altro lato.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "ingresso", "dominio"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z][a-z0-9_]*$" },
+          "ingresso": { "type": "string" },
+          "dominio": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": { "type": "integer" }
+          },
+          "sotto_il_minimo": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["soglia", "valore", "nota"],
+            "description": "Cosa vale sotto la prima fascia. Esiste per i gradi sfida frazionari (0, 1/8, 1/4, 1/2), che la tabella delle fasce non puo' esprimere perche' le fasce sono intere.",
+            "properties": {
+              "soglia": { "type": "integer" },
+              "valore": { "type": "integer" },
+              "nota": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+
+    "base": {
+      "type": "integer",
+      "description": "Il termine costante di una `formula`."
+    },
+
+    "addendi": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Gli addendi di una `formula`, riferiti per id ad altri dati di sistema. Riferiti e non ricopiati: e' la regola del `$ref` fra schemi (decisione 49, `vocabolario-italiano`) applicata fra dati.",
+      "items": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" }
+    },
+
+    "moltiplicatori": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["difesa", "moltiplicatore", "arrotondamento"],
+        "properties": {
+          "difesa": { "type": "string", "enum": ["resistenza", "vulnerabilita", "immunita"] },
+          "moltiplicatore": { "type": "number" },
+          "arrotondamento": { "type": "string", "enum": ["per_difetto", "nessuno"] }
+        }
+      }
+    },
+
+    "ordine_di_applicazione": {
+      "type": "array",
+      "description": "In quale ordine si applicano le difese quando un colpo ne incontra piu' d'una. Oggi era l'ordine delle righe di una funzione, cioe' un dato scritto in una posizione del codice: qui e' un campo.",
+      "items": { "type": "string", "enum": ["resistenza", "vulnerabilita", "immunita"] }
+    },
+
+    "soglie": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "valore", "esito"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z][a-z0-9_]*$" },
+          "valore": { "type": "integer" },
+          "esito": { "type": "string" }
+        }
+      }
+    },
+
+    "note": { "type": "string" }
+  },
+
+  "allOf": [
+    { "if": { "properties": { "genere": { "const": "tabella" } }, "required": ["genere"] },
+      "then": { "required": ["fasce", "letture"] } },
+    { "if": { "properties": { "genere": { "const": "formula" } }, "required": ["genere"] },
+      "then": { "required": ["base", "addendi"] } },
+    { "if": { "properties": { "genere": { "const": "moltiplicatori" } }, "required": ["genere"] },
+      "then": { "required": ["moltiplicatori", "ordine_di_applicazione"] } },
+    { "if": { "properties": { "genere": { "const": "soglie" } }, "required": ["genere"] },
+      "then": { "required": ["soglie"] } }
+  ]
+}

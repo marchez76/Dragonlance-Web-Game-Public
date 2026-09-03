@@ -31,6 +31,7 @@ BASE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, BASE)
 sys.path.insert(0, os.path.dirname(BASE))
 
+import _vocabolari as V  # noqa: E402
 from decisioni import cita  # noqa: E402
 
 CARTELLE = ("razze", "classi", "divinita", "mostri", "oggetti", "incantesimi",
@@ -179,8 +180,12 @@ def vincolo(cartella, percorso, enums):
 # ma il controllo 4 di dati/valida_effetti.py mette le due sedi una contro
 # l'altra ed esce != 0 se divergono — un modo diverso di chiudere lo stesso
 # buco, non un buco. Mente anche per eccesso se si scrive il controllo senza
-# le sedi: il controllo 3 verifica gli id di condizione citati da `effetto` e
-# NON tocca `condition_immunities`, che e' proprio la sede rotta.
+# le sedi: fino al 02/09/2026 il controllo 3 verificava gli id di condizione
+# citati da `effetto` e NON toccava `condition_immunities`, che era proprio
+# la sede rotta. Ora quella sede e' vincolata dallo schema (`$ref` al
+# vocabolario condiviso) e `valida_effetti.controlla_immunita_condizione()`
+# ne misura il divario col catalogo: sono due cose diverse, e la seconda non
+# e' un controllo di divergenza ma una misura, quindi non entra qui.
 CONTROLLI = {
     ("mostri", "mechanics_5e.*.effetto.tiro_salvezza.*.condizioni[].id"):
         "valida_effetti.py, controllo 3",
@@ -197,21 +202,13 @@ CONTROLLI = {
 }
 
 
-# Corrispondenza fra i nomi inglesi delle immunita' a condizione e gli id di
-# dati/condizioni/. SERVE SOLO A CONTARE quante condizioni mancherebbero se si
-# traducesse il campo: NON e' una traduzione adottata da nessuna parte, e
-# nessun dato la usa. Scritta qui perche' l'alternativa era stimare a occhio
-# la sovrapposizione, e una stima a occhio dentro un rapporto di misura e'
-# esattamente il difetto che il rapporto denuncia.
-COND_EN_IT = {
-    "blinded": "accecato", "charmed": "affascinato", "deafened": "assordato",
-    "exhaustion": "sfinimento", "frightened": "spaventato",
-    "grappled": "afferrato", "incapacitated": "incapacitato",
-    "invisible": "invisibile", "paralyzed": "paralizzato",
-    "petrified": "pietrificato", "poisoned": "avvelenato", "prone": "prono",
-    "restrained": "trattenuto", "stunned": "stordito",
-    "unconscious": "incosciente",
-}
+# La traduzione dai nomi SRD agli id italiani NON sta piu' qui. Fino al
+# 02/09/2026 questo file ne portava una copia con la nota «serve solo a
+# contare, nessun dato la usa»: da quando
+# decisione 53 (`condizioni-vocabolario-srd`) l'ha adottata, quella copia
+# sarebbe una struttura doppia nuova, creata dentro il rapporto che le
+# misura. Si legge dalla sede unica.
+DA_SRD_CONDIZIONE = V.CONDIZIONE_DA_SRD
 
 
 def copertura(cartella, percorso, vinc):
@@ -252,19 +249,18 @@ def main():
         quante = "1 sede scoperta" if n == 1 else f"{n} sedi scoperte"
         return f"**APERTO** — {quante} su {len(presenti)}"
 
-    # Quante condizioni mancherebbero davvero: le immunita' inglesi tradotte,
-    # meno quelle che dati/condizioni/ ha gia'.
-    imm_en = set(misure["condizioni"][0][2])
+    # Il divario fra cio' che il vocabolario NOMINA e cio' che il catalogo
+    # CONVERTE. Non si stima e non si scrive: si deriva dalle due sedi.
+    imm = set(misure["condizioni"][0][2])
     id_it = set(misure["condizioni"][1][2])
-    ignote = sorted(imm_en - set(COND_EN_IT))
-    if ignote:
-        # Un nome inglese fuori tabella farebbe scendere il conteggio senza
-        # dirlo: il rapporto direbbe "ne mancano N" con N sbagliato.
-        sys.exit(f"immunita' a condizione fuori da COND_EN_IT: {ignote}. "
-                 f"Aggiungile alla tabella prima di rigenerare il rapporto.")
-    tradotte = {COND_EN_IT[c] for c in imm_en if c in COND_EN_IT}
-    gia_presenti = sorted(tradotte & id_it)
-    mancanti = sorted(tradotte - id_it)
+    fuori_vocabolario = sorted(imm - set(V.CONDIZIONI))
+    if fuori_vocabolario:
+        sys.exit(f"immunita' a condizione fuori dal vocabolario: "
+                 f"{fuori_vocabolario}. L'insieme SRD e' chiuso: o e' un "
+                 f"refuso, o non e' una condizione.")
+    gia_presenti = sorted(imm & id_it)
+    mancanti = sorted(imm - id_it)
+    non_modellate = V.condizioni_non_modellate()
 
     aperti = [n for n, p in misure.items() if len(p) > 1 and scoperte(p)]
     una_sede = [n for n, p in misure.items() if len(p) == 1]
@@ -324,32 +320,39 @@ Il difetto arriva col prossimo file che usa lo stesso termine.
 
 ## 3. I tre casi che restano aperti, e cosa costa chiuderli
 
-**`condition_immunities` — lo stesso difetto dei tipi di danno, un anno piu'
-avanti.** `dati/mostri/` dichiara le immunita' a condizione con i nomi
-inglesi della 5e ({len(misure['condizioni'][0][2])} distinti su
-{sum(misure['condizioni'][0][2].values())} occorrenze: `charmed`, `poisoned`,
-`petrified`, `prone`, `restrained`...), mentre `dati/condizioni/` — che
-{cita('condizioni-a-consumo')} dichiara sede unica — ha
-{len(misure['condizioni'][1][2])} id italiani. Il campo `effetto` risolve
-contro la sede italiana e il controllo 3 lo verifica; `condition_immunities`
-non risolve contro niente. E' **piu' grave** dei tipi di danno, perche' li'
-le due sedi erano due trascrizioni e qui una delle due e' una **sede
-dichiarata** che l'altra ignora.
+**`condition_immunities` — chiusa, e non traducendo e basta.**
+`dati/mostri/` dichiarava le immunita' a condizione con i nomi inglesi della
+5e mentre `dati/condizioni/` — che {cita('condizioni-a-consumo')} dichiara
+sede unica — ha id italiani: stesso difetto dei tipi di danno, e **piu'
+grave**, perche' li' erano due trascrizioni e qui una delle due sedi era gia'
+**dichiarata unica** e l'altra la ignorava. Nessuna immunita' del bestiario
+poteva essere rispettata da nessun motore.
 
-Non si chiude senza una decisione, e le due strade costano cose diverse.
-**Tradurre e basta** significa che le {len(imm_en)} condizioni citate dalle
-immunita' diventano id italiani, e solo {len(gia_presenti)} di quegli id
-esistono in `dati/condizioni/` ({', '.join('`' + c + '`' for c in gia_presenti)}).
-Gli altri **{len(mancanti)}** non esistono
-({', '.join('`' + c + '`' for c in mancanti)}): o si accettano riferimenti che
-non risolvono, o si creano {len(mancanti)} condizioni per anticipazione — cioe'
-si sconfessa il criterio di {cita('condizioni-a-consumo')}, applicato per la
-prima volta tre giorni fa. **Restringere l'enum alle cinque esistenti** e' peggio: le
-schede perderebbero informazione vera di fonte. La terza strada — un
-vocabolario delle condizioni **separato** dalla cartella delle condizioni
-convertite, dove l'id esiste come termine e la scheda meccanica arriva dopo —
-e' probabilmente quella giusta e non e' una riga di enum: e' la stessa
-distinzione fra *nominare* e *convertire* che il progetto fa gia' altrove.
+Tradurre e basta non bastava, ed e' la ragione per cui il caso era rimasto
+aperto: delle condizioni citate dalle immunita' solo
+{len(gia_presenti)} avevano una scheda in `dati/condizioni/`
+({', '.join('`' + c + '`' for c in gia_presenti)}), quindi o si accettavano
+{len(mancanti)} riferimenti che non risolvono, o si creavano
+{len(mancanti)} condizioni per anticipazione — cioe' si sconfessava
+{cita('condizioni-a-consumo')} tre giorni dopo averla presa.
+
+Chiusa con {cita('condizioni-vocabolario-srd')} per la strada dei repertori
+({cita('repertori-sono-filtri')}): l'insieme delle condizioni SRD e' **chiuso
+e noto**, quindi il vocabolario e' **completo** — {len(V.CONDIZIONI)} termini
+in `vocabolari.schema.json`, riferiti per `$ref` da `mostro.schema.json` —
+mentre il catalogo ne converte {len(V.condizioni_modellate())}. Le altre
+{len(non_modellate)} non sono condizioni **inesistenti**: sono una **lacuna
+del nostro catalogo**, che e' cosa diversa, e non si scrive da nessuna parte
+— si deriva dai file presenti nella cartella.
+
+Il divario resta, e adesso e' un numero invece che un dubbio:
+**{sum(misure['condizioni'][0][2].values())} immunita'** nel bestiario, di cui
+**{sum(n for c, n in misure['condizioni'][0][2].items() if c in non_modellate)}**
+nominano una delle {len(non_modellate)} condizioni che il motore non sa
+ancora applicare ({', '.join('`' + c + '`' for c in non_modellate)}). Il
+motore lo **dichiara** — lacuna `condizione-non-modellata` — perche'
+un'immunita' saltata in silenzio e' indistinguibile da un'immunita'
+rispettata.
 
 **`taglia` — due sedi, una sola vincolata, d'accordo per fortuna.**
 `mostro.schema.json` ha l'enum `Tiny…Gargantuan`; `razza.schema.json`

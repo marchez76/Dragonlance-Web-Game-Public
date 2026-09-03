@@ -43,6 +43,13 @@ COSA C'E' DA OGGI, E PERCHE' L'INTESTAZIONE SOPRA NON BASTAVA PIU'
     le due dicano la stessa cosa.
 """
 
+import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+import _sistema  # noqa: E402
+
 # --------------------------------------------------------------------------
 # Colonna "Features" dell'SRD, livello per livello. Stringa vuota = "-".
 # --------------------------------------------------------------------------
@@ -169,8 +176,14 @@ TABELLE = {
     },
 }
 
-# Bonus di competenza: identico per tutte le classi, SRD 5.1.
-COMPETENZA = {l: 2 + (l - 1) // 4 for l in range(1, 21)}
+# Bonus di competenza: identico per tutte le classi, e LETTO dalla sua sede
+# unica, `dati/sistema/bonus-competenza.json`. Fino al 02/09/2026 la formula
+# stava scritta qui e una seconda volta in `dati/valida_effetti.py`, in due
+# file che nessuna esecuzione metteva uno contro l'altro: meta' della nona
+# struttura doppia del progetto, e la prima che vivesse nel codice.
+# Il nome resta, perche' i consumatori sono molti; cio' che cambia e' da
+# dove viene il numero. Decisione 51 (`criterio-meccanica`).
+COMPETENZA = {l: _sistema.competenza(l) for l in range(1, 21)}
 
 ASI = "Ability Score Improvement"
 

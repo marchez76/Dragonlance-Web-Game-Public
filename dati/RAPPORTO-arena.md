@@ -1,6 +1,6 @@
 # L'arena della fetta verticale — i dati usati per la prima volta
 
-*Generato da `motore/arena.py` il 2026-09-02.*
+*Generato da `motore/arena.py` il 2026-09-03.*
 
 ---
 
@@ -22,7 +22,7 @@ perché ogni valore assente diventa uno zero e ogni regola assente diventa un
 ramo che non si prende. È la stessa forma del difetto che la categoria d'arma
 ha reso visibile — un buco che sembra un dato.
 
-> **Lo scontro gira. Con 17 lacune dichiarate.**
+> **Lo scontro gira. Con 16 lacune dichiarate.**
 
 ---
 
@@ -95,76 +95,72 @@ classificare.
 
 ---
 
-## 3. Le 17 lacune
+## 3. Le 16 lacune
 
 Ognuna è un punto in cui il motore ha supplito ai dati. Sono l'esito vero di
 questa prova.
 
-**1. `pf-primo-livello`** — punti ferita del personaggio
+**1. `difese-del-pg`** — resistenze e immunita' del personaggio
 
-> massimo al 1° livello e media ai successivi: e' la regola 5e, ma nessun campo dei dati la dichiara — il dado vita c'e', la procedura che lo usa no
+> il mostro le porta in `damage_resistances`, `damage_immunities`, `damage_vulnerabilities`; il personaggio non ha nessun campo dove averle, e nessuna regola che le componga da razza e classe. Qui e' senza difese, che oggi e' vero per un Cavaliere della Corona umano ma lo e' per assenza di dato, non per verifica
 
 **2. `condizione-modificatore`** — stile «Duello»: la condizione di applicazione è prosa
 
 > «arma da mischia in una mano sola, nessun'altra arma impugnata» — il motore la considera sempre vera perché non c'è nessun campo che dica come verificarla
 
-**3. `nessuna-posizione`** — portata e gittata sono campi popolati e mai letti
+**3. `pf-primo-livello`** — punti ferita del personaggio
 
-> il motore non ha una griglia ne' distanze: ogni combattente e' a portata di ogni altro. `portata_ft` e `gittata_ft` esistono nei dati e questo scontro non li usa — un'arma a distanza e una da mischia si comportano uguale
+> massimo al 1° livello e media ai successivi: e' la regola 5e, ma nessun campo dei dati la dichiara — il dado vita c'e', la procedura che lo usa no
 
-**4. `attacco-del-pg`** — l'attacco del personaggio non esiste come dato
-
-> composto qui da arma + caratteristica + competenza + stile. Sul mostro `attacco` e' un campo; sul personaggio e' una funzione di questo modulo, e vive solo qui
-
-**5. `difese-del-pg`** — resistenze e immunita' del personaggio
-
-> il mostro le porta in `damage_resistances`, `damage_immunities`, `damage_vulnerabilities`; il personaggio non ha nessun campo dove averle, e nessuna regola che le componga da razza e classe. Qui e' senza difese, che oggi e' vero per un Cavaliere della Corona umano ma lo e' per assenza di dato, non per verifica
-
-**6. `blocco-senza-effetto:traag:Dissoluzione post mortem`** — Traag: il blocco «Dissoluzione post mortem» non ha `effetto`
+**4. `blocco-senza-effetto:traag:Dissoluzione post mortem`** — Traag: il blocco «Dissoluzione post mortem» non ha `effetto`
 
 > il motore lo ignora. L'assenza di `effetto` non distingue «non ha meccanica» da «non e' ancora strutturato»: sono due cose diverse e nei dati si scrivono uguali
 
-**7. `blocco-senza-effetto:traag:Furia cieca`** — Traag: il blocco «Furia cieca» non ha `effetto`
+**5. `blocco-senza-effetto:traag:Furia cieca`** — Traag: il blocco «Furia cieca» non ha `effetto`
 
 > il motore lo ignora. L'assenza di `effetto` non distingue «non ha meccanica» da «non e' ancora strutturato»: sono due cose diverse e nei dati si scrivono uguali
 
-**8. `iniziativa`** — il bonus di iniziativa
+**6. `iniziativa`** — il bonus di iniziativa
 
 > calcolato qui come modificatore di Destrezza. Nessun campo lo porta, ne' sul mostro ne' sulla classe
 
-**9. `fine-dello-scontro`** — quando finisce uno scontro
+**7. `fine-dello-scontro`** — quando finisce uno scontro
 
 > qui: quando una delle due parti non ha piu' nessuno che possa agire. Non e' un dato — ed e' la definizione che il Baaz mette alla prova, perche' una creatura pietrificata non e' morta, ha ancora i suoi punti ferita
 
-**10. `morale-non-letto`** — il morale dei mostri non entra nello scontro
+**8. `morale-non-letto`** — il morale dei mostri non entra nello scontro
 
 > la decisione 27 (`sette-campi-2e`) lo destina all'IA di combattimento e ogni mostro lo porta in `morale_2e`; qui nessuno lo legge, e i mostri combattono fino alla morte. Il Traag e' il caso peggiore: il suo morale ha due stati (8 prima dello scontro, nessun controllo dopo), e ignorarlo cancella il suo tratto identitario
 
-**11. `regole-di-sistema`** — la procedura di risoluzione di un attacco
+**9. `attacco-origine-non-dichiarata`** — il bonus di attacco del mostro non dice da dove viene
 
-> d20 + bonus contro la Classe Armatura, 20 naturale critico che raddoppia i dadi, 1 naturale mancato d'ufficio: e' scritta in questo file e in nessun dato. La decisione 41 (`sconfessione-condivisa`) ha gia' registrato che manca una sede per le regole di sistema, e dati/condizioni/ e' il primo caso: questo e' il secondo, e pesa piu' del primo
+> letto dalla scheda o rifatto col conto (competenza + modificatore) si scrivono uguali, esattamente come accadeva alle CD prima della decisione 50 (`cd-origine-dichiarata`): manca un `bonus_origine` accanto a `bonus_colpire`. Quante volte i due coincidano e' una misura, ed e' in `motore/arena.py` → `coincidenze_di_attacco()`
 
-**12. `quando-usare-una-risorsa`** — «Recuperare il fiato»: i dati dicono cosa fa e quanti usi ha
+**10. `nessuna-posizione`** — portata e gittata sono campi popolati e mai letti
+
+> il motore non ha una griglia ne' distanze: ogni combattente e' a portata di ogni altro. `portata_ft` e `gittata_ft` esistono nei dati e questo scontro non li usa — un'arma a distanza e una da mischia si comportano uguale
+
+**11. `quando-usare-una-risorsa`** — «Recuperare il fiato»: i dati dicono cosa fa e quanti usi ha
 
 > non dicono QUANDO usarlo. La politica («sotto meta' dei punti ferita») e' del motore, non dei dati: e' materia dell'IA di combattimento, la stessa casella in cui la decisione 27 (`sette-campi-2e`) ha messo il morale
 
-**13. `tiri-salvezza-contro-morte`** — il personaggio a 0 punti ferita
+**12. `tiri-salvezza-contro-morte`** — il personaggio a 0 punti ferita
 
 > resta incosciente e fuori dallo scontro. I tiri salvezza contro morte non sono modellati: la nota di dati/condizioni/incosciente.json lo dichiara gia' — sono una procedura del Personaggio, e il Personaggio non c'e'
 
-**14. `blocco-senza-effetto:draconico-baaz:Controlled Fall`** — Draconico Baaz: il blocco «Controlled Fall» non ha `effetto`
+**13. `blocco-senza-effetto:draconico-baaz:Controlled Fall`** — Draconico Baaz: il blocco «Controlled Fall» non ha `effetto`
 
 > il motore lo ignora. L'assenza di `effetto` non distingue «non ha meccanica» da «non e' ancora strutturato»: sono due cose diverse e nei dati si scrivono uguali
 
-**15. `blocco-senza-effetto:draconico-baaz:Draconic Devotion`** — Draconico Baaz: il blocco «Draconic Devotion» non ha `effetto`
+**14. `blocco-senza-effetto:draconico-baaz:Draconic Devotion`** — Draconico Baaz: il blocco «Draconic Devotion» non ha `effetto`
 
 > il motore lo ignora. L'assenza di `effetto` non distingue «non ha meccanica» da «non e' ancora strutturato»: sono due cose diverse e nei dati si scrivono uguali
 
-**16. `innesco-non-dichiarato`** — «Death Throes» si innesca alla morte del portatore
+**15. `innesco-non-dichiarato`** — «Death Throes» si innesca alla morte del portatore
 
 > nessun campo lo dice: `azione: nessuna` significa «non costa un'azione», non «scatta a 0 punti ferita». Il motore riconosce il tratto DAL NOME, che e' l'unico appiglio che i dati offrono
 
-**17. `bersagli-dell-area`** — «Death Throes» colpisce «ogni creatura entro 5 piedi»
+**16. `bersagli-dell-area`** — «Death Throes» colpisce «ogni creatura entro 5 piedi»
 
 > il motore lo applica a tutti gli AVVERSARI: non c'e' posizione, non c'e' distanza, e l'area non ha un campo (la prosa dice 5 piedi, `effetto` non ha dove metterlo). Ne segue un errore di regola dichiarato: la fonte dice «ogni creatura», quindi anche gli alleati del Baaz, e qui non li colpisce
 
@@ -172,21 +168,43 @@ questa prova.
 
 ## 4. Cosa si è rotto, in ordine di peso
 
-**Il personaggio non è un dato.** Sul mostro l'attacco è un campo; sul
-personaggio è una funzione di `motore/combattimento.py`, e vive solo lì. Classe
-Armatura, punti ferita, bonus di attacco, danno: tutti composti a runtime da
-razza + classe + oggetto + stile di combattimento, con la procedura scritta nel
-motore. È la lacuna più grande e non sorprende — lo schema Personaggio non
-esiste. Sorprende *quanto* di ciò che serve non sia da nessuna parte: la regola
-dei punti ferita al 1° livello, il bonus di iniziativa, la competenza applicata
-all'arma.
+**`attacco` era due cose con lo stesso nome — chiusa.** Sul mostro era un
+campo letto dalla scheda, sul personaggio una funzione di
+`motore/combattimento.py`: due cose diverse che si chiamavano uguale, ed è la
+lacuna che il primo scontro ha reso visibile. Chiusa con
+decisione 52 (`attacco-unica-lettura`): ciò che i due lati condividono non è il
+campo, è la **lettura**. `attacco_di(combattente)` torna la forma
+`effetto.attacco` da entrambe le parti — sul mostro la legge, sul personaggio
+la compone — e chi la chiama non sa quale dei due casi ha davanti. Il
+personaggio porta solo gli **ingressi** (razza, classe, livello, punteggi,
+equipaggiato, scelte): ogni campo ricavabile da quelli non *può* esistere, il
+costruttore solleva. Classe Armatura, punti ferita, bonus di attacco e danno
+restano composti dal motore, ma adesso sono composti **una volta sola e per
+tutti e due**.
 
-**Non c'è una sede per le regole di sistema.** La decisione 41
-(`sconfessione-condivisa`) l'aveva già registrato, e `dati/condizioni/` è stata
-la prima risposta. Questo è il secondo caso e pesa di più: *d20 + bonus contro
-la Classe Armatura, 20 naturale critico, 1 naturale mancato d'ufficio* sta
-scritto in un file Python e in nessun dato. Lo stesso vale per la struttura del
-round, l'economia delle azioni e la condizione di fine scontro.
+**Il numero che nessuno può verificare — lacuna nuova.** Un `bonus_colpire`
+letto dalla scheda e uno rifatto col conto (competenza + modificatore) si
+scrivono identici, e `attacco_di()` non ha modo di sapere quale dei due sta
+leggendo: manca un `bonus_origine` accanto a `bonus_colpire`, cioè
+esattamente ciò che decisione 50 (`cd-origine-dichiarata`) ha dovuto aggiungere alle
+CD. Non è una questione teorica, ed è misurata: dei **94 bonus di
+attacco** che il bestiario scrive in prosa, **85 tornano col conto** e
+9 no. Le coincidenze non sono conferme — la CD 11 del Baaz
+è stampata dalla fonte *e* torna col conto, e per questo il vecchio controllo
+non l'avrebbe mai segnalata. Contarle è l'unica cosa onesta: dicono quanto
+vale il conto come prova, e la risposta è poco.
+
+**Non c'è una sede per le regole di sistema — chiusa.** *d20 + bonus contro la
+Classe Armatura, 20 naturale critico, 1 naturale mancato d'ufficio* stava in
+un file Python e in nessun dato. Il criterio a tre domande
+(decisione 51 (`criterio-meccanica`)) l'ha tagliata in due: i **numeri** — il 20 e
+l'1 naturale, i moltiplicatori di resistenza e vulnerabilità, il modificatore
+di caratteristica, il bonus di competenza, la base della CD — sono ora dati di
+sistema in `dati/sistema/`, con schema e validatore; la **procedura** che li
+usa resta codice, che è la risposta e non più una mancanza. La condizione
+perché quella risposta valga era un riconfronto automatico, e c'è:
+`dati/valida_sistema.py` rifiuta la stessa tabella riscritta altrove, e a
+metterlo in piedi ha trovato subito i cinque punti in cui era già successo.
 
 **Un innesco non ha un campo.** `azione: nessuna` significa *non costa
 un'azione*, non *scatta a 0 punti ferita*. Il motore riconosce il Death Throes
@@ -243,6 +261,41 @@ resistenza. E lì c'è la lacuna nuova che ha preso il posto di quella chiusa �
 **nessun campo dice se un attacco è magico**. Sull'arma di un personaggio c'è
 `magico`; sull'azione di un mostro non c'è niente, e il motore assume *non
 magico*, cioè l'assunzione favorevole al difensore.
+
+**Le immunità a condizione: due sedi che non si parlavano — chiusa.**
+`dati/mostri/` dichiarava le immunità con i nomi inglesi della 5e
+(`charmed`, `poisoned`) mentre `dati/condizioni/` — che
+decisione 48 (`condizioni-a-consumo`) dichiara sede unica — ha id italiani. Stesso
+difetto dei tipi di danno, con l'aggravante che qui una delle due sedi era
+**già dichiarata unica** e l'altra la ignorava: nessuna immunità del
+bestiario poteva essere rispettata da nessun motore.
+
+Tradurre e basta non bastava, ed è la ragione per cui questo caso era rimasto
+aperto: delle condizioni citate dalle immunità solo tre esistono in
+`dati/condizioni/`, e crearne altre sette per anticipazione avrebbe
+sconfessato decisione 48 (`condizioni-a-consumo`) tre giorni dopo averla presa.
+La strada è quella dei repertori (decisione 35 (`repertori-sono-filtri`)): l'insieme
+delle condizioni SRD è **chiuso e noto**, quindi il vocabolario è completo —
+**15 termini** — mentre il catalogo ne converte **5**. Le altre
+10 non sono condizioni inesistenti: sono una **lacuna del nostro
+catalogo**, che è cosa diversa, e non si scrive da nessuna parte — si deriva
+dai file presenti nella cartella. decisione 53 (`condizioni-vocabolario-srd`).
+
+Nel bestiario: **35 immunità su 11 schede**, di cui
+**29 nominano una condizione che il motore non sa ancora applicare**.
+Quel numero non è un errore da correggere, è una distanza da conoscere — e il
+motore la **dichiara** (lacuna `condizione-non-modellata`) invece di
+ignorarla, perché un'immunità saltata in silenzio è indistinguibile da
+un'immunità rispettata.
+
+Anche qui nessuno dei tre scenari esercita il ramo — né il Traag né il Baaz
+dichiara immunità a condizione — quindi è provato a parte, su schede cercate
+nel bestiario e non costruite:
+
+| scheda e immunità | esito | come è stato letto |
+|---|---|---|
+| Sciame di Cavallette e Locuste — immune a `pietrificato` | la condizione e' **respinta** | Sciame di Cavallette e Locuste e' immune a «pietrificato»: non si applica. |
+| Bambola Kani — immune a `sfinimento` | il motore **la dichiara** | `dati/condizioni/sfinimento.json` non esiste: il termine c'e', la scheda meccanica no |
 
 ---
 

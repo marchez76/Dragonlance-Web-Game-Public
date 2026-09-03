@@ -32,6 +32,7 @@ sys.path.insert(0, BASE)
 
 import _draconici as D
 import _schemi as S
+import _vocabolari as V
 
 SCHEMA = os.path.join(BASE, "schema", "mostro.schema.json")
 LIBRO_2E = "MC - Dragonlance Appendix"
@@ -82,6 +83,10 @@ ABILITA = {
 }
 
 IMMUNITA_DANNO = {"Kapak": [{"tipo": "da_veleno", "solo_se": None}]}
+# I termini restano quelli che SotDQ STAMPA, perche' questa tabella e' il
+# lato "fonte" di un confronto; la traduzione all'id italiano avviene nel
+# generatore, una volta sola, come per i tipi di danno (CLAUDE.md 2 e
+# decisione 49, `vocabolario-italiano`).
 IMMUNITA_COND = {"Kapak": ["poisoned"], "Aurak": ["charmed"]}
 
 MR = {"Baaz": 20, "Bozak": 20, "Kapak": 20, "Sivak": 20, "Aurak": 30}
@@ -192,7 +197,8 @@ def costruisci(n):
         "damage_resistances": [],
         "damage_immunities": IMMUNITA_DANNO.get(n, []),
         "damage_vulnerabilities": [],
-        "condition_immunities": IMMUNITA_COND.get(n, []),
+        "condition_immunities": [V.condizione(x)
+                                 for x in IMMUNITA_COND.get(n, [])],
         "senses": SENSI[n],
         "passive_perception": PASSIVA[n],
         "languages": ["Common", "Draconic"],

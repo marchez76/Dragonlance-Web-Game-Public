@@ -40,9 +40,14 @@ import json
 import os
 import random
 import re
+import sys
 
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATI = os.path.join(BASE, "dati")
+
+sys.path.insert(0, DATI)
+import _sistema as sistema  # noqa: E402
+import _vocabolari as vocabolari  # noqa: E402
 
 CAR = ["str", "dex", "con", "int", "wis", "cha"]
 
@@ -80,7 +85,15 @@ def tira(dadi, rng):
 
 
 def mod(punteggio):
-    return (punteggio - 10) // 2
+    """Il modificatore, LETTO da dati/sistema/modificatore-caratteristica.json.
+
+    Era `(punteggio - 10) // 2` scritto qui e una seconda volta in
+    `dati/valida_effetti.py`: meta' della nona struttura doppia del
+    progetto, e la prima a vivere nel codice invece che nei dati — cioe'
+    dove non arrivavano ne' gli schemi ne' i validatori. Decisione 51
+    (`criterio-meccanica`); il controllo che impedisce di riscriverla e'
+    `dati/valida_sistema.py`."""
+    return sistema.modificatore(punteggio)
 
 
 def d20(rng, vantaggio=False, svantaggio=False):
@@ -131,7 +144,8 @@ def ha_clausola(ids, nome, caratteristica=None):
 # ------------------------------------------------------------- combattenti
 class Combattente:
     def __init__(self, nome, ca, pf, abilities, azioni, tratti,
-                 squadra, competenza, giocante=False, difese=None):
+                 squadra, competenza, giocante=False, difese=None,
+                 immunita_condizione=()):
         self.nome = nome
         self.ca = ca
         self.pf_max = pf
@@ -147,6 +161,12 @@ class Combattente:
         # ogni voce {"tipo", "solo_se"} del vocabolario condiviso.
         self.difese = difese or {"resistenze": [], "immunita": [],
                                  "vulnerabilita": []}
+        # Gli id del vocabolario condiviso
+        # (decisione 53, `condizioni-vocabolario-srd`). Possono nominare
+        # condizioni che il
+        # catalogo non modella: e' una lacuna nostra, non un errore della
+        # scheda, e il motore la dichiara invece di ignorarla.
+        self.immunita_condizione = tuple(immunita_condizione)
         self.salvezze_in_sospeso = []  # [(descrizione, effetto_ts, fonte)]
         self.risorse = {}
         self.morto = False
@@ -198,6 +218,24 @@ def da_mostro(ident, squadra, reg):
                    "assunto 2")
         cr = 2
 
+    immuni = m.get("condition_immunities") or []
+    ignote = [c for c in immuni if c not in CONDIZIONI]
+    if ignote:
+        reg.lacuna(
+            "condizione-non-modellata",
+            f"immunita' a condizioni che il catalogo non modella: "
+            f"{', '.join(sorted(set(ignote)))}",
+            "il vocabolario le NOMINA — l'insieme delle quindici condizioni "
+            "SRD e' chiuso e noto — ma `dati/condizioni/` non le converte "
+            "ancora, quindi il motore non saprebbe applicarle nemmeno a chi "
+            "non e' immune. E' una lacuna del nostro catalogo, non una "
+            "condizione inesistente, e la "
+            "decisione 48 (`condizioni-a-consumo`) vuole che si chiuda "
+            "quando un blocco "
+            "convertito la impone. Il punto e' che il motore lo SA: "
+            "un'immunita' a una condizione che non sa applicare, ignorata in "
+            "silenzio, sarebbe indistinguibile da un'immunita' rispettata")
+
     return Combattente(
         nome=nome,
         ca=m["armor_class"]["value"],
@@ -206,118 +244,246 @@ def da_mostro(ident, squadra, reg):
         azioni=azioni, tratti=tratti, squadra=squadra, competenza=cr,
         difese={"resistenze": m.get("damage_resistances") or [],
                 "immunita": m.get("damage_immunities") or [],
-                "vulnerabilita": m.get("damage_vulnerabilities") or []})
+                "vulnerabilita": m.get("damage_vulnerabilities") or []},
+        immunita_condizione=immuni)
 
 
-def pg_fetta(razza_id, classe_id, livello, punteggi, arma_id, armatura_id,
-             scudo_id, stile, reg, nome="Personaggio"):
-    """Assembla il personaggio della fetta verticale dai dati esistenti.
+# --------------------------------------------------------------- personaggio
+#
+# GLI INGRESSI, E NIENT'ALTRO. Sul mostro `attacco` e' un campo letto dalla
+# scheda; sul personaggio era una funzione di questo modulo, e le due cose
+# avevano lo stesso nome pur non essendo la stessa cosa. La risposta non e'
+# far memorizzare l'attacco al personaggio — sarebbe un derivato scritto a
+# mano, che CLAUDE.md 3 vieta per una ragione gia' pagata quattro volte — ne'
+# far derivare l'attacco al mostro, che vorrebbe dire inventare derivazioni
+# che la fonte non da'. Cio' che i due lati condividono non e' il CAMPO: e'
+# la LETTURA, e si chiama `attacco_di()`.
+#
+# Il personaggio porta quindi solo cio' che non e' derivabile da nient'altro:
+# razza, classe, livello, punteggi, cosa ha equipaggiato, quali scelte ha
+# fatto. Ogni campo ricavabile da questi NON PUO' esistere qui dentro — non
+# «e' sconsigliato», non puo': il costruttore solleva. E' la forma piu' forte
+# del divieto, la stessa che ha reso impossibile e non solo sconsigliato
+# fissare un ospite (decisione 39, `bersaglio-legale-filtro`).
 
-    Non esiste uno schema Personaggio: questa funzione E' la misura di cosa
-    servirebbe. Ogni riga che deve calcolare invece di leggere e' una lacuna.
-    """
-    import sys
+INGRESSI = ("razza", "classe", "livello", "punteggi", "equipaggiato", "scelte")
+
+# I nomi che un derivato prenderebbe. L'elenco non e' esaustivo e non puo'
+# esserlo — nessun elenco di nomi vietati lo e' — ma copre cio' che oggi il
+# motore calcola, che e' esattamente cio' che qualcuno sarebbe tentato di
+# scrivere qui per non ricalcolarlo.
+DERIVATI = ("ca", "classe_armatura", "pf", "punti_ferita", "pf_max",
+            "attacco", "attacchi", "bonus_colpire", "danno", "competenza",
+            "iniziativa", "tiri_salvezza", "velocita", "difese",
+            "resistenze", "immunita", "vulnerabilita")
+
+
+class Personaggio:
+    """Gli ingressi di un personaggio. Nessun derivato, per costruzione."""
+
+    def __init__(self, **campi):
+        vietati = sorted(set(campi) & set(DERIVATI))
+        if vietati:
+            raise ValueError(
+                f"{', '.join(vietati)}: sono derivati dagli ingressi e non "
+                f"possono essere scritti su un Personaggio. Chi li vuole "
+                f"chiede al motore di comporli — attacco_di(), ca_di(), "
+                f"pf_di() — e non li memorizza: un derivato scritto si sfasa "
+                f"al primo cambio d'arma o di livello")
+        ignoti = sorted(set(campi) - set(INGRESSI))
+        if ignoti:
+            raise ValueError(f"ingressi sconosciuti: {', '.join(ignoti)}. "
+                             f"Quelli previsti sono {', '.join(INGRESSI)}")
+        mancanti = sorted(set(INGRESSI) - set(campi))
+        if mancanti:
+            raise ValueError(f"ingressi mancanti: {', '.join(mancanti)}")
+        for k, v in campi.items():
+            setattr(self, k, v)
+        self._doc = {}
+
+    # --- i documenti che gli ingressi nominano, letti una volta sola
+    def documento(self, cartella, ident):
+        chiave = (cartella, ident)
+        if chiave not in self._doc:
+            if cartella == "razze":
+                self._doc[chiave] = generazione().carica_razza(ident)
+            elif cartella == "classi":
+                self._doc[chiave] = generazione().carica_classe(ident)
+            else:
+                self._doc[chiave] = carica(cartella, ident)
+        return self._doc[chiave]
+
+    def doc_classe(self):
+        return self.documento("classi", self.classe)["mechanics_5e"]
+
+    def doc_oggetto(self, ruolo):
+        return self.documento("oggetti", self.equipaggiato[ruolo])
+
+    def privilegi(self):
+        """I privilegi del chassis che portano un `effetto`."""
+        return {f["name"]: f["effetto"]
+                for f in (self.doc_classe().get("chassis_features") or [])
+                if f.get("effetto")}
+
+
+def generazione():
     sys.path.insert(0, BASE)
-    from motore import generazione
+    from motore import generazione as g
+    return g
 
-    razza = generazione.carica_razza(razza_id)
-    classe = generazione.carica_classe(classe_id)
-    c5 = classe["mechanics_5e"]
-    doc_arma = carica("oggetti", arma_id)
-    arma = doc_arma["mechanics_5e"]["weapon_5e"]
-    armatura = carica("oggetti", armatura_id)["mechanics_5e"]["armor_5e"]
-    scudo = carica("oggetti", scudo_id)["mechanics_5e"]["armor_5e"]
 
-    ab = dict(punteggi)
-    comp = _srd51_competenza(livello)
+# ------------------------------------------------------ i derivati, composti
 
-    # --- Classe Armatura
-    ca5 = armatura["ca_5e"]
-    ca = ca5["ca_base"]
-    if ca5["applica_mod_dex"]:
-        m_dex = mod(ab["dex"])
-        if ca5["mod_dex_max"] is not None:
-            m_dex = min(m_dex, ca5["mod_dex_max"])
-        ca += m_dex
-    ca += scudo["ca_5e"]["bonus_ca"] or 0
+def competenza_di(p):
+    return sistema.competenza(p.livello)
 
-    # --- punti ferita: dado vita della classe
-    dv = c5.get("hit_die")
-    if not dv:
-        reg.lacuna(f"hit_die:{classe_id}",
-                   f"{classe_id}: nessun dado vita nello strato 5e",
-                   "assunto 1d8")
-        dv = "1d8"
-    faccia = int(_DADO.match(dv).group(2))
-    pf = faccia + mod(ab["con"]) + (livello - 1) * (faccia // 2 + 1 + mod(ab["con"]))
-    reg.lacuna("pf-primo-livello",
-               "punti ferita del personaggio",
-               "massimo al 1° livello e media ai successivi: e' la regola 5e, "
-               "ma nessun campo dei dati la dichiara — il dado vita c'e', la "
-               "procedura che lo usa no")
 
-    # --- privilegi del chassis che hanno un `effetto`
-    privilegi = {}
-    for f in (c5.get("chassis_features") or []):
-        if f.get("effetto"):
-            privilegi[f["name"]] = f["effetto"]
-
-    bonus_danno = 0
-    bonus_ca = 0
-    if stile:
-        if stile not in privilegi:
-            raise KeyError(f"lo stile '{stile}' non e' fra i privilegi del "
-                           f"chassis di {classe_id}")
-        for m_ in (privilegi[stile].get("modificatori") or []):
-            if m_["bersaglio"] == "danno":
-                bonus_danno += m_["valore"]
-            elif m_["bersaglio"] == "ca":
-                bonus_ca += m_["valore"]
+def _modificatori_dello_stile(p, reg):
+    """(bonus al danno, bonus alla CA) dallo stile di combattimento scelto."""
+    stile = (p.scelte or {}).get("stile")
+    if not stile:
+        return 0, 0
+    privilegi = p.privilegi()
+    if stile not in privilegi:
+        raise KeyError(f"lo stile '{stile}' non e' fra i privilegi del "
+                       f"chassis di {p.classe}")
+    danno = ca = 0
+    for m_ in (privilegi[stile].get("modificatori") or []):
+        if m_["bersaglio"] == "danno":
+            danno += m_["valore"]
+        elif m_["bersaglio"] == "ca":
+            ca += m_["valore"]
+    if reg:
         reg.lacuna("condizione-modificatore",
                    f"stile «{stile}»: la condizione di applicazione è prosa",
                    f"«{(privilegi[stile]['modificatori'][0] or {}).get('condizione_di_applicazione')}» — "
                    "il motore la considera sempre vera perché non c'è nessun "
                    "campo che dica come verificarla")
-    ca += bonus_ca
+    return danno, ca
 
-    # --- competenza nell'arma: per categoria (incompatibilita' 4)
-    cat_arma = arma["categoria"]
-    categorie = ((c5.get("structural") or {}).get("weapon_proficiencies")
-                 or {}).get("categorie") or []
-    competente = cat_arma in categorie
-    if not competente:
+
+def ca_di(p, reg=None):
+    """Classe Armatura: armatura + Destrezza (col tetto) + scudo + stile."""
+    ca5 = p.doc_oggetto("armatura")["mechanics_5e"]["armor_5e"]["ca_5e"]
+    ca = ca5["ca_base"]
+    if ca5["applica_mod_dex"]:
+        m_dex = mod(p.punteggi["dex"])
+        if ca5["mod_dex_max"] is not None:
+            m_dex = min(m_dex, ca5["mod_dex_max"])
+        ca += m_dex
+    scudo = p.doc_oggetto("scudo")["mechanics_5e"]["armor_5e"]["ca_5e"]
+    ca += scudo["bonus_ca"] or 0
+    return ca + _modificatori_dello_stile(p, reg)[1]
+
+
+def pf_di(p, reg=None):
+    """Punti ferita: massimo al 1° livello, media ai successivi."""
+    dv = p.doc_classe().get("hit_die")
+    if not dv:
+        if reg:
+            reg.lacuna(f"hit_die:{p.classe}",
+                       f"{p.classe}: nessun dado vita nello strato 5e",
+                       "assunto 1d8")
+        dv = "1d8"
+    faccia = int(_DADO.match(dv).group(2))
+    m_con = mod(p.punteggi["con"])
+    if reg:
+        reg.lacuna("pf-primo-livello",
+                   "punti ferita del personaggio",
+                   "massimo al 1° livello e media ai successivi: e' la regola "
+                   "5e, ma nessun campo dei dati la dichiara — il dado vita "
+                   "c'e', la procedura che lo usa no")
+    return faccia + m_con + (p.livello - 1) * (faccia // 2 + 1 + m_con)
+
+
+def competente_nell_arma(p, reg=None):
+    arma = p.doc_oggetto("arma")["mechanics_5e"]["weapon_5e"]
+    categorie = ((p.doc_classe().get("structural") or {})
+                 .get("weapon_proficiencies") or {}).get("categorie") or []
+    competente = arma["categoria"] in categorie
+    if not competente and reg:
         reg.lacuna("competenza-arma",
-                   f"{classe_id} non e' competente in armi «{cat_arma}»",
+                   f"{p.classe} non e' competente in armi "
+                   f"«{arma['categoria']}»",
                    "il bonus di competenza non si somma")
+    return competente
 
-    # --- l'attacco del personaggio, costruito e non letto
-    car_att = "dex" if arma["proprieta_5e"]["finesse"] else "str"
-    attacco = {
+
+def _attacco_composto(p, reg=None):
+    """L'attacco del personaggio, nella forma `effetto.attacco`.
+
+    Composto da arma + caratteristica + competenza + stile, cioe' dagli
+    ingressi e da nient'altro. Nessuno di questi numeri e' scritto da
+    nessuna parte, ed e' il punto: se cambia l'arma o il livello, cambia
+    qui e in nessun altro posto."""
+    arma = p.doc_oggetto("arma")["mechanics_5e"]["weapon_5e"]
+    car = "dex" if arma["proprieta_5e"]["finesse"] else "str"
+    comp = competenza_di(p) if competente_nell_arma(p, reg) else 0
+    bonus_danno = _modificatori_dello_stile(p, reg)[0]
+    if reg:
+        reg.lacuna("nessuna-posizione",
+                   "portata e gittata sono campi popolati e mai letti",
+                   "il motore non ha una griglia ne' distanze: ogni "
+                   "combattente e' a portata di ogni altro. `portata_ft` e "
+                   "`gittata_ft` esistono nei dati e questo scontro non li "
+                   "usa — un'arma a distanza e una da mischia si comportano "
+                   "uguale")
+    return {
         "tipo": "mischia_arma" if arma["tipo"] == "mischia" else "distanza_arma",
-        "bonus_colpire": mod(ab[car_att]) + (comp if competente else 0),
+        "bonus_colpire": mod(p.punteggi[car]) + comp,
         "portata_ft": arma["proprieta_5e"]["portata_ft"],
         "bersagli": 1,
         "danno": [{"dadi": arma["damage_dice"],
-                   "bonus": mod(ab[car_att]) + bonus_danno,
+                   "bonus": mod(p.punteggi[car]) + bonus_danno,
                    "tipo": arma["damage_type"]}],
     }
-    reg.lacuna("nessuna-posizione",
-               "portata e gittata sono campi popolati e mai letti",
-               "il motore non ha una griglia ne' distanze: ogni combattente "
-               "e' a portata di ogni altro. `portata_ft` e `gittata_ft` "
-               "esistono nei dati e questo scontro non li usa — un'arma a "
-               "distanza e una da mischia si comportano uguale")
-    reg.lacuna("attacco-del-pg",
-               "l'attacco del personaggio non esiste come dato",
-               "composto qui da arma + caratteristica + competenza + stile. "
-               "Sul mostro `attacco` e' un campo; sul personaggio e' una "
-               "funzione di questo modulo, e vive solo qui")
 
-    azioni = [("Attacco", {"azione": "azione", "attacco": attacco})]
-    tratti = []
-    for nome_p, eff in privilegi.items():
-        if eff.get("guarigione") or eff.get("risorsa"):
-            tratti.append((nome_p, eff))
+
+# --------------------------------------------------------------- attacco_di
+#
+# LA LETTURA UNICA. Chi la chiama non sa se ha davanti un mostro o un
+# personaggio, ed e' questo il senso di «la stessa cosa da entrambe le
+# parti». La forma della risposta e' `effetto.attacco` di
+# effetto.schema.json, che esisteva gia' e non cambia.
+
+def attacco_di(combattente, azione=None, reg=None):
+    """L'attacco di un combattente: sul mostro letto, sul personaggio composto.
+
+    `azione` nomina il blocco da usare quando il portatore ne ha piu' d'uno
+    (un mostro con morso e artigli); omesso, si prende il primo che porti un
+    attacco. Torna `None` se non ce n'e' nessuno."""
+    p = getattr(combattente, "personaggio", None)
+    if p is not None:
+        return _attacco_composto(p, reg)
+
+    eff = combattente.azione(azione) if azione else None
+    if eff is None:
+        for _nome, e in combattente.azioni:
+            if e and e.get("attacco"):
+                eff = e
+                break
+    att = (eff or {}).get("attacco")
+    if att is not None and reg is not None:
+        reg.lacuna(
+            "attacco-origine-non-dichiarata",
+            "il bonus di attacco del mostro non dice da dove viene",
+            "letto dalla scheda o rifatto col conto (competenza + "
+            "modificatore) si scrivono uguali, esattamente come accadeva "
+            "alle CD prima della decisione 50 (`cd-origine-dichiarata`): "
+            "manca un `bonus_origine` accanto a `bonus_colpire`. Quante "
+            "volte i due coincidano e' una misura, ed e' in "
+            "`motore/arena.py` → `coincidenze_di_attacco()`")
+    return att
+
+
+def combattente_da(p, reg, nome="Personaggio", squadra="eroi"):
+    """Il combattente che gioca il turno, DERIVATO dagli ingressi.
+
+    Il Combattente e' stato di scontro — punti ferita correnti, condizioni,
+    risorse spese — e non una scheda: ogni numero di scheda che porta viene
+    da qui, cioe' da una funzione, e nessuno da un campo scritto a mano."""
+    tratti = [(n, e) for n, e in p.privilegi().items()
+              if e.get("guarigione") or e.get("risorsa")]
 
     reg.lacuna("difese-del-pg",
                "resistenze e immunita' del personaggio",
@@ -327,27 +493,26 @@ def pg_fetta(razza_id, classe_id, livello, punteggi, arma_id, armatura_id,
                "regola che le componga da razza e classe. Qui e' senza "
                "difese, che oggi e' vero per un Cavaliere della Corona "
                "umano ma lo e' per assenza di dato, non per verifica")
-    pg = Combattente(nome=nome, ca=ca, pf=pf, abilities=ab, azioni=azioni,
-                     tratti=tratti, squadra="eroi", competenza=comp,
-                     giocante=True)
-    pg.arma = arma
-    pg.arma_magica = doc_arma["magico"]
-    pg.razza = razza
-    pg.livello = livello
+
+    pg = Combattente(
+        nome=nome, ca=ca_di(p, reg), pf=pf_di(p, reg),
+        abilities=dict(p.punteggi),
+        # L'azione NON porta l'attacco: lo compone `attacco_di()` quando
+        # serve. Un attacco memorizzato qui sarebbe di nuovo un derivato
+        # scritto, buono finche' nessuno cambia arma.
+        azioni=[("Attacco", {"azione": "azione"})],
+        tratti=tratti, squadra=squadra, competenza=competenza_di(p),
+        giocante=True)
+    pg.personaggio = p
+    pg.livello = p.livello
+    pg.arma_magica = p.doc_oggetto("arma")["magico"]
     for nome_p, eff in tratti:
         ris = eff.get("risorsa") or {}
         usi = ris.get("usi")
         if isinstance(usi, dict):
-            usi = usi["per_livello"].get(str(livello), 0)
+            usi = usi["per_livello"].get(str(p.livello), 0)
         pg.risorse[nome_p] = usi or 0
     return pg
-
-
-def _srd51_competenza(livello):
-    import sys
-    sys.path.insert(0, DATI)
-    import _srd51
-    return _srd51.COMPETENZA[livello]
 
 
 # ------------------------------------------------------------------ attacco
@@ -384,43 +549,61 @@ def applica_difese(contro, grezzi, reg, magico=None):
     def cerca(elenco, tipo):
         return any(v["tipo"] == tipo and vale(v) for v in elenco)
 
+    # Il moltiplicatore di ogni difesa e il loro ORDINE vengono da
+    # dati/sistema/moltiplicatori-difesa.json. L'ordine, in particolare,
+    # era la sequenza delle righe di questa funzione: una regola scritta
+    # in una posizione del codice, che e' la forma piu' silenziosa in cui
+    # una regola possa vivere — non ha nemmeno un nome da cercare.
+    CAMPO = {"immunita": "immunita", "vulnerabilita": "vulnerabilita",
+             "resistenza": "resistenze"}
+    PAROLA = {"immunita": "immune", "vulnerabilita": "vulnerabile",
+              "resistenza": "resistente"}
+
     totale, righe = 0, []
     for n, tipo in grezzi:
         d = contro.difese
         if cerca(d["immunita"], tipo):
             righe.append(f"{n} {tipo} annullati (immune)")
             continue
-        nota = ""
-        if cerca(d["vulnerabilita"], tipo):
-            n *= 2
-            nota = ", vulnerabile"
-        if cerca(d["resistenze"], tipo):
-            n //= 2
-            nota += ", resistente"
-        righe.append(f"{n} {tipo}{nota}")
+        note = []
+        for difesa in sistema.ORDINE_DIFESE:
+            if difesa == "immunita":
+                continue
+            if cerca(d[CAMPO[difesa]], tipo):
+                n = sistema.applica_moltiplicatore(n, difesa)
+                note.append(PAROLA[difesa])
+        righe.append(f"{n} {tipo}" + "".join(f", {x}" for x in note))
         totale += n
     return totale, righe
 
 
-def risolvi_attacco(chi, contro, eff, reg, rng, etichetta,
-                    magico=None):
-    att = eff["attacco"]
-    reg.lacuna("regole-di-sistema",
-               "la procedura di risoluzione di un attacco",
-               "d20 + bonus contro la Classe Armatura, 20 naturale critico "
-               "che raddoppia i dadi, 1 naturale mancato d'ufficio: e' "
-               "scritta in questo file e in nessun dato. "
-               "La decisione 41 (`sconfessione-condivisa`) ha gia' "
-               "registrato che manca una "
-               "sede per le regole di sistema, e dati/condizioni/ e' il primo "
-               "caso: questo e' il secondo, e pesa piu' del primo")
+def risolvi_attacco(chi, contro, azione, reg, rng, magico=None):
+    """Un attacco, dal tiro al danno. NON sa chi lo sta tirando.
+
+    Prende il NOME dell'azione e non il suo `effetto`, perche' e'
+    `attacco_di()` a sapere se quel nome va letto da una scheda o composto
+    da un personaggio. Questa funzione vede solo la forma comune."""
+    att = attacco_di(chi, azione, reg)
+    etichetta = azione
+    # Qui stava la lacuna `regole-di-sistema`, ed e' stata CHIUSA dal
+    # criterio a tre domande (decisione 51, `criterio-meccanica`), non da una
+    # riga di codice. Il taglio: i NUMERI di questa procedura — il 20 e l'1
+    # naturale, i moltiplicatori delle difese, il modificatore e il bonus di
+    # competenza — sono dati di sistema in dati/sistema/, con schema,
+    # validatore e controllo anti-duplicazione; la PROCEDURA che li usa
+    # (tira, somma, confronta con la CA, raddoppia i dadi sul critico) resta
+    # codice perche' e' una procedura, e questa e' la risposta invece che una
+    # mancanza. Toglierla dal registro non e' un'assoluzione: e' che una
+    # lacuna che descrive lo stato deciso non e' piu' una lacuna, e lasciarla
+    # gonfierebbe il conto con una voce che non chiede piu' niente.
     vant = ha_clausola(contro.condizioni, "vantaggio_attacchi_contro")
     svant = ha_clausola(chi.condizioni, "svantaggio_attacchi_propri")
     dado, nota = d20(rng, vant, svant)
     totale = dado + att["bonus_colpire"]
-    critico = dado == 20
+    critico = dado == sistema.CRITICO_NATURALE
 
-    if not critico and (dado == 1 or totale < contro.ca):
+    if not critico and (dado == sistema.FALLIMENTO_NATURALE
+                        or totale < contro.ca):
         reg.riga(f"      {etichetta}: {dado}{nota}+{att['bonus_colpire']} = "
                  f"{totale} contro CA {contro.ca} — manca")
         return 0
@@ -436,7 +619,7 @@ def risolvi_attacco(chi, contro, eff, reg, rng, etichetta,
     danno, pezzi = applica_difese(contro, grezzi, reg, magico=magico)
 
     if ha_clausola(contro.condizioni, "resistenza_a_tutti_i_danni"):
-        danno //= 2
+        danno = sistema.applica_moltiplicatore(danno, "resistenza")
         pezzi.append("dimezzato dalla resistenza")
 
     reg.riga(f"      {etichetta}: {dado}{nota}+{att['bonus_colpire']} = "
@@ -537,8 +720,16 @@ def applica_esito(chi, esito, reg):
     for d in (esito.get("danno") or []):
         pass  # nessun danno in gioco nella fetta
     for c in (esito.get("condizioni") or []):
-        chi.condizioni.add(c["id"])
         nome = CONDIZIONI[c["id"]]["name"]["it"].lower()
+        # L'immunita' si confronta per id, e il confronto e' un `==` solo
+        # perche' i due lati parlano lo stesso vocabolario: prima del
+        # 02/09/2026 la scheda diceva `petrified` e la condizione si
+        # chiamava `pietrificato`, quindi nessuna immunita' del bestiario
+        # poteva essere rispettata da nessun motore.
+        if c["id"] in chi.immunita_condizione:
+            reg.riga(f"      {chi.nome} e' immune a «{nome}»: non si applica.")
+            continue
+        chi.condizioni.add(c["id"])
         durata = f", {c['durata']}" if c.get("durata") else ""
         reg.riga(f"      {chi.nome} diventa {nome}{durata}.")
 
@@ -607,8 +798,11 @@ def agisci(chi, bersaglio, reg, rng):
             scelta = (nome, eff)
             break
     if scelta is None:
+        # Quali azioni siano attacchi si chiede ad `attacco_di()`, non al
+        # campo: sul personaggio quel campo non c'e' e l'attacco esiste
+        # lo stesso. Era qui che le due parti si comportavano diverso.
         for nome, eff in chi.azioni:
-            if eff and eff.get("attacco"):
+            if attacco_di(chi, nome) is not None:
                 scelta = (nome, eff)
                 break
     if scelta is None:
@@ -618,17 +812,16 @@ def agisci(chi, bersaglio, reg, rng):
     nome, eff = scelta
     if eff.get("multiattacco"):
         ma = eff["multiattacco"]
-        sotto = chi.azione(ma["azione"])
         reg.riga(f"   {chi.nome} — {nome}: {ma['quanti']} × {ma['azione']} "
                  f"contro {bersaglio.nome}")
         for _ in range(ma["quanti"]):
             if not bersaglio.in_gioco():
                 break
-            risolvi_attacco(chi, bersaglio, sotto, reg, rng, ma["azione"],
+            risolvi_attacco(chi, bersaglio, ma["azione"], reg, rng,
                             magico=getattr(chi, "arma_magica", None))
     else:
         reg.riga(f"   {chi.nome} — {nome} contro {bersaglio.nome}")
-        risolvi_attacco(chi, bersaglio, eff, reg, rng, nome,
+        risolvi_attacco(chi, bersaglio, nome, reg, rng,
                         magico=getattr(chi, "arma_magica", None))
 
 

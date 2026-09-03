@@ -57,11 +57,19 @@ from decisioni import cita  # noqa: E402
 PUNTEGGI = {"str": 15, "dex": 13, "con": 14, "int": 10, "wis": 12, "cha": 8}
 
 
+# Gli INGRESSI del personaggio, e nient'altro: nessuna Classe Armatura,
+# nessun punto ferita, nessun bonus di attacco. Tutto cio' che manca qui e'
+# derivabile da cio' che c'e', e il motore lo deriva quando serve —
+# decisione 52 (`attacco-unica-lettura`).
+INGRESSI_EROE = dict(
+    razza="umano", classe="cavaliere-corona", livello=2, punteggi=PUNTEGGI,
+    equipaggiato={"arma": "longsword", "armatura": "chain-mail",
+                  "scudo": "shield"},
+    scelte={"stile": "Duello"})
+
+
 def eroe(reg, nome="Sir Aldric"):
-    return C.pg_fetta(
-        razza_id="umano", classe_id="cavaliere-corona", livello=2,
-        punteggi=PUNTEGGI, arma_id="longsword", armatura_id="chain-mail",
-        scudo_id="shield", stile="Duello", reg=reg, nome=nome)
+    return C.combattente_da(C.Personaggio(**INGRESSI_EROE), reg, nome=nome)
 
 
 def scheda(c):
@@ -222,6 +230,115 @@ def prova_delle_difese():
     return righe, sorted(set(usate))
 
 
+def coincidenze_di_attacco():
+    """Quanti bonus di attacco del bestiario tornano col conto, e quanti no.
+
+    E' la stessa misura che la decisione 50 (`cd-origine-dichiarata`) ha
+    imposto per le CD, applicata all'altro numero che `attacco_di()` legge. Serve perche' un
+    `bonus_colpire` LETTO dalla scheda e uno RIFATTO col conto (bonus di
+    competenza + modificatore di caratteristica) si scrivono identici, e
+    quando coincidono nessun controllo puo' distinguerli — e' esattamente la
+    ragione per cui la CD 11 del Baaz era invisibile.
+
+    Contare le coincidenze e' quindi l'unica cosa onesta da fare: dice quanto
+    vale il conto come prova, e la risposta e' che vale poco.
+
+    Torna (totale, coincidenti, non_coincidenti) sui blocchi ancora in prosa,
+    perche' e' li' che sta il bestiario: due soli attacchi sono strutturati."""
+    import glob
+    import json
+    import sys as _sys
+    _sys.path.insert(0, os.path.join(BASE, "dati"))
+    import _sistema
+
+    pat = re.compile(r"\+(\d+)\s*(?:a colpire|to hit)", re.I)
+    tot, coincidenti, fuori = 0, 0, []
+    for f in sorted(glob.glob(os.path.join(BASE, "dati", "mostri", "*.json"))):
+        d = json.load(open(f, encoding="utf-8"))
+        m = d["mechanics_5e"]
+        ab = m.get("abilities") or {}
+        cr = m.get("challenge_rating") or {}
+        pb = cr.get("proficiency_bonus")
+        if pb is None:
+            pb = _sistema.competenza_da_grado_sfida(cr.get("value"))
+        for gruppo in ("actions", "traits", "reactions", "legendary_actions"):
+            for b in (m.get(gruppo) or []):
+                for n in pat.findall(b.get("mechanics_5e") or ""):
+                    tot += 1
+                    if not ab or pb is None:
+                        fuori.append(d["name"]["it"])
+                        continue
+                    attese = {pb + _sistema.modificatore(v)
+                              for v in ab.values()}
+                    if int(n) in attese:
+                        coincidenti += 1
+                    else:
+                        fuori.append(d["name"]["it"])
+    return tot, coincidenti, sorted(set(fuori))
+
+
+def prova_delle_immunita():
+    """Le immunita' a condizione, provate su schede vere del bestiario.
+
+    Serve per la stessa ragione della prova delle difese: nessuno dei tre
+    scenari la esercita — ne' il Traag ne' il Baaz dichiara immunita' a
+    condizione — quindi «l'arena passa» non direbbe niente su questo ramo.
+
+    Prova le due meta' del problema: una condizione che il catalogo modella
+    (l'immunita' si applica davvero) e una che non modella ancora (il motore
+    lo dichiara invece di ignorarlo). Torna (righe, totali)."""
+    import glob
+    import json
+    import sys as _sys
+    _sys.path.insert(0, os.path.join(BASE, "dati"))
+    import _vocabolari
+
+    modellate = set(_vocabolari.condizioni_modellate())
+    schede = {}
+    n_voci = n_fuori = 0
+    for f in sorted(glob.glob(os.path.join(BASE, "dati", "mostri", "*.json"))):
+        d = json.load(open(f, encoding="utf-8"))
+        immuni = (d["mechanics_5e"].get("condition_immunities") or [])
+        if not immuni:
+            continue
+        ident = os.path.splitext(os.path.basename(f))[0]
+        schede[ident] = immuni
+        n_voci += len(immuni)
+        n_fuori += sum(1 for c in immuni if c not in modellate)
+
+    def prima(condizione_modellata):
+        for ident, immuni in schede.items():
+            for c in immuni:
+                if (c in modellate) == condizione_modellata:
+                    return ident, c
+        return None, None
+
+    righe = []
+    for modellata, etichetta in ((True, "modellata"), (False, "non modellata")):
+        ident, cond = prima(modellata)
+        if ident is None:
+            righe.append([f"condizione {etichetta}", "—",
+                          "nessuna scheda del bestiario ne porta una"])
+            continue
+        reg = C.Registro()
+        chi = C.da_mostro(ident, "mostri", reg)
+        if modellata:
+            C.applica_esito(chi, {"condizioni": [{"id": cond}]}, reg)
+            esito = ("respinta" if cond not in chi.condizioni else "APPLICATA")
+            righe.append([f"{chi.nome} — immune a `{cond}`",
+                          f"la condizione e' **{esito}**",
+                          reg.righe[-1].strip() if reg.righe else "—"])
+        else:
+            dichiarata = "condizione-non-modellata" in reg.lacune
+            righe.append([f"{chi.nome} — immune a `{cond}`",
+                          "il motore **" + ("la dichiara" if dichiarata
+                                            else "TACE") + "**",
+                          "`dati/condizioni/" + cond + ".json` non esiste: "
+                          "il termine c'e', la scheda meccanica no"])
+    return righe, (len(schede), n_voci, n_fuori, len(modellate),
+                   len(_vocabolari.CONDIZIONI))
+
+
 def tabella(intestazioni, righe, allin=None):
     allin = allin or ["---"] * len(intestazioni)
     return "\n".join(
@@ -237,6 +354,9 @@ def rapporto(scenari, lacune, completo):
     con = [b for b in blocchi if b[3]]
     senza = [b for b in blocchi if not b[3]]
     righe_difese, schede_difese = prova_delle_difese()
+    att_tot, att_coin, att_fuori = coincidenze_di_attacco()
+    righe_imm, (imm_schede, imm_voci, imm_fuori, n_mod, n_voc) = \
+        prova_delle_immunita()
 
     esiti = []
     for s in scenari:
@@ -362,21 +482,43 @@ questa prova.
 
 ## 4. Cosa si è rotto, in ordine di peso
 
-**Il personaggio non è un dato.** Sul mostro l'attacco è un campo; sul
-personaggio è una funzione di `motore/combattimento.py`, e vive solo lì. Classe
-Armatura, punti ferita, bonus di attacco, danno: tutti composti a runtime da
-razza + classe + oggetto + stile di combattimento, con la procedura scritta nel
-motore. È la lacuna più grande e non sorprende — lo schema Personaggio non
-esiste. Sorprende *quanto* di ciò che serve non sia da nessuna parte: la regola
-dei punti ferita al 1° livello, il bonus di iniziativa, la competenza applicata
-all'arma.
+**`attacco` era due cose con lo stesso nome — chiusa.** Sul mostro era un
+campo letto dalla scheda, sul personaggio una funzione di
+`motore/combattimento.py`: due cose diverse che si chiamavano uguale, ed è la
+lacuna che il primo scontro ha reso visibile. Chiusa con
+{cita('attacco-unica-lettura')}: ciò che i due lati condividono non è il
+campo, è la **lettura**. `attacco_di(combattente)` torna la forma
+`effetto.attacco` da entrambe le parti — sul mostro la legge, sul personaggio
+la compone — e chi la chiama non sa quale dei due casi ha davanti. Il
+personaggio porta solo gli **ingressi** (razza, classe, livello, punteggi,
+equipaggiato, scelte): ogni campo ricavabile da quelli non *può* esistere, il
+costruttore solleva. Classe Armatura, punti ferita, bonus di attacco e danno
+restano composti dal motore, ma adesso sono composti **una volta sola e per
+tutti e due**.
 
-**Non c'è una sede per le regole di sistema.** La decisione 41
-(`sconfessione-condivisa`) l'aveva già registrato, e `dati/condizioni/` è stata
-la prima risposta. Questo è il secondo caso e pesa di più: *d20 + bonus contro
-la Classe Armatura, 20 naturale critico, 1 naturale mancato d'ufficio* sta
-scritto in un file Python e in nessun dato. Lo stesso vale per la struttura del
-round, l'economia delle azioni e la condizione di fine scontro.
+**Il numero che nessuno può verificare — lacuna nuova.** Un `bonus_colpire`
+letto dalla scheda e uno rifatto col conto (competenza + modificatore) si
+scrivono identici, e `attacco_di()` non ha modo di sapere quale dei due sta
+leggendo: manca un `bonus_origine` accanto a `bonus_colpire`, cioè
+esattamente ciò che {cita('cd-origine-dichiarata')} ha dovuto aggiungere alle
+CD. Non è una questione teorica, ed è misurata: dei **{att_tot} bonus di
+attacco** che il bestiario scrive in prosa, **{att_coin} tornano col conto** e
+{att_tot - att_coin} no. Le coincidenze non sono conferme — la CD 11 del Baaz
+è stampata dalla fonte *e* torna col conto, e per questo il vecchio controllo
+non l'avrebbe mai segnalata. Contarle è l'unica cosa onesta: dicono quanto
+vale il conto come prova, e la risposta è poco.
+
+**Non c'è una sede per le regole di sistema — chiusa.** *d20 + bonus contro la
+Classe Armatura, 20 naturale critico, 1 naturale mancato d'ufficio* stava in
+un file Python e in nessun dato. Il criterio a tre domande
+({cita('criterio-meccanica')}) l'ha tagliata in due: i **numeri** — il 20 e
+l'1 naturale, i moltiplicatori di resistenza e vulnerabilità, il modificatore
+di caratteristica, il bonus di competenza, la base della CD — sono ora dati di
+sistema in `dati/sistema/`, con schema e validatore; la **procedura** che li
+usa resta codice, che è la risposta e non più una mancanza. La condizione
+perché quella risposta valga era un riconfronto automatico, e c'è:
+`dati/valida_sistema.py` rifiuta la stessa tabella riscritta altrove, e a
+metterlo in piedi ha trovato subito i cinque punti in cui era già successo.
 
 **Un innesco non ha un campo.** `azione: nessuna` significa *non costa
 un'azione*, non *scatta a 0 punti ferita*. Il motore riconosce il Death Throes
@@ -428,6 +570,38 @@ resistenza. E lì c'è la lacuna nuova che ha preso il posto di quella chiusa �
 **nessun campo dice se un attacco è magico**. Sull'arma di un personaggio c'è
 `magico`; sull'azione di un mostro non c'è niente, e il motore assume *non
 magico*, cioè l'assunzione favorevole al difensore.
+
+**Le immunità a condizione: due sedi che non si parlavano — chiusa.**
+`dati/mostri/` dichiarava le immunità con i nomi inglesi della 5e
+(`charmed`, `poisoned`) mentre `dati/condizioni/` — che
+{cita('condizioni-a-consumo')} dichiara sede unica — ha id italiani. Stesso
+difetto dei tipi di danno, con l'aggravante che qui una delle due sedi era
+**già dichiarata unica** e l'altra la ignorava: nessuna immunità del
+bestiario poteva essere rispettata da nessun motore.
+
+Tradurre e basta non bastava, ed è la ragione per cui questo caso era rimasto
+aperto: delle condizioni citate dalle immunità solo tre esistono in
+`dati/condizioni/`, e crearne altre sette per anticipazione avrebbe
+sconfessato {cita('condizioni-a-consumo')} tre giorni dopo averla presa.
+La strada è quella dei repertori ({cita('repertori-sono-filtri')}): l'insieme
+delle condizioni SRD è **chiuso e noto**, quindi il vocabolario è completo —
+**{n_voc} termini** — mentre il catalogo ne converte **{n_mod}**. Le altre
+{n_voc - n_mod} non sono condizioni inesistenti: sono una **lacuna del nostro
+catalogo**, che è cosa diversa, e non si scrive da nessuna parte — si deriva
+dai file presenti nella cartella. {cita('condizioni-vocabolario-srd')}.
+
+Nel bestiario: **{imm_voci} immunità su {imm_schede} schede**, di cui
+**{imm_fuori} nominano una condizione che il motore non sa ancora applicare**.
+Quel numero non è un errore da correggere, è una distanza da conoscere — e il
+motore la **dichiara** (lacuna `condizione-non-modellata`) invece di
+ignorarla, perché un'immunità saltata in silenzio è indistinguibile da
+un'immunità rispettata.
+
+Anche qui nessuno dei tre scenari esercita il ramo — né il Traag né il Baaz
+dichiara immunità a condizione — quindi è provato a parte, su schede cercate
+nel bestiario e non costruite:
+
+{tabella(["scheda e immunità", "esito", "come è stato letto"], righe_imm, ["---", "---", "---"])}
 
 ---
 

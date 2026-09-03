@@ -1,0 +1,21 @@
+{
+  "id": "moltiplicatori-difesa",
+  "name": {
+    "en": "Damage Resistance and Vulnerability",
+    "it": "Moltiplicatori di resistenza, vulnerabilita' e immunita'"
+  },
+  "genere": "moltiplicatori",
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "SRD 5.1, Damage and Healing — Damage Resistance and Vulnerability",
+    "api_ref": null
+  },
+  "mechanics_5e": "La resistenza a un tipo di danno lo dimezza, arrotondando per difetto; la vulnerabilita' lo raddoppia, cioe' lo moltiplica per 2; l'immunita' lo annulla, cioe' lo moltiplica per 0. Si applicano in quest'ordine: prima l'immunita', poi la vulnerabilita', poi la resistenza.",
+  "moltiplicatori": [
+    { "difesa": "immunita", "moltiplicatore": 0, "arrotondamento": "nessuno" },
+    { "difesa": "vulnerabilita", "moltiplicatore": 2, "arrotondamento": "nessuno" },
+    { "difesa": "resistenza", "moltiplicatore": 0.5, "arrotondamento": "per_difetto" }
+  ],
+  "ordine_di_applicazione": ["immunita", "vulnerabilita", "resistenza"],
+  "note": "L'ordine era l'ordine delle righe dentro `applica_difese()`, cioe' una regola scritta in una POSIZIONE del codice invece che in un campo — la forma piu' silenziosa in cui una regola puo' vivere, perche' non ha nemmeno un nome da cercare. Conta davvero: raddoppiare 5 e poi dimezzare da' 5, dimezzare 5 e poi raddoppiare da' 4."
+}

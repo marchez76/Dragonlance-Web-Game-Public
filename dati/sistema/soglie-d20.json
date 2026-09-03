@@ -1,0 +1,27 @@
+{
+  "id": "soglie-d20",
+  "name": {
+    "en": "Natural 20 and Natural 1",
+    "it": "Soglie del d20"
+  },
+  "genere": "soglie",
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "SRD 5.1, Making an Attack — Rolling 1 or 20; Critical Hits",
+    "api_ref": null
+  },
+  "mechanics_5e": "Un 20 naturale su un tiro per colpire e' un colpo critico e coglie il bersaglio qualunque sia la sua Classe Armatura; i dadi di danno si tirano due volte. Un 1 naturale manca il bersaglio qualunque sia il totale.",
+  "soglie": [
+    {
+      "id": "critico_naturale",
+      "valore": 20,
+      "esito": "colpo critico: coglie comunque, e i dadi di danno si tirano due volte"
+    },
+    {
+      "id": "fallimento_naturale",
+      "valore": 1,
+      "esito": "mancato d'ufficio, qualunque sia il totale"
+    }
+  ],
+  "note": "Due numeri che stavano dentro due confronti di `risolvi_attacco()`. Sono un dato di sistema per il criterio a tre domande — non variano da portatore a portatore e la fonte li stampa — mentre la PROCEDURA che li usa (tira, somma, confronta con la CA) resta codice: e' esattamente la linea che il criterio traccia."
+}

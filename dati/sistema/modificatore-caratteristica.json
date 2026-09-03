@@ -1,0 +1,40 @@
+{
+  "id": "modificatore-caratteristica",
+  "name": {
+    "en": "Ability Modifier",
+    "it": "Modificatore di caratteristica"
+  },
+  "genere": "tabella",
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "SRD 5.1, Using Ability Scores — Ability Scores and Modifiers",
+    "api_ref": null
+  },
+  "mechanics_5e": "Ogni punteggio di caratteristica, da 1 a 30, ha un modificatore che va da -5 a +10: si sottrae 10 dal punteggio e si divide per 2, arrotondando per difetto.",
+  "fasce": [
+    { "da": 1, "a": 1, "valore": -5 },
+    { "da": 2, "a": 3, "valore": -4 },
+    { "da": 4, "a": 5, "valore": -3 },
+    { "da": 6, "a": 7, "valore": -2 },
+    { "da": 8, "a": 9, "valore": -1 },
+    { "da": 10, "a": 11, "valore": 0 },
+    { "da": 12, "a": 13, "valore": 1 },
+    { "da": 14, "a": 15, "valore": 2 },
+    { "da": 16, "a": 17, "valore": 3 },
+    { "da": 18, "a": 19, "valore": 4 },
+    { "da": 20, "a": 21, "valore": 5 },
+    { "da": 22, "a": 23, "valore": 6 },
+    { "da": 24, "a": 25, "valore": 7 },
+    { "da": 26, "a": 27, "valore": 8 },
+    { "da": 28, "a": 29, "valore": 9 },
+    { "da": 30, "a": 30, "valore": 10 }
+  ],
+  "letture": [
+    {
+      "id": "per_punteggio",
+      "ingresso": "punteggio_caratteristica",
+      "dominio": [1, 30]
+    }
+  ],
+  "note": "La fonte la stampa come TABELLA e la descrive anche come formula: le due dicono la stessa cosa e qui la tabella e' la forma autoritativa, perche' e' quella che copre il dominio dichiarato. La formula resta una sonda di `valida_sistema.py`, che la ricalcola su tutti e trenta i punteggi e pretende che coincida — l'unica occorrenza permessa nel codice, dichiarata per nome nel controllo anti-duplicazione."
+}

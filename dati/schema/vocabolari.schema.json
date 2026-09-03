@@ -31,6 +31,28 @@
       "type": "string",
       "enum": ["da_attacchi_non_magici", "da_armi_non_magiche_non_argentate"],
       "description": "La clausola che restringe una resistenza o un'immunita' a una parte degli attacchi di quel tipo. Esiste perche' senza di essa la clausola resta dentro la stringa — «bludgeoning, piercing, and slashing from nonmagical attacks» era UN elemento di un array di stringhe, cioe' prosa in un campo che sembrava un vocabolario. Enum e non testo libero: e' la differenza fra un dato e una frase, e la frase e' gia' quello che c'era."
+    },
+
+    "condizione": {
+      "type": "string",
+      "enum": [
+        "accecato",
+        "affascinato",
+        "afferrato",
+        "assordato",
+        "avvelenato",
+        "incapacitato",
+        "incosciente",
+        "invisibile",
+        "paralizzato",
+        "pietrificato",
+        "prono",
+        "sfinimento",
+        "spaventato",
+        "stordito",
+        "trattenuto"
+      ],
+      "description": "Le quindici condizioni dell'Appendice A dell'SRD 5.1, in italiano. L'insieme e' CHIUSO e NOTO: la fonte lo stampa per intero, quindi il vocabolario puo' essere completo anche dove il nostro catalogo non lo e'. QUESTO ENUM NON DICE CHE LA CONDIZIONE E' MODELLATA. Nominare e convertire sono due cose diverse, e tenerle separate e' cio' che permette di chiudere `condition_immunities` senza sconfessare la decisione 48 (`condizioni-a-consumo`): un mostro puo' dichiarare immunita' a `affascinato` — e' un fatto della sua scheda, e perderlo sarebbe perdere informazione vera di fonte — mentre `dati/condizioni/affascinato.json` non esiste ancora, perche' nessun blocco convertito la impone e la cartella si riempie a consumo. Quali siano modellate NON si scrive da nessuna parte: si DERIVA dai file presenti in `dati/condizioni/` (`_vocabolari.condizioni_modellate()`), perche' un elenco scritto a mano accanto a una cartella e' una struttura doppia — la stessa forma che questo file esiste per chiudere. Il motore, quando incontra un'immunita' a una condizione che non sa applicare, la DICHIARA come lacuna: non saperla applicare e non accorgersene sono due cose diverse. NOTA SU `sfinimento`: nella 5e ha sei livelli invece di essere binaria, e quando verra' modellata portera' con se' quella differenza; qui e' un termine come gli altri, perche' un'immunita' lo nomina e basta."
     }
   }
 }

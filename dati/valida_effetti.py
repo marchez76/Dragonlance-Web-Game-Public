@@ -90,7 +90,9 @@ BASE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, BASE)
 
 import _schemi as S  # noqa: E402
+import _sistema as SIS  # noqa: E402
 import _srd51 as R  # noqa: E402
+import _vocabolari as V  # noqa: E402
 
 DADO = re.compile(r"\b(\d+d\d+)\b")
 CD = re.compile(r"\bCD\s*(\d+)\b")
@@ -239,6 +241,40 @@ def controlla_condizioni(err_globale):
     return cond
 
 
+def controlla_immunita_condizione(err_globale):
+    """Controllo 3, secondo lato: le immunita' a condizione dei mostri.
+
+    Due cose diverse, e la differenza e' il punto della decisione 53
+    (`condizioni-vocabolario-srd`):
+
+    - un id FUORI dal vocabolario e' un ERRORE: l'insieme delle condizioni
+      SRD e' chiuso e noto, quindi un nome che non ci sta dentro o e' un
+      refuso o non e' una condizione;
+    - un id dentro il vocabolario ma senza scheda in `dati/condizioni/` NON
+      e' un errore: e' la distanza fra nominare e convertire, e la
+      decisione 48 (`condizioni-a-consumo`) vuole che si accorci quando un
+      blocco convertito lo impone. Si CONTA, non si segnala.
+
+    Torna (schede, voci, voci_non_modellate)."""
+    modellate = set(V.condizioni_modellate())
+    schede = voci = fuori = 0
+    for nome, d in carica("mostri"):
+        immuni = (d.get("mechanics_5e") or {}).get("condition_immunities") or []
+        if not immuni:
+            continue
+        schede += 1
+        for c in immuni:
+            voci += 1
+            if c not in V.CONDIZIONI:
+                err_globale(f"mostri/{nome}: immunita' a '{c}', che non e' "
+                            f"una delle {len(V.CONDIZIONI)} condizioni del "
+                            f"vocabolario. L'insieme SRD e' chiuso: un nome "
+                            f"fuori o e' un refuso o non e' una condizione")
+            elif c not in modellate:
+                fuori += 1
+    return schede, voci, fuori
+
+
 def nomi_dei_blocchi(portatore):
     """I `name` di tutti i blocchi del portatore, per risolvere un rimando."""
     m = portatore.get("mechanics_5e") or {}
@@ -286,23 +322,24 @@ def controlla_competenze(err_globale):
 
 # --------------------------------------------- 5. le CD dichiarate vanno spiegate
 
-def competenza_da_cr(cr):
-    """Bonus di competenza dal grado sfida, tabella 5e."""
-    try:
-        n = float(cr)
-    except (TypeError, ValueError):
-        return 2
-    return 2 if n < 1 else max(2, 2 + (int(n) - 1) // 4)
-
-
 def cd_attese(portatore):
-    """Le CD che le caratteristiche del portatore possono generare."""
+    """Le CD che le caratteristiche del portatore possono generare.
+
+    Nessuna delle tre tabelle e' scritta qui: il bonus di competenza dal
+    grado sfida, il modificatore di caratteristica e la base 8 vengono
+    tutti da `dati/sistema/`. Fino al 02/09/2026 le prime due stavano
+    scritte in questo file E altrove — meta' della nona struttura doppia —
+    e questa riga le teneva insieme senza che nessuno le confrontasse.
+    Decisione 51 (`criterio-meccanica`)."""
     m = portatore.get("mechanics_5e") or {}
     ab = m.get("abilities") or {}
     if not ab:
         return None
-    pb = competenza_da_cr((m.get("challenge_rating") or {}).get("value"))
-    return {8 + pb + (v - 10) // 2 for v in ab.values()}
+    pb = SIS.competenza_da_grado_sfida(
+        (m.get("challenge_rating") or {}).get("value"))
+    if pb is None:
+        return None
+    return {SIS.cd_salvezza(pb, SIS.modificatore(v)) for v in ab.values()}
 
 
 def controlla_cd(eff, portatore, err):
@@ -354,6 +391,7 @@ def main(argv):
 
     cond = controlla_condizioni(err_globale)
     n_armi, n_armature = controlla_competenze(err_globale)
+    imm_schede, imm_voci, imm_fuori = controlla_immunita_condizione(err_globale)
 
     con_effetto = 0
     con_cd = 0
@@ -397,6 +435,11 @@ def main(argv):
     print(f"\n{con_effetto} blocchi con `effetto` confrontati con la loro prosa.")
     print(f"{len(cond)} condizioni, {n_armi} categorie d'arma e "
           f"{n_armature} d'armatura incrociate con le competenze.")
+    print(f"{imm_voci} immunita' a condizione su {imm_schede} schede: "
+          f"{imm_fuori} nominano una delle {len(V.condizioni_non_modellate())} "
+          f"condizioni che il vocabolario nomina e il catalogo non converte "
+          f"ancora ({len(cond)} su {len(V.CONDIZIONI)} modellate). Non e' un "
+          f"errore: e' la distanza fra nominare e convertire, e si misura.")
     per_origine = ", ".join(f"{n} {o}" for o, n in sorted(origini.items())) or "nessuna"
     print(f"{con_cd} CD dichiarate nella struttura ({per_origine}); "
           f"{coincidenze} di fonte combaciano comunque col conto "

@@ -1,0 +1,42 @@
+{
+  "id": "bonus-competenza",
+  "name": {
+    "en": "Proficiency Bonus",
+    "it": "Bonus di competenza"
+  },
+  "genere": "tabella",
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "SRD 5.1, Beyond 1st Level (per livello) e Monsters — Proficiency Bonus by Challenge Rating (per grado sfida)",
+    "api_ref": null
+  },
+  "mechanics_5e": "Il bonus di competenza vale +2 dal 1° al 4° livello e cresce di 1 ogni 4 livelli, fino a +6 al 20°. La stessa tabella, letta per grado sfida invece che per livello, vale +2 fino al grado 4 e arriva a +9 ai gradi 29 e 30; i gradi frazionari (0, 1/8, 1/4, 1/2) stanno sotto la prima fascia e prendono anch'essi +2.",
+  "fasce": [
+    { "da": 1, "a": 4, "valore": 2 },
+    { "da": 5, "a": 8, "valore": 3 },
+    { "da": 9, "a": 12, "valore": 4 },
+    { "da": 13, "a": 16, "valore": 5 },
+    { "da": 17, "a": 20, "valore": 6 },
+    { "da": 21, "a": 24, "valore": 7 },
+    { "da": 25, "a": 28, "valore": 8 },
+    { "da": 29, "a": 30, "valore": 9 }
+  ],
+  "letture": [
+    {
+      "id": "per_livello",
+      "ingresso": "livello_personaggio",
+      "dominio": [1, 20]
+    },
+    {
+      "id": "per_grado_sfida",
+      "ingresso": "grado_sfida",
+      "dominio": [0, 30],
+      "sotto_il_minimo": {
+        "soglia": 1,
+        "valore": 2,
+        "nota": "I gradi sfida frazionari (0, 1/8, 1/4, 1/2) non sono interi e nessuna fascia puo' contenerli: prendono il valore della prima fascia. E' l'unica differenza fra le due letture, ed e' la ragione per cui sono due LETTURE e non due tabelle."
+      }
+    }
+  ],
+  "note": "UNA tabella, due letture. Erano scritte due volte in due file che nessuna esecuzione metteva uno contro l'altro — `COMPETENZA` in dati/_srd51.py e `competenza_da_cr()` in dati/valida_effetti.py — ed e' meta' della nona struttura doppia del progetto. Le due letture coincidono fascia per fascia perche' nella 5e sono la stessa progressione: il livello 5 e il grado sfida 5 danno entrambi +3, e non per caso."
+}

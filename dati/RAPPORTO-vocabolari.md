@@ -24,7 +24,7 @@ mette le due sedi una contro l'altra. Contarle come rotte sarebbe falso.
 Un vocabolario con **una sede sola** non e' sano: e' **non ancora esposto**.
 Il difetto arriva col prossimo file che usa lo stesso termine.
 
-> **2 vocabolari aperti su 8 esaminati**, piu' 3 con una sede sola.
+> **1 vocabolari aperti su 8 esaminati**, piu' 3 con una sede sola.
 
 ---
 
@@ -33,7 +33,7 @@ Il difetto arriva col prossimo file che usa lo stesso termine.
 | vocabolario | sedi | valori distinti | come e' tenuto fermo | stato |
 |---|--:|--:|---|---|
 | tipi di danno | 5 | 7 | schema | **chiuso** |
-| condizioni | 3 | 15 | niente, valida_effetti.py, controllo 3 | **APERTO** — 1 sede scoperta su 3 |
+| condizioni | 3 | 12 | schema, valida_effetti.py, controllo 3 | **chiuso** |
 | taglia | 2 | 6 | niente, schema | **APERTO** — 1 sede scoperta su 2 |
 | tipo di creatura | 1 | 11 | niente | una sede sola |
 | scuole di magia | 1 | 8 | schema | una sede sola, vincolata |
@@ -55,7 +55,7 @@ Il difetto arriva col prossimo file che usa lo stesso termine.
 
 ### condizioni
 
-- `dati/mostri/` → `mechanics_5e.condition_immunities[]` — 10 valori distinti su 35 occorrenze, **scoperta**. `charmed`, `poisoned`, `exhaustion`, `paralyzed`, `frightened`, `grappled`
+- `dati/mostri/` → `mechanics_5e.condition_immunities[]` — 10 valori distinti su 35 occorrenze, **schema**. `affascinato`, `avvelenato`, `sfinimento`, `paralizzato`, `spaventato`, `afferrato`
 - `dati/condizioni/` → `id` — 5 valori distinti su 5 occorrenze, **valida_effetti.py, controllo 3**. `incapacitato`, `incosciente`, `pietrificato`, `prono`, `trattenuto`
 - `dati/mostri/` → `mechanics_5e.*.effetto.tiro_salvezza.*.condizioni[].id` — 2 valori distinti su 2 occorrenze, **valida_effetti.py, controllo 3**. `trattenuto`, `pietrificato`
 
@@ -90,30 +90,36 @@ Il difetto arriva col prossimo file che usa lo stesso termine.
 
 ## 3. I tre casi che restano aperti, e cosa costa chiuderli
 
-**`condition_immunities` — lo stesso difetto dei tipi di danno, un anno piu'
-avanti.** `dati/mostri/` dichiara le immunita' a condizione con i nomi inglesi
-della 5e (10 distinti su 35 occorrenze: `charmed`, `poisoned`, `petrified`,
-`prone`, `restrained`...), mentre `dati/condizioni/` — che decisione 48
-(`condizioni-a-consumo`) dichiara sede unica — ha 5 id italiani. Il campo
-`effetto` risolve contro la sede italiana e il controllo 3 lo verifica;
-`condition_immunities` non risolve contro niente. E' **piu' grave** dei tipi
-di danno, perche' li' le due sedi erano due trascrizioni e qui una delle due
-e' una **sede dichiarata** che l'altra ignora.
+**`condition_immunities` — chiusa, e non traducendo e basta.** `dati/mostri/`
+dichiarava le immunita' a condizione con i nomi inglesi della 5e mentre
+`dati/condizioni/` — che decisione 48 (`condizioni-a-consumo`) dichiara sede
+unica — ha id italiani: stesso difetto dei tipi di danno, e **piu' grave**,
+perche' li' erano due trascrizioni e qui una delle due sedi era gia'
+**dichiarata unica** e l'altra la ignorava. Nessuna immunita' del bestiario
+poteva essere rispettata da nessun motore.
 
-Non si chiude senza una decisione, e le due strade costano cose diverse.
-**Tradurre e basta** significa che le 10 condizioni citate dalle immunita'
-diventano id italiani, e solo 3 di quegli id esistono in `dati/condizioni/`
-(`pietrificato`, `prono`, `trattenuto`). Gli altri **7** non esistono
-(`affascinato`, `afferrato`, `avvelenato`, `paralizzato`, `sfinimento`,
-`spaventato`, `stordito`): o si accettano riferimenti che non risolvono, o si
-creano 7 condizioni per anticipazione — cioe' si sconfessa il criterio di
-decisione 48 (`condizioni-a-consumo`), applicato per la prima volta tre giorni
-fa. **Restringere l'enum alle cinque esistenti** e' peggio: le schede
-perderebbero informazione vera di fonte. La terza strada — un vocabolario
-delle condizioni **separato** dalla cartella delle condizioni convertite, dove
-l'id esiste come termine e la scheda meccanica arriva dopo — e' probabilmente
-quella giusta e non e' una riga di enum: e' la stessa distinzione fra
-*nominare* e *convertire* che il progetto fa gia' altrove.
+Tradurre e basta non bastava, ed e' la ragione per cui il caso era rimasto
+aperto: delle condizioni citate dalle immunita' solo 3 avevano una scheda in
+`dati/condizioni/` (`pietrificato`, `prono`, `trattenuto`), quindi o si
+accettavano 7 riferimenti che non risolvono, o si creavano 7 condizioni per
+anticipazione — cioe' si sconfessava decisione 48 (`condizioni-a-consumo`) tre
+giorni dopo averla presa.
+
+Chiusa con decisione 53 (`condizioni-vocabolario-srd`) per la strada dei
+repertori (decisione 35 (`repertori-sono-filtri`)): l'insieme delle condizioni
+SRD e' **chiuso e noto**, quindi il vocabolario e' **completo** — 15 termini
+in `vocabolari.schema.json`, riferiti per `$ref` da `mostro.schema.json` —
+mentre il catalogo ne converte 5. Le altre 10 non sono condizioni
+**inesistenti**: sono una **lacuna del nostro catalogo**, che e' cosa diversa,
+e non si scrive da nessuna parte — si deriva dai file presenti nella cartella.
+
+Il divario resta, e adesso e' un numero invece che un dubbio: **35 immunita'**
+nel bestiario, di cui **29** nominano una delle 10 condizioni che il motore
+non sa ancora applicare (`accecato`, `affascinato`, `afferrato`, `assordato`,
+`avvelenato`, `invisibile`, `paralizzato`, `sfinimento`, `spaventato`,
+`stordito`). Il motore lo **dichiara** — lacuna `condizione-non-modellata` —
+perche' un'immunita' saltata in silenzio e' indistinguibile da un'immunita'
+rispettata.
 
 **`taglia` — due sedi, una sola vincolata, d'accordo per fortuna.**
 `mostro.schema.json` ha l'enum `Tiny…Gargantuan`; `razza.schema.json` dichiara

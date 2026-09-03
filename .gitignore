@@ -169,6 +169,21 @@ CLAUDE.local.md
 !dati/condizioni/
 !dati/condizioni/*.json
 
+# Dati di sistema (decisione 51, `criterio-meccanica`): le tabelle che la 5e
+# stampa uguali per ogni creatura — modificatore di caratteristica, bonus di
+# competenza, moltiplicatori delle difese, soglie del d20. Stessa posizione e
+# stessa ragione di dati/condizioni/ sopra: vengono dall'SRD 5.1, CC-BY,
+# nessun testo 2e e nessun source_2e (sistema.schema.json non ne prevede uno,
+# `source_edition` e' costante a "SRD 5.1"). Dichiarato QUI nello stesso
+# commit che crea il primo file, non a posteriori. Non va in PERCORSI di
+# git-privato.sh. Se un giorno servisse una tabella propria di Krynn presa da
+# un manuale, quello sara' il momento di rivedere questa scelta, non prima.
+!dati/_sistema.py
+!dati/valida_sistema.py
+!dati/sistema/
+!dati/sistema/*.json
+!dati/schema/sistema.schema.json
+
 # Confronto fra i due strati (source_2e contro mechanics_5e) e validatore
 # degli effetti strutturati: codice nostro, nessun testo di fonte. Leggono i
 # dati privati e non ne riproducono niente — stampano solo divergenze.
