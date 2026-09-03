@@ -44,6 +44,7 @@ sys.path.insert(0, RADICE)
 
 import _srd51                      # noqa: E402
 import _sfere_5e as SF             # noqa: E402
+import _vocabolari as V            # noqa: E402
 from decisioni import PER_NUMERO   # noqa: E402
 from motore import generazione     # noqa: E402
 
@@ -1182,7 +1183,11 @@ Anche dove il dato è strutturato, il numero è spesso **dentro** una stringa:
     ("Uso di un privilegio", "usi rimasti, effetto", "usi consumati",
      f"**no**: {CL['stati'].get('pending', 0)} privilegi su {CL['tot_feat']} sono `pending`"),
     ("Condizioni e concentrazione", "condizioni attive", "condizioni attive",
-     "**no**: non esiste un elenco delle condizioni"),
+     f"**in parte**: il catalogo ne converte {len(V.condizioni_modellate())} "
+     f"delle {len(V.CONDIZIONI)} che il vocabolario nomina "
+     f"(decisioni 48 (`condizioni-a-consumo`) e "
+     f"53 (`condizioni-vocabolario-srd`)); la concentrazione non e' "
+     f"modellata da nessuna parte"),
     ("Decisione dell'IA", "ruolo e morale della creatura", "l'intenzione",
      f"**sì**: `ruolo` su {AR['n_mostri']}/{AR['n_mostri']}, `morale_2e` su {AR['morale']}/{AR['n_mostri']}"),
 ])}

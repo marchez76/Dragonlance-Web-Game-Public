@@ -1,6 +1,6 @@
 # Lo schema Personaggio — rapporto diagnostico
 
-*Generato da `dati/analizza_personaggio.py` il 2026-09-02.*
+*Generato da `dati/analizza_personaggio.py` il 2026-09-03.*
 
 > **Diagnostico.** Misura la forma del problema prima di progettarlo. **Non
 > decide niente**: non propone uno schema, non scioglie le tre decisioni
@@ -101,7 +101,7 @@ progetto: è il ritmo con cui i valori cambiano.
 | Posizione e ordine di iniziativa | **turno** | no |
 | Tiri salvezza contro morte | **turno** | no |
 
-> **Lettura interpretativa** — registrata il 2026-09-02. Non è derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-03. Non è derivata dai dati.
 >
 > **Cosa i dati impongono, prima di qualunque scelta di progetto.** La colonna
 > "cambia ogni" si divide in due gruppi senza che nessuno l'abbia deciso:
@@ -177,7 +177,7 @@ livello per livello. Non c'è una riga di meccanica: nessuna descrizione di
 Second Wind, nessuna tabella di slot, nessuna lista di competenze, nessuna
 sottoclasse, nessun pacchetto d'equipaggiamento.
 
-> **Lettura interpretativa** — registrata il 2026-09-02. Non è derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-03. Non è derivata dai dati.
 >
 > "Clonato" oggi vuol dire **abbiamo registrato quali privilegi ha il Fighter**,
 > non **abbiamo le regole del Fighter**. È esattamente il rapporto che c'è fra un
@@ -276,7 +276,7 @@ Tre legami esistono come intenzione ma non come chiave.
   `mechanics_5e` a **`null`**: il filtro delle sfere (decisione 24, `sfere-sacerdotali`) vive
   interamente in `dati/_sfere_5e.py`, cioè in codice, non nei dati.
 
-> **Lettura interpretativa** — registrata il 2026-09-02. Non è derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-03. Non è derivata dai dati.
 >
 > I tre giunti hanno la stessa forma e non è un caso: il legame è sempre scritto
 > come **etichetta leggibile**, mai come chiave. Finché i dati servivano a essere
@@ -412,7 +412,7 @@ razza + classe; la validazione; la soddisfacibilità (`esiste_assegnazione`,
 | Copre un passo su molti | punti ferita, competenze, equipaggiamento, incantesimi, denaro iniziale: nessuno di questi passa di qui |
 | La numerazione delle decisioni era sfasata — CHIUSA | il modulo cita ora le decisioni 8 (`generazione-caratteristiche`), 9 (`aggiustamenti-negativi`), 10 (`massimali-razziali`), 11 (`barbaro-vincoli`), 44 (`tetto-punto-perduto`), verificate da `verifica_decisioni.py` — vedi §3.4 |
 
-> **Lettura interpretativa** — registrata il 2026-09-02. Non è derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-03. Non è derivata dai dati.
 >
 > Sul terzo punto vale la pena fermarsi, perché è l'unico che sia un difetto e
 > non un lavoro non ancora fatto. Il modulo legge `source_2e` e non
@@ -431,14 +431,14 @@ razza + classe; la validazione; la soddisfacibilità (`esiste_assegnazione`,
 ### 3.4 Una nota che riguarda tutte e tre: la numerazione — CHIUSA
 
 Le tre questioni sospese si citano per numero, e i numeri **non erano
-stabili**. Il progetto contiene **1108 rimandi a una decisione in
-129 file**, di cui **303 nella fascia 1-12** — che è
+stabili**. Il progetto contiene **1195 rimandi a una decisione in
+134 file**, di cui **305 nella fascia 1-12** — che è
 esattamente dove stavano le tre questioni di questa sezione.
 
 Erano sfasati perché il numero è un ordinale dell'elenco, e l'elenco è
 cambiato: file scritti in momenti diversi hanno continuato a citare il numero
 della propria vintage, senza che nulla li riallineasse. Lette una per una, le
-303 citazioni della fascia bassa hanno dato questa corrispondenza —
+305 citazioni della fascia bassa hanno dato questa corrispondenza —
 **senza uno scarto costante**, e con lo stesso numero giusto in un file e
 sbagliato in un altro:
 
@@ -464,7 +464,7 @@ un `id` stabile che non cambierà mai, e la forma di un rimando è ora
 accanto come derivato. `verifica_decisioni.py` verifica la coppia in tutto il
 progetto e con `--correggi` riscrive i numeri a partire dagli id.
 
-Stato oggi: **1108 rimandi verificati, 0 sfasati,
+Stato oggi: **1195 rimandi verificati, 0 sfasati,
 0 con id ignoto, 0 ancora senza id**. Rinumerare
 adesso costa un comando.
 
@@ -498,7 +498,7 @@ esclusi di Dominio — 37 nomi dichiarati in
 `_sfere_5e.ESCLUSI_DI_DOMINIO` — e non sul loro numero, perché un
 incantesimo che entra mentre un altro esce lascerebbe il conteggio fermo.
 
-> **Lettura interpretativa** — registrata il 2026-09-02. Non è derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-03. Non è derivata dai dati.
 >
 > **L'allineamento perfetto è il dato interessante, non quello rassicurante.**
 > Le quattro divergenze già viste in questo progetto non sono nate da distrazione:
@@ -609,7 +609,7 @@ Anche dove il dato è strutturato, il numero è spesso **dentro** una stringa:
 | Attacco di un mostro | il blocco `actions` | PF del bersaglio | **no**: è prosa |
 | Lancio di un incantesimo | slot disponibili, CD, effetto | slot spesi, PF, condizioni | **no**: l'effetto non è strutturato |
 | Uso di un privilegio | usi rimasti, effetto | usi consumati | **no**: 40 privilegi su 43 sono `pending` |
-| Condizioni e concentrazione | condizioni attive | condizioni attive | **no**: non esiste un elenco delle condizioni |
+| Condizioni e concentrazione | condizioni attive | condizioni attive | **in parte**: il catalogo ne converte 5 delle 15 che il vocabolario nomina (decisioni 48 (`condizioni-a-consumo`) e 53 (`condizioni-vocabolario-srd`)); la concentrazione non e' modellata da nessuna parte |
 | Decisione dell'IA | ruolo e morale della creatura | l'intenzione | **sì**: `ruolo` su 52/52, `morale_2e` su 52/52 |
 
 I 9 ruoli già assegnati
@@ -617,7 +617,7 @@ I 9 ruoli già assegnati
 della decisione 27 (`sette-campi-2e`) sono, oggi, la parte dell'arena messa meglio: l'IA sa cosa
 vuole fare una creatura molto prima che il motore sappia risolverne l'attacco.
 
-> **Lettura interpretativa** — registrata il 2026-09-02. Non è derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-03. Non è derivata dai dati.
 >
 > **La scheda non è progettata male: è progettata per un altro uso.** Tutte e sei
 > le entità sono documenti di conversione — devono mostrare cosa dice la fonte,
