@@ -11,6 +11,7 @@ dichiara di essere riservato agli gnomi, una delle due trascrizioni e' sbagliata
 Uso:  python3 dati/valida_classi.py
 """
 
+import copy
 import glob
 import json
 import os
@@ -19,23 +20,26 @@ import sys
 import jsonschema
 
 BASE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, BASE)
+
+import _classi_ammesse as _CA  # noqa: E402
 Validator = getattr(jsonschema, "Draft202012Validator", None) or jsonschema.Draft7Validator
 
-# Nomi usati nella tabella Class/Race Combinations -> id delle nostre classi.
-# Le voci non mappate sono classi standard del PHB 2e, senza scheda dedicata.
-MAPPA_TABELLA = {
-    "Knight of Solamnia": "cavaliere-corona",
-    "Cavalier": "cavaliere",
-    "Mariner": "mariner",
-    "Barbarian": "barbaro",
-    "High Sorcerer": "mago-alta-stregoneria",
-    "Mage (Renegade)": "mago-rinnegato",
-    "Holy Orders": "sacerdote-ordini-sacri",
-    "Priest (heathen)": "sacerdote-eretico",
-    "Druid (heathen)": "sacerdote-eretico",
-    "Handler": "handler",
-    "Tinker": "tinker",
-}
+# Nomi della tabella Class/Race Combinations -> id delle nostre classi.
+#
+# NON SI SCRIVE QUI. Questa mappa era la DODICESIMA struttura doppia del
+# progetto: la stessa corrispondenza etichetta 2e -> nostra classe viveva qui
+# e in `analizza_allowed_classes.py`, ed era gia' divergente il giorno in cui
+# e' stata trovata — qui `Knight of Solamnia` valeva il solo Cavaliere della
+# Corona, di la' i tre ordini. Nessuna esecuzione metteva le due copie una
+# contro l'altra, quindi la divergenza non poteva emergere da sola.
+#
+# La sede e' `_classi_ammesse.ETICHETTE`, decisione 58 (`telaio-apre-classe-filtra`).
+# Qui si legge il solo campo che serve al
+# controllo incrociato: le classi che l'etichetta NOMINA. Il telaio non
+# c'entra — questo controllo confronta due tabelle del manuale fra loro, non
+# la conversione 5e.
+MAPPA_TABELLA = {e: v.classi for e, v in _CA.ETICHETTE.items() if v.classi}
 
 
 def coerenza(d, err):
@@ -87,26 +91,42 @@ def incrociato(classi, razze, err):
 
     for r in razze:
         for voce in r["source_2e"].get("class_level_limits", []):
-            cid = MAPPA_TABELLA.get(voce["class"])
-            if cid is None:
-                continue
-            c = per_id.get(cid)
-            if c is None:
-                err(f"{r['id']}: la tabella cita '{voce['class']}' ma la classe {cid} non esiste")
-                continue
-            restr = c["source_2e"].get("race_restriction")
-            if restr and r["id"] not in restr:
-                err(f"CONTRADDIZIONE: la razza {r['id']} puo' prendere '{voce['class']}' "
-                    f"(tetto {voce['limit']}) ma la classe {cid} e' riservata a {restr}")
+            nominate = MAPPA_TABELLA.get(voce["class"], ())
+            # Un'etichetta ombrello ne nomina piu' di una: la contraddizione
+            # c'e' solo se le esclude TUTTE. `Knight of Solamnia` concessa al
+            # mezzelfo non e' una contraddizione perche' un ordine dei tre lo
+            # ammette, e sarebbe diventata tale con una mappa a una voce sola.
+            ammesse = []
+            for cid in nominate:
+                c = per_id.get(cid)
+                if c is None:
+                    err(f"{r['id']}: la tabella cita '{voce['class']}' ma la "
+                        f"classe {cid} non esiste")
+                    continue
+                restr = c["source_2e"].get("race_restriction")
+                if not restr or r["id"] in restr:
+                    ammesse.append(cid)
+            if nominate and not ammesse:
+                err(f"CONTRADDIZIONE: la razza {r['id']} puo' prendere "
+                    f"'{voce['class']}' (tetto {voce['limit']}) ma nessuna "
+                    f"delle classi che l'etichetta nomina "
+                    f"({', '.join(nominate)}) l'ammette")
 
     # e viceversa: una classe riservata a una razza deve comparire fra i suoi limiti
     per_razza = {r["id"]: {v["class"] for v in r["source_2e"].get("class_level_limits", [])}
                  for r in razze}
-    inverso = {v: k for k, v in MAPPA_TABELLA.items()}
+    # Una classe puo' essere nominata da PIU' etichette (`Priest (heathen)` e
+    # `Druid (heathen)` sono lo stesso Sacerdote Eretico): il rovescio della
+    # mappa e' quindi un insieme, e non un valore solo. Con un dizionario
+    # rovesciato una delle due etichette spariva in silenzio.
+    inverso = {}
+    for e, cids in MAPPA_TABELLA.items():
+        for cid in cids:
+            inverso.setdefault(cid, set()).add(e)
     for c in classi:
         restr = c["source_2e"].get("race_restriction")
-        nome_tab = inverso.get(c["id"])
-        if not restr or not nome_tab:
+        nomi_tab = inverso.get(c["id"])
+        if not restr or not nomi_tab:
             continue
         for rid in restr:
             if rid not in per_razza:
@@ -115,8 +135,9 @@ def incrociato(classi, razze, err):
                 # Gli umani non compaiono nella tabella Class/Race Combinations
                 # perche' in 2e non hanno limiti di livello: assenza attesa, non errore.
                 continue
-            elif nome_tab not in per_razza[rid]:
-                err(f"{c['id']} e' riservata a {rid}, ma '{nome_tab}' non compare "
+            elif not (nomi_tab & per_razza[rid]):
+                err(f"{c['id']} e' riservata a {rid}, ma nessuna delle etichette "
+                    f"che la nominano ({', '.join(sorted(nomi_tab))}) compare "
                     f"fra i class_level_limits di quella razza")
 
     # le catene di ordini devono essere ben formate
@@ -126,6 +147,60 @@ def incrociato(classi, razze, err):
             err(f"{c['id']}: requires_class punta a '{rq}' che non esiste")
         if c.get("tier") and c["tier"] > 1 and not rq:
             err(f"{c['id']}: tier {c['tier']} senza requires_class")
+
+
+# --------------------------------------------------------------------------
+# IL CONTROLLO SI METTE ALLA PROVA — stesso schema di `_sistema.COPIE_PIANTATE`
+# e di `_schemi.prova_di_se_stesso`.
+#
+# Su un repository pulito un controllo incrociato rotto e uno funzionante
+# tacciono uguale, e questo e' appena stato riscritto per leggere la mappa da
+# `_classi_ammesse` invece che da una copia sua. Prima di dichiarare che non
+# ci sono contraddizioni, gliene si mettono davanti due piantate apposta e una
+# somiglianza legittima che NON deve segnalare.
+# --------------------------------------------------------------------------
+
+def _senza_ombrello(classi, razze):
+    """Somiglianza legittima: il mezzelfo dichiara `Knight of Solamnia`, che
+    nomina tre ordini. Due dei tre lo ammettono e uno no. Con una mappa a un
+    valore solo questo caso poteva diventare un falso allarme."""
+    return classi, razze
+
+
+def _kender_tinker(classi, razze):
+    r = copy.deepcopy(razze)
+    next(x for x in r if x["id"] == "kender")["source_2e"][
+        "class_level_limits"].append({"class": "Tinker", "limit": None})
+    return classi, r
+
+
+def _eretico_riservato(classi, razze):
+    c = copy.deepcopy(classi)
+    next(x for x in c if x["id"] == "sacerdote-eretico")["source_2e"][
+        "race_restriction"] = ["minotauro"]
+    return c, razze
+
+
+PIANTATI = [
+    ("una razza dichiara un'etichetta riservata a un'altra razza", _kender_tinker, True),
+    ("una classe e' riservata a una razza che non la dichiara", _eretico_riservato, True),
+    ("etichetta ombrello ammessa da due ordini su tre", _senza_ombrello, False),
+]
+
+
+def prova_di_se_stesso(classi, razze):
+    """Lista di fallimenti della prova. Vuota = il controllo vede e tace
+    quando deve."""
+    fuori = []
+    for nome, muta, atteso in PIANTATI:
+        c, r = muta(classi, razze)
+        errori = []
+        incrociato(c, r, errori.append)
+        if bool(errori) != atteso:
+            fuori.append(
+                f"{nome}: atteso {'un errore' if atteso else 'silenzio'}, "
+                f"ottenuto {'un errore' if errori else 'silenzio'}")
+    return fuori
 
 
 def main():
@@ -152,6 +227,17 @@ def main():
                 print(f"    {e}")
         else:
             print(f"✓ {os.path.basename(p)}")
+
+    print("\n--- il controllo incrociato si mette alla prova ---")
+    fuori = prova_di_se_stesso(classi, razze)
+    if fuori:
+        totale += len(fuori)
+        for e in fuori:
+            print(f"    ✗ {e}")
+    else:
+        print(f"    ✓ {len(PIANTATI)} casi: "
+              f"{sum(1 for _n, _m, a in PIANTATI if a)} difetti piantati visti, "
+              f"{sum(1 for _n, _m, a in PIANTATI if not a)} somiglianza legittima taciuta")
 
     print("\n--- controllo incrociato razze/classi ---")
     incr = []

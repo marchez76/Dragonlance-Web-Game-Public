@@ -192,21 +192,33 @@ netta. Decomporlo e' un giro suo, con il suo controllo.
 
 ### 5b. La zona morta: origine scritta, nessuno schema che la vincoli
 
-| famiglia | schema | dichiarazioni di elemento | vincolate dallo schema? |
-|---|---|--:|---|
-| mostri | `mostro.schema.json` | 416 | si' |
-| oggetti | `oggetto.schema.json` | 51 | si' |
-| modelli | `modello.schema.json` | 29 | si' |
-| razze | `razza.schema.json` | 105 | **NO** |
-| classi | `classe.schema.json` | 58 | si' |
+| famiglia | schema | dichiarazioni di elemento | `conversion_status` dichiarati dallo schema | …di cui legati al vocabolario | vincolate? |
+|---|---|--:|--:|--:|---|
+| mostri | `mostro.schema.json` | 416 | 4 | 4 | si' |
+| oggetti | `oggetto.schema.json` | 51 | 3 | 3 | si' |
+| modelli | `modello.schema.json` | 29 | 2 | 2 | si' |
+| razze | `razza.schema.json` | 105 | 0 | 0 | **NO** |
+| classi | `classe.schema.json` | 58 | 1 | 0 | **NO** |
 
 Il caso peggiore non e' un campo assente: e' un campo **scritto che sembra
 validato e non lo e'**. Dove la colonna dice NO, l'origine e' scritta nei dati
 con la stessa diligenza di tutte le altre, e nessun controllo la guarda: puo'
-portare un valore che l'enum non prevede senza che niente lo dica. E' la
-stessa forma della zona morta gia' misurata in
-`RAPPORTO-zona-morta-classi.md`, su un campo diverso — segno che il difetto
-sta nello schema di quelle famiglie, non nel campo.
+portare un valore che l'enum non prevede senza che niente lo dica. Sono **163
+dichiarazioni** fra razze e classi. E' la stessa forma della zona morta gia'
+misurata in `RAPPORTO-zona-morta-classi.md`, su un campo diverso — segno che
+il difetto sta nello schema di quelle famiglie, non nel campo. Il costo di
+chiuderla e' misurato li', in §5.
+
+**Il rilevatore era rotto e diceva di no, il 04/09/2026.** La prima versione
+cercava le stringhe `"conversion_status"` e `"enum"` nello stesso FILE invece
+che nello stesso nodo, e `classe.schema.json` le contiene entrambe in due
+punti che non c'entrano l'uno con l'altro: la famiglia risultava vincolata
+mentre non vincola niente. Un rilevatore che dichiara chiusa una zona morta
+aperta e' peggio di nessun rilevatore, perche' il numero che stampa viene
+creduto. Ora si guarda il nodo, e il `$ref` locale verso la sede si segue fino
+in fondo — che e' esattamente la forma che la decisione 55
+(`origine-sede-unica`) ha dato al vincolo, e che un rilevatore fermo al primo
+salto avrebbe chiamato scoperta.
 
 ### 5c. Il vocabolario di scheda delle classi
 

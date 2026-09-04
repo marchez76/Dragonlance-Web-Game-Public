@@ -304,9 +304,52 @@ def main():
                        "dich": len(d),
                        "add": m.get("additionalProperties")})
 
+    # ---- il lato razza, con lo stesso metro del lato classe (§5)
+    per_rz, tipi_rz = percorsi_dati(razze)
+    usati_rz = set(per_rz)
+    sc_razza = json.load(open(os.path.join(BASE, "schema/razza.schema.json"),
+                              encoding="utf-8"))
+    dich_rz = percorsi_schema(sc_razza["properties"]["mechanics_5e"])
+    eff_rz = {k for k in usati_rz if ".effetto." in k or k.endswith(".effetto")}
+    nudi_rz = usati_rz - dich_rz - eff_rz
+    nominati_rz = {k for k in nudi_rz if ultimo(k) in nomi_val}
+    mai_nominati_rz = nudi_rz - nominati_rz
+    blocchi_rz = collections.Counter()
+    blocchi_nudi_rz = collections.Counter()
+    for k in usati_rz:
+        cima = k.split(".")[1].rstrip("[]")
+        blocchi_rz[cima] += 1
+        if k in nudi_rz:
+            blocchi_nudi_rz[cima] += 1
+    N_RZ = len(razze)
+    disomogenei_rz = [k for k in usati_rz if len(per_rz[k]) < N_RZ]
+
+    # ---- le dichiarazioni di origine, che e' il campo su cui la zona morta
+    # e' gia' stata misurata da RAPPORTO-origine e va contata qui in blocchi.
+    # Due casi che il totale da solo confonde: quelle che nessuno schema VEDE,
+    # e quelle che lo schema vede e lascia libere.
+    def origini(docs, blocchi_elenco):
+        fuori = collections.Counter()
+        for d in docs:
+            m = d.get("mechanics_5e") or {}
+            for b in blocchi_elenco:
+                for e in (m.get(b) or []):
+                    if isinstance(e, dict) and "conversion_status" in e:
+                        fuori[b] += 1
+        return fuori
+
+    orig_rz = origini(razze, ["traits"])
+    orig_cl = origini(classi, ["features", "chassis_features"])
+    viste = {b: n for b, n in orig_cl.items()
+             if f"mechanics_5e.{b}[].conversion_status" in dichiarati}
+    cieche = ({("razza", b): n for b, n in orig_rz.items()}
+              | {("classe", b): n for b, n in orig_cl.items() if b not in viste})
+    n_cieche = sum(cieche.values())
+    n_viste = sum(viste.values())
+
     tot_inc = sum(len(v) for v in inc.values())
 
-    doc = f"""# La zona morta delle classi — quanto costa chiuderla
+    doc = f"""# Le zone morte di classe e di razza — quanto costa chiuderle
 
 *Generato da `dati/analizza_zona_morta_classi.py` il {OGGI}. Non modificare a
 mano: ogni numero è interpolato dai dati.*
@@ -512,6 +555,114 @@ chiude uno schema attorno a dati che lo violano. `additionalProperties: false`
 con `conversion_status: direct` e `mechanics_5e: null` insieme non passa —
 o si corregge il dato, o si scrive nello schema che quello stato ammette il
 vuoto, cioè si dichiara che l'invariante non vale.
+
+---
+
+## 5. Il lato razza, con lo stesso metro
+
+§3 diceva che le zone morte sono tre e che una sta peggio. Questa è quella,
+misurata come le classi invece che citata di sfuggita.
+
+`razza.schema.json` descrive `mechanics_5e` come un oggetto senza **nessuna**
+proprietà dichiarata: {len(usati_rz)} percorsi in uso nei {N_RZ} file,
+{len(dich_rz)} dichiarati.
+
+> **{len(nudi_rz)} percorsi su {len(usati_rz)}** non sono dichiarati da nessuno
+> schema, e **{len(mai_nominati_rz)}** non sono nominati nemmeno da un
+> validatore.
+
+{tabella(["blocco di primo livello", "percorsi in uso", "non dichiarati", "razze che lo portano"],
+         [[f"`{b}`", blocchi_rz[b], blocchi_nudi_rz[b],
+           f"{len(per_rz['mechanics_5e.' + b])}/{N_RZ}"]
+          for b in sorted(blocchi_rz, key=lambda x: -blocchi_rz[x])],
+         ["---", "--:", "--:", "--:"])}
+
+{len([b for b in blocchi_nudi_rz if blocchi_nudi_rz[b]])} blocchi da
+descrivere, contro i {len([b for b in blocchi_nudi if blocchi_nudi[b]])} delle
+classi. Il blocco più pesante è
+`{max(blocchi_nudi_rz, key=lambda b: blocchi_nudi_rz[b])}` con
+{max(blocchi_nudi_rz.values())} percorsi.
+{len(disomogenei_rz)} percorsi su {len(usati_rz)} non compaiono in tutte le
+razze: come per le classi, la disomogeneità è cosa uno schema deve decidere se
+ammettere, e finché non c'è schema non è stata decisa.
+
+### 5a. Le dichiarazioni di origine: due casi, non uno
+
+`RAPPORTO-origine.md` §5b misura lo stesso difetto su un campo solo,
+`conversion_status` di livello elemento, e dà il numero grosso. Qui va spezzato
+in due, perché costano cose diverse:
+
+{tabella(["famiglia", "blocco", "dichiarazioni", "lo schema le vede?"],
+         [[f, f"`{b}`", n, "**no**"] for (f, b), n in sorted(cieche.items())]
+         + [["classe", f"`{b}`", n, "sì, come stringa libera"]
+            for b, n in sorted(viste.items())],
+         ["---", "---", "--:", "---"])}
+
+- **{n_cieche} dichiarazioni che nessuno schema vede.** Stanno in blocchi che
+  lo schema non descrive affatto: `traits` delle razze e `features` delle
+  classi. Si chiudono descrivendo il blocco, cioè dentro il lavoro già contato
+  sopra — non sono una voce in più.
+- **{n_viste} dichiarazioni che lo schema vede e lascia libere.** Sono in
+  `chassis_features`, dichiarato con `"type": "string"` e nessun `enum`. Questo
+  è il caso che costa **una riga**: un `$ref` alla sede del vocabolario, la
+  stessa che i mostri, gli oggetti e i modelli usano già. È anche il caso più
+  insidioso, perché un campo dichiarato *sembra* controllato.
+
+### 5b. Il conto delle due zone morte insieme
+
+{tabella(["", "classe", "razza", "insieme"],
+         [["file", N, N_RZ, N + N_RZ],
+          ["percorsi in uso sotto `mechanics_5e`", len(usati), len(usati_rz),
+           len(usati) + len(usati_rz)],
+          ["già dichiarati dallo schema", len(dichiarati), len(dich_rz),
+           len(dichiarati) + len(dich_rz)],
+          ["già dichiarati da `effetto.schema.json`", len(sotto_effetto),
+           len(eff_rz), len(sotto_effetto) + len(eff_rz)],
+          ["**da dichiarare**", f"**{len(nudi)}**", f"**{len(nudi_rz)}**",
+           f"**{len(nudi) + len(nudi_rz)}**"],
+          ["…nominati da nessun validatore", len(mai_nominati),
+           len(mai_nominati_rz), len(mai_nominati) + len(mai_nominati_rz)],
+          ["blocchi di primo livello da descrivere",
+           len([b for b in blocchi_nudi if blocchi_nudi[b]]),
+           len([b for b in blocchi_nudi_rz if blocchi_nudi_rz[b]]),
+           len([b for b in blocchi_nudi if blocchi_nudi[b]])
+           + len([b for b in blocchi_nudi_rz if blocchi_nudi_rz[b]])],
+          ["incoerenze già nei dati", tot_inc, "—", tot_inc]],
+         ["---", "--:", "--:", "--:"])}
+
+Il termine di paragone resta quello di §3: `mostro.schema.json` dichiara
+{[c["dich"] for c in chiusi if c["nome"] == "mostro"][0]} percorsi su
+{[c["usati"] for c in chiusi if c["nome"] == "mostro"][0]} in uso, con
+`additionalProperties: false`, su {[c["file"] for c in chiusi if c["nome"] == "mostro"][0]}
+file. Le due zone morte insieme chiedono
+{len(nudi) + len(nudi_rz)} dichiarazioni contro le
+{[c["dich"] for c in chiusi if c["nome"] == "mostro"][0]} già scritte per il
+mostro — {(len(nudi) + len(nudi_rz)) / [c["dich"] for c in chiusi if c["nome"] == "mostro"][0]:.1f}
+volte quel lavoro — su {N + N_RZ} file invece di
+{[c["file"] for c in chiusi if c["nome"] == "mostro"][0]}. E senza le
+{tot_inc} incoerenze non si comincia, perché uno schema non si chiude attorno
+a dati che lo violano.
+
+**L'ordine che costa meno**, e non è quello dei numeri:
+
+1. Le {n_viste} dichiarazioni di `chassis_features`: **una riga** — un `$ref`
+   alla sede del vocabolario — e toglie il caso in cui un campo dichiarato
+   sembra controllato.
+2. Il blocco `features` ({blocchi_nudi["features"]} percorsi): è la stessa
+   forma di elemento già descritta due volte altrove, e va risolta una volta
+   per tutte e tre invece che una terza volta qui. È l'unica decisione dentro
+   il conto.
+3. I due blocchi grossi delle razze —
+   {", ".join(f"`{b}` ({blocchi_nudi_rz[b]})" for b in sorted(blocchi_nudi_rz, key=lambda x: -blocchi_nudi_rz[x])[:2])}
+   — che sono numeri e limiti, cioè trascrizione con `enum` e `minimum`
+   leggibili dai dati, non decisioni.
+4. `structural` ({blocchi_nudi["structural"]} percorsi): il pezzo più grosso
+   di tutti e il meno rischioso, perché è la scheda 2e riportata intera.
+
+Le {tot_inc} incoerenze non stanno in questa scaletta perché non sono lavoro
+di schema: sono dati da correggere, e vengono prima di tutto.
+
+---
 
 *Nessuna decisione è presa in questo documento, e nessuno schema è toccato.*
 """

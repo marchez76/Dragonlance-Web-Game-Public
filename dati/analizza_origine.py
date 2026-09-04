@@ -162,12 +162,71 @@ def fuori_dall_enum(righe, enum):
     return decomponibili, aliene, esempi
 
 
+def _vincolato(nodo, radice, giri=3):
+    """Un `conversion_status` e' vincolato se porta un `enum` suo, un `$ref`
+    alla sede, oppure un `$ref` locale che ci arriva. Il salto locale va
+    seguito: la decisione 55 (`origine-sede-unica`) ha proprio la forma
+    `$defs` locale -> sede, e un rilevatore che si fermasse al primo `$ref`
+    direbbe scoperto cio' che e' legato meglio di tutto il resto."""
+    if not isinstance(nodo, dict) or giri < 0:
+        return False
+    if nodo.get("enum"):
+        return True
+    rif = str(nodo.get("$ref") or "")
+    if not rif:
+        return False
+    if S.SEDE_ORIGINE in rif:
+        return True
+    if rif.startswith("#/"):
+        dentro = radice
+        for passo in rif[2:].split("/"):
+            if not isinstance(dentro, dict) or passo not in dentro:
+                return False
+            dentro = dentro[passo]
+        return _vincolato(dentro, radice, giri - 1)
+    return False
+
+
+def _conversion_status_nello_schema(nodo, radice=None, dentro_m5e=False,
+                                    chiave=None):
+    """Ogni `conversion_status` dichiarato sotto `mechanics_5e`, e se e'
+    davvero vincolato al vocabolario o solo dichiarato di tipo stringa."""
+    radice = nodo if radice is None else radice
+    fuori = []
+    if not isinstance(nodo, dict):
+        return fuori
+    if chiave == "conversion_status" and dentro_m5e:
+        fuori.append(_vincolato(nodo, radice))
+    for sotto in ("anyOf", "oneOf", "allOf"):
+        for n in nodo.get(sotto, []):
+            fuori += _conversion_status_nello_schema(n, radice, dentro_m5e,
+                                                     chiave)
+    for k, v in (nodo.get("properties") or {}).items():
+        fuori += _conversion_status_nello_schema(
+            v, radice, dentro_m5e or k == "mechanics_5e", k)
+    it = nodo.get("items")
+    if isinstance(it, dict):
+        fuori += _conversion_status_nello_schema(it, radice, dentro_m5e, chiave)
+    return fuori
+
+
 def zona_morta():
     """Dove l'origine e' scritta nei dati ma NESSUNO schema la vincola.
 
     Il caso peggiore non e' un campo assente: e' un campo scritto che sembra
     validato e non lo e'. Si misura confrontando cosa i dati dichiarano con
-    cosa lo schema di quella famiglia sa dire su `mechanics_5e`."""
+    cosa lo schema di quella famiglia sa dire su `mechanics_5e`.
+
+    IL RILEVATORE E' STATO CORRETTO IL 04/09/2026, e la correzione vale la
+    riga di commento. La prima versione cercava le due stringhe
+    `"conversion_status"` e `"enum"` DENTRO LO STESSO FILE, non nello stesso
+    punto: `classe.schema.json` le contiene entrambe — la prima dentro
+    `chassis_features`, la seconda su un campo `kind` che non c'entra — e
+    risultava quindi "vincolato" mentre non vincola niente. Un rilevatore che
+    dichiara chiusa una zona morta aperta e' peggio di nessun rilevatore,
+    perche' il numero che stampa viene creduto. Ora si guarda il NODO: un
+    `conversion_status` sotto `mechanics_5e` e' vincolato solo se porta un
+    `enum` suo o un `$ref` alla sede."""
     fuori = []
     for cart in CARTELLE:
         nome = {"mostri": "mostro", "oggetti": "oggetto", "modelli": "modello",
@@ -175,10 +234,13 @@ def zona_morta():
         p = os.path.join(BASE, "schema", nome)
         if not os.path.exists(p):
             continue
-        testo = open(p, encoding="utf-8").read()
-        vincolato = (f"{S.SEDE_ORIGINE}#/$defs/conversion_status" in testo
-                     or '"conversion_status"' in testo and '"enum"' in testo)
-        fuori.append((cart, nome, vincolato))
+        schema = json.load(open(p, encoding="utf-8"))
+        trovati = _conversion_status_nello_schema(schema)
+        # Vincolato = ne dichiara almeno uno E tutti quelli che dichiara sono
+        # legati al vocabolario. Uno solo lasciato libero e' una porta aperta.
+        vincolato = bool(trovati) and all(trovati)
+        fuori.append((cart, nome, vincolato, len(trovati),
+                      sum(1 for t in trovati if t)))
     return fuori
 
 
@@ -471,17 +533,30 @@ netta. Decomporlo e' un giro suo, con il suo controllo.
                for c in CARTELLE}
     parti.append(f"""### 5b. La zona morta: origine scritta, nessuno schema che la vincoli
 
-{tabella(["famiglia", "schema", "dichiarazioni di elemento", "vincolate dallo schema?"],
-         [(c, f"`{n}`", per_fam[c], "si'" if v else "**NO**")
-          for c, n, v in zm], allin=["---", "---", "--:", "---"])}
+{tabella(["famiglia", "schema", "dichiarazioni di elemento", "`conversion_status` dichiarati dallo schema", "…di cui legati al vocabolario", "vincolate?"],
+         [(c, f"`{n}`", per_fam[c], quanti, legati, "si'" if v else "**NO**")
+          for c, n, v, quanti, legati in zm],
+         allin=["---", "---", "--:", "--:", "--:", "---"])}
 
 Il caso peggiore non e' un campo assente: e' un campo **scritto che sembra
 validato e non lo e'**. Dove la colonna dice NO, l'origine e' scritta nei dati
 con la stessa diligenza di tutte le altre, e nessun controllo la guarda: puo'
-portare un valore che l'enum non prevede senza che niente lo dica. E' la
-stessa forma della zona morta gia' misurata in
-`RAPPORTO-zona-morta-classi.md`, su un campo diverso — segno che il difetto
-sta nello schema di quelle famiglie, non nel campo.
+portare un valore che l'enum non prevede senza che niente lo dica. Sono
+**{sum(per_fam[c] for c, _n, ok, _q, _l in zm if not ok)} dichiarazioni** fra razze e classi. E' la stessa forma della zona
+morta gia' misurata in `RAPPORTO-zona-morta-classi.md`, su un campo diverso —
+segno che il difetto sta nello schema di quelle famiglie, non nel campo. Il
+costo di chiuderla e' misurato li', in §5.
+
+**Il rilevatore era rotto e diceva di no, il 04/09/2026.** La prima versione
+cercava le stringhe `"conversion_status"` e `"enum"` nello stesso FILE invece
+che nello stesso nodo, e `classe.schema.json` le contiene entrambe in due
+punti che non c'entrano l'uno con l'altro: la famiglia risultava vincolata
+mentre non vincola niente. Un rilevatore che dichiara chiusa una zona morta
+aperta e' peggio di nessun rilevatore, perche' il numero che stampa viene
+creduto. Ora si guarda il nodo, e il `$ref` locale verso la sede si segue
+fino in fondo — che e' esattamente la forma che la {cita('origine-sede-unica')}
+ha dato al vincolo, e che un rilevatore fermo al primo salto avrebbe chiamato
+scoperta.
 
 ### 5c. Il vocabolario di scheda delle classi
 

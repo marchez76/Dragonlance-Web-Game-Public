@@ -176,6 +176,36 @@ TABELLE = {
     },
 }
 
+# --------------------------------------------------------------------------
+# LA CODA — i telai SRD che servono e che non abbiamo ancora trascritto.
+#
+# NON E' UNA DECISIONE, E' LAVORO NOTO. Un'etichetta 2e senza telaio ha due
+# cause che si assomigliano e non sono la stessa: il telaio non esiste nella
+# 5e (`Tinker`, che e' un'invenzione di Krynn — li' serve una decisione), o
+# esiste nell'SRD e nessuno l'ha ancora battuto a macchina. Le seconde stanno
+# qui, perche' una voce in coda si smaltisce e una domanda aperta va decisa,
+# e confonderle gonfia il conto delle decisioni con del lavoro.
+#
+# Le razze che le dichiarano NON sono elencate qui: si derivano dai dati
+# (decisione 58, `telaio-apre-classe-filtra`, e CLAUDE.md punto 3), e
+# `analizza_allowed_classes.py` le stampa nel rapporto.
+# --------------------------------------------------------------------------
+CODA = {
+    "Bard": "Bardo SRD 5.1. Etichetta `Bard` della tabella Class/Race "
+            "Combinations. Nel roster non c'e' una classe bardo di Krynn: "
+            "il telaio serve prima, la classe dopo.",
+    "Ranger": "Ranger SRD 5.1. Etichetta `Ranger` della stessa tabella. "
+              "Stessa forma del Bardo: manca il telaio, non la decisione.",
+    "Druid": "Druido SRD 5.1. Serve solo se `Druid (heathen)` risultera' una "
+             "classe distinta dal Sacerdote Eretico: finche' la fonte dice "
+             "che l'eretico li comprende entrambi, questa riga e' un'ipotesi "
+             "e non un impegno.",
+}
+
+assert not (set(CODA) & set(TABELLE)), \
+    "un telaio non puo' essere insieme trascritto e in coda"
+
+
 # Bonus di competenza: identico per tutte le classi, e LETTO dalla sua sede
 # unica, `dati/sistema/bonus-competenza.json`. Fino al 02/09/2026 la formula
 # stava scritta qui e una seconda volta in `dati/valida_effetti.py`, in due

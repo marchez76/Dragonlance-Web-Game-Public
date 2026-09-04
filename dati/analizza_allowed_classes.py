@@ -1,37 +1,38 @@
 #!/usr/bin/env python3
 """
-La mappa di `allowed_classes`: 17 etichette del PHB 2e contro 17 nostre classi.
+`allowed_classes` risolto -> dati/RAPPORTO-allowed-classes.md
 
-PERCHE' ESISTE. Le razze dichiarano quali classi possono prendere, e lo
-dichiarano con le **etichette del manuale 2e**. Il nostro roster e' un altro
-elenco, nato da un'altra strada. Fra i due non c'e' un ponte: `Fighter` e'
-concessa da quasi tutte le razze e non ha nulla cui agganciarsi, perche' il
-roster ha Cavaliere, Barbaro e Marinaio ma non un guerriero generico.
+COSA E' CAMBIATO RISPETTO ALLA PRIMA VERSIONE. La prima stesura portava la
+MAPPA e non decideva: 17 etichette del PHB 2e contro 17 nostre classi, tre vie
+di copertura, e il conto di cosa restava scoperto. La decisione 58
+(`telaio-apre-classe-filtra`) l'ha presa: il telaio apre l'insieme, i
+requisiti della classe filtrano dentro. Questo documento non porta piu' la
+domanda, porta l'esito — e il prezzo dell'esito, che va dichiarato e non
+assorbito (decisione 7, `doppio-strato`).
 
-QUESTO DOCUMENTO NON DECIDE. Porta la mappa perche' la decisione si prenda
-guardandola: per ciascuna etichetta, quale nostra classe la copre, per quale
-via, e a che prezzo. Le tre vie sono tenute separate perche' costano cose
-diverse — una coincidenza di nome non chiede niente a nessuno, una copertura
-per chassis chiede di stabilire che l'etichetta nomina un **telaio** e non una
-classe, e un'etichetta senza copertura chiede di scegliere fra togliere
-l'accesso alla razza e aggiungere una classe.
+LA SEDE NON E' QUI. La mappa e la risoluzione stanno in
+`dati/_classi_ammesse.py`. Qui si legge, si applica e si conta: un rapporto
+che ridigitasse la mappa sarebbe la copia che il progetto ha gia' pagato
+undici volte.
 
-IL VERSO OPPOSTO E' PARTE DELLA DOMANDA, non un'aggiunta: una nostra classe
-che nessuna razza dichiara di poter prendere e' una classe **ingiocabile**, e
-finche' nessuno guarda la mappa dal lato delle classi non si vede.
+IL CONTROLLO SI METTE ALLA PROVA. L'euristica della prima versione — nome
+uguale, parole in comune — non e' stata buttata: e' diventata un RISCONTRO. Se
+trova un accostamento che la sede non porta, la sede ha un buco; se la sede
+porta un accostamento che l'euristica non vede, quello e' un accostamento di
+merito e deve avere la sua riga di fonte. Su una mappa scritta a mano un
+riscontro assente e uno che tace si somigliano troppo.
 
-COSA E' DERIVATO E COSA E' EDITORIALE, dichiarato perche' non si confonda:
-- i conteggi, le etichette, il roster, i chassis: **letti dai dati**;
-- la somiglianza fra un'etichetta e un nome: **calcolata** sulle parole;
-- a quale telaio 5e corrisponde un'etichetta 2e: **editoriale**, in
-  `TELAIO_DELL_ETICHETTA`, una riga per etichetta con la sua ragione.
+COSA E' DERIVATO. Tutti i conteggi, gli elenchi, i motivi di esclusione:
+letti dai dati. Cio' che e' editoriale sta in `_classi_ammesse.ETICHETTE`,
+una riga per etichetta con la sua ragione accanto.
+
+RIDUZIONE — CLAUDE.md, punti 1 e 2: legge dati privati (razze/, classi/) e
+non emette testo di fonte. Escono id, nomi di classe, conteggi e motivi.
 
 Uso:  python3 dati/analizza_allowed_classes.py
 """
 
 import collections
-import glob
-import json
 import os
 import re
 import sys
@@ -42,6 +43,7 @@ RADICE = os.path.dirname(BASE)
 sys.path.insert(0, BASE)
 sys.path.insert(0, RADICE)
 
+import _classi_ammesse as CA  # noqa: E402
 import _srd51 as SRD  # noqa: E402
 from decisioni import cita  # noqa: E402
 
@@ -49,119 +51,52 @@ from decisioni import cita  # noqa: E402
 # quindi un accostamento che si regge solo su queste non e' un accostamento.
 VUOTE = {"of", "the", "and", "a", "stars", "wizard", "priest", "knight"}
 
-# A QUALE TELAIO 5e CORRISPONDE UN'ETICHETTA 2e — editoriale, e per questo
-# scritto in chiaro con la ragione accanto invece che dedotto in silenzio.
-# `None` vuol dire che il telaio non esiste fra quelli che abbiamo: e' un
-# fatto diverso da "l'etichetta non ha corrispondenza", e va tenuto distinto.
-TELAIO_DELL_ETICHETTA = {
-    "Barbarian": ("Fighter", "guerriero senza addestramento cavalleresco; l'Ira "
-                             "e' un'invenzione della 3e, assente da Krynn"),
-    "Bard":      (None, "il Bardo SRD esiste nella 5e ma non fra i cinque "
-                        "telai che abbiamo trascritto"),
-    "Cavalier":  ("Fighter", "guerriero a cavallo, telaio marziale puro"),
-    "Druid (heathen)": (None, "il Druido SRD esiste nella 5e ma non fra i "
-                              "cinque telai che abbiamo trascritto"),
-    "Fighter":   ("Fighter", "e' il telaio, non una classe del nostro roster"),
-    "Handler":   ("Rogue", "abilita' del ladro applicate al baratto kender"),
-    "High Sorcerer": ("Wizard", "incantatore arcano a preparazione"),
-    "Holy Orders": ("Cleric", "incantatore divino, e' il nome 2e dell'ordine "
-                              "sacerdotale di Krynn"),
-    "Illusionist": ("Wizard", "specialista arcano: nella 5e e' una "
-                              "sottoclasse del Mago, non una classe"),
-    "Knight of Solamnia": ("Paladin", "l'ombrello dei tre ordini cavallereschi; "
-                                      "due dei tre stanno su telaio Paladin"),
-    "Mage (Renegade)": ("Wizard", "incantatore arcano fuori dagli Ordini"),
-    "Mariner":   ("Fighter", "guerriero di mare"),
-    "Paladin":   ("Paladin", "e' il telaio, non una classe del nostro roster"),
-    "Priest (heathen)": ("Cleric", "incantatore divino fuori dagli Ordini"),
-    "Ranger":    (None, "il Ranger SRD esiste nella 5e ma non fra i cinque "
-                        "telai che abbiamo trascritto"),
-    "Thief":     ("Rogue", "e' il telaio, non una classe del nostro roster"),
-    "Tinker":    (None, "non ha un telaio 5e: e' un'invenzione di Krynn"),
-}
-
 
 def _parole(s):
     return {p for p in re.split(r"[^a-z]+", (s or "").lower()) if p} - VUOTE
 
 
-def razze():
-    """(id, allowed_classes) per ogni razza, in ordine."""
-    out = []
-    for f in sorted(glob.glob(os.path.join(BASE, "razze", "*.json"))):
-        d = json.load(open(f, encoding="utf-8"))
-        out.append((d["id"], (d.get("mechanics_5e") or {}).get("allowed_classes") or {}))
-    return out
+# ------------------------------------------------------------------ lettura
 
-
-def classi():
-    """(id, nome inglese, telaio, gruppo, stato, requires_class).
-
-    `requires_class` non e' un dettaglio: una classe che si prende **da**
-    un'altra non e' raggiunta dalle razze e non per questo e' ingiocabile —
-    ci si arriva passando per la classe che la richiede. Confondere i due
-    casi farebbe contare come irraggiungibili le tre Vesti, che sono avanzamenti
-    del Mago dell'Alta Stregoneria."""
-    out = []
-    for f in sorted(glob.glob(os.path.join(BASE, "classi", "*.json"))):
-        d = json.load(open(f, encoding="utf-8"))
-        m = d.get("mechanics_5e") or {}
-        out.append((d["id"], (d.get("name") or {}).get("en") or d["id"],
-                    (m.get("chassis") or {}).get("srd_class"),
-                    d.get("group"), m.get("conversion_status"),
-                    d.get("requires_class")))
-    return out
+def profilo(c):
+    """(id, nome inglese, gruppo, telaio, stato, si-entra-da) di una classe."""
+    m = c.get("mechanics_5e") or {}
+    return (c["id"], (c.get("name") or {}).get("en") or c["id"],
+            c.get("group"), (m.get("chassis") or {}).get("srd_class"),
+            m.get("conversion_status"),
+            c.get("requires_class") or m.get("prerequisite_class"))
 
 
 def etichette(rz):
     """Ogni etichetta 2e con quante razze la concedono."""
     c = collections.Counter()
-    for _r, ac in rz:
+    for r in rz:
+        ac = (r.get("mechanics_5e") or {}).get("allowed_classes") or {}
         for e in (ac.get("classes") or []):
             c[e] += 1
     return c
 
 
-def copertura(et, cl):
-    """Per ogni etichetta: chi la copre per nome, chi per telaio, e il verso.
+def riscontro_euristica(et, cl):
+    """L'euristica della prima versione, ridotta a controllo della sede.
 
-    Tre vie, tenute separate perche' non costano lo stesso:
-      "nome"   il nome inglese di una nostra classe coincide con l'etichetta;
-      "parole" condivide almeno una parola che distingue (non `of`, `the`...);
-      "telaio" nessuna parola in comune, ma la nostra classe sta sul telaio
-               5e che l'etichetta nomina — vale SOLO se si decide che
-               l'etichetta nomina un telaio e non una classe.
-    Un'etichetta puo' essere coperta per piu' vie insieme: quella che conta e'
-    la piu' economica, ed e' l'ordine in cui sono elencate."""
-    righe = []
+    Ritorna (trovati, mancanti): `trovati` e' cosa l'euristica accosta per
+    nome o per parole, `mancanti` sono gli accostamenti che l'euristica vede e
+    la sede NON porta. Un elemento in `mancanti` e' un buco della sede."""
+    per_nome = {}
+    trovati, mancanti = {}, []
     for e in sorted(et):
-        telaio, ragione = TELAIO_DELL_ETICHETTA.get(e, (None, "non classificata"))
         pe = _parole(e)
-        nome = [c for c in cl if (c[1] or "").lower() == e.lower()]
-        parole = [c for c in cl if c not in nome and _parole(c[1]) & pe]
-        comuni = sorted(set().union(*[_parole(c[1]) & pe for c in parole])
-                        ) if parole else []
-        per_telaio = [c for c in cl
-                      if c not in nome and c not in parole
-                      and telaio and c[2] == telaio]
-        via = ("nome" if nome else "parole" if parole
-               else "telaio" if per_telaio else "scoperta")
-        righe.append((e, et[e], via, nome, parole, per_telaio, telaio,
-                      ragione, comuni))
-    return righe
-
-
-def ingiocabili(cop, cl):
-    """Le nostre classi che nessuna etichetta raggiunge, per nessuna via."""
-    raggiunte = collections.defaultdict(set)
-    for e, _n, _v, nome, parole, tel, _t, _r, _p in cop:
-        for c in nome:
-            raggiunte[c[0]].add((e, "nome"))
-        for c in parole:
-            raggiunte[c[0]].add((e, "parole"))
-        for c in tel:
-            raggiunte[c[0]].add((e, "telaio"))
-    return [(c, sorted(raggiunte[c[0]])) for c in cl], raggiunte
+        nome = [c["id"] for c in cl
+                if ((c.get("name") or {}).get("en") or "").lower() == e.lower()]
+        parole = [c["id"] for c in cl
+                  if c["id"] not in nome and _parole((c.get("name") or {}).get("en")) & pe]
+        trovati[e] = (nome, parole)
+        per_nome[e] = set(nome) | set(parole)
+        dichiarate = set(CA.ETICHETTE[e].classi)
+        for c in sorted(per_nome[e] - dichiarate):
+            mancanti.append((e, c))
+    return trovati, mancanti
 
 
 # ---------------------------------------------------------------- rendering
@@ -190,63 +125,130 @@ def tabella(intestazioni, righe, allin=None):
 
 
 def rapporto():
-    rz = razze()
-    cl = classi()
+    rz, cl = CA.razze(), CA.classi()
+    prof = [profilo(c) for c in cl]
+    per_id = {p[0]: p for p in prof}
     et = etichette(rz)
-    cop = copertura(et, cl)
-    per_classe, raggiunte = ingiocabili(cop, cl)
+    incoerenze = CA.verifica()
+    _euristica, mancanti = riscontro_euristica(et, cl)
 
-    n_raz = len(rz)
-    applicate = [r for r, ac in rz if ac.get("applied")]
-    non_applicate = [(r, ac) for r, ac in rz if not ac.get("applied")]
+    n_raz, n_cl = len(rz), len(cl)
     telai = sorted(SRD.TABELLE)
-    telai_usati = sorted({c[2] for c in cl if c[2]})
+    telai_usati = sorted({p[3] for p in prof if p[3]})
+    senza_telaio = [p for p in prof if not p[3]]
+    avanzamenti = [p for p in prof if p[5]]
+    creabili = [p for p in prof if not p[5]]
 
-    per_via = collections.Counter(v for _e, _n, v, _a, _b, _c, _t, _r, _p in cop)
-    scoperte = [r for r in cop if r[2] == "scoperta"]
-    senza_telaio = [r for r in cop if r[6] is None]
-    mute = [c for c in cl if not raggiunte[c[0]]]
-    # DUE COSE DIVERSE, e contarle insieme darebbe un numero falso: una classe
-    # che si prende DA un'altra non deve essere raggiunta dalle razze — ci si
-    # arriva per la classe che la richiede. Restano ingiocabili solo quelle
-    # che non sono raggiunte NE' dalle razze NE' da un avanzamento.
-    avanzamenti = [c for c in mute if c[5]]
-    irraggiungibili = [c for c in mute if not c[5]]
-    # ...e un avanzamento e' davvero raggiungibile solo se la classe da cui si
-    # entra lo e' a sua volta. La catena si risale finche' regge.
-    ok = {c[0] for c in cl if raggiunte[c[0]]}
+    # ---- i due tempi, razza per razza
+    esito = {}
+    for r in rz:
+        ammesse, escluse = CA.accessibili(r, cl)
+        aperte, dich = CA.aperte(r, cl)
+        esito[r["id"]] = (sorted(aperte), ammesse, escluse, dich)
+
+    zero = [i for i, (_a, am, _e, _d) in esito.items() if not am]
+    conteggi = sorted(((i, len(v[0]), len(v[1])) for i, v in esito.items()),
+                      key=lambda t: (t[2], t[0]))
+    tot_ammesse = sum(c[2] for c in conteggi)
+    tot_aperte = sum(c[1] for c in conteggi)
+
+    # ---- le etichette dichiarate che il filtro svuota
+    # Una razza che dichiara un'etichetta e non ne ricava NESSUNA classe ha
+    # perso quell'accesso per intero, e il conto per razza da solo non lo
+    # mostra: mostra un numero piu' basso, non quale porta si e' chiusa.
+    svuotate = []
+    for r in rz:
+        ac = (r.get("mechanics_5e") or {}).get("allowed_classes") or {}
+        if not ac.get("applied"):
+            continue
+        ammesse = set(esito[r["id"]][1])
+        for e in (ac.get("classes") or []):
+            ap = CA.apre(e, cl)
+            if not (ap & ammesse):
+                svuotate.append((r["id"], e, sorted(ap)))
+    vuote_alla_nascita = sorted({(e, ) for _r, e, ap in svuotate if not ap})
+    svuotate_dal_filtro = [(r, e, ap) for r, e, ap in svuotate if ap]
+
+    # ---- il verso opposto, dopo il filtro
+    raggiunta_da = collections.defaultdict(list)
+    for i, (_a, am, _e, _d) in esito.items():
+        for c in am:
+            raggiunta_da[c].append(i)
+    mute = [p for p in prof if not raggiunta_da[p[0]]]
+    ok = set(raggiunta_da)
     cresce = True
     while cresce:
         cresce = False
-        for c in avanzamenti:
-            if c[0] not in ok and c[5] in ok:
-                ok.add(c[0])
+        for p in mute:
+            if p[0] not in ok and p[5] in ok:
+                ok.add(p[0])
                 cresce = True
-    orfani = [c for c in avanzamenti if c[0] not in ok]
+    orfani = [p for p in mute if p[0] not in ok]
+
+    # ---- il prezzo del telaio: chi la nomina contro chi la raggiunge
+    nomina = collections.defaultdict(set)
+    for r in rz:
+        ac = (r.get("mechanics_5e") or {}).get("allowed_classes") or {}
+        for e in (ac.get("classes") or []):
+            for c in CA.ETICHETTE[e].classi:
+                nomina[c].add(r["id"])
+
+    # ---- i motivi di esclusione, contati
+    motivi = collections.Counter()
+    coppie_escluse = 0
+    for _i, (_a, _am, escluse, _d) in esito.items():
+        for _c, ms in escluse:
+            coppie_escluse += 1
+            for m, _dett in ms:
+                motivi[m] += 1
+
+    # ---- la coda dei telai
+    # Le etichette senza telaio sono tre casi, non uno. Quella che apre lo
+    # stesso una classe per nome NON e' in coda: e' coperta, e il telaio le
+    # servirebbe solo per allargare.
+    in_coda = {e: CA.ETICHETTE[e] for e in sorted(CA.ETICHETTE)
+               if CA.ETICHETTE[e].telaio is None}
+    coperte_senza_telaio = {e: v for e, v in in_coda.items() if CA.apre(e, cl)}
+    aperte_a_niente = {e: v for e, v in in_coda.items() if not CA.apre(e, cl)}
+    coda_nota = {e: v for e, v in aperte_a_niente.items()
+                 if any(t.lower() in e.lower() for t in SRD.CODA)}
+    coda_decisione = {e: v for e, v in aperte_a_niente.items()
+                      if e not in coda_nota}
+    razze_di = {e: sorted(r["id"] for r in rz
+                          if e in (((r.get("mechanics_5e") or {}
+                                     ).get("allowed_classes") or {}
+                                    ).get("classes") or []))
+                for e in in_coda}
+
+    da_confermare = {e: v for e, v in sorted(CA.ETICHETTE.items())
+                     if v.da_confermare}
 
     P = []
-    P.append(f"""# `allowed_classes` — la mappa fra {len(et)} etichette 2e e {len(cl)} nostre classi
 
-*Generato da `dati/analizza_allowed_classes.py`. **Questo documento non
-decide**: porta la mappa perche' la decisione si prenda guardandola.*
+    # ------------------------------------------------------------------ §0
+    P.append(f"""# `allowed_classes` risolto — dal telaio alle classi, razza per razza
+
+*Generato da `dati/analizza_allowed_classes.py`. La mappa e la regola stanno
+in `dati/_classi_ammesse.py`: qui si applicano e si contano.*
 
 ---
 
-## 0. Perche' non manca un campo
+## 0. La regola, e cosa produce
 
-`allowed_classes` c'e', e' compilato su {len(applicate)} razze su {n_raz}, e
-non gli manca niente. Manca il **ponte**: le razze dichiarano le classi con le
-etichette del PHB 2e, il roster e' nato da un'altra strada, e fra i due
-elenchi non esiste una regola di traduzione scritta da nessuna parte. Finche'
-non c'e', la prima domanda della creazione di un personaggio — *quali classi
-puo' prendere questa razza* — non ha una risposta calcolabile.
+La {cita('telaio-apre-classe-filtra')} risolve le
+{len(et)} etichette del PHB 2e in due tempi: **il telaio apre l'insieme, i
+requisiti della classe filtrano dentro**. Due controlli in sequenza, non uno.
 
-Il caso che lo mostra meglio e' `Fighter`: e' l'etichetta piu' concessa
-({et.get('Fighter', 0)} razze su {n_raz}) e nel roster **non esiste una classe
-con quel nome**. Il roster ha Cavaliere, Barbaro, Marinaio — tutte cose che un
-guerriero fa — e nessun guerriero generico. Quindi o `Fighter` non nomina una
-classe ma un **telaio**, e allora la traduzione passa per i chassis, oppure
-{et.get('Fighter', 0)} razze concedono una classe che non esiste.
+Il conto, in tre numeri: le {n_raz} razze aprono **{tot_aperte} coppie
+razza+classe**, il filtro ne toglie **{coppie_escluse}**, ne restano
+**{tot_ammesse}** — una media di
+**{tot_ammesse / n_raz:.1f} classi accessibili per razza** su
+{n_cl} del roster, {len(creabili)} delle quali si prendono alla creazione.
+
+> **Razze con zero classi accessibili: {len(zero)}**{"." if not zero else ": " + ", ".join(f"`{z}`" for z in zero) + " — una razza ingiocabile, da vedere subito."}
+
+{"**La sede e i dati non tornano**: " + "; ".join(incoerenze) if incoerenze else "La sede e i dati tornano: nessuna etichetta dichiarata e non mappata, nessuna classe nominata che non esista."}
+{"**L'euristica trova accostamenti che la sede non porta**: " + ", ".join(f"`{e}` -> `{c}`" for e, c in mancanti) if mancanti else "Il riscontro dell'euristica non trova accostamenti che la sede non porti gia' (§2b)."}
 """)
 
     # ------------------------------------------------------------------ §1
@@ -260,196 +262,343 @@ classe ma un **telaio**, e allora la traduzione passa per i chassis, oppure
          [(f"`{e}`", n) for e, n in et.most_common()],
          allin=["---", "--:"])}
 
-**{len(cl)} classi** nel roster, con il telaio 5e su cui ciascuna sta:
+**{n_cl} classi** nel roster, con il telaio 5e su cui ciascuna sta:
 
 {tabella(["nostra classe", "nome inglese", "gruppo", "telaio 5e", "stato", "si entra da"],
          [(f"`{i}`", n, g or "—", f"`{t}`" if t else "**nessuno**", s,
            f"`{rq}`" if rq else "—")
-          for i, n, t, g, s, rq in cl])}
+          for i, n, g, t, s, rq in prof])}
 
-I telai disponibili sono {len(telai)} — {", ".join(f"`{t}`" for t in telai)} —
-e sono quelli, non tutti quelli della 5e: sono i cinque di cui abbiamo
-trascritto i privilegi. Di questi il roster ne usa {len(telai_usati)}
+I telai trascritti sono {len(telai)} — {", ".join(f"`{t}`" for t in telai)} —
+e il roster ne usa {len(telai_usati)}
 ({", ".join(f"`{t}`" for t in telai_usati)}).
-{len([c for c in cl if not c[2]])} nostre classi non hanno ancora un telaio, e
-{len([c for c in cl if c[5]])} non si prendono alla creazione: si entra da
-un'altra classe, quindi non e' dalle razze che devono essere raggiunte.
+{len(senza_telaio)} nostre classi non hanno un telaio: per loro la
+{cita('telaio-apre-classe-filtra')} non cambia niente, perche' il telaio non
+puo' aprire cio' su cui nessuno sta. Ci si arriva solo se un'etichetta le
+nomina. {len(avanzamenti)} classi non si prendono alla creazione: si entra da
+un'altra classe.
+
+In coda ci sono {len(SRD.CODA)} telai SRD non ancora trascritti
+({", ".join(f"`{t}`" for t in sorted(SRD.CODA))}, in `_srd51.CODA`): sono
+lavoro noto, non decisioni aperte — vedi §8.
 """)
 
     # ------------------------------------------------------------------ §2
-    def elenco(cs):
-        return ", ".join(f"`{c[0]}`" for c in cs) or "—"
-
     P.append(f"""---
 
 ## 2. La mappa, etichetta per etichetta
 
-Tre vie di copertura, in ordine di costo crescente. **Nome**: il nome inglese
-di una nostra classe coincide con l'etichetta, e non c'e' niente da decidere.
-**Parole**: condivide almeno una parola che distingue, e va confermata a
-occhio una volta. **Telaio**: nessuna parola in comune, ma la nostra classe
-sta sul telaio 5e che l'etichetta nomina — e vale **solo** se si decide che
-l'etichetta nomina un telaio e non una classe. **Scoperta**: nessuna delle
-tre.
+Due colonne, e non sono la stessa cosa. **Telaio**: editoriale — a quale
+chassis 5e corrisponde l'etichetta, con la ragione accanto. **Nomina
+direttamente**: di fonte — le nostre classi che l'etichetta nomina per nome o
+che il manuale dichiara essere quella classe. Il telaio **si aggiunge** alla
+seconda invece di sostituirsi: senza questa clausola l'etichetta `Mariner` non
+aprirebbe il Marinaio, che non ha chassis.
 
-{tabella(["etichetta", "razze", "via", "per nome / parole", "parole in comune",
-          "in piu' se e' un telaio", "telaio"],
-         [(f"`{e}`", n, v, elenco(nome + parole),
-           ", ".join(f"`{w}`" for w in pw) or "—", elenco(tel),
-           f"`{t}`" if t else "**nessuno**")
-          for e, n, v, nome, parole, tel, t, _r, pw in cop],
-         allin=["---", "--:", "---", "---", "---", "---", "---"])}
+{tabella(["etichetta", "razze", "telaio", "nomina direttamente", "apre in tutto"],
+         [(f"`{e}`", et[e],
+           f"`{CA.ETICHETTE[e].telaio}`" if CA.ETICHETTE[e].telaio else "**nessuno**",
+           ", ".join(f"`{c}`" for c in CA.ETICHETTE[e].classi) or "—",
+           ", ".join(f"`{c}`" for c in sorted(CA.apre(e, cl))) or "**niente**")
+          for e in sorted(et)],
+         allin=["---", "--:", "---", "---", "---"])}
 
-La colonna **in piu' se e' un telaio** non e' una via alternativa: e' cosa si
-aggiungerebbe *oltre* alla copertura gia' trovata, se si decidesse che
-l'etichetta nomina il telaio. Per `Barbarian` significa che l'accesso
-passerebbe dal solo Barbaro a tre classi.
+### Le ragioni, che sono di due tipi e restano distinte
 
-La colonna **parole in comune** e' li' perche' un accostamento per parole va
-guardato, non contato. `Druid (heathen)` e `Heathen Priest` condividono
-`heathen` e nient'altro: un druido e un sacerdote non sono la stessa cosa
-nemmeno nella 2e, e questo e' l'accostamento piu' debole della tabella.
+{tabella(["etichetta", "ragione del telaio (editoriale)", "ragione delle classi (di fonte)"],
+         [(f"`{e}`", CA.ETICHETTE[e].ragione or "—",
+           CA.ETICHETTE[e].fonte or "—")
+          for e in sorted(et)])}
 
-Conteggio per via: {", ".join(f"**{v}** {n}" for v, n in per_via.most_common())}.
+### 2b. Il riscontro dell'euristica
 
-### Le ragioni del telaio, che sono editoriali e non derivate
+La prima versione di questo rapporto accostava etichette e classi per
+somiglianza: nome uguale, oppure almeno una parola che distingue. Quella
+euristica e' rimasta, come **controllo della sede**: cerca cio' che la mappa
+scritta a mano potrebbe aver saltato.
 
-{tabella(["etichetta", "telaio", "perche'"],
-         [(f"`{e}`", f"`{t}`" if t else "**nessuno**", r)
-          for e, _n, _v, _a, _b, _c, t, r, _p in cop])}
+{"**Accostamenti che l'euristica vede e la sede non porta**: " + ", ".join(f"`{e}` -> `{c}`" for e, c in mancanti) + ". Ognuno e' un buco della sede." if mancanti else "Nessun accostamento sfugge alla sede: tutto cio' che l'euristica vede, la mappa lo porta gia'."}
+
+Il verso opposto non e' un errore ed e' la parte interessante: la sede porta
+accostamenti che l'euristica **non puo'** vedere, perche' non si reggono sui
+nomi. `Knight of Solamnia` non somiglia a nessuno dei tre ordini, e li apre
+tutti e tre. Ogni riga di questo tipo porta la propria fonte nella colonna
+qui sopra: e' il prezzo di non decidere per somiglianza.
 """)
 
     # ------------------------------------------------------------------ §3
     P.append(f"""---
 
-## 3. I tre casi che chiedono una decisione diversa
+## 3. Primo tempo: cosa apre il telaio, e quanto allarga
 
-### 3a. Le etichette che il telaio salva — {per_via.get('telaio', 0)} su {len(et)}
+Il prezzo della lettura per telaio va detto in numeri, non in prosa. Per ogni
+classe: quante razze la **nominano** attraverso un'etichetta che la nomina
+direttamente, e quante la **raggiungono** dopo che il telaio ha aperto e il
+filtro ha stretto.
 
-Sono le etichette senza nessuna parola in comune col roster, ma con un telaio
-che il roster usa. Se si decide che **un'etichetta 2e nomina un telaio**,
-queste si risolvono tutte insieme e senza aggiungere classi:
+{tabella(["nostra classe", "telaio", "la nominano", "l'aprono", "la raggiungono", "scarto"],
+         [(f"`{i}`", f"`{t}`" if t else "—",
+           len(nomina[i]),
+           sum(1 for _r, (ap, _am, _ex, _d) in esito.items() if i in ap),
+           len(raggiunta_da[i]),
+           (f"+{len(raggiunta_da[i]) - len(nomina[i])}"
+            if len(raggiunta_da[i]) > len(nomina[i])
+            else str(len(raggiunta_da[i]) - len(nomina[i]))))
+          for i, _n, _g, t, _s, _rq in prof],
+         allin=["---", "---", "--:", "--:", "--:", "--:"])}
 
-{tabella(["etichetta", "razze", "classi che il telaio le da'"],
-         [(f"`{e}`", n, elenco(tel))
-          for e, n, v, _a, _b, tel, _t, _r, _p in cop if v == "telaio"],
-         allin=["---", "--:", "---"]) if per_via.get("telaio") else "*(nessuna)*"}
+Le righe con lo scarto piu' alto sono la {cita('doppio-strato')} messa alla
+prova: dove la fonte era piu' stretta, il telaio allarga, e allargare in
+silenzio sarebbe stato il difetto. Le righe con scarto negativo dicono
+un'altra cosa ancora: l'etichetta nomina la classe, e il filtro la toglie a
+qualcuno che la nominava.
 
-Il prezzo di questa lettura va detto: `Fighter` concessa a una razza
-diventerebbe l'accesso a **{len([c for c in cl if c[2] == 'Fighter'])} classi
-diverse** insieme, fra cui il Cavaliere della Corona, che nella 2e ha
-restrizioni di razza sue. La traduzione per telaio e' generosa, e dove la
-fonte era piu' stretta lo diventa in silenzio: e' il punto in cui la
-{cita('doppio-strato')} chiede che lo scarto sia dichiarato, non assorbito.
-
-### 3b. Le etichette senza telaio — {len(senza_telaio)} su {len(et)}
-
-{tabella(["etichetta", "razze", "perche' nessun telaio"],
-         [(f"`{e}`", n, r) for e, n, _v, _a, _b, _c, t, r, _p in cop if t is None],
-         allin=["---", "--:", "---"])}
-
-Qui la domanda cambia forma. Per {", ".join(f"`{e}`" for e, _n, _v, _a, _b, _c, t, _r, _p in cop if t is None and _parole(e) & {"bard", "druid", "ranger"})}
-il telaio esiste nella 5e e **non l'abbiamo trascritto**: e' lavoro noto, non
-una decisione di conversione. Per le altre non esiste affatto, e allora
-delle due l'una — la razza perde quell'accesso, o manca una classe.
-
-### 3c. Le etichette scoperte — {len(scoperte)} su {len(et)}
-
-{tabella(["etichetta", "razze concedenti", "telaio dichiarato"],
-         [(f"`{e}`", n, f"`{t}`" if t else "**nessuno**")
-          for e, n, _v, _a, _b, _c, t, _r, _p in scoperte],
-         allin=["---", "--:", "---"]) if scoperte else "*(nessuna: ogni etichetta ha almeno una via)*"}
+{"Le tre razze senza elenco (§7) contano come razze che aprono tutto: il loro contributo alla colonna «l'aprono» non viene da un'etichetta ma dall'assenza di preclusione."}
 """)
 
     # ------------------------------------------------------------------ §4
     P.append(f"""---
 
-## 4. Il verso opposto: le classi che nessuna razza puo' prendere
+## 4. Secondo tempo: cosa toglie il filtro
 
-{tabella(["nostra classe", "telaio", "si entra da", "etichette che la raggiungono",
-          "per quale via"],
-         [(f"`{c[0]}`", f"`{c[2]}`" if c[2] else "—",
-           f"`{c[5]}`" if c[5] else "—",
-           ", ".join(f"`{e}`" for e, _v in vs) or "**NESSUNA**",
-           ", ".join(sorted({v for _e, v in vs})) or "—")
-          for c, vs in per_classe])}
+{tabella(["motivo", "cosa toglie", "coppie razza+classe tolte"],
+         [(f"`{m}`", CA.MOTIVI[m], n) for m, n in motivi.most_common()],
+         allin=["---", "---", "--:"])}
 
-**{len(mute)} classi su {len(cl)} non sono raggiunte da nessuna etichetta**, e
-non sono lo stesso caso. Contarle insieme darebbe un numero falso:
+Il filtro toglie **{coppie_escluse} coppie** su {tot_aperte} aperte. Una
+coppia puo' essere tolta da piu' motivi insieme, ed e' il motivo per cui la
+somma della colonna ({sum(motivi.values())}) supera il numero delle coppie:
+sapere che una classe e' esclusa due volte e' diverso dal saperla esclusa una,
+perche' togliere un vincolo non la riaprirebbe.
 
-{tabella(["classe", "si entra da", "verdetto"],
-         [(f"`{c[0]}` ({c[1]})",
-           f"`{c[5]}`" if c[5] else "— nessuna",
-           ("**avanzamento**, raggiungibile per la classe che lo richiede"
-            if c[5] and c[0] in ok else
-            "**avanzamento orfano**: anche la classe da cui si entra e' muta"
-            if c[5] else "**INGIOCABILE**"))
-          for c in mute])}
-
-- **{len(avanzamenti) - len(orfani)} sono avanzamenti**: non devono essere
-  dichiarati dalle razze, ci si arriva dalla classe che li richiede — le tre
-  Vesti si prendono dal Mago dell'Alta Stregoneria, che le razze raggiungono.
-  Che `allowed_classes` non le nomini e' **giusto**, non un buco.
-- **{len(irraggiungibili)}** {"non e' raggiunta" if len(irraggiungibili) == 1 else "non sono raggiunte"}
-  **da niente**: {", ".join(f"`{c[0]}`" for c in irraggiungibili) or "*(nessuna)*"}.
-- **{len(orfani)} avanzamenti orfani**{":" if orfani else " — nessuno: ogni catena di ingresso comincia da una classe che almeno una razza concede."}
-  {(", ".join(f"`{c[0]}`" for c in orfani) + " — la catena di ingresso c'e', ma comincia da una classe che nessuna razza concede.") if orfani else ""}
-
-Una classe raggiungibile da nessuna delle due vie e' **ingiocabile**, e non e'
-un difetto astratto: e' una scheda scritta, validata e irraggiungibile. Vale
-la pena saperlo **prima** di scrivere lo schema del Personaggio, perche' lo
-schema non puo' dirlo — un campo `classe` valido non sa che nessuno potra'
-sceglierlo. E la distinzione fra le due colonne e' esattamente il tipo di cosa
-che uno schema non vede e un controllo si': la raggiungibilita' non e' una
-proprieta' di un file, e' una proprieta' del **grafo** fra due famiglie.
+**Due filtri non sono applicati, e non per dimenticanza.** L'*allineamento*:
+nessuna razza ne dichiara uno, quindi e' un vincolo sulla scelta del giocatore
+e non sulla coppia razza+classe — filtrarlo qui non toglierebbe niente a
+nessuno. La *classe sociale*: la fonte la introduce come regola opzionale e
+non le ha dato una controparte in `mechanics_5e`, e un filtro su un dato che
+vive solo in `source_2e` applicherebbe una regola che non abbiamo adottato.
+Entrambi sono scritti in `_classi_ammesse.py`, non solo qui.
 """)
 
     # ------------------------------------------------------------------ §5
     P.append(f"""---
 
-## 5. Le {len(non_applicate)} razze senza elenco, e una che non torna
+## 5. La risposta: quante classi per razza, dopo il filtro
 
-{tabella(["razza", "applied", "classes"],
-         [(f"`{r}`", str(ac.get("applied")),
-           "null" if ac.get("classes") is None else str(ac.get("classes")))
-          for r, ac in non_applicate])}
+{tabella(["razza", "etichette dichiarate", "aperte dal telaio", "**accessibili**", "quali"],
+         [(f"`{i}`",
+           len(esito[i][3]) if esito[i][3] is not None else "*(nessun elenco)*",
+           ap, f"**{am}**",
+           ", ".join(f"`{c}`" for c in esito[i][1]))
+          for i, ap, am in conteggi],
+         allin=["---", "--:", "--:", "--:", "---"])}
 
-Per gli umani il vuoto ha una ragione dichiarata e giusta: la
-{cita('vincoli-caratteristica')} preclude le classi assenti dalla tabella del
-manuale, e il manuale gli umani non li elenca affatto — nessuna riga, quindi
-nessuna preclusione. La nota nel dato dice esattamente questo.
+Il numero e' molto piu' basso di quello del telaio — {tot_ammesse} contro
+{tot_aperte} — ed e' il punto: il telaio da solo sarebbe stato una traduzione
+generosa, la sequenza lo riporta dentro i vincoli che la fonte scrive sulle
+classi invece che sulle razze.
 
-**`elfo-dargonesti` porta lo stesso `applied: false` e la stessa nota, e la
-nota non lo riguarda**: non e' una razza che il manuale non elenca, e la
-ragione scritta accanto vale solo per gli umani. E' una nota copiata su un
-caso che non e' quello, ed e' la forma piu' silenziosa della struttura doppia:
-il campo e' compilato, il controllo passa, e la spiegazione e' di un altro. Va
-sciolto guardando la fonte — o l'elfo Dargonesti ha un elenco che non e' stato
-trascritto, o ha una ragione sua per non averlo, e in entrambi i casi la nota
-va riscritta.
+Il minimo e {min(c[2] for c in conteggi)}
+(`{conteggi[0][0]}`), il massimo {max(c[2] for c in conteggi)}
+(`{conteggi[-1][0]}`).
+{"**Nessuna razza resta a zero**: non c'e' nessuna razza ingiocabile." if not zero else "**Razze a zero: " + ", ".join(zero) + "**"}
 
----
+### 5b. Le etichette dichiarate che non aprono niente
 
-## 6. Cosa serve decidere, in ordine
+Il conto per razza da solo non dice **quale porta si e' chiusa**: dice un
+numero piu' basso. Queste sono le coppie razza+etichetta in cui la razza
+dichiara un accesso e non ne ricava nessuna classe. Sono due casi diversi.
 
-1. **Un'etichetta 2e nomina una classe o un telaio?** E' la domanda che
-   scioglie {per_via.get('telaio', 0)} etichette in un colpo e ne lascia
-   {len(senza_telaio)} aperte. Il sospetto che la risposta passi per i chassis
-   e' confermato dai numeri: i chassis sono gia' il ponte fra le classi di
-   Krynn e la 5e, e sono l'unica struttura che copre `Fighter`, `Paladin` e
-   `Thief` senza inventare classi.
-2. **Dove il telaio allarga, lo scarto si dichiara o si stringe?**
-   Vedi §3a: `Fighter` per telaio da' accesso anche al Cavaliere della Corona.
-3. **Le {len(senza_telaio)} etichette senza telaio**: la razza perde
-   l'accesso, o manca una classe? Sono due risposte diverse per
-   sottoinsiemi diversi (§3b).
-4. **Le {len(irraggiungibili) + len(orfani)} classi davvero irraggiungibili**
-   ({", ".join(f"`{c[0]}`" for c in irraggiungibili + orfani) or "nessuna"}):
-   si aggiunge un'etichetta che le raggiunga, o si accetta che siano PNG? Gli
-   altri {len(avanzamenti) - len(orfani)} silenzi sono avanzamenti e vanno
-   bene cosi'.
-5. **`elfo-dargonesti`**: la nota va riscritta comunque, qualunque sia la
-   risposta alle altre quattro.
+**{len([1 for _r, _e, ap in svuotate if not ap])} coppie: l'etichetta non apre niente perche' il telaio e' in
+coda.** Bard e Ranger, gia' contati in §8 come lavoro noto: la razza non ha
+perso l'accesso, l'accesso non e' ancora stato scritto.
+
+**{len(svuotate_dal_filtro)} coppie: l'etichetta apre, e il filtro toglie tutto.** Queste sono
+la parte che va guardata, perche' non si smaltiscono battendo a macchina un
+telaio SRD.
+
+{tabella(["razza", "etichetta", "cosa apre", "perche' non resta niente"],
+         [(f"`{r}`", f"`{e}`", ", ".join(f"`{c}`" for c in ap),
+           "; ".join(sorted({m for c in ap
+                             for m, _d in CA.filtra(next(x for x in rz if x["id"] == r),
+                                                   next(y for y in cl if y["id"] == c))})))
+          for r, e, ap in svuotate_dal_filtro])}
+
+Le due righe `Paladin` dicono la stessa cosa: il telaio Paladin e' trascritto,
+ma le uniche nostre classi che ci stanno sopra sono due ordini solamnici, che
+sono avanzamenti **e** sono riservati a umani e mezzelfi. Un Silvanesti o un
+Irda che nella fonte poteva fare il paladino qui non ha dove andare: non manca
+un telaio, manca una **classe** — un paladino di Krynn che non sia un
+Cavaliere di Solamnia. La riga `Thief` dell'Aghar ha la stessa forma: sul
+telaio Rogue il roster ha il solo Con Artist, che chiede Carisma 12 contro un
+massimale razziale di 9. Nove razze dichiarano `Thief`, otto arrivano al Con
+Artist, l'Aghar resta senza ladro.
+
+### Le esclusioni, razza per razza
+
+Cio' che il telaio ha aperto e il filtro ha tolto. Le classi che il telaio non
+ha mai aperto non compaiono: non sono state escluse, non sono state proposte.
+
+{tabella(["razza", "classe esclusa", "motivi"],
+         [(f"`{i}`", f"`{c}`",
+           "; ".join(f"{m} ({d})" for m, d in ms))
+          for i, (_a, _am, escluse, _d) in sorted(esito.items())
+          for c, ms in escluse])}
+""")
+
+    # ------------------------------------------------------------------ §6
+    P.append(f"""---
+
+## 6. Il verso opposto, ricalcolato
+
+Una nostra classe che nessuna razza puo' prendere e' **ingiocabile**, e finche'
+nessuno guarda la mappa dal lato delle classi non si vede. Con la risoluzione
+in opera il conto cambia, e cambia per una ragione che la mappa da sola non
+poteva vedere: le razze senza elenco (§7) aprono il roster intero, quindi
+raggiungono anche classi che **nessuna etichetta nomina**.
+
+{tabella(["nostra classe", "si entra da", "razze che la raggiungono", "quante"],
+         [(f"`{i}`", f"`{rq}`" if rq else "—",
+           ", ".join(f"`{r}`" for r in raggiunta_da[i]) or "**NESSUNA**",
+           len(raggiunta_da[i]))
+          for i, _n, _g, _t, _s, rq in prof],
+         allin=["---", "---", "---", "--:"])}
+
+{len(mute)} classi su {n_cl} non sono raggiunte da nessuna razza alla
+creazione, e contarle insieme darebbe un numero falso:
+
+{tabella(["classe", "si entra da", "verdetto"],
+         [(f"`{p[0]}` ({p[1]})", f"`{p[5]}`" if p[5] else "— nessuna",
+           ("**avanzamento**, raggiungibile per la classe che lo richiede"
+            if p[5] and p[0] in ok else
+            "**avanzamento orfano**: anche la classe da cui si entra e' muta"
+            if p[5] else "**INGIOCABILE**"))
+          for p in mute]) if mute else "*(nessuna: ogni classe del roster e' raggiungibile)*"}
+
+- **{len([p for p in mute if p[5] and p[0] in ok])} sono avanzamenti**: non
+  devono essere raggiunti dalle razze, ci si arriva dalla classe che li
+  richiede. Le tre Vesti si prendono dal Mago dell'Alta Stregoneria, Spada e
+  Rosa dal Cavaliere della Corona.
+- **{len([p for p in mute if not p[5]])} sono ingiocabili**:
+  {", ".join(f"`{p[0]}`" for p in mute if not p[5]) or "*(nessuna)*"}.
+### Il verdetto che e' cambiato: `commoner`
+
+La prima stesura di questo rapporto dava `commoner` **INGIOCABILE**: nessuna
+etichetta lo nomina, ed era vero. Con la risoluzione in opera lo raggiungono
+{len(raggiunta_da['commoner'])} razze — le tre senza elenco — perche' un
+roster aperto per assenza di preclusione arriva anche dove nessuna etichetta
+arriva. Il difetto non era nei dati, era nella lettura: contare solo le
+etichette non vedeva le razze che non ne hanno.
+
+Il verso opposto e' stato controllato sulla fonte, ed e' la domanda che
+contava: il Popolano e' una classe da personaggio o un profilo di PNG? Il
+manuale lo tratta come classe da personaggio — il capitolo delle classi apre
+la creazione di un popolano dalla scelta del mestiere, con i suoi tiri di
+caratteristica e la sua progressione, e la regola opzionale sulla classe
+sociale lo nomina come *classe da personaggio*. La sezione sui PNG e' un'altra
+e non lo riguarda. Quindi la raggiungibilita' e' **corretta**, non un effetto
+collaterale da correggere.
+
+Resta un fatto della fonte, non un difetto nostro: la tabella Class/Race
+Combinations non concede il Popolano a **nessuna** razza demiumana, mentre
+concede il Tinker allo Gnomo. Un popolano non umano non esiste nel manuale.
+
+- **{len(orfani)} avanzamenti orfani**{"." if not orfani else ": " + ", ".join(f"`{p[0]}`" for p in orfani) + " — la catena di ingresso c'e', ma comincia da una classe che nessuna razza raggiunge."}
+""")
+
+    # ------------------------------------------------------------------ §7
+    senza_elenco = [(r["id"], (r.get("mechanics_5e") or {}
+                               ).get("allowed_classes") or {})
+                    for r in rz
+                    if not ((r.get("mechanics_5e") or {}
+                             ).get("allowed_classes") or {}).get("applied")]
+    P.append(f"""---
+
+## 7. Le {len(senza_elenco)} razze senza elenco, e due significati per un valore
+
+{tabella(["razza", "applied", "classes", "accessibili dopo il filtro"],
+         [(f"`{i}`", str(ac.get("applied")),
+           "null" if ac.get("classes") is None else str(ac.get("classes")),
+           len(esito[i][1]))
+          for i, ac in senza_elenco],
+         allin=["---", "---", "---", "--:"])}
+
+`applied: false` vuol dire **nessun elenco**, e l'assenza di un elenco ha due
+cause che il valore non distingue:
+
+- **Nessuna preclusione** — la tabella Class/Race Combinations elenca solo le
+  razze demiumane e gli umani non vi compaiono affatto: non c'e' nessuna riga
+  che precluda loro qualcosa. Il vincolo non esiste.
+- **La fonte tace** — il Dargonesti non e' nella tabella, che elenca il solo
+  Dimernesti. Non e' un vincolo assente, e' un dato mancante.
+
+Il secondo caso portava la nota del primo: campo compilato, controllo che
+passa, e la spiegazione di un altro. Ora ogni razza senza elenco ha la
+**propria** nota, e `build_razze.nota_classi_ammesse` **rifiuta di generare**
+una razza a elenco vuoto che non ne abbia una: la garanzia e' strutturale, non
+affidata a chi rilegge.
+
+La conseguenza sui numeri resta e va guardata: finche' il silenzio della fonte
+viene letto come assenza di vincolo, il Dargonesti prende l'esito **piu'
+largo possibile** — {len(esito['elfo-dargonesti'][1])} classi — prodotto da un
+buco del manuale e non da una scelta. La questione aperta e' scritta nel dato:
+ereditare le {len(esito['elfo-dimernesti'][3] or [])} voci del Dimernesti, o
+lasciare il silenzio.
+""")
+
+    # ------------------------------------------------------------------ §8
+    P.append(f"""---
+
+## 8. Cosa resta aperto, e cosa e' solo lavoro
+
+Le due cose si somigliano e non sono la stessa: una voce in coda si smaltisce,
+una domanda aperta va decisa. Confonderle gonfia il conto delle decisioni con
+del lavoro gia' noto. Le {len(in_coda)} etichette senza telaio si dividono in
+tre casi, e solo uno e' una domanda.
+
+### Lavoro noto: {len(coda_nota)} etichette che non aprono niente e hanno un telaio SRD in coda
+
+{tabella(["etichetta", "telaio SRD in coda", "razze che la dichiarano", "quante"],
+         [(f"`{e}`", ", ".join(f"`{t}`" for t in sorted(SRD.CODA)
+                               if t.lower() in e.lower()),
+           ", ".join(f"`{r}`" for r in razze_di[e]), len(razze_di[e]))
+          for e in sorted(coda_nota)],
+         allin=["---", "---", "---", "--:"]) if coda_nota else "*(nessuna)*"}
+
+Il telaio esiste nell'SRD 5.1 e nessuno l'ha ancora trascritto: e' battitura,
+non conversione. La coda sta in `_srd51.CODA`, accanto ai telai trascritti,
+perche' e' li' che si guarda quando se ne aggiunge uno. Nota che trascrivere
+il telaio non basta da solo: serve anche una classe di Krynn che ci stia
+sopra, come per `Paladin` in §5b.
+
+### Coperte lo stesso: {len(coperte_senza_telaio)} etichette senza telaio che aprono una classe per nome
+
+{tabella(["etichetta", "apre", "razze", "perche' nessun telaio"],
+         [(f"`{e}`", ", ".join(f"`{c}`" for c in sorted(CA.apre(e, cl))),
+           ", ".join(f"`{r}`" for r in razze_di[e]), v.ragione)
+          for e, v in sorted(coperte_senza_telaio.items())])
+ if coperte_senza_telaio else "*(nessuna)*"}
+
+Non sono in coda e non sono una domanda: la classe c'e' e la razza la
+raggiunge. Cio' che manca e' il telaio **sotto la classe**, che e' un'altra
+questione — riguarda i privilegi di quella classe, non l'accesso a essa.
+
+### Decisioni aperte: {len(coda_decisione)} etichette che non aprono niente e non hanno un telaio in coda
+
+{tabella(["etichetta", "razze che la dichiarano", "perche'"],
+         [(f"`{e}`", ", ".join(f"`{r}`" for r in razze_di[e]), v.ragione)
+          for e, v in sorted(coda_decisione.items())])
+ if coda_decisione else "*(nessuna: ogni etichetta scoperta ha il suo telaio in coda)*"}
+
+### Accostamenti da confermare: {len(da_confermare)}
+
+{tabella(["etichetta", "classe aperta", "su cosa si regge"],
+         [(f"`{e}`", ", ".join(f"`{c}`" for c in v.da_confermare), v.fonte)
+          for e, v in da_confermare.items()]) if da_confermare else "*(nessuno)*"}
+
+Sono righe della sede marcate `da_confermare`: aprono una classe e aspettano
+una lettura di merito. Restano visibili finche' qualcuno non le guarda — che
+e' il contrario di un accostamento sciolto dentro un conteggio.
 """)
 
     return riflow("\n".join(P))
@@ -461,6 +610,8 @@ def main():
     with open(p, "w", encoding="utf-8") as f:
         f.write(testo)
     print(f"scritto {p} ({len(testo)} caratteri)")
+    for x in CA.verifica():
+        print("PROBLEMA nella sede:", x)
     return 0
 
 

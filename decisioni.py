@@ -999,6 +999,45 @@ DECISIONI = [
         'che manca — 17 etichette del PHB 2e contro 17 nostre classi — e '
         'nessun giro d\'arena poteva farla emergere, perche\' l\'arena '
         'riceve un personaggio a cui la classe e\' gia\' stata assegnata.'),
+    Decisione(
+        58, 'telaio-apre-classe-filtra',
+        "`allowed_classes` si risolve per telaio, con il filtro in sequenza",
+        "LA REGOLA. Un'etichetta del PHB 2e in `allowed_classes` non nomina "
+        "una classe del nostro roster: nomina un **telaio**. Il telaio "
+        "**apre** l'insieme — tutte le nostre classi che stanno su quel "
+        "chassis 5e — e poi **i requisiti della classe filtrano dentro**. "
+        "Due controlli in sequenza, non uno. Una razza che dichiara "
+        "`Fighter` accede al gruppo delle classi su chassis Fighter; poi "
+        "ogni classe del gruppo applica i propri vincoli. Il Cavaliere della "
+        "Corona e' riservato a umani e mezzelfi: un nano che ha `Fighter` "
+        "non ci arriva comunque — non perche' il telaio glielo neghi, ma "
+        "perche' la classe lo filtra. E' la stessa forma gia' in uso nella "
+        'decisione 24 (`sfere-sacerdotali`)' " (la sfera concede, il dominio filtra) e nella "
+        'decisione 35 (`repertori-sono-filtri`)' " (il filtro delimita, la scelta avviene dopo). "
+        "PERCHE' I CHASSIS. Sono gia' il ponte fra le classi di Krynn e la "
+        "5e, e sono l'unica struttura che copre `Fighter`, `Paladin` e "
+        "`Thief` senza inventare classi: tre etichette che il roster non ha "
+        "come nomi e che dodici, due e nove razze dichiarano. "
+        "CIO' CHE IL TELAIO NON APRE, dichiarato perche' non si confonda "
+        "con una dimenticanza. Il telaio non e' l'unica via: un'etichetta "
+        "che nomina una nostra classe **per nome** (`Mariner`, `Tinker`, "
+        "`Handler`), o che la fonte dichiara essere quella classe, la apre "
+        "lo stesso, e il telaio **si aggiunge** invece di sostituirsi. "
+        "Ogni accostamento di questo secondo tipo porta in sede la propria "
+        "riga di fonte, e quelli ancora da confermare sono marcati tali: "
+        "`Druid (heathen)` e `Priest (heathen)` sulla stessa classe sono "
+        "in attesa, non risolti qui. Senza questa "
+        "clausola l'etichetta `Mariner` non aprirebbe il Marinaio, che non "
+        "ha chassis. `Knight of Solamnia` e' un'etichetta ombrello e apre "
+        "tutti e tre gli ordini; il filtro dell'ingresso lascia poi il solo "
+        "Cavaliere della Corona, che e' esattamente la sequenza obbligata "
+        "della " 'decisione 5 (`cavalieri-solamnia`)' ". "
+        "LA SEDE E IL PREZZO. La mappa e la risoluzione stanno in "
+        "`dati/_classi_ammesse.py` — una sede sola, importata dal "
+        "diagnostico e da chiunque debba rispondere alla prima domanda "
+        "della creazione. Il prezzo e' reale e si paga in chiaro: dove la "
+        "fonte era piu' stretta il telaio allarga, e lo scarto si dichiara "
+        "invece di assorbirlo (" 'decisione 7 (`doppio-strato`)' ")."),
 ]
 
 PER_ID = {d.id: d for d in DECISIONI}
