@@ -27,26 +27,35 @@ I CINQUE CONTROLLI
     4. I DUE ESTREMI DELLA COMPETENZA. Le categorie nominate dalle competenze
        di classe esistono davvero come `categoria` in dati/oggetti/. Una
        competenza in una categoria inesistente e' una competenza in niente.
-    5. LE CD DICHIARATE DEVONO ESSERE SPIEGATE. Ogni CD in `effetto` porta
-       `cd_origine` — `fonte`, `derivata` o `stimata` — e il controllo si
-       comporta diversamente per ognuna: una `derivata` deve tornare col
-       conto 8 + competenza + una caratteristica del portatore, una `fonte`
-       e una `stimata` no ma devono dire in `cd_derivazione` da dove
-       vengono. E' la distinzione fra una CD letta e una CD scelta: il
-       metodo di conversione la impone gia' per i mostri (osservato contro
-       ipotizzato) e qui diventa un campo.
+    5. LE CD DICHIARATE DEVONO ESSERE SPIEGATE. Ogni CD in `effetto` e' un
+       `valore_dichiarato` — il numero in `value`, l'origine in
+       `conversion_status` accanto — e il controllo si comporta
+       diversamente per ognuna: una `derived` deve tornare col conto
+       8 + competenza + una caratteristica del portatore, una `direct` e
+       una `adapted` no ma devono dire in `note` da dove vengono. E' la
+       distinzione fra una CD letta e una CD scelta: il metodo di
+       conversione la impone gia' per i mostri (osservato contro
+       ipotizzato) e qui e' un campo.
 
-       DUE INFORMAZIONI, DUE CAMPI. Fino al 02/09/2026 ce n'era uno solo,
-       `cd_derivata_da`, e portava una contraddizione: la sua descrizione
-       diceva «come la CD e' stata ottenuta, QUANDO NON E' UN DATO DI
-       FONTE», mentre questo controllo pretendeva di riempirlo proprio per
-       una CD di fonte non derivabile. La CD 11 del Death Throes del Baaz e'
-       quel caso: stampata nel blocco ufficiale SotDQ e non derivabile dal
-       conto, quindi o si violava la descrizione o si violava il controllo.
-       Un campo con due significati e' inaffidabile da entrambi i lati.
-       `cd_origine` dice DA COSA viene la CD; la derivabilita' non e' un
-       campo perche' e' calcolabile, e questo controllo la calcola invece di
-       fidarsi di quello che il dato ne afferma.
+       L'ORIGINE NON PUO' PIU' MANCARE, E NON PERCHE' IL CONTROLLO LA
+       PRETENDE. Fino al 03/09/2026 la CD era un intero e l'origine un
+       campo-fratello (`cd_origine`), quindi si poteva scrivere la prima
+       senza la seconda e toccava a questo controllo accorgersene. Dalla
+       decisione 55 (`origine-sede-unica`) le due stanno nello stesso
+       oggetto e lo schema pretende `conversion_status`: una CD senza
+       origine e' INESPRIMIBILE, e qui resta solo la sonda che segnala la
+       forma vecchia rimasta indietro. Un divieto per costruzione batte un
+       divieto per controllo, ed e' la stessa preferenza della
+       decisione 39 (`bersaglio-legale-filtro`).
+
+       LO STESSO ENUM DI `armor_class`, E NON PER SIMMETRIA. `fonte`,
+       `derivata` e `stimata` erano il quarto nome di un campo che il
+       progetto aveva gia' inventato tre volte: `armor_class`, `hit_points`
+       e `challenge_rating` dichiarano l'origine come `conversion_status`
+       piu' `source` dal primo giorno del bestiario. La traduzione e'
+       esatta — `fonte` -> `direct`, `stimata` -> `adapted`,
+       `derivata` -> `derived` — e il terzo valore e' l'unico che l'enum
+       condiviso non aveva: era tutta la differenza fra i due vocabolari.
 
        Il controllo vale sui blocchi che hanno gia' una struttura, non su
        tutto il bestiario in prosa. La misura, presa il 02/09/2026 sui 52
@@ -55,11 +64,12 @@ I CINQUE CONTROLLI
        Ragno Botola e lo Skyfisher. Non sono errori: sono CD dichiarate
        dalla fonte o stimate, e le rispettive note lo dicono. Ma lo dicono
        in prosa, dove nessun controllo le legge — ed e' esattamente il buco
-       che `cd_origine` chiude man mano che quei blocchi si strutturano.
+       che l'origine dichiarata chiude man mano che quei blocchi si
+       strutturano.
        Renderlo bloccante adesso su blocchi ancora in prosa segnalerebbe
        sei casi corretti, e un controllo che grida al lupo viene spento.
 
-       LA COINCIDENZA E' UN'INFORMAZIONE, NON UN ERRORE. Una CD di fonte
+       LA COINCIDENZA E' UN'INFORMAZIONE, NON UN ERRORE. Una CD `direct`
        puo' tornare col conto per caso: 29 delle 35 CD in prosa lo fanno, e
        fra quelle ce ne sono certamente di stampate. Il controllo la
        registra e non la segnala — una CD `fonte` che coincide non e'
@@ -137,6 +147,18 @@ def blocchi_con_effetto():
 
 # ------------------------------------------------- 1. forma  2. prosa/struttura
 
+def valore_di(campo):
+    """Il numero dentro un `valore_dichiarato`, o None.
+
+    Decisione 55 (`origine-sede-unica`): un valore che deve dichiarare la
+    propria origine non e' piu' un intero nudo con dei campi-prefisso
+    accanto — e' un oggetto che porta il numero e l'origine insieme. Chi
+    legge il numero passa di qui e non conosce la forma."""
+    if isinstance(campo, dict):
+        return campo.get("value")
+    return campo
+
+
 def numeri_struttura(eff):
     """I numeri che la struttura dichiara: dadi e CD."""
     dadi, cd = set(), set()
@@ -149,8 +171,8 @@ def numeri_struttura(eff):
     att = eff.get("attacco") or {}
     danni(att.get("danno"))
     ts = eff.get("tiro_salvezza") or {}
-    if ts.get("cd") is not None:
-        cd.add(int(ts["cd"]))
+    if valore_di(ts.get("cd")) is not None:
+        cd.add(int(valore_di(ts["cd"])))
     for esito in ("fallimento", "successo", "fallimento_ripetuto"):
         danni((ts.get(esito) or {}).get("danno"))
     gua = eff.get("guarigione") or {}
@@ -348,27 +370,37 @@ def controlla_cd(eff, portatore, err):
     Torna l'origine dichiarata e se la CD combacia col conto, per la
     misura finale: la coincidenza fra una CD di fonte e il conto e' un
     dato sul valore del conto, non un errore."""
-    ts = eff.get("tiro_salvezza") or {}
-    cd = ts.get("cd")
+    blocco = (eff.get("tiro_salvezza") or {}).get("cd")
+    cd = valore_di(blocco)
     if cd is None:
         return None
-    origine = ts.get("cd_origine")
-    if not origine:
-        err(f"CD {cd} senza `cd_origine`: da dove viene una CD non si "
-            f"deduce, si dichiara")
+    # L'ORIGINE NON PUO' MANCARE PER COSTRUZIONE. Lo schema la pretende
+    # dentro `valore_dichiarato`, quindi questo controllo non deve piu'
+    # cercarla: se il blocco e' un intero nudo, e' la forma vecchia rimasta
+    # indietro, ed e' quello che va segnalato.
+    if not isinstance(blocco, dict):
+        err(f"CD {cd} scritta come intero nudo: dalla "
+            f"decisione 55 (`origine-sede-unica`) la CD e la sua origine "
+            f"stanno nello stesso oggetto (`value`, `conversion_status`, "
+            f"`source`)")
         return None
+    origine = blocco.get("conversion_status")
 
-    if origine in ("fonte", "stimata") and not ts.get("cd_derivazione"):
-        err(f"CD {cd} dichiarata `{origine}` e `cd_derivazione` vuoto: una "
-            f"CD che non si deriva dal conto e non dice da dove viene e' "
-            f"una stima nascosta")
+    if origine in ("direct", "adapted") and not blocco.get("note"):
+        err(f"CD {cd} dichiarata `{origine}` e `note` vuota: una CD che non "
+            f"si deriva dal conto e non dice da dove viene e' una stima "
+            f"nascosta")
+    if origine == "derived" and blocco.get("source") != "regola di sistema":
+        err(f"CD {cd} dichiarata `derived` con provenienza "
+            f"'{blocco.get('source')}': un valore che segue da una regola "
+            f"non viene da un manuale")
 
     attese = cd_attese(portatore)
     if attese is None:
         return (origine, None)
     combacia = cd in attese
-    if origine == "derivata" and not combacia:
-        err(f"CD {cd} dichiarata `derivata` ma non e' 8 + competenza + una "
+    if origine == "derived" and not combacia:
+        err(f"CD {cd} dichiarata `derived` ma non e' 8 + competenza + una "
             f"caratteristica del portatore (attese: {sorted(attese)}): "
             f"o l'origine e' un'altra, o il numero e' sbagliato")
     return (origine, combacia)
@@ -400,27 +432,33 @@ def controlla_bonus(eff, portatore, err):
     Gemello del controllo 5 — decisione 54 (`origine-e-un-dato`) li rende
     due applicazioni della stessa regola e non due controlli imparentati.
     Torna (origine, combacia) per la misura finale."""
-    at = eff.get("attacco") or {}
-    bonus = at.get("bonus_colpire")
+    blocco = (eff.get("attacco") or {}).get("bonus_colpire")
+    bonus = valore_di(blocco)
     if bonus is None:
         return None
-    origine = at.get("bonus_origine")
-    if not origine:
-        err(f"bonus di attacco +{bonus} senza `bonus_origine`: da dove "
-            f"viene un bonus non si deduce, si dichiara")
+    if not isinstance(blocco, dict):
+        err(f"bonus di attacco +{bonus} scritto come intero nudo: dalla "
+            f"decisione 55 (`origine-sede-unica`) il bonus e la sua origine "
+            f"stanno nello stesso oggetto (`value`, `conversion_status`, "
+            f"`source`)")
         return None
+    origine = blocco.get("conversion_status")
 
-    if origine in ("fonte", "stimata") and not at.get("bonus_derivazione"):
-        err(f"bonus +{bonus} dichiarato `{origine}` e `bonus_derivazione` "
-            f"vuoto: un bonus che non si deriva dal conto e non dice da "
-            f"dove viene e' una stima nascosta")
+    if origine in ("direct", "adapted") and not blocco.get("note"):
+        err(f"bonus +{bonus} dichiarato `{origine}` e `note` vuota: un "
+            f"bonus che non si deriva dal conto e non dice da dove viene "
+            f"e' una stima nascosta")
+    if origine == "derived" and blocco.get("source") != "regola di sistema":
+        err(f"bonus +{bonus} dichiarato `derived` con provenienza "
+            f"'{blocco.get('source')}': un valore che segue da una regola "
+            f"non viene da un manuale")
 
     attesi = bonus_attesi(portatore)
     if attesi is None:
         return (origine, None)
     combacia = bonus in attesi
-    if origine == "derivata" and not combacia:
-        err(f"bonus +{bonus} dichiarato `derivata` ma non e' competenza + "
+    if origine == "derived" and not combacia:
+        err(f"bonus +{bonus} dichiarato `derived` ma non e' competenza + "
             f"una caratteristica del portatore (attesi: {sorted(attesi)}): "
             f"o l'origine e' un'altra, o il numero e' sbagliato")
     return (origine, combacia)
@@ -438,6 +476,18 @@ def main(argv):
     # Il vocabolario condiviso e' applicato solo se il `$ref` fra file
     # risolve davvero: provato, non assunto.
     for m in S.verifica_riferimenti():
+        err_globale(m)
+
+
+    # LA SEDE DELL'ORIGINE, e la prova che il rilevatore ci vede.
+    # Decisione 55 (`origine-sede-unica`): `conversion_status` e `source`
+    # stanno in un file solo e gli altri schemi li riferiscono. Un enum
+    # ricopiato valida benissimo finche' le due copie coincidono, quindi il
+    # difetto non si vede dai dati: si vede solo guardando gli schemi.
+    _visti, _quanti, _prova = S.prova_di_se_stesso()
+    for m in _prova:
+        err_globale(m)
+    for m in S.verifica_origine():
         err_globale(m)
 
     cond = controlla_condizioni(err_globale)
@@ -465,20 +515,20 @@ def main(argv):
             err(f"[schema] {'.'.join(map(str, e.path)) or '(radice)'}: {e.message[:160]}")
 
         confronta_prosa(b.get("mechanics_5e"), eff, err)
-        if (eff.get("tiro_salvezza") or {}).get("cd") is not None:
+        if valore_di((eff.get("tiro_salvezza") or {}).get("cd")) is not None:
             con_cd += 1
             esito = controlla_cd(eff, portatore, err)
             if esito:
                 origini[esito[0]] += 1
-                if esito[0] == "fonte" and esito[1]:
+                if esito[0] == "direct" and esito[1]:
                     coincidenze += 1
 
-        if (eff.get("attacco") or {}).get("bonus_colpire") is not None:
+        if valore_di((eff.get("attacco") or {}).get("bonus_colpire")) is not None:
             con_bonus += 1
             esito = controlla_bonus(eff, portatore, err)
             if esito:
                 origini_bonus[esito[0]] += 1
-                if esito[0] == "fonte" and esito[1]:
+                if esito[0] == "direct" and esito[1]:
                     coincidenze_bonus += 1
 
         for cid in sorted(condizioni_citate(eff)):
@@ -504,12 +554,12 @@ def main(argv):
           f"errore: e' la distanza fra nominare e convertire, e si misura.")
     per_origine = ", ".join(f"{n} {o}" for o, n in sorted(origini.items())) or "nessuna"
     print(f"{con_cd} CD dichiarate nella struttura ({per_origine}); "
-          f"{coincidenze} di fonte combaciano comunque col conto "
+          f"{coincidenze} `direct` combaciano comunque col conto "
           f"8 + competenza + caratteristica.")
     per_origine_b = ", ".join(f"{n} {o}" for o, n in
                               sorted(origini_bonus.items())) or "nessuno"
     print(f"{con_bonus} bonus di attacco dichiarati nella struttura "
-          f"({per_origine_b}); {coincidenze_bonus} di fonte combaciano "
+          f"({per_origine_b}); {coincidenze_bonus} `direct` combaciano "
           f"comunque col conto competenza + caratteristica.")
 
     if errori:

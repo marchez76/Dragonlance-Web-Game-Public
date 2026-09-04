@@ -83,6 +83,7 @@ PERCORSI=(
     dati/RAPPORTO-sfere-completo.md
     dati/RAPPORTO-classi-completo.md
     dati/RAPPORTO-arena-completo.md
+    dati/RAPPORTO-origine-completo.md
     inventario_manuali.tsv
     riscontro
 )

@@ -88,7 +88,7 @@ Riga per riga:
 | soglie del 20 e dell'1 naturale | `dati/_sistema.py` → `CRITICO_NATURALE` | TABELLA | `dati/sistema/soglie-d20.json` | chiusa |
 | quali tratti scattano alla morte del portatore | `motore/combattimento.py` → `TRATTI_ALLA_MORTE` | VARIABILE | DATO — un campo `innesco` sul blocco | aperta — lacuna `innesco-non-dichiarato` |
 | quando usare una risorsa (sotto meta' dei punti ferita) | `motore/combattimento.py` → `def agisci` | VARIABILE | DATO — IA di combattimento, la casella di decisione 27 (`sette-campi-2e`) | aperta — lacuna `quando-usare-una-risorsa` |
-| da dove viene il bonus di attacco di un mostro | `motore/combattimento.py` → `def attacco_di` | VARIABILE | DATO — `bonus_origine` accanto a `bonus_colpire`, decisione 54 (`origine-e-un-dato`) | chiusa |
+| da dove viene il bonus di attacco di un mostro | `motore/combattimento.py` → `def attacco_di` | VARIABILE | DATO — l'origine DENTRO `bonus_colpire`, decisione 55 (`origine-sede-unica`) | chiusa |
 
 Le 5 righe aperte non sono un difetto del criterio: sono il criterio che le ha
 **nominate**. 2 di esse dicono la stessa cosa — un dato che dovrebbe esistere
@@ -126,7 +126,7 @@ controllo del progetto che guarda il codice invece dei dati.
 
 ### Cosa il controllo VEDE
 
-Legge **58 sorgenti Python** (la sede stessa esclusa: li' le tabelle devono
+Legge **60 sorgenti Python** (la sede stessa esclusa: li' le tabelle devono
 esserci) e li guarda in due modi.
 
 - **Per forma.** L'espressione, riconosciuta sul codice **tokenizzato**:
@@ -247,10 +247,13 @@ richiusa nello stesso giro.
   (`cd-origine-dichiarata`) aveva chiuso per la CD. Al secondo caso in due
   giri la regola e' stata scritta una volta per tutte invece di essere
   riapplicata: decisione 54 (`origine-e-un-dato`), di cui `cd_origine` e
-  `bonus_origine` sono le due applicazioni. La lacuna del motore non e'
-  sparita: e' diventata **condizionata al dato**, e scatta esattamente sugli
-  attacchi che non dichiarano l'origine. Oggi nessuno dei due strutturati,
-  domani il terzo se lo si struttura senza compilarla.
+  `bonus_origine` sono state le due applicazioni. Un giro dopo si e' visto che
+  quel campo esisteva gia' tre volte con un altro nome, e decisione 55
+  (`origine-sede-unica`) li ha fusi: il valore e la sua origine stanno adesso
+  nello **stesso oggetto**, con l'enum e la sede di `armor_class`. La lacuna
+  del motore non e' sparita: e' **condizionata al dato** e scatta sugli
+  attacchi che portano ancora un intero nudo. Oggi nessuno dei due
+  strutturati, domani il terzo se lo si struttura senza compilarla.
 
 L'arena misura quanto pesa: dei 94 bonus d'attacco che il bestiario scrive in
 prosa, 85 tornano col conto e 9 no. Il numero che conta non e' 85: e' che **85
@@ -259,7 +262,7 @@ coincidenze non sono 85 conferme**. La CD 11 del Baaz e' stampata dalla fonte
 l'avrebbe mai segnalata — non perche' fosse corretta, ma perche' letto e
 derivato sono indistinguibili quando coincidono. Contare le coincidenze invece
 di fidarsene e' la differenza fra verificare e credere, ed e' la ragione per
-cui il rimedio e' un `bonus_origine` e non un controllo piu' furbo: nessun
+cui il rimedio e' un'origine dichiarata e non un controllo piu' furbo: nessun
 controllo puo' essere abbastanza furbo da distinguere due numeri uguali.
 
 E la domanda giusta non era se 85 su 94 bastasse: era **quanti altri campi

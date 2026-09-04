@@ -130,8 +130,8 @@ REGOLE_NEL_CODICE = [
      "aperta — lacuna `quando-usare-una-risorsa`"),
     ("da dove viene il bonus di attacco di un mostro",
      "motore/combattimento.py", "def attacco_di", "VARIABILE",
-     "DATO — `bonus_origine` accanto a `bonus_colpire`, "
-     "decisione 54 (`origine-e-un-dato`)",
+     "DATO — l'origine DENTRO `bonus_colpire`, "
+     "decisione 55 (`origine-sede-unica`)",
      "chiusa"),
 ]
 
@@ -595,10 +595,14 @@ aperta e richiusa nello stesso giro.
   {cita('cd-origine-dichiarata')} aveva chiuso per la CD. Al secondo caso in
   due giri la regola e' stata scritta una volta per tutte invece di essere
   riapplicata: {cita('origine-e-un-dato')}, di cui `cd_origine` e
-  `bonus_origine` sono le due applicazioni. La lacuna del motore non e'
-  sparita: e' diventata **condizionata al dato**, e scatta esattamente sugli
-  attacchi che non dichiarano l'origine. Oggi nessuno dei due strutturati,
-  domani il terzo se lo si struttura senza compilarla.
+  `bonus_origine` sono state le due applicazioni. Un giro dopo si e' visto
+  che quel campo esisteva gia' tre volte con un altro nome, e
+  {cita('origine-sede-unica')} li ha fusi: il valore e la sua origine
+  stanno adesso nello **stesso oggetto**, con l'enum e la sede di
+  `armor_class`. La lacuna del motore non e' sparita: e' **condizionata al
+  dato** e scatta sugli attacchi che portano ancora un intero nudo. Oggi
+  nessuno dei due strutturati, domani il terzo se lo si struttura senza
+  compilarla.
 
 L'arena misura quanto pesa: dei {coinc[0]} bonus d'attacco che il bestiario
 scrive in prosa, {coinc[1]} tornano col conto e {coinc[2]} no. Il numero che
@@ -608,8 +612,8 @@ col conto, quindi un controllo che confronta letto e derivato non l'avrebbe
 mai segnalata — non perche' fosse corretta, ma perche' letto e derivato sono
 indistinguibili quando coincidono. Contare le coincidenze invece di fidarsene
 e' la differenza fra verificare e credere, ed e' la ragione per cui il rimedio
-e' un `bonus_origine` e non un controllo piu' furbo: nessun controllo puo'
-essere abbastanza furbo da distinguere due numeri uguali.
+e' un'origine dichiarata e non un controllo piu' furbo: nessun controllo
+puo' essere abbastanza furbo da distinguere due numeri uguali.
 
 E la domanda giusta non era se {coinc[0] - coinc[2]} su {coinc[0]} bastasse:
 era **quanti altri campi hanno questa forma**. Sono quattro ancora scoperti —

@@ -14,25 +14,12 @@
   "additionalProperties": false,
   "$defs": {
     "conversion_status": {
-      "enum": [
-        "direct",
-        "adapted",
-        "pending",
-        "source_only"
-      ],
-      "description": "Stessi quattro valori degli altri schemi. direct: il 5e ha gia' un equivalente e si copia quello (es. una spada lunga mondana e' gia' nell'SRD). adapted: convertito da noi con una scelta di forma. pending: da convertire, la meccanica 5e non e' ancora decisa. source_only: registrato dalla fonte ma senza effetto in 5e, per scelta motivata."
+      "$comment": "SEDE UNICA: vocabolari.schema.json. Qui NON si ridigita l'enum — ricopiarlo in tre schemi e' esattamente la struttura doppia che la decisione 55 (`origine-sede-unica`) chiude. La voce resta per non riscrivere i `#/$defs/conversion_status` interni.",
+      "$ref": "vocabolari.schema.json#/$defs/conversion_status"
     },
     "provenienza": {
-      "enum": [
-        "PHB 2e",
-        "DMG 2e",
-        "MC - Dragonlance Appendix",
-        "Tales of the Lance",
-        "SotDQ (ufficiale 5e)",
-        "SRD 5.1",
-        "conversione editoriale nostra"
-      ],
-      "description": "Gli stessi valori usati altrove, piu' PHB 2e e DMG 2e: le tabelle di armi/armature mondane stanno nel Player's Handbook, gli oggetti magici tipicamente nel Dungeon Master's Guide. Nessuna delle due fonti e' stata ancora estratta per l'equipaggiamento: quando lo sara', va marcata qui, non genericamente come 'PHB 2e' se il dato viene davvero dalla DMG."
+      "$comment": "SEDE UNICA: vocabolari.schema.json. L'elenco la' e' l'UNIONE delle tre copie che stavano qui, in oggetto.schema.json e in modello.schema.json, e la fusione allarga il vincolo di questo schema: e' il prezzo dichiarato di una sede sola.",
+      "$ref": "vocabolari.schema.json#/$defs/provenienza"
     },
     "elemento_5e": {
       "type": "object",

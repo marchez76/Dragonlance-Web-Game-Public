@@ -99,14 +99,186 @@ def verifica_riferimenti():
     sonde.append(
         ("mostro.schema.json", "condition_immunities[]",
          {"mechanics_5e": {"condition_immunities": ["charmed"]}}))
+    # L'ORIGINE HA LA STESSA FORMA DI DIFETTO E QUINDI LA STESSA SONDA.
+    # Dalla decisione 55 (`origine-sede-unica`) `conversion_status` e
+    # `provenienza` stanno in vocabolari.schema.json e gli altri schemi li
+    # riferiscono. `fonte` e' il termine del vocabolario ABBANDONATO — quello
+    # che `cd_origine` usava — ed e' esattamente il valore che l'enum unico
+    # deve rifiutare: se passa, il riferimento non e' stato risolto e i
+    # quattro nomi sono tornati a essere due senza che nulla lo dica.
+    sonde.append(
+        ("mostro.schema.json", "armor_class.conversion_status",
+         {"mechanics_5e": {"armor_class": {"value": 10,
+                                           "conversion_status": "fonte",
+                                           "source": "SRD 5.1"}}}))
+    sonde.append(
+        ("effetto.schema.json", "tiro_salvezza.cd.conversion_status",
+         {"tiro_salvezza": {"caratteristica": "con",
+                            "cd": {"value": 11,
+                                   "conversion_status": "fonte",
+                                   "source": "SRD 5.1"}}}))
+
     errori = []
     for nome, dove, documento in sonde:
         v = validatore(nome)
         messaggi = [e.message for e in v.iter_errors(documento)]
-        atteso = "charmed" if "charmed" in json.dumps(documento) else "slashing"
+        testo = json.dumps(documento)
+        atteso = ("charmed" if "charmed" in testo else
+                  "fonte" if "fonte" in testo else "slashing")
         if not any(atteso in m for m in messaggi):
             errori.append(
                 f"{nome}: '{dove}' non ha rifiutato '{atteso}'. Il $ref a "
                 f"vocabolari.schema.json non e' stato risolto: il "
                 f"vocabolario sembra applicato e non lo e'")
+    return errori
+
+
+# --------------------------------------------------------- la sede dell'origine
+#
+# PERCHE' ESISTE. Fino al 03/09/2026 la dichiarazione d'origine di un valore
+# era scritta in QUATTRO modi: `conversion_status` + `source` in
+# mostro.schema.json, in oggetto.schema.json e in modello.schema.json — tre
+# copie dello stesso enum, di cui una gia' divergente (oggetto ne aveva sette
+# voci, gli altri cinque) — e `cd_origine` + `bonus_origine` con un
+# vocabolario tutto suo in effetto.schema.json. Nessuno dei quattro era
+# sbagliato dal proprio lato, che e' la firma della struttura doppia: la
+# decima del progetto, e la prima in cui le sedi erano quattro invece di due.
+#
+# Fonderle non basta. Una sede unica senza un controllo che la difenda e' una
+# sede unica finche' qualcuno non ricopia l'enum «per non dipendere da un
+# altro file», ed e' esattamente cosi' che sono nate le tre copie. Questo
+# controllo e' il pezzo che paga il costo della fusione, come
+# `valida_sistema.py` lo e' per le tabelle di sistema.
+
+SEDE_ORIGINE = "vocabolari.schema.json"
+DEFS_CONDIVISI = ("conversion_status", "provenienza")
+
+# Lo stesso nome per due cose diverse, e va saputo: `conversion_status` al
+# livello della SCHEDA (`mechanics_5e.conversion_status`) non dichiara
+# l'origine di un valore — dice a che punto e' la conversione della scheda
+# nel suo insieme, con un vocabolario suo (`da_compilare`, `in_corso`,
+# `compilato`; `clonato` e `in_sospeso` nelle classi). Non e' il campo che
+# questo controllo difende, e confonderli lo farebbe gridare al lupo.
+STATI_DI_SCHEDA = {"da_compilare", "in_corso", "compilato",
+                   "clonato", "in_sospeso"}
+
+
+def _cammina(nodo, percorso=()):
+    if isinstance(nodo, dict):
+        yield percorso, nodo
+        for k, v in nodo.items():
+            yield from _cammina(v, percorso + (k,))
+    elif isinstance(nodo, list):
+        for i, v in enumerate(nodo):
+            yield from _cammina(v, percorso + (str(i),))
+
+
+# SI METTE ALLA PROVA. Su un insieme di schemi pulito un rilevatore rotto e
+# uno funzionante tacciono allo stesso modo, e la differenza si scopre il
+# giorno in cui serviva. E' la stessa ragione — e la stessa forma — delle
+# COPIE_PIANTATE di `dati/_sistema.py`: tre difetti costruiti apposta, uno
+# per pretesa, e due schemi che ci somigliano senza esserlo.
+DIFETTI_PIANTATI = [
+    ("enum ridigitato fuori dalla sede",
+     {"$defs": {"conversion_status": {
+         "enum": ["direct", "adapted", "derived", "pending", "source_only"]}}}),
+    ("$defs condiviso che non rimanda alla sede",
+     {"$defs": {"provenienza": {"type": "string"}}}),
+    ("meta' della dichiarazione: `conversion_status` senza `source`",
+     {"properties": {"armor_class": {"properties": {
+         "value": {"type": "integer"},
+         "conversion_status": {"$ref": "vocabolari.schema.json#/$defs/conversion_status"}}}}}),
+]
+
+INNOCENTI = [
+    ("lo stato della SCHEDA, che ha un vocabolario suo e nessun `source`",
+     {"properties": {"mechanics_5e": {"properties": {"conversion_status": {
+         "enum": ["da_compilare", "in_corso", "compilato"]}}}}}),
+    ("le due meta' insieme, riferite alla sede",
+     {"properties": {"hit_points": {"properties": {
+         "average": {"type": "integer"},
+         "conversion_status": {"$ref": "vocabolari.schema.json#/$defs/conversion_status"},
+         "source": {"$ref": "vocabolari.schema.json#/$defs/provenienza"}}}}}),
+]
+
+
+def _difetti_in(nome, schema):
+    """I difetti d'origine di UNO schema gia' caricato. Vedi verifica_origine."""
+    errori = []
+    for percorso, nodo in _cammina(schema):
+        enum = nodo.get("enum") if isinstance(nodo, dict) else None
+        ultimo = percorso[-1] if percorso else ""
+
+        # 1. l'enum ridigitato fuori dalla sede
+        if (nome != SEDE_ORIGINE and enum
+                and ultimo in DEFS_CONDIVISI + ("source",)
+                and not (set(enum) & STATI_DI_SCHEDA)):
+            errori.append(
+                f"{nome}: '{'.'.join(percorso)}' ridigita l'enum "
+                f"dell'origine ({enum}). La sede e' {SEDE_ORIGINE}: si "
+                f"riferisce con $ref, non si ricopia "
+                f"(decisione 55 (`origine-sede-unica`)")
+
+        # 2. i $defs condivisi sono solo un rimando
+        if (nome != SEDE_ORIGINE and len(percorso) == 2
+                and percorso[0] == "$defs" and ultimo in DEFS_CONDIVISI):
+            if "$ref" not in nodo:
+                errori.append(
+                    f"{nome}: $defs/{ultimo} non e' un $ref a {SEDE_ORIGINE}")
+            elif SEDE_ORIGINE not in nodo["$ref"]:
+                errori.append(
+                    f"{nome}: $defs/{ultimo} rimanda a '{nodo['$ref']}' "
+                    f"invece che a {SEDE_ORIGINE}")
+
+        # 3. le due meta' della dichiarazione stanno insieme
+        props = nodo.get("properties") if isinstance(nodo, dict) else None
+        if isinstance(props, dict) and "conversion_status" in props:
+            cs = props["conversion_status"]
+            di_scheda = set((cs or {}).get("enum") or ()) & STATI_DI_SCHEDA
+            if not di_scheda and "source" not in props:
+                errori.append(
+                    f"{nome}: '{'.'.join(percorso)}' dichiara "
+                    f"`conversion_status` senza `source` accanto: meta' di "
+                    f"una dichiarazione d'origine dice come e non dice da "
+                    f"dove")
+    return errori
+
+
+def prova_di_se_stesso():
+    """Il rilevatore vede i difetti piantati e tace sui due innocenti?
+
+    Torna (visti, quanti, errori). Chiamato dai validatori insieme a
+    `verifica_origine()`: un controllo di cui non si e' provata la vista
+    viene creduto piu' di quanto valga."""
+    errori, visti = [], 0
+    for etichetta, schema in DIFETTI_PIANTATI:
+        if _difetti_in("piantato.schema.json", schema):
+            visti += 1
+        else:
+            errori.append(f"difetto piantato NON visto — {etichetta}")
+    for etichetta, schema in INNOCENTI:
+        for m in _difetti_in("innocente.schema.json", schema):
+            errori.append(f"falso allarme su un caso lecito — {etichetta}: {m}")
+    return visti, len(DIFETTI_PIANTATI), errori
+
+
+def verifica_origine():
+    """La dichiarazione d'origine ha una sede sola? Torna un elenco di errori.
+
+    Tre pretese, e nessuna delle tre e' verificabile validando i dati: sono
+    difetti degli SCHEMI, e uno schema che si ricopia un enum valida
+    benissimo finche' le due copie coincidono.
+
+    1. Nessuno schema tranne la sede definisce l'enum dell'origine. Chi lo
+       ridigita crea la copia numero due.
+    2. Dove un `$defs` porta uno dei due nomi condivisi, e' un `$ref` alla
+       sede e nient'altro.
+    3. `conversion_status` e `source` viaggiano insieme. Una meta' sola non
+       e' una dichiarazione d'origine: dice come senza dire da dove, o il
+       contrario."""
+    errori = []
+    for f in sorted(glob.glob(os.path.join(CARTELLA, "*.json"))):
+        nome = os.path.basename(f)
+        with open(f, encoding="utf-8") as fh:
+            errori += _difetti_in(nome, json.load(fh))
     return errori

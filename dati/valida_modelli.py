@@ -18,10 +18,17 @@ import json
 import os
 import sys
 
-import jsonschema
-
 BASE = os.path.dirname(os.path.abspath(__file__))
-Validator = getattr(jsonschema, "Draft202012Validator", None) or jsonschema.Draft7Validator
+sys.path.insert(0, BASE)
+
+# Il validatore si costruisce QUI e non con un `jsonschema.Draft...(schema)`
+# fatto in casa. Da quando `conversion_status` e `provenienza` hanno una sede
+# sola — decisione 55 (`origine-sede-unica`) — modello.schema.json li riferisce
+# con un `$ref` fra file, e un validatore senza registro non lo risolve: e'
+# esattamente l'errore che questo file dava (`Unresolvable:
+# vocabolari.schema.json#/$defs/conversion_status`). Il registro sta in
+# `_schemi.py`, sede unica anche quello.
+import _schemi as S
 
 
 def coerenza_file(d, err):
@@ -153,16 +160,32 @@ def coerenza_incrociata(modelli, err):
 
 
 def main():
-    schema = json.load(open(os.path.join(BASE, "schema", "modello.schema.json")))
-    Validator.check_schema(schema)
-    v = Validator(schema)
+    schema = S.carica("modello.schema.json")
+    v = S.validatore("modello.schema.json", schema)
+
+    fuori = list(S.verifica_riferimenti())
+    for m in fuori:
+        print(f"\u2717 {m}")
+
+    # LA SEDE DELL'ORIGINE, e la prova che il rilevatore ci vede. Un enum
+    # ricopiato valida benissimo finche' le due copie coincidono: il difetto
+    # non si vede dai dati, si vede solo guardando gli schemi. E su un
+    # repository pulito un rilevatore rotto e uno funzionante tacciono uguale,
+    # quindi `prova_di_se_stesso()` gli mette davanti difetti piantati.
+    visti, quanti, prova = S.prova_di_se_stesso()
+    fuori += prova
+    for m in prova:
+        print(f"\u2717 {m}")
+    for m in S.verifica_origine():
+        print(f"\u2717 {m}")
+        fuori.append(m)
 
     files = sorted(glob.glob(os.path.join(BASE, "modelli", "*.json")))
     if not files:
         print("nessun file in dati/modelli/")
         return 1
 
-    modelli, totale = {}, 0
+    modelli, totale = {}, len(fuori)
     for p in files:
         nome = os.path.basename(p)
         d = json.load(open(p, encoding="utf-8"))
@@ -198,6 +221,8 @@ def main():
     else:
         print("✓ controlli incrociati")
 
+    print(f"\u2713 sede dell'origine: {visti}/{quanti} difetti piantati visti, "
+          f"{len(fuori)} problemi negli schemi.")
     print(f"\n{len(files)} file controllati, {totale} errori.")
     return 1 if totale else 0
 

@@ -56,17 +56,11 @@
           "enum": ["mischia_arma", "distanza_arma", "mischia_incantesimo", "distanza_incantesimo"]
         },
         "bonus_colpire": {
-          "type": ["integer", "null"],
-          "description": "Fissato solo dove la fonte lo fissa (i mostri). Su un personaggio e' derivato — competenza piu' caratteristica — e resta null: scriverlo sarebbe un derivato scritto a mano. Quando NON e' null deve portare `bonus_origine`: vedi li'."
-        },
-        "bonus_origine": {
-          "type": "string",
-          "enum": ["fonte", "derivata", "stimata"],
-          "description": "DA DOVE VIENE IL BONUS DI ATTACCO. Stesso campo di `cd_origine`, stessa ragione, altro numero: decisione 54 (`origine-e-un-dato`), di cui questa e' la seconda applicazione. `fonte`: e' stampato nel blocco d'origine e si trascrive (il +3 della Spada corta del Baaz, dal blocco ufficiale SotDQ). `derivata`: e' competenza + il modificatore di una caratteristica del portatore, e il controllo 6 di dati/valida_effetti.py verifica che il conto torni. `stimata`: l'abbiamo scelto noi, e allora `bonus_derivazione` deve dire su cosa. OBBLIGATORIO ovunque `bonus_colpire` non sia null, e per una ragione misurata: dei 94 bonus di attacco che il bestiario scrive in prosa 85 tornano col conto, quindi un bonus letto e uno rifatto col conto si scrivono identici quasi sempre. La coincidenza non e' una conferma — il +3 del Baaz e' stampato dalla fonte E torna col conto, esattamente come la sua CD 11."
-        },
-        "bonus_derivazione": {
-          "type": ["string", "null"],
-          "description": "COME, in prosa breve. Con `fonte`: da quale blocco e' letto, e quale addendo la fonte dichiara oltre al conto (il +3 innato del Cavaliere della Morte, il +1 con l'arco dei centauri). Con `derivata`: quale caratteristica del portatore — il conto puo' tornare con piu' d'una, quindi non e' un derivato riscritto a mano ma l'unica informazione che il conto non da'. Con `stimata`: il precedente su cui e' stato scelto. Obbligatorio con `fonte` e con `stimata`, come per le CD: un bonus non derivabile che non dice da dove viene e' una stima nascosta."
+          "anyOf": [
+            {"$ref": "vocabolari.schema.json#/$defs/valore_dichiarato"},
+            {"type": "null"}
+          ],
+          "description": "Fissato solo dove la fonte lo fissa (i mostri). Su un personaggio e' derivato — competenza piu' caratteristica — e la decisione 52 (`attacco-unica-lettura`) vieta di scriverlo sulla scheda: li' il campo non esiste, e il motore lo compone dichiarandosi `derived`. LA FORMA E' `valore_dichiarato` (sede unica: vocabolari.schema.json), non piu' un intero con `bonus_origine` e `bonus_derivazione` accanto — decisione 55 (`origine-sede-unica`). Il cambio non e' cosmetico: con l'origine DENTRO l'oggetto del valore, un bonus senza origine non e' piu' vietato da una clausola condizionale, e' INESPRIMIBILE — la versione piu' forte del divieto, la stessa che la decisione 39 (`bersaglio-legale-filtro`) ha usato altrove. Il prefisso `bonus_` serviva solo a distinguere questo numero dal bonus di danno nello stesso blocco, ed e' proprio il prefisso il meccanismo con cui lo stesso campo si e' reinventato quattro volte con quattro nomi: dentro il proprio oggetto non serve piu' e il quinto nome non puo' nascere."
         },
         "portata_ft": {"type": ["number", "null"]},
         "gittata_ft": {
@@ -84,34 +78,18 @@
           "items": {"$ref": "#/$defs/danno"},
           "description": "Piu' voci per un attacco che infligge due tipi di danno insieme."
         }
-      },
-      "allOf": [
-        {
-          "$comment": "Un bonus di attacco scritto DEVE dire da dove viene. Sul personaggio `bonus_colpire` e' null o assente e la clausola non scatta: li' il numero non esiste, quindi non ha un'origine da dichiarare.",
-          "if": {
-            "required": ["bonus_colpire"],
-            "properties": {"bonus_colpire": {"type": "integer"}}
-          },
-          "then": {"required": ["bonus_origine"]}
-        }
-      ]
+      }
     },
 
     "tiro_salvezza": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["caratteristica", "cd", "cd_origine"],
+      "required": ["caratteristica", "cd"],
       "properties": {
         "caratteristica": {"$ref": "#/$defs/caratteristica"},
-        "cd": {"type": "integer"},
-        "cd_origine": {
-          "type": "string",
-          "enum": ["fonte", "derivata", "stimata"],
-          "description": "DA DOVE VIENE LA CD. `fonte`: e' stampata nel blocco d'origine e si trascrive (la CD 11 del Death Throes del Baaz, dal blocco ufficiale SotDQ). `derivata`: e' 8 + competenza + il modificatore di una caratteristica del portatore, e il controllo 5 di dati/valida_effetti.py verifica che il conto torni. `stimata`: l'abbiamo scelta noi su un precedente, e allora `cd_derivazione` deve dire quale. E' la distinzione fra osservato e ipotizzato del metodo di conversione, resa campo. Sostituisce `cd_derivata_da`, che portava DUE informazioni in una: la sua descrizione diceva «quando non e' un dato di fonte» e il controllo 5 pretendeva di riempirlo proprio per una CD di fonte non derivabile — quella del Baaz. Un campo con due significati e' inaffidabile da entrambi i lati."
-        },
-        "cd_derivazione": {
-          "type": ["string", "null"],
-          "description": "COME, in prosa breve. Con `fonte`: da quale blocco e' letta. Con `derivata`: quale caratteristica del portatore — il conto puo' tornare con piu' d'una, quindi non e' un derivato riscritto a mano ma l'unica informazione che il conto non da'. Con `stimata`: il precedente su cui e' stata scelta. Obbligatorio con `fonte` e con `stimata`: una CD non derivabile che non dice da dove viene e' una stima nascosta."
+        "cd": {
+          "$ref": "vocabolari.schema.json#/$defs/valore_dichiarato",
+          "description": "LA CD E LA SUA ORIGINE NELLO STESSO OGGETTO. Era un intero con `cd_origine` e `cd_derivazione` accanto — decisione 50 (`cd-origine-dichiarata`), generalizzata dalla decisione 54 (`origine-e-un-dato`) — e la decisione 55 (`origine-sede-unica`) la riscrive nella forma condivisa: gli stessi tre campi che `armor_class` porta dal primo giorno del bestiario (`conversion_status`, `source`, `note`), un enum solo, una sede sola. La traduzione e' esatta e non cambia il significato di nessuna CD: `fonte` -> `direct`, `stimata` -> `adapted`, `derivata` -> `derived`. Il terzo era l'unico che l'enum condiviso non aveva, ed e' tutta la ragione per cui i due erano sembrati vocabolari diversi invece dello stesso."
         },
         "fallimento": {"$ref": "#/$defs/esito"},
         "successo": {"$ref": "#/$defs/esito"},

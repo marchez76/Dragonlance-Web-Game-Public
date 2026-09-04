@@ -9,17 +9,12 @@
 
   "$defs": {
     "conversion_status": {
-      "enum": ["direct", "adapted", "pending", "source_only"],
-      "description": "Stessi quattro valori di mostro.schema.json, stesse due varianti di `direct` (a indicazione di fonte, la piu' solida, e per scelta nostra) da distinguere nel campo `note`."
+      "$comment": "SEDE UNICA: vocabolari.schema.json. Qui NON si ridigita l'enum — ricopiarlo in tre schemi e' esattamente la struttura doppia che la decisione 55 (`origine-sede-unica`) chiude. La voce resta per non riscrivere i `#/$defs/conversion_status` interni.",
+      "$ref": "vocabolari.schema.json#/$defs/conversion_status"
     },
     "provenienza": {
-      "enum": [
-        "MC - Dragonlance Appendix",
-        "Tales of the Lance",
-        "SotDQ (ufficiale 5e)",
-        "SRD 5.1",
-        "conversione editoriale nostra"
-      ]
+      "$comment": "SEDE UNICA: vocabolari.schema.json. L'elenco la' e' l'UNIONE delle tre copie che stavano qui, in oggetto.schema.json e in modello.schema.json, e la fusione allarga il vincolo di questo schema: e' il prezzo dichiarato di una sede sola.",
+      "$ref": "vocabolari.schema.json#/$defs/provenienza"
     },
     "elemento_5e": {
       "type": "object",

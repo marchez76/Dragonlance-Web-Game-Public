@@ -53,6 +53,46 @@
         "trattenuto"
       ],
       "description": "Le quindici condizioni dell'Appendice A dell'SRD 5.1, in italiano. L'insieme e' CHIUSO e NOTO: la fonte lo stampa per intero, quindi il vocabolario puo' essere completo anche dove il nostro catalogo non lo e'. QUESTO ENUM NON DICE CHE LA CONDIZIONE E' MODELLATA. Nominare e convertire sono due cose diverse, e tenerle separate e' cio' che permette di chiudere `condition_immunities` senza sconfessare la decisione 48 (`condizioni-a-consumo`): un mostro puo' dichiarare immunita' a `affascinato` — e' un fatto della sua scheda, e perderlo sarebbe perdere informazione vera di fonte — mentre `dati/condizioni/affascinato.json` non esiste ancora, perche' nessun blocco convertito la impone e la cartella si riempie a consumo. Quali siano modellate NON si scrive da nessuna parte: si DERIVA dai file presenti in `dati/condizioni/` (`_vocabolari.condizioni_modellate()`), perche' un elenco scritto a mano accanto a una cartella e' una struttura doppia — la stessa forma che questo file esiste per chiudere. Il motore, quando incontra un'immunita' a una condizione che non sa applicare, la DICHIARA come lacuna: non saperla applicare e non accorgersene sono due cose diverse. NOTA SU `sfinimento`: nella 5e ha sei livelli invece di essere binaria, e quando verra' modellata portera' con se' quella differenza; qui e' un termine come gli altri, perche' un'immunita' lo nomina e basta."
+    },
+
+    "conversion_status": {
+      "type": "string",
+      "enum": ["direct", "adapted", "derived", "pending", "source_only"],
+      "description": "DA DOVE VIENE UN VALORE — la sede unica. Non e' un enum nuovo: e' quello che `armor_class`, `hit_points` e `challenge_rating` portano dal primo giorno del bestiario, spostato qui e riferito per `$ref` invece che ricopiato in tre schemi. `direct`: la fonte lo stampa e si trascrive — DUE varianti, da distinguere nella nota: (a) conversione A INDICAZIONE DI FONTE, la piu' solida, quando il testo 2e nomina o descrive l'equivalente 5e da usare (l'Horax, la cui fonte dice che il freddo \"ha l'effetto di un incantesimo slow\"; l'Ogre di Krynn, che la fonte dichiara identico all'ogre standard) — non e' analogia nostra, e' il testo che indica dove guardare, e va cercata PRIMA di ripiegare sull'analogo SRD; (b) conversione diretta per SCELTA NOSTRA, quando il 5e ha gia' un idioma adatto ma la fonte non lo nomina (\"colpibile solo da armi magiche\" -> resistenza alle armi non magiche). `adapted`: convertito da noi con una scelta di forma, senza che la fonte indichi l'equivalente (analogia SRD, invenzione editoriale minima). `derived`: il valore non e' ne' letto ne' scelto — SEGUE da una regola di sistema applicata ad altri dati della stessa scheda (la CD 8 + competenza + modificatore, il bonus di attacco competenza + modificatore, la percezione passiva 10 + Saggezza). `pending`: da convertire, la meccanica 5e non e' ancora decisa. `source_only`: registrato dalla fonte ma senza effetto in 5e, per scelta motivata. PERCHE' `derived` E' STATO AGGIUNTO. E' l'unico valore che `cd_origine` aveva e questo enum no, ed e' la ragione per cui i due erano sembrati vocabolari diversi invece dello stesso: un valore derivato non e' ne' `direct` (nessuno l'ha stampato) ne' `adapted` (nessuno l'ha scelto), e senza un termine per dirlo l'unica strada era inventare un secondo enum. Un `derived` e' l'unico dei cinque che un controllo puo' RIFARE: `dati/valida_effetti.py` lo ricalcola e pretende che torni. Gli altri quattro si dichiarano e non si verificano — ed e' esattamente il motivo per cui vanno dichiarati."
+    },
+
+    "provenienza": {
+      "type": "string",
+      "enum": [
+        "PHB 2e",
+        "DMG 2e",
+        "MC - Dragonlance Appendix",
+        "Tales of the Lance",
+        "SotDQ (ufficiale 5e)",
+        "SRD 5.1",
+        "regola di sistema",
+        "conversione editoriale nostra"
+      ],
+      "description": "DA QUALE DOCUMENTO — il compagno obbligato di `conversion_status`, e la seconda meta' della dichiarazione d'origine. L'elenco e' l'UNIONE delle tre copie che stavano in `mostro.schema.json` (5 voci), `oggetto.schema.json` (7) e `modello.schema.json` (5): fondere tre enum divergenti in uno significa che il bestiario adesso accetta `PHB 2e` e `DMG 2e`, che prima non accettava. E' un allentamento vero e va detto: il prezzo di una sede unica e' che il vincolo diventa quello dell'insieme piu' largo. Vale la pena perche' il vincolo stretto non stava proteggendo niente — nessun mostro aveva mai provato a citare il PHB 2e — mentre le tre copie stavano gia' divergendo. `regola di sistema` e' l'unica voce nuova, e accompagna sempre `derived`: la provenienza di un valore derivato non e' un manuale, e' una tabella di `dati/sistema/` (decisione 51, `criterio-meccanica`). Scriverlo `conversione editoriale nostra` sarebbe stato falso — non l'abbiamo scelto noi, l'ha imposto il conto."
+    },
+
+    "valore_dichiarato": {
+      "type": "object",
+      "required": ["value", "conversion_status", "source"],
+      "additionalProperties": false,
+      "description": "LA FORMA UNICA: un valore e la sua origine viaggiano nello STESSO oggetto. Non e' una forma nuova — e' quella che `armor_class` ha sempre avuto (`value` piu' `conversion_status` piu' `source` piu' `note`), estratta e resa riferibile. Serve dove il numero e' nudo: prima di questa forma un secondo numero nello stesso blocco costringeva a un PREFISSO (`cd_origine`, `bonus_origine`), e il prefisso e' esattamente il meccanismo con cui lo stesso campo si e' reinventato quattro volte con quattro nomi. Con il valore dentro il proprio oggetto il prefisso non serve piu' e il quinto nome non puo' nascere. NON PORTA DERIVATI (CLAUDE.md 3): niente campo `derivabile`, niente `coincide_col_conto`. La derivabilita' si calcola, e `dati/valida_effetti.py` la calcola invece di fidarsi di quello che il dato ne afferma.",
+      "properties": {
+        "value": {
+          "type": ["integer", "string"],
+          "description": "Il numero. Stringa dove la scala non e' numerica (il grado di sfida `1/2`)."
+        },
+        "conversion_status": {"$ref": "#/$defs/conversion_status"},
+        "source": {"$ref": "#/$defs/provenienza"},
+        "note": {
+          "type": ["string", "null"],
+          "description": "COME, in prosa breve. Con `direct`: da quale blocco e' letto, e quale addendo la fonte dichiara oltre al conto (il +3 innato del Cavaliere della Morte, il +1 con l'arco dei centauri). Con `derived`: quale caratteristica del portatore — il conto puo' tornare con piu' d'una, quindi non e' un derivato riscritto a mano ma l'unica informazione che il conto non da'. Con `adapted`: il precedente su cui e' stato scelto. Obbligatoria con `direct` e con `adapted`, dove il controllo la pretende: un valore non derivabile che non dice da dove viene e' una stima nascosta."
+        }
+      }
     }
   }
 }

@@ -1,6 +1,6 @@
 # Dragonlance Web GDR — contesto di progetto
 
-*Generato da `genera_contesto.py` il 2026-09-03.*
+*Generato da `genera_contesto.py` il 2026-09-04.*
 
 > **Come leggere questo documento.** Ogni numero, tabella e percentuale è
 > **derivato dai JSON** al momento della generazione: se un dato cambia, cambia
@@ -22,7 +22,7 @@
 
 ---
 
-## Le 54 decisioni prese
+## Le 57 decisioni prese
 
 Ordine cronologico. Questa è la storia completa delle scelte: non serve
 ricostruirla dalle sezioni.
@@ -81,6 +81,9 @@ ricostruirla dalle sezioni.
 52. **Cio' che il mostro e il personaggio condividono non e' il campo, e' la lettura** — `attacco` era un **campo** sul mostro e una **funzione** sul personaggio: due cose diverse con lo stesso nome, ed e' la lacuna che il primo scontro ha reso visibile. Le due strade ovvie rompevano ciascuna qualcosa di gia' deciso — far memorizzare l'attacco al personaggio e' un derivato scritto a mano (decisione 7, `doppio-strato`, e CLAUDE.md 3), far derivare l'attacco al mostro e' inventare derivazioni che la fonte non da' (decisione 50, `cd-origine-dichiarata`). SOLUZIONE: **una sola LETTURA**, `attacco_di(combattente)`, che torna la forma `effetto.attacco` gia' definita — sul mostro la legge, sul personaggio la compone da arma, caratteristica, competenza e stile. Chi la chiama non sa quale dei due casi ha davanti, ed e' questo il senso di «la stessa cosa da entrambe le parti»: anche la scelta di quale azione sia un attacco passa da li' e non dal campo, perche' sul personaggio quel campo non esiste. IL PERSONAGGIO PORTA SOLO GLI INGRESSI: razza, classe, livello, punteggi, equipaggiato, scelte. Ogni campo ricavabile da questi **non puo'** esistere — il costruttore solleva, che e' la forma piu' forte del divieto, la stessa con cui la decisione 39 (`bersaglio-legale-filtro`) ha reso impossibile e non solo sconsigliato fissare un ospite. CIO' CHE APRE. Un `bonus_colpire` **letto** dalla scheda e uno **rifatto col conto** si scrivono identici: manca un `bonus_origine`, esattamente come mancava `cd_origine` prima della decisione 50 (`cd-origine-dichiarata`). Misurato invece che supposto — misura al 02/09/2026: dei 94 bonus di attacco che il bestiario scrive in prosa, 85 tornano col conto e 9 no, quindi la coincidenza non e' una conferma. `motore/arena.py` la riconta a ogni giro, cosi' il numero non invecchia in silenzio.
 53. **Il vocabolario nomina tutte le condizioni SRD; il catalogo ne converte alcune** — `dati/mostri/` dichiarava le immunita' a condizione con i nomi inglesi della 5e mentre `dati/condizioni/` — sede unica per la decisione 48 (`condizioni-a-consumo`) — ha id italiani. Stesso difetto dei tipi di danno, **piu' grave**: li' erano due trascrizioni, qui una delle due sedi era gia' **dichiarata unica** e l'altra la ignorava, quindi nessuna immunita' del bestiario poteva essere rispettata da nessun motore. PERCHE' NON BASTAVA TRADURRE. Delle condizioni citate dalle immunita' solo tre esistevano nel catalogo: tradurre e basta avrebbe prodotto sette riferimenti che non risolvono, e crearle per anticipazione avrebbe sconfessato la decisione 48 (`condizioni-a-consumo`) tre giorni dopo averla presa. Restringere l'enum alle esistenti era peggio: le schede perdevano informazione vera di fonte. SOLUZIONE, ed e' la strada della decisione 35 (`repertori-sono-filtri`): l'insieme delle condizioni SRD e' **chiuso e noto**, quindi il vocabolario e' **completo** — quindici termini in `vocabolari.schema.json`, riferiti per `$ref` da `mostro.schema.json` — mentre il catalogo ne converte cinque. Le altre dieci non sono condizioni **inesistenti**: sono una **lacuna del nostro catalogo**, che e' cosa diversa. IL DIVARIO NON SI SCRIVE, SI DERIVA: quali siano modellate lo dice la cartella (`_vocabolari.condizioni_modellate()`), perche' un elenco a mano accanto a una cartella sarebbe una struttura doppia nuova creata mentre se ne chiude un'altra. IL MOTORE DEVE SAPERLO. Un'immunita' a una condizione che il catalogo non modella viene **dichiarata** come lacuna (`condizione-non-modellata`) e non ignorata in silenzio: ignorata, sarebbe indistinguibile da un'immunita' rispettata. Misura al 02/09/2026: 35 immunita' su 11 schede, di cui 29 nominano una condizione che il motore non sa ancora applicare. La traduzione dall'SRD ha una sede sola (`_vocabolari.CONDIZIONE_DA_SRD`), con l'invariante verificata all'import: ogni id prodotto sta nell'enum, e ogni voce dell'enum ha un termine inglese che ci arriva.
 54. **L'origine di un valore e' un dato, non una deduzione** — PRINCIPIO. Quando un valore puo' essere **sia letto dalla fonte sia calcolato dal sistema**, la sua **origine va dichiarata in un campo**. Nessun controllo puo' dedurla dai numeri, perche' quando le due strade coincidono il valore letto e quello calcolato sono **indistinguibili** — e coincidono quasi sempre, che e' esattamente cio' che rende il difetto invisibile. Un valore che non dichiara la propria origine non e' verificabile: oggi puo' essere giusto e domani sfasarsi senza che nessuno se ne accorga. DUE APPLICAZIONI, NON DUE DECISIONI. La decisione 50 (`cd-origine-dichiarata`) e' la prima e riguarda le CD (`cd_origine` con `cd_derivazione`); `bonus_origine` con `bonus_derivazione` sul `bonus_colpire` di `effetto.attacco` e' la seconda. Stesso enum — `fonte` | `derivata` | `stimata` — stessa coppia di campi, stessa forma di controllo: una `derivata` deve tornare col conto e il controllo lo verifica, una `fonte` e una `stimata` no ma devono dire da dove vengono. La regola e' stata generalizzata al **secondo** caso e non al terzo: e' successo due volte in due giri, su campi diversi, e la seconda l'ha trovata il committente. LA DERIVABILITA' RESTA CALCOLATA, l'origine no. E' la stessa distinzione della decisione 50 (`cd-origine-dichiarata`): si dichiara cio' che non si puo' ricavare, e si ricava tutto il resto. Un campo `derivabile` sarebbe un derivato scritto a mano (CLAUDE.md 3). LA MISURA, al 03/09/2026, e' cio' che regge il principio invece di un'argomentazione. Dei **94 bonus di attacco** che il bestiario scrive in prosa **85 tornano col conto** competenza + caratteristica e 9 no; delle 35 CD in prosa 29 tornano e 6 no. Gli 85 e i 29 non sono conferme: il bonus della Spada corta del Baaz e' **stampato** nel blocco ufficiale SotDQ **e** torna col conto, come la sua CD 11, e nessuno dei due controlli poteva vederlo. I due attacchi oggi strutturati sono uno `fonte` (Baaz) e uno `derivata` (Traag) e si scrivono allo stesso modo: e' la dimostrazione su un caso vero, non un'ipotesi. I NOVE FUORI CONTO SONO IL GRUPPO CHE INSEGNA, e non sono nove errori. **Due** portano un addendo che la fonte dichiara e che la formula non ha un posto dove mettere — il +3 innato del Cavaliere della Morte e dello Scheletro Guerriero, che sono la stessa voce in due varianti. **Tre** sono l'arco lungo dei centauri, dove la 2e attribuisce alla specie un bonus con gli archi: un tratto di razza convertito, non uno scarto. **Quattro** — l'Orso Glaciale e lo Skyfisher, due attacchi ciascuno — non hanno nessuna nota che li spieghi. La lezione e' che il conto non fallisce dove il dato e' sbagliato: fallisce dove la **formula e' incompleta**, e le due cose si scrivono uguali finche' l'origine non e' un campo. QUANTI ALTRI CAMPI HANNO QUESTA FORMA — misurato, non stimato, ed e' il motivo per cui la decisione e' generale. Ancora scoperti: il **bonus di danno** in prosa (110 casi, 96 tornano col conto), i **bonus di abilita'** (18, 16 tornano), la **percezione passiva** (52, 52 tornano). Quest'ultima e' il caso limite che spiega il principio meglio di ogni altro: il conto torna il **cento per cento** delle volte, e proprio per questo di nessuna si sa se sia stata letta o calcolata. Un campo dove il conto torna sempre e' il posto **peggiore** in cui fidarsi del conto. IL PRECEDENTE INCONSAPEVOLE, che e' la scoperta piu' utile del giro: `armor_class`, `hit_points` e `challenge_rating` **dichiarano gia'** la propria origine, sotto un altro nome — `conversion_status` piu' `source`. Il progetto aveva inventato questo campo **tre volte** senza accorgersi che era lo stesso campo, e `cd_origine` era la quarta. Unificare i tre nomi e' un rinominare che tocca 52 schede e uno schema gia' committato: **non fatto ora, dichiarato aperto**, e il momento giusto sara' quando il primo dei campi ancora scoperti dovra' portare l'origine davvero. DOVE IL DIFETTO NON PUO' ESISTERE. Un campo che porta solo **ingressi** non ha questa forma: `saving_throws` dichiara quali competenze il portatore ha e non il numero che ne segue, quindi non c'e' niente da confondere. E' la stessa forma che la decisione 52 (`attacco-unica-lettura`) ha imposto al personaggio, e la regola che ne segue e' che **un campo che si puo' non scrivere e' meglio di un campo la cui origine si deve dichiarare**: dichiarare l'origine e' il rimedio dove il valore deve stare scritto, non il primo posto dove guardare.
+55. **Un valore e la sua origine viaggiano insieme, e il vocabolario ha una sede sola** — IL DIFETTO. Il progetto aveva inventato il campo "origine" **quattro volte** senza accorgersene: `conversion_status` piu' `source` su `armor_class`, su `hit_points` e su `challenge_rating` — 156 dichiarazioni gia' in opera su 52 schede — e poi `cd_origine` con `cd_derivazione`, e poi `bonus_origine` con `bonus_derivazione`. Decima struttura doppia, e in una forma nuova: non due file che divergono, ma **lo stesso concetto con quattro nomi**. La decisione 54 (`origine-e-un-dato`) l'aveva vista e dichiarata aperta, rimandando l'unificazione al momento in cui il primo campo ancora scoperto avesse dovuto portare l'origine davvero. Quel momento e' arrivato: ogni campo nuovo sarebbe stata la quinta reinvenzione. SI ESTENDE, NON SI SOSTITUISCE. `conversion_status` piu' `source` reggeva da mesi su tre campi e su 156 dichiarazioni: e' quello a restare, ed e' il motivo per cui il rinominare temuto su 52 schede **non e' servito**. La traduzione dell'enum piu' giovane in quello piu' vecchio e' `fonte` -> `direct`, `stimata` -> `adapted`, `derivata` -> **`derived`**, che e' l'unico valore che l'enum piu' vecchio non aveva: un valore derivato non e' `direct` (nessuno l'ha stampato) ne' `adapted` (nessuno l'ha scelto), ed e' l'unico dei cinque che un controllo puo' **rifare**. LA FORMA E' UN OGGETTO, E IL PREFISSO ERA IL DIFETTO. Un valore e la sua origine stanno nello **stesso oggetto** — `{value, conversion_status, source, note}` — che e' esattamente cio' che `armor_class` gia' era. La forma piatta a prefisso (`cd_origine`, `bonus_origine`) non scala e **e' il meccanismo** con cui il campo si e' reinventato quattro volte: `attacco` porta due numeri che hanno ciascuno un'origine, `bonus_colpire` e `danno[].bonus`, e ogni numero nuovo pretendeva un prefisso nuovo. Con l'incapsulamento l'origine **non puo' piu' mancare** — non perche' un controllo la pretende, ma perche' non c'e' un posto dove scrivere il valore senza di essa. La clausola condizionale che obbligava il campo di origine e' stata cancellata: la garanzia e' diventata strutturale. LA SEDE. `conversion_status` e `provenienza` erano definiti **tre volte** in `$defs` (mostro, oggetto, modello) e la copia di `oggetto` era **gia' divergente** (sette voci contro cinque): la struttura doppia aveva gia' cominciato a sfasarsi senza che nessun dato la denunciasse, perche' un enum ricopiato valida benissimo finche' le copie coincidono. Ora i due vocabolari stanno in `vocabolari.schema.json` — la stessa sede della decisione 49 (`vocabolario-italiano`) — e i quattro schemi che li usano li riferiscono con un `$ref` fra file. L'elenco delle provenienze e' l'**unione** delle tre copie: la fusione allarga il vincolo dei singoli schemi, ed e' il prezzo dichiarato di una sede sola. Unico valore nuovo, `regola di sistema`, che accompagna sempre un `derived`. IL CONTROLLO SI METTE ALLA PROVA. Questo difetto non si vede dai dati e si vede solo guardando gli schemi, e su un repository pulito un rilevatore rotto e uno funzionante tacciono uguale: `prova_di_se_stesso()` gli mette davanti tre difetti piantati (un enum ridigitato fuori sede, un `$defs` condiviso che non e' un `$ref`, un `conversion_status` senza `source` accanto) e due somiglianze legittime che non deve segnalare. E' lo stesso schema di `COPIE_PIANTATE` in `_sistema.py`. COSA NON SI E' LASCIATO UNIFICARE, dichiarato e non nascosto. (a) `conversion_status` **e un nome per due concetti**: a livello di scheda vale "a che punto e' questa scheda" ({da_compilare, in_corso, compilato} nei mostri, negli oggetti, nei modelli e nelle razze; {clonato, in_sospeso} nelle classi), a livello di elemento dichiara l'origine di un valore. Rinominare tocca ~166 file piu' i generatori `build_*.py`: e' un giro suo, misurato e non fatto qui. (b) In razze e classi `source` e' una **stringa libera** che porta la citazione di pagina, non un enum: li' porta piu' informazione, ed e' la ragione per cui resiste alla fusione diretta. (c) `razza.schema.json` e `classe.schema.json` quasi non vincolano `mechanics_5e`: l'origine dichiarata in 105 tratti razziali e 43 privilegi di classe **non e' validata da nessuno**. Zona morta di schema, aperta. (d) Restano scoperti `danno[].bonus` (110 casi), `skills[].bonus` (18) e `passive_perception` (52 su 52 che tornano col conto, il caso che insegna): la forma ora esiste, applicarla e' lavoro di dati.
+56. **Il Personaggio si progetta perche' il background si possa aggiungere dopo** — IL RINVIO CONFERMATO. Il Barbaro resta una **razza** e non diventa un background: tappo, non conversione. Ma delle tre decisioni sospese e' l'unica che tocca la **forma** dello schema e non il contenuto, e una forma sbagliata oggi si paga riscrivendo domani. LA PROVVISIONE. Lo schema Personaggio si progetta in modo che aggiungere un campo `background` piu' avanti sia **additivo**: nessun campo esistente cambia significato, nessun dato gia' scritto va riletto. In concreto: l'origine narrativa del personaggio non si deduce dalla razza ne' si incastra dentro di essa, e i tratti che oggi arrivano dalla razza non presuppongono nella loro forma che la razza sia la loro **unica** sorgente. Il campo **non si aggiunge ora** — si evita solo di precluderlo. PERCHE' NON BASTA DIRLO A VOCE. E' la stessa lezione delle dieci strutture doppie: un vincolo che vive solo nella testa di chi scrive non sopravvive alla sessione in cui e' stato pensato.
+57. **Il limite della fetta verticale: la prossima parte dalla creazione, non dal combattimento** — IL LIMITE, INDIVIDUATO DAL METODO STESSO. L'arena misura cosa manca al motore **a un turno**, e il personaggio le arriva **gia' costruito**. Ne segue che nessuna lacuna della **creazione** puo' comparire in quella misura, per quanto la si affini: la fetta verticale non vede cio' che sta a monte del suo ingresso. Non e' una critica al metodo — e' il metodo che ha reso visibile il proprio limite, che e' il motivo per cui va **registrato** invece che ricordato. LA CONSEGUENZA. La **prossima fetta parte dalla creazione**, non dal combattimento. La prova che il limite era reale c'e' gia': `allowed_classes` non e' un campo che manca, e' una decisione che manca — 17 etichette del PHB 2e contro 17 nostre classi — e nessun giro d'arena poteva farla emergere, perche' l'arena riceve un personaggio a cui la classe e' gia' stata assegnata.
 
 ---
 
@@ -129,7 +132,7 @@ caratteristica, conservata perché è del manuale:
 - Nano delle Colline (Neidar) (CAR -1, max 12)
 - Nano delle Montagne (Hylar / Daewar) (CAR -1, max 16)
 
-> **Lettura interpretativa** — registrata il 2026-09-03. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-04. Non e' derivata dai dati.
 >
 > Il netto va da +0 a +2: nessuna razza raggiunge il +3 che la 5e
 > 2014 assegna di norma. Non va pareggiato. Le razze di Krynn non vengono mescolate
@@ -163,7 +166,7 @@ La velocità è derivata dai **tassi MV della 2e**, non dalla taglia.
 | 9 | 25 ft | Irda (Alto Ogre), Kender |
 | 12 | 30 ft | Barbaro, Elfo Dargonesti (Elfo degli Abissi), Elfo Dimernesti (Elfo dei Bassifondi), Elfo Kagonesti, Elfo Qualinesti, Elfo Silvanesti, Mezzelfo, Minotauro, Umano |
 
-> **Lettura interpretativa** — registrata il 2026-09-03. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-04. Non e' derivata dai dati.
 >
 > Derivare la velocità dalla taglia invertiva l'ordinamento della fonte: i nani
 > finivano a 30 e i Kender a 25, cioè il nano correva più del Kender. La 5e stessa
@@ -245,7 +248,7 @@ ottengano.
 - **Nessuna classe ha una tabella di THAC0 o di tiri salvezza**: valgono quelle di
   gruppo del PHB 2e, che non sono ancora nei dati.
 
-> **Lettura interpretativa** — registrata il 2026-09-03. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-04. Non e' derivata dai dati.
 >
 > Le classi di Krynn non sono classi nel senso della 5e: sono profili di
 > restrizione appoggiati sulle classi base della 2e. Convertirle non è un lavoro di
@@ -306,7 +309,7 @@ come sottoclasse. Accesso minore: solo fino al 3° livello, come in 2e.
 - Delle 105 voci, 28 sono attribuzioni nostre e non ereditate da un
   antenato 2e: restano marcate `nostra` nel dato.
 
-> **Lettura interpretativa** — registrata il 2026-09-03. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-04. Non e' derivata dai dati.
 >
 > 1 sfera 2e non trova un solo incantesimo nella lista base del chierico 5e:
 > Plant. Animal ne trova 1, Weather 1. Non è un difetto della mappatura:
@@ -397,7 +400,7 @@ Combinazioni sotto l'1%:
 |---|---|---:|---:|
 | Nano Sozzo (Aghar) | `barbaro` | 0,249% | 1 ogni 402 |
 
-> **Lettura interpretativa** — registrata il 2026-09-03. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-04. Non e' derivata dai dati.
 >
 > **Perché si tira.** Sotto point-buy due percorsi erano matematicamente
 > impossibili — il Cavaliere e il Cavaliere della Rosa — e il Nano Sozzo non aveva
@@ -461,7 +464,7 @@ Combinazioni sotto l'1%:
 | Umano | 3 | 0 | 0 | 0 | 3 | 0 |
 | Barbaro | 2 | 0 | 2 | 0 | 0 | 0 |
 
-> **Lettura interpretativa** — registrata il 2026-09-03. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-04. Non e' derivata dai dati.
 >
 > Su 105 tratti, 70 vengono dal PHB 2e (67%) e
 > 32 dalle fonti di Krynn (30%). La densità apparente di una
@@ -564,7 +567,7 @@ attacco da 1-4.
 perché i dadi vita della 2e misurano solo la resistenza. **Il Kapak ha cambiato
 asse.**
 
-> **Lettura interpretativa** — registrata il 2026-09-03. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-04. Non e' derivata dai dati.
 >
 > **Non esiste una formula estraibile da cinque casi.** Una regolarità si
 > intravede — grado di sfida uguale ai dadi vita meno due — e tiene per quattro
@@ -645,7 +648,7 @@ pagina:
 
 **8 nomi di voce erano sbagliati** nel testo estratto, non i quattro noti.
 
-> **Lettura interpretativa** — registrata il 2026-09-03. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-04. Non e' derivata dai dati.
 >
 > **L'estrazione non ha solo sbagliato i nomi: ha perso dei dati.** In tre voci
 > le colonne di destra sono sparite del tutto — `Avian` aveva quattro uccelli e ne
@@ -775,7 +778,7 @@ chassis Fighter e le azioni dei due mostri con cui l'arena gira davvero
 
 ### Richiedono una decisione
 
-> **Lettura interpretativa** — registrata il 2026-09-03. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-04. Non e' derivata dai dati.
 >
 > - **Il PHB 5e 2014 non è fra i PDF**: la cartella contiene solo edizioni 2024.
 >   Alternativa disponibile: `2014.5e.tools`, che espone il materiale 2014 come

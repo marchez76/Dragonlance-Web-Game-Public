@@ -248,14 +248,15 @@ def coincidenze_di_attacco():
     gli 85 dentro non sono 85 conferme. Questa funzione li nomina e riporta
     il numero accanto ai numeri attesi; NON li classifica, perche'
     classificarli richiede di leggere da dove viene il bonus, e leggerlo da
-    un dato e' precisamente cio' che il campo `bonus_origine` esiste per
+    un dato e' precisamente cio' che l'origine dichiarata esiste per
     permettere. Dedurlo dalla prosa sarebbe la deduzione che la
     decisione 54 (`origine-e-un-dato`) vieta, travestita da controllo.
 
     Torna (totale, coincidenti, fuori, dichiarati) sui blocchi ancora in
     prosa, perche' e' li' che sta il bestiario: due soli attacchi sono
-    strutturati, e `dichiarati` conta quelli che portano gia'
-    `bonus_origine`."""
+    strutturati, e `dichiarati` conta quelli il cui `bonus_colpire` e' gia'
+    un `valore_dichiarato` invece di un intero nudo
+    (decisione 55 (`origine-sede-unica`)."""
     import glob
     import json
     import sys as _sys
@@ -275,7 +276,7 @@ def coincidenze_di_attacco():
         for gruppo in ("actions", "traits", "reactions", "legendary_actions"):
             for b in (m.get(gruppo) or []):
                 att = (b.get("effetto") or {}).get("attacco") or {}
-                if att.get("bonus_origine"):
+                if isinstance(att.get("bonus_colpire"), dict):
                     dichiarati += 1
                 for n in pat.findall(b.get("mechanics_5e") or ""):
                     tot += 1
@@ -389,7 +390,7 @@ def campi_con_la_stessa_forma():
         ("`skills[].bonus`", "scheda", ab_tot, ab_ok, "no"),
         ("`passive_perception`", "scheda", pp_tot, pp_ok, "no"),
         ("`hit_points.average`", "scheda", pf_tot, pf_ok,
-         "si', con altro nome"),
+         "si', nella forma unica"),
     ]
 
 
@@ -615,8 +616,8 @@ questa prova.
             "sono i casi in cui il conto NON basta a spiegare il numero, e "
             "quello che manca — un addendo dichiarato dalla fonte, una "
             "stima nostra — sta scritto nella prosa accanto, dove nessun "
-            "controllo lo legge. E' il buco che `bonus_origine` chiude man "
-            "mano che quei blocchi si strutturano.\n".format(
+            "controllo lo legge. E' il buco che l'origine dichiarata chiude "
+            "man mano che quei blocchi si strutturano.\n".format(
                 n=len(att_fuori), c=att_coin))
 
     testa += f"""---
@@ -649,14 +650,19 @@ conto, esattamente come la sua CD 11, e nessun controllo poteva vederlo.
 Al secondo caso in due giri la regola è stata scritta una volta per tutte
 invece di essere riapplicata a mano: {cita('origine-e-un-dato')}. Quando un
 valore può essere **sia letto dalla fonte sia calcolato dal sistema**, la sua
-origine è un **campo**, non una deduzione. `cd_origine` e `bonus_origine` ne
-sono le due applicazioni, non due decisioni imparentate. Il campo è nello
-schema, il controllo 6 di `dati/valida_effetti.py` lo pretende ovunque
-`bonus_colpire` non sia nullo, e la lacuna del motore non è sparita: è
-diventata **condizionata al dato**, e scatta esattamente sugli attacchi che
-non la dichiarano. Oggi sono zero perché i due strutturati la portano
-({att_dich} su {att_dich}), e tornerà da sola quando si strutturerà il terzo
-senza compilarla.
+origine è un **campo**, non una deduzione.
+
+E al giro dopo si è scoperto che il campo esisteva già, tre volte, con un
+altro nome: {cita('origine-sede-unica')}. `cd_origine` e `bonus_origine`
+dicevano con `fonte` | `derivata` | `stimata` quello che `armor_class`,
+`hit_points` e `challenge_rating` dicevano da mesi con `conversion_status` +
+`source`. Un enum solo — con `derived` aggiunto, l'unico valore che il
+vocabolario condiviso non aveva — una sede sola, e una forma sola: il
+**valore e la sua origine nello stesso oggetto**. Il guadagno non è di
+ordine: un `bonus_colpire` senza origine adesso non è vietato da una
+clausola, è **inesprimibile**. La lacuna del motore resta condizionata al
+dato e scatta sugli attacchi che portano ancora un intero nudo — oggi zero,
+perché i due strutturati sono nella forma nuova ({att_dich} su {att_dich}).
 
 **Quanti altri campi hanno questa forma — la misura, non la stima.** La
 domanda che conta non è se `bonus_colpire` sia a posto adesso, ma quanti altri
@@ -673,12 +679,17 @@ proprio per questo di nessuna si sa se sia stata letta o calcolata. Un campo dov
 fidarsi del conto, non il migliore.
 
 `hit_points.average` è l'altro estremo, e va detto perché è la scoperta più
-utile del giro: l'origine lì **è già dichiarata**, sotto un altro nome —
-`conversion_status` e `source`, che `armor_class` e `challenge_rating` portano
-allo stesso modo. Il progetto aveva già inventato questo campo **tre volte**
-senza accorgersi che era lo stesso campo, e la {cita('origine-e-un-dato')}
-lo scrive come una regola sola. Unificare i tre nomi è un rinominare che tocca 52
-schede e uno schema già committato: **non fatto ora, e dichiarato aperto**.
+utile del giro: l'origine lì **era già dichiarata**, sotto un altro nome —
+`conversion_status` e `source`, che `armor_class` e `challenge_rating`
+portano allo stesso modo. Il progetto aveva inventato questo campo **tre
+volte** senza accorgersi che era lo stesso campo, e `cd_origine` era la
+quarta. Non è più aperto: {cita('origine-sede-unica')} ha fuso i quattro nomi
+in uno e l'ha messo in una sede sola. Il rinominare temuto — 52 schede —
+**non è servito**, e la ragione merita di essere registrata: si è esteso
+l'enum che già reggeva invece di sostituirlo, quindi le tre colonne del
+bestiario non sono state toccate e il costo è caduto sui **due** blocchi che
+portavano il nome minoritario. Il dettaglio della misura è in
+`dati/RAPPORTO-origine.md`.
 
 `saving_throws` non è nell'elenco e non è una dimenticanza: porta solo
 `proficient`, cioè **quali competenze** il portatore ha e non il numero che ne

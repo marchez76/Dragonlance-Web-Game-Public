@@ -409,6 +409,17 @@ def competente_nell_arma(p, reg=None):
     return competente
 
 
+def valore(campo):
+    """Il numero dentro un `valore_dichiarato`, o il campo se e' gia' nudo.
+
+    Decisione 55 (`origine-sede-unica`): un valore che deve dichiarare la
+    propria origine viaggia in un oggetto insieme a lei. Chi ha bisogno
+    solo del numero passa di qui, e non conosce ne' l'origine ne' la
+    forma — esattamente come `attacco_di()` non sa se ha davanti un mostro
+    o un personaggio."""
+    return campo.get("value") if isinstance(campo, dict) else campo
+
+
 def _attacco_composto(p, reg=None):
     """L'attacco del personaggio, nella forma `effetto.attacco`.
 
@@ -430,7 +441,20 @@ def _attacco_composto(p, reg=None):
                    "uguale")
     return {
         "tipo": "mischia_arma" if arma["tipo"] == "mischia" else "distanza_arma",
-        "bonus_colpire": mod(p.punteggi[car]) + comp,
+        # L'ORIGINE ESCE DALLA COMPOSIZIONE, NON VA CERCATA. Questo bonus
+        # non e' letto da nessuna scheda: e' competenza + modificatore,
+        # cioe' `derived` per costruzione, e la funzione che lo compone e'
+        # l'unica che possa saperlo. Dichiararlo qui e' cio' che rende la
+        # forma del personaggio identica a quella del mostro fino in fondo
+        # (decisione 52, `attacco-unica-lettura`).
+        "bonus_colpire": {
+            "value": mod(p.punteggi[car]) + comp,
+            "conversion_status": "derived",
+            "source": "regola di sistema",
+            "note": f"{'Destrezza' if car == 'dex' else 'Forza'} "
+                    f"{mod(p.punteggi[car]):+d} + competenza {comp}, "
+                    f"composto dagli ingressi del personaggio",
+        },
         "portata_ft": arma["proprieta_5e"]["portata_ft"],
         "bersagli": 1,
         "danno": [{"dadi": arma["damage_dice"],
@@ -472,15 +496,17 @@ def attacco_di(combattente, azione=None, reg=None):
     # per sempre un difetto gia' chiuso.
     if (att is not None and reg is not None
             and att.get("bonus_colpire") is not None
-            and not att.get("bonus_origine")):
+            and not isinstance(att.get("bonus_colpire"), dict)):
         reg.lacuna(
             "attacco-origine-non-dichiarata",
             "il bonus di attacco del mostro non dice da dove viene",
             "letto dalla scheda o rifatto col conto (competenza + "
             "modificatore) si scrivono uguali, e nessun controllo puo' "
             "distinguerli quando coincidono. Il campo esiste dalla "
-            "decisione 54 (`origine-e-un-dato`) — `bonus_origine` accanto a "
-            "`bonus_colpire` — e questo attacco non lo porta. Quanto "
+            "decisione 54 (`origine-e-un-dato`) e dalla "
+            "decisione 55 (`origine-sede-unica`) sta DENTRO "
+            "`bonus_colpire` insieme al numero — e questo attacco porta "
+            "ancora un intero nudo. Quanto "
             "bestiario sia ancora scoperto e' una misura, ed e' in "
             "`motore/arena.py` → `coincidenze_di_attacco()`")
     return att
@@ -609,12 +635,13 @@ def risolvi_attacco(chi, contro, azione, reg, rng, magico=None):
     vant = ha_clausola(contro.condizioni, "vantaggio_attacchi_contro")
     svant = ha_clausola(chi.condizioni, "svantaggio_attacchi_propri")
     dado, nota = d20(rng, vant, svant)
-    totale = dado + att["bonus_colpire"]
+    colpire = valore(att["bonus_colpire"])
+    totale = dado + colpire
     critico = dado == sistema.CRITICO_NATURALE
 
     if not critico and (dado == sistema.FALLIMENTO_NATURALE
                         or totale < contro.ca):
-        reg.riga(f"      {etichetta}: {dado}{nota}+{att['bonus_colpire']} = "
+        reg.riga(f"      {etichetta}: {dado}{nota}+{colpire} = "
                  f"{totale} contro CA {contro.ca} — manca")
         return 0
 
@@ -632,7 +659,7 @@ def risolvi_attacco(chi, contro, azione, reg, rng, magico=None):
         danno = sistema.applica_moltiplicatore(danno, "resistenza")
         pezzi.append("dimezzato dalla resistenza")
 
-    reg.riga(f"      {etichetta}: {dado}{nota}+{att['bonus_colpire']} = "
+    reg.riga(f"      {etichetta}: {dado}{nota}+{colpire} = "
              f"{totale} contro CA {contro.ca} — "
              f"{'CRITICO, ' if critico else ''}colpisce, {danno} danni "
              f"({', '.join(pezzi)})")
@@ -701,8 +728,9 @@ def tiro_salvezza(chi, ts, fonte, nome_effetto, reg, rng, primo):
     else:
         dado, nota = d20(rng, False, svant)
         totale = dado + mod(chi.ab[car])
-    ok = (not auto_fallito) and totale >= ts["cd"]
-    reg.riga(f"      {chi.nome}, tiro salvezza {car.upper()} CD {ts['cd']}: "
+    cd = valore(ts["cd"])
+    ok = (not auto_fallito) and totale >= cd
+    reg.riga(f"      {chi.nome}, tiro salvezza {car.upper()} CD {cd}: "
              f"{dado}{nota}{'' if auto_fallito else '+' + str(mod(chi.ab[car]))}"
              f" = {totale} — {'superato' if ok else 'fallito'}")
 

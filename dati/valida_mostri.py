@@ -277,6 +277,21 @@ def main():
     errori = len(S.verifica_riferimenti())
     for m in S.verifica_riferimenti():
         print(f"✗ {m}")
+
+    # LA SEDE DELL'ORIGINE, e la prova che il rilevatore ci vede. Per la
+    # decisione 55 (`origine-sede-unica`) `conversion_status` e `source`
+    # stanno in un file solo e gli altri schemi li riferiscono. Un enum ricopiato valida
+    # benissimo finche' le due copie coincidono, quindi il difetto non si
+    # vede dai dati: si vede solo guardando gli schemi.
+    visti, quanti, prova = S.prova_di_se_stesso()
+    for m in prova:
+        print(f"\u2717 {m}")
+    if prova:
+        errori += len(prova)
+    for m in S.verifica_origine():
+        print(f"\u2717 {m}")
+        errori += 1
+
     tutti_vuoti = {}
 
     for n in D.ORDINE_5E:

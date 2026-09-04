@@ -1,6 +1,6 @@
 # L'arena della fetta verticale — i dati usati per la prima volta
 
-*Generato da `motore/arena.py` il 2026-09-03.*
+*Generato da `motore/arena.py` il 2026-09-04.*
 
 ---
 
@@ -190,14 +190,19 @@ conto, esattamente come la sua CD 11, e nessun controllo poteva vederlo.
 Al secondo caso in due giri la regola è stata scritta una volta per tutte
 invece di essere riapplicata a mano: decisione 54 (`origine-e-un-dato`). Quando un
 valore può essere **sia letto dalla fonte sia calcolato dal sistema**, la sua
-origine è un **campo**, non una deduzione. `cd_origine` e `bonus_origine` ne
-sono le due applicazioni, non due decisioni imparentate. Il campo è nello
-schema, il controllo 6 di `dati/valida_effetti.py` lo pretende ovunque
-`bonus_colpire` non sia nullo, e la lacuna del motore non è sparita: è
-diventata **condizionata al dato**, e scatta esattamente sugli attacchi che
-non la dichiarano. Oggi sono zero perché i due strutturati la portano
-(2 su 2), e tornerà da sola quando si strutturerà il terzo
-senza compilarla.
+origine è un **campo**, non una deduzione.
+
+E al giro dopo si è scoperto che il campo esisteva già, tre volte, con un
+altro nome: decisione 55 (`origine-sede-unica`). `cd_origine` e `bonus_origine`
+dicevano con `fonte` | `derivata` | `stimata` quello che `armor_class`,
+`hit_points` e `challenge_rating` dicevano da mesi con `conversion_status` +
+`source`. Un enum solo — con `derived` aggiunto, l'unico valore che il
+vocabolario condiviso non aveva — una sede sola, e una forma sola: il
+**valore e la sua origine nello stesso oggetto**. Il guadagno non è di
+ordine: un `bonus_colpire` senza origine adesso non è vietato da una
+clausola, è **inesprimibile**. La lacuna del motore resta condizionata al
+dato e scatta sugli attacchi che portano ancora un intero nudo — oggi zero,
+perché i due strutturati sono nella forma nuova (2 su 2).
 
 **Quanti altri campi hanno questa forma — la misura, non la stima.** La
 domanda che conta non è se `bonus_colpire` sia a posto adesso, ma quanti altri
@@ -210,7 +215,7 @@ ancora scoperti**, e il quinto è il caso che insegna di più:
 | bonus di danno | prosa dei blocchi | 110 | 96 (87%) | no |
 | `skills[].bonus` | scheda | 18 | 16 (88%) | no |
 | `passive_perception` | scheda | 52 | 52 (100%) | no |
-| `hit_points.average` | scheda | 51 | 48 (94%) | si', con altro nome |
+| `hit_points.average` | scheda | 51 | 48 (94%) | si', nella forma unica |
 
 `passive_perception` è il caso che spiega perché la percentuale non è una
 diagnosi: **52 su 52** tornano col conto, il cento per cento, e
@@ -218,12 +223,17 @@ proprio per questo di nessuna si sa se sia stata letta o calcolata. Un campo dov
 fidarsi del conto, non il migliore.
 
 `hit_points.average` è l'altro estremo, e va detto perché è la scoperta più
-utile del giro: l'origine lì **è già dichiarata**, sotto un altro nome —
-`conversion_status` e `source`, che `armor_class` e `challenge_rating` portano
-allo stesso modo. Il progetto aveva già inventato questo campo **tre volte**
-senza accorgersi che era lo stesso campo, e la decisione 54 (`origine-e-un-dato`)
-lo scrive come una regola sola. Unificare i tre nomi è un rinominare che tocca 52
-schede e uno schema già committato: **non fatto ora, e dichiarato aperto**.
+utile del giro: l'origine lì **era già dichiarata**, sotto un altro nome —
+`conversion_status` e `source`, che `armor_class` e `challenge_rating`
+portano allo stesso modo. Il progetto aveva inventato questo campo **tre
+volte** senza accorgersi che era lo stesso campo, e `cd_origine` era la
+quarta. Non è più aperto: decisione 55 (`origine-sede-unica`) ha fuso i quattro nomi
+in uno e l'ha messo in una sede sola. Il rinominare temuto — 52 schede —
+**non è servito**, e la ragione merita di essere registrata: si è esteso
+l'enum che già reggeva invece di sostituirlo, quindi le tre colonne del
+bestiario non sono state toccate e il costo è caduto sui **due** blocchi che
+portavano il nome minoritario. Il dettaglio della misura è in
+`dati/RAPPORTO-origine.md`.
 
 `saving_throws` non è nell'elenco e non è una dimenticanza: porta solo
 `proficient`, cioè **quali competenze** il portatore ha e non il numero che ne
