@@ -393,6 +393,40 @@
       ],
       "description": "ZONA MORTA DICHIARATA, 02/09/2026. Questo schema descrive `mechanics_5e` come un oggetto qualunque: nessuna proprieta' dichiarata, nessun additionalProperties. L'intero strato di conversione delle classi — chassis, sette incompatibilita', privilegi, minimi — non e' quindi mai stato verificato dallo schema, e un campo scritto storto ci passa attraverso senza che nessuno lo veda. Il difetto e' preesistente ed e' emerso aggiungendo i campi qui sotto, che sono passati al primo colpo senza essere dichiarati da nessuna parte. Sono dichiarati sotto solo i blocchi toccati dalla prima fetta verticale: chiudere l'oggetto per intero vuol dire censire tutto lo strato, che e' un lavoro a se' e non va fatto di straforo dentro un altro. Nel frattempo i controlli veri su questi campi stanno in dati/valida_effetti.py.",
       "properties": {
+        "alignment_restriction": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["applied", "values"],
+          "description": "IL VINCOLO DI ALLINEAMENTO COME INSIEME, non come frase (05/09/2026). Prima portava `value`, cioe' la prosa di `source_2e` ricopiata nello strato nostro, con `applied` a `true` accanto: dieci classi su venti dichiaravano applicato un vincolo che nessun motore poteva applicare, perche' non esisteva un vocabolario degli allineamenti contro cui verificarlo, e le stringhe erano in due lingue diverse. La lettura — quale insieme corrisponde a quale frase della fonte, con la ragione per riga — sta in `dati/_allineamenti.py`; qui c'e' il risultato. `applied` e' vero se e solo se `values` non e' vuoto: un campo che dichiara di funzionare e non funziona e' peggio di un campo assente.",
+          "properties": {
+            "applied": {
+              "type": "boolean",
+              "description": "Vero solo quando il vincolo e' un insieme di valori applicabile. Falso quando la classe non ha restrizione, e falso anche quando la restrizione esiste ma dipende da una scelta successiva: in quel caso `depends_on` dice da quale, e `motivo_non_applicato` perche' non si e' appiattita su un insieme."
+            },
+            "values": {
+              "type": "array",
+              "items": { "$ref": "vocabolari.schema.json#/$defs/allineamento" },
+              "description": "Gli allineamenti ammessi, dal vocabolario unico. Vuoto quando `applied` e' falso."
+            },
+            "source_text": {
+              "type": ["string", "null"],
+              "description": "La frase della fonte da cui l'insieme e' stato letto. Resta accanto al risultato perche' la lettura sia verificabile senza aprire il file privato, ed e' l'invariante che `_allineamenti.verifica()` controlla nei due sensi: se la fonte cambia formulazione, la lettura va rifatta e non riallineata."
+            },
+            "depends_on": {
+              "type": ["string", "null"],
+              "description": "Per le due voci che sono REGOLE e non valori: da quale altra scelta dipende l'insieme. `veste` per il Mago dell'Alta Stregoneria (decisione 6, `maghi-delle-torri`: il giuramento avviene al Test, al 3° livello), `divinita` per il Sacerdote degli Ordini Sacri. Sono filtri che dipendono da una scelta successiva, cioe' la forma della decisione 35 (`repertori-sono-filtri`), e appiattirli su un insieme perderebbe proprio cio' che dicono."
+            },
+            "motivo_non_applicato": {
+              "type": ["string", "null"],
+              "description": "Perche' una restrizione che esiste non e' ancora un insieme. Obbligatoria in sostanza dove c'e' `depends_on`: un `applied: false` senza motivo e' indistinguibile da un campo dimenticato."
+            },
+            "da_confermare": {
+              "type": ["string", "null"],
+              "description": "La lettura regge ma ne esiste una seconda plausibile che la fonte non ha ancora escluso, e la riga la dichiara invece di nasconderla. Stessa forma del campo omonimo in `dati/_classi_ammesse.py`: non e' un difetto, e' una riga che aspetta una lettura, e finche' aspetta si vede."
+            }
+          }
+        },
+
         "features": {
           "type": "array",
           "description": "I privilegi e gli impedimenti della fonte 2e (decisione 15, `tratti-trascrizione-integrale`; decisione 23, `principio-del-clone`). Lista separata da `chassis_features` di proposito — vedi la' sopra.",

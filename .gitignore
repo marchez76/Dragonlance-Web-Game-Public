@@ -140,6 +140,14 @@ CLAUDE.local.md
 !dati/build_oggetti.py
 !dati/valida_oggetti.py
 
+# Allineamento (05/09/2026): il vocabolario dei nove viene dalla sezione
+# Alignment dell'SRD 5.1, la lettura delle restrizioni di classe e' nostra.
+# Il modulo legge dati/classi/, dati/mostri/ e dati/divinita/ — privati — e
+# non ne riproduce il testo: porta la frase breve da cui ogni insieme e'
+# stato letto, che e' un dato di regola e non prosa di manuale, e la tiene
+# li' perche' la lettura sia verificabile senza aprire il file privato.
+!dati/_allineamenti.py
+
 # Lista incantesimi (Fase 2): stessa ragione dell'equipaggiamento sopra, ma
 # qui la cartella intera puo' restare pubblica, non solo i tre script — a
 # differenza di dati/oggetti/, dati/incantesimi/ non condivide spazio con
