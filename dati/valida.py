@@ -13,13 +13,12 @@ import os
 import re
 import sys
 
-import jsonschema
-
 BASE = os.path.dirname(os.path.abspath(__file__))
-DADO = re.compile(r"^\d+d\d+([+-]\d+)?$|^\d+[+-]\d+d\d+$")
+sys.path.insert(0, BASE)
 
-# Draft-7 basta: lo schema non usa keyword esclusive di 2020-12.
-Validator = getattr(jsonschema, "Draft202012Validator", None) or jsonschema.Draft7Validator
+import _schemi as S  # noqa: E402
+
+DADO = re.compile(r"^\d+d\d+([+-]\d+)?$|^\d+[+-]\d+d\d+$")
 
 
 def coerenza(d, err):
@@ -76,16 +75,31 @@ def coerenza(d, err):
 
 
 def main():
-    schema = json.load(open(os.path.join(BASE, "schema", "razza.schema.json")))
-    Validator.check_schema(schema)
-    v = Validator(schema)
+    # IL VALIDATORE VIENE DA `_schemi`, non piu' costruito qui. Dal
+    # 05/09/2026 `traits[].conversion_status` non e' piu' una stringa libera
+    # ma un `$ref` a `vocabolari.schema.json`: un `$ref` fra file non si
+    # risolve senza registro, e un validatore senza registro non sbaglia
+    # rumorosamente — lascia passare tutto e il vocabolario sembra applicato.
+    v = S.validatore("razza.schema.json")
+
+    schemi_errori = 0
+    for m in S.verifica_riferimenti():
+        print(f"✗ {m}")
+        schemi_errori += 1
+    _visti, _quanti, prova = S.prova_di_se_stesso()
+    for m in prova:
+        print(f"✗ {m}")
+        schemi_errori += 1
+    for m in S.verifica_origine():
+        print(f"✗ {m}")
+        schemi_errori += 1
 
     files = sorted(glob.glob(os.path.join(BASE, "razze", "*.json")))
     if not files:
         print("nessun file in dati/razze/ — esegui prima build_razze.py")
         return 1
 
-    ids, totale_errori = set(), 0
+    ids, totale_errori = set(), schemi_errori
     for p in files:
         nome = os.path.basename(p)
         d = json.load(open(p, encoding="utf-8"))

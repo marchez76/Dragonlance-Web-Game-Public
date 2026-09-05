@@ -32,13 +32,13 @@ Sono l'unico pezzo dello strato che ha una verifica vera.
 | `ability_minimums` | 10 | 10 | 20/20 |
 | `chassis` | 9 | 9 | 20/20 |
 | `chassis_features_da_trascrivere` | 3 | 0 | 20/20 |
-| `race_restriction` | 3 | 3 | 20/20 |
 | `alignment_restriction` | 3 | 3 | 20/20 |
 | `level_limits` | 3 | 3 | 20/20 |
-| `entry_level` | 1 | 1 | 20/20 |
-| `prerequisite_class` | 1 | 1 | 20/20 |
+| `race_restriction` | 3 | 3 | 20/20 |
 | `hit_die` | 1 | 1 | 20/20 |
+| `prerequisite_class` | 1 | 1 | 20/20 |
 | `features_pending` | 1 | 1 | 20/20 |
+| `entry_level` | 1 | 1 | 20/20 |
 | `conversion_status` | 1 | 1 | 20/20 |
 
 Il conto del lavoro si legge da questa tabella: non sono
@@ -194,7 +194,7 @@ nella stessa condizione, e uno sta peggio:
 | strato | file | percorsi in uso | dichiarati dallo schema | `mechanics_5e` null |
 |---|--:|--:|--:|--:|
 | **classe** | 20 | 167 | 14 | 0 |
-| **razza** | 15 | 107 | 0 | 0 |
+| **razza** | 15 | 107 | 69 | 0 |
 | **divinita** | 21 | 0 | 0 | 21 |
 
 `razza.schema.json` dichiara **zero** proprietà per `mechanics_5e`, su
@@ -275,38 +275,38 @@ misurata come le classi invece che citata di sfuggita.
 
 `razza.schema.json` descrive `mechanics_5e` come un oggetto senza **nessuna**
 proprietà dichiarata: 107 percorsi in uso nei 15 file,
-0 dichiarati.
+69 dichiarati.
 
-> **107 percorsi su 107** non sono dichiarati da nessuno
-> schema, e **25** non sono nominati nemmeno da un
+> **38 percorsi su 107** non sono dichiarati da nessuno
+> schema, e **0** non sono nominati nemmeno da un
 > validatore.
 
 | blocco di primo livello | percorsi in uso | non dichiarati | razze che lo portano |
 |---|--:|--:|--:|
-| `ability_constraints` | 23 | 23 | 15/15 |
-| `ability_adjustments` | 21 | 21 | 15/15 |
-| `physical` | 12 | 12 | 15/15 |
-| `generation` | 11 | 11 | 15/15 |
-| `ability_caps` | 10 | 10 | 15/15 |
-| `traits` | 9 | 9 | 15/15 |
-| `traits_by_status` | 5 | 5 | 15/15 |
-| `allowed_classes` | 4 | 4 | 15/15 |
-| `level_limits` | 3 | 3 | 15/15 |
-| `darkvision_note` | 1 | 1 | 15/15 |
-| `languages_note` | 1 | 1 | 15/15 |
-| `movement_2e` | 1 | 1 | 15/15 |
-| `darkvision_ft` | 1 | 1 | 15/15 |
-| `movement_note` | 1 | 1 | 15/15 |
-| `languages` | 1 | 1 | 15/15 |
-| `size` | 1 | 1 | 15/15 |
-| `speed_ft` | 1 | 1 | 15/15 |
-| `conversion_status` | 1 | 1 | 15/15 |
+| `ability_constraints` | 23 | 12 | 15/15 |
+| `ability_adjustments` | 21 | 14 | 15/15 |
+| `physical` | 12 | 0 | 15/15 |
+| `generation` | 11 | 6 | 15/15 |
+| `ability_caps` | 10 | 6 | 15/15 |
+| `traits` | 9 | 0 | 15/15 |
+| `traits_by_status` | 5 | 0 | 15/15 |
+| `allowed_classes` | 4 | 0 | 15/15 |
+| `level_limits` | 3 | 0 | 15/15 |
+| `darkvision_ft` | 1 | 0 | 15/15 |
+| `size` | 1 | 0 | 15/15 |
+| `darkvision_note` | 1 | 0 | 15/15 |
+| `movement_2e` | 1 | 0 | 15/15 |
+| `speed_ft` | 1 | 0 | 15/15 |
+| `languages` | 1 | 0 | 15/15 |
+| `movement_note` | 1 | 0 | 15/15 |
+| `conversion_status` | 1 | 0 | 15/15 |
+| `languages_note` | 1 | 0 | 15/15 |
 
-18 blocchi da
+4 blocchi da
 descrivere, contro i 12 delle
 classi. Il blocco più pesante è
-`ability_constraints` con
-23 percorsi.
+`ability_adjustments` con
+14 percorsi.
 27 percorsi su 107 non compaiono in tutte le
 razze: come per le classi, la disomogeneità è cosa uno schema deve decidere se
 ammettere, e finché non c'è schema non è stata decisa.
@@ -339,11 +339,11 @@ in due, perché costano cose diverse:
 |---|--:|--:|--:|
 | file | 20 | 15 | 35 |
 | percorsi in uso sotto `mechanics_5e` | 167 | 107 | 274 |
-| già dichiarati dallo schema | 14 | 0 | 14 |
+| già dichiarati dallo schema | 14 | 69 | 83 |
 | già dichiarati da `effetto.schema.json` | 39 | 0 | 39 |
-| **da dichiarare** | **115** | **107** | **222** |
-| …nominati da nessun validatore | 63 | 25 | 88 |
-| blocchi di primo livello da descrivere | 12 | 18 | 30 |
+| **da dichiarare** | **115** | **38** | **153** |
+| …nominati da nessun validatore | 63 | 0 | 63 |
+| blocchi di primo livello da descrivere | 12 | 4 | 16 |
 | incoerenze: stato dichiarato | 9 | — | 9 |
 | incoerenze: difetti | 0 | — | 0 |
 
@@ -352,9 +352,9 @@ Il termine di paragone resta quello di §3: `mostro.schema.json` dichiara
 160 in uso, con
 `additionalProperties: false`, su 52
 file. Le due zone morte insieme chiedono
-222 dichiarazioni contro le
+153 dichiarazioni contro le
 90 già scritte per il
-mostro — 2.5
+mostro — 1.7
 volte quel lavoro — su 35 file invece di
 52. E non ci sono più difetti da correggere prima: i 9 che restano sono stato dichiarato, cioè questo stesso lavoro visto da un altro lato.
 
@@ -366,7 +366,7 @@ volte quel lavoro — su 35 file invece di
    per tutte e tre invece che una terza volta qui. È l'unica decisione dentro
    il conto.
 3. I due blocchi grossi delle razze —
-   `ability_constraints` (23), `ability_adjustments` (21)
+   `ability_adjustments` (14), `ability_constraints` (12)
    — che sono numeri e limiti, cioè trascrizione con `enum` e `minimum`
    leggibili dai dati, non decisioni.
 4. `structural` (68 percorsi): il pezzo più grosso

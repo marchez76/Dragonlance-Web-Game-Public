@@ -189,7 +189,265 @@
 
     "mechanics_5e": {
       "type": ["object", "null"],
-      "description": "null finché la conversione non è stata fatta. Da compilare quando saranno disponibili PHB 5e e Shadow of the Dragon Queen."
+      "description": "null finché la conversione non è stata fatta. Da compilare quando saranno disponibili PHB 5e e Shadow of the Dragon Queen. Tutte le 15 razze oggi hanno questo blocco compilato: i 18 campi sotto sono tutti presenti in ogni file, quindi tutti richiesti.",
+      "required": [
+        "conversion_status", "generation", "ability_constraints", "ability_caps",
+        "ability_adjustments", "allowed_classes", "level_limits", "size",
+        "speed_ft", "movement_2e", "movement_note", "darkvision_ft",
+        "darkvision_note", "traits", "traits_by_status", "languages",
+        "languages_note", "physical"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "conversion_status": {
+          "enum": ["compilato"],
+          "description": "Stato della scheda nel suo insieme. Un solo valore osservato finora: `compilato`, come nell'enum omonimo (piu' ampio) di mostro.schema.json. Non e' l'enum di vocabolari.schema.json#/$defs/conversion_status, che descrive l'origine di UN valore: qui e' lo stato dell'intera scheda."
+        },
+
+        "generation": {
+          "type": "object",
+          "description": "Decisione 8 (`generazione-caratteristiche`).",
+          "required": ["default_method", "methods", "dice_formulas", "note"],
+          "additionalProperties": false,
+          "properties": {
+            "default_method": {
+              "type": "string",
+              "description": "Letto dai dati: unico valore osservato e' `4d6-scarta-minore`."
+            },
+            "methods": {
+              "type": "array",
+              "items": {
+                "enum": ["4d6-scarta-minore", "array-standard", "point-buy", "dadi-propri"]
+              }
+            },
+            "dice_formulas": {
+              "type": ["object", "null"],
+              "description": "Formule di dado prescritte dal manuale per singola caratteristica, quando il metodo scelto non si applica a quella caratteristica (Kender, Aghar). null altrove.",
+              "additionalProperties": false,
+              "patternProperties": { "^(str|dex|con|int|wis|cha)$": { "type": "string" } }
+            },
+            "note": { "type": "string" }
+          }
+        },
+
+        "ability_constraints": {
+          "type": "object",
+          "description": "Decisione 3 (`vincoli-caratteristica`).",
+          "required": ["applied", "limits", "note", "source"],
+          "additionalProperties": false,
+          "properties": {
+            "applied": { "type": "boolean" },
+            "limits": {
+              "type": "object",
+              "description": "Una chiave per caratteristica con un vincolo reale; una caratteristica senza minimo ne' massimo (source_2e ha min e max entrambi null) non compare. Il Barbaro delle Pianure non ha `cha`, le altre 14 razze hanno tutte e sei.",
+              "additionalProperties": false,
+              "properties": {
+                "str": { "$ref": "#/$defs/min_max" },
+                "dex": { "$ref": "#/$defs/min_max" },
+                "con": { "$ref": "#/$defs/min_max" },
+                "int": { "$ref": "#/$defs/min_max" },
+                "wis": { "$ref": "#/$defs/min_max" },
+                "cha": { "$ref": "#/$defs/min_max" }
+              }
+            },
+            "note": { "type": "string" },
+            "source": { "type": "string" }
+          }
+        },
+
+        "ability_caps": {
+          "type": "object",
+          "description": "Decisione 10 (`massimali-razziali`): i massimali valgono anche come tetti di crescita.",
+          "required": ["applied", "caps", "note"],
+          "additionalProperties": false,
+          "properties": {
+            "applied": { "type": "boolean" },
+            "caps": {
+              "type": "object",
+              "description": "Una chiave per ogni caratteristica che porta un massimale (sottoinsieme di str/dex/con/int/wis/cha, mai tutte e sei nello stesso file).",
+              "additionalProperties": false,
+              "patternProperties": { "^(str|dex|con|int|wis|cha)$": { "type": "integer" } }
+            },
+            "note": { "type": "string" }
+          }
+        },
+
+        "ability_adjustments": {
+          "type": "object",
+          "description": "Decisione 9 (`aggiustamenti-negativi`). `editorial_values`/`editorial_note` sono la decisione 20 (`tappo-barbaro`): presenti in tutti i 15 file per forma, compilati solo nel Barbaro delle Pianure.",
+          "required": ["applied", "values", "source_values", "editorial_values", "editorial_note", "note"],
+          "additionalProperties": false,
+          "properties": {
+            "applied": { "type": "boolean" },
+            "values": {
+              "type": "object",
+              "description": "Somma di source_values ed editorial_values, la sola che il motore legge.",
+              "additionalProperties": false,
+              "patternProperties": { "^(str|dex|con|int|wis|cha)$": { "type": "integer" } }
+            },
+            "source_values": {
+              "type": "object",
+              "description": "Aggiustamenti stampati dal manuale.",
+              "additionalProperties": false,
+              "patternProperties": { "^(str|dex|con|int|wis|cha)$": { "type": "integer" } }
+            },
+            "editorial_values": {
+              "type": "object",
+              "description": "Il tappo editoriale, quando c'e'. Vuoto in 14 file su 15.",
+              "additionalProperties": false,
+              "patternProperties": { "^(str|dex|con|int|wis|cha)$": { "type": "integer" } }
+            },
+            "editorial_note": {
+              "type": ["string", "null"],
+              "description": "null tranne dove editorial_values non e' vuoto."
+            },
+            "note": { "type": "string" }
+          }
+        },
+
+        "allowed_classes": {
+          "type": "object",
+          "description": "Decisione 58 (`telaio-apre-classe-filtra`).",
+          "required": ["applied", "classes", "note"],
+          "additionalProperties": false,
+          "properties": {
+            "applied": { "type": "boolean" },
+            "classes": {
+              "type": ["array", "null"],
+              "description": "null quando applied e' false: nessuna preclusione da applicare, non un dato mancante. Le etichette sono quelle del PHB 2e (Barbarian, Cavalier, Holy Orders...), risolte in classi nostre da _classi_ammesse.py.",
+              "items": { "type": "string" }
+            },
+            "note": { "type": "string" }
+          }
+        },
+
+        "level_limits": {
+          "type": "object",
+          "description": "I limiti di livello della tabella Class/Race Combinations non sono applicati per scelta (deliberata, non dimenticanza): applied e' false in tutte le 15 razze.",
+          "required": ["applied", "note"],
+          "additionalProperties": false,
+          "properties": {
+            "applied": { "type": "boolean" },
+            "note": { "type": "string" }
+          }
+        },
+
+        "size": {
+          "enum": ["Medium", "Small"],
+          "description": "Letto dai dati: solo queste due taglie compaiono nelle 15 razze."
+        },
+        "speed_ft": { "enum": [25, 30] },
+        "movement_2e": {
+          "enum": [6, 9, 12],
+          "description": "Il tasso MV della fonte 2e, da cui speed_ft e' derivata (vedi movement_note)."
+        },
+        "movement_note": { "type": "string" },
+        "darkvision_ft": {
+          "enum": [30, 60, null],
+          "description": "null e' assenza deliberata (decisione 14, `infravisione`), non dato mancante."
+        },
+        "darkvision_note": { "type": "string" },
+
+        "languages": {
+          "type": "array",
+          "description": "Linguaggi iniziali diversi dal comune. Vuoto per 14 razze su 15: solo il Kender ne dichiara.",
+          "items": { "type": "string" }
+        },
+        "languages_note": {
+          "type": ["string", "null"],
+          "description": "null quando `languages` porta gia' l'elenco (Kender); altrove spiega perche' la fonte non ne dichiara."
+        },
+
+        "traits": {
+          "type": "array",
+          "description": "I tratti razziali. Stessa forma di elemento_5e in mostro.schema.json (name, text_2e, conversion_status, mechanics_5e, source, note, editorial, provisional), dichiarata qui in proprio invece che con $ref: unificare le due e' una decisione di forma, non presa in questo giro (vedi RAPPORTO-zona-morta-classi.md §4 sullo stesso nodo per mechanics_5e.features di classe).",
+          "items": {
+            "type": "object",
+            "required": ["name", "source", "text_2e", "conversion_status", "mechanics_5e", "note", "provisional", "editorial"],
+            "additionalProperties": false,
+            "properties": {
+              "name": { "type": "string" },
+              "source": {
+                "type": "string",
+                "description": "Citazione libera con pagina, non l'enum `provenienza` di vocabolari.schema.json: qui il campo porta anche l'indice di pagina, l'enum condiviso no."
+              },
+              "text_2e": { "type": "string" },
+              "conversion_status": { "$ref": "vocabolari.schema.json#/$defs/conversion_status" },
+              "mechanics_5e": {
+                "type": ["string", "null"],
+                "description": "null quando conversion_status e' `source_only` (sempre). Puo' essere null anche con `adapted`, quando il tratto e' informativo e non impone una meccanica propria (es. \"Lingue iniziali\", la cui meccanica vera e' il campo `languages`)."
+              },
+              "note": { "type": ["string", "null"] },
+              "provisional": {
+                "type": ["string", "null"],
+                "description": "Motivo per cui la conversione va riverificata quando arriva una fonte mancante. Sempre null oggi: nessun tratto e' in questa condizione."
+              },
+              "editorial": { "type": "boolean" }
+            }
+          }
+        },
+        "traits_by_status": {
+          "type": "object",
+          "description": "Il conto di `traits` per conversion_status.",
+          "required": ["direct", "adapted", "pending", "source_only"],
+          "additionalProperties": false,
+          "properties": {
+            "direct": { "type": "integer", "minimum": 0 },
+            "adapted": { "type": "integer", "minimum": 0 },
+            "pending": { "type": "integer", "minimum": 0 },
+            "source_only": { "type": "integer", "minimum": 0 }
+          }
+        },
+
+        "physical": {
+          "type": "object",
+          "description": "Stesse formule di source_2e.physical, ricopiate qui perche' la 5e non le converte: sono un dato, non una conversione.",
+          "required": ["height_in", "weight_lb", "age", "note"],
+          "additionalProperties": false,
+          "properties": {
+            "height_in": {
+              "type": "object",
+              "required": ["male", "female"],
+              "additionalProperties": false,
+              "properties": {
+                "male": { "type": ["string", "null"] },
+                "female": { "type": ["string", "null"] }
+              }
+            },
+            "weight_lb": {
+              "type": "object",
+              "required": ["male", "female"],
+              "additionalProperties": false,
+              "properties": {
+                "male": { "type": ["string", "null"] },
+                "female": { "type": ["string", "null"] }
+              }
+            },
+            "age": {
+              "type": "object",
+              "required": ["adult_at", "max_formula", "max_typical"],
+              "additionalProperties": false,
+              "properties": {
+                "adult_at": { "type": ["integer", "null"] },
+                "max_formula": { "type": ["string", "null"] },
+                "max_typical": { "type": ["integer", "null"] }
+              }
+            },
+            "note": { "type": "string" }
+          }
+        }
+      }
+    }
+  },
+
+  "$defs": {
+    "min_max": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "min": { "type": ["integer", "null"] },
+        "max": { "type": ["integer", "null"] }
+      }
     }
   }
 }

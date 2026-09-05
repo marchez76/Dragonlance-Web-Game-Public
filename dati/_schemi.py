@@ -127,6 +127,15 @@ def verifica_riferimenti():
          {"mechanics_5e": {"chassis_features": [
              {"name": "X", "kind": "privilegio_chassis", "level": 1,
               "conversion_status": "fonte", "mechanics_5e": "x"}]}}))
+    # LE RAZZE, dal 05/09/2026: stessa chiusura di poco sopra, sullo stesso
+    # campo con lo stesso nome ma sul lato razza (`traits` invece di
+    # `chassis_features`).
+    sonde.append(
+        ("razza.schema.json", "mechanics_5e.traits[].conversion_status",
+         {"mechanics_5e": {"traits": [
+             {"name": "X", "source": "X", "text_2e": "x",
+              "conversion_status": "fonte", "mechanics_5e": "x",
+              "note": None, "provisional": None, "editorial": False}]}}))
 
     errori = []
     for nome, dove, documento in sonde:
