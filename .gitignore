@@ -140,6 +140,16 @@ CLAUDE.local.md
 !dati/build_oggetti.py
 !dati/valida_oggetti.py
 
+# Pacchetti ed equipaggiamento iniziale di classe (05/09/2026): stessa fonte
+# e stessa ragione dei tre file qui sopra — SRD 5.1 via api.open5e.com, la
+# sezione «Equipment Packs» e il campo `equipment` delle classi SRD. Nessun
+# testo 2e. Il rapporto che li usa legge dati/classi/ e dati/oggetti/, che
+# sono privati, e non ne riproduce niente: stampa conteggi, id e nomi di
+# voci SRD, e delle regole di equipaggiamento della fonte dice QUANTE sono,
+# non quali. Dichiarato qui nello stesso commit che crea i file.
+!dati/_fonti/srd51_pacchetti.py
+!dati/analizza_equipaggiamento.py
+
 # Allineamento (05/09/2026): il vocabolario dei nove viene dalla sezione
 # Alignment dell'SRD 5.1, la lettura delle restrizioni di classe e' nostra.
 # Il modulo legge dati/classi/, dati/mostri/ e dati/divinita/ — privati — e
