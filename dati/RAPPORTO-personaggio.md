@@ -7,9 +7,9 @@
 > sospese, non tocca `dati/`. Ogni numero è derivato dai JSON; le letture sono
 > marcate con un blocco citato e datato.
 >
-> Il corpus letto è di **509 file** per **1,94 MB**:
+> Il corpus letto è di **522 file** per **2,02 MB**:
 > 15 razze, 20 classi, 21 divinità,
-> 319 incantesimi, 79 oggetti,
+> 319 incantesimi, 92 oggetti,
 > 52 mostri, 3 modelli.
 
 ---
@@ -22,8 +22,8 @@ delle nostre revisioni, non della partita. Un personaggio è la prima entità de
 progetto la cui vita è **dentro** la partita.
 
 La differenza si misura, e il numero è netto. Delle grandezze che servono a far
-combattere un personaggio, 11 su 27 sono coperte da un
-campo pieno, 6 da un campo compilato solo
+combattere un personaggio, 12 su 27 sono coperte da un
+campo pieno, 5 da un campo compilato solo
 in parte, e **10 non hanno alcun campo in nessuno schema**
 (tabella in §2). Ma la
 divisione interessante non è quella: è che **nessuna delle sei entità esistenti
@@ -56,7 +56,7 @@ dove i filtri vengono **risolti**.
 | Veste | 3 (Bianca, Rossa, Nera), giurata al 3° livello | `classi/mago-veste-*.json` → `prerequisite_class` |
 | Epoca | 5 valori di `valid_eras` | strato editoriale, decisione 12 (`valid-eras`) |
 | Competenze di abilità | — | **nessun filtro esiste**: le 18 abilità 5e non sono nei dati |
-| Equipaggiamento iniziale | 7 vincoli dichiarati su 20 classi | `mechanics_5e.structural.starting_equipment.constraints` |
+| Equipaggiamento iniziale | 80 vincoli dichiarati su 20 classi | `mechanics_5e.structural.starting_equipment.constraints` |
 
 ### 1.2 Derivato — nessuno lo scrive, si ricalcola
 
@@ -147,7 +147,7 @@ entità reale.
 | Privilegi di classe con meccanica 5e | — | **assente** | nessun campo lo porta |
 | Competenze di abilità (le 18 della 5e) | — | **assente** | nessun campo lo porta |
 | Competenze in armi e armature | — | **assente** | nessun campo lo porta |
-| Pacchetto di equipaggiamento iniziale | `source_wealth` | parziale **4/20** | classi |
+| Pacchetto di equipaggiamento iniziale | `source_wealth` | **20/20** | classi |
 | Slot incantesimi 5e | — | **assente** | nessun campo lo porta |
 | Lista incantesimi per classe | `classes` | **319/319** | incantesimi |
 | Filtro delle sfere per divinità | `mechanics_5e` | **assente** (0/21) | divinità |
@@ -431,14 +431,14 @@ razza + classe; la validazione; la soddisfacibilità (`esiste_assegnazione`,
 ### 3.4 Una nota che riguarda tutte e tre: la numerazione — CHIUSA
 
 Le tre questioni sospese si citano per numero, e i numeri **non erano
-stabili**. Il progetto contiene **1445 rimandi a una decisione in
-152 file**, di cui **375 nella fascia 1-12** — che è
+stabili**. Il progetto contiene **1592 rimandi a una decisione in
+162 file**, di cui **401 nella fascia 1-12** — che è
 esattamente dove stavano le tre questioni di questa sezione.
 
 Erano sfasati perché il numero è un ordinale dell'elenco, e l'elenco è
 cambiato: file scritti in momenti diversi hanno continuato a citare il numero
 della propria vintage, senza che nulla li riallineasse. Lette una per una, le
-375 citazioni della fascia bassa hanno dato questa corrispondenza —
+401 citazioni della fascia bassa hanno dato questa corrispondenza —
 **senza uno scarto costante**, e con lo stesso numero giusto in un file e
 sbagliato in un altro:
 
@@ -464,15 +464,15 @@ un `id` stabile che non cambierà mai, e la forma di un rimando è ora
 accanto come derivato. `verifica_decisioni.py` verifica la coppia in tutto il
 progetto e con `--correggi` riscrive i numeri a partire dagli id.
 
-Stato oggi: **1445 rimandi verificati, 0 sfasati,
-0 con id ignoto, 0 ancora senza id**. Rinumerare
+Stato oggi: **1590 rimandi verificati, 0 sfasati,
+0 con id ignoto, 2 ancora senza id**. Rinumerare
 adesso costa un comando.
 
 **Dal 2026-09-05 la stessa sede porta anche le questioni APERTE**, che fino a
 quel giorno erano prosa dentro `genera_contesto.py` — senza id, e quindi non
 citabili da nessun altro testo. Un rimando a una di esse si scrive «questione
 aperta (`aumento-oltre-tetto`)» e non ha numero: dove non c'è un derivato non
-c'è niente che possa sfasarsi. Ce ne sono **9** nel progetto,
+c'è niente che possa sfasarsi. Ce ne sono **10** nel progetto,
 0 con id ignoto.
 
 ---
@@ -560,7 +560,7 @@ il totale. Lo stesso vale per la ricchezza iniziale, se tirata.
 
 ### 5.1 Non è un problema di velocità
 
-Il corpus intero è **509 file per 1,94 MB**. Caricato una
+Il corpus intero è **522 file per 2,02 MB**. Caricato una
 volta all'avvio e indicizzato per id, ci sta in memoria senza discussione: gli
 indici `*.index.json` esistono già e fanno esattamente questo mestiere.
 **A ogni turno non va letto nessun file.** La domanda "quanto velocemente" ha
@@ -655,11 +655,11 @@ vuole fare una creatura molto prima che il motore sappia risolverne l'attacco.
 
 | domanda | risposta breve |
 |---|---|
-| 1. Cosa serve | su 27 grandezze: 11 coperte, 6 parziali, 10 senza alcun campo; e nessuna entità esistente ha un campo che cambi in partita |
+| 1. Cosa serve | su 27 grandezze: 12 coperte, 5 parziali, 10 senza alcun campo; e nessuna entità esistente ha un campo che cambi in partita |
 | 2. Cosa manca | i privilegi del chassis (non contati fra i 40 `pending`), la tabella PE 5e (20/20 non applicata), le competenze 5e, gli slot 5e, l'effetto degli incantesimi, il cambio stl/gp |
 | 3. Le tre sospese | riportate con fonte e opzioni, non sciolte |
 | 4. Riferimento o copia | riferimento per id, più impronta del corpus, più le sole scelte che risolvono un filtro; i derivati non si scrivono |
-| 5. Arena | 1,94 MB stanno in memoria: il vincolo non è la velocità ma che 380 blocchi di meccanica su 405 sono ancora solo prosa |
+| 5. Arena | 2,02 MB stanno in memoria: il vincolo non è la velocità ma che 380 blocchi di meccanica su 405 sono ancora solo prosa |
 
 ---
 

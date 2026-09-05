@@ -30,18 +30,18 @@ quel momento: ogni campo nuovo sarebbe stato la quinta reinvenzione.
 
 ## 1. Quante dichiarazioni ci sono, e di che tipo
 
-833 dichiarazioni di origine nei dati, su 5 famiglie.
+846 dichiarazioni di origine nei dati, su 5 famiglie.
 
 | famiglia | livello scheda | livello elemento | totale |
 |---|--:|--:|--:|
 | mostri | 52 | 416 | 468 |
-| oggetti | 79 | 51 | 130 |
+| oggetti | 92 | 51 | 143 |
 | modelli | 3 | 29 | 32 |
 | razze | 15 | 105 | 120 |
 | classi | 20 | 63 | 83 |
-| **totale** | **169** | **664** | **833** |
+| **totale** | **182** | **664** | **846** |
 
-> Cartelle di dati non guardate da questo controllo: `condizioni`, `divinita`, `incantesimi`. Vanno aggiunte a `CARTELLE` o dichiarate senza origine.
+> Cartelle di dati non guardate da questo controllo: `condizioni`, `divinita`, `incantesimi`, `pacchetti`. Vanno aggiunte a `CARTELLE` o dichiarate senza origine.
 
 ---
 
@@ -49,7 +49,7 @@ quel momento: ogni campo nuovo sarebbe stato la quinta reinvenzione.
 
 `conversion_status` nomina due cose diverse, e la parte utile e' che non serve
 leggere le descrizioni per dimostrarlo. Il discriminante e' un conteggio: a
-livello di **scheda** il campo `source` non c'e' **mai** (169 su 169); a
+livello di **scheda** il campo `source` non c'e' **mai** (182 su 182); a
 livello di **elemento** c'e' **sempre** (664 su 664). Due popolazioni che non
 si toccano.
 
@@ -57,14 +57,14 @@ Anche i vocabolari sono disgiunti, ed e' la seconda prova:
 
 | livello | significato | vocabolario usato nei dati |
 |---|---|---|
-| scheda | a che punto e' **questa scheda** | `clonato` (12), `compilato` (149), `in_sospeso` (8) |
+| scheda | a che punto e' **questa scheda** | `clonato` (12), `compilato` (162), `in_sospeso` (8) |
 | elemento | da dove viene **questo valore** | `adapted` (357), `derived` (1), `direct` (220), `pending` (54), `source_only` (32) |
 
 Le classi usano `clonato` e `in_sospeso` dove le altre famiglie usano
 `compilato`: e' un terzo vocabolario di scheda, non un'origine.
 
 **Questo non e' stato unificato**, ed e' la prima cosa che resiste. Rinominare
-il campo di scheda tocca le 169 schede piu' i generatori `build_*.py` che lo
+il campo di scheda tocca le 182 schede piu' i generatori `build_*.py` che lo
 scrivono: e' un giro suo, che va misurato e fatto con un controllo davanti,
 non infilato dentro l'unificazione dell'origine. Finche' non e' fatto, il
 rischio non e' teorico — e' che qualcuno legga `compilato` come un'origine, o

@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pacchetto.schema.json",
+  "title": "Pacchetto di equipaggiamento iniziale",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "name", "source", "cost_gp", "voci"],
+
+  "description": "UN PACCHETTO E' UN ELENCO, NON UN OGGETTO. La decisione 62 (`pacchetto-fisso`) sceglie il pacchetto fisso contro il borsello da spendere, e questa cartella e' cio' che quella scelta chiedeva di trascrivere: i pacchetti dell'SRD 5.1 che gli elenchi di equipaggiamento delle classi nominano. Ha uno schema proprio e non sta in `dati/oggetti/` per il criterio della decisione 33 (`schema-oggetti`): un pacchetto non ha peso ne' proprieta' proprie, ha un contenuto, e le sue voci RIFERISCONO il catalogo per id invece di ricopiarlo — la stessa regola per cui le condizioni si riferiscono e non si trascrivono. NESSUN `source_2e`: i pacchetti sono un istituto della 5e, e la fonte 2e per l'equipaggiamento iniziale e' una formula di ricchezza che la decisione 62 (`pacchetto-fisso`) lascia esplicitamente non applicata. Cartella PUBBLICA come `dati/incantesimi/` e `dati/condizioni/`, e per la stessa ragione: viene dall'SRD 5.1 (CC-BY, vedi LICENSE-SRD.md) e non riproduce testo di manuale. NE STANNO QUI 5 SU 7, e non e' una trascrizione incompleta: sono quelli che i cinque elenchi di telaio nominano davvero. Gli altri due — Diplomat's e Entertainer's — nominano voci che il catalogo non ha, e scriverli vorrebbe dire o riferimenti che non risolvono o 9 voci adottate per completezza: la cartella si riempie a consumo, come `dati/condizioni/` per la decisione 48 (`condizioni-a-consumo`).",
+
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$",
+      "description": "Chiave stabile, dallo slug del nome inglese. Non cambia se la resa italiana cambia."
+    },
+    "name": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["en", "it"],
+      "properties": {
+        "en": { "type": "string" },
+        "it": { "type": "string" }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_edition", "source_book"],
+      "properties": {
+        "source_edition": { "type": "string", "const": "SRD 5.1" },
+        "source_book": { "type": "string" },
+        "api_ref": { "type": ["string", "null"] }
+      }
+    },
+    "cost_gp": {
+      "type": "number",
+      "description": "Il prezzo che l'SRD stampa per il pacchetto intero. NON e' la somma delle voci e non deve tornare: la fonte lo vende scontato, e un controllo che pretendesse la somma segnalerebbe la fonte invece di un nostro errore. Serve alla strada del borsello, che la decisione 62 (`pacchetto-fisso`) non ha preso, e si trascrive lo stesso perche' e' dato di fonte."
+    },
+    "voci": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["quantita", "name_srd", "stato", "oggetto"],
+        "properties": {
+          "quantita": { "type": "integer", "minimum": 1 },
+          "name_srd": {
+            "type": "string",
+            "description": "Il nome come l'SRD lo scrive. Resta accanto al riferimento perche' la lettura sia verificabile senza aprire il catalogo, ed e' l'unico modo di nominare le voci che un riferimento non ce l'hanno ancora."
+          },
+          "oggetto": {
+            "type": ["string", "null"],
+            "pattern": "^[a-z][a-z0-9-]*$",
+            "description": "L'id in `dati/oggetti/`. `null` quando `stato` e' `da_decidere`."
+          },
+          "stato": {
+            "enum": ["a_catalogo", "da_decidere"],
+            "description": "`a_catalogo`: la voce e' una riga della tabella dell'attrezzatura SRD e il catalogo la porta. `da_decidere`: l'SRD la nomina SOLO dentro la descrizione di questo pacchetto e non le da' ne' prezzo ne' peso — non e' quindi una voce mancante dal catalogo, e' una domanda aperta: oggetto o testo del pacchetto. Sono 7 in tutto e la decisione 62 (`pacchetto-fisso`) le lascia esplicitamente non decise; il campo esiste perche' una domanda aperta si vede, e non si scioglie in silenzio scegliendo per comodita'."
+          },
+          "motivo": {
+            "type": ["string", "null"],
+            "description": "Perche' la voce e' `da_decidere`, in una riga. Obbligatorio in sostanza li': un `da_decidere` senza motivo e' indistinguibile da una voce dimenticata."
+          }
+        }
+      }
+    },
+    "note": {
+      "type": ["string", "null"]
+    }
+  }
+}

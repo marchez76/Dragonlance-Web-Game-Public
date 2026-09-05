@@ -1,0 +1,114 @@
+{
+  "id": "burglars-pack",
+  "name": {
+    "en": "Burglar's Pack",
+    "it": "Pacchetto dello scassinatore"
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1), sezione «Equipment Packs»",
+    "api_ref": "v1/sections/equipment-packs"
+  },
+  "cost_gp": 16.0,
+  "voci": [
+    {
+      "quantita": 1,
+      "name_srd": "Backpack",
+      "oggetto": "backpack",
+      "stato": "a_catalogo",
+      "motivo": null
+    },
+    {
+      "quantita": 1,
+      "name_srd": "Ball Bearings (bag of 1000)",
+      "oggetto": "ball-bearings-bag-of-1000",
+      "stato": "a_catalogo",
+      "motivo": null
+    },
+    {
+      "quantita": 1,
+      "name_srd": "String (10 feet)",
+      "oggetto": null,
+      "stato": "da_decidere",
+      "motivo": "l'SRD la nomina solo dentro la descrizione di questo pacchetto: la tabella dell'attrezzatura non la elenca, quindi non ha ne' prezzo ne' peso propri. Non e' una voce mancante dal catalogo — e' da decidere se diventa un oggetto o resta testo del pacchetto (decisione 62, `pacchetto-fisso`)"
+    },
+    {
+      "quantita": 1,
+      "name_srd": "Bell",
+      "oggetto": "bell",
+      "stato": "a_catalogo",
+      "motivo": null
+    },
+    {
+      "quantita": 5,
+      "name_srd": "Candle",
+      "oggetto": "candle",
+      "stato": "a_catalogo",
+      "motivo": null
+    },
+    {
+      "quantita": 1,
+      "name_srd": "Crowbar",
+      "oggetto": "crowbar",
+      "stato": "a_catalogo",
+      "motivo": null
+    },
+    {
+      "quantita": 1,
+      "name_srd": "Hammer",
+      "oggetto": "hammer",
+      "stato": "a_catalogo",
+      "motivo": null
+    },
+    {
+      "quantita": 10,
+      "name_srd": "Piton",
+      "oggetto": "piton",
+      "stato": "a_catalogo",
+      "motivo": null
+    },
+    {
+      "quantita": 1,
+      "name_srd": "Lantern, Hooded",
+      "oggetto": "lantern-hooded",
+      "stato": "a_catalogo",
+      "motivo": null
+    },
+    {
+      "quantita": 2,
+      "name_srd": "Lamp oil (flask)",
+      "oggetto": "lamp-oil-flask",
+      "stato": "a_catalogo",
+      "motivo": null
+    },
+    {
+      "quantita": 5,
+      "name_srd": "Rations (1 day)",
+      "oggetto": "rations-1-day",
+      "stato": "a_catalogo",
+      "motivo": null
+    },
+    {
+      "quantita": 1,
+      "name_srd": "Tinderbox",
+      "oggetto": "tinderbox",
+      "stato": "a_catalogo",
+      "motivo": null
+    },
+    {
+      "quantita": 1,
+      "name_srd": "Waterskin",
+      "oggetto": "waterskin",
+      "stato": "a_catalogo",
+      "motivo": null
+    },
+    {
+      "quantita": 1,
+      "name_srd": "Rope, hempen (50 feet)",
+      "oggetto": "rope-hempen-50-feet",
+      "stato": "a_catalogo",
+      "motivo": null
+    }
+  ],
+  "note": null
+}

@@ -95,22 +95,28 @@ solleva `ValueError` invece di leggere un intero.
 
 **Una divergenza di trascrizione trovata strada facendo.** Su una voce la nostra `ac_formula` non è quella della fonte: `shield` (fonte `0 +2`, nostra `+2`). Il campo `source_srd` dichiara una trascrizione diretta; quella stringa è stata normalizzata a mano. Il valore risultante è corretto, la trascrizione no.
 
-### 2.2 Prezzo e peso dell'attrezzatura — il caso che costa davvero
+### 2.2 Prezzo e peso dell'attrezzatura — CHIUSO
 
-Armi e armature hanno `cost_gp` e `weight_lb` in campi propri. Le
-**28** voci di attrezzatura no: `build_oggetti.py` scrive
-prezzo e peso **dentro una frase italiana** di `mechanics_5e.note`, nella
-forma *«Peso N lb, costo N mo»*. Sono
-**28/28**.
+Armi e armature hanno sempre avuto `cost_gp` e `weight_lb` in campi propri;
+le **41** voci di attrezzatura no. `build_oggetti.py`
+scriveva prezzo e peso **dentro una frase italiana** di
+`mechanics_5e.note`, nella forma *«Peso N lb, costo N mo»*: la fonte
+(`v2/items`) dà `cost` e `weight` come campi, noi li leggevamo, ci
+componevamo una frase, e buttavamo via i campi.
 
-La fonte (`v2/items`) dà `cost` e `weight` come campi. Noi li leggiamo, li
-usiamo per comporre una frase, e buttiamo via i campi.
-
-Questo è il caso con una conseguenza già scritta altrove: la decisione 42
+Era il caso con una conseguenza già scritta altrove: la decisione 42
 (`cambio-acciaio-oro`) è nata perché *«un personaggio non poteva comprare il
-proprio equipaggiamento»*. Quella decisione ha dato il rapporto fra acciaio e
-oro. Ma su 28 oggetti **non c'è un prezzo leggibile
-a cui applicarlo**: c'è una frase che lo contiene.
+proprio equipaggiamento»*, e ha dato il rapporto fra acciaio e oro — a un
+campo che per l'attrezzatura non esisteva.
+
+**Chiuso dalla decisione 62 (`pacchetto-fisso`)**, che ha dovuto guardare
+questo strato per un altro motivo. `mechanics_5e.attrezzatura_5e` porta ora
+`cost_gp` e `weight_lb` in campi, su
+**41/41** voci, e
+**0** restano nella frase. Non è una quarta sede
+accanto a `weapon_5e` e `armor_5e`: le tre si escludono a vicenda — un
+oggetto ne porta al più una — e chi cerca un prezzo passa da
+`_valuta.prezzo_di()`, che è l'unico posto che sa quali sono.
 
 ### 2.3 Semplice o da guerra — un booleano riscritto da una stringa
 

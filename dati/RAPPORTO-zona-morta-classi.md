@@ -8,11 +8,11 @@ mano: ogni numero è interpolato dai dati.*
 ## 0. La misura in una riga
 
 `classe.schema.json` descrive `mechanics_5e` come *object o null*, con
-23 proprietà dichiarate su **171 percorsi in uso** nei
+49 proprietà dichiarate su **191 percorsi in uso** nei
 20 file. Nessun `additionalProperties`.
 
-> **110 percorsi su 171** non sono dichiarati da nessuno
-> schema. Di questi, **60 non sono nominati nemmeno da un
+> **104 percorsi su 191** non sono dichiarati da nessuno
+> schema. Di questi, **54 non sono nominati nemmeno da un
 > validatore**: un campo scritto storto lì dentro non incontra nessun
 > controllo, in nessun punto della catena.
 
@@ -22,34 +22,34 @@ Sono l'unico pezzo dello strato che ha una verifica vera.
 
 ---
 
-## 1. Dove stanno i 110 percorsi nudi
+## 1. Dove stanno i 104 percorsi nudi
 
 | blocco di primo livello | percorsi in uso | non dichiarati | classi che lo portano |
 |---|--:|--:|--:|
-| `structural` | 68 | 68 | 20/20 |
+| `structural` | 88 | 62 | 20/20 |
 | `chassis_features` | 49 | 4 | 20/20 |
 | `features` | 14 | 8 | 20/20 |
 | `ability_minimums` | 10 | 10 | 20/20 |
 | `chassis` | 9 | 9 | 20/20 |
 | `alignment_restriction` | 7 | 0 | 20/20 |
-| `level_limits` | 3 | 3 | 20/20 |
 | `race_restriction` | 3 | 3 | 20/20 |
+| `level_limits` | 3 | 3 | 20/20 |
 | `chassis_features_da_trascrivere` | 3 | 0 | 20/20 |
 | `conversion_status` | 1 | 1 | 20/20 |
 | `features_pending` | 1 | 1 | 20/20 |
+| `hit_die` | 1 | 1 | 20/20 |
 | `prerequisite_class` | 1 | 1 | 20/20 |
 | `entry_level` | 1 | 1 | 20/20 |
-| `hit_die` | 1 | 1 | 20/20 |
 
 Il conto del lavoro si legge da questa tabella: non sono
-110 decisioni indipendenti, sono **12
+104 decisioni indipendenti, sono **12
 blocchi** da descrivere, e due di essi (`structural`, `ability_minimums`)
 pesano da soli
-78 percorsi su 110.
+72 percorsi su 104.
 
 ### Quanto è già deciso
 
-16 campi scalari hanno **fra due e sei valori distinti** in tutto il
+18 campi scalari hanno **fra due e sei valori distinti** in tutto il
 corpus: nello schema diventano `enum`, e il valore ammesso non va inventato,
 va letto dai dati. Esempi:
 
@@ -143,7 +143,7 @@ tabella di difetti per un privilegio che difetto non era.
 
 ### 2.3 Percorsi disomogenei
 
-75 percorsi su 171 non compaiono in tutte le
+84 percorsi su 191 non compaiono in tutte le
 20 classi. La maggior parte è legittima e attesa: un minimo di
 caratteristica esiste solo dove la fonte lo pone, i titoli di livello solo
 dove la 2e li stampa. Ma la disomogeneità non è distinguibile dall'errore
@@ -193,13 +193,13 @@ nella stessa condizione, e uno sta peggio:
 
 | strato | file | percorsi in uso | dichiarati dallo schema | `mechanics_5e` null |
 |---|--:|--:|--:|--:|
-| **classe** | 20 | 171 | 23 | 0 |
+| **classe** | 20 | 191 | 49 | 0 |
 | **razza** | 15 | 107 | 69 | 0 |
 | **divinita** | 21 | 0 | 0 | 21 |
 
 `razza.schema.json` dichiara **zero** proprietà per `mechanics_5e`, su
 107 percorsi in uso:
-peggio delle classi, che almeno ne hanno 23. È lo strato dove
+peggio delle classi, che almeno ne hanno 49. È lo strato dove
 vive il tappo della decisione 20 (`tappo-barbaro`), in
 `razze/umano-barbaro.json`: il campo che esiste solo in `mechanics_5e` e che
 il motore, leggendo `source_2e`, scartava in silenzio. Il difetto trovato ieri
@@ -216,7 +216,7 @@ guardia domani.
 | strato | file | percorsi in uso | dichiarati | `additionalProperties` |
 |---|--:|--:|--:|:-:|
 | **mostro** | 52 | 163 | 93 | `False` |
-| **oggetto** | 79 | 60 | 51 | `False` |
+| **oggetto** | 92 | 63 | 54 | `False` |
 | **modello** | 3 | 108 | 82 | `False` |
 
 Sono la misura vera del costo: `mostro` dichiara
@@ -232,20 +232,20 @@ di grandezza, su meno file.
 
 |  |  |
 |---|--:|
-| percorsi in uso sotto `mechanics_5e`, 20 file | 171 |
-| già dichiarati da `classe.schema.json` | 23 |
+| percorsi in uso sotto `mechanics_5e`, 20 file | 191 |
+| già dichiarati da `classe.schema.json` | 49 |
 | già dichiarati da `effetto.schema.json` (validati a parte) | 39 |
-| **da dichiarare** | **110** |
+| **da dichiarare** | **104** |
 | …di cui nominati almeno da un validatore | 50 |
-| …di cui **nominati da nessuno** | **60** |
+| …di cui **nominati da nessuno** | **54** |
 | blocchi di primo livello da descrivere | 12 |
-| campi scalari che diventano `enum` letti dai dati | 16 |
+| campi scalari che diventano `enum` letti dai dati | 18 |
 | incoerenze: **stato dichiarato**, da descrivere | **9** |
 | incoerenze: **difetti**, da correggere | **0** |
 
-**Il costo non è nei 110 percorsi.** Sono
+**Il costo non è nei 104 percorsi.** Sono
 12 blocchi, e uno solo —
-`structural` — ne porta 68: è la scheda 2e
+`structural` — ne porta 62: è la scheda 2e
 riportata intera (tabella dei punti esperienza, progressione d'attacco, tiri
 salvezza, competenze, titoli, equipaggiamento iniziale), cioè un lavoro di
 trascrizione, non di decisione.
@@ -293,14 +293,14 @@ proprietà dichiarata: 107 percorsi in uso nei 15 file,
 | `allowed_classes` | 4 | 0 | 15/15 |
 | `level_limits` | 3 | 0 | 15/15 |
 | `languages` | 1 | 0 | 15/15 |
-| `movement_2e` | 1 | 0 | 15/15 |
-| `movement_note` | 1 | 0 | 15/15 |
-| `conversion_status` | 1 | 0 | 15/15 |
-| `darkvision_ft` | 1 | 0 | 15/15 |
-| `speed_ft` | 1 | 0 | 15/15 |
 | `languages_note` | 1 | 0 | 15/15 |
-| `darkvision_note` | 1 | 0 | 15/15 |
+| `conversion_status` | 1 | 0 | 15/15 |
+| `movement_note` | 1 | 0 | 15/15 |
 | `size` | 1 | 0 | 15/15 |
+| `speed_ft` | 1 | 0 | 15/15 |
+| `movement_2e` | 1 | 0 | 15/15 |
+| `darkvision_ft` | 1 | 0 | 15/15 |
+| `darkvision_note` | 1 | 0 | 15/15 |
 
 4 blocchi da
 descrivere, contro i 12 delle
@@ -338,11 +338,11 @@ in due, perché costano cose diverse:
 |  | classe | razza | insieme |
 |---|--:|--:|--:|
 | file | 20 | 15 | 35 |
-| percorsi in uso sotto `mechanics_5e` | 171 | 107 | 278 |
-| già dichiarati dallo schema | 23 | 69 | 92 |
+| percorsi in uso sotto `mechanics_5e` | 191 | 107 | 298 |
+| già dichiarati dallo schema | 49 | 69 | 118 |
 | già dichiarati da `effetto.schema.json` | 39 | 0 | 39 |
-| **da dichiarare** | **110** | **38** | **148** |
-| …nominati da nessun validatore | 60 | 0 | 60 |
+| **da dichiarare** | **104** | **38** | **142** |
+| …nominati da nessun validatore | 54 | 0 | 54 |
 | blocchi di primo livello da descrivere | 12 | 4 | 16 |
 | incoerenze: stato dichiarato | 9 | — | 9 |
 | incoerenze: difetti | 0 | — | 0 |
@@ -352,9 +352,9 @@ Il termine di paragone resta quello di §3: `mostro.schema.json` dichiara
 163 in uso, con
 `additionalProperties: false`, su 52
 file. Le due zone morte insieme chiedono
-148 dichiarazioni contro le
+142 dichiarazioni contro le
 93 già scritte per il
-mostro — 1.6
+mostro — 1.5
 volte quel lavoro — su 35 file invece di
 52. E non ci sono più difetti da correggere prima: i 9 che restano sono stato dichiarato, cioè questo stesso lavoro visto da un altro lato.
 
@@ -369,7 +369,7 @@ volte quel lavoro — su 35 file invece di
    `ability_adjustments` (14), `ability_constraints` (12)
    — che sono numeri e limiti, cioè trascrizione con `enum` e `minimum`
    leggibili dai dati, non decisioni.
-4. `structural` (68 percorsi): il pezzo più grosso
+4. `structural` (62 percorsi): il pezzo più grosso
    di tutti e il meno rischioso, perché è la scheda 2e riportata intera.
 
 Le 9 incoerenze di stato dichiarato non sono una voce in più

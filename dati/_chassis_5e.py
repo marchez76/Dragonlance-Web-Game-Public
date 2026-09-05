@@ -37,7 +37,14 @@ LE SETTE INCOMPATIBILITA' STRUTTURALI
     resta in `source_2e`.
 """
 
+import os
+import sys
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                "_fonti"))
+
 import _srd51 as R
+import srd51_pacchetti as PK  # noqa: E402
 
 DEC = "DECISIONE 23 (`principio-del-clone`)"
 
@@ -258,6 +265,109 @@ def verifica_rimandi(docs):
 # --------------------------------------------------------------------------
 # LE SETTE INCOMPATIBILITA' STRUTTURALI, applicate uguali per tutti.
 # --------------------------------------------------------------------------
+# --------------------------------------------------------------------------
+# L'EQUIPAGGIAMENTO INIZIALE — decisione 62 (`pacchetto-fisso`).
+#
+# La scelta e' il PACCHETTO e non il borsello, e questa funzione e' il punto
+# in cui la scelta diventa dato. Non inventa niente: l'elenco viene dal
+# telaio SRD (`srd51_pacchetti.EQUIPAGGIAMENTO`), che e' trascritto, e le sue
+# voci RIFERISCONO il catalogo e i pacchetti per id invece di ricopiarli.
+#
+# LE OTTO CLASSI SENZA CHASSIS NON HANNO UN ELENCO, e non e' una dimenticanza
+# che si tappa con un elenco plausibile: comporre un pacchetto per una classe
+# che nessun telaio 5e copre e' una scelta editoriale, e la
+# decisione 62 (`pacchetto-fisso`) dice esplicitamente che va PROPOSTA prima
+# di essere scritta. `da_comporre: true` e' quel vuoto reso visibile — stessa forma
+# dell'`in_sospeso` che la decisione 23 (`principio-del-clone`) usa per i
+# chassis mancanti, e per la stessa ragione.
+#
+# TRE GENERI DI VOCE, e la distinzione conta perche' cambia chi le risolve:
+# `oggetto` va letto in dati/oggetti/, `pacchetto` in dati/pacchetti/,
+# `scelta` non si risolve affatto — e' un filtro che l'interfaccia deve porre
+# come domanda (decisione 35, `repertori-sono-filtri`).
+# --------------------------------------------------------------------------
+
+def _slug(nome):
+    """Lo stesso slug di build_oggetti/build_pacchetti, senza importarlo:
+    quel modulo scrive file, e importarlo da qui accoppierebbe la lettura
+    del chassis alla generazione del catalogo."""
+    fuori = []
+    for ch in nome.lower().replace("'", "").replace(",", ""):
+        fuori.append(ch if ch.isalnum() else "-")
+    return "-".join(x for x in "".join(fuori).split("-") if x)
+
+
+def _voce(quantita, nome, genere):
+    if genere == PK.PACCHETTO:
+        return {"quantita": quantita, "name_srd": nome, "genere": "pacchetto",
+                "riferimento": _slug(nome), "filtro": None}
+    if genere == PK.CATEGORIA:
+        return {"quantita": quantita, "name_srd": nome, "genere": "scelta",
+                "riferimento": None, "filtro": PK.SCELTE[nome]["filtro"]}
+    return {"quantita": quantita, "name_srd": nome, "genere": "oggetto",
+            "riferimento": _slug(nome), "filtro": None}
+
+
+def equipaggiamento_iniziale(c, s):
+    srd, _ = CHASSIS[c["id"]]
+    righe = PK.EQUIPAGGIAMENTO.get(srd)
+    return {
+        "system": "pacchetto_fisso_5e",
+        # NON SI RICOPIA LA FONTE NELLO STRATO NOSTRO. Fino al 05/09/2026
+        # questi due campi portavano la stringa di `source_2e` per intero —
+        # la formula di ricchezza e le regole di equipaggiamento — cioe' la
+        # stessa struttura doppia che la
+        # decisione 61 (`allineamento-insieme`) ha appena chiuso su
+        # `alignment_restriction`, e che la
+        # decisione 4 (`limiti-di-livello`) evita da sempre sui
+        # limiti di livello: `applied: false` piu' la SEDE, mai il valore
+        # duplicato. Chi vuole la formula la legge dove sta.
+        "source_wealth": {
+            "applied": False,
+            "sede": "source_2e.starting_wealth",
+            "presente": s.get("starting_wealth") is not None,
+            "note": "La formula di ricchezza 2e resta dato di fonte e NON si "
+                    "applica: la decisione 62 (`pacchetto-fisso`) sceglie il "
+                    "pacchetto, e su questa strada la formula non serve a "
+                    "niente. La fonte ne da' una a 4 classi su 20, quindi "
+                    "l'altra strada avrebbe dovuto inventarne 16.",
+        },
+        "constraints": {
+            "applied": False,
+            "sede": "source_2e.equipment_rules",
+            "quante": len(s.get("equipment_rules") or []),
+            "note": "Le regole di equipaggiamento della fonte mordono sul "
+                    "pacchetto e non sul tiro, ma COME mordano non e' "
+                    "deciso: un vincolo come «non puo' portare armature piu' "
+                    "pesanti di X» su un pacchetto fisso o e' gia' rispettato "
+                    "— e allora non serve — o chiede un pacchetto riscritto "
+                    "per quella classe, che e' un pacchetto in piu' da "
+                    "comporre. La decisione 62 (`pacchetto-fisso`) lo "
+                    "registra come conseguenza non risolta, e finche' non lo "
+                    "e' il campo dichiara di non essere applicato invece di "
+                    "ricopiare la prosa qui.",
+        },
+        "telaio": srd,
+        "da_comporre": righe is None,
+        "scelte": None if righe is None else [
+            {"alternative": [{"voci": [_voce(*v) for v in alternativa]}
+                             for alternativa in riga]}
+            for riga in righe
+        ],
+        "note": "INCOMPATIBILITA' 5. Pacchetto fisso 5e "
+                "(decisione 62, `pacchetto-fisso`). Le regole di "
+                "equipaggiamento della fonte diventano vincoli sul "
+                "pacchetto, non sul tiro della ricchezza, e la formula di "
+                "ricchezza 2e resta in `source_wealth` come dato di fonte "
+                "NON applicato — stessa forma della "
+                "decisione 4 (`limiti-di-livello`)."
+                + ("" if righe is not None else
+                   " Questa classe non ha chassis 5e: l'elenco va COMPOSTO, "
+                   "e comporlo e' una proposta da portare, non un dato da "
+                   "scrivere di propria iniziativa."),
+    }
+
+
 def incompatibilita(c):
     s = c["s2e"]
     prog = s.get("progression") or []
@@ -348,14 +458,7 @@ def incompatibilita(c):
                     "propria nei dati — RAPPORTO-personaggio §2.4 — quindi "
                     "qui sono nomi italiani, non id.",
         },
-        "starting_equipment": {
-            "system": "pacchetto_fisso_5e",
-            "source_wealth": s.get("starting_wealth"),
-            "constraints": s.get("equipment_rules") or [],
-            "note": "INCOMPATIBILITA' 5. Pacchetto fisso 5e. Le regole di "
-                    "equipaggiamento della fonte diventano vincoli sul "
-                    "pacchetto, non sul tiro della ricchezza.",
-        },
+        "starting_equipment": equipaggiamento_iniziale(c, s),
         "level_cap": {
             "value": 20,
             "source_max": max_2e,

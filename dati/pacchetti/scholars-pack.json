@@ -1,0 +1,65 @@
+{
+  "id": "scholars-pack",
+  "name": {
+    "en": "Scholar's Pack",
+    "it": "Pacchetto dello studioso"
+  },
+  "source": {
+    "source_edition": "SRD 5.1",
+    "source_book": "Player's Handbook (SRD 5.1), sezione «Equipment Packs»",
+    "api_ref": "v1/sections/equipment-packs"
+  },
+  "cost_gp": 40.0,
+  "voci": [
+    {
+      "quantita": 1,
+      "name_srd": "Backpack",
+      "oggetto": "backpack",
+      "stato": "a_catalogo",
+      "motivo": null
+    },
+    {
+      "quantita": 1,
+      "name_srd": "Book",
+      "oggetto": "book",
+      "stato": "a_catalogo",
+      "motivo": null
+    },
+    {
+      "quantita": 1,
+      "name_srd": "Ink (1 ounce bottle)",
+      "oggetto": "ink-1-ounce-bottle",
+      "stato": "a_catalogo",
+      "motivo": null
+    },
+    {
+      "quantita": 1,
+      "name_srd": "Ink pen",
+      "oggetto": "ink-pen",
+      "stato": "a_catalogo",
+      "motivo": null
+    },
+    {
+      "quantita": 10,
+      "name_srd": "Parchment (one sheet)",
+      "oggetto": "parchment-one-sheet",
+      "stato": "a_catalogo",
+      "motivo": null
+    },
+    {
+      "quantita": 1,
+      "name_srd": "Little bag of sand",
+      "oggetto": null,
+      "stato": "da_decidere",
+      "motivo": "l'SRD la nomina solo dentro la descrizione di questo pacchetto: la tabella dell'attrezzatura non la elenca, quindi non ha ne' prezzo ne' peso propri. Non e' una voce mancante dal catalogo — e' da decidere se diventa un oggetto o resta testo del pacchetto (decisione 62, `pacchetto-fisso`)"
+    },
+    {
+      "quantita": 1,
+      "name_srd": "Small knife",
+      "oggetto": null,
+      "stato": "da_decidere",
+      "motivo": "l'SRD la nomina solo dentro la descrizione di questo pacchetto: la tabella dell'attrezzatura non la elenca, quindi non ha ne' prezzo ne' peso propri. Non e' una voce mancante dal catalogo — e' da decidere se diventa un oggetto o resta testo del pacchetto (decisione 62, `pacchetto-fisso`)"
+    }
+  ],
+  "note": null
+}

@@ -359,6 +359,10 @@ def main():
         o for o in attrezzatura
         if any(re.search(r"Peso .*costo", n or "")
                for n in (o["mechanics_5e"].get("note") or []))]
+    attrezzatura_in_campo = [
+        o for o in attrezzatura
+        if (o["mechanics_5e"].get("attrezzatura_5e") or {}
+            ).get("cost_gp") is not None]
 
     doc = f"""# Campi disponibili e non estratti
 
@@ -459,22 +463,28 @@ solleva `ValueError` invece di leggere un intero.
 
 {"" if not str_divergono else '''**Una divergenza di trascrizione trovata strada facendo.** Su ''' + ("una voce" if len(str_divergono) == 1 else str(len(str_divergono)) + " voci") + ''' la nostra `ac_formula` non è quella della fonte: ''' + ", ".join("`" + e["slug"] + "` (fonte `" + e["stringa_fonte"] + "`, nostra `" + str(e["stringa_nostra"]) + "`)" for e in str_divergono) + '''. Il campo `source_srd` dichiara una trascrizione diretta; quella stringa è stata normalizzata a mano. Il valore risultante è corretto, la trascrizione no.'''}
 
-### 2.2 Prezzo e peso dell'attrezzatura — il caso che costa davvero
+### 2.2 Prezzo e peso dell'attrezzatura — CHIUSO
 
-Armi e armature hanno `cost_gp` e `weight_lb` in campi propri. Le
-**{len(attrezzatura)}** voci di attrezzatura no: `build_oggetti.py` scrive
-prezzo e peso **dentro una frase italiana** di `mechanics_5e.note`, nella
-forma *«Peso N lb, costo N mo»*. Sono
-**{len(attrezzatura_in_nota)}/{len(attrezzatura)}**.
+Armi e armature hanno sempre avuto `cost_gp` e `weight_lb` in campi propri;
+le **{len(attrezzatura)}** voci di attrezzatura no. `build_oggetti.py`
+scriveva prezzo e peso **dentro una frase italiana** di
+`mechanics_5e.note`, nella forma *«Peso N lb, costo N mo»*: la fonte
+(`v2/items`) dà `cost` e `weight` come campi, noi li leggevamo, ci
+componevamo una frase, e buttavamo via i campi.
 
-La fonte (`v2/items`) dà `cost` e `weight` come campi. Noi li leggiamo, li
-usiamo per comporre una frase, e buttiamo via i campi.
-
-Questo è il caso con una conseguenza già scritta altrove: la decisione 42
+Era il caso con una conseguenza già scritta altrove: la decisione 42
 (`cambio-acciaio-oro`) è nata perché *«un personaggio non poteva comprare il
-proprio equipaggiamento»*. Quella decisione ha dato il rapporto fra acciaio e
-oro. Ma su {len(attrezzatura_in_nota)} oggetti **non c'è un prezzo leggibile
-a cui applicarlo**: c'è una frase che lo contiene.
+proprio equipaggiamento»*, e ha dato il rapporto fra acciaio e oro — a un
+campo che per l'attrezzatura non esisteva.
+
+**Chiuso dalla decisione 62 (`pacchetto-fisso`)**, che ha dovuto guardare
+questo strato per un altro motivo. `mechanics_5e.attrezzatura_5e` porta ora
+`cost_gp` e `weight_lb` in campi, su
+**{len(attrezzatura_in_campo)}/{len(attrezzatura)}** voci, e
+**{len(attrezzatura_in_nota)}** restano nella frase. Non è una quarta sede
+accanto a `weapon_5e` e `armor_5e`: le tre si escludono a vicenda — un
+oggetto ne porta al più una — e chi cerca un prezzo passa da
+`_valuta.prezzo_di()`, che è l'unico posto che sa quali sono.
 
 ### 2.3 Semplice o da guerra — un booleano riscritto da una stringa
 

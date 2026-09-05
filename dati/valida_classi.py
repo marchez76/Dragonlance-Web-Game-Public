@@ -86,6 +86,54 @@ def coerenza(d, err):
                 f"e' sotto il minimo richiesto per {ab} ({minimo})")
 
 
+def _ids(cartella):
+    return {json.load(open(p, encoding="utf-8"))["id"]
+            for p in glob.glob(os.path.join(BASE, cartella, "*.json"))}
+
+
+def equipaggiamento(classi, err):
+    """I riferimenti dell'equipaggiamento iniziale devono risolvere.
+
+    decisione 62 (`pacchetto-fisso`). Una voce di pacchetto rimanda a
+    `dati/oggetti/` o a `dati/pacchetti/` per id: un riferimento che non
+    risolve e' peggio di un elenco assente, perche' promette. Le classi
+    senza chassis non hanno elenco e devono dirlo — `da_comporre` — invece
+    di avere `scelte` vuote, che sarebbero indistinguibili da un pacchetto
+    davvero vuoto."""
+    oggetti, pacchetti = _ids("oggetti"), _ids("pacchetti")
+    voci = da_comporre = 0
+    for d in classi:
+        se = (((d.get("mechanics_5e") or {}).get("structural") or {})
+              .get("starting_equipment") or {})
+        if not se:
+            err(f"{d['id']}: nessun blocco starting_equipment")
+            continue
+        if se.get("da_comporre"):
+            da_comporre += 1
+            if se.get("scelte") is not None:
+                err(f"{d['id']}: dichiara da_comporre e porta comunque un "
+                    f"elenco: o e' composto o non lo e'")
+            continue
+        if not se.get("scelte"):
+            err(f"{d['id']}: non e' da comporre e non ha elenco")
+            continue
+        for scelta in se["scelte"]:
+            for alternativa in scelta["alternative"]:
+                for v in alternativa["voci"]:
+                    voci += 1
+                    g, r = v["genere"], v["riferimento"]
+                    if g == "oggetto" and r not in oggetti:
+                        err(f"{d['id']}: «{v['name_srd']}» rimanda a "
+                            f"`{r}`, che in dati/oggetti/ non c'e'")
+                    elif g == "pacchetto" and r not in pacchetti:
+                        err(f"{d['id']}: «{v['name_srd']}» rimanda a "
+                            f"`{r}`, che in dati/pacchetti/ non c'e'")
+                    elif g == "scelta" and r is not None:
+                        err(f"{d['id']}: «{v['name_srd']}» e' una scelta "
+                            f"aperta e rimanda a un oggetto preciso")
+    return voci, da_comporre
+
+
 def incrociato(classi, razze, err):
     """La tabella Class/Race Combinations delle razze deve concordare
     con le restrizioni di razza dichiarate dalle classi."""
@@ -270,6 +318,18 @@ def main():
         print(f"    ✓ {len(PIANTATI)} casi: "
               f"{sum(1 for _n, _m, a in PIANTATI if a)} difetti piantati visti, "
               f"{sum(1 for _n, _m, a in PIANTATI if not a)} somiglianza legittima taciuta")
+
+    print("\n--- equipaggiamento iniziale ---")
+    errori_eq = []
+    voci, da_comporre = equipaggiamento(classi, errori_eq.append)
+    for e in errori_eq:
+        print(f"    ✗ {e}")
+    totale += len(errori_eq)
+    if not errori_eq:
+        print(f"    ✓ {voci} voci di equipaggiamento, tutti i riferimenti "
+              f"risolvono in dati/oggetti/ e dati/pacchetti/")
+        print(f"    ✓ {da_comporre} classi senza chassis dichiarano "
+              f"`da_comporre` invece di un elenco vuoto")
 
     print("\n--- controllo incrociato razze/classi ---")
     incr = []

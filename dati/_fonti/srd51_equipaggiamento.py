@@ -43,6 +43,18 @@ DUE ANOMALIE DI DATI, NON DI FONTE
     - Sling bullets: il campo desc dell'API segnala "Technically their cost
       is 20 for 4cp" (errore di battitura del Player's Handboook riportato
       pari pari da Open5e, non nostro).
+    - Blanket: peso 0 su /v2/items/?document__key=srd-2014, mentre la tabella
+      dell'SRD gliene da' uno. Recuperato da srd-2024 — 3 lb, con lo STESSO
+      costo (0.50) sulle due edizioni — che e' la stessa tecnica gia' usata
+      per il peso delle armature: non un valore inventato, lo stesso dato
+      letto da un record diverso della stessa fonte. Le altre voci a peso 0
+      fra le 13 aggiunte il 05/09/2026 (Bell, Candle, Ink, Ink pen,
+      Parchment) sono a peso 0 anche nella tabella stampata: li' il vuoto e'
+      della fonte, non dell'API, e va tenuto.
+    - Spellbook: il `desc` dell'API porta "leather-\u00ad\u2010\u2011bound",
+      cioe' i trattini morbidi dell'estrazione dal PDF dell'SRD. Trascritto
+      "leather-bound": e' un artefatto del trasporto, non una parola della
+      fonte, e l'unico caso in cui questo modulo tocca il testo che riceve.
 """
 
 # (name_en, name_it, categoria_arma, damage_dice, damage_type, properties, cost_gp, weight_lb, api_ref)
@@ -133,4 +145,29 @@ ATTREZZATURA = [
     ("Crossbow bolt", "Dardo da balestra", "Bolts to be used in a crossbow.", 0.05, 0.08, "v2/items/srd_crossbow-bolt"),
     ("Sling bullets", "Proiettili da fionda", "Sold in bags of 20.", 0.01, 0.075, "v2/items/srd_sling-bullets"),
     ("Blowgun needles", "Aghi da cerbottana", "Needles to be fired with a blowgun. Sold in bags of 50.", 0.02, 0.02, "v2/items/srd_blowgun-needles"),
+
+    # ---------------------------------------------------------------------
+    # LE 13 VOCI DEI PACCHETTI (05/09/2026, decisione 62, `pacchetto-fisso`).
+    #
+    # Non sono un allargamento del confine dichiarato in testa a questo
+    # modulo — «cio' che serve al combattimento e all'esplorazione, non ogni
+    # voce della tabella» — ma la sua CONSEGUENZA: scelto il pacchetto fisso,
+    # queste 13 sono esattamente le voci che i 5 pacchetti e i 5 elenchi di
+    # telaio nominano e che il catalogo non aveva. Nessuna e' stata aggiunta
+    # per completezza: `analizza_equipaggiamento.py` le ha contate, e il
+    # conto e' 13. Le altre 100 voci del listino SRD restano fuori, ed e' la
+    # ragione per cui il borsello sarebbe costato di piu'.
+    ("Bedroll", "Giaciglio da campo", "A bedroll.", 1.0, 7.0, "v2/items/srd_bedroll"),
+    ("Blanket", "Coperta", "A blanket.", 0.5, 3.0, "v2/items/srd_blanket"),
+    ("Candle", "Candela", "For 1 hour, a candle sheds bright light in a 5-foot radius and dim light for an additional 5 feet.", 0.01, 0.0, "v2/items/srd_candle"),
+    ("Bell", "Campanello", "A bell.", 1.0, 0.0, "v2/items/srd_bell"),
+    ("Hammer", "Martello", "A hammer.", 1.0, 3.0, "v2/items/srd_hammer"),
+    ("Mess Kit", "Gavetta", "This tin box contains a cup and simple cutlery. The box clamps together, and one side can be used as a cooking pan and the other as a plate or shallow bowl.", 0.2, 1.0, "v2/items/srd_mess-kit"),
+    ("Rations (1 day)", "Razioni (1 giorno)", "Rations consist of dry foods suitable for extended travel, including jerky, dried fruit, hardtack, and nuts.", 0.5, 2.0, "v2/items/srd_rations-1-day"),
+    ("Book", "Libro", "A book might contain poetry, historical accounts, information pertaining to a particular field of lore, diagrams and notes on gnomish contraptions, or just about anything else that can be represented using text or pictures. A book of spells is a spellbook (described later in this section).", 25.0, 5.0, "v2/items/srd_book"),
+    ("Ink (1 ounce bottle)", "Inchiostro (boccetta da 30 ml)", "A bottle of ink.", 10.0, 0.0, "v2/items/srd_ink-1-ounce-bottle"),
+    ("Ink pen", "Penna d'inchiostro", "A pen for writing with ink.", 0.02, 0.0, "v2/items/srd_ink-pen"),
+    ("Parchment (one sheet)", "Pergamena (un foglio)", "A sheet of parchment", 0.1, 0.0, "v2/items/srd_parchment-one-sheet"),
+    ("Spellbook", "Libro degli incantesimi", "Essential for wizards, a spellbook is a leather-bound tome with 100 blank vellum pages suitable for recording spells.", 50.0, 3.0, "v2/items/srd_spellbook"),
+    ("Component Pouch", "Borsa dei componenti", "A component pouch is a small, watertight leather belt pouch that has compartments to hold all the material components and other special items you need to cast your spells, except for those components that have a specific cost (as indicated in a spell's description).", 25.0, 2.0, "v2/items/srd_component-pouch"),
 ]

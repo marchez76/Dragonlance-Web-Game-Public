@@ -55,6 +55,7 @@ def base_doc(id_, name_en, name_it, categoria, descrizione, api_ref):
             "conversion_status": "compilato",
             "weapon_5e": None,
             "armor_5e": None,
+            "attrezzatura_5e": None,
             "rarity": None,
             "attunement": None,
             "proprieta_magiche": [],
@@ -232,13 +233,17 @@ def build_attrezzatura():
     for name_en, name_it, desc, cost, weight, api_ref in SRD.ATTREZZATURA:
         id_ = slugify(name_en)
         d = base_doc(id_, name_en, name_it, "attrezzatura", desc, api_ref)
-        d["mechanics_5e"]["note"] = [
-            f"Peso {weight} lb, costo {cost} mo (SRD 5.1, direct)."
-        ]
-        # L'attrezzatura non ha weapon_5e/armor_5e: costo e peso restano
-        # dentro source_srd/mechanics_5e.note, non c'e' una sottosezione
-        # dedicata come per armi e armature (lo schema non ne prevede una:
-        # la Fase 2 doveva coprire il combattimento, non l'inventario).
+        # PREZZO E PESO IN CAMPI, non dentro una frase
+        # (decisione 62, `pacchetto-fisso`). Fino al 05/09/2026 questa riga
+        # scriveva «Peso N lb, costo N mo» in `mechanics_5e.note`: due campi
+        # letti dalla fonte, cuciti in una stringa italiana, e i campi
+        # buttati. Erano 28 oggetti su 79 senza un prezzo leggibile, cioe'
+        # senza niente a cui applicare l'aritmetica della
+        # decisione 42 (`cambio-acciaio-oro`).
+        d["mechanics_5e"]["attrezzatura_5e"] = {
+            "cost_gp": cost,
+            "weight_lb": weight,
+        }
         docs.append((id_, d))
     return docs
 

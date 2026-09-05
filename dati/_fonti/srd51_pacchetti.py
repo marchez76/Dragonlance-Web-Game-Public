@@ -197,6 +197,61 @@ EQUIPAGGIAMENTO = {
 }
 
 
+# --------------------------------------------------------------------------
+# LE CINQUE SCELTE APERTE, e cosa delimita ciascuna.
+#
+# Non sono voci mancanti dal catalogo: sono domande da porre al giocatore,
+# cioe' FILTRI nella forma della decisione 35 (`repertori-sono-filtri`) — il
+# filtro delimita, la scelta avviene dopo. La decisione 62 (`pacchetto-fisso`)
+# chiede di registrarle come tali invece di risolverle scegliendo una voce
+# per comodita'.
+#
+# `filtro` e' scritto nel vocabolario del CATALOGO — `weapon_5e.categoria` e
+# `weapon_5e.tipo` di `dati/oggetti/` — e non in quello inglese della fonte:
+# un filtro si scrive nei termini di chi deve risolverlo, altrimenti la
+# traduzione avviene in chi lo legge, cioe' in tanti posti quanti sono i
+# lettori. `None` dice che il filtro esiste ma il catalogo non ha ancora
+# nessun campione che lo soddisfi — e' un FILTRO SENZA CAMPIONE, lo stesso
+# caso e lo stesso nome della clausola regionale in `_valuta.py`, e va detto
+# invece di essere aggirato adottando tre voci al volo.
+# `valida_pacchetti.py` verifica i due sensi contro il catalogo.
+# --------------------------------------------------------------------------
+SCELTE = {
+    "arma da guerra": {
+        "filtro": {"categoria": "da_guerra", "tipo": None},
+        "nota": "qualunque arma da guerra, mischia o distanza",
+    },
+    "arma da mischia semplice": {
+        "filtro": {"categoria": "semplice", "tipo": "mischia"},
+        "nota": "solo mischia, e la distinzione conta: l'alternativa nella "
+                "stessa riga sono cinque giavellotti",
+    },
+    "arma semplice": {
+        "filtro": {"categoria": "semplice", "tipo": None},
+        "nota": "qualunque arma semplice, mischia o distanza",
+    },
+    "focus arcano": {
+        "filtro": None,
+        "nota": "l'SRD elenca sfera, cristallo, bacchetta, verga e bastone "
+                "come focus arcani, e il catalogo non ne ha adottato "
+                "nessuno: e' un FILTRO SENZA CAMPIONE. Le voci stanno "
+                "nell'indice SRD (Orb, Crystal, Wooden staff) e adottarle e' "
+                "una scelta, non un atto dovuto — con il pacchetto fisso "
+                "l'alternativa nella stessa riga, il Component Pouch, e' a "
+                "catalogo, quindi la creazione non si blocca",
+    },
+    "simbolo sacro": {
+        "filtro": None,
+        "nota": "stesso caso del focus arcano: amuleto, emblema e reliquiario "
+                "stanno nell'indice SRD e non nel catalogo. Qui pero' NON "
+                "c'e' un'alternativa nella stessa riga — Cleric e Paladin lo "
+                "ricevono insieme allo scudo o alla cotta di maglia, senza "
+                "scelta — quindi e' l'unica delle cinque che lascia un buco "
+                "vero dentro un pacchetto",
+    },
+}
+
+
 def voci_di_pacchetto():
     """{nome_pacchetto: [(quantita', voce, a_listino)]}"""
     return {nome: voci for nome, _costo, voci in PACCHETTI}
@@ -299,6 +354,15 @@ assert not _MANCANTI, (
     "il catalogo adotta voci che l'indice SRD non nomina: "
     f"{_MANCANTI}. Le due trascrizioni vengono dalla stessa tabella e si "
     "sono sfasate.")
+
+_USATE = {v for righe in EQUIPAGGIAMENTO.values() for riga in righe
+          for alt in riga for _q, v, g in alt if g == CATEGORIA}
+_SCARTO = _USATE ^ set(SCELTE)
+assert not _SCARTO, (
+    f"le scelte dichiarate e quelle usate dagli elenchi non coincidono: "
+    f"{sorted(_SCARTO)}. Una scelta senza filtro e' una domanda che "
+    "l'interfaccia non sa porre; un filtro senza scelta e' un permesso "
+    "marcito.")
 
 _FANTASMA = sorted(set(EQUIVALENZE.values()) - set(indice_completo()))
 assert not _FANTASMA, (

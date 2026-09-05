@@ -393,6 +393,110 @@
       ],
       "description": "ZONA MORTA DICHIARATA, 02/09/2026. Questo schema descrive `mechanics_5e` come un oggetto qualunque: nessuna proprieta' dichiarata, nessun additionalProperties. L'intero strato di conversione delle classi — chassis, sette incompatibilita', privilegi, minimi — non e' quindi mai stato verificato dallo schema, e un campo scritto storto ci passa attraverso senza che nessuno lo veda. Il difetto e' preesistente ed e' emerso aggiungendo i campi qui sotto, che sono passati al primo colpo senza essere dichiarati da nessuna parte. Sono dichiarati sotto solo i blocchi toccati dalla prima fetta verticale: chiudere l'oggetto per intero vuol dire censire tutto lo strato, che e' un lavoro a se' e non va fatto di straforo dentro un altro. Nel frattempo i controlli veri su questi campi stanno in dati/valida_effetti.py.",
       "properties": {
+        "structural": {
+          "type": "object",
+          "description": "DICHIARAZIONE PARZIALE, come il resto di questo strato: qui sotto sta il solo blocco che la decisione 62 (`pacchetto-fisso`) ha riempito, e nessun `additionalProperties` — gli altri campi di `structural` restano nella zona morta dichiarata sopra, e chiuderla per intero e' il lavoro a se' gia' nominato li'.",
+          "properties": {
+            "starting_equipment": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["system", "da_comporre", "scelte"],
+              "description": "L'EQUIPAGGIAMENTO INIZIALE COME ELENCO, non come dichiarazione vuota (decisione 62, `pacchetto-fisso`). Il campo diceva `system: \"pacchetto_fisso_5e\"` su 20 classi su 20 e conteneva zero pacchetti: una dichiarazione senza referente, la stessa forma dell'`alignment_restriction.applied` di prima della decisione 61 (`allineamento-insieme`). Ora le 12 classi con un chassis portano l'elenco del telaio SRD, e le 8 senza dichiarano `da_comporre` — che e' un vuoto VISIBILE, non un elenco assente.",
+              "properties": {
+                "system": {
+                  "enum": ["pacchetto_fisso_5e"],
+                  "description": "Un valore solo, ed e' voluto: l'altra economia — il borsello da spendere — e' stata misurata e scartata dalla decisione 62 (`pacchetto-fisso`). Se un giorno tornasse, tornerebbe come decisione e non come valore nuovo scritto di straforo."
+                },
+                "telaio": {
+                  "type": ["string", "null"],
+                  "description": "Il nome della classe SRD da cui l'elenco viene. `null` per le 8 senza chassis, dove combacia con `da_comporre: true`."
+                },
+                "da_comporre": {
+                  "type": "boolean",
+                  "description": "Vero per le classi che nessun telaio 5e copre: l'elenco va COMPOSTO, ed e' una scelta editoriale che la decisione 62 (`pacchetto-fisso`) vuole proposta prima che scritta. Stessa forma dell'`in_sospeso` dei chassis mancanti della decisione 23 (`principio-del-clone`)."
+                },
+                "scelte": {
+                  "type": ["array", "null"],
+                  "description": "Le righe dell'elenco SRD: ogni riga e' una scelta fra alternative, ogni alternativa un insieme di voci che si prendono insieme. `null` se `da_comporre`.",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": ["alternative"],
+                    "properties": {
+                      "alternative": {
+                        "type": "array",
+                        "minItems": 1,
+                        "items": {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "required": ["voci"],
+                          "properties": {
+                            "voci": {
+                              "type": "array",
+                              "minItems": 1,
+                              "items": {
+                                "type": "object",
+                                "additionalProperties": false,
+                                "required": ["quantita", "name_srd", "genere", "riferimento", "filtro"],
+                                "properties": {
+                                  "quantita": { "type": "integer", "minimum": 1 },
+                                  "name_srd": { "type": "string" },
+                                  "genere": {
+                                    "enum": ["oggetto", "pacchetto", "scelta"],
+                                    "description": "Chi risolve la voce, e sono tre risolutori diversi: `oggetto` si legge in `dati/oggetti/`, `pacchetto` in `dati/pacchetti/`, `scelta` NON si risolve — e' un filtro che l'interfaccia deve porre come domanda al giocatore (decisione 35, `repertori-sono-filtri`)."
+                                  },
+                                  "riferimento": {
+                                    "type": ["string", "null"],
+                                    "pattern": "^[a-z][a-z0-9-]*$",
+                                    "description": "L'id in `dati/oggetti/` o `dati/pacchetti/`. `null` per le voci di genere `scelta`: una scelta aperta che rimandasse a un oggetto preciso non sarebbe piu' aperta. `valida_classi.py` verifica che ogni riferimento risolva."
+                                  },
+                                  "filtro": {
+                                    "type": ["object", "null"],
+                                    "additionalProperties": false,
+                                    "description": "Cosa delimita una voce di genere `scelta`, nel vocabolario del catalogo e non in quello inglese della fonte. `null` su tutte le altre voci, e `null` anche su due delle cinque scelte — focus arcano e simbolo sacro — dove il filtro esiste ma il catalogo non ha ancora nessun campione: e' un FILTRO SENZA CAMPIONE, e va detto invece di essere aggirato adottando tre voci al volo. La sede delle cinque e' `_fonti/srd51_pacchetti.SCELTE`.",
+                                    "properties": {
+                                      "categoria": { "type": ["string", "null"] },
+                                      "tipo": { "type": ["string", "null"] }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "source_wealth": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["applied", "sede"],
+                  "description": "La formula di ricchezza che la fonte 2e da' a 4 classi su 20, DICHIARATA E NON RICOPIATA. La decisione 62 (`pacchetto-fisso`) sceglie il pacchetto, quindi la formula non si applica; e non si trascrive nemmeno qui, perche' sta gia' in `source_2e.starting_wealth` e portarla in due strati sarebbe la struttura doppia che la decisione 61 (`allineamento-insieme`) ha appena chiuso su `alignment_restriction`. La forma e' quella della decisione 4 (`limiti-di-livello`): `applied: false` piu' la sede, mai il valore.",
+                  "properties": {
+                    "applied": { "const": false },
+                    "sede": { "type": "string" },
+                    "presente": { "type": "boolean", "description": "Se la fonte ne dia una per questa classe. E' un fatto, non il valore: dice che c'e' qualcosa da leggere alla `sede`, senza ricopiarlo." },
+                    "note": { "type": ["string", "null"] }
+                  }
+                },
+                "constraints": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["applied", "sede"],
+                  "description": "Le regole di equipaggiamento della fonte 2e (4 classi su 20), dichiarate come la ricchezza e per la stessa ragione. Su un pacchetto fisso mordono in modo diverso che su un acquisto — o sono gia' rispettate, o chiedono un pacchetto riscritto per quella classe — e QUALE dei due non e' deciso: la decisione 62 (`pacchetto-fisso`) lo registra fra le conseguenze non risolte.",
+                  "properties": {
+                    "applied": { "const": false },
+                    "sede": { "type": "string" },
+                    "quante": { "type": "integer", "minimum": 0 },
+                    "note": { "type": ["string", "null"] }
+                  }
+                },
+                "note": { "type": ["string", "null"] }
+              }
+            }
+          }
+        },
         "alignment_restriction": {
           "type": "object",
           "additionalProperties": false,

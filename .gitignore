@@ -150,6 +150,23 @@ CLAUDE.local.md
 !dati/_fonti/srd51_pacchetti.py
 !dati/analizza_equipaggiamento.py
 
+# Pacchetti di equipaggiamento iniziale (05/09/2026, decisione 62,
+# `pacchetto-fisso`). CARTELLA NUOVA SOTTO dati/, quindi la sua sorte si
+# dichiara ADESSO e non quando qualcuno se ne accorge (CLAUDE.md 1). Resta
+# PUBBLICA, e la ragione e' la stessa di dati/condizioni/ e
+# dati/incantesimi/: viene dall'SRD 5.1 (CC-BY, LICENSE-SRD.md) e non porta
+# source_2e — lo schema non ne prevede uno, perche' i pacchetti sono un
+# istituto della 5e e la fonte 2e per l'equipaggiamento iniziale e' una
+# formula di ricchezza che la decisione 62 lascia non applicata. Un pacchetto
+# e' un elenco di RIFERIMENTI a dati/oggetti/, non una copia: i nomi delle
+# voci SRD ci sono, il testo dei manuali no. NON va in PERCORSI di
+# git-privato.sh. Se un giorno servisse un pacchetto proprio di Krynn preso
+# da un manuale, quello sara' il momento di rileggere questa riga.
+!dati/pacchetti/
+!dati/pacchetti/*.json
+!dati/build_pacchetti.py
+!dati/valida_pacchetti.py
+
 # Allineamento (05/09/2026): il vocabolario dei nove viene dalla sezione
 # Alignment dell'SRD 5.1, la lettura delle restrizioni di classe e' nostra.
 # Il modulo legge dati/classi/, dati/mostri/ e dati/divinita/ — privati — e

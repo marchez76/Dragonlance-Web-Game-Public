@@ -747,8 +747,8 @@ applica.
 
 ### Cosa manca per costruirne uno
 
-Su 27 grandezze necessarie a giocare, **11
-sono coperte da un campo pieno, 6 solo in parte e
+Su 27 grandezze necessarie a giocare, **12
+sono coperte da un campo pieno, 5 solo in parte e
 10 non hanno alcun campo in nessuno schema**.
 
 | buco | misura |
@@ -781,7 +781,7 @@ Riportate nel rapporto con fonte e opzioni, **non decise**.
 
 ### Il vincolo dell'arena
 
-Il corpus intero pesa **1,94 MB**: sta in memoria, e a ogni turno non
+Il corpus intero pesa **2,02 MB**: sta in memoria, e a ogni turno non
 serve leggere alcun file. Il vincolo non è la velocità — è che
 **380 blocchi di meccanica su 405 sono
 ancora solo prosa italiana** e non numeri, su un totale di

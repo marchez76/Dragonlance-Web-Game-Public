@@ -105,3 +105,45 @@ def prezzo_in_acciaio(cost_gp):
     if cost_gp is None:
         return None
     return cost_gp * FATTORE_LISTINO["valore"]
+
+
+# --------------------------------------------------------------------------
+# DOVE STA IL PREZZO DI UN OGGETTO — una domanda sola, un posto solo.
+#
+# Le sezioni di `mechanics_5e` che portano un listino sono tre e SI ESCLUDONO
+# a vicenda: `weapon_5e` per le armi, `armor_5e` per armature e scudo,
+# `attrezzatura_5e` per il resto (decisione 62, `pacchetto-fisso`). Tre
+# sezioni non sono tre sedi: nessun valore e' scritto due volte, e questa e'
+# l'unica funzione che sa quali sono. Chi cerca un prezzo passa di qui, e il
+# giorno in cui nascesse una quarta sezione si aggiunge una riga qui e non in
+# ogni chiamante — che e' esattamente com'e' andata quando le sezioni erano
+# due e l'attrezzatura non ne aveva nessuna.
+# --------------------------------------------------------------------------
+
+SEZIONI_DI_LISTINO = ("weapon_5e", "armor_5e", "attrezzatura_5e")
+
+
+def listino(oggetto):
+    """La sezione che porta prezzo e peso, o None se l'oggetto non ne ha."""
+    m = oggetto.get("mechanics_5e") or {}
+    for sezione in SEZIONI_DI_LISTINO:
+        blocco = m.get(sezione)
+        if blocco and blocco.get("cost_gp") is not None:
+            return blocco
+    return None
+
+
+def prezzo_di(oggetto):
+    """Il prezzo di un oggetto del catalogo, in pezzi d'acciaio.
+
+    None quando l'oggetto non ha prezzo, ed e' un caso vero e non un difetto:
+    il diadema dello Scheletro Guerriero e' un oggetto magico di fonte 2e, e
+    la fonte non gliene da' uno."""
+    blocco = listino(oggetto)
+    return None if blocco is None else prezzo_in_acciaio(blocco["cost_gp"])
+
+
+def peso_di(oggetto):
+    """Il peso di un oggetto del catalogo, in libbre, o None."""
+    blocco = listino(oggetto)
+    return None if blocco is None else blocco.get("weight_lb")

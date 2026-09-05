@@ -127,7 +127,7 @@ controllo del progetto che guarda il codice invece dei dati.
 
 ### Cosa il controllo VEDE
 
-Legge **63 sorgenti Python** (la sede stessa esclusa: li' le tabelle devono
+Legge **65 sorgenti Python** (la sede stessa esclusa: li' le tabelle devono
 esserci) e li guarda in due modi.
 
 - **Per forma.** L'espressione, riconosciuta sul codice **tokenizzato**:

@@ -664,6 +664,34 @@
             }
           }
         },
+        "attrezzatura_5e": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "additionalProperties": false,
+          "description": "PREZZO E PESO DELL'ATTREZZATURA, IN CAMPI (05/09/2026, decisione 62, `pacchetto-fisso`). Armi e armature li hanno sempre avuti dentro `weapon_5e`/`armor_5e`; l'attrezzatura no, e `build_oggetti.py` li scriveva dentro una FRASE ITALIANA di `mechanics_5e.note` — «Peso N lb, costo N mo» — leggendo dalla fonte due campi, componendoci una frase e buttando via i campi. E' lo stesso caso della categoria d'arma misurato in `RAPPORTO-campi-scartati.md` §2.2: un dato scartato che sembra mancante. La conseguenza era gia' scritta altrove — la decisione 42 (`cambio-acciaio-oro`) ha dato l'aritmetica fra acciaio e oro, e `_valuta.prezzo_in_acciaio()` vuole un `cost_gp` che per l'attrezzatura non esisteva. Non c'e' duplicazione con `weapon_5e`/`armor_5e`: le tre sezioni si escludono a vicenda, un oggetto ne porta al piu' una, e chi cerca il prezzo passa da `_valuta.prezzo_di()`, che e' l'unico posto che sa quali sono le tre.",
+          "required": [
+            "cost_gp",
+            "weight_lb"
+          ],
+          "properties": {
+            "cost_gp": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "description": "In pezzi d'oro, come la fonte lo stampa. La decisione 42 (`cambio-acciaio-oro`) fissa a 1 il fattore di listino: un `cost_gp` si legge come prezzo in acciaio senza conversione."
+            },
+            "weight_lb": {
+              "type": [
+                "number",
+                "null"
+              ],
+              "description": "In libbre. Zero e' un valore, non un'assenza: la tabella SRD lascia il peso in bianco per le voci trascurabili (campanello, candela, inchiostro, pennino, pergamena) e quel vuoto e' della fonte."
+            }
+          }
+        },
         "rarity": {
           "type": [
             "string",
