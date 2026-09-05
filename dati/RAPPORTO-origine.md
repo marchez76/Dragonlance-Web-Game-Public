@@ -86,7 +86,7 @@ Oggi la sede e' `vocabolari.schema.json` — la stessa della decisione 49
 
 | definizione | voci | schemi che la riferiscono |
 |---|---|---|
-| `conversion_status` | 5 | `classe.schema.json`, `modello.schema.json`, `mostro.schema.json`, `oggetto.schema.json` |
+| `conversion_status` | 5 | `classe.schema.json`, `modello.schema.json`, `mostro.schema.json`, `oggetto.schema.json`, `razza.schema.json` |
 | `provenienza` | 8 | `modello.schema.json`, `mostro.schema.json`, `oggetto.schema.json` |
 
 L'elenco delle provenienze e' l'**unione** delle tre copie (8 voci): `PHB 2e`,
@@ -166,20 +166,19 @@ scritti in questa forma nei dati: 3.
 
 ### 5a. `source` come stringa libera in razze e classi
 
-148 dichiarazioni di livello elemento portano un `source` che l'enum della
+105 dichiarazioni di livello elemento portano un `source` che l'enum della
 sede **non accetta**. La domanda utile non e' quante sono, ma quanto sono
 lontane — e la risposta cambia il lavoro che serve:
 
 | famiglia | valore o prefisso | casi | decomponibile? |
 |---|---|--:|---|
 | `razze` | `PHB 2e` | 70 | si', e' l'enum piu' un dettaglio |
-| `classi` | `Tales of the Lance` | 43 | si', e' l'enum piu' un dettaglio |
 | `classi` | `SRD 5.1` | 20 | si', e' l'enum piu' un dettaglio |
 | `razze` | `MC - Dragonlance Appendix` | 11 | si', e' l'enum piu' un dettaglio |
 | `razze` | *(stringa non riprodotta)* | 3 | no |
 | `razze` | *(stringa non riprodotta)* | 1 | no |
 
-**144 su 148 cominciano con un valore dell'enum.** Non sono un vocabolario
+**101 su 105 cominciano con un valore dell'enum.** Non sono un vocabolario
 diverso: sono lo stesso valore piu' un dettaglio — il capitolo, la pagina
 stampata, il fatto che sia stato letto da immagine. La fusione quindi non e'
 bloccata, e' **decomposta**: `source` (enum, vincolato) piu' un campo di
@@ -197,13 +196,13 @@ netta. Decomporlo e' un giro suo, con il suo controllo.
 | mostri | `mostro.schema.json` | 416 | 4 | 4 | si' |
 | oggetti | `oggetto.schema.json` | 51 | 3 | 3 | si' |
 | modelli | `modello.schema.json` | 29 | 2 | 2 | si' |
-| razze | `razza.schema.json` | 105 | 0 | 0 | **NO** |
+| razze | `razza.schema.json` | 105 | 2 | 2 | si' |
 | classi | `classe.schema.json` | 63 | 1 | 1 | si' |
 
 Il caso peggiore non e' un campo assente: e' un campo **scritto che sembra
 validato e non lo e'**. Dove la colonna dice NO, l'origine e' scritta nei dati
 con la stessa diligenza di tutte le altre, e nessun controllo la guarda: puo'
-portare un valore che l'enum non prevede senza che niente lo dica. Sono **105
+portare un valore che l'enum non prevede senza che niente lo dica. Sono **0
 dichiarazioni** fra razze e classi. E' la stessa forma della zona morta gia'
 misurata in `RAPPORTO-zona-morta-classi.md`, su un campo diverso — segno che
 il difetto sta nello schema di quelle famiglie, non nel campo. Il costo di
