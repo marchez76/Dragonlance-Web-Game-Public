@@ -32,6 +32,7 @@ Uso:  python3 dati/analizza_origine.py
 """
 
 import collections
+import functools
 import glob
 import json
 import os
@@ -187,6 +188,43 @@ def _vincolato(nodo, radice, giri=3):
     return False
 
 
+@functools.lru_cache(maxsize=None)
+def _schema_esterno(nome_file):
+    return S.carica(nome_file)
+
+
+def _risolvi_esterno(rif):
+    """Un `$ref` a UN ALTRO FILE ("altro.schema.json#/a/b") risolto in
+    (nodo, radice_di_quel_file). None se il ref e' locale o non risolve.
+
+    Serve da quando `elemento_convertito` (vocabolari.schema.json) porta
+    `conversion_status` un livello piu' in la' di un `$ref` diretto: senza
+    seguire il file, il camminatore vede l'`allOf` fermarsi su un nodo che
+    e' solo `{"$ref": ...}` e non trova mai la chiave che cerca — non perche'
+    non sia vincolata, ma perche' non ha guardato dentro. E' lo stesso
+    principio di _schemi.py — un `$ref` fra file non si segue da solo — qui
+    applicato a un rilevatore di prosa invece che a un validatore di dati."""
+    if rif.startswith("#/"):
+        return None
+    if "#" not in rif:
+        return None
+    file_, frammento = rif.split("#", 1)
+    if not file_:
+        return None
+    try:
+        radice_esterna = _schema_esterno(os.path.basename(file_))
+    except FileNotFoundError:
+        return None
+    nodo = radice_esterna
+    for passo in frammento.strip("/").split("/"):
+        if not passo:
+            continue
+        if not isinstance(nodo, dict) or passo not in nodo:
+            return None
+        nodo = nodo[passo]
+    return nodo, radice_esterna
+
+
 def _conversion_status_nello_schema(nodo, radice=None, dentro_m5e=False,
                                     chiave=None):
     """Ogni `conversion_status` dichiarato sotto `mechanics_5e`, e se e'
@@ -196,7 +234,19 @@ def _conversion_status_nello_schema(nodo, radice=None, dentro_m5e=False,
     if not isinstance(nodo, dict):
         return fuori
     if chiave == "conversion_status" and dentro_m5e:
+        # _vincolato() risolve gia' da solo un $ref diretto su QUESTO nodo
+        # (anche fra file, via la scorciatoia su SEDE_ORIGINE): seguirlo
+        # anche qui sotto conterebbe la stessa dichiarazione due volte, una
+        # come nodo grezzo e una come nodo risolto.
         fuori.append(_vincolato(nodo, radice))
+    else:
+        rif = nodo.get("$ref")
+        if isinstance(rif, str):
+            risolto = _risolvi_esterno(rif)
+            if risolto:
+                n2, radice2 = risolto
+                fuori += _conversion_status_nello_schema(n2, radice2, dentro_m5e,
+                                                         chiave)
     for sotto in ("anyOf", "oneOf", "allOf"):
         for n in nodo.get(sotto, []):
             fuori += _conversion_status_nello_schema(n, radice, dentro_m5e,

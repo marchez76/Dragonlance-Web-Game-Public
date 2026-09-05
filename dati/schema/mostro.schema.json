@@ -34,30 +34,29 @@
       "$ref": "vocabolari.schema.json#/$defs/provenienza"
     },
     "elemento_5e": {
-      "type": "object",
-      "required": ["name", "conversion_status", "source"],
-      "additionalProperties": false,
+      "$comment": "NUCLEO COMUNE in vocabolari.schema.json#/$defs/elemento_convertito (name, source, conversion_status, mechanics_5e, note), riferito con $ref invece che ricopiato: e' la stessa forma, confrontata campo per campo il 05/09/2026, che chassis_features/features di classe.schema.json e traits di razza.schema.json portano ciascuno con le proprie estensioni. Qui sotto restano solo i campi che il bestiario aggiunge (text_2e, effetto, analogo_srd, editorial, provisional) e la stretta locale di `source` a questo solo enum: vedi il $comment di elemento_convertito sul perche' e' unevaluatedProperties e non additionalProperties.",
+      "allOf": [
+        { "$ref": "vocabolari.schema.json#/$defs/elemento_convertito" }
+      ],
+      "unevaluatedProperties": false,
       "properties": {
-        "name": { "type": "string" },
+        "mechanics_5e": {
+          "type": ["string", "null"],
+          "description": "La forma 5e. null quando lo stato e' `pending` o `source_only`. Tipato qui e non nella sede comune: e' l'unico campo dei cinque dove i quattro usi divergono davvero — `features` di classe.schema.json vi ammette anche un rimando-oggetto, vedi elemento_convertito in vocabolari.schema.json."
+        },
         "text_2e": {
           "type": ["string", "null"],
           "description": "Il testo della fonte da cui questo elemento deriva, quando esiste."
-        },
-        "mechanics_5e": {
-          "type": ["string", "null"],
-          "description": "La forma 5e. null quando lo stato e' `pending` o `source_only`."
         },
         "effetto": {
           "type": ["object", "null"],
           "description": "La stessa meccanica in campi, accanto alla prosa. Stessa forma e stessa ragione del campo omonimo in classe.schema.json: la prosa resta autoritativa per una persona, `effetto` e' cio' che un motore legge, e dati/valida_effetti.py li tiene allineati. Validato a parte contro effetto.schema.json — qui non si puo' fare un $ref a un altro file senza cambiare come i validatori caricano gli schemi. APERTO SULLA FETTA VERTICALE, NON SUL BESTIARIO: oggi lo portano i due mostri dello scontro di collaudo. Gli altri 50 restano prosa finche' non c'e' un motore che li legga davvero — la lezione della decisione 43 (`barbaro-rimandato`), che vieta di progettare su un caso solo, vale anche al contrario: non si compila un corpus per uno schema che nessuno ha ancora esercitato."
         },
-        "conversion_status": { "$ref": "#/$defs/conversion_status" },
         "source": { "$ref": "#/$defs/provenienza" },
         "analogo_srd": {
           "type": ["string", "null"],
           "description": "Creatura SRD 5.1 usata come termine di paragone, se la conversione e' avvenuta per analogia."
         },
-        "note": { "type": ["string", "null"] },
         "editorial": {
           "type": "boolean",
           "default": false,

@@ -86,8 +86,8 @@ Oggi la sede e' `vocabolari.schema.json` — la stessa della decisione 49
 
 | definizione | voci | schemi che la riferiscono |
 |---|---|---|
-| `conversion_status` | 5 | `classe.schema.json`, `modello.schema.json`, `mostro.schema.json`, `oggetto.schema.json`, `razza.schema.json` |
-| `provenienza` | 8 | `modello.schema.json`, `mostro.schema.json`, `oggetto.schema.json` |
+| `conversion_status` | 5 | `modello.schema.json`, `mostro.schema.json`, `oggetto.schema.json`, `razza.schema.json` |
+| `provenienza` | 8 | `classe.schema.json`, `modello.schema.json`, `mostro.schema.json`, `oggetto.schema.json` |
 
 L'elenco delle provenienze e' l'**unione** delle tre copie (8 voci): `PHB 2e`,
 `DMG 2e`, `MC - Dragonlance Appendix`, `Tales of the Lance`, `SotDQ (ufficiale
@@ -197,7 +197,7 @@ netta. Decomporlo e' un giro suo, con il suo controllo.
 | oggetti | `oggetto.schema.json` | 51 | 3 | 3 | si' |
 | modelli | `modello.schema.json` | 29 | 2 | 2 | si' |
 | razze | `razza.schema.json` | 105 | 2 | 2 | si' |
-| classi | `classe.schema.json` | 63 | 1 | 1 | si' |
+| classi | `classe.schema.json` | 63 | 2 | 2 | si' |
 
 Il caso peggiore non e' un campo assente: e' un campo **scritto che sembra
 validato e non lo e'**. Dove la colonna dice NO, l'origine e' scritta nei dati

@@ -93,6 +93,24 @@
           "description": "COME, in prosa breve. Con `direct`: da quale blocco e' letto, e quale addendo la fonte dichiara oltre al conto (il +3 innato del Cavaliere della Morte, il +1 con l'arco dei centauri). Con `derived`: quale caratteristica del portatore — il conto puo' tornare con piu' d'una, quindi non e' un derivato riscritto a mano ma l'unica informazione che il conto non da'. Con `adapted`: il precedente su cui e' stato scelto. Obbligatoria con `direct` e con `adapted`, dove il controllo la pretende: un valore non derivabile che non dice da dove viene e' una stima nascosta."
         }
       }
+    },
+
+    "elemento_convertito": {
+      "type": "object",
+      "description": "LA FORMA BASE di un elemento con cronologia di conversione: un nome, la sua origine, e la resa 5e quando c'e'. Confrontata campo per campo il 05/09/2026 fra le quattro copie che la portavano — `elemento_5e` di mostro.schema.json, `features` e `chassis_features` di classe.schema.json, `traits` di razza.schema.json — non erano la stessa forma: solo questi cinque campi ricorrevano in tutti e quattro con lo stesso tipo. Il resto (`kind`, `level`, `text_2e`, `editorial`, `provisional`, `effetto`, `name_srd`, `opzione_di`, `analogo_srd`) e' presente in alcuni e assente in altri, quindi resta un'ESTENSIONE locale di chi lo usa, dichiarata li' e non qui — forzarla qui avrebbe richiesto o restringere un uso che non la porta o aprire un campo che per gli altri tre non significa niente. Chi usa questa forma la riferisce con `$ref` piu' `unevaluatedProperties: false` nel proprio schema, MAI con `additionalProperties: false` accanto a un `$ref` nello stesso oggetto: quella combinazione rifiuta i campi di QUESTA definizione, perche' `additionalProperties` guarda solo le `properties` dichiarate allo stesso livello e non quelle portate da un `$ref` in un `allOf` fratello — `unevaluatedProperties` e' l'unico dei due che le vede entrambe.",
+      "required": ["name", "conversion_status", "source"],
+      "properties": {
+        "name": { "type": "string" },
+        "source": {
+          "type": "string",
+          "description": "DA DOVE VIENE, in una grana che varia da un uso all'altro: qui resta stringa libera perche' l'unico vincolo comune a tutti e quattro e' `type: string`. Due dei quattro usi (mostro, e classe.features dal 05/09/2026) lo restringono in piu', localmente, a `$ref` di `#/$defs/provenienza`: gli altri due (chassis_features, che aggiunge il chassis al valore — \"SRD 5.1 — Fighter\" — e razza.traits, che cita pagina e voce) non possono, perche' il loro valore non e' mai il solo valore nudo dell'enum."
+        },
+        "conversion_status": { "$ref": "#/$defs/conversion_status" },
+        "mechanics_5e": {
+          "description": "La resa 5e, o l'assenza di una. NESSUN type qui: e' l'unico dei cinque campi comuni dove il confronto ha trovato una vera incompatibilita', non solo una grana diversa. In tre usi su quattro e' `[\"string\", \"null\"]`, null quando la conversione non c'e' ancora o non concede nulla (in razza.traits null anche con `adapted`, per i tratti la cui meccanica vera vive altrove). Nel quarto — `features` di classe.schema.json — PUO' essere anche un oggetto: un RIMANDO al chassis quando il privilegio della fonte coincide con una meccanica che il chassis SRD concede gia' (`_chassis_5e.rimando_a_privilegio`/`rimando_al_chassis`), verificato in costruzione e di nuovo in lettura da `_chassis_5e.verifica_rimandi()`. Un `type` qui, in un `allOf`, si sarebbe SOMMATO in AND a quello di chi lo riferisce e avrebbe reso il rimando irricevibile ovunque: chi lo usa dichiara il proprio tipo in proprio."
+        },
+        "note": { "type": ["string", "null"] }
+      }
     }
   }
 }

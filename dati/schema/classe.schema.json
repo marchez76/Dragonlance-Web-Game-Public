@@ -14,6 +14,36 @@
     "mechanics_5e"
   ],
   "additionalProperties": false,
+
+  "$defs": {
+    "rimando_chassis": {
+      "type": "object",
+      "description": "Un privilegio della fonte 2e la cui meccanica 5e e' gia' quella del chassis SRD, invece di essere riscritta qui (decisione 23, `principio-del-clone`). Costruito solo da _chassis_5e.rimando_a_privilegio()/rimando_al_chassis(), che falliscono in costruzione se il bersaglio non esiste; _chassis_5e.verifica_rimandi() rifa' la stessa prova sui file gia' scritti.",
+      "required": ["riferimento_a", "srd_class", "name_srd", "name", "level"],
+      "additionalProperties": false,
+      "properties": {
+        "riferimento_a": {
+          "type": "string",
+          "enum": ["chassis", "privilegio_chassis"],
+          "description": "`chassis`: il privilegio E' la classe stessa (la classe e' un Paladin, punto). `privilegio_chassis`: rimanda a UN privilegio specifico che il chassis concede a un livello preciso."
+        },
+        "srd_class": { "type": "string" },
+        "name_srd": {
+          "type": ["string", "null"],
+          "description": "null solo con riferimento_a: chassis."
+        },
+        "name": {
+          "type": ["string", "null"],
+          "description": "null solo con riferimento_a: chassis."
+        },
+        "level": {
+          "type": ["integer", "null"],
+          "description": "null solo con riferimento_a: chassis."
+        }
+      }
+    }
+  },
+
   "properties": {
     "id": {
       "type": "string",
@@ -363,11 +393,54 @@
       ],
       "description": "ZONA MORTA DICHIARATA, 02/09/2026. Questo schema descrive `mechanics_5e` come un oggetto qualunque: nessuna proprieta' dichiarata, nessun additionalProperties. L'intero strato di conversione delle classi — chassis, sette incompatibilita', privilegi, minimi — non e' quindi mai stato verificato dallo schema, e un campo scritto storto ci passa attraverso senza che nessuno lo veda. Il difetto e' preesistente ed e' emerso aggiungendo i campi qui sotto, che sono passati al primo colpo senza essere dichiarati da nessuna parte. Sono dichiarati sotto solo i blocchi toccati dalla prima fetta verticale: chiudere l'oggetto per intero vuol dire censire tutto lo strato, che e' un lavoro a se' e non va fatto di straforo dentro un altro. Nel frattempo i controlli veri su questi campi stanno in dati/valida_effetti.py.",
       "properties": {
+        "features": {
+          "type": "array",
+          "description": "I privilegi e gli impedimenti della fonte 2e (decisione 15, `tratti-trascrizione-integrale`; decisione 23, `principio-del-clone`). Lista separata da `chassis_features` di proposito — vedi la' sopra.",
+          "items": {
+            "$comment": "NUCLEO COMUNE in vocabolari.schema.json#/$defs/elemento_convertito, come chassis_features e elemento_5e di mostro.schema.json. `kind` NON e' quello di chassis_features: vocabolario incompatibile, vedi il $comment li'.",
+            "allOf": [
+              { "$ref": "vocabolari.schema.json#/$defs/elemento_convertito" }
+            ],
+            "unevaluatedProperties": false,
+            "required": ["name", "kind", "level", "text_2e", "conversion_status", "mechanics_5e", "note"],
+            "properties": {
+              "kind": {
+                "type": "string",
+                "enum": ["privilegio", "impedimento"]
+              },
+              "level": {
+                "type": ["integer", "null"],
+                "minimum": 1,
+                "maximum": 20,
+                "description": "null quando la fonte non lega il privilegio a un livello preciso (la maggioranza: 33/43 oggi)."
+              },
+              "source": {
+                "$ref": "vocabolari.schema.json#/$defs/provenienza",
+                "description": "Oggi un solo valore in tutti i 43 casi: `Tales of the Lance`. Non era cosi' fino al 05/09/2026: il generatore scriveva `Tales of the Lance (2e)`, un suffisso ridondante mai presente nel vocabolario (vedi build_classi.py, features_da_fonte)."
+              },
+              "mechanics_5e": {
+                "anyOf": [
+                  { "type": ["string", "null"] },
+                  { "$ref": "#/$defs/rimando_chassis" }
+                ],
+                "description": "Di norma stringa o null. Due privilegi su 43 oggi (cavaliere-rosa, cavaliere-spada) sono un RIMANDO al chassis invece: il privilegio della fonte 2e coincide con una meccanica che il chassis SRD concede gia', e non si riscrive due volte. Vedi $defs/rimando_chassis."
+              },
+              "text_2e": {
+                "type": "string",
+                "description": "Il testo del privilegio o dell'impedimento cosi' come lo stampa la fonte."
+              }
+            }
+          }
+        },
         "chassis_features": {
           "type": "array",
           "description": "I privilegi che vengono dal chassis SRD, non dalla fonte 2e. Lista separata da `features` di proposito: i due insiemi hanno provenienza diversa e si contano diversamente — vedi _chassis_5e.features_chassis().",
           "items": {
-            "type": "object",
+            "$comment": "NUCLEO COMUNE in vocabolari.schema.json#/$defs/elemento_convertito (name, source, conversion_status, mechanics_5e, note), riferito con $ref: stessa forma di elemento_5e (mostro) e di features qui sotto, confrontata campo per campo il 05/09/2026. `kind` NON e' condiviso con quello di `features`: stesso nome, vocabolario incompatibile (privilegio_chassis/opzione_chassis contro privilegio/impedimento), quindi resta locale a ciascuno dei due blocchi.",
+            "allOf": [
+              { "$ref": "vocabolari.schema.json#/$defs/elemento_convertito" }
+            ],
+            "unevaluatedProperties": false,
             "required": [
               "name",
               "kind",
@@ -376,9 +449,6 @@
               "mechanics_5e"
             ],
             "properties": {
-              "name": {
-                "type": "string"
-              },
               "name_srd": {
                 "type": "string"
               },
@@ -389,19 +459,14 @@
                   "opzione_chassis"
                 ]
               },
-              "source": {
-                "type": "string"
-              },
               "level": {
                 "type": "integer",
                 "minimum": 1,
                 "maximum": 20
               },
-              "conversion_status": {
-                "$ref": "vocabolari.schema.json#/$defs/conversion_status"
-              },
               "mechanics_5e": {
-                "type": "string"
+                "type": "string",
+                "description": "Mai null qui: un privilegio di chassis clonato dall'SRD porta sempre una meccanica, a differenza di `features` dove null e' lo stato normale prima della conversione."
               },
               "effetto": {
                 "type": [
@@ -409,12 +474,6 @@
                   "null"
                 ],
                 "description": "Validato a parte contro effetto.schema.json, da valida_effetti.py: qui non si puo' fare un $ref a un altro file senza cambiare come i validatori caricano gli schemi."
-              },
-              "note": {
-                "type": [
-                  "string",
-                  "null"
-                ]
               },
               "opzione_di": {
                 "type": "string",
