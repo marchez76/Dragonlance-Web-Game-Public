@@ -8,7 +8,7 @@
 
 **Fase 0 quasi chiusa.** Libreria ri-estratta a colonne separate: 100 manuali su 140, 13.791 pagine, 61 milioni di caratteri in `Testi/`. Restano 22 scansioni in coda OCR, nessuna bloccante.
 
-**Dati strutturati pronti e validati a zero errori**: 15 razze, 17 classi, 21 divinità in `dati/`, tutte da *Tales of the Lance* (AD&D 2e). Schema a doppio strato: `source_2e` fedele al manuale, `mechanics_5e` con le regole di validazione già applicate (vincoli di caratteristica e classi precluse) e i tratti 5e ancora da compilare.
+**Dati strutturati pronti e validati a zero errori**: 15 razze, 20 classi, 21 divinità in `dati/`, da *Tales of the Lance* (AD&D 2e) tranne 3 classi base venute dal PHB 2e con la decisione 59 (`classi-base-2e`). Schema a doppio strato: `source_2e` fedele al manuale, `mechanics_5e` con le regole di validazione già applicate (vincoli di caratteristica e classi precluse) e i tratti 5e ancora da compilare.
 
 **Materiale 5e arrivato**, ma solo in edizione **2024** (PHB, DMG, Monster Manual): il PHB 2014 scelto come riferimento non è fra i PDF. In compenso è disponibile `2014.5e.tools`, che espone tutto il materiale 2014 come **JSON strutturato** — metro di conversione migliore dei PDF. *Shadow of the Dragon Queen* resta assente.
 
@@ -112,7 +112,7 @@ Corollario operativo: i file in `dati/razze/`, `dati/classi/` e `dati/divinita/`
 
 ### Stato
 
-`dati/schema/` contiene `razza`, `classe` e `divinita`. Popolate e validate a zero errori: **15 razze, 17 classi, 21 divinità**. Vedi `dati/LEGGIMI.md`.
+`dati/schema/` contiene `razza`, `classe` e `divinita`. Popolate e validate a zero errori: **15 razze, 20 classi, 21 divinità**. Vedi `dati/LEGGIMI.md`.
 
 Restano da scrivere: **Personaggio**, Incantesimo, Mostro, Oggetto.
 

@@ -40,6 +40,30 @@ I FILTRI CHE SEPARANO E QUELLI CHE NO
         Un filtro su un dato che vive solo in `source_2e` applicherebbe una
         regola che non abbiamo adottato.
 
+CLASSI BASE 2e — CINQUE ETICHETTE NOMINANO ANCHE UNA CLASSE CHE NON ABBIAMO
+    Letto sulla fonte il 04/09/2026, e non e' un'ipotesi nostra: *Tales of
+    the Lance* apre il capitolo dei guerrieri dicendo che su Ansalon si
+    giocano le classi guerriere tipiche dell'AD&D 2e — fighter, ranger e
+    paladin — e che quelle *uniche* di Ansalon sono descritte di seguito.
+    Il gruppo dei ladri dice la stessa cosa con altre parole: oltre ai bardi
+    e ai ladri comuni, Krynn ne ha due tipi propri (Handler e Con Artist).
+    I gruppi Wizard e Priest NON lo dicono, e infatti sono di Krynn: il
+    manuale arriva a precisare che negli Ordini Sacri non ci sono chierici
+    come li definisce il PHB 2e.
+
+    Conseguenza: cinque etichette — `Fighter`, `Paladin`, `Ranger`, `Thief`,
+    `Bard` — non nominano solo un telaio, nominano anche una classe base 2e
+    che si gioca su Krynn e che il nostro roster non ha trascritto. Non e'
+    una contraddizione della fonte, ed e' esattamente la ragione per cui il
+    Silvanesti e l'Irda dichiarano `Paladin` senza arrivare a nessuna nostra
+    classe: il paladino che la fonte concede loro e' quello del PHB 2e, non
+    un ordine solamnico.
+
+    Cio' che questo modulo puo' dire e' dove sta il buco, non come si chiude:
+    la classe base va trascritta come le altre, e finche' non c'e' l'etichetta
+    apre il solo insieme del telaio. Le tre righe qui sotto lo dichiarano
+    invece di lasciar credere che il telaio esaurisca l'etichetta.
+
 UN MASSIMALE MANCANTE NON E' UN MASSIMALE A ZERO
     `ability_caps.caps` elenca solo le caratteristiche che il manuale limita:
     dove la voce manca non c'e' tetto, e il minimo di classe e' raggiungibile.
@@ -66,6 +90,29 @@ BASE = os.path.dirname(os.path.abspath(__file__))
 # --------------------------------------------------------------------------
 Etichetta = namedtuple("Etichetta", "telaio classi ragione fonte da_confermare")
 
+# Le etichette che nominano ANCHE una classe base 2e. Vedi CLASSI BASE 2e nel
+# docstring: non e' una nostra classificazione, e' quello che la fonte
+# dichiara aprendo i gruppi Warrior e Rogue. Sta qui e non nel rapporto
+# perche' i consumatori sono due e il dato e' uno solo.
+#
+# L'elenco e' un FATTO DI FONTE e non si muove: cinque etichette nominano una
+# classe base, oggi come il giorno in cui e' stato letto. Cio' che si muove e'
+# QUALI di esse il roster abbia gia' trascritto, e quello non si scrive —
+# si deriva da `ETICHETTE` (CLAUDE.md 3). Fino al 05/09/2026 le due cose
+# erano la stessa riga, e la riga diceva "assente dal roster": una frase vera
+# per cinque etichette su cinque, che sarebbe diventata falsa per tre il
+# giorno dopo senza che nulla la denunciasse.
+BASE_2E = ("Bard", "Fighter", "Paladin", "Ranger", "Thief")
+
+
+def base_2e_mancanti():
+    """Le etichette di BASE_2E la cui classe base il roster non ha ancora.
+
+    Derivata: un'etichetta di BASE_2E che non nomina nessuna nostra classe e'
+    un'etichetta la cui classe base manca. Le tre trascritte dalla
+    decisione 59 (`classi-base-2e`) escono da qui da sole."""
+    return tuple(e for e in BASE_2E if not ETICHETTE[e].classi)
+
 
 def _e(telaio, classi=(), ragione="", fonte="", da_confermare=()):
     return Etichetta(telaio, tuple(classi), ragione, fonte, tuple(da_confermare))
@@ -79,7 +126,9 @@ ETICHETTE = {
         "il nome inglese del Barbaro coincide con l'etichetta"),
     "Bard": _e(
         None, [],
-        "il Bardo SRD esiste nella 5e ma non fra i telai trascritti: in coda"),
+        "il Bardo SRD esiste nella 5e ma non fra i telai trascritti: in coda. "
+        "E' anche una classe base 2e che il roster non ha: vedi CLASSI BASE "
+        "2e nel docstring"),
     "Cavalier": _e(
         "Fighter", ["cavaliere"],
         "guerriero a cavallo, telaio marziale puro",
@@ -87,18 +136,24 @@ ETICHETTE = {
     "Druid (heathen)": _e(
         None, ["sacerdote-eretico"],
         "nessun telaio, e non serve: l'etichetta e' gia' coperta per nome "
-        "dal Sacerdote Eretico, che di telaio non ne ha. Il Druido SRD "
-        "servirebbe solo se il druido eretico risultasse una classe a se' "
-        "(`_srd51.CODA`)",
-        "la scheda del Sacerdote Eretico dichiara gia' di essere entrambe le "
-        "righe della tabella Class/Race Combinations, `Priest (heathen)` e "
-        "`Druid (heathen)`; il capitolo delle classi definisce eretico anche "
-        "il druido che viene da un altro mondo, perche' ignora gli dei della "
-        "natura di Krynn",
-        da_confermare=["sacerdote-eretico"]),
+        "dal Sacerdote Eretico, che di telaio non ne ha",
+        "CONFERMATO sulla fonte il 04/09/2026, non piu' un accostamento in "
+        "attesa. Il capitolo Priest Group Classes ha due sole voci — Holy "
+        "Orders of the Stars ed Heathen Priests — e nessuna terza voce per un "
+        "druido: la scheda dell'eretico dichiara che sono eretici anche i "
+        "druidi venuti da altri mondi, perche' non conoscono Chislev e "
+        "Habbakuk. Le due righe `Druid (heathen)` e `Priest (heathen)` della "
+        "tabella Class/Race Combinations si distinguono per il solo tetto di "
+        "livello, che non applichiamo (decisione 4, `limiti-di-livello`): "
+        "tolto quello, sono la stessa classe"),
     "Fighter": _e(
-        "Fighter", [],
-        "e' il telaio, non una classe del nostro roster"),
+        "Fighter", ["guerriero"],
+        "e' il telaio, e nomina anche la classe base 2e che gli sta sopra: "
+        "vedi CLASSI BASE 2e nel docstring",
+        "il nome inglese del Guerriero coincide con l'etichetta. E' la "
+        "classe base AD&D 2e che *Tales of the Lance* dichiara giocabile su "
+        "Ansalon senza descriverla, trascritta dal PHB 2e con la "
+        "decisione 59 (`classi-base-2e`)"),
     "Handler": _e(
         "Rogue", ["handler"],
         "abilita' del ladro applicate al baratto kender",
@@ -135,18 +190,30 @@ ETICHETTE = {
         "riga l'etichetta `Mariner` non aprirebbe il Marinaio, che non ha "
         "chassis"),
     "Paladin": _e(
-        "Paladin", [],
-        "e' il telaio, non una classe del nostro roster"),
+        "Paladin", ["paladino"],
+        "e' il telaio, e nomina anche la classe base 2e che gli sta sopra: "
+        "vedi CLASSI BASE 2e nel docstring",
+        "il nome inglese del Paladino coincide con l'etichetta. E' la classe "
+        "base AD&D 2e trascritta dal PHB 2e con la "
+        "decisione 59 (`classi-base-2e`), e non un ordine solamnico: e' il "
+        "paladino che la fonte concede al Silvanesti e all'Irda"),
     "Priest (heathen)": _e(
         "Cleric", ["sacerdote-eretico"],
         "incantatore divino fuori dagli Ordini",
         "`Heathen Priest` e' il nome inglese della classe"),
     "Ranger": _e(
         None, [],
-        "il Ranger SRD esiste nella 5e ma non fra i telai trascritti: in coda"),
+        "il Ranger SRD esiste nella 5e ma non fra i telai trascritti: in "
+        "coda. E' anche una classe base 2e che il roster non ha: vedi CLASSI "
+        "BASE 2e nel docstring"),
     "Thief": _e(
-        "Rogue", [],
-        "e' il telaio, non una classe del nostro roster"),
+        "Rogue", ["ladro"],
+        "e' il telaio, e nomina anche la classe base 2e che gli sta sopra: "
+        "vedi CLASSI BASE 2e nel docstring",
+        "il nome inglese del Ladro coincide con l'etichetta. E' la classe "
+        "base AD&D 2e trascritta dal PHB 2e con la "
+        "decisione 59 (`classi-base-2e`), e non il Con Artist: il ladro "
+        "comune non ha il minimo di Carisma che escludeva l'Aghar"),
     "Tinker": _e(
         None, ["tinker"],
         "non ha un telaio 5e: e' un'invenzione di Krynn",
@@ -297,6 +364,11 @@ def verifica():
                 problemi.append(f"{et}: da_confermare fuori da classi: {c}")
         if e.classi and not e.fonte:
             problemi.append(f"{et}: apre classi per nome e non dice da dove")
+    for et in sorted(set(BASE_2E) - set(ETICHETTE)):
+        problemi.append(f"BASE_2E nomina un'etichetta non mappata: {et}")
+    for et in sorted(set(BASE_2E) - dichiarate):
+        problemi.append(f"BASE_2E nomina un'etichetta che nessuna razza "
+                        f"dichiara: {et}")
     return problemi
 
 

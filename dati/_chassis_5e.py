@@ -18,7 +18,18 @@ CINQUE CLASSI RESTANO SENZA CHASSIS
     Popolano, Tinker, Sacerdote Eretico, Handler e Marinaio. Il rapporto le
     aveva segnalate come prive di candidato pulito e la decisione 23 (`principio-del-clone`) le lascia
     esplicitamente indecise. Restano `in_sospeso`: proposte nel rapporto,
-    nessuna applicata.
+    nessuna applicata. Dal 05/09/2026 ciascuna ha anche un id nel registro
+    delle questioni aperte, per poter essere citata da fuori.
+
+TRE CLASSI DOVE IL CHASSIS NON E' UN ACCOSTAMENTO MA UN'IDENTITA'
+    Guerriero, Paladino e Ladro sono le classi base AD&D 2e che la
+    decisione 59 (`classi-base-2e`) ha trascritto dal PHB. Per tutte le altre
+    voci di `CHASSIS` la `ragione` argomenta un accostamento fra una classe di
+    Krynn e un chassis 5e; per queste tre non c'e' niente da argomentare,
+    perche' sono la stessa classe in due edizioni. Da non confondere con le
+    classi di Krynn che condividono il loro telaio: il Cavaliere della Spada
+    sta su Paladin ed e' un ordine solamnico, il Con Artist sta su Rogue ed e'
+    il ladro proprio di Krynn.
 
 LE SETTE INCOMPATIBILITA' STRUTTURALI
     Discendono dalla scelta della 5e come chassis e sono applicate qui, in un
@@ -68,7 +79,28 @@ CHASSIS = {
     "con-artist": ("Rogue",
                    "Le quattro abilita' potenziate diventano competenze ed "
                    "Esperienza."),
+    # ---- classi base 2e, decisione 59 (`classi-base-2e`) ----
+    # Qui il chassis NON e' un accostamento editoriale: e' la stessa classe.
+    # Il Guerriero 2e e il Fighter SRD sono la medesima classe in due
+    # edizioni, e lo stesso vale per le altre due. La `ragione` accanto e'
+    # percio' piu' corta di tutte: non c'e' niente da argomentare.
+    "guerriero": ("Fighter",
+                  "Identita', non accostamento: e' la stessa classe in due "
+                  "edizioni. Lo strato di Krynn e' vuoto per dichiarazione "
+                  "della fonte (decisione 59, `classi-base-2e`)."),
+    "paladino": ("Paladin",
+                 "Identita', non accostamento. Da non confondere con i "
+                 "Cavalieri della Spada e della Rosa, che stanno sullo "
+                 "stesso telaio ma sono ordini di Krynn."),
+    "ladro": ("Rogue",
+              "Identita', non accostamento. Da non confondere con il Con "
+              "Artist, che e' il ladro proprio di Krynn e porta minimi suoi."),
     # ---- lasciate indecise dalla decisione 23 (`principio-del-clone`) ----
+    # Ciascuna ha un id nel registro delle questioni aperte (`decisioni.APERTE`)
+    # dal 05/09/2026: `chassis-commoner`, `chassis-tinker`,
+    # `chassis-sacerdote-eretico`, `chassis-handler`, `chassis-mariner`. Il
+    # registro porta l'id e rimanda QUI per la ragione — erano gia' dichiarate,
+    # quello che mancava era il modo di citarle da un altro testo.
     "commoner": (None, "Non e' una classe 5e. Da decidere."),
     "tinker": (None, "Non e' una classe 5e. Da decidere."),
     "sacerdote-eretico": (None, "Per definizione non ha potere. Da decidere."),
@@ -84,7 +116,71 @@ CHASSIS = {
 # Stato di conversione dei privilegi di fonte.
 # Default: `pending`. La decisione 23 (`principio-del-clone`) autorizza il clone del chassis, non
 # l'invenzione di meccanica 5e per i privilegi: quella resta da fare.
+#
+# IL TERZO CAMPO E' UN RIMANDO, ed e' nato il 04/09/2026 da due incoerenze
+# vere su dodici segnalate. Due privilegi della fonte dichiaravano
+# `conversion_status: direct` con `mechanics_5e: null`, cioe' dicevano
+# insieme «la conversione e' conclusa» e «non c'e' niente»: l'invariante di
+# `elemento_5e` — la meccanica manca solo dove la conversione non c'e'
+# ancora — risultava violata. Non era un difetto di quei due privilegi. La
+# loro meccanica 5e ESISTE e non e' scritta li' perche' e' quella del
+# chassis: mancava al campo il modo di dire «sta altrove».
+#
+# Fra le due strade si e' scelta la seconda:
+#   (a) uno stato di conversione nuovo — un termine in piu' nel vocabolario
+#       condiviso con mostri, oggetti e modelli, per un caso che riguarda le
+#       sole classi e conta due occorrenze. Sarebbe stata la quinta volta che
+#       il progetto reinventa lo stesso concetto sotto un nome nuovo.
+#   (b) riempire il campo che gia' c'e'. `mechanics_5e` porta il rimando,
+#       `direct` torna vero, e il vocabolario condiviso non si muove.
+#
+# Un rimando e' un DATO e non una nota perche' e' verificabile: il privilegio
+# del chassis o sta nella tabella SRD o non ci sta. `_srd51.livello_privilegio`
+# risponde, `rimando_a_privilegio()` fallisce in costruzione se il bersaglio
+# non esiste, e `verifica_rimandi()` rifa' la prova sui file gia' scritti —
+# perche' un rimando che risolve il giorno in cui e' scritto e' esattamente
+# la forma di copia che questo progetto ha gia' visto sfasarsi dodici volte.
+#
+# Il livello NON si scrive qui: si legge dalla tabella SRD (CLAUDE.md 3). La
+# nota nemmeno — la prosa del rimando e' derivata da `prosa_rimando()`, e
+# quello che la nota diceva in piu' era una domanda aperta, che il 04/09/2026
+# e' uscita di qui ed e' entrata nel registro (CONTESTO-PROGETTO.md,
+# "Questioni aperte"). Una decisione che vive solo in una nota di campo e'
+# una decisione che nessuno prende.
 # --------------------------------------------------------------------------
+
+def rimando_a_privilegio(srd_class, name_srd, nome_it):
+    """Rimando a UN privilegio del chassis, con il livello letto dalla fonte."""
+    livello = R.livello_privilegio(srd_class, name_srd)
+    if livello is None:
+        raise KeyError(
+            f"rimando a un privilegio che il chassis {srd_class} non concede: "
+            f"{name_srd!r}. Il bersaglio di un rimando si verifica, non si "
+            f"assume: vedi _srd51.TABELLE[{srd_class!r}]['features'].")
+    return {"riferimento_a": "privilegio_chassis", "srd_class": srd_class,
+            "name_srd": name_srd, "name": nome_it, "level": livello}
+
+
+def rimando_al_chassis(srd_class):
+    """Rimando al chassis INTERO: il privilegio coincide con la classe."""
+    if srd_class not in R.TABELLE:
+        raise KeyError(f"rimando a un chassis non trascritto: {srd_class!r}")
+    return {"riferimento_a": "chassis", "srd_class": srd_class,
+            "name_srd": None, "name": None, "level": None}
+
+
+def prosa_rimando(rim):
+    """La nota di un privilegio che rimanda, derivata dal rimando stesso."""
+    if rim["riferimento_a"] == "chassis":
+        return (f"RIMANDO AL CHASSIS. La classe E' un {rim['srd_class']}: il "
+                f"privilegio coincide con la classe stessa e non va "
+                f"convertito a parte. La meccanica non e' assente, sta nel "
+                f"chassis clonato dalla decisione 23 (`principio-del-clone`).")
+    return (f"RIMANDO AL CHASSIS. Il privilegio e' gia' concesso da "
+            f"{rim['name']} ({rim['srd_class']} SRD 5.1, "
+            f"{rim['level']}° livello): la meccanica non si riscrive qui.")
+
+
 STATO_PRIVILEGI = {
     ("cavaliere-corona", "Specializzazione nelle armi"): (
         "source_only",
@@ -94,26 +190,69 @@ STATO_PRIVILEGI = {
         "l'ha, il permesso non vale nulla. CONSEGUENZA REGISTRATA: il grado "
         "d'ingresso dell'intero ordine solamnico resta a ZERO privilegi "
         "dichiarati dalla fonte. Non e' un errore da correggere: e' cio' che "
-        "dice il manuale, ed e' la ragione per cui serve la decisione 23 (`principio-del-clone`)."),
+        "dice il manuale, ed e' la ragione per cui serve la decisione 23 (`principio-del-clone`).",
+        None),
     ("cavaliere-spada", "Capacita' del paladino"): (
-        "direct",
-        "Assorbito dal chassis: se la classe E' un Paladino, il privilegio "
-        "coincide con la classe stessa e non va convertito a parte."),
+        "direct", None, rimando_al_chassis("Paladin")),
     ("cavaliere-rosa", "Immunita' alla paura"): (
-        "direct",
-        "Aura di Coraggio del Paladino, SRD 5.1, 10° livello. Il chassis lo "
-        "concede gia'; resta da decidere se anticiparlo al 4°, che e' il "
-        "livello d'ingresso del grado."),
+        "direct", None,
+        rimando_a_privilegio("Paladin", "Aura of Courage", "Aura di Coraggio")),
 }
 
 DEFAULT_PRIVILEGIO = (
     "pending",
     "La decisione 23 (`principio-del-clone`) autorizza il clone del chassis, non l'invenzione di "
-    "meccanica 5e per i privilegi della fonte. Da convertire.")
+    "meccanica 5e per i privilegi della fonte. Da convertire.",
+    None)
 
 
 def stato(class_id, nome):
-    return STATO_PRIVILEGI.get((class_id, nome), DEFAULT_PRIVILEGIO)
+    """(conversion_status, nota, mechanics_5e) di un privilegio della fonte.
+
+    La nota di un rimando NON sta nella tabella: si deriva dal rimando, cosi'
+    che non possa dire una cosa mentre il dato ne dice un'altra."""
+    st, nota, rim = STATO_PRIVILEGI.get((class_id, nome), DEFAULT_PRIVILEGIO)
+    return st, (nota if nota is not None else prosa_rimando(rim)), rim
+
+
+def verifica_rimandi(docs):
+    """I rimandi dei file gia' scritti risolvono? Lista vuota = si'.
+
+    Ripete sui dati la prova che `rimando_a_privilegio()` fa in costruzione.
+    Le due non sono ridondanti: la prima protegge chi genera, la seconda chi
+    legge un file generato mesi fa da un elenco SRD che intanto e' cambiato.
+    """
+    problemi = []
+    for d in docs:
+        m = d.get("mechanics_5e") or {}
+        proprio = ((m.get("chassis") or {}).get("srd_class"))
+        for b in (m.get("features") or []):
+            rim = b.get("mechanics_5e")
+            if not isinstance(rim, dict) or "riferimento_a" not in rim:
+                continue
+            eti = f"{d['id']}: {b.get('name')}"
+            if rim["srd_class"] != proprio:
+                problemi.append(
+                    f"{eti}: rimanda al chassis {rim['srd_class']} ma la "
+                    f"classe sta su {proprio}")
+            if rim["riferimento_a"] == "chassis":
+                if rim["srd_class"] not in R.TABELLE:
+                    problemi.append(f"{eti}: chassis non trascritto")
+                continue
+            if rim["riferimento_a"] != "privilegio_chassis":
+                problemi.append(f"{eti}: rimando di tipo sconosciuto "
+                                f"{rim['riferimento_a']!r}")
+                continue
+            liv = R.livello_privilegio(rim["srd_class"], rim["name_srd"])
+            if liv is None:
+                problemi.append(
+                    f"{eti}: rimanda a {rim['name_srd']!r}, che il chassis "
+                    f"{rim['srd_class']} non concede")
+            elif liv != rim["level"]:
+                problemi.append(
+                    f"{eti}: il rimando dice {rim['level']}° livello, la "
+                    f"tabella SRD dice {liv}°")
+    return problemi
 
 
 # --------------------------------------------------------------------------

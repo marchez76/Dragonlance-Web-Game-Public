@@ -75,12 +75,12 @@ Il difetto arriva col prossimo file che usa lo stesso termine.
 ### categorie d'arma
 
 - `dati/oggetti/` → `mechanics_5e.weapon_5e.categoria` — 2 valori distinti su 37 occorrenze, **schema**. `da_guerra`, `semplice`
-- `dati/classi/` → `mechanics_5e.structural.weapon_proficiencies.categorie[]` — 2 valori distinti su 6 occorrenze, **valida_effetti.py, controllo 4**. `semplice`, `da_guerra`
+- `dati/classi/` → `mechanics_5e.structural.weapon_proficiencies.categorie[]` — 2 valori distinti su 8 occorrenze, **valida_effetti.py, controllo 4**. `semplice`, `da_guerra`
 
 ### categorie d'armatura
 
 - `dati/oggetti/` → `mechanics_5e.armor_5e.categoria` — 4 valori distinti su 13 occorrenze, **schema**. `media`, `pesante`, `leggera`, `scudo`
-- `dati/classi/` → `mechanics_5e.structural.armor_proficiencies.categorie[]` — 4 valori distinti su 12 occorrenze, **valida_effetti.py, controllo 4**. `leggera`, `media`, `pesante`, `scudo`
+- `dati/classi/` → `mechanics_5e.structural.armor_proficiencies.categorie[]` — 4 valori distinti su 16 occorrenze, **valida_effetti.py, controllo 4**. `leggera`, `media`, `pesante`, `scudo`
 
 ### allineamento
 

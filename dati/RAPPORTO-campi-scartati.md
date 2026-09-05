@@ -1,6 +1,6 @@
 # Campi disponibili e non estratti
 
-*Generato da `dati/analizza_campi_scartati.py` il 2026-09-02. Non modificare a
+*Generato da `dati/analizza_campi_scartati.py` il 2026-09-05. Non modificare a
 mano: i numeri sono interpolati dai dati, un numero scritto qui si sfasa alla
 prossima rigenerazione.*
 

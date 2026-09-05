@@ -60,6 +60,24 @@ VALIDATORI = ["valida_classi.py", "valida_effetti.py", "verifica_strati.py",
 # c'e' ancora.
 STATI_SENZA_MECCANICA = ("pending", "source_only")
 
+# LE FAMIGLIE NON PESANO UGUALE, e trattarle come un numero solo e' costato
+# una lettura. Delle dodici segnalazioni del 04/09/2026 sette erano STATO
+# DICHIARATO — cose vere dei dati che lo schema deve DESCRIVERE, non dati da
+# correggere — e cinque erano difetti, di cui tre del rilevatore stesso. Un
+# totale unico le sommava e faceva sembrare il lavoro cinque volte piu' grande
+# di quello che era.
+#
+# `difetto`: i dati dicono una cosa falsa, e va corretto il dato.
+# `dichiarato`: i dati dicono una cosa vera che nessuno schema ammette
+#               ancora, e va scritto lo schema (§5b).
+NATURA = {
+    "stato_senza_meccanica": "difetto",
+    "pending_non_torna": "difetto",
+    "hit_die_doppio": "difetto",
+    "chassis_senza_privilegi": "dichiarato",
+    "tipo_variabile": "dichiarato",
+}
+
 
 # ------------------------------------------------------------------ censimento
 def carica(cartella):
@@ -152,13 +170,27 @@ def incoerenze(docs):
                     fuori["stato_senza_meccanica"].append(
                         (cid, blocco, b.get("name"), b.get("conversion_status")))
 
-        # C. features_pending contro i blocchi davvero senza meccanica
+        # C. features_pending contro gli stati `pending`, che e' quello che
+        #    dichiara di contare.
+        #
+        #    CORRETTO IL 04/09/2026, ed e' un difetto DEL RILEVATORE, non dei
+        #    dati. Il confronto era con i blocchi VUOTI, e un blocco vuoto non
+        #    e' un blocco in sospeso: `source_only` e' vuoto per definizione —
+        #    la fonte concede un permesso che il nostro sistema non ha — e un
+        #    rimando al chassis non e' vuoto affatto. Il derivato tornava; era
+        #    il controllo a chiedergli un conto che non e' il suo, e le tre
+        #    segnalazioni che ne uscivano erano tutte false.
+        #
+        #    La lezione e' la stessa dei difetti che questo rapporto misura:
+        #    un controllo scritto su un'assunzione implicita — «vuoto e in
+        #    sospeso sono la stessa cosa» — non fallisce, segnala. E una
+        #    segnalazione falsa costa la lettura di tutte le altre.
         if "features_pending" in m:
-            vuoti = sum(1 for b in (m.get("features") or [])
-                        if b.get("mechanics_5e") is None)
-            if vuoti != m["features_pending"]:
+            sospesi = sum(1 for b in (m.get("features") or [])
+                          if b.get("conversion_status") == "pending")
+            if sospesi != m["features_pending"]:
                 fuori["pending_non_torna"].append(
-                    (cid, m["features_pending"], vuoti))
+                    (cid, m["features_pending"], sospesi))
 
         # D. hit_die dichiarato due volte
         ch = m.get("chassis") or {}
@@ -342,12 +374,38 @@ def main():
     orig_cl = origini(classi, ["features", "chassis_features"])
     viste = {b: n for b, n in orig_cl.items()
              if f"mechanics_5e.{b}[].conversion_status" in dichiarati}
+
+    # DICHIARATO NON VUOL DIRE VINCOLATO, e la differenza va derivata dallo
+    # schema, non scritta accanto. Un nodo `{"type": "string"}` senza `enum`
+    # ne' `$ref` e' dichiarato e libero: sembra controllato e non lo e'. Un
+    # nodo che rimanda alla sede del vocabolario e' dichiarato e vincolato.
+    def _vincolo(blocco):
+        nodo = (((sc_classe.get("properties") or {}).get("mechanics_5e") or {}
+                 ).get("properties") or {}).get(blocco) or {}
+        nodo = ((nodo.get("items") or {}).get("properties") or {}
+                ).get("conversion_status") or {}
+        if "$ref" in nodo:
+            return f"sì, con `$ref` a `{nodo['$ref'].split('#')[0]}`"
+        if nodo.get("enum"):
+            return "sì, con `enum` proprio"
+        return "sì, ma come stringa libera"
+
+    vincolo_di = {b: _vincolo(b) for b in viste}
+    libere = {b: n for b, n in viste.items() if "libera" in vincolo_di[b]}
+    n_libere = sum(libere.values())
     cieche = ({("razza", b): n for b, n in orig_rz.items()}
               | {("classe", b): n for b, n in orig_cl.items() if b not in viste})
     n_cieche = sum(cieche.values())
     n_viste = sum(viste.values())
 
     tot_inc = sum(len(v) for v in inc.values())
+    tot_difetti = sum(len(v) for k, v in inc.items() if NATURA[k] == "difetto")
+    tot_dichiarato = tot_inc - tot_difetti
+    assert set(inc) <= set(NATURA), (
+        "una famiglia di incoerenze senza natura dichiarata: "
+        f"{sorted(set(inc) - set(NATURA))}. Una segnalazione che non dice se "
+        "e' un dato da correggere o uno stato da descrivere torna a essere il "
+        "numero unico che questa distinzione ha chiuso.")
 
     doc = f"""# Le zone morte di classe e di razza — quanto costa chiuderle
 
@@ -402,39 +460,88 @@ va letto dai dati. Esempi:
 
 ## 2. Le incoerenze fra classi
 
-**{tot_inc} in tutto**, in {len([k for k, v in inc.items() if v])} famiglie.
+**{tot_inc} in tutto**, in {len([k for k, v in inc.items() if v])} famiglie, e
+non sono una cosa sola. **{tot_dichiarato} sono stato dichiarato**: cose vere
+dei dati che nessuno schema ammette ancora, e si chiudono scrivendo lo schema,
+cioè dentro il lavoro di §5b. **{tot_difetti} sono difetti**: i dati dicono
+una cosa falsa, e va corretto il dato.
+
+La distinzione è nata da una lettura, non da un conteggio. Il 04/09/2026 le
+famiglie erano quattro e il totale dodici, tutte nella stessa colonna. Divise:
+sette di stato dichiarato, due difetti veri, e **tre segnalazioni false
+prodotte da questo stesso rilevatore**, che chiedeva a `features_pending` un
+conto che non è il suo. Un totale unico faceva sembrare il lavoro cinque volte
+più grande di quello che era, e faceva pagare a un derivato corretto il prezzo
+di un controllo sbagliato.
 
 ### 2.1 Uno stato di conversione che promette una meccanica che non c'è
 
 `{"`, `".join(STATI_SENZA_MECCANICA)}` sono gli stati in cui la meccanica 5e
 può mancare — è scritto nella descrizione di `elemento_5e` in
 `mostro.schema.json`, ed è l'invariante che distingue *«non è ancora stato
-scritto»* da *«è stato scritto che non succede niente»*. Le classi la
-violano:
+scritto»* da *«è stato scritto che non succede niente»*.
 
 {tabella(["classe", "blocco", "privilegio", "stato dichiarato"],
          [[f"`{c}`", f"`{b}`", n, f"**`{s}`**"]
           for c, b, n, s in inc["stato_senza_meccanica"]],
          ["---", "---", "---", "---"]) if inc["stato_senza_meccanica"] else "*nessuna*"}
 
+{"""\
 Non è una svista di battitura: `direct` significa *conversione conclusa senza
-adattamenti*. Due privilegi dichiarano di essere convertiti e non portano
-niente.
+adattamenti*. Quei privilegi dichiarano di essere convertiti e non portano
+niente.""" if inc["stato_senza_meccanica"] else """\
+**CHIUSA il 04/09/2026**, e la sezione resta perché l'invariante continui ad
+avere un posto dove fallire. Le due violazioni erano privilegi della fonte con `direct`
+e `mechanics_5e: null` insieme: dicevano nello stesso respiro *«conversione
+conclusa»* e *«non c'è niente»*.
 
-### 2.2 Il numero che dice quanto manca non conta quei due
+Non era un difetto dei due privilegi. La loro meccanica 5e **esiste** — è
+quella del chassis Paladino, che li concede già — e non stava scritta lì
+perché al campo mancava il modo di dire *sta altrove*. Un privilegio la cui
+meccanica è il chassis non è un caso di provenienza: è un **rimando**.
 
-{tabella(["classe", "`features_pending` dichiarato", "privilegi davvero senza meccanica"],
+Le strade erano due. Aggiungere uno stato di conversione nuovo avrebbe messo
+un termine in più nel vocabolario condiviso con mostri, oggetti e modelli, per
+un caso che riguarda le sole classi e conta due occorrenze — la quinta volta
+che questo progetto reinventa lo stesso concetto sotto un nome nuovo. La
+seconda riempie il campo che già c'è: `mechanics_5e` porta il rimando
+(`riferimento_a`, `srd_class`, `name_srd`, `level`), `direct` torna vero, e il
+vocabolario condiviso non si muove. È quella adottata.
+
+Un rimando è un **dato e non una nota** perché è verificabile: il privilegio
+del chassis o sta nella tabella SRD o non ci sta. `_chassis_5e` fallisce in
+costruzione se il bersaglio non esiste, `verifica_rimandi()` rifà la prova sui
+file già scritti, e `valida_classi.py` la esegue — perché un riferimento che
+risolve il giorno in cui è scritto è esattamente la forma di copia che qui si
+è già sfasata dodici volte."""}
+
+### 2.2 Il numero che dice quanto manca, e il controllo che glielo chiedeva male
+
+{tabella(["classe", "`features_pending` dichiarato", "privilegi in sospeso"],
          [[f"`{c}`", d, v] for c, d, v in inc["pending_non_torna"]],
          ["---", "--:", "--:"]) if inc["pending_non_torna"] else "*nessuna*"}
 
-`features_pending` conta gli stati `pending`, non i blocchi vuoti. La
-conseguenza è quella che conta: **`cavaliere-rosa` dichiara zero privilegi in
-sospeso e ne ha uno vuoto.** È il numero che una schermata di stato
-mostrerebbe come «classe completa».
+{"""\
+`features_pending` conta gli stati `pending`. Dove il numero dichiarato e
+quello contato divergono, è il derivato ad essersi sfasato dal dato: la stessa
+forma di difetto già vista sei volte in questo progetto, dentro lo strato che
+nessuno valida.""" if inc["pending_non_torna"] else """\
+**Le tre segnalazioni di questa famiglia erano false, e il difetto era del
+rilevatore.** Corretto il 04/09/2026.
 
-Questa è la stessa forma del difetto già visto sei volte in questo progetto —
-un derivato scritto accanto al dato invece che ricavato dal dato — e questa
-volta è dentro lo strato che nessuno valida.
+Il controllo confrontava `features_pending` con i blocchi **vuoti**, cioè con
+i privilegi che hanno `mechanics_5e: null`. Ma vuoto e in sospeso non sono la
+stessa cosa: `source_only` è vuoto per definizione — la fonte concede un
+permesso che il nostro sistema non ha, e non c'è niente da convertire — e un
+rimando al chassis non è vuoto affatto. `build_classi.py` il conto lo faceva
+giusto, sugli stati `pending`; era la verifica a chiedergli un numero diverso
+da quello che dichiara.
+
+È il difetto più insidioso dei tre tipi visti oggi, perché **non fallisce:
+segnala**. Un controllo rotto e uno funzionante tacciono uguale su un
+repository pulito, ma un controllo rotto che parla costa la lettura di tutte
+le altre segnalazioni — e in questo caso metteva `cavaliere-rosa` in una
+tabella di difetti per un privilegio che difetto non era."""}
 
 ### 2.3 Percorsi disomogenei
 
@@ -533,7 +640,9 @@ di grandezza, su meno file.
           ["blocchi di primo livello da descrivere",
            len([b for b in blocchi_nudi if blocchi_nudi[b]])],
           ["campi scalari che diventano `enum` letti dai dati", len(enum)],
-          ["**incoerenze già presenti nei dati**", f"**{tot_inc}**"]],
+          ["incoerenze: **stato dichiarato**, da descrivere",
+           f"**{tot_dichiarato}**"],
+          ["incoerenze: **difetti**, da correggere", f"**{tot_difetti}**"]],
          ["---", "--:"])}
 
 **Il costo non è nei {len(nudi)} percorsi.** Sono
@@ -550,11 +659,14 @@ stato, prosa, nota — già descritta due volte altrove, in `elemento_5e` di
 Tre copie della stessa forma è la domanda a cui questo progetto ha già
 risposto sei volte.
 
-Il pezzo che non si risolve da solo sono le {tot_inc} incoerenze: non si
-chiude uno schema attorno a dati che lo violano. `additionalProperties: false`
-con `conversion_status: direct` e `mechanics_5e: null` insieme non passa —
-o si corregge il dato, o si scrive nello schema che quello stato ammette il
-vuoto, cioè si dichiara che l'invariante non vale.
+Le incoerenze non sono un pezzo a parte del conto, e per metà del 04/09/2026
+lo sono sembrate. Le {tot_dichiarato} di stato dichiarato **sono** il lavoro
+di schema, viste da un altro lato: un chassis SRD con `chassis_features` vuota
+e un `risorsa.usi` che è intero o oggetto non sono dati sbagliati, sono dati
+veri che nessuna dichiarazione ammette ancora. Chiuderle vuol dire scrivere
+`anyOf` e condizioni, non toccare un file di classe.
+
+{"I " + str(tot_difetti) + " difetti invece sì, e vengono prima di tutto: `additionalProperties: false` non si mette sopra dati che lo violano." if tot_difetti else "Difetti da correggere prima non ce ne sono: il vincolo — `additionalProperties: false` non si mette sopra dati che lo violano — è già soddisfatto, e quello che resta è tutto lavoro di dichiarazione."}
 
 ---
 
@@ -594,7 +706,7 @@ in due, perché costano cose diverse:
 
 {tabella(["famiglia", "blocco", "dichiarazioni", "lo schema le vede?"],
          [[f, f"`{b}`", n, "**no**"] for (f, b), n in sorted(cieche.items())]
-         + [["classe", f"`{b}`", n, "sì, come stringa libera"]
+         + [["classe", f"`{b}`", n, vincolo_di[b]]
             for b, n in sorted(viste.items())],
          ["---", "---", "--:", "---"])}
 
@@ -602,11 +714,11 @@ in due, perché costano cose diverse:
   lo schema non descrive affatto: `traits` delle razze e `features` delle
   classi. Si chiudono descrivendo il blocco, cioè dentro il lavoro già contato
   sopra — non sono una voce in più.
-- **{n_viste} dichiarazioni che lo schema vede e lascia libere.** Sono in
-  `chassis_features`, dichiarato con `"type": "string"` e nessun `enum`. Questo
-  è il caso che costa **una riga**: un `$ref` alla sede del vocabolario, la
-  stessa che i mostri, gli oggetti e i modelli usano già. È anche il caso più
-  insidioso, perché un campo dichiarato *sembra* controllato.
+- **{n_viste} dichiarazioni che lo schema vede**, e di queste
+  **{n_libere} lasciate libere**. Un campo dichiarato `"type": "string"` senza
+  `enum` né `$ref` è il caso più insidioso di tutti, perché *sembra*
+  controllato: non somiglia a una lacuna, e nessun conteggio di percorsi nudi
+  lo trova. {"Ne resta " + str(n_libere) + ": " + ", ".join(f"`{b}`" for b in sorted(libere)) + "." if libere else "**Non ne resta nessuno.** `chassis_features` è stato agganciato alla sede del vocabolario il 04/09/2026, la stessa che i mostri, gli oggetti e i modelli usano già, ed è costato la riga che era stato previsto costasse. La verifica non è affidata alla lettura: `_schemi.verifica_riferimenti()` prova su questo schema che il termine abbandonato `fonte` venga davvero rifiutato — senza registro dei `$ref` un validatore non fallisce rumorosamente, lascia passare tutto."}
 
 ### 5b. Il conto delle due zone morte insieme
 
@@ -627,7 +739,8 @@ in due, perché costano cose diverse:
            len([b for b in blocchi_nudi_rz if blocchi_nudi_rz[b]]),
            len([b for b in blocchi_nudi if blocchi_nudi[b]])
            + len([b for b in blocchi_nudi_rz if blocchi_nudi_rz[b]])],
-          ["incoerenze già nei dati", tot_inc, "—", tot_inc]],
+          ["incoerenze: stato dichiarato", tot_dichiarato, "—", tot_dichiarato],
+          ["incoerenze: difetti", tot_difetti, "—", tot_difetti]],
          ["---", "--:", "--:", "--:"])}
 
 Il termine di paragone resta quello di §3: `mostro.schema.json` dichiara
@@ -639,15 +752,11 @@ file. Le due zone morte insieme chiedono
 {[c["dich"] for c in chiusi if c["nome"] == "mostro"][0]} già scritte per il
 mostro — {(len(nudi) + len(nudi_rz)) / [c["dich"] for c in chiusi if c["nome"] == "mostro"][0]:.1f}
 volte quel lavoro — su {N + N_RZ} file invece di
-{[c["file"] for c in chiusi if c["nome"] == "mostro"][0]}. E senza le
-{tot_inc} incoerenze non si comincia, perché uno schema non si chiude attorno
-a dati che lo violano.
+{[c["file"] for c in chiusi if c["nome"] == "mostro"][0]}. {"E i " + str(tot_difetti) + " difetti vengono prima, perché uno schema non si chiude attorno a dati che lo violano." if tot_difetti else "E non ci sono più difetti da correggere prima: i " + str(tot_dichiarato) + " che restano sono stato dichiarato, cioè questo stesso lavoro visto da un altro lato."}
 
 **L'ordine che costa meno**, e non è quello dei numeri:
 
-1. Le {n_viste} dichiarazioni di `chassis_features`: **una riga** — un `$ref`
-   alla sede del vocabolario — e toglie il caso in cui un campo dichiarato
-   sembra controllato.
+1. {"Le " + str(n_libere) + " dichiarazioni ancora libere (" + ", ".join(f"`{b}`" for b in sorted(libere)) + "): **una riga** — un `$ref` alla sede del vocabolario — e toglie il caso in cui un campo dichiarato sembra controllato." if libere else "~~Le " + str(n_viste) + " dichiarazioni di `chassis_features`~~ — **fatto il 04/09/2026**: `$ref` alla sede del vocabolario, più la sonda che prova che il riferimento risolva. La voce resta in elenco perché il costo previsto e quello pagato coincidano in chiaro."}
 2. Il blocco `features` ({blocchi_nudi["features"]} percorsi): è la stessa
    forma di elemento già descritta due volte altrove, e va risolta una volta
    per tutte e tre invece che una terza volta qui. È l'unica decisione dentro
@@ -659,8 +768,10 @@ a dati che lo violano.
 4. `structural` ({blocchi_nudi["structural"]} percorsi): il pezzo più grosso
    di tutti e il meno rischioso, perché è la scheda 2e riportata intera.
 
-Le {tot_inc} incoerenze non stanno in questa scaletta perché non sono lavoro
-di schema: sono dati da correggere, e vengono prima di tutto.
+Le {tot_dichiarato} incoerenze di stato dichiarato non sono una voce in più
+della scaletta: sono le stesse righe viste dal lato dei dati — `chassis_features`
+vuota si descrive dentro il blocco `features`/`chassis_features`, `risorsa.usi`
+è già descritto da `effetto.schema.json`. {"I " + str(tot_difetti) + " difetti sì, e vengono prima di tutto." if tot_difetti else "Difetti da correggere prima non ce ne sono più."}
 
 ---
 
@@ -680,7 +791,8 @@ di schema: sono dati da correggere, e vengono prima di tutto.
           f"({len(doc.splitlines())} righe)")
     print(f"percorsi in uso {len(usati)}, dichiarati {len(dichiarati)}, "
           f"nudi {len(nudi)}, mai nominati {len(mai_nominati)}")
-    print(f"incoerenze: {tot_inc}")
+    print(f"incoerenze: {tot_inc} "
+          f"({tot_difetti} difetti, {tot_dichiarato} stato dichiarato)")
     return 0
 
 

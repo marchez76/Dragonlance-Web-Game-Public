@@ -117,6 +117,16 @@ def verifica_riferimenti():
                             "cd": {"value": 11,
                                    "conversion_status": "fonte",
                                    "source": "SRD 5.1"}}}))
+    # LE CLASSI, dal 04/09/2026. `chassis_features[].conversion_status` era
+    # dichiarato `"type": "string"` senza enum: un campo che SEMBRA
+    # controllato e non lo e', ed e' il caso peggiore perche' non somiglia a
+    # una lacuna. Ora e' un `$ref` alla sede, e questa sonda lo prova con lo
+    # stesso termine abbandonato usato per gli altri.
+    sonde.append(
+        ("classe.schema.json", "mechanics_5e.chassis_features[].conversion_status",
+         {"mechanics_5e": {"chassis_features": [
+             {"name": "X", "kind": "privilegio_chassis", "level": 1,
+              "conversion_status": "fonte", "mechanics_5e": "x"}]}}))
 
     errori = []
     for nome, dove, documento in sonde:

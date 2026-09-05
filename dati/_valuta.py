@@ -10,8 +10,8 @@ DECISIONE 42 (`cambio-acciaio-oro`)
     decisione 27 (`sette-campi-2e`), dove un dato di fonte entra con la
     destinazione dichiarata e mai come valore nudo.
 
-    Il buco che chiudono e' misurato in RAPPORTO-personaggio §2.5: quattro
-    classi su diciassette dichiarano una ricchezza iniziale in pezzi
+    Il buco che chiudono e' misurato in RAPPORTO-personaggio §2.5: poche
+    classi dichiarano una ricchezza iniziale in pezzi
     d'acciaio, tutti gli oggetti portano `cost_gp` in pezzi d'oro, e nessun
     campo in nessuno schema diceva il rapporto fra le due. Un personaggio
     non poteva comprare il proprio equipaggiamento perche' non esisteva

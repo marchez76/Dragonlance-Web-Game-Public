@@ -169,6 +169,31 @@ def rapporto():
     vuote_alla_nascita = sorted({(e, ) for _r, e, ap in svuotate if not ap})
     svuotate_dal_filtro = [(r, e, ap) for r, e, ap in svuotate if ap]
 
+    # ---- le etichette che nominano anche una classe base 2e
+    # Lettura del 04/09/2026 sulla fonte, sede in `_classi_ammesse`, sezione
+    # CLASSI BASE 2e. Cinque etichette non nominano solo un telaio: nominano
+    # anche una classe del PHB 2e che Krynn gioca tale e quale e che il nostro
+    # roster non ha. I numeri qui sotto si derivano, non si scrivono.
+    def _dichiarano(e):
+        return sorted(r["id"] for r in rz
+                      if e in (((r.get("mechanics_5e") or {}
+                                 ).get("allowed_classes") or {}
+                                ).get("classes") or []))
+
+    base_2e = sorted(CA.BASE_2E)
+    dich_base = {e: _dichiarano(e) for e in base_2e}
+    # Quali delle cinque il roster abbia gia' non si scrive: si chiede alla
+    # sede, che lo deriva da ETICHETTE (decisione 59, `classi-base-2e`).
+    base_manca = sorted(CA.base_2e_mancanti())
+    base_fatte = [e for e in base_2e if e not in base_manca]
+    # Chi ha guadagnato una classe dalla trascrizione: per ogni etichetta
+    # trascritta, la classe base che nomina e le razze che ora ci arrivano.
+    base_resa = [(e, c, sorted(i for i in dich_base[e] if c in esito[i][1]))
+                 for e in base_fatte for c in CA.ETICHETTE[e].classi]
+    thief_dich = dich_base["Thief"]
+    thief_con = [i for i in thief_dich if "con-artist" in esito[i][1]]
+    thief_senza = [i for i in thief_dich if i not in thief_con]
+
     # ---- il verso opposto, dopo il filtro
     raggiunta_da = collections.defaultdict(list)
     for i, (_a, am, _e, _d) in esito.items():
@@ -410,29 +435,72 @@ numero piu' basso. Queste sono le coppie razza+etichetta in cui la razza
 dichiara un accesso e non ne ricava nessuna classe. Sono due casi diversi.
 
 **{len([1 for _r, _e, ap in svuotate if not ap])} coppie: l'etichetta non apre niente perche' il telaio e' in
-coda.** Bard e Ranger, gia' contati in §8 come lavoro noto: la razza non ha
-perso l'accesso, l'accesso non e' ancora stato scritto.
+coda.** {", ".join(f"`{e}`" for e in base_manca) if base_manca else "Nessuna"},
+gia' contate in §8 come lavoro noto: la razza non ha perso l'accesso,
+l'accesso non e' ancora stato scritto.
 
-**{len(svuotate_dal_filtro)} coppie: l'etichetta apre, e il filtro toglie tutto.** Queste sono
-la parte che va guardata, perche' non si smaltiscono battendo a macchina un
-telaio SRD.
+**{len(svuotate_dal_filtro)} coppie: l'etichetta apre, e il filtro toglie tutto.** {"""Erano tre fino al
+04/09/2026 e sono la ragione per cui la decisione 59 (`classi-base-2e`)
+esiste: un'etichetta che apre e poi non lascia niente e' una porta che il
+manuale concede e il nostro roster chiude.""" if not svuotate_dal_filtro else """Queste sono la parte
+che va guardata, perche' non si smaltiscono battendo a macchina un telaio
+SRD."""}
 
 {tabella(["razza", "etichetta", "cosa apre", "perche' non resta niente"],
          [(f"`{r}`", f"`{e}`", ", ".join(f"`{c}`" for c in ap),
            "; ".join(sorted({m for c in ap
                              for m, _d in CA.filtra(next(x for x in rz if x["id"] == r),
                                                    next(y for y in cl if y["id"] == c))})))
-          for r, e, ap in svuotate_dal_filtro])}
+          for r, e, ap in svuotate_dal_filtro]).strip() if svuotate_dal_filtro else ""}
+### Le cinque etichette che nominano una classe base 2e
 
-Le due righe `Paladin` dicono la stessa cosa: il telaio Paladin e' trascritto,
-ma le uniche nostre classi che ci stanno sopra sono due ordini solamnici, che
-sono avanzamenti **e** sono riservati a umani e mezzelfi. Un Silvanesti o un
-Irda che nella fonte poteva fare il paladino qui non ha dove andare: non manca
-un telaio, manca una **classe** — un paladino di Krynn che non sia un
-Cavaliere di Solamnia. La riga `Thief` dell'Aghar ha la stessa forma: sul
-telaio Rogue il roster ha il solo Con Artist, che chiede Carisma 12 contro un
-massimale razziale di 9. Nove razze dichiarano `Thief`, otto arrivano al Con
-Artist, l'Aghar resta senza ladro.
+La fonte lo dice per prima, e non e' una nostra classificazione. Il capitolo
+delle classi di *Tales of the Lance* apre il gruppo dei guerrieri dichiarando
+che su Ansalon si giocano le classi guerriere tipiche dell'AD&D 2e — fighter,
+ranger e paladin — e che quelle **uniche** di Ansalon sono descritte di
+seguito; il gruppo dei ladri ripete la forma, contando i bardi e i ladri fra
+quelli comuni e riservando la descrizione ai due tipi propri di Krynn. I
+gruppi Wizard e Priest non lo dicono, e infatti sono di Krynn.
+
+Sono {len(base_2e)} etichette in questa condizione
+({", ".join(f"`{e}`" for e in base_2e)}), dichiarate in tutto da
+{len(set().union(*dich_base.values()))} razze su {n_raz}. La sede e'
+`_classi_ammesse.BASE_2E`; **quali di esse il roster abbia gia' non e'
+scritto da nessuna parte: si deriva** da chi nomina una nostra classe
+(`_classi_ammesse.base_2e_mancanti()`).
+
+**{len(base_fatte)} trascritte** dalla {cita('classi-base-2e')}, con i minimi
+della Tabella 13 del PHB 2e e `mechanics_5e` che rimanda al chassis SRD senza
+aggiungere nulla:
+
+{tabella(["etichetta", "nostra classe", "razze che la dichiarano e ci arrivano", "quali"],
+         [(f"`{e}`", f"`{c}`", str(len(chi)),
+           ", ".join(f"`{i}`" for i in chi) if chi else "—")
+          for e, c, chi in base_resa])}
+
+**{len(base_manca)} ancora da trascrivere** ({", ".join(f"`{e}`" for e in base_manca) if base_manca else "nessuna"}), e
+costano piu' delle prime tre: per queste manca **anche** il telaio SRD, che e'
+in coda in `_srd51.CODA` (§8). Le prime tre avevano il telaio gia' battuto a
+macchina e mancava la sola classe.
+
+**Il Con Artist non e' in questa condizione, ed e' un esito atteso.** Il
+manuale lo apre a qualunque razza giocabile di Krynn e nella stessa riga gli
+pone un minimo di Carisma 12; all'Aghar pone un massimale di Carisma 9. E' la
+doppia penalita' della {cita('massimali-razziali')} che morde dove deve
+mordere: fedelta' che funziona, non una porta da riaprire.
+{len(thief_dich)} razze dichiarano `Thief` e
+{len(thief_con)} arrivano al Con Artist; {"resta fuori " + ", ".join(f"`{i}`" for i in thief_senza) if thief_senza else "nessuna resta fuori"}.
+Chi rilegge fra sei mesi trovi scritto qui che questa riga **non va sanata** —
+e che il ladro comune, che l'Aghar ora prende, e' un'altra classe.
+
+Il conto che ne segue va saputo: la razza piu' vincolata del roster e'
+`{conteggi[0][0]}`, con **{conteggi[0][2]} classi accessibili** su {n_cl}
+({", ".join(f"`{c}`" for c in esito[conteggi[0][0]][1])}), contro le
+{conteggi[1][2]} della seconda. Delle
+{len(esito[conteggi[0][0]][3] or [])} etichette che dichiara,
+{len([e for e in (esito[conteggi[0][0]][3] or []) if e in base_manca])} restano
+nella condizione sopra. E' un numero che il giocatore deve vedere **in
+creazione**, non scoprire dopo aver scelto la razza.
 
 ### Le esclusioni, razza per razza
 
@@ -541,9 +609,19 @@ affidata a chi rilegge.
 La conseguenza sui numeri resta e va guardata: finche' il silenzio della fonte
 viene letto come assenza di vincolo, il Dargonesti prende l'esito **piu'
 largo possibile** — {len(esito['elfo-dargonesti'][1])} classi — prodotto da un
-buco del manuale e non da una scelta. La questione aperta e' scritta nel dato:
-ereditare le {len(esito['elfo-dimernesti'][3] or [])} voci del Dimernesti, o
-lasciare il silenzio.
+buco del manuale e non da una scelta.
+
+**La fonte non tace del tutto, e va detto qui perche' cambia i termini della
+domanda.** Letto il 04/09/2026: il capitolo delle razze ha un paragrafo di
+regole speciali per i PG Dimernesti **e** Dargonesti, e li' elenca cinque
+classi che gli elfi del mare possono prendere — Cavalier, Paladin, Fighter,
+High Sorcerer, Holy Orders. E' l'unico posto in cui il Dargonesti riceve un
+elenco, e per il Dimernesti e' un **secondo** elenco accanto alla riga della
+tabella. I due non coincidono: la riga della tabella non concede `Paladin`, il
+paragrafo si'. La questione aperta resta scritta nel dato, ma le opzioni sono
+tre e non due: ereditare le {len(esito['elfo-dimernesti'][3] or [])} voci del
+Dimernesti, leggere le cinque del paragrafo, o lasciare il silenzio. Non e'
+deciso qui, ed e' registrato perche' la seconda opzione non era in vista.
 """)
 
     # ------------------------------------------------------------------ §8
@@ -554,7 +632,8 @@ lasciare il silenzio.
 Le due cose si somigliano e non sono la stessa: una voce in coda si smaltisce,
 una domanda aperta va decisa. Confonderle gonfia il conto delle decisioni con
 del lavoro gia' noto. Le {len(in_coda)} etichette senza telaio si dividono in
-tre casi, e solo uno e' una domanda.
+tre casi, e nessuno di essi e' oggi una domanda; una quarta voce, le classi
+base 2e, taglia trasversalmente e non dipende dal telaio.
 
 ### Lavoro noto: {len(coda_nota)} etichette che non aprono niente e hanno un telaio SRD in coda
 
@@ -568,8 +647,30 @@ tre casi, e solo uno e' una domanda.
 Il telaio esiste nell'SRD 5.1 e nessuno l'ha ancora trascritto: e' battitura,
 non conversione. La coda sta in `_srd51.CODA`, accanto ai telai trascritti,
 perche' e' li' che si guarda quando se ne aggiunge uno. Nota che trascrivere
-il telaio non basta da solo: serve anche una classe di Krynn che ci stia
-sopra, come per `Paladin` in §5b.
+il telaio non basta da solo: serve anche la classe che ci sta sopra, ed e'
+esattamente la voce qui sotto.
+
+### Lavoro noto, seconda voce: {len(base_manca)} etichette su {len(base_2e)} che nominano una classe base 2e ancora assente dal roster
+
+{tabella(["etichetta", "telaio", "cosa manca", "razze che la dichiarano", "quante"],
+         [(f"`{e}`",
+           f"`{CA.ETICHETTE[e].telaio}`" if CA.ETICHETTE[e].telaio
+           else "*in coda*",
+           "la sola classe" if CA.ETICHETTE[e].telaio else "telaio **e** classe",
+           ", ".join(f"`{r}`" for r in dich_base[e]), len(dich_base[e]))
+          for e in base_manca],
+         allin=["---", "---", "---", "---", "--:"])}
+
+Non e' una nostra classificazione: e' quello che *Tales of the Lance* dichiara
+aprendo i gruppi Warrior e Rogue (§5b). Delle {len(base_2e)} etichette in
+questa condizione, {len(base_fatte)} sono state trascritte dalla
+{cita('classi-base-2e')} — {", ".join(f"`{e}`" for e in base_fatte)}, che
+avevano il telaio SRD gia' battuto a macchina e costavano la sola classe — e
+con esse si sono chiuse le tre righe svuotate di §5b. Le
+{len(base_manca)} che restano compaiono anche nella voce sopra e costano
+telaio **e** classe: finche' la classe non c'e', l'etichetta apre il solo
+insieme del telaio, che per queste due e' vuoto. Sede:
+`_classi_ammesse.BASE_2E`, con la parte derivata in `base_2e_mancanti()`.
 
 ### Coperte lo stesso: {len(coperte_senza_telaio)} etichette senza telaio che aprono una classe per nome
 
@@ -594,7 +695,7 @@ questione — riguarda i privilegi di quella classe, non l'accesso a essa.
 
 {tabella(["etichetta", "classe aperta", "su cosa si regge"],
          [(f"`{e}`", ", ".join(f"`{c}`" for c in v.da_confermare), v.fonte)
-          for e, v in da_confermare.items()]) if da_confermare else "*(nessuno)*"}
+          for e, v in da_confermare.items()]) if da_confermare else "*(nessuno: l'ultimo, `Druid (heathen)` sul Sacerdote Eretico, e' stato confermato sulla fonte il 04/09/2026 — la ragione sta in sede, non qui)*"}
 
 Sono righe della sede marcate `da_confermare`: aprono una classe e aspettano
 una lettura di merito. Restano visibili finche' qualcuno non le guarda — che

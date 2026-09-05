@@ -96,6 +96,43 @@ prosa o dati, insieme ai `valida_*.py`; con `--correggi` riscrive i numeri
 a partire dagli id, quindi rinumerare costa un comando e non sessanta file
 riletti a mano.
 
+**Anche una questione APERTA ha un id, e sta nella stessa sede.** `APERTE` in
+`decisioni.py`, accanto a `DECISIONI`. Fino al 05/09/2026 le questioni aperte
+erano prosa scritta a mano dentro `genera_contesto.py` — senza id e senza
+sede, cioè esattamente ciò che questa regola vieta ovunque tranne lì. La forma
+di un rimando è più corta, perché non c'è nessun derivato:
+
+    questione aperta (`aumento-oltre-tetto`)
+
+Quando una questione viene decisa **esce da `APERTE`** e la decisione prende
+un id proprio: i due elenchi non condividono id, e un `assert` lo impedisce. I
+rimandi alla questione decisa diventano allora `aperta-ignota` in
+`verifica_decisioni.py`, ed è voluto — è il controllo che dice quali testi
+vanno riportati sulla decisione. Una voce può non avere testo proprio: allora
+dichiara la `sede` dove la ragione vive già (i cinque chassis indecisi la
+tengono in `_chassis_5e.CHASSIS`), e il generatore la legge da lì invece di
+ricopiarla.
+
+**Quando si crea una sede unica, si cerca subito chi altro scriveva quel
+dato.** Nello stesso giro, non dopo. È il pattern che si è ripetuto dodici
+volte: ogni volta che una struttura doppia è stata chiusa dandole una sede,
+saltava fuori che qualcun altro riscriveva lo stesso dato a mano — e lo si è
+scoperto per caso, mentre si chiudeva un'altra cosa. La dodicesima
+(`valida_classi.MAPPA_TABELLA` contro `dati/_classi_ammesse.py`, 03/09/2026)
+è stata trovata così, non cercata.
+
+Creare la sede è metà del lavoro; l'altra metà è `grep` sul nome del dato,
+sui suoi valori e sui suoi sinonimi, per trovare le copie **prima** che si
+sfasino. Una copia scoperta il giorno in cui la sede nasce costa una riga di
+import; scoperta sei mesi dopo costa la diagnosi di perché due numeri non
+tornano. Una sede nuova che non porta con sé questo controllo non ha chiuso
+la struttura doppia: l'ha spostata.
+
+Le copie combaciano sempre il giorno in cui vengono scritte — è il motivo per
+cui nessun controllo le vede nascere. Chi importa dalla sede resta allineato
+per costruzione; chi la ricopia resta allineato **per coincidenza**, finché
+dura.
+
 ## 4. Convenzione delle pagine
 
 Due numeri diversi convivono, non sono intercambiabili:

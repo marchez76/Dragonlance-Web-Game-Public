@@ -11,9 +11,9 @@ La decisione 58 (`telaio-apre-classe-filtra`) risolve le 17 etichette del PHB
 2e in due tempi: **il telaio apre l'insieme, i requisiti della classe filtrano
 dentro**. Due controlli in sequenza, non uno.
 
-Il conto, in tre numeri: le 15 razze aprono **135 coppie razza+classe**, il
-filtro ne toglie **42**, ne restano **93** — una media di **6.2 classi
-accessibili per razza** su 17 del roster, 12 delle quali si prendono alla
+Il conto, in tre numeri: le 15 razze aprono **168 coppie razza+classe**, il
+filtro ne toglie **42**, ne restano **126** — una media di **8.4 classi
+accessibili per razza** su 20 del roster, 15 delle quali si prendono alla
 creazione.
 
 > **Razze con zero classi accessibili: 0**.
@@ -48,7 +48,7 @@ accostamenti che la sede non porti gia' (§2b).
 | `Handler` | 1 |
 | `Knight of Solamnia` | 1 |
 
-**17 classi** nel roster, con il telaio 5e su cui ciascuna sta:
+**20 classi** nel roster, con il telaio 5e su cui ciascuna sta:
 
 | nostra classe | nome inglese | gruppo | telaio 5e | stato | si entra da |
 |---|---|---|---|---|---|
@@ -59,13 +59,16 @@ accostamenti che la sede non porti gia' (§2b).
 | `cavaliere` | Cavalier | Warrior | `Fighter` | clonato | — |
 | `commoner` | Commoner | Normal | **nessuno** | in_sospeso | — |
 | `con-artist` | Con Artist / Prestidigitator | Rogue | `Rogue` | clonato | — |
+| `guerriero` | Fighter | Warrior | `Fighter` | clonato | — |
 | `handler` | Handler | Rogue | **nessuno** | in_sospeso | — |
+| `ladro` | Thief | Rogue | `Rogue` | clonato | — |
 | `mago-alta-stregoneria` | Wizard of High Sorcery | Wizard | `Wizard` | clonato | — |
 | `mago-rinnegato` | Renegade Wizard | Wizard | `Wizard` | clonato | — |
 | `mago-veste-bianca` | Wizard of the White Robes | Wizard | **nessuno** | in_sospeso | `mago-alta-stregoneria` |
 | `mago-veste-nera` | Wizard of the Black Robes | Wizard | **nessuno** | in_sospeso | `mago-alta-stregoneria` |
 | `mago-veste-rossa` | Wizard of the Red Robes | Wizard | **nessuno** | in_sospeso | `mago-alta-stregoneria` |
 | `mariner` | Mariner | Warrior | **nessuno** | in_sospeso | — |
+| `paladino` | Paladin | Warrior | `Paladin` | clonato | — |
 | `sacerdote-eretico` | Heathen Priest | Priest | **nessuno** | in_sospeso | — |
 | `sacerdote-ordini-sacri` | Priest of the Holy Orders of the Stars | Priest | `Cleric` | clonato | — |
 | `tinker` | Tinker | Normal | **nessuno** | in_sospeso | — |
@@ -77,8 +80,8 @@ nostre classi non hanno un telaio: per loro la decisione 58
 aprire cio' su cui nessuno sta. Ci si arriva solo se un'etichetta le nomina. 5
 classi non si prendono alla creazione: si entra da un'altra classe.
 
-In coda ci sono 3 telai SRD non ancora trascritti (`Bard`, `Druid`, `Ranger`,
-in `_srd51.CODA`): sono lavoro noto, non decisioni aperte — vedi §8.
+In coda ci sono 2 telai SRD non ancora trascritti (`Bard`, `Ranger`, in
+`_srd51.CODA`): sono lavoro noto, non decisioni aperte — vedi §8.
 
 ---
 
@@ -93,22 +96,22 @@ aprirebbe il Marinaio, che non ha chassis.
 
 | etichetta | razze | telaio | nomina direttamente | apre in tutto |
 |---|--:|---|---|---|
-| `Barbarian` | 5 | `Fighter` | `barbaro` | `barbaro`, `cavaliere`, `cavaliere-corona` |
+| `Barbarian` | 5 | `Fighter` | `barbaro` | `barbaro`, `cavaliere`, `cavaliere-corona`, `guerriero` |
 | `Bard` | 5 | **nessuno** | — | **niente** |
-| `Cavalier` | 3 | `Fighter` | `cavaliere` | `barbaro`, `cavaliere`, `cavaliere-corona` |
+| `Cavalier` | 3 | `Fighter` | `cavaliere` | `barbaro`, `cavaliere`, `cavaliere-corona`, `guerriero` |
 | `Druid (heathen)` | 2 | **nessuno** | `sacerdote-eretico` | `sacerdote-eretico` |
-| `Fighter` | 12 | `Fighter` | — | `barbaro`, `cavaliere`, `cavaliere-corona` |
-| `Handler` | 1 | `Rogue` | `handler` | `con-artist`, `handler` |
+| `Fighter` | 12 | `Fighter` | `guerriero` | `barbaro`, `cavaliere`, `cavaliere-corona`, `guerriero` |
+| `Handler` | 1 | `Rogue` | `handler` | `con-artist`, `handler`, `ladro` |
 | `High Sorcerer` | 6 | `Wizard` | `mago-alta-stregoneria` | `mago-alta-stregoneria`, `mago-rinnegato` |
 | `Holy Orders` | 11 | `Cleric` | `sacerdote-ordini-sacri` | `sacerdote-ordini-sacri` |
 | `Illusionist` | 1 | `Wizard` | — | `mago-alta-stregoneria`, `mago-rinnegato` |
-| `Knight of Solamnia` | 1 | `Paladin` | `cavaliere-corona`, `cavaliere-spada`, `cavaliere-rosa` | `cavaliere-corona`, `cavaliere-rosa`, `cavaliere-spada` |
+| `Knight of Solamnia` | 1 | `Paladin` | `cavaliere-corona`, `cavaliere-spada`, `cavaliere-rosa` | `cavaliere-corona`, `cavaliere-rosa`, `cavaliere-spada`, `paladino` |
 | `Mage (Renegade)` | 2 | `Wizard` | `mago-rinnegato` | `mago-alta-stregoneria`, `mago-rinnegato` |
-| `Mariner` | 3 | `Fighter` | `mariner` | `barbaro`, `cavaliere`, `cavaliere-corona`, `mariner` |
-| `Paladin` | 2 | `Paladin` | — | `cavaliere-rosa`, `cavaliere-spada` |
+| `Mariner` | 3 | `Fighter` | `mariner` | `barbaro`, `cavaliere`, `cavaliere-corona`, `guerriero`, `mariner` |
+| `Paladin` | 2 | `Paladin` | `paladino` | `cavaliere-rosa`, `cavaliere-spada`, `paladino` |
 | `Priest (heathen)` | 2 | `Cleric` | `sacerdote-eretico` | `sacerdote-eretico`, `sacerdote-ordini-sacri` |
 | `Ranger` | 6 | **nessuno** | — | **niente** |
-| `Thief` | 9 | `Rogue` | — | `con-artist` |
+| `Thief` | 9 | `Rogue` | `ladro` | `con-artist`, `ladro` |
 | `Tinker` | 1 | **nessuno** | `tinker` | `tinker` |
 
 ### Le ragioni, che sono di due tipi e restano distinte
@@ -116,10 +119,10 @@ aprirebbe il Marinaio, che non ha chassis.
 | etichetta | ragione del telaio (editoriale) | ragione delle classi (di fonte) |
 |---|---|---|
 | `Barbarian` | guerriero senza addestramento cavalleresco; l'Ira e' un'invenzione della 3e, assente da Krynn | il nome inglese del Barbaro coincide con l'etichetta |
-| `Bard` | il Bardo SRD esiste nella 5e ma non fra i telai trascritti: in coda | — |
+| `Bard` | il Bardo SRD esiste nella 5e ma non fra i telai trascritti: in coda. E' anche una classe base 2e che il roster non ha: vedi CLASSI BASE 2e nel docstring | — |
 | `Cavalier` | guerriero a cavallo, telaio marziale puro | il nome inglese del Cavaliere coincide con l'etichetta |
-| `Druid (heathen)` | nessun telaio, e non serve: l'etichetta e' gia' coperta per nome dal Sacerdote Eretico, che di telaio non ne ha. Il Druido SRD servirebbe solo se il druido eretico risultasse una classe a se' (`_srd51.CODA`) | la scheda del Sacerdote Eretico dichiara gia' di essere entrambe le righe della tabella Class/Race Combinations, `Priest (heathen)` e `Druid (heathen)`; il capitolo delle classi definisce eretico anche il druido che viene da un altro mondo, perche' ignora gli dei della natura di Krynn |
-| `Fighter` | e' il telaio, non una classe del nostro roster | — |
+| `Druid (heathen)` | nessun telaio, e non serve: l'etichetta e' gia' coperta per nome dal Sacerdote Eretico, che di telaio non ne ha | CONFERMATO sulla fonte il 04/09/2026, non piu' un accostamento in attesa. Il capitolo Priest Group Classes ha due sole voci — Holy Orders of the Stars ed Heathen Priests — e nessuna terza voce per un druido: la scheda dell'eretico dichiara che sono eretici anche i druidi venuti da altri mondi, perche' non conoscono Chislev e Habbakuk. Le due righe `Druid (heathen)` e `Priest (heathen)` della tabella Class/Race Combinations si distinguono per il solo tetto di livello, che non applichiamo (decisione 4, `limiti-di-livello`): tolto quello, sono la stessa classe |
+| `Fighter` | e' il telaio, e nomina anche la classe base 2e che gli sta sopra: vedi CLASSI BASE 2e nel docstring | il nome inglese del Guerriero coincide con l'etichetta. E' la classe base AD&D 2e che *Tales of the Lance* dichiara giocabile su Ansalon senza descriverla, trascritta dal PHB 2e con la decisione 59 (`classi-base-2e`) |
 | `Handler` | abilita' del ladro applicate al baratto kender | il nome inglese dell'Handler coincide con l'etichetta |
 | `High Sorcerer` | incantatore arcano a preparazione | `Wizard of High Sorcery` e' il nome inglese della classe |
 | `Holy Orders` | incantatore divino, e' il nome 2e dell'ordine sacerdotale di Krynn | `Priest of the Holy Orders of the Stars` e' il nome inglese della classe; la tabella abbrevia |
@@ -127,10 +130,10 @@ aprirebbe il Marinaio, che non ha chassis.
 | `Knight of Solamnia` | l'ombrello dei tre ordini cavallereschi; due dei tre stanno su telaio Paladin | etichetta OMBRELLO: la tabella la porta come una riga sola e il capitolo dei Cavalieri di Solamnia descrive tre ordini in sequenza obbligata (decisione 5, `cavalieri-solamnia`). Apre tutti e tre; il filtro dell'ingresso lascia il solo Cavaliere della Corona |
 | `Mage (Renegade)` | incantatore arcano fuori dagli Ordini | `Renegade Wizard` e' il nome inglese della classe |
 | `Mariner` | guerriero di mare | il nome inglese del Marinaio coincide con l'etichetta. Senza questa riga l'etichetta `Mariner` non aprirebbe il Marinaio, che non ha chassis |
-| `Paladin` | e' il telaio, non una classe del nostro roster | — |
+| `Paladin` | e' il telaio, e nomina anche la classe base 2e che gli sta sopra: vedi CLASSI BASE 2e nel docstring | il nome inglese del Paladino coincide con l'etichetta. E' la classe base AD&D 2e trascritta dal PHB 2e con la decisione 59 (`classi-base-2e`), e non un ordine solamnico: e' il paladino che la fonte concede al Silvanesti e all'Irda |
 | `Priest (heathen)` | incantatore divino fuori dagli Ordini | `Heathen Priest` e' il nome inglese della classe |
-| `Ranger` | il Ranger SRD esiste nella 5e ma non fra i telai trascritti: in coda | — |
-| `Thief` | e' il telaio, non una classe del nostro roster | — |
+| `Ranger` | il Ranger SRD esiste nella 5e ma non fra i telai trascritti: in coda. E' anche una classe base 2e che il roster non ha: vedi CLASSI BASE 2e nel docstring | — |
+| `Thief` | e' il telaio, e nomina anche la classe base 2e che gli sta sopra: vedi CLASSI BASE 2e nel docstring | il nome inglese del Ladro coincide con l'etichetta. E' la classe base AD&D 2e trascritta dal PHB 2e con la decisione 59 (`classi-base-2e`), e non il Con Artist: il ladro comune non ha il minimo di Carisma che escludeva l'Aghar |
 | `Tinker` | non ha un telaio 5e: e' un'invenzione di Krynn | il nome inglese del Tinker coincide con l'etichetta |
 
 ### 2b. Il riscontro dell'euristica
@@ -167,13 +170,16 @@ filtro ha stretto.
 | `cavaliere` | `Fighter` | 3 | 15 | 14 | +11 |
 | `commoner` | — | 0 | 3 | 3 | +3 |
 | `con-artist` | `Rogue` | 0 | 12 | 11 | +11 |
+| `guerriero` | `Fighter` | 12 | 15 | 15 | +3 |
 | `handler` | — | 1 | 4 | 1 | 0 |
+| `ladro` | `Rogue` | 9 | 12 | 12 | +3 |
 | `mago-alta-stregoneria` | `Wizard` | 6 | 10 | 10 | +4 |
 | `mago-rinnegato` | `Wizard` | 2 | 10 | 10 | +8 |
 | `mago-veste-bianca` | — | 0 | 3 | 0 | 0 |
 | `mago-veste-nera` | — | 0 | 3 | 0 | 0 |
 | `mago-veste-rossa` | — | 0 | 3 | 0 | 0 |
 | `mariner` | — | 3 | 6 | 6 | +3 |
+| `paladino` | `Paladin` | 2 | 6 | 6 | +4 |
 | `sacerdote-eretico` | — | 2 | 5 | 5 | +3 |
 | `sacerdote-ordini-sacri` | `Cleric` | 11 | 15 | 15 | +4 |
 | `tinker` | — | 1 | 4 | 1 | 0 |
@@ -198,7 +204,7 @@ di preclusione.
 | `ingresso` | si entra da un'altra classe, non alla creazione | 21 |
 | `caratteristica` | un minimo di classe supera il massimale razziale | 5 |
 
-Il filtro toglie **42 coppie** su 135 aperte. Una coppia puo' essere tolta da
+Il filtro toglie **42 coppie** su 168 aperte. Una coppia puo' essere tolta da
 piu' motivi insieme, ed e' il motivo per cui la somma della colonna (53)
 supera il numero delle coppie: sapere che una classe e' esclusa due volte e'
 diverso dal saperla esclusa una, perche' togliere un vincolo non la
@@ -218,28 +224,28 @@ Entrambi sono scritti in `_classi_ammesse.py`, non solo qui.
 
 | razza | etichette dichiarate | aperte dal telaio | **accessibili** | quali |
 |---|--:|--:|--:|---|
-| `nano-aghar` | 4 | 5 | **2** | `barbaro`, `sacerdote-ordini-sacri` |
-| `elfo-kagonesti` | 6 | 5 | **4** | `barbaro`, `cavaliere`, `con-artist`, `sacerdote-ordini-sacri` |
-| `nano-collina` | 5 | 5 | **4** | `barbaro`, `cavaliere`, `con-artist`, `sacerdote-ordini-sacri` |
-| `nano-montagna` | 4 | 5 | **4** | `barbaro`, `cavaliere`, `con-artist`, `sacerdote-ordini-sacri` |
-| `elfo-dimernesti` | 4 | 6 | **5** | `barbaro`, `cavaliere`, `mago-alta-stregoneria`, `mago-rinnegato`, `sacerdote-ordini-sacri` |
-| `elfo-silvanesti` | 6 | 8 | **5** | `barbaro`, `cavaliere`, `mago-alta-stregoneria`, `mago-rinnegato`, `sacerdote-ordini-sacri` |
-| `elfo-qualinesti` | 7 | 7 | **6** | `barbaro`, `cavaliere`, `con-artist`, `mago-alta-stregoneria`, `mago-rinnegato`, `sacerdote-ordini-sacri` |
-| `kender` | 8 | 7 | **6** | `barbaro`, `cavaliere`, `con-artist`, `handler`, `sacerdote-eretico`, `sacerdote-ordini-sacri` |
-| `minotauro` | 5 | 7 | **6** | `barbaro`, `cavaliere`, `mago-alta-stregoneria`, `mago-rinnegato`, `mariner`, `sacerdote-ordini-sacri` |
-| `gnomo-minoi` | 5 | 8 | **7** | `barbaro`, `cavaliere`, `con-artist`, `mago-alta-stregoneria`, `mago-rinnegato`, `sacerdote-ordini-sacri`, `tinker` |
-| `irda` | 7 | 10 | **7** | `barbaro`, `cavaliere`, `con-artist`, `mago-alta-stregoneria`, `mago-rinnegato`, `mariner`, `sacerdote-ordini-sacri` |
-| `elfo-dargonesti` | *(nessun elenco)* | 17 | **9** | `barbaro`, `cavaliere`, `commoner`, `con-artist`, `mago-alta-stregoneria`, `mago-rinnegato`, `mariner`, `sacerdote-eretico`, `sacerdote-ordini-sacri` |
-| `mezzelfo` | 11 | 11 | **9** | `barbaro`, `cavaliere`, `cavaliere-corona`, `con-artist`, `mago-alta-stregoneria`, `mago-rinnegato`, `mariner`, `sacerdote-eretico`, `sacerdote-ordini-sacri` |
-| `umano-barbaro` | *(nessun elenco)* | 17 | **9** | `barbaro`, `cavaliere`, `commoner`, `con-artist`, `mago-alta-stregoneria`, `mago-rinnegato`, `mariner`, `sacerdote-eretico`, `sacerdote-ordini-sacri` |
-| `umano` | *(nessun elenco)* | 17 | **10** | `barbaro`, `cavaliere`, `cavaliere-corona`, `commoner`, `con-artist`, `mago-alta-stregoneria`, `mago-rinnegato`, `mariner`, `sacerdote-eretico`, `sacerdote-ordini-sacri` |
+| `nano-aghar` | 4 | 7 | **4** | `barbaro`, `guerriero`, `ladro`, `sacerdote-ordini-sacri` |
+| `elfo-dimernesti` | 4 | 7 | **6** | `barbaro`, `cavaliere`, `guerriero`, `mago-alta-stregoneria`, `mago-rinnegato`, `sacerdote-ordini-sacri` |
+| `elfo-kagonesti` | 6 | 7 | **6** | `barbaro`, `cavaliere`, `con-artist`, `guerriero`, `ladro`, `sacerdote-ordini-sacri` |
+| `nano-collina` | 5 | 7 | **6** | `barbaro`, `cavaliere`, `con-artist`, `guerriero`, `ladro`, `sacerdote-ordini-sacri` |
+| `nano-montagna` | 4 | 7 | **6** | `barbaro`, `cavaliere`, `con-artist`, `guerriero`, `ladro`, `sacerdote-ordini-sacri` |
+| `elfo-silvanesti` | 6 | 10 | **7** | `barbaro`, `cavaliere`, `guerriero`, `mago-alta-stregoneria`, `mago-rinnegato`, `paladino`, `sacerdote-ordini-sacri` |
+| `minotauro` | 5 | 8 | **7** | `barbaro`, `cavaliere`, `guerriero`, `mago-alta-stregoneria`, `mago-rinnegato`, `mariner`, `sacerdote-ordini-sacri` |
+| `elfo-qualinesti` | 7 | 9 | **8** | `barbaro`, `cavaliere`, `con-artist`, `guerriero`, `ladro`, `mago-alta-stregoneria`, `mago-rinnegato`, `sacerdote-ordini-sacri` |
+| `kender` | 8 | 9 | **8** | `barbaro`, `cavaliere`, `con-artist`, `guerriero`, `handler`, `ladro`, `sacerdote-eretico`, `sacerdote-ordini-sacri` |
+| `gnomo-minoi` | 5 | 10 | **9** | `barbaro`, `cavaliere`, `con-artist`, `guerriero`, `ladro`, `mago-alta-stregoneria`, `mago-rinnegato`, `sacerdote-ordini-sacri`, `tinker` |
+| `irda` | 7 | 13 | **10** | `barbaro`, `cavaliere`, `con-artist`, `guerriero`, `ladro`, `mago-alta-stregoneria`, `mago-rinnegato`, `mariner`, `paladino`, `sacerdote-ordini-sacri` |
+| `elfo-dargonesti` | *(nessun elenco)* | 20 | **12** | `barbaro`, `cavaliere`, `commoner`, `con-artist`, `guerriero`, `ladro`, `mago-alta-stregoneria`, `mago-rinnegato`, `mariner`, `paladino`, `sacerdote-eretico`, `sacerdote-ordini-sacri` |
+| `mezzelfo` | 11 | 14 | **12** | `barbaro`, `cavaliere`, `cavaliere-corona`, `con-artist`, `guerriero`, `ladro`, `mago-alta-stregoneria`, `mago-rinnegato`, `mariner`, `paladino`, `sacerdote-eretico`, `sacerdote-ordini-sacri` |
+| `umano-barbaro` | *(nessun elenco)* | 20 | **12** | `barbaro`, `cavaliere`, `commoner`, `con-artist`, `guerriero`, `ladro`, `mago-alta-stregoneria`, `mago-rinnegato`, `mariner`, `paladino`, `sacerdote-eretico`, `sacerdote-ordini-sacri` |
+| `umano` | *(nessun elenco)* | 20 | **13** | `barbaro`, `cavaliere`, `cavaliere-corona`, `commoner`, `con-artist`, `guerriero`, `ladro`, `mago-alta-stregoneria`, `mago-rinnegato`, `mariner`, `paladino`, `sacerdote-eretico`, `sacerdote-ordini-sacri` |
 
-Il numero e' molto piu' basso di quello del telaio — 93 contro 135 — ed e' il
+Il numero e' molto piu' basso di quello del telaio — 126 contro 168 — ed e' il
 punto: il telaio da solo sarebbe stato una traduzione generosa, la sequenza lo
 riporta dentro i vincoli che la fonte scrive sulle classi invece che sulle
 razze.
 
-Il minimo e 2 (`nano-aghar`), il massimo 10 (`umano`). **Nessuna razza resta a
+Il minimo e 4 (`nano-aghar`), il massimo 13 (`umano`). **Nessuna razza resta a
 zero**: non c'e' nessuna razza ingiocabile.
 
 ### 5b. Le etichette dichiarate che non aprono niente
@@ -248,28 +254,62 @@ Il conto per razza da solo non dice **quale porta si e' chiusa**: dice un
 numero piu' basso. Queste sono le coppie razza+etichetta in cui la razza
 dichiara un accesso e non ne ricava nessuna classe. Sono due casi diversi.
 
-**11 coppie: l'etichetta non apre niente perche' il telaio e' in coda.** Bard
-e Ranger, gia' contati in §8 come lavoro noto: la razza non ha perso
+**11 coppie: l'etichetta non apre niente perche' il telaio e' in coda.**
+`Bard`, `Ranger`, gia' contate in §8 come lavoro noto: la razza non ha perso
 l'accesso, l'accesso non e' ancora stato scritto.
 
-**3 coppie: l'etichetta apre, e il filtro toglie tutto.** Queste sono la parte
-che va guardata, perche' non si smaltiscono battendo a macchina un telaio SRD.
+**0 coppie: l'etichetta apre, e il filtro toglie tutto.** Erano tre fino al
+04/09/2026 e sono la ragione per cui la decisione 59 (`classi-base-2e`)
+esiste: un'etichetta che apre e poi non lascia niente e' una porta che il
+manuale concede e il nostro roster chiude.
 
-| razza | etichetta | cosa apre | perche' non resta niente |
+
+### Le cinque etichette che nominano una classe base 2e
+
+La fonte lo dice per prima, e non e' una nostra classificazione. Il capitolo
+delle classi di *Tales of the Lance* apre il gruppo dei guerrieri dichiarando
+che su Ansalon si giocano le classi guerriere tipiche dell'AD&D 2e — fighter,
+ranger e paladin — e che quelle **uniche** di Ansalon sono descritte di
+seguito; il gruppo dei ladri ripete la forma, contando i bardi e i ladri fra
+quelli comuni e riservando la descrizione ai due tipi propri di Krynn. I
+gruppi Wizard e Priest non lo dicono, e infatti sono di Krynn.
+
+Sono 5 etichette in questa condizione (`Bard`, `Fighter`, `Paladin`, `Ranger`,
+`Thief`), dichiarate in tutto da 12 razze su 15. La sede e'
+`_classi_ammesse.BASE_2E`; **quali di esse il roster abbia gia' non e' scritto
+da nessuna parte: si deriva** da chi nomina una nostra classe
+(`_classi_ammesse.base_2e_mancanti()`).
+
+**3 trascritte** dalla decisione 59 (`classi-base-2e`), con i minimi della
+Tabella 13 del PHB 2e e `mechanics_5e` che rimanda al chassis SRD senza
+aggiungere nulla:
+
+| etichetta | nostra classe | razze che la dichiarano e ci arrivano | quali |
 |---|---|---|---|
-| `elfo-silvanesti` | `Paladin` | `cavaliere-rosa`, `cavaliere-spada` | ingresso; razza |
-| `irda` | `Paladin` | `cavaliere-rosa`, `cavaliere-spada` | ingresso; razza |
-| `nano-aghar` | `Thief` | `con-artist` | caratteristica |
+| `Fighter` | `guerriero` | 12 | `elfo-dimernesti`, `elfo-kagonesti`, `elfo-qualinesti`, `elfo-silvanesti`, `gnomo-minoi`, `irda`, `kender`, `mezzelfo`, `minotauro`, `nano-aghar`, `nano-collina`, `nano-montagna` |
+| `Paladin` | `paladino` | 2 | `elfo-silvanesti`, `irda` |
+| `Thief` | `ladro` | 9 | `elfo-kagonesti`, `elfo-qualinesti`, `gnomo-minoi`, `irda`, `kender`, `mezzelfo`, `nano-aghar`, `nano-collina`, `nano-montagna` |
 
-Le due righe `Paladin` dicono la stessa cosa: il telaio Paladin e' trascritto,
-ma le uniche nostre classi che ci stanno sopra sono due ordini solamnici, che
-sono avanzamenti **e** sono riservati a umani e mezzelfi. Un Silvanesti o un
-Irda che nella fonte poteva fare il paladino qui non ha dove andare: non manca
-un telaio, manca una **classe** — un paladino di Krynn che non sia un
-Cavaliere di Solamnia. La riga `Thief` dell'Aghar ha la stessa forma: sul
-telaio Rogue il roster ha il solo Con Artist, che chiede Carisma 12 contro un
-massimale razziale di 9. Nove razze dichiarano `Thief`, otto arrivano al Con
-Artist, l'Aghar resta senza ladro.
+**2 ancora da trascrivere** (`Bard`, `Ranger`), e costano piu' delle prime
+tre: per queste manca **anche** il telaio SRD, che e' in coda in `_srd51.CODA`
+(§8). Le prime tre avevano il telaio gia' battuto a macchina e mancava la sola
+classe.
+
+**Il Con Artist non e' in questa condizione, ed e' un esito atteso.** Il
+manuale lo apre a qualunque razza giocabile di Krynn e nella stessa riga gli
+pone un minimo di Carisma 12; all'Aghar pone un massimale di Carisma 9. E' la
+doppia penalita' della decisione 10 (`massimali-razziali`) che morde dove deve
+mordere: fedelta' che funziona, non una porta da riaprire. 9 razze dichiarano
+`Thief` e 8 arrivano al Con Artist; resta fuori `nano-aghar`. Chi rilegge fra
+sei mesi trovi scritto qui che questa riga **non va sanata** — e che il ladro
+comune, che l'Aghar ora prende, e' un'altra classe.
+
+Il conto che ne segue va saputo: la razza piu' vincolata del roster e'
+`nano-aghar`, con **4 classi accessibili** su 20 (`barbaro`, `guerriero`,
+`ladro`, `sacerdote-ordini-sacri`), contro le 6 della seconda. Delle 4
+etichette che dichiara, 0 restano nella condizione sopra. E' un numero che il
+giocatore deve vedere **in creazione**, non scoprire dopo aver scelto la
+razza.
 
 ### Le esclusioni, razza per razza
 
@@ -340,18 +380,21 @@ quindi raggiungono anche classi che **nessuna etichetta nomina**.
 | `cavaliere` | — | `elfo-dargonesti`, `elfo-dimernesti`, `elfo-kagonesti`, `elfo-qualinesti`, `elfo-silvanesti`, `gnomo-minoi`, `irda`, `kender`, `mezzelfo`, `minotauro`, `nano-collina`, `nano-montagna`, `umano-barbaro`, `umano` | 14 |
 | `commoner` | — | `elfo-dargonesti`, `umano-barbaro`, `umano` | 3 |
 | `con-artist` | — | `elfo-dargonesti`, `elfo-kagonesti`, `elfo-qualinesti`, `gnomo-minoi`, `irda`, `kender`, `mezzelfo`, `nano-collina`, `nano-montagna`, `umano-barbaro`, `umano` | 11 |
+| `guerriero` | — | `elfo-dargonesti`, `elfo-dimernesti`, `elfo-kagonesti`, `elfo-qualinesti`, `elfo-silvanesti`, `gnomo-minoi`, `irda`, `kender`, `mezzelfo`, `minotauro`, `nano-aghar`, `nano-collina`, `nano-montagna`, `umano-barbaro`, `umano` | 15 |
 | `handler` | — | `kender` | 1 |
+| `ladro` | — | `elfo-dargonesti`, `elfo-kagonesti`, `elfo-qualinesti`, `gnomo-minoi`, `irda`, `kender`, `mezzelfo`, `nano-aghar`, `nano-collina`, `nano-montagna`, `umano-barbaro`, `umano` | 12 |
 | `mago-alta-stregoneria` | — | `elfo-dargonesti`, `elfo-dimernesti`, `elfo-qualinesti`, `elfo-silvanesti`, `gnomo-minoi`, `irda`, `mezzelfo`, `minotauro`, `umano-barbaro`, `umano` | 10 |
 | `mago-rinnegato` | — | `elfo-dargonesti`, `elfo-dimernesti`, `elfo-qualinesti`, `elfo-silvanesti`, `gnomo-minoi`, `irda`, `mezzelfo`, `minotauro`, `umano-barbaro`, `umano` | 10 |
 | `mago-veste-bianca` | `mago-alta-stregoneria` | **NESSUNA** | 0 |
 | `mago-veste-nera` | `mago-alta-stregoneria` | **NESSUNA** | 0 |
 | `mago-veste-rossa` | `mago-alta-stregoneria` | **NESSUNA** | 0 |
 | `mariner` | — | `elfo-dargonesti`, `irda`, `mezzelfo`, `minotauro`, `umano-barbaro`, `umano` | 6 |
+| `paladino` | — | `elfo-dargonesti`, `elfo-silvanesti`, `irda`, `mezzelfo`, `umano-barbaro`, `umano` | 6 |
 | `sacerdote-eretico` | — | `elfo-dargonesti`, `kender`, `mezzelfo`, `umano-barbaro`, `umano` | 5 |
 | `sacerdote-ordini-sacri` | — | `elfo-dargonesti`, `elfo-dimernesti`, `elfo-kagonesti`, `elfo-qualinesti`, `elfo-silvanesti`, `gnomo-minoi`, `irda`, `kender`, `mezzelfo`, `minotauro`, `nano-aghar`, `nano-collina`, `nano-montagna`, `umano-barbaro`, `umano` | 15 |
 | `tinker` | — | `gnomo-minoi` | 1 |
 
-5 classi su 17 non sono raggiunte da nessuna razza alla creazione, e contarle
+5 classi su 20 non sono raggiunte da nessuna razza alla creazione, e contarle
 insieme darebbe un numero falso:
 
 | classe | si entra da | verdetto |
@@ -398,9 +441,9 @@ concede il Tinker allo Gnomo. Un popolano non umano non esiste nel manuale.
 
 | razza | applied | classes | accessibili dopo il filtro |
 |---|---|---|--:|
-| `elfo-dargonesti` | False | null | 9 |
-| `umano-barbaro` | False | null | 9 |
-| `umano` | False | null | 10 |
+| `elfo-dargonesti` | False | null | 12 |
+| `umano-barbaro` | False | null | 12 |
+| `umano` | False | null | 13 |
 
 `applied: false` vuol dire **nessun elenco**, e l'assenza di un elenco ha due
 cause che il valore non distingue:
@@ -419,9 +462,19 @@ affidata a chi rilegge.
 
 La conseguenza sui numeri resta e va guardata: finche' il silenzio della fonte
 viene letto come assenza di vincolo, il Dargonesti prende l'esito **piu' largo
-possibile** — 9 classi — prodotto da un buco del manuale e non da una scelta.
-La questione aperta e' scritta nel dato: ereditare le 4 voci del Dimernesti, o
-lasciare il silenzio.
+possibile** — 12 classi — prodotto da un buco del manuale e non da una scelta.
+
+**La fonte non tace del tutto, e va detto qui perche' cambia i termini della
+domanda.** Letto il 04/09/2026: il capitolo delle razze ha un paragrafo di
+regole speciali per i PG Dimernesti **e** Dargonesti, e li' elenca cinque
+classi che gli elfi del mare possono prendere — Cavalier, Paladin, Fighter,
+High Sorcerer, Holy Orders. E' l'unico posto in cui il Dargonesti riceve un
+elenco, e per il Dimernesti e' un **secondo** elenco accanto alla riga della
+tabella. I due non coincidono: la riga della tabella non concede `Paladin`, il
+paragrafo si'. La questione aperta resta scritta nel dato, ma le opzioni sono
+tre e non due: ereditare le 4 voci del Dimernesti, leggere le cinque del
+paragrafo, o lasciare il silenzio. Non e' deciso qui, ed e' registrato perche'
+la seconda opzione non era in vista.
 
 ---
 
@@ -430,7 +483,8 @@ lasciare il silenzio.
 Le due cose si somigliano e non sono la stessa: una voce in coda si smaltisce,
 una domanda aperta va decisa. Confonderle gonfia il conto delle decisioni con
 del lavoro gia' noto. Le 4 etichette senza telaio si dividono in tre casi, e
-solo uno e' una domanda.
+nessuno di essi e' oggi una domanda; una quarta voce, le classi base 2e,
+taglia trasversalmente e non dipende dal telaio.
 
 ### Lavoro noto: 2 etichette che non aprono niente e hanno un telaio SRD in coda
 
@@ -442,14 +496,31 @@ solo uno e' una domanda.
 Il telaio esiste nell'SRD 5.1 e nessuno l'ha ancora trascritto: e' battitura,
 non conversione. La coda sta in `_srd51.CODA`, accanto ai telai trascritti,
 perche' e' li' che si guarda quando se ne aggiunge uno. Nota che trascrivere
-il telaio non basta da solo: serve anche una classe di Krynn che ci stia
-sopra, come per `Paladin` in §5b.
+il telaio non basta da solo: serve anche la classe che ci sta sopra, ed e'
+esattamente la voce qui sotto.
+
+### Lavoro noto, seconda voce: 2 etichette su 5 che nominano una classe base 2e ancora assente dal roster
+
+| etichetta | telaio | cosa manca | razze che la dichiarano | quante |
+|---|---|---|---|--:|
+| `Bard` | *in coda* | telaio **e** classe | `elfo-kagonesti`, `elfo-qualinesti`, `elfo-silvanesti`, `kender`, `mezzelfo` | 5 |
+| `Ranger` | *in coda* | telaio **e** classe | `elfo-kagonesti`, `elfo-qualinesti`, `elfo-silvanesti`, `kender`, `mezzelfo`, `nano-collina` | 6 |
+
+Non e' una nostra classificazione: e' quello che *Tales of the Lance* dichiara
+aprendo i gruppi Warrior e Rogue (§5b). Delle 5 etichette in questa
+condizione, 3 sono state trascritte dalla decisione 59 (`classi-base-2e`) —
+`Fighter`, `Paladin`, `Thief`, che avevano il telaio SRD gia' battuto a
+macchina e costavano la sola classe — e con esse si sono chiuse le tre righe
+svuotate di §5b. Le 2 che restano compaiono anche nella voce sopra e costano
+telaio **e** classe: finche' la classe non c'e', l'etichetta apre il solo
+insieme del telaio, che per queste due e' vuoto. Sede:
+`_classi_ammesse.BASE_2E`, con la parte derivata in `base_2e_mancanti()`.
 
 ### Coperte lo stesso: 2 etichette senza telaio che aprono una classe per nome
 
 | etichetta | apre | razze | perche' nessun telaio |
 |---|---|---|---|
-| `Druid (heathen)` | `sacerdote-eretico` | `kender`, `mezzelfo` | nessun telaio, e non serve: l'etichetta e' gia' coperta per nome dal Sacerdote Eretico, che di telaio non ne ha. Il Druido SRD servirebbe solo se il druido eretico risultasse una classe a se' (`_srd51.CODA`) |
+| `Druid (heathen)` | `sacerdote-eretico` | `kender`, `mezzelfo` | nessun telaio, e non serve: l'etichetta e' gia' coperta per nome dal Sacerdote Eretico, che di telaio non ne ha |
 | `Tinker` | `tinker` | `gnomo-minoi` | non ha un telaio 5e: e' un'invenzione di Krynn |
 
 Non sono in coda e non sono una domanda: la classe c'e' e la razza la
@@ -460,11 +531,10 @@ questione — riguarda i privilegi di quella classe, non l'accesso a essa.
 
 *(nessuna: ogni etichetta scoperta ha il suo telaio in coda)*
 
-### Accostamenti da confermare: 1
+### Accostamenti da confermare: 0
 
-| etichetta | classe aperta | su cosa si regge |
-|---|---|---|
-| `Druid (heathen)` | `sacerdote-eretico` | la scheda del Sacerdote Eretico dichiara gia' di essere entrambe le righe della tabella Class/Race Combinations, `Priest (heathen)` e `Druid (heathen)`; il capitolo delle classi definisce eretico anche il druido che viene da un altro mondo, perche' ignora gli dei della natura di Krynn |
+*(nessuno: l'ultimo, `Druid (heathen)` sul Sacerdote Eretico, e' stato
+confermato sulla fonte il 04/09/2026 — la ragione sta in sede, non qui)*
 
 Sono righe della sede marcate `da_confermare`: aprono una classe e aspettano
 una lettura di merito. Restano visibili finche' qualcuno non le guarda — che

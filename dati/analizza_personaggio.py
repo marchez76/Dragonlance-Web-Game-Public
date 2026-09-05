@@ -298,12 +298,20 @@ def d_numerazione():
         file_con.add(percorso)
         for e in esiti:
             conta[e["esito"]] += 1
-            per_numero[e["numero"]] += 1
-    return {"per_numero": per_numero, "tot": sum(conta.values()),
+            # I rimandi a una QUESTIONE APERTA non hanno numero, per
+            # costruzione: non c'e' un ordinale da citare, quindi non c'e'
+            # nessun derivato che possa sfasarsi. Restano fuori dal conteggio
+            # per fascia, che e' un conteggio di numeri.
+            if e["numero"] is not None:
+                per_numero[e["numero"]] += 1
+    aperte = conta["ok-aperta"] + conta["aperta-ignota"]
+    return {"per_numero": per_numero,
+            "tot": sum(conta.values()) - aperte,
             "file": len(file_con),
             "bassa": sum(v for k, v in per_numero.items() if k <= 12),
             "ok": conta["ok"], "sfasati": conta["numero-sfasato"],
-            "nudi": conta["non-qualificata"], "ignoti": conta["id-ignoto"]}
+            "nudi": conta["non-qualificata"], "ignoti": conta["id-ignoto"],
+            "aperte": aperte, "aperte_ignote": conta["aperta-ignota"]}
 
 
 def d_scelte(razze):
@@ -1041,6 +1049,13 @@ progetto e con `--correggi` riscrive i numeri a partire dagli id.
 Stato oggi: **{NU['ok']} rimandi verificati, {NU['sfasati']} sfasati,
 {NU['ignoti']} con id ignoto, {NU['nudi']} ancora senza id**. Rinumerare
 adesso costa un comando.
+
+**Dal 2026-09-05 la stessa sede porta anche le questioni APERTE**, che fino a
+quel giorno erano prosa dentro `genera_contesto.py` — senza id, e quindi non
+citabili da nessun altro testo. Un rimando a una di esse si scrive «questione
+aperta (`aumento-oltre-tetto`)» e non ha numero: dove non c'è un derivato non
+c'è niente che possa sfasarsi. Ce ne sono **{NU['aperte']}** nel progetto,
+{NU['aperte_ignote']} con id ignoto.
 
 ---
 

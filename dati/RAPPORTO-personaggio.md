@@ -1,14 +1,14 @@
 # Lo schema Personaggio — rapporto diagnostico
 
-*Generato da `dati/analizza_personaggio.py` il 2026-09-03.*
+*Generato da `dati/analizza_personaggio.py` il 2026-09-05.*
 
 > **Diagnostico.** Misura la forma del problema prima di progettarlo. **Non
 > decide niente**: non propone uno schema, non scioglie le tre decisioni
 > sospese, non tocca `dati/`. Ogni numero è derivato dai JSON; le letture sono
 > marcate con un blocco citato e datato.
 >
-> Il corpus letto è di **506 file** per **1,9 MB**:
-> 15 razze, 17 classi, 21 divinità,
+> Il corpus letto è di **509 file** per **1,94 MB**:
+> 15 razze, 20 classi, 21 divinità,
 > 319 incantesimi, 79 oggetti,
 > 52 mostri, 3 modelli.
 
@@ -46,17 +46,17 @@ dove i filtri vengono **risolti**.
 | dato | l'insieme da cui si sceglie | dove sta il filtro oggi |
 |---|---|---|
 | Razza | 15 voci | `razze.index.json` |
-| Classe di partenza | 12 su 17 (le altre 5 hanno `entry_level` > 1) | `classi/*.json` → `mechanics_5e.entry_level` |
+| Classe di partenza | 15 su 20 (le altre 5 hanno `entry_level` > 1) | `classi/*.json` → `mechanics_5e.entry_level` |
 | Sei punteggi grezzi | 3 metodi, default `4d6-scarta-minore` | `motore/generazione.py` |
 | Assegnazione dei punteggi | libera, fissata o parziale a seconda della razza | `generazione.genera()` → `assegnazione_libera` |
 | Aggiustamenti fissi | 1 razza con `editorial_values` (umano-barbaro, decisione 20, `tappo-barbaro`) | `razze/*.json` → `mechanics_5e.ability_adjustments` |
 | Scelte lasciate aperte dai tratti | 4 tratti su 15 razze (elfo-dargonesti, umano) | **nessun campo**: la scelta è descritta in prosa dentro il tratto |
-| Allineamento | vincolato in 10 classi su 17 | `classi/*.json` → `source_2e.alignment_restriction` (prosa libera) |
+| Allineamento | vincolato in 10 classi su 20 | `classi/*.json` → `source_2e.alignment_restriction` (prosa libera) |
 | Divinità | 21 voci, solo per le classi sacerdotali | `divinita.index.json` |
 | Veste | 3 (Bianca, Rossa, Nera), giurata al 3° livello | `classi/mago-veste-*.json` → `prerequisite_class` |
 | Epoca | 5 valori di `valid_eras` | strato editoriale, decisione 12 (`valid-eras`) |
 | Competenze di abilità | — | **nessun filtro esiste**: le 18 abilità 5e non sono nei dati |
-| Equipaggiamento iniziale | 7 vincoli dichiarati su 17 classi | `mechanics_5e.structural.starting_equipment.constraints` |
+| Equipaggiamento iniziale | 7 vincoli dichiarati su 20 classi | `mechanics_5e.structural.starting_equipment.constraints` |
 
 ### 1.2 Derivato — nessuno lo scrive, si ricalcola
 
@@ -101,7 +101,7 @@ progetto: è il ritmo con cui i valori cambiano.
 | Posizione e ordine di iniziativa | **turno** | no |
 | Tiri salvezza contro morte | **turno** | no |
 
-> **Lettura interpretativa** — registrata il 2026-09-03. Non è derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-05. Non è derivata dai dati.
 >
 > **Cosa i dati impongono, prima di qualunque scelta di progetto.** La colonna
 > "cambia ogni" si divide in due gruppi senza che nessuno l'abbia deciso:
@@ -140,14 +140,14 @@ entità reale.
 | Velocità | `speed_ft` | **15/15** | razze |
 | Scurovisione | `darkvision_ft` | parziale **11/15** | razze |
 | Linguaggi | `languages` | parziale **1/15** | razze |
-| Dado vita | `hit_die` | parziale **9/17** | classi |
-| Tiri salvezza competenti | `saving_throws` | parziale **9/17** | classi |
-| Bonus di competenza per livello | `values` | **17/17** | classi |
-| Tabella dei punti esperienza | `system` | **assente** (0/17) | classi |
+| Dado vita | `hit_die` | parziale **12/20** | classi |
+| Tiri salvezza competenti | `saving_throws` | parziale **12/20** | classi |
+| Bonus di competenza per livello | `values` | **20/20** | classi |
+| Tabella dei punti esperienza | `system` | **assente** (0/20) | classi |
 | Privilegi di classe con meccanica 5e | — | **assente** | nessun campo lo porta |
 | Competenze di abilità (le 18 della 5e) | — | **assente** | nessun campo lo porta |
 | Competenze in armi e armature | — | **assente** | nessun campo lo porta |
-| Pacchetto di equipaggiamento iniziale | `source_wealth` | parziale **4/17** | classi |
+| Pacchetto di equipaggiamento iniziale | `source_wealth` | parziale **4/20** | classi |
 | Slot incantesimi 5e | — | **assente** | nessun campo lo porta |
 | Lista incantesimi per classe | `classes` | **319/319** | incantesimi |
 | Filtro delle sfere per divinità | `mechanics_5e` | **assente** (0/21) | divinità |
@@ -162,7 +162,7 @@ entità reale.
 
 ### 2.1 I privilegi di classe
 
-Dei **43 fra privilegi e impedimenti** delle 17 classi:
+Dei **43 fra privilegi e impedimenti** delle 20 classi:
 **40** `pending`,
 **2** `direct`,
 **1** `source_only`.
@@ -177,7 +177,7 @@ livello per livello. Non c'è una riga di meccanica: nessuna descrizione di
 Second Wind, nessuna tabella di slot, nessuna lista di competenze, nessuna
 sottoclasse, nessun pacchetto d'equipaggiamento.
 
-> **Lettura interpretativa** — registrata il 2026-09-03. Non è derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-05. Non è derivata dai dati.
 >
 > "Clonato" oggi vuol dire **abbiamo registrato quali privilegi ha il Fighter**,
 > non **abbiamo le regole del Fighter**. È esattamente il rapporto che c'è fra un
@@ -192,22 +192,22 @@ sottoclasse, nessun pacchetto d'equipaggiamento.
 
 ### 2.2 Le otto classi senza chassis
 
-**8 classi su 17** non hanno chassis, per decisione:
+**8 classi su 20** non hanno chassis, per decisione:
 `commoner`, `handler`, `mago-veste-bianca`, `mago-veste-nera`, `mago-veste-rossa`, `mariner`, `sacerdote-eretico`, `tinker`.
 Non hanno dado vita 5e, né tiri salvezza, né progressione. Nessuna di loro può
 oggi produrre un personaggio giocabile, nemmeno vuoto.
-Le 9 che ce l'hanno usano
-Cleric ×1, Fighter ×3, Paladin ×2, Rogue ×1, Wizard ×2.
+Le 12 che ce l'hanno usano
+Cleric ×1, Fighter ×4, Paladin ×3, Rogue ×2, Wizard ×2.
 
-Su 3 classi il chassis **cambia il dado vita** rispetto
-alla fonte (`con-artist` d6→1d8, `mago-alta-stregoneria` 1d4→1d6, `mago-rinnegato` 1d4→1d6).
+Su 6 classi il chassis **cambia il dado vita** rispetto
+alla fonte (`con-artist` d6→1d8, `guerriero` None→1d10, `ladro` None→1d8, `mago-alta-stregoneria` 1d4→1d6, `mago-rinnegato` 1d4→1d6, `paladino` None→1d10).
 È corretto e voluto, ma dice una cosa che serve allo schema: sui punti ferita
 **la fonte non è autoritativa, lo è il chassis**.
 
 ### 2.3 La tabella dei punti esperienza
 
-`structural.xp_table.applied` è `false` in **17
-classi su 17** — cioè in tutte. Le progressioni 2e restano in
+`structural.xp_table.applied` è `false` in **20
+classi su 20** — cioè in tutte. Le progressioni 2e restano in
 `source_2e` come dato storico, e **la tabella 5e che doveva sostituirle non
 esiste in nessun file**. Un personaggio sale di livello e nessun dato del
 progetto dice a quanti punti esperienza.
@@ -232,7 +232,7 @@ il risultato: la scelta vive come prosa dentro `traits[].mechanics_5e`.
 
 ### 2.5 La valuta
 
-**4 classi su 17** dichiarano una ricchezza
+**4 classi su 20** dichiarano una ricchezza
 iniziale, espressa in **pezzi d'acciaio** (`stl`). Tutti gli oggetti portano
 `cost_gp`, in **pezzi d'oro**. Nessun campo, in nessuno schema, dichiara il
 cambio fra le due. Oggi un personaggio non può comprare il proprio
@@ -250,7 +250,7 @@ conosce, e non può risolverne nemmeno uno.
 
 Manca inoltre **la tabella degli slot 5e**. Le uniche tabelle di slot nel
 progetto sono 2e: `source_2e.spell_progression`, presente in
-4 classi su 17.
+4 classi su 20.
 
 ### 2.7 I giunti che non sono agganciati
 
@@ -259,15 +259,15 @@ Tre legami esistono come intenzione ma non come chiave.
 - **`allowed_classes` → classi.** Le razze dichiarano
   17 etichette distinte, prese dalla tabella
   Class/Race Combinations. **Nessuna è un id.** Solo
-  **5** coincidono con il `name.en` di una nostra classe
-  (Barbarian, Cavalier, Handler, Mariner, Tinker); le altre 12 vanno
-  mappate a mano, e **6** non condividono nemmeno una
-  parola con una nostra classe (Bard, Fighter, Illusionist, Paladin, Ranger, Thief).
+  **8** coincidono con il `name.en` di una nostra classe
+  (Barbarian, Cavalier, Fighter, Handler, Mariner, Paladin, Thief, Tinker); le altre 9 vanno
+  mappate a mano, e **3** non condividono nemmeno una
+  parola con una nostra classe (Bard, Illusionist, Ranger).
   Fra queste c'è **l'etichetta più frequente di tutte**, `Fighter`,
   concessa da 12 razze su 15: la tabella del
   manuale elenca il roster generico della 2e, di cui il progetto ha convertito
   solo le voci proprie di Krynn. E **12 classi su
-  17** non sono nominate da nessuna etichetta.
+  20** non sono nominate da nessuna etichetta.
 - **classe → incantesimi.** Il catalogo elenca le classi in `classes` con i
   nomi SRD (Wizard, Cleric…), non con i nostri id. Il ponte è
   `mechanics_5e.chassis.srd_class`, che però è `null` per
@@ -276,7 +276,7 @@ Tre legami esistono come intenzione ma non come chiave.
   `mechanics_5e` a **`null`**: il filtro delle sfere (decisione 24, `sfere-sacerdotali`) vive
   interamente in `dati/_sfere_5e.py`, cioè in codice, non nei dati.
 
-> **Lettura interpretativa** — registrata il 2026-09-03. Non è derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-05. Non è derivata dai dati.
 >
 > I tre giunti hanno la stessa forma e non è un caso: il legame è sempre scritto
 > come **etichetta leggibile**, mai come chiave. Finché i dati servivano a essere
@@ -412,7 +412,7 @@ razza + classe; la validazione; la soddisfacibilità (`esiste_assegnazione`,
 | Copre un passo su molti | punti ferita, competenze, equipaggiamento, incantesimi, denaro iniziale: nessuno di questi passa di qui |
 | La numerazione delle decisioni era sfasata — CHIUSA | il modulo cita ora le decisioni 8 (`generazione-caratteristiche`), 9 (`aggiustamenti-negativi`), 10 (`massimali-razziali`), 11 (`barbaro-vincoli`), 44 (`tetto-punto-perduto`), verificate da `verifica_decisioni.py` — vedi §3.4 |
 
-> **Lettura interpretativa** — registrata il 2026-09-03. Non è derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-05. Non è derivata dai dati.
 >
 > Sul terzo punto vale la pena fermarsi, perché è l'unico che sia un difetto e
 > non un lavoro non ancora fatto. Il modulo legge `source_2e` e non
@@ -431,14 +431,14 @@ razza + classe; la validazione; la soddisfacibilità (`esiste_assegnazione`,
 ### 3.4 Una nota che riguarda tutte e tre: la numerazione — CHIUSA
 
 Le tre questioni sospese si citano per numero, e i numeri **non erano
-stabili**. Il progetto contiene **1195 rimandi a una decisione in
-134 file**, di cui **305 nella fascia 1-12** — che è
+stabili**. Il progetto contiene **1378 rimandi a una decisione in
+147 file**, di cui **354 nella fascia 1-12** — che è
 esattamente dove stavano le tre questioni di questa sezione.
 
 Erano sfasati perché il numero è un ordinale dell'elenco, e l'elenco è
 cambiato: file scritti in momenti diversi hanno continuato a citare il numero
 della propria vintage, senza che nulla li riallineasse. Lette una per una, le
-305 citazioni della fascia bassa hanno dato questa corrispondenza —
+354 citazioni della fascia bassa hanno dato questa corrispondenza —
 **senza uno scarto costante**, e con lo stesso numero giusto in un file e
 sbagliato in un altro:
 
@@ -464,9 +464,16 @@ un `id` stabile che non cambierà mai, e la forma di un rimando è ora
 accanto come derivato. `verifica_decisioni.py` verifica la coppia in tutto il
 progetto e con `--correggi` riscrive i numeri a partire dagli id.
 
-Stato oggi: **1195 rimandi verificati, 0 sfasati,
+Stato oggi: **1378 rimandi verificati, 0 sfasati,
 0 con id ignoto, 0 ancora senza id**. Rinumerare
 adesso costa un comando.
+
+**Dal 2026-09-05 la stessa sede porta anche le questioni APERTE**, che fino a
+quel giorno erano prosa dentro `genera_contesto.py` — senza id, e quindi non
+citabili da nessun altro testo. Un rimando a una di esse si scrive «questione
+aperta (`aumento-oltre-tetto`)» e non ha numero: dove non c'è un derivato non
+c'è niente che possa sfasarsi. Ce ne sono **6** nel progetto,
+0 con id ignoto.
 
 ---
 
@@ -498,7 +505,7 @@ esclusi di Dominio — 37 nomi dichiarati in
 `_sfere_5e.ESCLUSI_DI_DOMINIO` — e non sul loro numero, perché un
 incantesimo che entra mentre un altro esce lascerebbe il conteggio fermo.
 
-> **Lettura interpretativa** — registrata il 2026-09-03. Non è derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-05. Non è derivata dai dati.
 >
 > **L'allineamento perfetto è il dato interessante, non quello rassicurante.**
 > Le quattro divergenze già viste in questo progetto non sono nate da distrazione:
@@ -514,7 +521,7 @@ incantesimo che entra mentre un altro esce lascerebbe il conteggio fermo.
 **Il personaggio referenzia per id e non copia valori.** Non perché la copia
 sfasi in astratto, ma per una ragione che si misura sui dati di oggi:
 **40 privilegi su 43 sono `pending`**
-e 8 classi su 17 non hanno chassis. Le classi
+e 8 classi su 20 non hanno chassis. Le classi
 *cambieranno*, molto e presto. Un personaggio che ne avesse copiato i valori
 resterebbe fermo alla versione del giorno in cui è stato creato, e — questo è
 il punto — **senza saperlo**: non c'è modo di distinguere un valore copiato
@@ -553,7 +560,7 @@ il totale. Lo stesso vale per la ricchezza iniziale, se tirata.
 
 ### 5.1 Non è un problema di velocità
 
-Il corpus intero è **506 file per 1,9 MB**. Caricato una
+Il corpus intero è **509 file per 1,94 MB**. Caricato una
 volta all'avvio e indicizzato per id, ci sta in memoria senza discussione: gli
 indici `*.index.json` esistono già e fanno esattamente questo mestiere.
 **A ogni turno non va letto nessun file.** La domanda "quanto velocemente" ha
@@ -582,9 +589,9 @@ Il campo si chiama `mechanics_5e` ed è una **stringa in italiano**: un'azione
 di attacco è scritta nella forma *"+N a colpire, portata N piedi, un bersaglio,
 N (NdN+N) danni di un certo tipo"*. Leggibile da una persona, non da un motore.
 
-Di quei blocchi, **20 portano ora anche un campo `effetto`**
+Di quei blocchi, **25 portano ora anche un campo `effetto`**
 accanto alla prosa: i privilegi del chassis Fighter e le azioni dei due mostri
-della fetta verticale. Restano **385** in cui
+della fetta verticale. Restano **380** in cui
 tutto quello che serve c'è e nulla di quello che serve è un campo.
 
 Anche dove il dato è strutturato, il numero è spesso **dentro** una stringa:
@@ -617,7 +624,7 @@ I 9 ruoli già assegnati
 della decisione 27 (`sette-campi-2e`) sono, oggi, la parte dell'arena messa meglio: l'IA sa cosa
 vuole fare una creatura molto prima che il motore sappia risolverne l'attacco.
 
-> **Lettura interpretativa** — registrata il 2026-09-03. Non è derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-05. Non è derivata dai dati.
 >
 > **La scheda non è progettata male: è progettata per un altro uso.** Tutte e sei
 > le entità sono documenti di conversione — devono mostrare cosa dice la fonte,
@@ -637,7 +644,7 @@ vuole fare una creatura molto prima che il motore sappia risolverne l'attacco.
 > non può, è stato ed è del personaggio.
 >
 > Va detto anche il rovescio, perché è il costo dell'intera sezione: finché i
-> 385 blocchi di meccanica restano prosa, **nessuna proiezione può
+> 380 blocchi di meccanica restano prosa, **nessuna proiezione può
 > derivarli**. Trasformarli in numeri non è un lavoro di formato, è la stessa
 > conversione dei `pending` vista da un'altra angolazione — e riguarda anche i
 > 257 blocchi dei mostri, che oggi risultano "convertiti".
@@ -649,10 +656,10 @@ vuole fare una creatura molto prima che il motore sappia risolverne l'attacco.
 | domanda | risposta breve |
 |---|---|
 | 1. Cosa serve | su 27 grandezze: 11 coperte, 6 parziali, 10 senza alcun campo; e nessuna entità esistente ha un campo che cambi in partita |
-| 2. Cosa manca | i privilegi del chassis (non contati fra i 40 `pending`), la tabella PE 5e (17/17 non applicata), le competenze 5e, gli slot 5e, l'effetto degli incantesimi, il cambio stl/gp |
+| 2. Cosa manca | i privilegi del chassis (non contati fra i 40 `pending`), la tabella PE 5e (20/20 non applicata), le competenze 5e, gli slot 5e, l'effetto degli incantesimi, il cambio stl/gp |
 | 3. Le tre sospese | riportate con fonte e opzioni, non sciolte |
 | 4. Riferimento o copia | riferimento per id, più impronta del corpus, più le sole scelte che risolvono un filtro; i derivati non si scrivono |
-| 5. Arena | 1,9 MB stanno in memoria: il vincolo non è la velocità ma che 385 blocchi di meccanica su 405 sono ancora solo prosa |
+| 5. Arena | 1,94 MB stanno in memoria: il vincolo non è la velocità ma che 380 blocchi di meccanica su 405 sono ancora solo prosa |
 
 ---
 

@@ -1,6 +1,6 @@
-# Rapporto diagnostico sulle 17 classi di Krynn
+# Rapporto diagnostico sulle 20 classi di Krynn
 
-*Generato da `dati/analizza_classi.py` il 2026-09-01.*
+*Generato da `dati/analizza_classi.py` il 2026-09-05.*
 
 > **Cos'è.** Una diagnosi, non una conversione. Serve a vedere la forma del
 > problema prima di compilare `mechanics_5e`, come `RAPPORTO-soddisfacibilita.md`
@@ -24,7 +24,9 @@
 | Cavaliere della Corona | Warrior | d10 | 25 liv. | — | 1 | 1 | 1° | allineamento, razza, 5 minimi |
 | Cavaliere della Rosa | Warrior | d10 | 22 liv. | — | 1 | 0 | 4° | allineamento, razza, 5 minimi |
 | Cavaliere della Spada | Warrior | d10 | 23 liv. | sì | 3 | 0 | 3° | allineamento, razza, 5 minimi |
+| Guerriero | Warrior | — | gruppo | — | 0 | 0 | 1° | 1 minimo |
 | Marinaio | Warrior | d10 | gruppo | — | 1 | 1 | 1° | allineamento, 2 minimi |
+| Paladino | Warrior | — | gruppo | — | 0 | 0 | 1° | 4 minimi |
 | Mago dell'Alta Stregoneria | Wizard | 1d4 | 25 liv. | sì | 3 | 4 | 1° | allineamento, 1 minimo |
 | Mago Rinnegato | Wizard | 1d4 | 25 liv. | sì | 1 | 2 | 1° | 1 minimo |
 | Mago delle Vesti Bianche | Wizard | 1d4 | gruppo | — | 0 | 1 | 3° | allineamento, 1 minimo |
@@ -34,6 +36,7 @@
 | Sacerdote degli Ordini Sacri delle Stelle | Priest | 1d8 | 25 liv. | sì | 0 | 1 | 1° | allineamento, 1 minimo |
 | Truffatore / Prestigiatore | Rogue | d6 | gruppo | — | 1 | 1 | 1° | 1 minimo |
 | Handler | Rogue | d6 | gruppo | — | 0 | 3 | 1° | razza |
+| Ladro | Rogue | — | gruppo | — | 0 | 0 | 1° | 1 minimo |
 | Popolano | Normal | d6 | 25 liv. | — | 0 | 0 | 1° | — |
 | Tinker | Normal | d6 | 25 liv. | — | 0 | 1 | 1° | razza |
 
@@ -45,21 +48,21 @@ impedimenti.
 
 | gruppo | classi | privilegi | media | impedimenti |
 |---|---:|---:|---:|---:|
-| Warrior | 6 | 14 | 2.3 | 7 |
+| Warrior | 8 | 14 | 1.8 | 7 |
 | Wizard | 5 | 4 | 0.8 | 9 |
 | Priest | 2 | 0 | 0.0 | 3 |
-| Rogue | 2 | 1 | 0.5 | 4 |
+| Rogue | 3 | 1 | 0.3 | 4 |
 | Normal | 2 | 0 | 0.0 | 1 |
 
-Su 17 classi: **19 privilegi** in tutto (media 1.1), di cui
+Su 20 classi: **19 privilegi** in tutto (media 0.9), di cui
 **7** agganciati a un livello esplicito, e **24 impedimenti**
-(media 1.4).
+(media 1.2).
 
-**8 classi su 17 non hanno una tabella di esperienza propria**:
-Barbaro, Cavaliere, Truffatore / Prestigiatore, Handler, Mago delle Vesti Bianche, Mago delle Vesti Nere, Mago delle Vesti Rosse, Marinaio.
+**11 classi su 20 non hanno una tabella di esperienza propria**:
+Barbaro, Cavaliere, Truffatore / Prestigiatore, Guerriero, Handler, Ladro, Mago delle Vesti Bianche, Mago delle Vesti Nere, Mago delle Vesti Rosse, Marinaio, Paladino.
 
-**8 classi su 17 non hanno alcun privilegio**:
-Popolano, Handler, Mago delle Vesti Bianche, Mago delle Vesti Nere, Mago delle Vesti Rosse, Sacerdote Eretico, Sacerdote degli Ordini Sacri delle Stelle, Tinker.
+**11 classi su 20 non hanno alcun privilegio**:
+Popolano, Guerriero, Handler, Ladro, Mago delle Vesti Bianche, Mago delle Vesti Nere, Mago delle Vesti Rosse, Paladino, Sacerdote Eretico, Sacerdote degli Ordini Sacri delle Stelle, Tinker.
 
 ---
 
@@ -127,7 +130,7 @@ Dado vita: 1d8 contro 1d8. Tiri salvezza Cleric: Wisdom, Charisma.
 Livelli a cui Sacerdote degli Ordini Sacri delle Stelle concede qualcosa: **1**, contro **11** del Cleric. Privilegi totali: **0** contro **16** (piu' 5 aumenti di caratteristica, che la 2e non ha).
 
 
-> **Lettura interpretativa** — registrata il 2026-09-01. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-05. Non e' derivata dai dati.
 >
 > Le classi di Krynn non sono classi nel senso della 5e: sono **profili di
 > restrizione** appoggiati sulle classi base della 2e. Su 19 privilegi totali solo
@@ -136,7 +139,7 @@ Livelli a cui Sacerdote degli Ordini Sacri delle Stelle concede qualcosa: **1**,
 > personaggio guadagna salendo di livello viene dalla tabella del gruppo 2e, non
 > dalla classe di Krynn.
 >
-> **9 classi su 17 hanno più impedimenti che privilegi**, cioè tolgono più di quanto
+> **9 classi su 20 hanno più impedimenti che privilegi**, cioè tolgono più di quanto
 > diano: Handler (0 contro 3), Sacerdote Eretico (0 contro 2), Mago dell'Alta Stregoneria (3 contro 4), Mago Rinnegato (1 contro 2), Mago delle Vesti Bianche (0 contro 1), Mago delle Vesti Nere (0 contro 1), Mago delle Vesti Rosse (0 contro 1), Sacerdote degli Ordini Sacri delle Stelle (0 contro 1), Tinker (0 contro 1).
 > Il caso limite è l'**Handler**. Non è un errore di trascrizione: il manuale
 > definisce alcune di queste classi per ciò che non possono fare.
@@ -145,7 +148,7 @@ Livelli a cui Sacerdote degli Ordini Sacri delle Stelle concede qualcosa: **1**,
 > del roster in entrambe le colonne. È la sola classe con un contenuto meccanico
 > paragonabile a una classe 5e, e lo paga con il codice cavalleresco.
 >
-> All'estremo opposto ci sono 8 classi con zero privilegi. Popolano e Tinker
+> All'estremo opposto ci sono 11 classi con zero privilegi. Popolano e Tinker
 > sono del gruppo Normal e non dovrebbero averne; le tre Vesti sono vuote perché
 > sono affiliazioni e non classi, il che è coerente con la decisione 6 (`maghi-delle-torri`). Restano i due
 > sacerdoti e l'Handler, che invece dovrebbero avere un contenuto e non ce l'hanno:
@@ -184,7 +187,7 @@ Per ciascuna classe di Krynn, la classe base 5e più vicina come chassis.
 | Popolano | **nessuno** | Non è una classe 5e. O PNG, o background. |
 | Tinker | **nessuno** | Stessa situazione del Popolano, con in più il tema tecnologico gnomesco. Artificer esiste ma non è nel PHB 2014. |
 
-> **Lettura interpretativa** — registrata il 2026-09-01. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-05. Non e' derivata dai dati.
 >
 > Su quindici voci, sei hanno un chassis pulito (i due maghi, il Cleric, i due gradi
 > paladinici, il Rogue truffatore); tre non hanno alcun candidato perché non sono
@@ -210,7 +213,9 @@ Per ciascuna classe di Krynn, la classe base 5e più vicina come chassis.
 Sistemi 2e senza equivalente in 5e. Richiedevano una **decisione**, non una
 conversione. **Le prime sette sono state decise e applicate**: la scelta adottata
 è indicata sotto ciascuna, e vive in `mechanics_5e.structural` in ogni classe.
-Le ultime due restano aperte.
+**L'ottava è decisa e vive altrove**, perché non è un campo della classe: le
+sfere stanno in `dati/_sfere_5e.py`, il Dominio sulle divinità. **L'ultima
+resta aperta.**
 
 Per ciascuno: cosa faceva, perché la 5e l'ha eliminato, opzioni, esito.
 
@@ -266,7 +271,7 @@ Incantesimi→SAG) e assegnare a ogni classe le due competenze coerenti col grup
 tutto il resto della 5e. (c) Ibrido: competenze 5e più un bonus che cresce col
 livello sulle categorie in cui il gruppo 2e era forte.
 
-**Nota:** nessuna delle 17 classi ha una tabella di tiri salvezza estratta. Il
+**Nota:** nessuna delle 20 classi ha una tabella di tiri salvezza estratta. Il
 manuale non ne stampa una per classe di Krynn: valgono quelle di gruppo del PHB 2e,
 che non sono ancora nei dati.
 
@@ -313,7 +318,7 @@ barbaro senza armature pesanti, il cavaliere obbligato all'armatura migliore).
 (b) Tiro 2e conservato, coerente con la decisione 8 (`generazione-caratteristiche`) che ha già scelto i dadi per
 le caratteristiche. (c) Pacchetto fisso più tiro opzionale.
 
-**Da notare:** solo 4 classi su 17 dichiarano una ricchezza iniziale propria; le
+**Da notare:** solo 4 classi su 20 dichiarano una ricchezza iniziale propria; le
 altre rimandano al gruppo. E una delle quattro, il Cavaliere, ha il valore
 **ricostruito e non letto** (vedi le sue ambiguità di fonte).
 
@@ -362,6 +367,14 @@ incantesimi bonus, sfere per i divieti.
 **Materiale già pronto**: le sfere delle 21 divinità sono estratte in
 `dati/divinita/`, con accesso maggiore e minore distinti.
 
+**DECISO** — opzione (c), e da prima che questa riga la registrasse: la
+decisione 24 (`sfere-sacerdotali`) tiene le sfere come **filtro di preparazione**,
+ripristinando la negazione d'accesso, e lascia il **Dominio 2014 come
+sottoclasse** per i privilegi di livello, associandone uno a ciascuna
+divinità. Fino al 05/09/2026 questa sezione era l'unica delle nove a
+presentare come aperte tre opzioni fra cui una scelta era già stata fatta —
+il rapporto elencava, la decisione decideva, e i due testi non si parlavano.
+
 ### 3.9 Ordine obbligato dei gradi solamnici
 
 **Cosa faceva.** Corona → Spada → Rosa, con ingresso al 1°, 3° e 4° livello.
@@ -379,13 +392,13 @@ più un sistema di gradi d'ordine separato dalla classe.
 
 ## Cosa manca ai dati
 
-> **Lettura interpretativa** — registrata il 2026-09-01. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-05. Non e' derivata dai dati.
 >
 > Prima di poter compilare `mechanics_5e` per le classi mancano tre cose che non
 > sono decisioni ma estrazioni:
 >
 > 1. **Le tabelle di gruppo del PHB 2e** — PE, THAC0 e tiri salvezza per Warrior,
->    Wizard, Priest e Rogue. 8 classi su 17 vi rimandano, e senza quelle tabelle
+>    Wizard, Priest e Rogue. 11 classi su 20 vi rimandano, e senza quelle tabelle
 >    quelle classi non hanno progressione alcuna nei dati. Il PHB 2e è in libreria
 >    ma il suo testo estratto è degradato: le tabelle andranno lette dalle immagini
 >    di pagina, come già fatto per i tratti razziali.
@@ -472,7 +485,7 @@ Il fighter ha:
 | Immunità al freddo | assente | assente | **barbari del ghiaccio** | **specifico di Krynn** |
 | Quattro gruppi culturali | assente | terreno a scelta libera | montagna, pianura, ghiaccio, mare | **specifico di Krynn** |
 
-> **Lettura interpretativa** — registrata il 2026-09-01. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-05. Non e' derivata dai dati.
 >
 > **Il Barbaro di Krynn discende dal kit del 1989, non dalla classe del 1995.**
 > La prova non è un'impressione: Tales of the Lance obbliga alle **stesse due armi**
@@ -543,7 +556,7 @@ Il fighter ha:
 
 **Punti esperienza**: nessuna tabella propria. Il manuale rimanda alle tabelle standard del gruppo Warrior.
 
-**THAC0**: citato nel testo della classe, nessuna tabella propria in nessuna delle 17 classi — vale quella del gruppo Warrior.
+**THAC0**: citato nel testo della classe, nessuna tabella propria in nessuna classe del roster — vale quella del gruppo Warrior.
 **Tiri salvezza**: nessuna tabella estratta. Il manuale non ne stampa una per classe: valgono le cinque categorie del gruppo Warrior.
 
 **Incantesimi**: nessuna progressione propria.
@@ -587,7 +600,7 @@ Il fighter ha:
 
 **Punti esperienza**: nessuna tabella propria. Il manuale rimanda alle tabelle standard del gruppo Warrior.
 
-**THAC0**: citato nel testo della classe, nessuna tabella propria in nessuna delle 17 classi — vale quella del gruppo Warrior.
+**THAC0**: citato nel testo della classe, nessuna tabella propria in nessuna classe del roster — vale quella del gruppo Warrior.
 **Tiri salvezza**: nessuna tabella estratta. Il manuale non ne stampa una per classe: valgono le cinque categorie del gruppo Warrior.
 
 **Incantesimi**: nessuna progressione propria.
@@ -640,7 +653,7 @@ Il fighter ha:
 **Punti esperienza**: tabella presente. 25 livelli (dal 1° al 25°). monotona crescente. Da 0 a 5.500.000 PE.
 Titoli di livello: 11 su 25 (fino al 11°).
 
-**THAC0**: citato nel testo della classe, nessuna tabella propria in nessuna delle 17 classi — vale quella del gruppo Warrior.
+**THAC0**: citato nel testo della classe, nessuna tabella propria in nessuna classe del roster — vale quella del gruppo Warrior.
 **Tiri salvezza**: nessuna tabella estratta. Il manuale non ne stampa una per classe: valgono le cinque categorie del gruppo Warrior.
 
 **Incantesimi**: nessuna progressione propria.
@@ -680,7 +693,7 @@ Titoli di livello: 11 su 25 (fino al 11°).
 **Punti esperienza**: tabella presente. 22 livelli (dal 4° al 25°). monotona crescente. Da 0 a 9.000.000 PE.
 Titoli di livello: 12 su 22 (fino al 15°).
 
-**THAC0**: citato nel testo della classe, nessuna tabella propria in nessuna delle 17 classi — vale quella del gruppo Warrior.
+**THAC0**: citato nel testo della classe, nessuna tabella propria in nessuna classe del roster — vale quella del gruppo Warrior.
 **Tiri salvezza**: nessuna tabella estratta. Il manuale non ne stampa una per classe: valgono le cinque categorie del gruppo Warrior.
 
 **Incantesimi**: nessuna progressione propria.
@@ -718,7 +731,7 @@ Titoli di livello: 12 su 22 (fino al 15°).
 **Punti esperienza**: tabella presente. 23 livelli (dal 3° al 25°). monotona crescente. Da 0 a 6.500.000 PE.
 Titoli di livello: 11 su 23 (fino al 13°).
 
-**THAC0**: citato nel testo della classe, nessuna tabella propria in nessuna delle 17 classi — vale quella del gruppo Warrior.
+**THAC0**: citato nel testo della classe, nessuna tabella propria in nessuna classe del roster — vale quella del gruppo Warrior.
 **Tiri salvezza**: nessuna tabella estratta. Il manuale non ne stampa una per classe: valgono le cinque categorie del gruppo Warrior.
 
 **Incantesimi**: tabella presente, dal 6° al 18° livello di classe, fino al 7° grado di incantesimo.
@@ -742,6 +755,36 @@ Titoli di livello: 11 su 23 (fino al 13°).
 
 ---
 
+### Guerriero — `guerriero`
+
+| campo | valore |
+|---|---|
+| gruppo 2e | Warrior |
+| dado vita | — |
+| minimi di caratteristica | FOR 9 |
+| livello d'ingresso | 1 |
+| classe prerequisito | — |
+| allineamento | nessuna restrizione |
+| razze ammesse | tutte |
+| ricchezza iniziale | non dichiarata (eredita dal gruppo) |
+| pagine PDF | 25 |
+
+**Punti esperienza**: nessuna tabella propria. Il manuale rimanda alle tabelle standard del gruppo Warrior.
+
+**THAC0**: citato nel testo della classe, nessuna tabella propria in nessuna classe del roster — vale quella del gruppo Warrior.
+**Tiri salvezza**: nessuna tabella estratta. Il manuale non ne stampa una per classe: valgono le cinque categorie del gruppo Warrior.
+
+**Incantesimi**: nessuna progressione propria.
+
+**Chassis 5e (decisione 23, `principio-del-clone`)**: clone di **Fighter** (SRD 5.1), dado vita 1d10, tiri salvezza Strength, Constitution. Identita', non accostamento: e' la stessa classe in due edizioni. Lo strato di Krynn e' vuoto per dichiarazione della fonte (decisione 59, `classi-base-2e`).
+
+**Privilegi**: 0, di cui 0 agganciati a un livello esplicito. **Impedimenti**: 0. Da convertire: 0.
+
+**Armi obbligate**: nessuna.
+**Regole di equipaggiamento**: nessuna dichiarata.
+
+---
+
 ### Marinaio — `mariner`
 
 | campo | valore |
@@ -758,7 +801,7 @@ Titoli di livello: 11 su 23 (fino al 13°).
 
 **Punti esperienza**: nessuna tabella propria. Il manuale rimanda alle tabelle standard del gruppo Warrior.
 
-**THAC0**: citato nel testo della classe, nessuna tabella propria in nessuna delle 17 classi — vale quella del gruppo Warrior.
+**THAC0**: citato nel testo della classe, nessuna tabella propria in nessuna classe del roster — vale quella del gruppo Warrior.
 **Tiri salvezza**: nessuna tabella estratta. Il manuale non ne stampa una per classe: valgono le cinque categorie del gruppo Warrior.
 
 **Incantesimi**: nessuna progressione propria.
@@ -781,6 +824,36 @@ Titoli di livello: 11 su 23 (fino al 13°).
 
 ---
 
+### Paladino — `paladino`
+
+| campo | valore |
+|---|---|
+| gruppo 2e | Warrior |
+| dado vita | — |
+| minimi di caratteristica | CAR 17, COS 9, FOR 12, SAG 13 |
+| livello d'ingresso | 1 |
+| classe prerequisito | — |
+| allineamento | nessuna restrizione |
+| razze ammesse | tutte |
+| ricchezza iniziale | non dichiarata (eredita dal gruppo) |
+| pagine PDF | 25 |
+
+**Punti esperienza**: nessuna tabella propria. Il manuale rimanda alle tabelle standard del gruppo Warrior.
+
+**THAC0**: citato nel testo della classe, nessuna tabella propria in nessuna classe del roster — vale quella del gruppo Warrior.
+**Tiri salvezza**: nessuna tabella estratta. Il manuale non ne stampa una per classe: valgono le cinque categorie del gruppo Warrior.
+
+**Incantesimi**: nessuna progressione propria.
+
+**Chassis 5e (decisione 23, `principio-del-clone`)**: clone di **Paladin** (SRD 5.1), dado vita 1d10, tiri salvezza Wisdom, Charisma. Identita', non accostamento. Da non confondere con i Cavalieri della Spada e della Rosa, che stanno sullo stesso telaio ma sono ordini di Krynn.
+
+**Privilegi**: 0, di cui 0 agganciati a un livello esplicito. **Impedimenti**: 0. Da convertire: 0.
+
+**Armi obbligate**: nessuna.
+**Regole di equipaggiamento**: nessuna dichiarata.
+
+---
+
 ### Mago dell'Alta Stregoneria — `mago-alta-stregoneria`
 
 | campo | valore |
@@ -798,7 +871,7 @@ Titoli di livello: 11 su 23 (fino al 13°).
 **Punti esperienza**: tabella presente. 25 livelli (dal 1° al 25°). monotona crescente. Da 0 a 6.000.000 PE.
 Titoli di livello: 1 su 25 (fino al 18°).
 
-**THAC0**: citato nel testo della classe, nessuna tabella propria in nessuna delle 17 classi — vale quella del gruppo Wizard.
+**THAC0**: citato nel testo della classe, nessuna tabella propria in nessuna classe del roster — vale quella del gruppo Wizard.
 **Tiri salvezza**: nessuna tabella estratta. Il manuale non ne stampa una per classe: valgono le cinque categorie del gruppo Wizard.
 
 **Incantesimi**: tabella presente, dal 1° al 25° livello di classe, fino al 9° grado di incantesimo.
@@ -845,7 +918,7 @@ Titoli di livello: 1 su 25 (fino al 18°).
 **Punti esperienza**: tabella presente. 25 livelli (dal 1° al 25°). monotona crescente. Da 0 a 6.000.000 PE.
 Titoli di livello: 1 su 25 (fino al 18°).
 
-**THAC0**: citato nel testo della classe, nessuna tabella propria in nessuna delle 17 classi — vale quella del gruppo Wizard.
+**THAC0**: citato nel testo della classe, nessuna tabella propria in nessuna classe del roster — vale quella del gruppo Wizard.
 **Tiri salvezza**: nessuna tabella estratta. Il manuale non ne stampa una per classe: valgono le cinque categorie del gruppo Wizard.
 
 **Incantesimi**: tabella presente, dal 1° al 25° livello di classe, fino al 9° grado di incantesimo.
@@ -887,7 +960,7 @@ Titoli di livello: 1 su 25 (fino al 18°).
 
 **Punti esperienza**: nessuna tabella propria. Il manuale rimanda alle tabelle standard del gruppo Wizard.
 
-**THAC0**: citato nel testo della classe, nessuna tabella propria in nessuna delle 17 classi — vale quella del gruppo Wizard.
+**THAC0**: citato nel testo della classe, nessuna tabella propria in nessuna classe del roster — vale quella del gruppo Wizard.
 **Tiri salvezza**: nessuna tabella estratta. Il manuale non ne stampa una per classe: valgono le cinque categorie del gruppo Wizard.
 
 **Incantesimi**: nessuna progressione propria.
@@ -921,7 +994,7 @@ Titoli di livello: 1 su 25 (fino al 18°).
 
 **Punti esperienza**: nessuna tabella propria. Il manuale rimanda alle tabelle standard del gruppo Wizard.
 
-**THAC0**: citato nel testo della classe, nessuna tabella propria in nessuna delle 17 classi — vale quella del gruppo Wizard.
+**THAC0**: citato nel testo della classe, nessuna tabella propria in nessuna classe del roster — vale quella del gruppo Wizard.
 **Tiri salvezza**: nessuna tabella estratta. Il manuale non ne stampa una per classe: valgono le cinque categorie del gruppo Wizard.
 
 **Incantesimi**: nessuna progressione propria.
@@ -955,7 +1028,7 @@ Titoli di livello: 1 su 25 (fino al 18°).
 
 **Punti esperienza**: nessuna tabella propria. Il manuale rimanda alle tabelle standard del gruppo Wizard.
 
-**THAC0**: citato nel testo della classe, nessuna tabella propria in nessuna delle 17 classi — vale quella del gruppo Wizard.
+**THAC0**: citato nel testo della classe, nessuna tabella propria in nessuna classe del roster — vale quella del gruppo Wizard.
 **Tiri salvezza**: nessuna tabella estratta. Il manuale non ne stampa una per classe: valgono le cinque categorie del gruppo Wizard.
 
 **Incantesimi**: nessuna progressione propria.
@@ -990,7 +1063,7 @@ Titoli di livello: 1 su 25 (fino al 18°).
 **Punti esperienza**: tabella presente. 25 livelli (dal 1° al 25°). monotona crescente. Da 0 a 4.400.000 PE.
 Titoli di livello: 16 su 25 (fino al 18°).
 
-**THAC0**: citato nel testo della classe, nessuna tabella propria in nessuna delle 17 classi — vale quella del gruppo Priest.
+**THAC0**: citato nel testo della classe, nessuna tabella propria in nessuna classe del roster — vale quella del gruppo Priest.
 **Tiri salvezza**: nessuna tabella estratta. Il manuale non ne stampa una per classe: valgono le cinque categorie del gruppo Priest.
 
 **Incantesimi**: nessuna progressione propria.
@@ -1029,7 +1102,7 @@ Titoli di livello: 16 su 25 (fino al 18°).
 **Punti esperienza**: tabella presente. 25 livelli (dal 1° al 25°). monotona crescente. Da 0 a 4.400.000 PE.
 Titoli di livello: 16 su 25 (fino al 18°).
 
-**THAC0**: citato nel testo della classe, nessuna tabella propria in nessuna delle 17 classi — vale quella del gruppo Priest.
+**THAC0**: citato nel testo della classe, nessuna tabella propria in nessuna classe del roster — vale quella del gruppo Priest.
 **Tiri salvezza**: nessuna tabella estratta. Il manuale non ne stampa una per classe: valgono le cinque categorie del gruppo Priest.
 
 **Incantesimi**: tabella presente, dal 1° al 25° livello di classe, fino al 7° grado di incantesimo.
@@ -1066,7 +1139,7 @@ Titoli di livello: 16 su 25 (fino al 18°).
 
 **Punti esperienza**: nessuna tabella propria. Il manuale rimanda alle tabelle standard del gruppo Rogue.
 
-**THAC0**: citato nel testo della classe, nessuna tabella propria in nessuna delle 17 classi — vale quella del gruppo Rogue.
+**THAC0**: citato nel testo della classe, nessuna tabella propria in nessuna classe del roster — vale quella del gruppo Rogue.
 **Tiri salvezza**: nessuna tabella estratta. Il manuale non ne stampa una per classe: valgono le cinque categorie del gruppo Rogue.
 
 **Incantesimi**: nessuna progressione propria.
@@ -1104,7 +1177,7 @@ Titoli di livello: 16 su 25 (fino al 18°).
 
 **Punti esperienza**: nessuna tabella propria. Il manuale rimanda alle tabelle standard del gruppo Rogue.
 
-**THAC0**: citato nel testo della classe, nessuna tabella propria in nessuna delle 17 classi — vale quella del gruppo Rogue.
+**THAC0**: citato nel testo della classe, nessuna tabella propria in nessuna classe del roster — vale quella del gruppo Rogue.
 **Tiri salvezza**: nessuna tabella estratta. Il manuale non ne stampa una per classe: valgono le cinque categorie del gruppo Rogue.
 
 **Incantesimi**: nessuna progressione propria.
@@ -1118,6 +1191,36 @@ Titoli di livello: 16 su 25 (fino al 18°).
 | Nessun attacco alle spalle | pending |
 | Nessuna esperienza dal denaro | pending |
 | Seguaci limitati | pending |
+
+**Armi obbligate**: nessuna.
+**Regole di equipaggiamento**: nessuna dichiarata.
+
+---
+
+### Ladro — `ladro`
+
+| campo | valore |
+|---|---|
+| gruppo 2e | Rogue |
+| dado vita | — |
+| minimi di caratteristica | DES 9 |
+| livello d'ingresso | 1 |
+| classe prerequisito | — |
+| allineamento | nessuna restrizione |
+| razze ammesse | tutte |
+| ricchezza iniziale | non dichiarata (eredita dal gruppo) |
+| pagine PDF | 25 |
+
+**Punti esperienza**: nessuna tabella propria. Il manuale rimanda alle tabelle standard del gruppo Rogue.
+
+**THAC0**: citato nel testo della classe, nessuna tabella propria in nessuna classe del roster — vale quella del gruppo Rogue.
+**Tiri salvezza**: nessuna tabella estratta. Il manuale non ne stampa una per classe: valgono le cinque categorie del gruppo Rogue.
+
+**Incantesimi**: nessuna progressione propria.
+
+**Chassis 5e (decisione 23, `principio-del-clone`)**: clone di **Rogue** (SRD 5.1), dado vita 1d8, tiri salvezza Dexterity, Intelligence. Identita', non accostamento. Da non confondere con il Con Artist, che e' il ladro proprio di Krynn e porta minimi suoi.
+
+**Privilegi**: 0, di cui 0 agganciati a un livello esplicito. **Impedimenti**: 0. Da convertire: 0.
 
 **Armi obbligate**: nessuna.
 **Regole di equipaggiamento**: nessuna dichiarata.
@@ -1140,7 +1243,7 @@ Titoli di livello: 16 su 25 (fino al 18°).
 
 **Punti esperienza**: tabella presente. 25 livelli (dal 1° al 25°). monotona crescente. Da 0 a 17.000.000 PE.
 
-**THAC0**: citato nel testo della classe, nessuna tabella propria in nessuna delle 17 classi — vale quella del gruppo Normal.
+**THAC0**: citato nel testo della classe, nessuna tabella propria in nessuna classe del roster — vale quella del gruppo Normal.
 **Tiri salvezza**: nessuna tabella estratta. Il manuale non ne stampa una per classe: valgono le cinque categorie del gruppo Normal.
 
 **Incantesimi**: nessuna progressione propria.
@@ -1170,7 +1273,7 @@ Titoli di livello: 16 su 25 (fino al 18°).
 
 **Punti esperienza**: tabella presente. 25 livelli (dal 1° al 25°). monotona crescente. Da 0 a 17.000.000 PE.
 
-**THAC0**: citato nel testo della classe, nessuna tabella propria in nessuna delle 17 classi — vale quella del gruppo Normal.
+**THAC0**: citato nel testo della classe, nessuna tabella propria in nessuna classe del roster — vale quella del gruppo Normal.
 **Tiri salvezza**: nessuna tabella estratta. Il manuale non ne stampa una per classe: valgono le cinque categorie del gruppo Normal.
 
 **Incantesimi**: nessuna progressione propria.

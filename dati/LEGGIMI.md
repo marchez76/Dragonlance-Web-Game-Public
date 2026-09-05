@@ -1,8 +1,12 @@
 # Dati strutturati — razze, classi e divinità di Krynn
 
-Fase 0. **15 razze**, **17 classi** e **21 divinità** estratte da *Tales of the
-Lance* (AD&D 2e, TSR 1992), capitoli *People of Ansalon*, *Classes of Ansalon*
-e *Realms Above*.
+Fase 0. **15 razze**, **20 classi** e **21 divinità**. Razze e divinità e 17
+classi vengono da *Tales of the Lance* (AD&D 2e, TSR 1992), capitoli *People of
+Ansalon*, *Classes of Ansalon* e *Realms Above*. Le altre 3 — Guerriero,
+Paladino, Ladro — sono le classi base AD&D 2e che *Tales of the Lance* dichiara
+giocabili su Ansalon senza descriverle, trascritte dal Player's Handbook con la
+decisione 59 (`classi-base-2e`). La fonte è per classe, nel campo
+`source.source_book`: non è più un dato di file.
 
 ## Struttura
 

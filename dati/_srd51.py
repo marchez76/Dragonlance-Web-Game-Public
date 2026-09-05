@@ -196,11 +196,17 @@ CODA = {
             "il telaio serve prima, la classe dopo.",
     "Ranger": "Ranger SRD 5.1. Etichetta `Ranger` della stessa tabella. "
               "Stessa forma del Bardo: manca il telaio, non la decisione.",
-    "Druid": "Druido SRD 5.1. Serve solo se `Druid (heathen)` risultera' una "
-             "classe distinta dal Sacerdote Eretico: finche' la fonte dice "
-             "che l'eretico li comprende entrambi, questa riga e' un'ipotesi "
-             "e non un impegno.",
 }
+
+# TOLTO DALLA CODA il 04/09/2026, e la riga resta qui perche' non venga
+# rimesso: il "Druido SRD 5.1" stava in coda sotto condizione — serviva SOLO
+# se `Druid (heathen)` fosse risultata una classe distinta dal Sacerdote
+# Eretico. La condizione e' stata verificata sulla fonte ed e' FALSA: il
+# capitolo Priest Group Classes ha due sole voci, e i druidi di altri mondi
+# sono eretici per la stessa definizione. Le due righe della tabella
+# Class/Race Combinations differiscono per il solo tetto di livello, che non
+# applichiamo (decisione 4, `limiti-di-livello`). Motivazione per esteso in
+# `_classi_ammesse.ETICHETTE["Druid (heathen)"].fonte`.
 
 assert not (set(CODA) & set(TABELLE)), \
     "un telaio non puo' essere insieme trascritto e in coda"
@@ -240,6 +246,30 @@ def n_asi(classe):
 
 def livelli_con_privilegi(classe):
     return len(privilegi(classe))
+
+
+def livello_privilegio(srd_class, nome):
+    """Il livello a cui la tabella SRD concede `nome`, o None se non lo concede.
+
+    E' la lettura che rende VERIFICABILE un rimando al chassis: un privilegio
+    della fonte 2e la cui meccanica 5e e' gia' quella del chassis non porta
+    una prosa propria ma un riferimento, e un riferimento vale solo se il
+    bersaglio esiste. Qui esistere vuol dire comparire nella colonna Features
+    della tabella, che e' l'unica cosa che si ha per i telai non ancora
+    trascritti privilegio per privilegio.
+
+    Il confronto e' sul nome BASE, senza la parentesi che l'SRD usa per gli
+    usi progressivi (`Indomitable (one use)`): il rimando nomina il
+    privilegio, non lo stadio.
+    """
+    if srd_class not in TABELLE:
+        return None
+    atteso = (nome or "").strip()
+    for liv, riga in sorted(TABELLE[srd_class]["features"].items()):
+        for voce in [x.strip() for x in riga.split(",") if x.strip()]:
+            if voce == atteso or voce.split(" (")[0].strip() == atteso:
+                return liv
+    return None
 
 
 # --------------------------------------------------------------------------

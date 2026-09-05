@@ -53,7 +53,7 @@ CAR_IT = {"str": "FOR", "dex": "DES", "con": "COS",
 # possono divergere (punto 3 di CLAUDE.md).
 sys.path.insert(0, DATI)
 import analizza_personaggio as AP   # noqa: E402
-from decisioni import DECISIONI   # noqa: E402
+from decisioni import APERTE, DECISIONI   # noqa: E402
 
 
 def interpretativo(testo):
@@ -610,6 +610,30 @@ def d_import():
 def d_aperte(entita, etichetta):
     return [f"- **{e['id']}** ({etichetta}): {q}"
             for e in entita for q in e["source_2e"].get("open_questions", [])]
+
+
+def d_registro_aperte():
+    """Le questioni aperte, dal registro. NON da qui.
+
+    Erano prosa dentro questo generatore fino al 05/09/2026: senza id, senza
+    sede, e quindi non citabili da nessun altro testo. Ora la sede e'
+    `decisioni.APERTE` e qui si stampa soltanto — la stessa strada che
+    l'elenco delle decisioni ha fatto prima di loro.
+
+    Le voci che dichiarano una `sede` non portano il proprio testo: lo si
+    legge da dove vive davvero, invece di ricopiarlo. Oggi sono i cinque
+    chassis indecisi della decisione 23 (`principio-del-clone`), la cui
+    ragione sta gia' scritta in `_chassis_5e.CHASSIS`."""
+    import _chassis_5e as CH   # noqa: E402  (dati/ e' gia' su sys.path)
+
+    def _corpo(a):
+        if not a.sede:
+            return a.testo
+        chiave = a.sede.split('["')[1].rstrip('"]')
+        return (f"{CH.CHASSIS[chiave][1]} Sede: `{a.sede}` — la ragione si "
+                f"legge li' e non si ricopia qui.")
+
+    return [f"- **{a.titolo}** (`{a.id}`). {_corpo(a)}" for a in APERTE]
 
 
 # ==========================================================================
@@ -1247,25 +1271,7 @@ chassis Fighter e le azioni dei due mostri con cui l'arena gira davvero
 
 ### Richiedono una decisione
 
-{interpretativo(f'''- **Il PHB 5e 2014 non è fra i PDF**: la cartella contiene solo edizioni 2024.
-  Alternativa disponibile: `2014.5e.tools`, che espone il materiale 2014 come
-  JSON strutturato (repo GitHub `5etools-mirror-3/5etools-2014-src`).
-- **Shadow of the Dragon Queen** continua a mancare: resta l'unica fonte 5e
-  ufficiale su Krynn, e da essa dipende l'unico tratto ancora provvisorio.
-- **Il Barbaro ha doppia natura**: il manuale lo tratta sia come cultura umana
-  sia come classe. La decisione 20 (`tappo-barbaro`) gli ha dato un tappo reversibile; la
-  conversione a background va decisa insieme allo schema Personaggio. Le
-  quattro conseguenze sono ora misurate in `dati/RAPPORTO-personaggio.md`.
-- **Cosa succede a un aumento che sfonda un tetto razziale.** La decisione 10 (`massimali-razziali`)
-  applica i massimali anche in crescita ma non dice come si comporta l'aumento
-  respinto: si perde, si travasa, o il tetto cede. La fonte non ha una risposta
-  da trascrivere — in AD&D 2e il caso non si poneva.
-- **Il Qualinesti ha un tratto che registra un'assenza.** L'Appendice non
-  dichiara alcuna capacità per quel ramo, e il posto è tenuto da una voce
-  `source_only` senza meccanica. Nelle tabelle conta come un tratto
-  dell'Appendice pur non concedendo nulla: è un artefatto di rappresentazione,
-  non un beneficio. Da decidere se tenerlo come registrazione esplicita o
-  toglierlo e lasciare il conteggio a zero.''')}
+{interpretativo(chr(10).join(d_registro_aperte()))}
 
 ### Ambiguità delle fonti, registrate e non risolte
 

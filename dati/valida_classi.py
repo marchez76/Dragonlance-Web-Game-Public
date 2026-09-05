@@ -22,7 +22,9 @@ import jsonschema
 BASE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, BASE)
 
+import _chassis_5e as _CH  # noqa: E402
 import _classi_ammesse as _CA  # noqa: E402
+import _schemi as S  # noqa: E402
 Validator = getattr(jsonschema, "Draft202012Validator", None) or jsonschema.Draft7Validator
 
 # Nomi della tabella Class/Race Combinations -> id delle nostre classi.
@@ -204,16 +206,46 @@ def prova_di_se_stesso(classi, razze):
 
 
 def main():
-    schema = json.load(open(os.path.join(BASE, "schema", "classe.schema.json")))
-    Validator.check_schema(schema)
-    v = Validator(schema)
+    # IL VALIDATORE VIENE DA `_schemi`, non piu' costruito qui.
+    # Dal 04/09/2026 `chassis_features[].conversion_status` non e' piu' una
+    # stringa libera ma un `$ref` a `vocabolari.schema.json`: un `$ref` fra
+    # file non si risolve senza registro, e un validatore senza registro non
+    # sbaglia rumorosamente — lascia passare tutto e il vocabolario sembra
+    # applicato. Per questo il registro arriva dalla sede, e i tre controlli
+    # sotto provano che il riferimento risolva davvero.
+    schema = S.carica("classe.schema.json")
+    v = S.validatore("classe.schema.json", schema)
+
+    schemi_errori = 0
+    for m in S.verifica_riferimenti():
+        print(f"\u2717 {m}")
+        schemi_errori += 1
+    _visti, _quanti, prova = S.prova_di_se_stesso()
+    for m in prova:
+        print(f"\u2717 {m}")
+        schemi_errori += 1
+    for m in S.verifica_origine():
+        print(f"\u2717 {m}")
+        schemi_errori += 1
 
     files = sorted(glob.glob(os.path.join(BASE, "classi", "*.json")))
     classi = [json.load(open(p, encoding="utf-8")) for p in files]
     razze = [json.load(open(p, encoding="utf-8"))
              for p in sorted(glob.glob(os.path.join(BASE, "razze", "*.json")))]
 
-    totale = 0
+    # I RIMANDI AL CHASSIS, dal 04/09/2026.
+    # Un privilegio della fonte la cui meccanica 5e e' gia' quella del chassis
+    # porta un rimando invece di `null` (decisione 23, `principio-del-clone`,
+    # e _chassis_5e). Un rimando vale solo se il bersaglio esiste: qui si
+    # rifa' sui file la prova che la sede fa in costruzione, perche' il
+    # bersaglio sta in un elenco SRD che puo' cambiare dopo che il file e'
+    # stato scritto — e una copia che combacia il giorno in cui nasce e'
+    # esattamente la forma che questo progetto ha visto sfasarsi dodici volte.
+    for m in _CH.verifica_rimandi(classi):
+        print(f"\u2717 {m}")
+        schemi_errori += 1
+
+    totale = schemi_errori
     for p, d in zip(files, classi):
         errori = []
         for e in sorted(v.iter_errors(d), key=lambda e: list(e.path)):

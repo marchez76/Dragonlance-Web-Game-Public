@@ -126,7 +126,7 @@ controllo del progetto che guarda il codice invece dei dati.
 
 ### Cosa il controllo VEDE
 
-Legge **60 sorgenti Python** (la sede stessa esclusa: li' le tabelle devono
+Legge **61 sorgenti Python** (la sede stessa esclusa: li' le tabelle devono
 esserci) e li guarda in due modi.
 
 - **Per forma.** L'espressione, riconosciuta sul codice **tokenizzato**:
@@ -287,11 +287,11 @@ pretende che le due dicano la stessa cosa.
 | mostri | 257 | 5 | a mano |
 | razze | 105 | 0 | a mano |
 | classi (features) | 43 | 0 | a mano |
-| classi (chassis, generati) | 15 | 15 | con un comando |
+| classi (chassis, generati) | 20 | 20 | con un comando |
 
 **Adesso: 5 blocchi scritti a mano portano `effetto`** — tutti sui mostri, su
 2 schede delle 52 convertite; razze e privilegi di classe non ne hanno ancora
-nessuno. Piu' 15 generati da `_srd51.py`, che si rifanno con un comando e
+nessuno. Piu' 20 generati da `_srd51.py`, che si rifanno con un comando e
 quindi non entrano nel costo.
 
 **Dopo trenta mostri strutturati:** il bestiario converte in media 4,9 blocchi

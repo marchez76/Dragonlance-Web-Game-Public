@@ -1,8 +1,14 @@
-"""Registro canonico delle decisioni di progetto.
+"""Registro canonico delle decisioni di progetto, e delle questioni ancora aperte.
 
-UNICA SEDE. `genera_contesto.py` importa da qui: l'elenco non va duplicato
-altrove, ne' ricopiato in un documento a mano. Chi aggiunge una decisione
-tocca solo questo file.
+UNICA SEDE. `genera_contesto.py` importa da qui: i due elenchi non vanno
+duplicati altrove, ne' ricopiati in un documento a mano. Chi aggiunge una
+decisione, o una questione aperta, tocca solo questo file.
+
+DUE ELENCHI, LO STESSO TRATTAMENTO. `DECISIONI` porta cio' che e' stato
+deciso, `APERTE` cio' che aspetta di esserlo. Il secondo e' nato il
+05/09/2026, quando si e' visto che le questioni aperte erano rimaste prosa
+dentro il generatore mentre le decisioni ne erano uscite mesi prima: la
+motivazione per esteso sta sopra `APERTE`, in fondo al file.
 
 PERCHE' ESISTE UN `id` OLTRE AL NUMERO
     Il numero e' un **ordinale di lettura**: dice dove sta la decisione
@@ -1038,6 +1044,63 @@ DECISIONI = [
         "della creazione. Il prezzo e' reale e si paga in chiaro: dove la "
         "fonte era piu' stretta il telaio allarga, e lo scarto si dichiara "
         "invece di assorbirlo (" 'decisione 7 (`doppio-strato`)' ")."),
+    Decisione(
+        59, 'classi-base-2e',
+        "Le cinque classi base 2e si trascrivono, e il loro strato di Krynn e' vuoto",
+        "IL MOTIVO CHE DECIDE E' UN'ESCLUSIONE FALSA, e non un vuoto da "
+        "riempire per completezza. Il Con Artist chiede Carisma 12 contro il "
+        "massimale 9 dell'Aghar, e quel filtro morde giusto: e' la doppia "
+        "penalita' della "
+        'decisione 10 (`massimali-razziali`)'
+        " che fa il suo mestiere. Ma il ladro **base** chiede Destrezza 9 e "
+        "l'Aghar la porta fino a 18, e la tabella Class/Race Combinations gli "
+        "concede `Thief` fino all'ottavo livello. E' il primo caso in cui a "
+        "togliere qualcosa non e' la fonte ma un buco del NOSTRO roster: "
+        "tutte le altre esclusioni erano fedelta', questa era nostra. E "
+        "colpiva la razza piu' stretta del roster, che prima di oggi aveva 2 "
+        "classi accessibili su 17. "
+        "LA FORMA, ED E' LA FONTE A DETTARLA. *Tales of the Lance* dichiara "
+        "queste classi giocabili su Ansalon e non le descrive: l'Overview le "
+        "elenca, le Class descriptions passano oltre, e il capitolo dei "
+        "guerrieri scrive che su Ansalon si giocano le classi guerriere "
+        "tipiche della 2e mentre quelle *uniche* di Ansalon vengono descritte "
+        "di seguito. Il gruppo dei ladri ripete la forma. Lo strato di Krynn "
+        "e' quindi **vuoto per dichiarazione**, non per trascrizione "
+        "incompleta, e cio' che la tabella aggiunge — accesso razziale e "
+        "tetto di livello — non appartiene alla classe: il primo vive gia' in "
+        "`allowed_classes` delle razze, il secondo non si applica "
+        '(decisione 4, `limiti-di-livello`)'
+        ". "
+        "SI TRASCRIVONO percio' i soli minimi della Tabella 13 del PHB 2e "
+        "(pag. 25 stampata, letta dall'immagine), e `mechanics_5e` e' il "
+        "chassis SRD **con niente sopra**. Non e' una scorciatoia: e' cio' "
+        "che la fonte dice, e **zero privilegi di fonte da convertire e' un "
+        "dato**, non una lacuna. E' anche il primo posto del progetto dove il "
+        "chassis della "
+        'decisione 23 (`principio-del-clone`)'
+        " non e' un accostamento editoriale ma un'identita': il Guerriero 2e "
+        "e il Fighter SRD sono la stessa classe in due edizioni. "
+        "IL SECONDO MANUALE DI FONTE NON E' UN PRECEDENTE NUOVO. La "
+        'decisione 16 (`nove-tratti-phb2e`)'
+        " l'ha gia' fatto per le razze: 70 tratti su 105 vengono dal PHB 2e "
+        "per rimando, con la fonte marcata voce per voce. Le classi seguono "
+        "la stessa strada, e ne segue la correzione che la rende possibile: "
+        "**la fonte va per classe, non per file**. `build_classi.BOOK` era "
+        "una costante di modulo, cioe' un dato di file, e non lo e' mai "
+        "stato; ora e' un default, e chi viene da un altro manuale lo dichiara "
+        "nel proprio campo `book`. "
+        "L'ORDINE, E QUANTO COSTA CIASCUNA META'. Prime le tre a telaio gia' "
+        "trascritto — Guerriero, Paladino, Ladro — che chiudono le tre "
+        "esclusioni vere: `Paladin` al Silvanesti e all'Irda, `Thief` "
+        "all'Aghar, le uniche tre coppie razza+etichetta che aprivano una "
+        "porta e non lasciavano dentro niente. Bardo e Ranger dopo: per loro "
+        "manca **anche** il telaio (`_srd51.CODA`), e le coppie che "
+        "sbloccheranno non sono esclusioni ma classi non ancora scritte. "
+        "LA MISURA, dopo le prime tre: le coppie razza+classe accessibili "
+        "passano da 93 a 126 su 168 aperte, il filtro ne toglie 42 come "
+        "prima, e l'Aghar passa da 2 a 4 classi — `barbaro`, `guerriero`, "
+        "`ladro`, `sacerdote-ordini-sacri`. Il Con Artist gli resta precluso, "
+        "ed e' giusto cosi': la porta riaperta e' quella del ladro comune."),
 ]
 
 PER_ID = {d.id: d for d in DECISIONI}
@@ -1050,6 +1113,159 @@ assert [d.numero for d in DECISIONI] == list(range(1, len(DECISIONI) + 1)), \
     "la numerazione deve essere contigua e partire da 1"
 
 
+# ==========================================================================
+# LE QUESTIONI APERTE — stessa sede, stesso trattamento, id stabili.
+#
+# PERCHE' STANNO QUI E NON PIU' NEL GENERATORE
+#     Fino al 05/09/2026 erano prosa scritta a mano dentro
+#     `genera_contesto.py`: nessun id, nessuna sede, nessun modo di citarne
+#     una. Cioe' esattamente cio' che il punto 3 di CLAUDE.md vieta ovunque
+#     tranne li', e per la stessa ragione per cui l'elenco delle decisioni e'
+#     uscito dal generatore prima di loro: una cosa che vive dentro chi la
+#     stampa non ha nulla contro cui essere verificata.
+#
+#     Il costo si vedeva gia'. Una questione senza id non si puo' citare, e
+#     una questione che non si puo' citare viene RIDETTA: la nota di campo
+#     che il 04/09/2026 e' uscita da `_chassis_5e.STATO_PRIVILEGI` per
+#     entrare nel registro era una domanda aperta scritta due volte, in due
+#     posti che non si parlavano. Con un id, il posto giusto per la seconda
+#     copia e' un rimando.
+#
+# LA FORMA DI UN RIMANDO — un id e basta:
+#
+#         questione aperta (`aumento-oltre-tetto`)
+#
+#     Non c'e' un numero, e non e' una dimenticanza: una decisione ha un
+#     ordinale cronologico che la gente cita davvero, una questione aperta
+#     no. Dove non c'e' un derivato non c'e' niente che possa sfasarsi, e il
+#     rimando si verifica per sola esistenza dell'id.
+#     `verifica_decisioni.py` lo controlla insieme agli altri.
+#
+# QUANDO UNA QUESTIONE VIENE DECISA esce da qui e la decisione prende un id
+#     PROPRIO. I due elenchi non condividono id — c'e' un assert — perche'
+#     un id che valesse per entrambi renderebbe ambiguo ogni rimando gia'
+#     scritto. Il prezzo e' che i rimandi alla questione decisa diventano
+#     `id-ignoto` e vanno riportati sulla decisione: e' voluto, ed e' il modo
+#     in cui il controllo dice che c'e' del testo da aggiornare.
+#
+# `sede` — DOVE LA QUESTIONE VIVE DAVVERO, quando non vive qui.
+#     Cinque delle voci qui sotto non portano il proprio testo: sono i cinque
+#     chassis che la decisione 23 (`principio-del-clone`) ha lasciato indecisi,
+#     e la ragione di ciascuno sta gia' scritta in `_chassis_5e.CHASSIS`.
+#     Ricopiarla qui sarebbe stata una struttura doppia creata mentre se ne
+#     chiude un'altra — il difetto che questo progetto ha visto dodici volte.
+#     Quello che mancava loro non era una sede: era un ID con cui citarle.
+# ==========================================================================
+
+Aperta = namedtuple("Aperta", "id titolo testo sede")
+
+
+def _a(id_, titolo, testo="", sede=None):
+    return Aperta(id_, titolo, testo.strip(), sede)
+
+
+APERTE = [
+    _a('phb-2014-assente',
+       'Il PHB 5e 2014 non e\' fra i PDF',
+       'La cartella contiene solo edizioni 2024. Alternativa disponibile: '
+       '`2014.5e.tools`, che espone il materiale 2014 come JSON strutturato '
+       '(repo GitHub `5etools-mirror-3/5etools-2014-src`).'),
+    _a('sotdq-assente',
+       '*Shadow of the Dragon Queen* continua a mancare',
+       'Resta l\'unica fonte 5e ufficiale su Krynn, e da essa dipende '
+       'l\'unico tratto ancora provvisorio.'),
+    _a('barbaro-background',
+       'Il Barbaro ha doppia natura',
+       'Il manuale lo tratta sia come cultura umana sia come classe. La '
+       'decisione 20 (`tappo-barbaro`) gli ha dato un tappo reversibile; la '
+       'conversione a background va decisa insieme allo schema Personaggio. '
+       'Le quattro conseguenze sono misurate in '
+       '`dati/RAPPORTO-personaggio.md`. La '
+       'decisione 56 (`personaggio-additivo`) non la scioglie: garantisce '
+       'solo che deciderla dopo non costi una riscrittura.'),
+    _a('aumento-oltre-tetto',
+       'Cosa succede a un aumento che sfonda un tetto razziale',
+       'La decisione 10 (`massimali-razziali`) applica i massimali anche in '
+       'crescita ma non dice come si comporta l\'aumento respinto: si perde, '
+       'si travasa, o il tetto cede. La fonte non ha una risposta da '
+       'trascrivere — in AD&D 2e il caso non si poneva.'),
+    _a('qualinesti-tratto-vuoto',
+       'Il Qualinesti ha un tratto che registra un\'assenza',
+       'L\'Appendice non dichiara alcuna capacita\' per quel ramo, e il posto '
+       'e\' tenuto da una voce `source_only` senza meccanica. Nelle tabelle '
+       'conta come un tratto dell\'Appendice pur non concedendo nulla: e\' un '
+       'artefatto di rappresentazione, non un beneficio. Da decidere se '
+       'tenerlo come registrazione esplicita o toglierlo e lasciare il '
+       'conteggio a zero.'),
+    _a('rosa-aura-di-coraggio',
+       'Il Cavaliere della Rosa e l\'Aura di Coraggio',
+       'L\'immunita\' alla paura che la fonte 2e concede al grado e\' gia\' un '
+       'privilegio del chassis Paladino, e `mechanics_5e` la porta come '
+       'rimando verificabile invece che come `null`. Il chassis pero\' la '
+       'concede molto piu\' tardi del livello a cui si entra nel grado: da '
+       'decidere se anticiparla all\'ingresso, lasciarla dov\'e\', o dichiarare '
+       'che il grado non la concede affatto finche\' il chassis non arriva. I '
+       'due livelli stanno nel dato — `_chassis_5e.STATO_PRIVILEGI` e la '
+       'tabella SRD del Paladino — e non si ricopiano qui. E\' un caso '
+       'particolare di questione aperta (`gradi-solamnici-forma`).'),
+    _a('gradi-solamnici-forma',
+       'Come si rappresentano i tre gradi solamnici in 5e',
+       'La decisione 5 (`cavalieri-solamnia`) ha fissato la sequenza '
+       'obbligata Corona → Spada → Rosa, ma non la forma che prende in un '
+       'sistema che non ha il concetto di grado: classe unica con stadi '
+       'interni, tre sottoclassi in sequenza (che la 5e non prevede), o '
+       'classe base piu\' un sistema di gradi separato. Le tre opzioni sono '
+       'in `dati/RAPPORTO-classi.md` §3.9, ed e\' l\'unica delle nove '
+       'incompatibilita\' strutturali rimasta senza esito.'),
+    _a('vesti-livello-sottoclasse',
+       'Il livello delle Vesti contro il livello della sottoclasse',
+       'La decisione 6 (`maghi-delle-torri`) colloca il giuramento alla '
+       'Veste al livello del Test; la 5e assegna la sottoclasse del Mago un '
+       'livello prima. Lo scarto e\' di un livello solo — si sposta il Test, '
+       'si tiene la sottoclasse vuota per un livello, o si accetta lo scarto '
+       '— e finche\' non e\' deciso le tre Vesti restano affiliazioni senza '
+       'un aggancio meccanico. Diagnosi in `dati/RAPPORTO-classi.md` §2.'),
+    _a('dargonesti-senza-elenco',
+       'Il Dargonesti e le classi che la fonte non gli assegna',
+       'La tabella Class/Race Combinations elenca il solo Dimernesti; le '
+       'Gaming Notes equiparano le due razze per requisiti e aggiustamenti e '
+       'tacciono sulle classi. Oggi `allowed_classes.applied` e\' `false`, '
+       'che la decisione 58 (`telaio-apre-classe-filtra`) legge come assenza '
+       'di vincolo e apre il roster intero: l\'esito piu\' largo possibile, '
+       'prodotto da un buco della fonte e non da una scelta. Le opzioni sono '
+       'tre e non due — ereditare l\'elenco del Dimernesti, leggere le classi '
+       'che il paragrafo sugli elfi del mare elenca davvero, o lasciare il '
+       'silenzio. Misura in `dati/RAPPORTO-allowed-classes.md`.'),
+
+    # --- i cinque chassis che la decisione 23 (`principio-del-clone`) ha
+    # lasciato indecisi. Il testo non sta qui: sta in sede, e da li' si legge.
+    _a('chassis-commoner', 'Che chassis 5e dare al Popolano',
+       sede='dati/_chassis_5e.CHASSIS["commoner"]'),
+    _a('chassis-tinker', 'Che chassis 5e dare al Tinker',
+       sede='dati/_chassis_5e.CHASSIS["tinker"]'),
+    _a('chassis-sacerdote-eretico', 'Che chassis 5e dare al Sacerdote Eretico',
+       sede='dati/_chassis_5e.CHASSIS["sacerdote-eretico"]'),
+    _a('chassis-handler', 'Che chassis 5e dare all\'Handler',
+       sede='dati/_chassis_5e.CHASSIS["handler"]'),
+    _a('chassis-mariner', 'Che chassis 5e dare al Marinaio',
+       sede='dati/_chassis_5e.CHASSIS["mariner"]'),
+]
+
+PER_ID_APERTA = {a.id: a for a in APERTE}
+
+assert len(PER_ID_APERTA) == len(APERTE), "id duplicato fra le questioni aperte"
+assert not (set(PER_ID) & set(PER_ID_APERTA)), (
+    "un id non puo' essere insieme una decisione e una questione aperta: "
+    "quando una questione viene decisa, esce da APERTE")
+assert all(a.testo or a.sede for a in APERTE), \
+    "una questione aperta senza testo deve dire dove vive (`sede`)"
+
+
 def cita(id_decisione):
     """Il rimando in forma canonica, con il numero derivato dal registro."""
     return f"decisione {PER_ID[id_decisione].numero} (`{id_decisione}`)"
+
+
+def cita_aperta(id_questione):
+    """Il rimando a una questione aperta. Solo l'id: non c'e' un derivato."""
+    return f"questione aperta (`{PER_ID_APERTA[id_questione].id}`)"

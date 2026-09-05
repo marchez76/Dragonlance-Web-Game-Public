@@ -30,7 +30,7 @@ quel momento: ogni campo nuovo sarebbe stato la quinta reinvenzione.
 
 ## 1. Quante dichiarazioni ci sono, e di che tipo
 
-825 dichiarazioni di origine nei dati, su 5 famiglie.
+833 dichiarazioni di origine nei dati, su 5 famiglie.
 
 | famiglia | livello scheda | livello elemento | totale |
 |---|--:|--:|--:|
@@ -38,8 +38,8 @@ quel momento: ogni campo nuovo sarebbe stato la quinta reinvenzione.
 | oggetti | 79 | 51 | 130 |
 | modelli | 3 | 29 | 32 |
 | razze | 15 | 105 | 120 |
-| classi | 17 | 58 | 75 |
-| **totale** | **166** | **659** | **825** |
+| classi | 20 | 63 | 83 |
+| **totale** | **169** | **664** | **833** |
 
 > Cartelle di dati non guardate da questo controllo: `condizioni`, `divinita`, `incantesimi`. Vanno aggiunte a `CARTELLE` o dichiarate senza origine.
 
@@ -49,22 +49,22 @@ quel momento: ogni campo nuovo sarebbe stato la quinta reinvenzione.
 
 `conversion_status` nomina due cose diverse, e la parte utile e' che non serve
 leggere le descrizioni per dimostrarlo. Il discriminante e' un conteggio: a
-livello di **scheda** il campo `source` non c'e' **mai** (166 su 166); a
-livello di **elemento** c'e' **sempre** (659 su 659). Due popolazioni che non
+livello di **scheda** il campo `source` non c'e' **mai** (169 su 169); a
+livello di **elemento** c'e' **sempre** (664 su 664). Due popolazioni che non
 si toccano.
 
 Anche i vocabolari sono disgiunti, ed e' la seconda prova:
 
 | livello | significato | vocabolario usato nei dati |
 |---|---|---|
-| scheda | a che punto e' **questa scheda** | `clonato` (9), `compilato` (149), `in_sospeso` (8) |
-| elemento | da dove viene **questo valore** | `adapted` (357), `derived` (1), `direct` (215), `pending` (54), `source_only` (32) |
+| scheda | a che punto e' **questa scheda** | `clonato` (12), `compilato` (149), `in_sospeso` (8) |
+| elemento | da dove viene **questo valore** | `adapted` (357), `derived` (1), `direct` (220), `pending` (54), `source_only` (32) |
 
 Le classi usano `clonato` e `in_sospeso` dove le altre famiglie usano
 `compilato`: e' un terzo vocabolario di scheda, non un'origine.
 
 **Questo non e' stato unificato**, ed e' la prima cosa che resiste. Rinominare
-il campo di scheda tocca le 166 schede piu' i generatori `build_*.py` che lo
+il campo di scheda tocca le 169 schede piu' i generatori `build_*.py` che lo
 scrivono: e' un giro suo, che va misurato e fatto con un controllo davanti,
 non infilato dentro l'unificazione dell'origine. Finche' non e' fatto, il
 rischio non e' teorico — e' che qualcuno legga `compilato` come un'origine, o
@@ -86,7 +86,7 @@ Oggi la sede e' `vocabolari.schema.json` — la stessa della decisione 49
 
 | definizione | voci | schemi che la riferiscono |
 |---|---|---|
-| `conversion_status` | 5 | `modello.schema.json`, `mostro.schema.json`, `oggetto.schema.json` |
+| `conversion_status` | 5 | `classe.schema.json`, `modello.schema.json`, `mostro.schema.json`, `oggetto.schema.json` |
 | `provenienza` | 8 | `modello.schema.json`, `mostro.schema.json`, `oggetto.schema.json` |
 
 L'elenco delle provenienze e' l'**unione** delle tre copie (8 voci): `PHB 2e`,
@@ -166,7 +166,7 @@ scritti in questa forma nei dati: 3.
 
 ### 5a. `source` come stringa libera in razze e classi
 
-143 dichiarazioni di livello elemento portano un `source` che l'enum della
+148 dichiarazioni di livello elemento portano un `source` che l'enum della
 sede **non accetta**. La domanda utile non e' quante sono, ma quanto sono
 lontane — e la risposta cambia il lavoro che serve:
 
@@ -174,12 +174,12 @@ lontane — e la risposta cambia il lavoro che serve:
 |---|---|--:|---|
 | `razze` | `PHB 2e` | 70 | si', e' l'enum piu' un dettaglio |
 | `classi` | `Tales of the Lance` | 43 | si', e' l'enum piu' un dettaglio |
-| `classi` | `SRD 5.1` | 15 | si', e' l'enum piu' un dettaglio |
+| `classi` | `SRD 5.1` | 20 | si', e' l'enum piu' un dettaglio |
 | `razze` | `MC - Dragonlance Appendix` | 11 | si', e' l'enum piu' un dettaglio |
 | `razze` | *(stringa non riprodotta)* | 3 | no |
 | `razze` | *(stringa non riprodotta)* | 1 | no |
 
-**139 su 143 cominciano con un valore dell'enum.** Non sono un vocabolario
+**144 su 148 cominciano con un valore dell'enum.** Non sono un vocabolario
 diverso: sono lo stesso valore piu' un dettaglio — il capitolo, la pagina
 stampata, il fatto che sia stato letto da immagine. La fusione quindi non e'
 bloccata, e' **decomposta**: `source` (enum, vincolato) piu' un campo di
@@ -198,12 +198,12 @@ netta. Decomporlo e' un giro suo, con il suo controllo.
 | oggetti | `oggetto.schema.json` | 51 | 3 | 3 | si' |
 | modelli | `modello.schema.json` | 29 | 2 | 2 | si' |
 | razze | `razza.schema.json` | 105 | 0 | 0 | **NO** |
-| classi | `classe.schema.json` | 58 | 1 | 0 | **NO** |
+| classi | `classe.schema.json` | 63 | 1 | 1 | si' |
 
 Il caso peggiore non e' un campo assente: e' un campo **scritto che sembra
 validato e non lo e'**. Dove la colonna dice NO, l'origine e' scritta nei dati
 con la stessa diligenza di tutte le altre, e nessun controllo la guarda: puo'
-portare un valore che l'enum non prevede senza che niente lo dica. Sono **163
+portare un valore che l'enum non prevede senza che niente lo dica. Sono **105
 dichiarazioni** fra razze e classi. E' la stessa forma della zona morta gia'
 misurata in `RAPPORTO-zona-morta-classi.md`, su un campo diverso — segno che
 il difetto sta nello schema di quelle famiglie, non nel campo. Il costo di

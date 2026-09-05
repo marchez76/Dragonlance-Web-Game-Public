@@ -56,7 +56,7 @@ import os
 import re
 import sys
 
-from decisioni import DECISIONI, PER_ID
+from decisioni import APERTE, DECISIONI, PER_ID, PER_ID_APERTA
 
 BASE = os.path.dirname(os.path.abspath(__file__))
 
@@ -98,6 +98,15 @@ RE_SEGUITO = re.compile(r"(?<![\d.])(?P<numero>\d+)\s*\(\s*`(?P<id>[a-z0-9-]+)`\
 # «decisione 13 (`taglia`)/N». Non ha la parola davanti ne' l'id dietro, e
 # quindi sfuggirebbe a tutte le regole precedenti.
 RE_ORFANO = re.compile(r"`\)\s*[/–-]\s*(?P<numero>\d{1,2})(?![\d.]|\s*\()")
+
+# Il rimando a una QUESTIONE APERTA. Non ha numero e non ne vuole uno: una
+# questione aperta non ha un ordinale che qualcuno citi, quindi non c'e'
+# nessun derivato che possa sfasarsi. Resta un solo modo di sbagliarla —
+# nominare un id che non esiste — e succede in due casi: il refuso, e la
+# questione che nel frattempo e' stata DECISA ed e' uscita da APERTE. Il
+# secondo e' quello che conta: il rimando va riportato sulla decisione, e
+# senza questo controllo resterebbe li' a indicare il nulla.
+RE_APERTA = re.compile(r"question[ae]\s+apert[ae]\s*\(\s*`(?P<id>[a-z0-9-]+)`\s*\)")
 
 
 def file_da_leggere():
@@ -171,6 +180,15 @@ def analizza(percorso):
                       "inizio": m.start("numero"), "fine": m.end("numero"),
                       "testo": " ".join(m.group(0).split())})
 
+    for m in RE_APERTA.finditer(testo):
+        esiti.append({"file": rel, "riga": testo.count("\n", 0, m.start()) + 1,
+                      "numero": None, "id": m.group("id"),
+                      "esito": "ok-aperta" if m.group("id") in PER_ID_APERTA
+                               else "aperta-ignota",
+                      "atteso": None,
+                      "inizio": m.start("id"), "fine": m.end("id"),
+                      "testo": " ".join(m.group(0).split())})
+
     esiti.sort(key=lambda e: e["inizio"])
     return testo, esiti
 
@@ -191,7 +209,8 @@ def main():
     verboso = "-v" in sys.argv or "--tutti" in sys.argv
 
     conta = {"ok": 0, "numero-sfasato": 0, "id-ignoto": 0,
-             "non-qualificata": 0, "numero-orfano": 0}
+             "non-qualificata": 0, "numero-orfano": 0,
+             "ok-aperta": 0, "aperta-ignota": 0}
     problemi, corretti, file_con = [], 0, set()
 
     for percorso in file_da_leggere():
@@ -204,19 +223,22 @@ def main():
         file_con.add(os.path.relpath(percorso, BASE))
         for e in esiti:
             conta[e["esito"]] += 1
-            if e["esito"] != "ok":
+            if e["esito"] not in ("ok", "ok-aperta"):
                 problemi.append(e)
         if correzione:
             corretti += correggi(percorso, testo, esiti)
 
     tot = sum(conta.values())
     print(f"{tot} rimandi in {len(file_con)} file, contro le "
-          f"{len(DECISIONI)} decisioni del registro.")
+          f"{len(DECISIONI)} decisioni e le {len(APERTE)} questioni aperte "
+          f"del registro.")
     print(f"  ok               {conta['ok']:>4}")
     print(f"  numero-sfasato   {conta['numero-sfasato']:>4}")
     print(f"  id-ignoto        {conta['id-ignoto']:>4}")
     print(f"  non-qualificata  {conta['non-qualificata']:>4}")
     print(f"  numero-orfano    {conta['numero-orfano']:>4}")
+    print(f"  questioni aperte {conta['ok-aperta']:>4} "
+          f"(id ignoti: {conta['aperta-ignota']})")
 
     if correzione:
         print(f"\ncorretti {corretti} numeri a partire dall'id.")

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Genera dati/RAPPORTO-classi.md: diagnostica sulle 17 classi di Krynn.
+Genera dati/RAPPORTO-classi.md: diagnostica sulle classi del roster.
 
 COSA E' E COSA NON E'
     E' un rapporto DIAGNOSTICO, come RAPPORTO-soddisfacibilita.md per le razze.
@@ -36,11 +36,17 @@ import glob
 import json
 import os
 import re
+import sys
 from datetime import date
 
-import _srd51 as R
-
 BASE = os.path.dirname(os.path.abspath(__file__))
+RADICE = os.path.dirname(BASE)
+sys.path.insert(0, BASE)
+sys.path.insert(0, RADICE)
+
+import _srd51 as R  # noqa: E402
+from decisioni import cita  # noqa: E402
+
 OGGI = date.today().isoformat()
 
 GRUPPI = ["Warrior", "Wizard", "Priest", "Rogue", "Normal"]
@@ -163,7 +169,7 @@ def scheda(c, completo=False):
     testo_tot = json.dumps(c, ensure_ascii=False)
     righe.append(
         f"**THAC0**: {'citato nel testo della classe' if 'THAC0' in testo_tot else 'non citato'}, "
-        f"nessuna tabella propria in nessuna delle 17 classi — vale quella del gruppo "
+        f"nessuna tabella propria in nessuna classe del roster — vale quella del gruppo "
         f"{c['group']}.")
     righe.append(
         "**Tiri salvezza**: nessuna tabella estratta. Il manuale non ne stampa una "
@@ -475,7 +481,9 @@ tiene la sottoclasse vuota per un livello, o si accetta uno scarto.''')}
 Sistemi 2e senza equivalente in 5e. Richiedevano una **decisione**, non una
 conversione. **Le prime sette sono state decise e applicate**: la scelta adottata
 è indicata sotto ciascuna, e vive in `mechanics_5e.structural` in ogni classe.
-Le ultime due restano aperte.
+**L'ottava è decisa e vive altrove**, perché non è un campo della classe: le
+sfere stanno in `dati/_sfere_5e.py`, il Dominio sulle divinità. **L'ultima
+resta aperta.**
 
 Per ciascuno: cosa faceva, perché la 5e l'ha eliminato, opzioni, esito.
 
@@ -626,6 +634,14 @@ incantesimi bonus, sfere per i divieti.
 
 **Materiale già pronto**: le sfere delle 21 divinità sono estratte in
 `dati/divinita/`, con accesso maggiore e minore distinti.
+
+**DECISO** — opzione (c), e da prima che questa riga la registrasse: la
+{cita('sfere-sacerdotali')} tiene le sfere come **filtro di preparazione**,
+ripristinando la negazione d'accesso, e lascia il **Dominio 2014 come
+sottoclasse** per i privilegi di livello, associandone uno a ciascuna
+divinità. Fino al 05/09/2026 questa sezione era l'unica delle nove a
+presentare come aperte tre opzioni fra cui una scelta era già stata fatta —
+il rapporto elencava, la decisione decideva, e i due testi non si parlavano.
 
 ### 3.9 Ordine obbligato dei gradi solamnici
 

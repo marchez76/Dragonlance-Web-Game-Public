@@ -398,7 +398,7 @@
                 "maximum": 20
               },
               "conversion_status": {
-                "type": "string"
+                "$ref": "vocabolari.schema.json#/$defs/conversion_status"
               },
               "mechanics_5e": {
                 "type": "string"

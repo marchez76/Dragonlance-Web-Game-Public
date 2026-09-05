@@ -1,6 +1,6 @@
 # Dragonlance Web GDR — contesto di progetto
 
-*Generato da `genera_contesto.py` il 2026-09-04.*
+*Generato da `genera_contesto.py` il 2026-09-05.*
 
 > **Come leggere questo documento.** Ogni numero, tabella e percentuale è
 > **derivato dai JSON** al momento della generazione: se un dato cambia, cambia
@@ -18,11 +18,11 @@
 
 **Libreria**: 101/141 manuali estratti (72%), 14.017 pagine, 61.499.879 caratteri. Restano 22 scansioni in coda OCR e 18 manuali non ancora lavorati.
 
-**Dati strutturati**: 15 razze, 17 classi, 21 divinità, validate a zero errori. 105 tratti razziali, 0 in sospeso, 3 di conversione editoriale nostra.
+**Dati strutturati**: 15 razze, 20 classi, 21 divinità, validate a zero errori. 105 tratti razziali, 0 in sospeso, 3 di conversione editoriale nostra.
 
 ---
 
-## Le 58 decisioni prese
+## Le 59 decisioni prese
 
 Ordine cronologico. Questa è la storia completa delle scelte: non serve
 ricostruirla dalle sezioni.
@@ -85,6 +85,7 @@ ricostruirla dalle sezioni.
 56. **Il Personaggio si progetta perche' il background si possa aggiungere dopo** — IL RINVIO CONFERMATO. Il Barbaro resta una **razza** e non diventa un background: tappo, non conversione. Ma delle tre decisioni sospese e' l'unica che tocca la **forma** dello schema e non il contenuto, e una forma sbagliata oggi si paga riscrivendo domani. LA PROVVISIONE. Lo schema Personaggio si progetta in modo che aggiungere un campo `background` piu' avanti sia **additivo**: nessun campo esistente cambia significato, nessun dato gia' scritto va riletto. In concreto: l'origine narrativa del personaggio non si deduce dalla razza ne' si incastra dentro di essa, e i tratti che oggi arrivano dalla razza non presuppongono nella loro forma che la razza sia la loro **unica** sorgente. Il campo **non si aggiunge ora** — si evita solo di precluderlo. PERCHE' NON BASTA DIRLO A VOCE. E' la stessa lezione delle dieci strutture doppie: un vincolo che vive solo nella testa di chi scrive non sopravvive alla sessione in cui e' stato pensato.
 57. **Il limite della fetta verticale: la prossima parte dalla creazione, non dal combattimento** — IL LIMITE, INDIVIDUATO DAL METODO STESSO. L'arena misura cosa manca al motore **a un turno**, e il personaggio le arriva **gia' costruito**. Ne segue che nessuna lacuna della **creazione** puo' comparire in quella misura, per quanto la si affini: la fetta verticale non vede cio' che sta a monte del suo ingresso. Non e' una critica al metodo — e' il metodo che ha reso visibile il proprio limite, che e' il motivo per cui va **registrato** invece che ricordato. LA CONSEGUENZA. La **prossima fetta parte dalla creazione**, non dal combattimento. La prova che il limite era reale c'e' gia': `allowed_classes` non e' un campo che manca, e' una decisione che manca — 17 etichette del PHB 2e contro 17 nostre classi — e nessun giro d'arena poteva farla emergere, perche' l'arena riceve un personaggio a cui la classe e' gia' stata assegnata.
 58. **`allowed_classes` si risolve per telaio, con il filtro in sequenza** — LA REGOLA. Un'etichetta del PHB 2e in `allowed_classes` non nomina una classe del nostro roster: nomina un **telaio**. Il telaio **apre** l'insieme — tutte le nostre classi che stanno su quel chassis 5e — e poi **i requisiti della classe filtrano dentro**. Due controlli in sequenza, non uno. Una razza che dichiara `Fighter` accede al gruppo delle classi su chassis Fighter; poi ogni classe del gruppo applica i propri vincoli. Il Cavaliere della Corona e' riservato a umani e mezzelfi: un nano che ha `Fighter` non ci arriva comunque — non perche' il telaio glielo neghi, ma perche' la classe lo filtra. E' la stessa forma gia' in uso nella decisione 24 (`sfere-sacerdotali`) (la sfera concede, il dominio filtra) e nella decisione 35 (`repertori-sono-filtri`) (il filtro delimita, la scelta avviene dopo). PERCHE' I CHASSIS. Sono gia' il ponte fra le classi di Krynn e la 5e, e sono l'unica struttura che copre `Fighter`, `Paladin` e `Thief` senza inventare classi: tre etichette che il roster non ha come nomi e che dodici, due e nove razze dichiarano. CIO' CHE IL TELAIO NON APRE, dichiarato perche' non si confonda con una dimenticanza. Il telaio non e' l'unica via: un'etichetta che nomina una nostra classe **per nome** (`Mariner`, `Tinker`, `Handler`), o che la fonte dichiara essere quella classe, la apre lo stesso, e il telaio **si aggiunge** invece di sostituirsi. Ogni accostamento di questo secondo tipo porta in sede la propria riga di fonte, e quelli ancora da confermare sono marcati tali: `Druid (heathen)` e `Priest (heathen)` sulla stessa classe sono in attesa, non risolti qui. Senza questa clausola l'etichetta `Mariner` non aprirebbe il Marinaio, che non ha chassis. `Knight of Solamnia` e' un'etichetta ombrello e apre tutti e tre gli ordini; il filtro dell'ingresso lascia poi il solo Cavaliere della Corona, che e' esattamente la sequenza obbligata della decisione 5 (`cavalieri-solamnia`). LA SEDE E IL PREZZO. La mappa e la risoluzione stanno in `dati/_classi_ammesse.py` — una sede sola, importata dal diagnostico e da chiunque debba rispondere alla prima domanda della creazione. Il prezzo e' reale e si paga in chiaro: dove la fonte era piu' stretta il telaio allarga, e lo scarto si dichiara invece di assorbirlo (decisione 7 (`doppio-strato`)).
+59. **Le cinque classi base 2e si trascrivono, e il loro strato di Krynn e' vuoto** — IL MOTIVO CHE DECIDE E' UN'ESCLUSIONE FALSA, e non un vuoto da riempire per completezza. Il Con Artist chiede Carisma 12 contro il massimale 9 dell'Aghar, e quel filtro morde giusto: e' la doppia penalita' della decisione 10 (`massimali-razziali`) che fa il suo mestiere. Ma il ladro **base** chiede Destrezza 9 e l'Aghar la porta fino a 18, e la tabella Class/Race Combinations gli concede `Thief` fino all'ottavo livello. E' il primo caso in cui a togliere qualcosa non e' la fonte ma un buco del NOSTRO roster: tutte le altre esclusioni erano fedelta', questa era nostra. E colpiva la razza piu' stretta del roster, che prima di oggi aveva 2 classi accessibili su 17. LA FORMA, ED E' LA FONTE A DETTARLA. *Tales of the Lance* dichiara queste classi giocabili su Ansalon e non le descrive: l'Overview le elenca, le Class descriptions passano oltre, e il capitolo dei guerrieri scrive che su Ansalon si giocano le classi guerriere tipiche della 2e mentre quelle *uniche* di Ansalon vengono descritte di seguito. Il gruppo dei ladri ripete la forma. Lo strato di Krynn e' quindi **vuoto per dichiarazione**, non per trascrizione incompleta, e cio' che la tabella aggiunge — accesso razziale e tetto di livello — non appartiene alla classe: il primo vive gia' in `allowed_classes` delle razze, il secondo non si applica (decisione 4, `limiti-di-livello`). SI TRASCRIVONO percio' i soli minimi della Tabella 13 del PHB 2e (pag. 25 stampata, letta dall'immagine), e `mechanics_5e` e' il chassis SRD **con niente sopra**. Non e' una scorciatoia: e' cio' che la fonte dice, e **zero privilegi di fonte da convertire e' un dato**, non una lacuna. E' anche il primo posto del progetto dove il chassis della decisione 23 (`principio-del-clone`) non e' un accostamento editoriale ma un'identita': il Guerriero 2e e il Fighter SRD sono la stessa classe in due edizioni. IL SECONDO MANUALE DI FONTE NON E' UN PRECEDENTE NUOVO. La decisione 16 (`nove-tratti-phb2e`) l'ha gia' fatto per le razze: 70 tratti su 105 vengono dal PHB 2e per rimando, con la fonte marcata voce per voce. Le classi seguono la stessa strada, e ne segue la correzione che la rende possibile: **la fonte va per classe, non per file**. `build_classi.BOOK` era una costante di modulo, cioe' un dato di file, e non lo e' mai stato; ora e' un default, e chi viene da un altro manuale lo dichiara nel proprio campo `book`. L'ORDINE, E QUANTO COSTA CIASCUNA META'. Prime le tre a telaio gia' trascritto — Guerriero, Paladino, Ladro — che chiudono le tre esclusioni vere: `Paladin` al Silvanesti e all'Irda, `Thief` all'Aghar, le uniche tre coppie razza+etichetta che aprivano una porta e non lasciavano dentro niente. Bardo e Ranger dopo: per loro manca **anche** il telaio (`_srd51.CODA`), e le coppie che sbloccheranno non sono esclusioni ma classi non ancora scritte. LA MISURA, dopo le prime tre: le coppie razza+classe accessibili passano da 93 a 126 su 168 aperte, il filtro ne toglie 42 come prima, e l'Aghar passa da 2 a 4 classi — `barbaro`, `guerriero`, `ladro`, `sacerdote-ordini-sacri`. Il Con Artist gli resta precluso, ed e' giusto cosi': la porta riaperta e' quella del ladro comune.
 
 ---
 
@@ -133,7 +134,7 @@ caratteristica, conservata perché è del manuale:
 - Nano delle Colline (Neidar) (CAR -1, max 12)
 - Nano delle Montagne (Hylar / Daewar) (CAR -1, max 16)
 
-> **Lettura interpretativa** — registrata il 2026-09-04. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-05. Non e' derivata dai dati.
 >
 > Il netto va da +0 a +2: nessuna razza raggiunge il +3 che la 5e
 > 2014 assegna di norma. Non va pareggiato. Le razze di Krynn non vengono mescolate
@@ -167,7 +168,7 @@ La velocità è derivata dai **tassi MV della 2e**, non dalla taglia.
 | 9 | 25 ft | Irda (Alto Ogre), Kender |
 | 12 | 30 ft | Barbaro, Elfo Dargonesti (Elfo degli Abissi), Elfo Dimernesti (Elfo dei Bassifondi), Elfo Kagonesti, Elfo Qualinesti, Elfo Silvanesti, Mezzelfo, Minotauro, Umano |
 
-> **Lettura interpretativa** — registrata il 2026-09-04. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-05. Non e' derivata dai dati.
 >
 > Derivare la velocità dalla taglia invertiva l'ordinamento della fonte: i nani
 > finivano a 30 e i Kender a 25, cioè il nano correva più del Kender. La 5e stessa
@@ -190,7 +191,7 @@ La velocità è derivata dai **tassi MV della 2e**, non dalla taglia.
 
 ---
 
-## Le 17 classi
+## Le 20 classi
 
 | id | classe | gruppo | note |
 |---|---|---|---|
@@ -201,13 +202,16 @@ La velocità è derivata dai **tassi MV della 2e**, non dalla taglia.
 | `cavaliere` | Cavaliere | Warrior | Qualunque allineamento buono |
 | `commoner` | Popolano | Normal | — |
 | `con-artist` | Truffatore / Prestigiatore | Rogue | — |
+| `guerriero` | Guerriero | Warrior | — |
 | `handler` | Handler | Rogue | solo kender |
+| `ladro` | Ladro | Rogue | — |
 | `mago-alta-stregoneria` | Mago dell'Alta Stregoneria | Wizard | Determinato dalla veste: Bianca=buono, Rossa=neutrale, Nera=malvagio. L'allineamento va dichiarato al 3° livello, prima del Test. |
 | `mago-rinnegato` | Mago Rinnegato | Wizard | — |
 | `mago-veste-bianca` | Mago delle Vesti Bianche | Wizard | si entra al 3°; Buono |
 | `mago-veste-nera` | Mago delle Vesti Nere | Wizard | si entra al 3°; Malvagio |
 | `mago-veste-rossa` | Mago delle Vesti Rosse | Wizard | si entra al 3°; Neutrale |
 | `mariner` | Marinaio | Warrior | Qualunque tranne Legale Buono |
+| `paladino` | Paladino | Warrior | — |
 | `sacerdote-eretico` | Sacerdote Eretico | Priest | — |
 | `sacerdote-ordini-sacri` | Sacerdote degli Ordini Sacri delle Stelle | Priest | Coerente con la famiglia celeste del dio servito: Bene, Male o Neutralita'. |
 | `tinker` | Tinker | Normal | solo gnomo-minoi |
@@ -225,7 +229,9 @@ Diagnostica completa in `dati/RAPPORTO-classi.md`. Qui la sintesi.
 | Cavaliere della Corona | Warrior | d10 | propria, 25 liv. | — | 1 | 1 | `Fighter` |
 | Cavaliere della Rosa | Warrior | d10 | propria, 22 liv. | — | 1 | 0 | `Paladin` |
 | Cavaliere della Spada | Warrior | d10 | propria, 23 liv. | sì | 3 | 0 | `Paladin` |
+| Guerriero | Warrior | — | del gruppo | — | 0 | 0 | `Fighter` |
 | Marinaio | Warrior | d10 | del gruppo | — | 1 | 1 | **indeciso** |
+| Paladino | Warrior | — | del gruppo | — | 0 | 0 | `Paladin` |
 | Mago dell'Alta Stregoneria | Wizard | 1d4 | propria, 25 liv. | sì | 3 | 4 | `Wizard` |
 | Mago Rinnegato | Wizard | 1d4 | propria, 25 liv. | sì | 1 | 2 | `Wizard` |
 | Mago delle Vesti Bianche | Wizard | 1d4 | del gruppo | — | 0 | 1 | **indeciso** |
@@ -235,21 +241,22 @@ Diagnostica completa in `dati/RAPPORTO-classi.md`. Qui la sintesi.
 | Sacerdote degli Ordini Sacri delle Stelle | Priest | 1d8 | propria, 25 liv. | sì | 0 | 1 | `Cleric` |
 | Truffatore / Prestigiatore | Rogue | d6 | del gruppo | — | 1 | 1 | `Rogue` |
 | Handler | Rogue | d6 | del gruppo | — | 0 | 3 | **indeciso** |
+| Ladro | Rogue | — | del gruppo | — | 0 | 0 | `Rogue` |
 | Popolano | Normal | d6 | propria, 25 liv. | — | 0 | 0 | **indeciso** |
 | Tinker | Normal | d6 | propria, 25 liv. | — | 0 | 1 | **indeciso** |
 
-Su 17 classi: **19 privilegi** e **24 impedimenti**. Solo 7 privilegi sono
+Su 20 classi: **19 privilegi** e **24 impedimenti**. Solo 7 privilegi sono
 agganciati a un livello esplicito; per gli altri 12 la fonte non dice quando si
 ottengano.
 
-- **8 classi non hanno tabella di esperienza propria** e rimandano al gruppo: Barbaro, Cavaliere, Truffatore / Prestigiatore, Handler, Mago delle Vesti Bianche, Mago delle Vesti Nere, Mago delle Vesti Rosse, Marinaio.
-- **8 classi non hanno alcun privilegio**: Popolano, Handler, Mago delle Vesti Bianche, Mago delle Vesti Nere, Mago delle Vesti Rosse, Sacerdote Eretico, Sacerdote degli Ordini Sacri delle Stelle, Tinker.
+- **11 classi non hanno tabella di esperienza propria** e rimandano al gruppo: Barbaro, Cavaliere, Truffatore / Prestigiatore, Guerriero, Handler, Ladro, Mago delle Vesti Bianche, Mago delle Vesti Nere, Mago delle Vesti Rosse, Marinaio, Paladino.
+- **11 classi non hanno alcun privilegio**: Popolano, Guerriero, Handler, Ladro, Mago delle Vesti Bianche, Mago delle Vesti Nere, Mago delle Vesti Rosse, Paladino, Sacerdote Eretico, Sacerdote degli Ordini Sacri delle Stelle, Tinker.
 - **9 classi hanno più impedimenti che privilegi.**
 - Le tabelle arrivano al **25° livello**, cinque oltre il tetto della 5e.
 - **Nessuna classe ha una tabella di THAC0 o di tiri salvezza**: valgono quelle di
   gruppo del PHB 2e, che non sono ancora nei dati.
 
-> **Lettura interpretativa** — registrata il 2026-09-04. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-05. Non e' derivata dai dati.
 >
 > Le classi di Krynn non sono classi nel senso della 5e: sono profili di
 > restrizione appoggiati sulle classi base della 2e. Convertirle non è un lavoro di
@@ -258,7 +265,7 @@ ottengano.
 
 ### Chassis applicati (decisione 23, `principio-del-clone`)
 
-**9 classi su 17** sono cloni meccanici di una classe SRD 5.1: Cleric ×1, Fighter ×3, Paladin ×2, Rogue ×1, Wizard ×2.
+**12 classi su 20** sono cloni meccanici di una classe SRD 5.1: Cleric ×1, Fighter ×4, Paladin ×3, Rogue ×2, Wizard ×2.
 **8 restano senza chassis**, per decisione: Popolano, Handler, Mago delle Vesti Bianche, Mago delle Vesti Nere, Mago delle Vesti Rosse, Marinaio, Sacerdote Eretico, Tinker.
 
 Le sette incompatibilità strutturali sono risolte in `mechanics_5e.structural`,
@@ -310,7 +317,7 @@ come sottoclasse. Accesso minore: solo fino al 3° livello, come in 2e.
 - Delle 105 voci, 28 sono attribuzioni nostre e non ereditate da un
   antenato 2e: restano marcate `nostra` nel dato.
 
-> **Lettura interpretativa** — registrata il 2026-09-04. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-05. Non e' derivata dai dati.
 >
 > 1 sfera 2e non trova un solo incantesimo nella lista base del chierico 5e:
 > Plant. Animal ne trova 1, Weather 1. Non è un difetto della mappatura:
@@ -401,7 +408,7 @@ Combinazioni sotto l'1%:
 |---|---|---:|---:|
 | Nano Sozzo (Aghar) | `barbaro` | 0,249% | 1 ogni 402 |
 
-> **Lettura interpretativa** — registrata il 2026-09-04. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-05. Non e' derivata dai dati.
 >
 > **Perché si tira.** Sotto point-buy due percorsi erano matematicamente
 > impossibili — il Cavaliere e il Cavaliere della Rosa — e il Nano Sozzo non aveva
@@ -465,7 +472,7 @@ Combinazioni sotto l'1%:
 | Umano | 3 | 0 | 0 | 0 | 3 | 0 |
 | Barbaro | 2 | 0 | 2 | 0 | 0 | 0 |
 
-> **Lettura interpretativa** — registrata il 2026-09-04. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-05. Non e' derivata dai dati.
 >
 > Su 105 tratti, 70 vengono dal PHB 2e (67%) e
 > 32 dalle fonti di Krynn (30%). La densità apparente di una
@@ -568,7 +575,7 @@ attacco da 1-4.
 perché i dadi vita della 2e misurano solo la resistenza. **Il Kapak ha cambiato
 asse.**
 
-> **Lettura interpretativa** — registrata il 2026-09-04. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-05. Non e' derivata dai dati.
 >
 > **Non esiste una formula estraibile da cinque casi.** Una regolarità si
 > intravede — grado di sfida uguale ai dadi vita meno due — e tiene per quattro
@@ -649,7 +656,7 @@ pagina:
 
 **8 nomi di voce erano sbagliati** nel testo estratto, non i quattro noti.
 
-> **Lettura interpretativa** — registrata il 2026-09-04. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-05. Non e' derivata dai dati.
 >
 > **L'estrazione non ha solo sbagliato i nomi: ha perso dei dati.** In tre voci
 > le colonne di destra sono sparite del tutto — `Avian` aveva quattro uccelli e ne
@@ -737,13 +744,13 @@ sono coperte da un campo pieno, 6 solo in parte e
 |---|---|
 | Privilegi di classe `pending` | 40 su 43 |
 | Privilegi del **chassis** SRD | `dati/_srd51.py` porta 5 classi × 3 campi: i *nomi* dei privilegi, non le regole |
-| Classi senza chassis | 8 su 17 |
-| Tabella dei punti esperienza 5e | `xp_table.applied` è `false` in 17/17, e la sostituta non esiste |
+| Classi senza chassis | 8 su 20 |
+| Tabella dei punti esperienza 5e | `xp_table.applied` è `false` in 20/20, e la sostituta non esiste |
 | Competenze 5e | né le 18 abilità, né quante ne concede una classe, né la categoria delle armi e delle armature |
 | Slot incantesimi 5e | assenti: le uniche tabelle di slot nel progetto sono 2e |
 | Effetto degli incantesimi | nessun campo per tiro salvezza, danno, area: sta in `descrizione`, in prosa |
-| Cambio fra le valute | 4/17 classi dichiarano una ricchezza in **stl**, gli oggetti costano in **gp**, nessun campo lega le due |
-| `allowed_classes` → classi | 17 etichette, di cui 5 coincidono con un `name.en`: il legame esiste come parola, non come chiave |
+| Cambio fra le valute | 4/20 classi dichiarano una ricchezza in **stl**, gli oggetti costano in **gp**, nessun campo lega le due |
+| `allowed_classes` → classi | 17 etichette, di cui 8 coincidono con un `name.en`: il legame esiste come parola, non come chiave |
 
 ### Le tre decisioni sospese
 
@@ -763,12 +770,12 @@ Riportate nel rapporto con fonte e opzioni, **non decise**.
 
 ### Il vincolo dell'arena
 
-Il corpus intero pesa **1,9 MB**: sta in memoria, e a ogni turno non
+Il corpus intero pesa **1,94 MB**: sta in memoria, e a ogni turno non
 serve leggere alcun file. Il vincolo non è la velocità — è che
-**385 blocchi di meccanica su 405 sono
+**380 blocchi di meccanica su 405 sono
 ancora solo prosa italiana** e non numeri, su un totale di
 257 fra azioni e tratti dei mostri, 105 tratti
-razziali e 43 privilegi di classe. I 20 che
+razziali e 43 privilegi di classe. I 25 che
 portano anche un campo `effetto` sono la fetta verticale: i privilegi del
 chassis Fighter e le azioni dei due mostri con cui l'arena gira davvero
 (`motore/arena.py`, `dati/RAPPORTO-arena.md`).
@@ -779,27 +786,22 @@ chassis Fighter e le azioni dei due mostri con cui l'arena gira davvero
 
 ### Richiedono una decisione
 
-> **Lettura interpretativa** — registrata il 2026-09-04. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-05. Non e' derivata dai dati.
 >
-> - **Il PHB 5e 2014 non è fra i PDF**: la cartella contiene solo edizioni 2024.
->   Alternativa disponibile: `2014.5e.tools`, che espone il materiale 2014 come
->   JSON strutturato (repo GitHub `5etools-mirror-3/5etools-2014-src`).
-> - **Shadow of the Dragon Queen** continua a mancare: resta l'unica fonte 5e
->   ufficiale su Krynn, e da essa dipende l'unico tratto ancora provvisorio.
-> - **Il Barbaro ha doppia natura**: il manuale lo tratta sia come cultura umana
->   sia come classe. La decisione 20 (`tappo-barbaro`) gli ha dato un tappo reversibile; la
->   conversione a background va decisa insieme allo schema Personaggio. Le
->   quattro conseguenze sono ora misurate in `dati/RAPPORTO-personaggio.md`.
-> - **Cosa succede a un aumento che sfonda un tetto razziale.** La decisione 10 (`massimali-razziali`)
->   applica i massimali anche in crescita ma non dice come si comporta l'aumento
->   respinto: si perde, si travasa, o il tetto cede. La fonte non ha una risposta
->   da trascrivere — in AD&D 2e il caso non si poneva.
-> - **Il Qualinesti ha un tratto che registra un'assenza.** L'Appendice non
->   dichiara alcuna capacità per quel ramo, e il posto è tenuto da una voce
->   `source_only` senza meccanica. Nelle tabelle conta come un tratto
->   dell'Appendice pur non concedendo nulla: è un artefatto di rappresentazione,
->   non un beneficio. Da decidere se tenerlo come registrazione esplicita o
->   toglierlo e lasciare il conteggio a zero.
+> - **Il PHB 5e 2014 non e' fra i PDF** (`phb-2014-assente`). La cartella contiene solo edizioni 2024. Alternativa disponibile: `2014.5e.tools`, che espone il materiale 2014 come JSON strutturato (repo GitHub `5etools-mirror-3/5etools-2014-src`).
+> - ***Shadow of the Dragon Queen* continua a mancare** (`sotdq-assente`). Resta l'unica fonte 5e ufficiale su Krynn, e da essa dipende l'unico tratto ancora provvisorio.
+> - **Il Barbaro ha doppia natura** (`barbaro-background`). Il manuale lo tratta sia come cultura umana sia come classe. La decisione 20 (`tappo-barbaro`) gli ha dato un tappo reversibile; la conversione a background va decisa insieme allo schema Personaggio. Le quattro conseguenze sono misurate in `dati/RAPPORTO-personaggio.md`. La decisione 56 (`personaggio-additivo`) non la scioglie: garantisce solo che deciderla dopo non costi una riscrittura.
+> - **Cosa succede a un aumento che sfonda un tetto razziale** (`aumento-oltre-tetto`). La decisione 10 (`massimali-razziali`) applica i massimali anche in crescita ma non dice come si comporta l'aumento respinto: si perde, si travasa, o il tetto cede. La fonte non ha una risposta da trascrivere — in AD&D 2e il caso non si poneva.
+> - **Il Qualinesti ha un tratto che registra un'assenza** (`qualinesti-tratto-vuoto`). L'Appendice non dichiara alcuna capacita' per quel ramo, e il posto e' tenuto da una voce `source_only` senza meccanica. Nelle tabelle conta come un tratto dell'Appendice pur non concedendo nulla: e' un artefatto di rappresentazione, non un beneficio. Da decidere se tenerlo come registrazione esplicita o toglierlo e lasciare il conteggio a zero.
+> - **Il Cavaliere della Rosa e l'Aura di Coraggio** (`rosa-aura-di-coraggio`). L'immunita' alla paura che la fonte 2e concede al grado e' gia' un privilegio del chassis Paladino, e `mechanics_5e` la porta come rimando verificabile invece che come `null`. Il chassis pero' la concede molto piu' tardi del livello a cui si entra nel grado: da decidere se anticiparla all'ingresso, lasciarla dov'e', o dichiarare che il grado non la concede affatto finche' il chassis non arriva. I due livelli stanno nel dato — `_chassis_5e.STATO_PRIVILEGI` e la tabella SRD del Paladino — e non si ricopiano qui. E' un caso particolare di questione aperta (`gradi-solamnici-forma`).
+> - **Come si rappresentano i tre gradi solamnici in 5e** (`gradi-solamnici-forma`). La decisione 5 (`cavalieri-solamnia`) ha fissato la sequenza obbligata Corona → Spada → Rosa, ma non la forma che prende in un sistema che non ha il concetto di grado: classe unica con stadi interni, tre sottoclassi in sequenza (che la 5e non prevede), o classe base piu' un sistema di gradi separato. Le tre opzioni sono in `dati/RAPPORTO-classi.md` §3.9, ed e' l'unica delle nove incompatibilita' strutturali rimasta senza esito.
+> - **Il livello delle Vesti contro il livello della sottoclasse** (`vesti-livello-sottoclasse`). La decisione 6 (`maghi-delle-torri`) colloca il giuramento alla Veste al livello del Test; la 5e assegna la sottoclasse del Mago un livello prima. Lo scarto e' di un livello solo — si sposta il Test, si tiene la sottoclasse vuota per un livello, o si accetta lo scarto — e finche' non e' deciso le tre Vesti restano affiliazioni senza un aggancio meccanico. Diagnosi in `dati/RAPPORTO-classi.md` §2.
+> - **Il Dargonesti e le classi che la fonte non gli assegna** (`dargonesti-senza-elenco`). La tabella Class/Race Combinations elenca il solo Dimernesti; le Gaming Notes equiparano le due razze per requisiti e aggiustamenti e tacciono sulle classi. Oggi `allowed_classes.applied` e' `false`, che la decisione 58 (`telaio-apre-classe-filtra`) legge come assenza di vincolo e apre il roster intero: l'esito piu' largo possibile, prodotto da un buco della fonte e non da una scelta. Le opzioni sono tre e non due — ereditare l'elenco del Dimernesti, leggere le classi che il paragrafo sugli elfi del mare elenca davvero, o lasciare il silenzio. Misura in `dati/RAPPORTO-allowed-classes.md`.
+> - **Che chassis 5e dare al Popolano** (`chassis-commoner`). Non e' una classe 5e. Da decidere. Sede: `dati/_chassis_5e.CHASSIS["commoner"]` — la ragione si legge li' e non si ricopia qui.
+> - **Che chassis 5e dare al Tinker** (`chassis-tinker`). Non e' una classe 5e. Da decidere. Sede: `dati/_chassis_5e.CHASSIS["tinker"]` — la ragione si legge li' e non si ricopia qui.
+> - **Che chassis 5e dare al Sacerdote Eretico** (`chassis-sacerdote-eretico`). Per definizione non ha potere. Da decidere. Sede: `dati/_chassis_5e.CHASSIS["sacerdote-eretico"]` — la ragione si legge li' e non si ricopia qui.
+> - **Che chassis 5e dare all'Handler** (`chassis-handler`). Rogue senza attacco furtivo: il chassis c'e' ma svuotato. Da decidere. Sede: `dati/_chassis_5e.CHASSIS["handler"]` — la ragione si legge li' e non si ricopia qui.
+> - **Che chassis 5e dare al Marinaio** (`chassis-mariner`). Ibrido Fighter/Rogue: nessun candidato pulito. Da decidere. Sede: `dati/_chassis_5e.CHASSIS["mariner"]` — la ragione si legge li' e non si ricopia qui.
 
 ### Ambiguità delle fonti, registrate e non risolte
 
