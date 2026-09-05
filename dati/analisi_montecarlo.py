@@ -23,27 +23,38 @@ MODELLO
     sceglie per primo, quindi non gli viene sottratto un valore che solo lui
     poteva usare.
 
+DA DOVE LEGGE, e perche' e' cambiato il 05/09/2026
+    Le classi di una razza vengono da `dati/_classi_ammesse.py`, sede della
+    decisione 58 (`telaio-apre-classe-filtra`); i vincoli vengono da
+    `mechanics_5e` tramite `motore/generazione.py`. Fino a oggi questo file
+    aveva una risoluzione propria delle coppie razza+classe e leggeva
+    `source_2e` — le stesse due strutture doppie di
+    `analisi_soddisfacibilita.py`, nello stesso punto e per la stessa
+    ragione. Il confronto fra i due strati e' in coda al rapporto: la
+    lettura nuova si mostra, non si assume.
+
 NON MODIFICA NULLA.
 
-Uso:  python3 dati/analisi_montecarlo.py [iterazioni]
+Uso:  python3 dati/analisi_montecarlo.py [iterazioni] > dati/RAPPORTO-montecarlo.md
 """
 
-import glob
-import json
 import os
 import sys
 
 import numpy as np
 
 BASE = os.path.dirname(os.path.abspath(__file__))
-CAR = ["str", "dex", "con", "int", "wis", "cha"]
+RADICE = os.path.dirname(BASE)
+sys.path.insert(0, BASE)
+sys.path.insert(0, RADICE)
+
+import _classi_ammesse as CA        # noqa: E402
+import verifica_strati as VS        # noqa: E402
+from motore import generazione as G  # noqa: E402
+
+CAR = G.CAR
 N_DEFAULT = 200_000
 SOGLIA_RARA = 1.0    # percentuale sotto la quale segnalare
-
-
-def carica(sub):
-    return [json.load(open(p, encoding="utf-8"))
-            for p in sorted(glob.glob(os.path.join(BASE, sub, "*.json")))]
 
 
 def tira_4d6(n, rng):
@@ -93,7 +104,8 @@ def main():
     n = int(sys.argv[1]) if len(sys.argv) > 1 and sys.argv[1].isdigit() else N_DEFAULT
     rng = np.random.default_rng(20260812)
 
-    razze, classi = carica("razze"), carica("classi")
+    razze, classi = CA.razze(), CA.classi()
+    per_id = {c["id"]: c for c in classi}
     tiro = tira_4d6(n, rng)
 
     print(f"# Probabilita' di qualificazione con 4d6 scarta il minore\n")
@@ -102,40 +114,45 @@ def main():
 
     risultati = []
     for r in razze:
-        s = r["source_2e"]
-        req = s["ability_requirements"]
-        adj = s.get("ability_adjustments") or {}
-        formule = {k: v for k, v in (s.get("ability_generation") or {}).items()
-                   if k != "all" and k in CAR}
+        adj = G.aggiustamenti(r)
+        formule = G.formule_razziali(r)
         proprio = len(formule) == len(CAR)
 
         if proprio:
-            colonne = {c: tira_formula(formule[c], n, rng) + adj.get(c, 0) for c in CAR}
+            colonne = {c: tira_formula(formule[c], n, rng) + adj.get(c, 0)
+                       for c in CAR}
         else:
             base = tiro + np.array([adj.get(c, 0) for c in CAR])
 
-        lo_r = [req[c]["min"] or 3 for c in CAR]
-        hi_r = [req[c]["max"] or 99 for c in CAR]
+        lo, hi = G.intervalli(r)
+        lo_r = [lo[c] for c in CAR]
+        hi_r = [hi[c] for c in CAR]
 
         p_razza = (soddisfa_fisso(colonne, lo_r, hi_r) if proprio
                    else soddisfa_libero(base, lo_r, hi_r)).mean() * 100
 
-        nomi_tab = {v["class"] for v in s.get("class_level_limits", [])}
+        # Le classi le decide la sede, non una seconda risoluzione. Passano
+        # quelle che il telaio apre e il filtro lascia — e in piu' quelle
+        # che il filtro toglie SOLO per l'ingresso, che sono i gradi
+        # solamnici e le tre Vesti. La differenza e' reale: chi e' escluso
+        # per razza o per un minimo oltre il proprio massimale non ha una
+        # probabilita' bassa, non ne ha una affatto; chi e' escluso per
+        # ingresso ci arriva in sequenza
+        # (decisione 5, `cavalieri-solamnia`), e la domanda «quanto e' raro
+        # qualificarsi come Cavaliere della Rosa» resta sensata. Le altre esclusioni
+        # restano fuori.
         classi_r = []
-        for c in classi:
-            restr = c["source_2e"].get("race_restriction")
-            if restr and r["id"] not in restr:
+        for pe in G.percorsi(r, classi):
+            solo_ingresso = (not pe.ammessa
+                             and all(k == "ingresso" for k, _ in pe.motivi))
+            if not pe.ammessa and not solo_ingresso:
                 continue
-            nomi = {c["name"]["en"]}
-            if c["order"] == "cavaliere-solamnia":
-                nomi.add("Knight of Solamnia")
-            if nomi_tab and not (nomi & nomi_tab):
-                continue
-            mc = c["source_2e"].get("ability_minimums") or {}
-            lo_c = [max(lo_r[i], mc.get(cc, 0)) for i, cc in enumerate(CAR)]
-            p = (soddisfa_fisso(colonne, lo_c, hi_r) if proprio
-                 else soddisfa_libero(base, lo_c, hi_r)).mean() * 100
-            classi_r.append((c["id"], p))
+            lo_c, hi_c = G.intervalli(r, per_id[pe.classe])
+            p = (soddisfa_fisso(colonne, [lo_c[c] for c in CAR],
+                                [hi_c[c] for c in CAR]) if proprio
+                 else soddisfa_libero(base, [lo_c[c] for c in CAR],
+                                      [hi_c[c] for c in CAR])).mean() * 100
+            classi_r.append((pe.classe, p))
 
         risultati.append((r, p_razza, sorted(classi_r, key=lambda x: x[1])))
 
@@ -162,6 +179,12 @@ def main():
         print("Nessuna combinazione sotto l'1%.")
 
     print("\n\n## Dettaglio per razza\n")
+    print("Le tabelle elencano le classi che il telaio apre e il filtro "
+          "lascia passare, piu' quelle che il filtro toglie per il solo "
+          "INGRESSO — i gradi solamnici e le tre Vesti, a cui si arriva in "
+          "sequenza da un'altra classe. Una classe esclusa per razza o per "
+          "un minimo oltre il massimale non compare: non ha una "
+          "probabilita' bassa, non ne ha una.\n")
     for r, p, cl in risultati:
         print(f"### {r['name']['it']} — {p:.2f}% supera i soli vincoli razziali\n")
         print("| classe | qualificati |")
@@ -169,6 +192,25 @@ def main():
         for cid, pc in cl:
             print(f"| `{cid}` | {pc:6.2f}% |")
         print()
+
+    div, dichiarati, misure = VS.verifica()
+    print("\n## I due strati a confronto\n")
+    print(f"Le percentuali qui sopra sono calcolate su `mechanics_5e`. "
+          f"`verifica_strati.py` confronta {misure['razze']} razze e "
+          f"{misure['classi']} classi contro `source_2e`: scarti dichiarati "
+          f"**{misure['scarti_dichiarati']}**, divergenze non dichiarate "
+          f"**{misure['divergenze']}**. Uno scarto dichiarato cambia una "
+          f"probabilita' di questo rapporto; una divergenza non dichiarata la "
+          f"cambierebbe senza che nessuno se ne accorga, ed e' la ragione per "
+          f"cui il confronto sta in coda al rapporto e non solo in un "
+          f"validatore che nessuno guarda quando legge i numeri.\n")
+    if dichiarati:
+        print("| entita' | grandezza | scarto |")
+        print("|---|---|---|")
+        for chi, tipo, det in dichiarati:
+            print(f"| {chi} | {tipo} | {det} |")
+    for chi, tipo, det in div:
+        print(f"- **DIVERGENZA NON DICHIARATA** {chi} — {tipo}: {det}")
 
 
 if __name__ == "__main__":

@@ -47,7 +47,7 @@ dove i filtri vengono **risolti**.
 |---|---|---|
 | Razza | 15 voci | `razze.index.json` |
 | Classe di partenza | 15 su 20 (le altre 5 hanno `entry_level` > 1) | `classi/*.json` → `mechanics_5e.entry_level` |
-| Sei punteggi grezzi | 3 metodi, default `4d6-scarta-minore` | `motore/generazione.py` |
+| Sei punteggi grezzi | 3 metodi, default `tiro-4d6-scarta-minore` | `motore/generazione.py` |
 | Assegnazione dei punteggi | libera, fissata o parziale a seconda della razza | `generazione.genera()` → `assegnazione_libera` |
 | Aggiustamenti fissi | 1 razza con `editorial_values` (umano-barbaro, decisione 20, `tappo-barbaro`) | `razze/*.json` → `mechanics_5e.ability_adjustments` |
 | Scelte lasciate aperte dai tratti | 4 tratti su 15 razze (elfo-dargonesti, umano) | **nessun campo**: la scelta è descritta in prosa dentro il tratto |
@@ -391,12 +391,12 @@ alcun catalogo di talenti.
 
 ### 3.3 La generazione delle caratteristiche
 
-`motore/generazione.py` esiste: **409 righe**, **18
-funzioni pubbliche** (`aggiustamenti()`, `anteprima_aumento()`, `applica_aggiustamenti()`, `caratteristiche_al_tetto()`, `carica_classe()`, `carica_razza()`, `esiste_assegnazione()`, `formule_razziali()`, `genera()`, `intervalli()`, `metodi_praticabili()`, `senza_chassis()`, `strato()`, `tetto_crescita()`, `tira_4d6_scarta_minore()`, `tira_formula()`, `valida()`, `valida_pointbuy()`).
+`motore/generazione.py` esiste: **557 righe**, **22
+funzioni pubbliche** (`aggiustamenti()`, `anteprima_aumento()`, `applica_aggiustamenti()`, `caratteristiche_al_tetto()`, `carica_classe()`, `carica_razza()`, `classi_per_metodo()`, `esiste_assegnazione()`, `formule_razziali()`, `genera()`, `intervalli()`, `metodi_praticabili()`, `percorsi()`, `praticabili()`, `precluse_dal_metodo()`, `senza_chassis()`, `strato()`, `tetto_crescita()`, `tira_4d6_scarta_minore()`, `tira_formula()`, `valida()`, `valida_pointbuy()`).
 
 **Cosa copre.** I 3 metodi
-(`4d6-scarta-minore`, `array-standard`, `point-buy`) con default
-`4d6-scarta-minore`; le formule razziali per singola caratteristica, comprese le
+(`tiro-4d6-scarta-minore`, `array-standard`, `punti-acquisto`) con default
+`tiro-4d6-scarta-minore`; le formule razziali per singola caratteristica, comprese le
 sei dell'Aghar e la Forza del Kender; gli aggiustamenti; l'unione dei vincoli
 razza + classe; la validazione; la soddisfacibilità (`esiste_assegnazione`,
 `metodi_praticabili`); il tetto di crescita.
@@ -431,14 +431,14 @@ razza + classe; la validazione; la soddisfacibilità (`esiste_assegnazione`,
 ### 3.4 Una nota che riguarda tutte e tre: la numerazione — CHIUSA
 
 Le tre questioni sospese si citano per numero, e i numeri **non erano
-stabili**. Il progetto contiene **1378 rimandi a una decisione in
-147 file**, di cui **354 nella fascia 1-12** — che è
+stabili**. Il progetto contiene **1418 rimandi a una decisione in
+152 file**, di cui **370 nella fascia 1-12** — che è
 esattamente dove stavano le tre questioni di questa sezione.
 
 Erano sfasati perché il numero è un ordinale dell'elenco, e l'elenco è
 cambiato: file scritti in momenti diversi hanno continuato a citare il numero
 della propria vintage, senza che nulla li riallineasse. Lette una per una, le
-354 citazioni della fascia bassa hanno dato questa corrispondenza —
+370 citazioni della fascia bassa hanno dato questa corrispondenza —
 **senza uno scarto costante**, e con lo stesso numero giusto in un file e
 sbagliato in un altro:
 
@@ -464,7 +464,7 @@ un `id` stabile che non cambierà mai, e la forma di un rimando è ora
 accanto come derivato. `verifica_decisioni.py` verifica la coppia in tutto il
 progetto e con `--correggi` riscrive i numeri a partire dagli id.
 
-Stato oggi: **1378 rimandi verificati, 0 sfasati,
+Stato oggi: **1418 rimandi verificati, 0 sfasati,
 0 con id ignoto, 0 ancora senza id**. Rinumerare
 adesso costa un comando.
 

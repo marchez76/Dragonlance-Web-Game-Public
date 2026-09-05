@@ -30,6 +30,8 @@ COSA ESPONE
     cd_salvezza(competenza, mod)       8 + competenza + modificatore
     MOLTIPLICATORI / ORDINE_DIFESE     resistenza, vulnerabilita', immunita'
     CRITICO_NATURALE / FALLIMENTO_NATURALE
+    ARRAY_STANDARD / COSTO_ACQUISTO / BUDGET_ACQUISTO / TIRO_CARATTERISTICA
+                                       i tre metodi di generazione
     copie_nel_codice()                 il controllo anti-duplicazione
 
     Il valore di ritorno viene SEMPRE dalla tabella: nessuna funzione qui
@@ -165,6 +167,32 @@ CRITICO_NATURALE = _SOGLIE["critico_naturale"]
 FALLIMENTO_NATURALE = _SOGLIE["fallimento_naturale"]
 
 
+# ------------------------------------------- i metodi di generazione (PHB 2014)
+#
+# PRIMO DATO DI QUESTA CARTELLA CHE NON VIENE DALL'SRD: la generazione delle
+# caratteristiche il documento SRD 5.1 non la contiene affatto. Il perche'
+# resti pubblicabile sta nella `note` del JSON e nel .gitignore, dichiarato
+# li' e non qui.
+#
+# Il DEFAULT non e' fra questi: e' la
+# decisione 8 (`generazione-caratteristiche`) e sta con il motore. Qui c'e' cosa i
+# metodi sono, non quale si usa.
+
+def _metodo(metodo_id):
+    for m in DATI["generazione-caratteristiche"]["metodi"]:
+        if m["id"] == metodo_id:
+            return m
+    raise KeyError(f"nessun metodo di generazione '{metodo_id}'")
+
+
+ARRAY_STANDARD = tuple(_metodo("array-standard")["valori"])
+COSTO_ACQUISTO = {c["punteggio"]: c["costo"]
+                  for c in _metodo("punti-acquisto")["costi"]}
+BUDGET_ACQUISTO = _metodo("punti-acquisto")["budget"]
+TIRO_CARATTERISTICA = _metodo("tiro-4d6-scarta-minore")
+PUNTEGGI = _metodo("array-standard")["punteggi"]
+
+
 # ------------------------------------------------ controllo anti-duplicazione
 
 # I sorgenti in cui una copia puo' nascere. Non e' tutto il repository: e'
@@ -221,6 +249,19 @@ FORME = {
 # --------------------------------------------------------------------------
 CORSA_MINIMA = 10
 DISTINTI_MINIMI = 3
+
+# LE SFILZE CORTE, e sono l'altra meta' del controllo. Una tabella di trenta
+# righe si riconosce da un tratto di dieci valori; l'array standard ne ha 6 e
+# il listino dell'acquisto a punti 8, quindi con la sola CORSA_MINIMA i due
+# dati aggiunti il 05/09/2026 sarebbero entrati nella sede senza che nessuno
+# potesse vederne una copia — cioe' la sede sarebbe stata una descrizione, che
+# e' esattamente cio' che questo file esiste per evitare.
+#
+# La regola per loro e' piu' stretta, non piu' larga: si segnala solo la
+# sfilza ripetuta PER INTERO. Sei valori di seguito uguali a `15, 14, 13, 12,
+# 10, 8` non sono una coincidenza; i primi tre di quella stessa sfilza si',
+# e con una soglia proporzionale lo sarebbero stati.
+LUNGHEZZA_CORTA = CORSA_MINIMA
 
 # --------------------------------------------------------------------------
 # LE ECCEZIONI, DICHIARATE. Un'occorrenza e' permessa solo se sta in questa
@@ -341,6 +382,33 @@ def _gruppi_di_interi(token):
     return fuori
 
 
+def _sequenze():
+    """Le sfilze di interi che un sorgente potrebbe aver ricopiato.
+
+    Torna [(dato_id, etichetta, valori)]. Due sorgenti, non uno: le LETTURE
+    di una tabella espansa sul loro dominio (trenta valori, la forma
+    riconosciuta dal 02/09/2026) e i METODI di generazione, che sono sfilze
+    corte e gia' scritte per esteso nel dato.
+
+    Dei costi dell'acquisto a punti si dichiara il solo listino dei COSTI e
+    non la colonna dei punteggi: `8, 9, 10, 11, 12, 13, 14, 15` e' una
+    progressione qualunque e segnalarla vorrebbe dire gridare al lupo su
+    ogni `range` scritto per esteso. Il gruppo interleaved di un dizionario
+    `{8: 0, 9: 1, ...}` resta comunque coperto, perche' `_gruppi_di_interi`
+    ne offre anche i posti dispari, cioe' i costi."""
+    fuori = []
+    for dato_id, d in DATI.items():
+        for l in d.get("letture") or []:
+            fuori.append((dato_id, l["id"], _espandi(dato_id, l["id"])))
+        for m in d.get("metodi") or []:
+            if m.get("valori"):
+                fuori.append((dato_id, m["id"], list(m["valori"])))
+            if m.get("costi"):
+                fuori.append((dato_id, m["id"] + "/costi",
+                              [c["costo"] for c in m["costi"]]))
+    return fuori
+
+
 def _corsa_comune(interi, tabella):
     """Il piu' lungo tratto contiguo comune, e quanti valori distinti ha."""
     migliore, distinti = 0, 0
@@ -387,18 +455,20 @@ def copie_in(percorso, testo):
 
     # B. per valori
     gruppi = _gruppi_di_interi(token)
-    for dato_id, d in DATI.items():
-        for l in d.get("letture") or []:
-            tabella = _espandi(dato_id, l["id"])
-            lunga = distinti = 0
-            for g in gruppi:
-                n, quanti = _corsa_comune(g, tabella)
-                if n > lunga:
-                    lunga, distinti = n, quanti
-            if lunga >= CORSA_MINIMA and distinti >= DISTINTI_MINIMI:
-                copie.append((dato_id, percorso, 0, "valori",
-                              f"{lunga} valori consecutivi ({distinti} "
-                              f"distinti) della lettura '{l['id']}'"))
+    for dato_id, etichetta, tabella in _sequenze():
+        # Una sfilza piu' corta della soglia si segnala solo INTERA: vedi
+        # LUNGHEZZA_CORTA. Le altre si segnalano su un tratto.
+        richiesta = (len(tabella) if len(tabella) < LUNGHEZZA_CORTA
+                     else CORSA_MINIMA)
+        lunga = distinti = 0
+        for g in gruppi:
+            n, quanti = _corsa_comune(g, tabella)
+            if n > lunga:
+                lunga, distinti = n, quanti
+        if lunga >= richiesta and distinti >= DISTINTI_MINIMI:
+            copie.append((dato_id, percorso, 0, "valori",
+                          f"{lunga} valori consecutivi ({distinti} "
+                          f"distinti) di '{etichetta}'"))
     return copie, viste
 
 
@@ -439,6 +509,10 @@ COPIE_FINTE = [
     ("tabella espansa come dizionario, chiavi in mezzo ai valori",
      "PB = {1: 2, 2: 2, 3: 2, 4: 2, 5: 3, 6: 3, 7: 3, 8: 3, 9: 4, 10: 4,\n"
      "      11: 4, 12: 4, 13: 5, 14: 5, 15: 5, 16: 5}\n"),
+    ("array standard ricopiato",
+     "ARRAY_STD = (15, 14, 13, 12, 10, 8)\n"),
+    ("listino dell'acquisto a punti ricopiato come dizionario",
+     "COSTO = {8: 0, 9: 1, 10: 2, 11: 3, 12: 4, 13: 5, 14: 7, 15: 9}\n"),
 ]
 
 # I sorgenti finti che NON devono essere segnalati. Servono a misurare
@@ -455,6 +529,10 @@ NON_COPIE_FINTE = [
     ("la formula descritta in prosa, che e' il mestiere dei rapporti",
      'NOTA = "la CD di un tiro salvezza e\' 8 + competenza + modificatore"\n'
      '# il modificatore e\' (punteggio - 10) // 2, e qui e\' un commento\n'),
+    ("una sfilza corta che comincia come l'array standard e non lo e'",
+     "SOGLIE = (15, 14, 13, 12, 10, 9, 7)\n"),
+    ("i primi valori dell'array standard dentro un'altra sfilza",
+     "TAGLIE = [15, 14, 13]\n"),
 ]
 
 
@@ -470,9 +548,9 @@ LIMITI = [
     "un'altra lingua: il giorno in cui il motore avra' un lato web, la "
     "stessa formula in JavaScript passera' inosservata. I sorgenti scanditi "
     "sono quelli di SORGENTI, cioe' Python. "
-    "E' L'UNICO DEI CINQUE LIMITI CHE RIGUARDA LA FASE 2, ed e' il primo "
+    "E' L'UNICO LIMITE DI QUESTO ELENCO CHE RIGUARDA LA FASE 2, ed e' il primo "
     "vincolo del progetto a guardare avanti invece che indietro: gli altri "
-    "quattro dicono cosa questo controllo non vede oggi, questo dice quando "
+    "dicono cosa questo controllo non vede oggi, questo dice quando "
     "smettera' di vedere abbastanza. LA CONDIZIONE, scritta perche' non "
     "venga riletta troppo tardi: quando si scrivera' il primo codice fuori "
     "da Python, questa riga va riletta PRIMA di scriverlo e non dopo. "
@@ -494,8 +572,16 @@ LIMITI = [
     "calcolato, e quella dichiarazione un altro controllo la verifica. Due "
     "controlli che guardano lo stesso difetto da due lati, nessuno dei due "
     "sufficiente da solo.",
+    "un numero SOLO: il budget dell'acquisto a punti e' un intero e basta, "
+    "e un intero non forma una sfilza. Un `27` riscritto altrove non viene "
+    "visto da nessuno dei due lati del controllo — ne' per forma, perche' "
+    "non e' un'espressione, ne' per valori, perche' `_gruppi_di_interi` "
+    "raccoglie da due numeri in su. E' il limite piu' facile da incontrare "
+    "di questo elenco, ed e' dichiarato qui perche' chi aggiunge una costante "
+    "singola alla cartella sappia che la sede la ospita ma non la protegge.",
     "una tabella copiata parzialmente: sotto i "
-    f"{CORSA_MINIMA} valori consecutivi la corsa non scatta. E' una soglia "
+    f"{CORSA_MINIMA} valori consecutivi la corsa non scatta, salvo per le "
+    "sfilze piu' corte della soglia, che si segnalano intere. E' una soglia "
     "scelta, e le soglie scelte sbagliano da un lato: qui sbagliano "
     "lasciando passare, che e' il lato giusto per un controllo che deve "
     "restare acceso.",

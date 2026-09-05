@@ -28,6 +28,19 @@ COMPORTAMENTO IN CREAZIONE
     Se il metodo scelto rende irraggiungibile una combinazione razza+classe,
     il sistema **segnala e propone il tiro**. Non blocca.
 
+I TRE FILTRI, E LA FUNZIONE CHE LI METTE IN FILA
+    `percorsi(razza)` e' la risposta unica alla prima domanda della
+    creazione. Applica in sequenza il telaio (decisione 58,
+    `telaio-apre-classe-filtra`), i requisiti della classe, e il METODO di
+    generazione — che e' il terzo filtro e fino al 05/09/2026 non era
+    applicato da nessuno, perche' le due meta' della risposta vivevano in
+    due moduli che non si importavano. Dettaglio sopra la funzione.
+
+DOVE STANNO I TRE METODI
+    In `dati/sistema/generazione-caratteristiche.json`, non qui. Quello che
+    resta qui e' il DEFAULT, che e' una scelta nostra e non un dato di
+    fonte.
+
 DA QUALE STRATO LEGGE QUESTO MODULO
     Da `mechanics_5e`, sempre. Mai da `source_2e`.
 
@@ -59,20 +72,47 @@ import json
 import os
 import random
 import re
+import sys
+from collections import namedtuple
 
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATI = os.path.join(BASE, "dati")
+sys.path.insert(0, DATI)
+
+import _classi_ammesse as CLASSI_AMMESSE  # noqa: E402
+import _sistema as SIS  # noqa: E402
 
 CAR = ["str", "dex", "con", "int", "wis", "cha"]
 NOMI_CAR = {"str": "Forza", "dex": "Destrezza", "con": "Costituzione",
             "int": "Intelligenza", "wis": "Saggezza", "cha": "Carisma"}
 
-ARRAY_STANDARD = [15, 14, 13, 12, 10, 8]
-COSTO_POINTBUY = {8: 0, 9: 1, 10: 2, 11: 3, 12: 4, 13: 5, 14: 7, 15: 9}
-BUDGET_POINTBUY = 27
+# I tre metodi non stanno piu' qui: stanno in
+# `dati/sistema/generazione-caratteristiche.json` e si leggono da li'.
+# Fino al 05/09/2026 erano scritti in questo file e di nuovo, con altri nomi,
+# in `dati/analisi_soddisfacibilita.py`: due copie allineate per coincidenza,
+# e il controllo anti-duplicazione di `valida_sistema.py` non poteva vederle
+# perche' guardava le tabelle di `dati/sistema/` e questi numeri non erano
+# li' dentro. Ora ci sono, e le vede.
+ARRAY_STANDARD = list(SIS.ARRAY_STANDARD)
+COSTO_POINTBUY = SIS.COSTO_ACQUISTO
+BUDGET_POINTBUY = SIS.BUDGET_ACQUISTO
 
-METODI = ("4d6-scarta-minore", "array-standard", "point-buy")
-METODO_DEFAULT = "4d6-scarta-minore"
+# I nomi dei metodi vengono dalla stessa sede: un elenco di id scritto a mano
+# accanto a un elenco di id gia' esistente e' la stessa struttura doppia in
+# formato piu' piccolo.
+METODI = tuple(m["id"] for m in SIS.DATI["generazione-caratteristiche"]["metodi"])
+ARRAY, ACQUISTO, TIRO = "array-standard", "punti-acquisto", "tiro-4d6-scarta-minore"
+
+# IL DEFAULT, invece, e' nostro e sta qui: la
+# decisione 8 (`generazione-caratteristiche`) sceglie il tiro perche' i requisiti 2e
+# presuppongono una scala 3-18. La fonte stampa i tre metodi senza
+# preferirne uno; la preferenza e' di casa, e non si scrive nel dato.
+METODO_DEFAULT = TIRO
+
+# Non e' uno dei tre: e' la razza che il manuale fa tirare con dadi propri
+# per ogni caratteristica (l'Aghar). Non e' una scelta del giocatore, quindi
+# non e' un metodo della sede — e' l'assenza di scelta.
+DADI_PROPRI = "dadi-propri"
 
 # Le voci "all: 3d6" della fonte non sono una regola speciale: sono il default
 # generico della 2e, riportato dal manuale ("Create all abilities by rolling
@@ -175,11 +215,12 @@ def genera(razza, metodo=METODO_DEFAULT, rng=random):
         # tutte e sei prescritte: nessuna liberta' di assegnazione
         return {c: tira_formula(formule[c], rng) for c in CAR}, False
 
-    if metodo == "array-standard":
+    if metodo == ARRAY:
         base = list(ARRAY_STANDARD)
-    elif metodo == "point-buy":
-        raise ValueError("il point-buy non si tira: usa valida_pointbuy() "
-                         "sull'assegnazione scelta dal giocatore")
+    elif metodo == ACQUISTO:
+        raise ValueError("l'acquisto a punti non si tira: usa "
+                         "valida_pointbuy() sull'assegnazione scelta dal "
+                         "giocatore")
     else:
         base = [tira_4d6_scarta_minore(rng) for _ in CAR]
 
@@ -194,12 +235,15 @@ def genera(razza, metodo=METODO_DEFAULT, rng=random):
 
 
 def valida_pointbuy(assegnazione):
-    """Verifica costo e intervallo di un'assegnazione point-buy."""
+    """Verifica costo e intervallo di un'assegnazione ad acquisto a punti."""
     problemi = []
     for c in CAR:
         v = assegnazione.get(c)
         if v is None or v not in COSTO_POINTBUY:
-            problemi.append(f"{NOMI_CAR[c]}: {v} fuori dall'intervallo 8-15 del point-buy")
+            problemi.append(
+                f"{NOMI_CAR[c]}: {v} fuori dall'intervallo "
+                f"{min(COSTO_POINTBUY)}-{max(COSTO_POINTBUY)} "
+                f"dell'acquisto a punti")
     if problemi:
         return problemi
     costo = sum(COSTO_POINTBUY[assegnazione[c]] for c in CAR)
@@ -356,17 +400,16 @@ def metodi_praticabili(razza, classe=None):
     # Se il manuale prescrive dadi per tutte e sei le caratteristiche (Aghar),
     # non c'e' scelta di metodo: quella razza si tira e basta.
     if len(formule_razziali(razza)) == len(CAR):
-        return {"dadi-propri": True, "array-standard": False, "point-buy": False,
-                "4d6-scarta-minore": False}
+        return dict({DADI_PROPRI: True}, **{m: False for m in METODI})
 
     out = {}
-    out["array-standard"] = esiste_assegnazione(ARRAY_STANDARD, lo_g, hi_g)
-    out["point-buy"] = any(
+    out[ARRAY] = esiste_assegnazione(ARRAY_STANDARD, lo_g, hi_g)
+    out[ACQUISTO] = any(
         esiste_assegnazione(t, lo_g, hi_g)
         for t in _combinazioni_pointbuy())
     # col tiro il massimo e' 18 per caratteristica: praticabile se gli
     # intervalli grezzi sono tutti non vuoti dentro 3-18
-    out["4d6-scarta-minore"] = all(
+    out[TIRO] = all(
         max(3, lo_g[c]) <= min(18, hi_g[c]) for c in CAR)
     return out
 
@@ -381,6 +424,100 @@ def _combinazioni_pointbuy():
         _PB = [t for t in itertools.product(range(8, 16), repeat=6)
                if sum(COSTO_POINTBUY[v] for v in t) <= BUDGET_POINTBUY]
     return _PB
+
+
+# ======================================================================
+# I TRE FILTRI IN SEQUENZA — la risposta unica alla prima domanda della
+# creazione.
+#
+# PERCHE' UNA SOLA FUNZIONE E NON DUE
+#     Le due meta' esistevano gia' e non si parlavano: `_classi_ammesse
+#     .accessibili()` dice quali classi il TELAIO apre e il FILTRO lascia
+#     (decisione 58, `telaio-apre-classe-filtra`); `metodi_praticabili()`
+#     dice quali METODI possono produrre un personaggio valido. Chi crea un
+#     personaggio ha una domanda sola — «cosa posso fare?» — e le due meta'
+#     rispondevano ciascuna a meta' di essa, in due moduli che non si
+#     importavano.
+#
+# IL FILTRO CHE MANCAVA, ED E' IL TERZO
+#     Il filtro della decisione 58 (`telaio-apre-classe-filtra`) confronta
+#     il minimo di classe con il MASSIMALE RAZZIALE, cioe' con il teoricamente raggiungibile. Non con
+#     cio' che il metodo scelto sa produrre: l'array standard si ferma a 15
+#     pre-razziale e l'acquisto a punti pure, mentre il tiro arriva a 18.
+#     Una coppia razza+classe puo' quindi passare i primi due filtri e
+#     restare comunque irraggiungibile, e nessuna delle due funzioni lo
+#     diceva perche' nessuna delle due guardava l'altra meta'.
+#
+#     Non e' un difetto: e' la decisione 8 (`generazione-caratteristiche`)
+#     che si manifesta. Era scritto che l'acquisto a punti non sa esprimere
+#     la rarita' — appiattisce tutti sullo stesso budget — quindi cio' che
+#     in 2e era raro diventa impossibile. Era una previsione; qui e' una
+#     misura.
+# ======================================================================
+
+Percorso = namedtuple("Percorso", "classe ammessa motivi metodi")
+
+
+def percorsi(razza, cl=None):
+    """Tutti i percorsi di creazione di una razza, coi tre filtri in fila.
+
+    Torna [Percorso], una voce per ogni classe che il TELAIO apre — le
+    classi che il telaio non apre non compaiono, perche' non sono state
+    escluse: non sono state proposte (e' la regola di `accessibili()`).
+
+      classe   id della classe
+      ammessa  True se telaio e filtro la lasciano passare
+      motivi   [(nome_filtro, dettaglio)] quando `ammessa` e' False
+      metodi   {metodo: praticabile} quando `ammessa` e' True, None altrimenti
+
+    `metodi` e' None per una classe gia' esclusa, e non un dizionario di
+    False: una classe che la razza non puo' prendere non e' «impraticabile
+    con l'array standard», e' fuori dalla domanda. Confondere le due cose
+    farebbe contare due volte la stessa esclusione, che e' il modo in cui
+    un conteggio diventa falso senza che nessun numero sia sbagliato."""
+    cl = cl if cl is not None else CLASSI_AMMESSE.classi()
+    ammesse, escluse = CLASSI_AMMESSE.accessibili(razza, cl)
+    per_id = {c["id"]: c for c in cl}
+    fuori = [Percorso(i, False, motivi, None) for i, motivi in escluse]
+    fuori += [Percorso(i, True, [], metodi_praticabili(razza, per_id[i]))
+              for i in ammesse]
+    return sorted(fuori, key=lambda p: p.classe)
+
+
+def praticabili(percorso):
+    """I metodi con cui un percorso ammesso si puo' davvero percorrere."""
+    return sorted(m for m, ok in (percorso.metodi or {}).items() if ok)
+
+
+def classi_per_metodo(razza, cl=None):
+    """{metodo: [classi]} — cosa resta aperto scegliendo prima il metodo.
+
+    E' la stessa misura di `percorsi()` letta per colonna invece che per
+    riga. Serve alle due forme che la creazione puo' prendere: chi chiede il
+    metodo per primo ha bisogno di questa; chi chiede la classe per prima ha
+    bisogno di `percorsi()`. Una funzione sola le produce entrambe, cosi'
+    che la scelta della forma resti una scelta di interfaccia e non diventi
+    una seconda risoluzione."""
+    fuori = {}
+    for p in percorsi(razza, cl):
+        if not p.ammessa:
+            continue
+        for m, ok in p.metodi.items():
+            if ok:
+                fuori.setdefault(m, []).append(p.classe)
+    return {m: sorted(v) for m, v in fuori.items()}
+
+
+def precluse_dal_metodo(razza, metodo, cl=None):
+    """Le classi che il METODO toglie, fra quelle che il filtro lascia.
+
+    E' il terzo filtro isolato dagli altri due: non «cosa non puoi fare»,
+    ma «cosa ti costa questo metodo». La decisione 8
+    (`generazione-caratteristiche`) impone di mostrarlo e non di bloccare,
+    quindi questa lista e' un avviso da far vedere, non un divieto da
+    applicare."""
+    return [p.classe for p in percorsi(razza, cl)
+            if p.ammessa and not p.metodi.get(metodo)]
 
 
 # ------------------------------------------------------------------ caricamento
@@ -405,5 +542,16 @@ if __name__ == "__main__":
                      ("nano-aghar", "barbaro"), ("umano-barbaro", "barbaro")):
         r, c = carica_razza(rid), carica_classe(cid)
         m = metodi_praticabili(r, c)
-        praticabili = [k for k, ok in m.items() if ok] or ["nessuno"]
-        print(f"{rid:14} + {cid:16} praticabile con: {', '.join(praticabili)}")
+        pratici = [k for k, ok in m.items() if ok] or ["nessuno"]
+        print(f"{rid:14} + {cid:16} praticabile con: {', '.join(pratici)}")
+
+    print("\nI tre filtri in fila, per l'Umano:")
+    for p in percorsi(carica_razza("umano")):
+        if p.ammessa:
+            print(f"  {p.classe:24} {', '.join(praticabili(p)) or 'nessun metodo'}")
+        else:
+            print(f"  {p.classe:24} esclusa: "
+                  + "; ".join(f"{k} ({v})" for k, v in p.motivi))
+    for metodo in METODI:
+        precluse = precluse_dal_metodo(carica_razza("umano"), metodo)
+        print(f"  scegliendo {metodo}: preclude {', '.join(precluse) or 'niente'}")

@@ -28,8 +28,8 @@
 
     "genere": {
       "type": "string",
-      "enum": ["tabella", "formula", "moltiplicatori", "soglie"],
-      "description": "Che forma ha il dato. `tabella`: un ingresso intero da' un valore, per fasce. `formula`: una base piu' addendi nominati, dove gli addendi sono ALTRI dati di sistema riferiti per id. `moltiplicatori`: quanto un danno viene moltiplicato da una difesa. `soglie`: un valore del dado che ha un esito d'ufficio."
+      "enum": ["tabella", "formula", "moltiplicatori", "soglie", "metodi"],
+      "description": "Che forma ha il dato. `tabella`: un ingresso intero da' un valore, per fasce. `formula`: una base piu' addendi nominati, dove gli addendi sono ALTRI dati di sistema riferiti per id. `moltiplicatori`: quanto un danno viene moltiplicato da una difesa. `soglie`: un valore del dado che ha un esito d'ufficio. `metodi`: piu' procedure alternative che producono la stessa cosa — oggi i tre modi di generare le caratteristiche. QUALE dei metodi sia il default di casa NON sta qui: e' una scelta nostra (decisione 8, `generazione-caratteristiche`) e vive con il motore, mentre qui stanno i metodi come la fonte li stampa."
     },
 
     "source": {
@@ -37,7 +37,11 @@
       "additionalProperties": false,
       "required": ["source_edition", "source_book"],
       "properties": {
-        "source_edition": { "type": "string", "const": "SRD 5.1" },
+        "source_edition": {
+          "type": "string",
+          "enum": ["SRD 5.1", "PHB 2014"],
+          "description": "Da quale documento viene la regola. NON era un enum fino al 05/09/2026: era costante a \"SRD 5.1\", e il .gitignore pubblico citava quella costante come la ragione per cui questa cartella e' pubblica. La costante era pero' una COINCIDENZA di cio' che era stato aggiunto fin li', non il criterio: il criterio e' la decisione 51 (`criterio-meccanica`) da un lato e CLAUDE.md 1 dall'altro — un dato di sistema e' pubblico se non riproduce TESTO di manuale, non se viene dall'SRD. La generazione delle caratteristiche lo ha reso visibile: array standard, punti d'acquisto e 4d6 scarta il minore NON sono nell'SRD 5.1 (verificato il 05/09/2026 contro le sezioni dell'SRD: nessuna nomina 4d6, l'array 15/14/13/12/10/8 o la tabella dei costi), vengono dal PHB 2014 della decisione 2 (`edizione-phb-2014`), e sono sei numeri e una tabella di otto righe — fatti di regola, non prosa. Il .gitignore lo dichiara accanto all'esclusione, come chiedeva il commento che gia' stava li': «se un giorno servisse una tabella presa da un manuale, quello sara' il momento di rivedere questa scelta»."
+        },
         "source_book": { "type": "string" },
         "api_ref": { "type": ["string", "null"] }
       }
@@ -144,6 +148,47 @@
       }
     },
 
+    "metodi": {
+      "type": "array",
+      "minItems": 1,
+      "description": "I metodi alternativi. Tre tipi, e ciascuno porta solo i campi del proprio tipo: `tiro` e' una procedura di dadi, `insieme_fisso` una sfilza di valori gia' decisa, `acquisto` un budget con un listino di costi.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "tipo", "nome_it"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+          "nome_it": { "type": "string" },
+          "tipo": { "type": "string", "enum": ["tiro", "insieme_fisso", "acquisto"] },
+          "punteggi": { "type": "integer", "description": "Quante caratteristiche il metodo produce." },
+          "dadi": { "type": "integer" },
+          "facce": { "type": "integer" },
+          "scarta_i_piu_bassi": { "type": "integer" },
+          "valori": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "type": "integer" },
+            "description": "I valori di un `insieme_fisso`, nell'ordine in cui la fonte li stampa."
+          },
+          "budget": { "type": "integer" },
+          "costi": {
+            "type": "array",
+            "minItems": 1,
+            "description": "Il listino di un `acquisto`: quanto costa portare una caratteristica a ciascun punteggio.",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["punteggio", "costo"],
+              "properties": {
+                "punteggio": { "type": "integer" },
+                "costo": { "type": "integer" }
+              }
+            }
+          }
+        }
+      }
+    },
+
     "note": { "type": "string" }
   },
 
@@ -155,6 +200,8 @@
     { "if": { "properties": { "genere": { "const": "moltiplicatori" } }, "required": ["genere"] },
       "then": { "required": ["moltiplicatori", "ordine_di_applicazione"] } },
     { "if": { "properties": { "genere": { "const": "soglie" } }, "required": ["genere"] },
-      "then": { "required": ["soglie"] } }
+      "then": { "required": ["soglie"] } },
+    { "if": { "properties": { "genere": { "const": "metodi" } }, "required": ["genere"] },
+      "then": { "required": ["metodi"] } }
   ]
 }

@@ -1,6 +1,8 @@
-Spazio di ricerca: 720 permutazioni dell'array standard. 191.587 combinazioni point-buy entro 27 punti.
+Spazio di ricerca: 720 permutazioni dell'array standard, 191.587 combinazioni di acquisto a punti entro 27 punti.
 
-| razza | array std | point-buy | verdetto |
+Le coppie razza+classe aperte dal telaio e lasciate passare dal filtro (decisione 58 (`telaio-apre-classe-filtra`)) sono **126**, su 15 razze e 20 classi. Sono quelle che questo rapporto misura: le classi che il telaio non apre non compaiono, perche' non sono state escluse — non sono state proposte.
+
+| razza | array std | acquisto a punti | verdetto |
 |---|---:|---:|---|
 | Elfo Dargonesti (Elfo degli Abissi | 600/720 | 162336/191587 | libera |
 | Elfo Dimernesti (Elfo dei Bassifon | 600/720 | 162336/191587 | libera |
@@ -12,149 +14,222 @@ Spazio di ricerca: 720 permutazioni dell'array standard. 191.587 combinazioni po
 | Kender | 720/720 | 191587/191587 | libera |
 | Mezzelfo | 720/720 | 191587/191587 | libera |
 | Minotauro | 480/720 |  92359/191587 | libera |
-| Nano Sozzo (Aghar) |   0/720 |   2560/191587 | **solo point-buy** |
+| Nano Sozzo (Aghar) |   0/720 |   2560/191587 | **dadi propri del manuale** |
 | Nano delle Colline (Neidar) | 216/720 |  40811/191587 | libera |
 | Nano delle Montagne (Hylar / Daewa | 480/720 | 106914/191587 | libera |
-| Barbaro | 384/720 |  54715/191587 | libera |
+| Barbaro | 384/720 |  89543/191587 | libera |
 | Umano | 720/720 | 191587/191587 | libera |
 
 
-## Combinazioni razza+classe matematicamente impossibili
+## Il metodo di generazione e' il terzo filtro
 
-- **Elfo Dargonesti (Elfo degli Abissi)** + `cavaliere` — la classe richiede STR 15, DEX 15, CON 15, INT 10, WIS 10
-- **Elfo Dimernesti (Elfo dei Bassifondi)** + `cavaliere` — la classe richiede STR 15, DEX 15, CON 15, INT 10, WIS 10
-- **Irda (Alto Ogre)** + `cavaliere` — la classe richiede STR 15, DEX 15, CON 15, INT 10, WIS 10
-- **Nano delle Montagne (Hylar / Daewar)** + `cavaliere` — la classe richiede STR 15, DEX 15, CON 15, INT 10, WIS 10
-- **Barbaro** + `cavaliere` — la classe richiede STR 15, DEX 15, CON 15, INT 10, WIS 10
-- **Umano** + `cavaliere-rosa` — la classe richiede STR 15, DEX 12, CON 15, INT 10, WIS 13
-- **Umano** + `cavaliere` — la classe richiede STR 15, DEX 15, CON 15, INT 10, WIS 10
+Il filtro di decisione 58 (`telaio-apre-classe-filtra`) confronta il minimo di classe con il MASSIMALE RAZZIALE, cioe' con il teoricamente raggiungibile. Non con cio' che il metodo scelto sa produrre: l'array standard e l'acquisto a punti si fermano a 15 pre-razziale, il tiro arriva a 18. Le coppie qui sotto passano i primi due filtri e restano comunque irraggiungibili con quel metodo.
+
+Le coppie con una scelta di metodo da fare sono **122**; le altre **4** appartengono a razze per cui il manuale prescrive sei formule di dado, dove non c'e' nessun metodo da scegliere. Restano fuori dal conto.
+
+| metodo | coppie precluse | su | classi coinvolte |
+|---|---:|---:|---|
+| `tiro-4d6-scarta-minore` | 0 | 122 | — |
+| `array-standard` | 19 | 122 | `cavaliere`, `paladino` |
+| `punti-acquisto` | 16 | 122 | `cavaliere`, `paladino` |
+
+**16 coppie su 122 non sono raggiungibili con nessuno dei due metodi senza dadi**, e appartengono a 2 classi soltanto:
+
+| classe | coppie irraggiungibili | coppie aperte | resta |
+|---|---:|---:|---|
+| `cavaliere` | 10 | 14 | 10 su 14, e resta solo il tiro |
+| `paladino` | 6 | 6 | **tutta la classe**, e resta solo il tiro |
+
+Non e' un difetto: e' decisione 8 (`generazione-caratteristiche`) che si manifesta. Era scritto che l'acquisto a punti non sa esprimere la rarita' — appiattisce tutti sullo stesso budget — quindi cio' che in 2e era raro diventa impossibile. Era una previsione; questa e' la misura.
+
+Le coppie, una per una:
+
+- **Barbaro** + `paladino`
+- **Elfo Dargonesti (Elfo degli Abissi)** + `cavaliere`
+- **Elfo Dargonesti (Elfo degli Abissi)** + `paladino`
+- **Elfo Dimernesti (Elfo dei Bassifondi)** + `cavaliere`
+- **Elfo Qualinesti** + `cavaliere`
+- **Elfo Silvanesti** + `cavaliere`
+- **Elfo Silvanesti** + `paladino`
+- **Gnomo (Minoi)** + `cavaliere`
+- **Irda (Alto Ogre)** + `cavaliere`
+- **Irda (Alto Ogre)** + `paladino`
+- **Kender** + `cavaliere`
+- **Mezzelfo** + `paladino`
+- **Nano delle Colline (Neidar)** + `cavaliere`
+- **Nano delle Montagne (Hylar / Daewar)** + `cavaliere`
+- **Umano** + `cavaliere`
+- **Umano** + `paladino`
 
 
-## Difficolta' per classe (a prescindere dalla razza)
+## Difficolta' per classe
 
-Quante razze possono accedere a ciascuna classe, fra quelle a cui la tabella del manuale la concede.
+Quante razze arrivano a ciascuna classe, fra quelle a cui il telaio la apre, e con quanti metodi. La colonna «dadi propri» tiene a parte le razze che non scelgono un metodo: senza di essa comparirebbero come precluse da tutti e tre.
 
-| classe | requisiti | razze ammesse | di cui raggiungibili |
-|---|---|---:|---:|
-| `barbaro` | STR10 DEX8 CON12 WIS8 | 8 | 8 |
-| `cavaliere` | STR15 DEX15 CON15 INT10 WIS10 | 6 | 0 ⚠ |
-| `cavaliere-corona` | STR10 DEX8 CON10 INT7 WIS10 | 2 | 2 |
-| `cavaliere-rosa` | STR15 DEX12 CON15 INT10 WIS13 | 2 | 1 ⚠ |
-| `cavaliere-spada` | STR12 DEX9 CON10 INT9 WIS13 | 2 | 2 |
-| `con-artist` | CHA12 | 3 | 3 |
-| `mago-alta-stregoneria` | INT9 | 3 | 3 |
-| `mago-rinnegato` | INT9 | 3 | 3 |
-| `mago-veste-bianca` | INT9 | 3 | 3 |
-| `mago-veste-nera` | INT9 | 3 | 3 |
-| `mago-veste-rossa` | INT9 | 3 | 3 |
-| `mariner` | STR12 DEX11 | 6 | 6 |
-| `sacerdote-eretico` | WIS9 | 3 | 3 |
-| `sacerdote-ordini-sacri` | WIS9 | 3 | 3 |
+| classe | requisiti | razze aperte | passano il filtro | dadi propri | con array | con acquisto |
+|---|---|---:|---:|---:|---:|---:|
+| `barbaro` | CON12 DEX8 STR10 WIS8 | 15 | 15 | 1 | 14/14 | 14/14 |
+| `cavaliere` | CON15 DEX15 INT10 STR15 WIS10 | 15 | 14 | 0 | 1/14 ⚠ | 4/14 |
+| `cavaliere-corona` | CON10 DEX8 INT7 STR10 WIS10 | 15 | 2 | 0 | 2/2 | 2/2 |
+| `cavaliere-rosa` | CON15 DEX12 INT10 STR15 WIS13 | 6 | 0 | 0 | 0/0 | 0/0 |
+| `cavaliere-spada` | CON10 DEX9 INT9 STR12 WIS13 | 6 | 0 | 0 | 0/0 | 0/0 |
+| `commoner` | — | 3 | 3 | 0 | 3/3 | 3/3 |
+| `con-artist` | CHA12 | 12 | 11 | 0 | 11/11 | 11/11 |
+| `guerriero` | STR9 | 15 | 15 | 1 | 14/14 | 14/14 |
+| `handler` | — | 4 | 1 | 0 | 1/1 | 1/1 |
+| `ladro` | DEX9 | 12 | 12 | 1 | 11/11 | 11/11 |
+| `mago-alta-stregoneria` | INT9 | 10 | 10 | 0 | 10/10 | 10/10 |
+| `mago-rinnegato` | INT9 | 10 | 10 | 0 | 10/10 | 10/10 |
+| `mago-veste-bianca` | INT9 | 3 | 0 | 0 | 0/0 | 0/0 |
+| `mago-veste-nera` | INT9 | 3 | 0 | 0 | 0/0 | 0/0 |
+| `mago-veste-rossa` | INT9 | 3 | 0 | 0 | 0/0 | 0/0 |
+| `mariner` | DEX11 STR12 | 6 | 6 | 0 | 6/6 | 6/6 |
+| `paladino` | CHA17 CON9 STR12 WIS13 | 6 | 6 | 0 | 0/6 ⚠ | 0/6 |
+| `sacerdote-eretico` | WIS9 | 5 | 5 | 0 | 5/5 | 5/5 |
+| `sacerdote-ordini-sacri` | WIS9 | 15 | 15 | 1 | 14/14 | 14/14 |
+| `tinker` | — | 4 | 1 | 0 | 1/1 | 1/1 |
 
 
 ## Dettaglio per razza
 
 ### Elfo Dargonesti (Elfo degli Abissi) (`elfo-dargonesti`)
-- minimi: {'str': 3, 'dex': 10, 'con': 3, 'int': 8, 'wis': 8, 'cha': 3}
+- minimi: {'dex': 10, 'int': 8, 'wis': 8}
 - massimali: {'str': 18, 'dex': 19, 'con': 18, 'int': 18, 'wis': 18, 'cha': 18}
-- aggiustamenti: {'str': -1, 'dex': 1}
-- distribuzioni valide: 600/720 array standard, 162336/191587 point-buy
-- classi piu' vincolate: `barbaro` (216/720), `mariner` (288/720), `con-artist` (384/720), `mago-alta-stregoneria` (480/720)
+- aggiustamenti applicati: {'str': -1, 'dex': 1}
+- distribuzioni valide: 600/720 array standard, 162336/191587 acquisto a punti
+- classi piu' vincolate: `cavaliere` (0/720), `paladino` (0/720), `barbaro` (216/720), `mariner` (288/720)
+- aperte dal telaio e tolte dal filtro: `cavaliere-corona` (razza), `cavaliere-rosa` (ingresso), `cavaliere-spada` (ingresso), `handler` (razza), `mago-veste-bianca` (ingresso), `mago-veste-nera` (ingresso), `mago-veste-rossa` (ingresso), `tinker` (razza)
 
 ### Elfo Dimernesti (Elfo dei Bassifondi) (`elfo-dimernesti`)
-- minimi: {'str': 3, 'dex': 10, 'con': 3, 'int': 8, 'wis': 8, 'cha': 3}
+- minimi: {'dex': 10, 'int': 8, 'wis': 8}
 - massimali: {'str': 18, 'dex': 19, 'con': 18, 'int': 18, 'wis': 18, 'cha': 18}
-- aggiustamenti: {'str': -1, 'dex': 1}
-- distribuzioni valide: 600/720 array standard, 162336/191587 point-buy
+- aggiustamenti applicati: {'str': -1, 'dex': 1}
+- distribuzioni valide: 600/720 array standard, 162336/191587 acquisto a punti
+- classi piu' vincolate: `cavaliere` (0/720), `barbaro` (216/720), `guerriero` (480/720), `mago-alta-stregoneria` (480/720)
+- aperte dal telaio e tolte dal filtro: `cavaliere-corona` (razza)
 
 ### Elfo Kagonesti (`elfo-kagonesti`)
-- minimi: {'str': 8, 'dex': 8, 'con': 8, 'int': 3, 'wis': 8, 'cha': 8}
+- minimi: {'str': 8, 'dex': 8, 'con': 8, 'wis': 8, 'cha': 8}
 - massimali: {'str': 18, 'dex': 19, 'con': 18, 'int': 12, 'wis': 18, 'cha': 18}
-- aggiustamenti: {'str': 1, 'dex': 2, 'con': 1, 'int': -3}
-- distribuzioni valide: 720/720 array standard, 191587/191587 point-buy
-- classi piu' vincolate: `barbaro` (384/720)
+- aggiustamenti applicati: {'str': 1, 'con': 1, 'dex': 2, 'int': -3}
+- distribuzioni valide: 720/720 array standard, 191587/191587 acquisto a punti
+- classi piu' vincolate: `cavaliere` (0/720), `barbaro` (384/720), `con-artist` (480/720), `sacerdote-ordini-sacri` (600/720)
+- aperte dal telaio e tolte dal filtro: `cavaliere-corona` (razza)
 
 ### Elfo Qualinesti (`elfo-qualinesti`)
 - minimi: {'str': 7, 'dex': 7, 'con': 7, 'int': 8, 'wis': 6, 'cha': 8}
 - massimali: {'str': 18, 'dex': 19, 'con': 18, 'int': 18, 'wis': 18, 'cha': 18}
-- aggiustamenti: {'dex': 1, 'con': -1}
-- distribuzioni valide: 720/720 array standard, 191587/191587 point-buy
+- aggiustamenti applicati: {'dex': 1, 'con': -1}
+- distribuzioni valide: 720/720 array standard, 191587/191587 acquisto a punti
+- classi piu' vincolate: `cavaliere` (0/720), `barbaro` (288/720), `con-artist` (480/720), `guerriero` (600/720)
+- aperte dal telaio e tolte dal filtro: `cavaliere-corona` (razza)
 
 ### Elfo Silvanesti (`elfo-silvanesti`)
-- minimi: {'str': 3, 'dex': 7, 'con': 6, 'int': 10, 'wis': 6, 'cha': 12}
+- minimi: {'dex': 7, 'con': 6, 'int': 10, 'wis': 6, 'cha': 12}
 - massimali: {'str': 18, 'dex': 19, 'con': 18, 'int': 18, 'wis': 18, 'cha': 18}
-- aggiustamenti: {'dex': 1, 'con': -1}
-- distribuzioni valide: 384/720 array standard, 54715/191587 point-buy
+- aggiustamenti applicati: {'dex': 1, 'con': -1}
+- distribuzioni valide: 384/720 array standard, 54715/191587 acquisto a punti
+- classi piu' vincolate: `cavaliere` (0/720), `paladino` (0/720), `barbaro` (108/720), `guerriero` (288/720)
+- aperte dal telaio e tolte dal filtro: `cavaliere-corona` (razza), `cavaliere-rosa` (ingresso), `cavaliere-spada` (ingresso)
 
 ### Gnomo (Minoi) (`gnomo-minoi`)
-- minimi: {'str': 6, 'dex': 8, 'con': 8, 'int': 8, 'wis': 3, 'cha': 3}
+- minimi: {'str': 6, 'dex': 8, 'con': 8, 'int': 8}
 - massimali: {'str': 18, 'dex': 18, 'con': 18, 'int': 18, 'wis': 12, 'cha': 18}
-- aggiustamenti: {'str': -1, 'dex': 2}
-- distribuzioni valide: 360/720 array standard, 134828/191587 point-buy
-- classi piu' vincolate: `tinker` (360/720)
+- aggiustamenti applicati: {'str': -1, 'dex': 2}
+- distribuzioni valide: 360/720 array standard, 134828/191587 acquisto a punti
+- classi piu' vincolate: `cavaliere` (0/720), `barbaro` (180/720), `sacerdote-ordini-sacri` (240/720), `con-artist` (264/720)
+- aperte dal telaio e tolte dal filtro: `cavaliere-corona` (razza)
 
 ### Irda (Alto Ogre) (`irda`)
 - minimi: {'str': 12, 'dex': 8, 'con': 12, 'int': 5, 'wis': 10, 'cha': 15}
 - massimali: {'str': 18, 'dex': 19, 'con': 15, 'int': 19, 'wis': 18, 'cha': 19}
-- aggiustamenti: {'dex': 1, 'con': -3, 'int': 1, 'cha': 1}
-- distribuzioni valide: 8/720 array standard, 129/191587 point-buy
-- classi piu' vincolate: `mariner` (4/720)
+- aggiustamenti applicati: {'con': -3, 'dex': 1, 'int': 1, 'cha': 1}
+- distribuzioni valide: 8/720 array standard, 129/191587 acquisto a punti
+- classi piu' vincolate: `cavaliere` (0/720), `paladino` (0/720), `mariner` (4/720), `barbaro` (8/720)
+- aperte dal telaio e tolte dal filtro: `cavaliere-corona` (razza), `cavaliere-rosa` (ingresso), `cavaliere-spada` (ingresso)
 
 ### Kender (`kender`)
-- minimi: {'str': 6, 'dex': 8, 'con': 8, 'int': 6, 'wis': 3, 'cha': 6}
+- minimi: {'str': 6, 'dex': 8, 'con': 8, 'int': 6, 'cha': 6}
 - massimali: {'str': 16, 'dex': 19, 'con': 18, 'int': 18, 'wis': 16, 'cha': 18}
-- aggiustamenti: {'dex': 1}
-- distribuzioni valide: 720/720 array standard, 191587/191587 point-buy
-- classi piu' vincolate: `barbaro` (384/720), `handler` (720/720)
+- aggiustamenti applicati: {'dex': 1}
+- formule proprie del manuale: {'str': '2d6+4'}
+- distribuzioni valide: 720/720 array standard, 191587/191587 acquisto a punti
+- classi piu' vincolate: `cavaliere` (0/720), `barbaro` (384/720), `con-artist` (480/720), `guerriero` (600/720)
+- aperte dal telaio e tolte dal filtro: `cavaliere-corona` (razza)
 
 ### Mezzelfo (`mezzelfo`)
-- minimi: {'str': 3, 'dex': 6, 'con': 6, 'int': 4, 'wis': 3, 'cha': 3}
+- minimi: {'dex': 6, 'con': 6, 'int': 4}
 - massimali: {'str': 18, 'dex': 18, 'con': 18, 'int': 18, 'wis': 18, 'cha': 18}
-- aggiustamenti: {'dex': 2}
-- distribuzioni valide: 720/720 array standard, 191587/191587 point-buy
-- classi piu' vincolate: `cavaliere-rosa` (0/720), `cavaliere-spada` (108/720), `cavaliere-corona` (360/720), `mariner` (384/720)
+- aggiustamenti applicati: {'dex': 2}
+- distribuzioni valide: 720/720 array standard, 191587/191587 acquisto a punti
+- classi piu' vincolate: `cavaliere` (0/720), `paladino` (0/720), `cavaliere-corona` (360/720), `barbaro` (384/720)
+- aperte dal telaio e tolte dal filtro: `cavaliere-rosa` (ingresso), `cavaliere-spada` (ingresso)
 
 ### Minotauro (`minotauro`)
-- minimi: {'str': 12, 'dex': 8, 'con': 12, 'int': 5, 'wis': 3, 'cha': 3}
+- minimi: {'str': 12, 'dex': 8, 'con': 12, 'int': 5}
 - massimali: {'str': 20, 'dex': 18, 'con': 20, 'int': 18, 'wis': 16, 'cha': 16}
-- aggiustamenti: {'str': 2, 'con': 2, 'wis': -2, 'cha': -2}
-- distribuzioni valide: 480/720 array standard, 92359/191587 point-buy
-- classi piu' vincolate: `mariner` (288/720), `barbaro` (360/720)
+- aggiustamenti applicati: {'str': 2, 'con': 2, 'wis': -2, 'cha': -2}
+- distribuzioni valide: 480/720 array standard, 92359/191587 acquisto a punti
+- classi piu' vincolate: `cavaliere` (2/720), `mariner` (288/720), `sacerdote-ordini-sacri` (288/720), `barbaro` (360/720)
+- aperte dal telaio e tolte dal filtro: `cavaliere-corona` (razza)
 
 ### Nano Sozzo (Aghar) (`nano-aghar`)
-- minimi: {'str': 6, 'dex': 6, 'con': 3, 'int': 3, 'wis': 3, 'cha': 3}
+- minimi: {'str': 6, 'dex': 6}
 - massimali: {'str': 18, 'dex': 18, 'con': 12, 'int': 9, 'wis': 9, 'cha': 9}
-- aggiustamenti: nessuno
-- distribuzioni valide: 0/720 array standard, 2560/191587 point-buy
-- classi piu' vincolate: `barbaro` (0/720)
+- aggiustamenti applicati: nessuno
+- formule proprie del manuale: {'str': '4d4+2', 'dex': '4d4+2', 'con': '3d4', 'int': '2d4+1', 'wis': '2d4+1', 'cha': '2d4+1'}
+- distribuzioni valide: 0/720 array standard, 2560/191587 acquisto a punti
+- classi piu' vincolate: `barbaro` (0/720), `guerriero` (0/720), `ladro` (0/720), `sacerdote-ordini-sacri` (0/720)
+- aperte dal telaio e tolte dal filtro: `cavaliere` (caratteristica), `cavaliere-corona` (razza), `con-artist` (caratteristica)
 
 ### Nano delle Colline (Neidar) (`nano-collina`)
-- minimi: {'str': 9, 'dex': 3, 'con': 14, 'int': 3, 'wis': 3, 'cha': 3}
+- minimi: {'str': 9, 'con': 14}
 - massimali: {'str': 18, 'dex': 17, 'con': 19, 'int': 18, 'wis': 18, 'cha': 12}
-- aggiustamenti: {'con': 1, 'cha': -1}
-- distribuzioni valide: 216/720 array standard, 40811/191587 point-buy
-- classi piu' vincolate: `barbaro` (216/720)
+- aggiustamenti applicati: {'con': 1, 'cha': -1}
+- distribuzioni valide: 216/720 array standard, 40811/191587 acquisto a punti
+- classi piu' vincolate: `cavaliere` (0/720), `con-artist` (36/720), `ladro` (168/720), `sacerdote-ordini-sacri` (168/720)
+- aperte dal telaio e tolte dal filtro: `cavaliere-corona` (razza)
 
 ### Nano delle Montagne (Hylar / Daewar) (`nano-montagna`)
-- minimi: {'str': 8, 'dex': 3, 'con': 12, 'int': 3, 'wis': 3, 'cha': 3}
+- minimi: {'str': 8, 'con': 12}
 - massimali: {'str': 18, 'dex': 17, 'con': 19, 'int': 18, 'wis': 18, 'cha': 16}
-- aggiustamenti: {'con': 1, 'cha': -1}
-- distribuzioni valide: 480/720 array standard, 106914/191587 point-buy
+- aggiustamenti applicati: {'con': 1, 'cha': -1}
+- distribuzioni valide: 480/720 array standard, 106914/191587 acquisto a punti
+- classi piu' vincolate: `cavaliere` (0/720), `con-artist` (216/720), `barbaro` (384/720), `guerriero` (384/720)
+- aperte dal telaio e tolte dal filtro: `cavaliere-corona` (razza)
 
 ### Barbaro (`umano-barbaro`)
 - minimi: {'str': 10, 'dex': 8, 'con': 12, 'wis': 8}
 - massimali: {'dex': 16, 'int': 18}
-- aggiustamenti: nessuno
-- distribuzioni valide: 384/720 array standard, 54715/191587 point-buy
-- classi piu' vincolate: `mariner` (144/720), `con-artist` (216/720), `mago-alta-stregoneria` (288/720), `mago-rinnegato` (288/720)
+- aggiustamenti applicati: {'str': 1, 'con': 1}
+- distribuzioni valide: 384/720 array standard, 89543/191587 acquisto a punti
+- classi piu' vincolate: `cavaliere` (0/720), `paladino` (0/720), `mariner` (144/720), `con-artist` (216/720)
+- aperte dal telaio e tolte dal filtro: `cavaliere-corona` (razza), `cavaliere-rosa` (ingresso), `cavaliere-spada` (ingresso), `handler` (razza), `mago-veste-bianca` (ingresso), `mago-veste-nera` (ingresso), `mago-veste-rossa` (ingresso), `tinker` (razza)
 
 ### Umano (`umano`)
-- minimi: {'str': 3, 'dex': 3, 'con': 3, 'int': 3, 'wis': 3, 'cha': 3}
+- minimi: nessuno
 - massimali: {'str': 18, 'dex': 18, 'con': 18, 'int': 18, 'wis': 18, 'cha': 18}
-- aggiustamenti: nessuno
-- distribuzioni valide: 720/720 array standard, 191587/191587 point-buy
-- classi piu' vincolate: `cavaliere-spada` (54/720), `mariner` (288/720), `cavaliere-corona` (360/720), `barbaro` (384/720)
+- aggiustamenti applicati: nessuno
+- distribuzioni valide: 720/720 array standard, 191587/191587 acquisto a punti
+- classi piu' vincolate: `cavaliere` (0/720), `paladino` (0/720), `mariner` (288/720), `cavaliere-corona` (360/720)
+- aperte dal telaio e tolte dal filtro: `cavaliere-rosa` (ingresso), `cavaliere-spada` (ingresso), `handler` (razza), `mago-veste-bianca` (ingresso), `mago-veste-nera` (ingresso), `mago-veste-rossa` (ingresso), `tinker` (razza)
 
+
+
+## I due strati a confronto
+
+`verifica_strati.py` confronta 15 razze e 20 classi sulle stesse grandezze che questo rapporto usa: vincoli, massimali, aggiustamenti, formule, minimi di classe. Scarti dichiarati: **4**. Divergenze non dichiarate: **0**.
+
+Gli scarti dichiarati sono la ragione per cui questo rapporto legge lo strato 5e e non la fonte: letti da `source_2e` varrebbero zero, e sparirebbero dal conto senza che nulla lo segnali.
+
+| entita' | grandezza | scarto |
+|---|---|---|
+| umano-barbaro | aggiustamento editoriale | con +1, str +1 |
+| con-artist | dado vita dal chassis | fonte 1d6 -> 1d8 |
+| mago-alta-stregoneria | dado vita dal chassis | fonte 1d4 -> 1d6 |
+| mago-rinnegato | dado vita dal chassis | fonte 1d4 -> 1d6 |
+
+Controllo interno: «zero disposizioni» e «metodo non praticabile» sono la stessa cosa detta da due funzioni diverse — il conteggio di questo file e `metodi_praticabili()` del motore. Coppie confrontate: 122. Disaccordi: **0**.
 
 
 # COMPITO B — aggiustamenti negativi
@@ -174,97 +249,22 @@ In 5e 2014 le razze hanno solo bonus positivi, per un totale che si aggira su **
 | Nano delle Colline (Neidar) | CHA -1 | CHA max 12 | CHA | CON +1 | +0 | -3 |
 | Nano delle Montagne (Hylar / D | CHA -1 | CHA max 16 | CHA | CON +1 | +0 | -3 |
 
-**Tutte le razze, anche quelle senza negativi, per confronto:**
+**Tutte le razze, anche quelle senza negativi, e i due strati accanto:**
 
-| razza | aggiustamenti | netto | scarto da +3 |
-|---|---|---:|---:|
-| Elfo Dargonesti (Elfo degli Abissi | DEX +1, STR -1 | +0 | -3 |
-| Elfo Dimernesti (Elfo dei Bassifon | DEX +1, STR -1 | +0 | -3 |
-| Elfo Qualinesti | CON -1, DEX +1 | +0 | -3 |
-| Elfo Silvanesti | CON -1, DEX +1 | +0 | -3 |
-| Irda (Alto Ogre) | CHA +1, CON -3, DEX +1, INT +1 | +0 | -3 |
-| Minotauro | CHA -2, CON +2, STR +2, WIS -2 | +0 | -3 |
-| Nano Sozzo (Aghar) | nessuno | +0 | -3 |
-| Nano delle Colline (Neidar) | CHA -1, CON +1 | +0 | -3 |
-| Nano delle Montagne (Hylar / Daewa | CHA -1, CON +1 | +0 | -3 |
-| Barbaro | nessuno | +0 | -3 |
-| Umano | nessuno | +0 | -3 |
-| Elfo Kagonesti | CON +1, DEX +2, INT -3, STR +1 | +1 | -2 |
-| Gnomo (Minoi) | DEX +2, STR -1 | +1 | -2 |
-| Kender | DEX +1 | +1 | -2 |
-| Mezzelfo | DEX +2 | +2 | -1 |
-
-
----
-
-# COMPITO C — il Barbaro: proposta, non decisione
-
-## Il nodo
-
-La doppia natura e' gia' modellata: esistono sia la razza `umano-barbaro` sia la
-classe `barbaro`. Resta da decidere quale set di vincoli valga, perche' i due
-non coincidono:
-
-| | STR | DEX | CON | INT | WIS |
-|---|---|---|---|---|---|
-| scheda razziale (*People of Ansalon*) | min 10 | min 8, **max 16** | min 12 | **max 18** | min 8 |
-| voce di classe (*Classes of Ansalon*) | min 10 | min 8 | min 12 | — | min 8 |
-
-I minimi coincidono. La differenza sta tutta nei **due massimali** che solo la
-scheda razziale riporta.
-
-## Il dato che cambia la domanda
-
-**I due massimali non hanno alcun effetto alla creazione del personaggio.**
-
-Verificato programmaticamente: con o senza massimali, le disposizioni valide
-dell'array standard sono **384 su 720**, identiche. Il motivo e' aritmetico:
-l'array standard arriva a 15 e il point-buy pure, mentre i tetti sono 16 e 18.
-Nessuno dei due puo' essere raggiunto, quindi nessuno dei due puo' vincolare.
-
-I massimali mordono **solo durante l'avanzamento**, quando gli aumenti di
-caratteristica portano un punteggio oltre 16. Non sono un requisito d'accesso:
-sono un **tetto alla crescita**.
-
-## Perche' questo e' dirimente
-
-Un tetto alla crescita e' esattamente la categoria di meccanica che la
-**decisione 4 (`limiti-di-livello`)** ha gia' respinto per i limiti di livello, con tre motivazioni
-che valgono identiche qui:
-
-1. e' la meccanica 2e piu' universalmente abbandonata dalle edizioni successive;
-2. blocca le campagne lunghe;
-3. contraddice il principio fissato per i Cavalieri — potere sempre monotono
-   crescente, mai regressioni ne' tetti.
-
-Applicare DEX max 16 significherebbe che un barbaro umano resta per sempre a
-+3 di modificatore di Destrezza, mentre qualunque altro umano arriva a +5.
-Su venti livelli e' una penalita' concreta, e sarebbe l'unica razza umana a
-subirla.
-
-## Proposta
-
-**Far valere i vincoli della voce di classe, scartando i due massimali della
-scheda razziale.** In concreto: `umano-barbaro` conserva i minimi (STR 10,
-CON 12, WIS 8, DEX 8) e le abilita' speciali culturali, ma non i tetti.
-
-Motivazione in una riga: i massimali sono tetti di crescita travestiti da
-requisiti d'accesso, e la decisione 4 (`limiti-di-livello`) ha gia' stabilito che i tetti di crescita
-non si applicano.
-
-## Variante da considerare
-
-Se l'obiettivo e' conservare il sapore culturale senza incoerenze meccaniche,
-si puo' andare oltre: modellare `umano-barbaro` come **background** anziche'
-come razza. Le sue abilita' speciali — competenza in Sopravvivenza nel clima
-natio, affaticamento fuori dalla regione d'origine, bonus a Caccia e
-Seguire Tracce — sono gia' oggi di forma tipicamente da background, non da
-tratto razziale. L'umano resterebbe uno solo, numericamente coerente, e la
-cultura barbarica diventerebbe una scelta ortogonale, combinabile anche con
-classi diverse dal barbaro.
-
-Questa strada risolve la duplicazione invece di arbitrarla, ma esce dallo
-schema attuale (non esiste ancora un'entita' "background") e va quindi decisa
-insieme allo schema Personaggio.
-
-**La decisione resta tua.**
+| razza | applicati (`mechanics_5e`) | netto | dichiarati (`source_2e`) | netto | scarto fra gli strati |
+|---|---|---:|---|---:|---|
+| Elfo Dargonesti (Elfo degli Abissi | DEX +1, STR -1 | +0 | DEX +1, STR -1 | +0 | — |
+| Elfo Dimernesti (Elfo dei Bassifon | DEX +1, STR -1 | +0 | DEX +1, STR -1 | +0 | — |
+| Elfo Qualinesti | CON -1, DEX +1 | +0 | CON -1, DEX +1 | +0 | — |
+| Elfo Silvanesti | CON -1, DEX +1 | +0 | CON -1, DEX +1 | +0 | — |
+| Irda (Alto Ogre) | CHA +1, CON -3, DEX +1, INT +1 | +0 | CHA +1, CON -3, DEX +1, INT +1 | +0 | — |
+| Minotauro | CHA -2, CON +2, STR +2, WIS -2 | +0 | CHA -2, CON +2, STR +2, WIS -2 | +0 | — |
+| Nano Sozzo (Aghar) | nessuno | +0 | nessuno | +0 | — |
+| Nano delle Colline (Neidar) | CHA -1, CON +1 | +0 | CHA -1, CON +1 | +0 | — |
+| Nano delle Montagne (Hylar / Daewa | CHA -1, CON +1 | +0 | CHA -1, CON +1 | +0 | — |
+| Umano | nessuno | +0 | nessuno | +0 | — |
+| Elfo Kagonesti | CON +1, DEX +2, INT -3, STR +1 | +1 | CON +1, DEX +2, INT -3, STR +1 | +1 | — |
+| Gnomo (Minoi) | DEX +2, STR -1 | +1 | DEX +2, STR -1 | +1 | — |
+| Kender | DEX +1 | +1 | DEX +1 | +1 | — |
+| Mezzelfo | DEX +2 | +2 | DEX +2 | +2 | — |
+| Barbaro | CON +1, STR +1 | +2 | nessuno | +0 | CON +1, STR +1 |

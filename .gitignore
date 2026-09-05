@@ -171,13 +171,32 @@ CLAUDE.local.md
 
 # Dati di sistema (decisione 51, `criterio-meccanica`): le tabelle che la 5e
 # stampa uguali per ogni creatura — modificatore di caratteristica, bonus di
-# competenza, moltiplicatori delle difese, soglie del d20. Stessa posizione e
-# stessa ragione di dati/condizioni/ sopra: vengono dall'SRD 5.1, CC-BY,
-# nessun testo 2e e nessun source_2e (sistema.schema.json non ne prevede uno,
-# `source_edition` e' costante a "SRD 5.1"). Dichiarato QUI nello stesso
-# commit che crea il primo file, non a posteriori. Non va in PERCORSI di
-# git-privato.sh. Se un giorno servisse una tabella propria di Krynn presa da
-# un manuale, quello sara' il momento di rivedere questa scelta, non prima.
+# competenza, moltiplicatori delle difese, soglie del d20, generazione delle
+# caratteristiche. Stessa posizione e stessa ragione di dati/condizioni/
+# sopra: nessun testo di manuale e nessun source_2e (sistema.schema.json non
+# ne prevede uno). Dichiarato QUI nello stesso commit che crea il primo file,
+# non a posteriori. Non va in PERCORSI di git-privato.sh.
+#
+# LA RILETTURA CHIESTA DA QUESTA RIGA STESSA, fatta il 05/09/2026. La versione
+# precedente diceva: «vengono dall'SRD 5.1, CC-BY [...] `source_edition` e'
+# costante a "SRD 5.1"», e chiudeva con «se un giorno servisse una tabella
+# presa da un manuale, quello sara' il momento di rivedere questa scelta».
+# Quel giorno e' arrivato con `sistema/generazione-caratteristiche.json`: le
+# sezioni dell'SRD 5.1 non contengono la generazione delle caratteristiche —
+# ne' 4d6 scarta il minore, ne' l'array standard, ne' il listino
+# dell'acquisto a punti — che vengono dal PHB 2014 della decisione 2
+# (`edizione-phb-2014`).
+#
+# La cartella resta pubblica, e il criterio non cambia: e' quello di
+# CLAUDE.md 1 — «questo file riproduce testo dei manuali?». No: sei numeri,
+# una tabella di otto righe e prosa italiana nostra sono la regola in fatti,
+# non nella forma del manuale. La costante "SRD 5.1" nello schema non era il
+# criterio, era una COINCIDENZA di cio' che era stato aggiunto fin li', ed e'
+# ora un enum che dichiara la fonte file per file. Non cambia nemmeno cosa e'
+# gia' pubblico: quegli stessi numeri stanno da sempre in
+# `motore/generazione.py`, che e' tracciato dal pubblico. Cio' che questa
+# rilettura NON autorizza e' un testo di manuale in un `mechanics_5e` di
+# questa cartella: quella prosa resta nostra, e la `note` del JSON lo dice.
 !dati/_sistema.py
 !dati/valida_sistema.py
 !dati/sistema/

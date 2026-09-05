@@ -100,13 +100,14 @@ scrivendo codice.
 
 ## 2. La sede delle regole di sistema, e il controllo che la tiene ferma
 
-`dati/sistema/` esiste, con il suo schema e il suo validatore. Contiene 5 dati
+`dati/sistema/` esiste, con il suo schema e il suo validatore. Contiene 6 dati
 che coprono **81 ingressi**:
 
 | dato di sistema | genere | letture | ingressi |
 |---|---|---|---|
 | `bonus-competenza` | tabella | `per_livello`, `per_grado_sfida` | 51 |
 | `cd-tiro-salvezza` | formula | — | — |
+| `generazione-caratteristiche` | metodi | — | — |
 | `modificatore-caratteristica` | tabella | `per_punteggio` | 30 |
 | `moltiplicatori-difesa` | moltiplicatori | — | — |
 | `soglie-d20` | soglie | — | — |
@@ -126,7 +127,7 @@ controllo del progetto che guarda il codice invece dei dati.
 
 ### Cosa il controllo VEDE
 
-Legge **61 sorgenti Python** (la sede stessa esclusa: li' le tabelle devono
+Legge **63 sorgenti Python** (la sede stessa esclusa: li' le tabelle devono
 esserci) e li guarda in due modi.
 
 - **Per forma.** L'espressione, riconosciuta sul codice **tokenizzato**:
@@ -146,9 +147,9 @@ esserci) e li guarda in due modi.
   Un'eccezione dichiarata che non trova piu' il suo marcatore viene segnalata
   **come una copia**: un permesso che non protegge piu' niente e' peggio di
   nessun permesso.
-- **Se stesso.** A ogni giro gli si piantano davanti 5 copie costruite apposta
-  e 2 sorgenti che gli somigliano senza esserlo, e si pretende che veda le
-  prime e non i secondi. Oggi ne riconosce **5 su 5**. Serve perche' su un
+- **Se stesso.** A ogni giro gli si piantano davanti 7 copie costruite apposta
+  e 4 sorgenti che gli somigliano senza esserlo, e si pretende che veda le
+  prime e non i secondi. Oggi ne riconosce **7 su 7**. Serve perche' su un
   repository pulito un rilevatore rotto e uno funzionante tacciono allo stesso
   modo, e la differenza si scopre il giorno in cui serviva.
 
@@ -167,17 +168,17 @@ leggono la sede adesso.
   e fingere il contrario darebbe un controllo che rassicura.
 - un'altra lingua: il giorno in cui il motore avra' un lato web, la stessa
   formula in JavaScript passera' inosservata. I sorgenti scanditi sono quelli
-  di SORGENTI, cioe' Python. E' L'UNICO DEI CINQUE LIMITI CHE RIGUARDA LA FASE
-  2, ed e' il primo vincolo del progetto a guardare avanti invece che
-  indietro: gli altri quattro dicono cosa questo controllo non vede oggi,
-  questo dice quando smettera' di vedere abbastanza. LA CONDIZIONE, scritta
-  perche' non venga riletta troppo tardi: quando si scrivera' il primo codice
-  fuori da Python, questa riga va riletta PRIMA di scriverlo e non dopo.
-  Riletta dopo non e' una rilettura: e' una struttura doppia gia' nata, e per
-  giunta la decima, in una lingua dove nessuno dei controlli esistenti arriva.
-  Non si risolve ora — non c'e' ancora una riga di JavaScript da scandire, e
-  un rilevatore scritto contro codice che non esiste e' un rilevatore mai
-  messo alla prova, che e' il difetto che COPIE_PIANTATE esiste per evitare.
+  di SORGENTI, cioe' Python. E' L'UNICO LIMITE DI QUESTO ELENCO CHE RIGUARDA
+  LA FASE 2, ed e' il primo vincolo del progetto a guardare avanti invece che
+  indietro: gli altri dicono cosa questo controllo non vede oggi, questo dice
+  quando smettera' di vedere abbastanza. LA CONDIZIONE, scritta perche' non
+  venga riletta troppo tardi: quando si scrivera' il primo codice fuori da
+  Python, questa riga va riletta PRIMA di scriverlo e non dopo. Riletta dopo
+  non e' una rilettura: e' una struttura doppia gia' nata, e per giunta la
+  decima, in una lingua dove nessuno dei controlli esistenti arriva. Non si
+  risolve ora — non c'e' ancora una riga di JavaScript da scandire, e un
+  rilevatore scritto contro codice che non esiste e' un rilevatore mai messo
+  alla prova, che e' il difetto che COPIE_PIANTATE esiste per evitare.
 - la prosa: una formula scritta a parole dentro un `description` di schema,
   dentro una nota di un JSON o dentro un documento non e' un letterale e non
   viene letta.
@@ -189,8 +190,16 @@ leggono la sede adesso.
   controllo, ma adesso deve dichiarare se e' letto o calcolato, e quella
   dichiarazione un altro controllo la verifica. Due controlli che guardano lo
   stesso difetto da due lati, nessuno dei due sufficiente da solo.
+- un numero SOLO: il budget dell'acquisto a punti e' un intero e basta, e un
+  intero non forma una sfilza. Un `27` riscritto altrove non viene visto da
+  nessuno dei due lati del controllo — ne' per forma, perche' non e'
+  un'espressione, ne' per valori, perche' `_gruppi_di_interi` raccoglie da due
+  numeri in su. E' il limite piu' facile da incontrare di questo elenco, ed e'
+  dichiarato qui perche' chi aggiunge una costante singola alla cartella
+  sappia che la sede la ospita ma non la protegge.
 - una tabella copiata parzialmente: sotto i 10 valori consecutivi la corsa non
-  scatta. E' una soglia scelta, e le soglie scelte sbagliano da un lato: qui
+  scatta, salvo per le sfilze piu' corte della soglia, che si segnalano
+  intere. E' una soglia scelta, e le soglie scelte sbagliano da un lato: qui
   sbagliano lasciando passare, che e' il lato giusto per un controllo che deve
   restare acceso.
 

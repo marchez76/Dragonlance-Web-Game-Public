@@ -180,6 +180,21 @@ def controlla_prosa(err):
         elif d["genere"] == "soglie":
             for s in d["soglie"]:
                 manca(s["valore"])
+        elif d["genere"] == "metodi":
+            # Di un metodo la prosa deve nominare OGNI numero, non gli
+            # estremi: non e' una tabella di trenta righe, sono tre
+            # procedure corte, e il numero che la prosa non nomina e'
+            # esattamente quello che nessuno riconfronta piu'.
+            for m in d["metodi"]:
+                for campo in ("punteggi", "dadi", "facce",
+                              "scarta_i_piu_bassi", "budget"):
+                    if m.get(campo) is not None:
+                        manca(m[campo])
+                for v in m.get("valori") or []:
+                    manca(v)
+                for c in m.get("costi") or []:
+                    manca(c["punteggio"])
+                    manca(c["costo"])
 
 
 def controlla_duplicazione(err):

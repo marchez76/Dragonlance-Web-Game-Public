@@ -1,0 +1,50 @@
+{
+  "id": "generazione-caratteristiche",
+  "name": {
+    "en": "Determine Ability Scores",
+    "it": "Generazione delle caratteristiche"
+  },
+  "genere": "metodi",
+  "source": {
+    "source_edition": "PHB 2014",
+    "source_book": "Player's Handbook 2014, Step 3 — Determine Ability Scores, e la variante Customizing Ability Scores",
+    "api_ref": null
+  },
+  "mechanics_5e": "Tre modi di ottenere le 6 caratteristiche di un personaggio, e producono la stessa cosa per vie diverse. TIRO: per ciascuna delle 6 caratteristiche si tirano 4 dadi da 6 facce, si scarta 1 risultato — il piu' basso — e si sommano i 3 restanti; i valori escono in ordine di tiro e si assegnano a piacere. INSIEME FISSO: si distribuiscono a piacere i 6 valori gia' decisi 15, 14, 13, 12, 10, 8, senza tirare nulla. ACQUISTO A PUNTI: si parte da 27 punti e si compra ciascuna delle 6 caratteristiche entro l'intervallo da 8 a 15, dove 8 costa 0, 9 costa 1, 10 costa 2, 11 costa 3, 12 costa 4, 13 costa 5, 14 costa 7 e 15 costa 9; la somma dei costi non puo' superare il budget. In tutti e tre i casi i valori sono PRE-RAZZIALI: gli aggiustamenti si sommano dopo.",
+  "metodi": [
+    {
+      "id": "tiro-4d6-scarta-minore",
+      "nome_it": "4d6 scarta il minore",
+      "tipo": "tiro",
+      "punteggi": 6,
+      "dadi": 4,
+      "facce": 6,
+      "scarta_i_piu_bassi": 1
+    },
+    {
+      "id": "array-standard",
+      "nome_it": "Array standard",
+      "tipo": "insieme_fisso",
+      "punteggi": 6,
+      "valori": [15, 14, 13, 12, 10, 8]
+    },
+    {
+      "id": "punti-acquisto",
+      "nome_it": "Acquisto a punti",
+      "tipo": "acquisto",
+      "punteggi": 6,
+      "budget": 27,
+      "costi": [
+        { "punteggio": 8, "costo": 0 },
+        { "punteggio": 9, "costo": 1 },
+        { "punteggio": 10, "costo": 2 },
+        { "punteggio": 11, "costo": 3 },
+        { "punteggio": 12, "costo": 4 },
+        { "punteggio": 13, "costo": 5 },
+        { "punteggio": 14, "costo": 7 },
+        { "punteggio": 15, "costo": 9 }
+      ]
+    }
+  ],
+  "note": "PERCHE' E' IL PRIMO DATO DI SISTEMA CHE NON VIENE DALL'SRD. Le sezioni dell'SRD 5.1 non contengono la generazione delle caratteristiche: nessuna nomina 4d6, l'array 15/14/13/12/10/8 o la tabella dei costi (verificato il 05/09/2026 scandendo le 45 sezioni dell'SRD). Vengono dal PHB 2014, cioe' dall'edizione di riferimento della decisione 2 (`edizione-phb-2014`). Restano pubblicabili per il criterio di CLAUDE.md 1: sono la regola in numeri, non la prosa del manuale — nessuna frase e' ripresa, e la descrizione qui sopra e' nostra. QUALE METODO SIA IL DEFAULT NON STA QUI, ed e' voluto: e' una scelta di casa (decisione 8, `generazione-caratteristiche`, che sceglie il tiro) e vive con il motore. Questo file dice cosa i tre metodi SONO, non quale si usa. PERCHE' ERA UN DATO DA SPOSTARE. I tre valori vivevano insieme in `motore/generazione.py` e di nuovo, con altri nomi, in `dati/analisi_soddisfacibilita.py`: due copie, allineate per coincidenza, che nessuno metteva una contro l'altra — la stessa forma delle nove strutture doppie precedenti. Il controllo anti-duplicazione di `valida_sistema.py` non poteva vederle perche' guardava le tabelle di questa cartella, e questi numeri non erano in questa cartella: e' il motivo per cui la risposta e' stata spostarli qui e non estendere il sorvegliante, che per sorvegliarli avrebbe dovuto riscriverli una terza volta."
+}

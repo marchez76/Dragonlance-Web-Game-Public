@@ -377,8 +377,8 @@ Sui soli vincoli razziali:
 | Mezzelfo | 94,30% |
 | Minotauro | 96,42% |
 | Elfo Silvanesti | 99,32% |
-| Barbaro | 99,34% |
 | Nano delle Montagne (Hylar / Daewar) | 99,63% |
+| Barbaro | 99,65% |
 | Kender | 99,85% |
 | Elfo Dargonesti (Elfo degli Abissi) | 99,92% |
 | Elfo Dimernesti (Elfo dei Bassifondi) | 99,92% |
@@ -389,11 +389,19 @@ Percorsi cavallereschi (`cavaliere` è la classe generica, non un grado dell'Ord
 
 | razza | classe | qualificati |
 |---|---|---:|
+| Barbaro | `cavaliere` | 18,15% |
+| Mezzelfo | `cavaliere` | 16,56% |
+| Kender | `cavaliere` | 14,57% |
+| Minotauro | `cavaliere` | 12,72% |
 | Nano delle Montagne (Hylar / Daewar) | `cavaliere` | 12,54% |
 | Umano | `cavaliere` | 12,50% |
 | Elfo Dargonesti (Elfo degli Abissi) | `cavaliere` | 12,46% |
 | Elfo Dimernesti (Elfo dei Bassifondi) | `cavaliere` | 12,46% |
-| Barbaro | `cavaliere` | 12,32% |
+| Nano delle Colline (Neidar) | `cavaliere` | 11,78% |
+| Gnomo (Minoi) | `cavaliere` | 11,38% |
+| Elfo Qualinesti | `cavaliere` | 10,49% |
+| Elfo Kagonesti | `cavaliere` | 10,31% |
+| Elfo Silvanesti | `cavaliere` | 6,50% |
 | Irda (Alto Ogre) | `cavaliere` | 1,23% |
 | Umano | `cavaliere-corona` | 97,92% |
 | Mezzelfo | `cavaliere-corona` | 92,95% |
