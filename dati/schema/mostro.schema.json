@@ -305,7 +305,37 @@
         "size": { "enum": ["Tiny", "Small", "Medium", "Large", "Huge", "Gargantuan"] },
         "type": { "type": "string" },
         "subtype": { "type": ["string", "null"] },
-        "alignment": { "type": "string" },
+        "alignment": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["forma", "valori"],
+          "description": "L'ALLINEAMENTO COME VOCABOLARIO, non come frase (05/09/2026, decisione 61, `allineamento-insieme`). Fino a oggi era `{\"type\": \"string\"}` e conteneva prosa INGLESE dentro lo strato italiano — «Typically Chaotic Evil», «Unaligned» — cioe' lo stesso difetto che `dati/_vocabolari.py` e' nato per chiudere sui tipi di danno, in un campo che nessuno aveva guardato. La stringa portava TRE cose insieme e nessuna verificabile: quale dei nove, se la fonte dice «typically», e i due termini che la 5e usa AL POSTO di un allineamento. Ora sono tre campi. Il valore non si digita in conversione: si chiede a `_allineamenti.blocco_mostro()`, che o lo produce o si ferma su un termine che non conosce — vedi `dati/METODO-conversione-mostri.md`.",
+          "properties": {
+            "forma": {
+              "enum": ["tipico", "fisso", "senza_allineamento", "qualunque"],
+              "description": "`tipico`: la fonte scrive «Typically X», che nella 5e non e' un'incertezza nostra ma un termine suo — dice «i piu' di questa specie», e una scheda che lo perde afferma piu' di quanto la fonte affermi. `fisso`: la fonte da' l'allineamento senza qualificarlo. `senza_allineamento`: `Unaligned`, la creatura non ha bussola morale. `qualunque`: `Any alignment`, la scheda non ne fissa una. Le ultime due non sono un buco del vocabolario e non vanno contate come tale: sono due forme, e qui hanno un nome."
+            },
+            "valori": {
+              "type": "array",
+              "items": { "$ref": "vocabolari.schema.json#/$defs/allineamento" },
+              "description": "Gli allineamenti nominati, dal vocabolario unico. VUOTO — e obbligatoriamente vuoto, l'`allOf` qui sotto lo pretende — quando `forma` e' `senza_allineamento` o `qualunque`: la prima non nomina nessun allineamento, la seconda li ammette tutti e nove, e scriverceli sarebbe confondere «la scheda non sceglie» con «la scheda ha scelto tutto»."
+            },
+            "note": {
+              "type": ["string", "null"],
+              "description": "La condizione, quando la scheda ne porta una. Prosa nostra, italiana: e' il posto dove finisce cio' che la fonte dice fra parentesi e che il vocabolario non puo' reggere."
+            }
+          },
+          "allOf": [
+            {
+              "if": { "properties": { "forma": { "enum": ["senza_allineamento", "qualunque"] } }, "required": ["forma"] },
+              "then": { "properties": { "valori": { "maxItems": 0 } } }
+            },
+            {
+              "if": { "properties": { "forma": { "enum": ["tipico", "fisso"] } }, "required": ["forma"] },
+              "then": { "properties": { "valori": { "minItems": 1 } } }
+            }
+          ]
+        },
 
         "armor_class": {
           "type": "object",

@@ -1,6 +1,6 @@
 # Il bestiario di Krynn — diagnostica
 
-*Generato da `dati/analizza_bestiario.py` il 2026-09-01.*
+*Generato da `dati/analizza_bestiario.py` il 2026-09-05.*
 
 > **Diagnostica, non conversione.** Serve a vedere la forma del problema prima
 > di cominciare, come `RAPPORTO-classi.md` per le classi. Nessuno statblock è
@@ -44,7 +44,7 @@ reale del **Baaz**.
 
 I 7 senza corrispettivo: `FREQUENCY`, `ORGANIZATION`, `ACTIVITY CYCLE`, `DIET`, `NO. APPEARING`, `MAGIC RESISTANCE`, `MORALE`.
 
-> **Lettura interpretativa** — registrata il 2026-09-01. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-05. Non e' derivata dai dati.
 >
 > Un terzo abbondante della scheda 2e — 7 campi su 21 — non ha dove andare.
 > Ma le due metà del problema non si somigliano.
@@ -251,7 +251,7 @@ identitarie di Krynn, quindi il campione non è casuale: è il migliore possibil
 | — | **aggiunto** | `Aura of Command`: aura di comando sugli altri draconici. In 2e l'Aurak era un comandante nel testo, non nelle regole. |
 
 
-> **Lettura interpretativa** — registrata il 2026-09-01. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-05. Non e' derivata dai dati.
 >
 > Tre regolarità nel modo di rendere, che valgono per tutti e cinque.
 >
@@ -328,7 +328,7 @@ ma non c'è una formula: Baaz e Kapak hanno la stessa CA 2e (4) e finiscono a 14
 | Sivak | 14.0 | 34.0 | ×2.4 |
 | Aurak | 13.0 | 24.0 | ×1.8 |
 
-> **Lettura interpretativa** — registrata il 2026-09-01. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-05. Non e' derivata dai dati.
 >
 > **La risposta alla domanda è no: cinque casi non bastano.**
 >
@@ -402,7 +402,7 @@ il danno la tira su da sola.
 | Sivak | 4 | 57 | 85 | 67% | 34 | ×2.4 |
 | Aurak | 6 | 67 | 114 | 59% | 24 | ×1.8 |
 
-> **Lettura interpretativa** — registrata il 2026-09-01. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-05. Non e' derivata dai dati.
 >
 > **Il Kapak ha 39 punti ferita contro una mediana di 58 al suo grado: il 67%.**
 > Sta *sotto* la mediana in difesa e ci arriva col danno — 24 per round. È un
@@ -425,7 +425,7 @@ il danno la tira su da sola.
 > offensivo rispetto alla propria fonte**: ×9.6 contro il ×1.6–×4.0 degli altri
 > quattro. Gli altri sono stati riscalati; lui è stato **ripensato**.
 
-> **Lettura interpretativa** — registrata il 2026-09-01. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-05. Non e' derivata dai dati.
 >
 > **Sopra la mediana in armatura, sotto in punti ferita.** È lo stesso profilo
 > visto sopra, letto sui due assi: la CA dei draconici sta sempre a pari o sopra
@@ -482,7 +482,7 @@ immagini di pagina lo ha rifatto voce per voce.
 verificati per primi. Il dettaglio completo — testo estratto, nome reale, pagina,
 causa — è nella tabella più sotto.
 
-> **Lettura interpretativa** — registrata il 2026-09-01. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-05. Non e' derivata dai dati.
 >
 > **L'estrazione non ha solo sbagliato i nomi: ha perso dei dati.** In tre voci
 > le colonne di destra sono sparite del tutto — `Avian` aveva quattro uccelli e
@@ -501,7 +501,7 @@ causa — è nella tabella più sotto.
 > specie sola in due stati, il solitario e la coppia accoppiata da 35 dadi vita
 > che il manuale tratta come singola creatura.
 
-> **Lettura interpretativa** — registrata il 2026-09-01. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-05. Non e' derivata dai dati.
 >
 > **Questo numero non è un fatto acquisito: è la stima migliore ottenuta finora,
 > e va detto invece di presentare 87 come definitivo.** Il conteggio "definitivo"
@@ -753,7 +753,7 @@ cinque fasce, più il Cervo Bianco fuori fascia.
 **The White Stag.** Il terzo abitante della voce Stag (pag. 78). Non è una bestia: è unico, allineamento legale buono, 2.000 PE, con capacità magiche — una creatura sacra da incontro narrativo, non un avversario. Proposta: schedarlo quando esiste uno schema per creature uniche/da avventura (vicino allo schema Personaggio), non forzarlo nel bestiario da combattimento. LETTURA COMPLETA (compito 3): SPECIAL DEFENSES "See below" si risolve in "non puo' essere catturato, combatte fino alla morte" — se ucciso il corpo scompare e chi lo ha ucciso resta maledetto (+1 alla propria Classe Armatura nella scala 2e discendente, cioe' PEGGIORE, per sette giorni). Ha anche find the path e speak with animals a volonta' e bless 3/giorno. Conferma: fuori fascia, creatura da incontro narrativo, non da arena.
 
 
-> **Lettura interpretativa** — registrata il 2026-09-01. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-05. Non e' derivata dai dati.
 >
 > **Le fasce sono state ricostruite leggendo i 62 blocchi statistiche, non i
 > nomi delle voci.** La versione precedente aveva scelto la prima fascia (compresi
@@ -804,7 +804,7 @@ cinque fasce, più il Cervo Bianco fuori fascia.
 > fascia (il campo rimandato al testo si risolveva in una sola immunita' al
 > freddo) ed e' stato **convertito**: vedi `dati/mostri/eyewing.json`.
 
-> **Lettura interpretativa** — registrata il 2026-09-01. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-05. Non e' derivata dai dati.
 >
 > ### Compito 3 — le restanti voci con campo rimandato, lette tutte prima di convertire altro
 >
@@ -837,7 +837,7 @@ cinque fasce, più il Cervo Bianco fuori fascia.
 > pagina prima della conversione (vincolo 5, come i campi bloccati da
 > filtro).
 
-> **Lettura interpretativa** — registrata il 2026-09-01. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-05. Non e' derivata dai dati.
 >
 > **2 voci hanno una correzione di lettura, non di fascia:**
 >
@@ -965,7 +965,7 @@ ricontaggio voce per voce ne ha trovati altri quattro con la stessa causa.
 | `Tayling Tayland` | **Tayling** (+1 varianti) | 79 | statblock a due colonne |
 | `Y a g g o l` | **Yaggol** | 87 | titolo con spaziatura fra le lettere nel layout |
 
-> **Lettura interpretativa** — registrata il 2026-09-01. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-05. Non e' derivata dai dati.
 >
 > **La causa è quasi sempre una sola, e non è un difetto delle pagine.**
 > 14 casi su 8 sono voci con statblock a **più colonne**: una sola
@@ -1003,7 +1003,7 @@ Delle tre cose che mancavano, **sono fatte tutte e tre**.
   87 creature**, stabilito voce per voce sulle immagini di pagina —
   vedi "Il conteggio vero del bestiario" sopra.
 
-> **Lettura interpretativa** — registrata il 2026-09-01. Non e' derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-05. Non e' derivata dai dati.
 >
 > Nessuna delle tre resta aperta. Quello che resta, e non è bloccante per
 > cominciare a convertire, è un disallineamento scoperto per strada: il

@@ -32,14 +32,14 @@ Sono l'unico pezzo dello strato che ha una verifica vera.
 | `ability_minimums` | 10 | 10 | 20/20 |
 | `chassis` | 9 | 9 | 20/20 |
 | `alignment_restriction` | 7 | 0 | 20/20 |
-| `race_restriction` | 3 | 3 | 20/20 |
 | `level_limits` | 3 | 3 | 20/20 |
+| `race_restriction` | 3 | 3 | 20/20 |
 | `chassis_features_da_trascrivere` | 3 | 0 | 20/20 |
-| `features_pending` | 1 | 1 | 20/20 |
-| `hit_die` | 1 | 1 | 20/20 |
 | `conversion_status` | 1 | 1 | 20/20 |
-| `entry_level` | 1 | 1 | 20/20 |
+| `features_pending` | 1 | 1 | 20/20 |
 | `prerequisite_class` | 1 | 1 | 20/20 |
+| `entry_level` | 1 | 1 | 20/20 |
+| `hit_die` | 1 | 1 | 20/20 |
 
 Il conto del lavoro si legge da questa tabella: non sono
 110 decisioni indipendenti, sono **12
@@ -215,13 +215,13 @@ guardia domani.
 
 | strato | file | percorsi in uso | dichiarati | `additionalProperties` |
 |---|--:|--:|--:|:-:|
-| **mostro** | 52 | 160 | 90 | `False` |
+| **mostro** | 52 | 163 | 93 | `False` |
 | **oggetto** | 79 | 60 | 51 | `False` |
 | **modello** | 3 | 108 | 82 | `False` |
 
 Sono la misura vera del costo: `mostro` dichiara
-90 percorsi per
-160 in uso su
+93 percorsi per
+163 in uso su
 52 file, con
 `additionalProperties: false`. Il lavoro sulle classi è dello stesso ordine
 di grandezza, su meno file.
@@ -292,15 +292,15 @@ proprietà dichiarata: 107 percorsi in uso nei 15 file,
 | `traits_by_status` | 5 | 0 | 15/15 |
 | `allowed_classes` | 4 | 0 | 15/15 |
 | `level_limits` | 3 | 0 | 15/15 |
-| `movement_note` | 1 | 0 | 15/15 |
-| `darkvision_note` | 1 | 0 | 15/15 |
-| `size` | 1 | 0 | 15/15 |
 | `languages` | 1 | 0 | 15/15 |
 | `movement_2e` | 1 | 0 | 15/15 |
-| `speed_ft` | 1 | 0 | 15/15 |
-| `languages_note` | 1 | 0 | 15/15 |
+| `movement_note` | 1 | 0 | 15/15 |
 | `conversion_status` | 1 | 0 | 15/15 |
 | `darkvision_ft` | 1 | 0 | 15/15 |
+| `speed_ft` | 1 | 0 | 15/15 |
+| `languages_note` | 1 | 0 | 15/15 |
+| `darkvision_note` | 1 | 0 | 15/15 |
+| `size` | 1 | 0 | 15/15 |
 
 4 blocchi da
 descrivere, contro i 12 delle
@@ -348,12 +348,12 @@ in due, perché costano cose diverse:
 | incoerenze: difetti | 0 | — | 0 |
 
 Il termine di paragone resta quello di §3: `mostro.schema.json` dichiara
-90 percorsi su
-160 in uso, con
+93 percorsi su
+163 in uso, con
 `additionalProperties: false`, su 52
 file. Le due zone morte insieme chiedono
 148 dichiarazioni contro le
-90 già scritte per il
+93 già scritte per il
 mostro — 1.6
 volte quel lavoro — su 35 file invece di
 52. E non ci sono più difetti da correggere prima: i 9 che restano sono stato dichiarato, cioè questo stesso lavoro visto da un altro lato.

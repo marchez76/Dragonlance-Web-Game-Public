@@ -40,25 +40,35 @@ DUE VOCI SU DIECI NON SONO VALORI: SONO REGOLE
 CHI ALTRO SCRIVE UN ALLINEAMENTO
     Cercato il giorno in cui questa sede nasce, non sei mesi dopo — e' la
     meta' del lavoro che CLAUDE.md 3 chiede quando si crea una sede unica.
-    Tre altri scrittori, tutti gia' esistenti:
+    Tre altri scrittori, tutti gia' esistenti, e uno dei tre e' stato chiuso
+    subito dopo (decisione 61, `allineamento-insieme`):
 
-      dati/mostri/  `mechanics_5e.alignment`   prosa INGLESE nello strato
-                                               italiano: lo stesso difetto
-                                               che `_vocabolari.py` e' nato
-                                               per chiudere sui tipi di danno
+      dati/mostri/  `mechanics_5e.alignment`   CHIUSO. Era prosa INGLESE
+                                               nello strato italiano — lo
+                                               stesso difetto che
+                                               `_vocabolari.py` e' nato per
+                                               chiudere sui tipi di danno —
+                                               ed e' ora il blocco di
+                                               `blocco_mostro()`, vincolato
+                                               dallo schema.
       dati/mostri/  `source_2e.alignment`      prosa 2e, strato di fonte:
                                                resta com'e', per costruzione
       dati/divinita/ `family`                  i soli assi morali, tre valori
       dati/divinita/ `source_2e.priest_alignment`  abbreviazioni 2e
 
-    Nessuno dei quattro viene toccato qui, e la ragione non e' la fretta: il
-    primo e' una conversione di 51 schede che va fatta nel suo generatore
-    (CLAUDE.md 2), il secondo e' strato di fonte e non si tocca mai, il
-    terzo e il quarto vivono nella
-    decisione 35 (`repertori-sono-filtri`) e si muoveranno con essa.
-    Cio' che questo modulo fa e' MISURARE la distanza — `fuori_vocabolario()`
-    — perche' una struttura doppia misurata non e' chiusa ma non e' nemmeno
-    invisibile, ed e' la differenza fra una sede che chiude e una che sposta.
+    I due delle divinita' restano aperti e non per fretta: quale dei due si
+    legge e' deciso — `priest_alignment`, e `divinita_a_confronto()` misura
+    perche' — ma SCRIVERLO nel dato appartiene alla
+    decisione 24 (`sfere-sacerdotali`), che apre lo strato 5e delle divinita'
+    (oggi `mechanics_5e` e' null su tutte e 21). Il terzo e' strato di fonte
+    e non si tocca mai.
+
+    Cio' che questo modulo fa nel frattempo e' MISURARE la distanza —
+    `fuori_vocabolario()` — perche' una struttura doppia misurata non e'
+    chiusa ma non e' nemmeno invisibile, ed e' la differenza fra una sede che
+    chiude e una che sposta. Il campo chiuso resta censito insieme agli
+    altri: un difetto che smette di essere misurato il giorno in cui si
+    chiude e' un difetto che puo' tornare senza che nessuno lo veda.
 """
 
 import json
@@ -207,17 +217,17 @@ RESTRIZIONI = {
     "mago-veste-rossa": _r(
         "Neutrale", insieme(morale="neutrale"),
         "«neutrale» come valore dell'asse MORALE: legale neutrale, neutrale, "
-        "caotico neutrale",
-        da_confermare=
-        "e' l'unica delle tre Vesti dove la parola e' ambigua, perche' "
-        "«neutrale» sta su tutti e due gli assi. La lettura scelta e' quella "
-        "dell'asse morale (tre valori), coerente con le altre due Vesti che "
-        "leggono la stessa posizione sullo stesso asse. La seconda lettura "
-        "possibile e' «qualunque allineamento che abbia un neutrale», cioe' "
-        "cinque valori: i tre di qui piu' neutrale buono e neutrale "
-        "malvagio. Le due non si distinguono senza una riga della fonte, e "
-        "la riga non e' stata ancora letta: la differenza vale due "
-        "allineamenti su nove e va decisa, non indovinata."),
+        "caotico neutrale — decisione 61 (`allineamento-insieme`). E' l'unica "
+        "delle tre Vesti dove la parola e' ambigua, perche' «neutrale» sta su "
+        "tutti e due gli assi, e la seconda lettura possibile — «qualunque "
+        "allineamento che abbia un neutrale», cinque valori: questi tre piu' "
+        "neutrale buono e neutrale malvagio — non e' assurda. A deciderla non "
+        "e' una riga della fonte ma la FORMA in cui la fonte le presenta: una "
+        "terna simmetrica, Bianca buono, Rossa neutrale, Nera malvagio, cioe' "
+        "le tre posizioni dello stesso asse. Le altre due si leggono "
+        "sull'asse morale senza ambiguita'; leggere la Rossa su un asse "
+        "diverso spezzerebbe la simmetria che la fonte costruisce, e sarebbe "
+        "una lettura buona per un terzo della terna e non per la terna."),
     "mariner": _r(
         "Qualunque tranne Legale Buono", tranne("legale_buono"),
         "la fonte lo scrive per complemento e qui resta un complemento: "
@@ -232,21 +242,107 @@ RESTRIZIONI = {
         ragione="non e' un insieme: e' una funzione della Veste, che alla "
                 "creazione non e' ancora scelta — la "
                 "decisione 6 (`maghi-delle-torri`) colloca il giuramento al "
-                "Test, al 3°. "
-                "Le tre Vesti hanno gia' ciascuna il proprio insieme qui "
-                "sopra: la forma che questa voce prendera' e' una decisione "
-                "da prendere, non un dato da scrivere."),
+                "Test, al 3°. Non si scrive un dato che dipende da una "
+                "decisione non presa: la forma dell'aggancio e' la "
+                "questione aperta (`vesti-livello-sottoclasse`), e finche' "
+                "quella non e' sciolta un insieme scritto qui sarebbe una "
+                "risposta data per conto di chi non ha ancora deciso. "
+                "E L'UNIONE DEI TRE INSIEMI DELLE VESTI DA' TUTTI E NOVE — "
+                "`unione_vesti()`, derivata e non scritta a mano — che NON e' "
+                "un ripiego per non decidere: e' cio' che la fonte dice. Al "
+                "1° livello il mago non ha ancora giurato, e nessuno dei nove "
+                "gli e' precluso; il vincolo nasce al Test, insieme alla "
+                "Veste. decisione 61 (`allineamento-insieme`)."),
     "sacerdote-ordini-sacri": _r(
         "Coerente con la famiglia celeste del dio servito: Bene, Male o "
         "Neutralita'.",
         dipende_da="divinita",
-        ragione="non e' un insieme: e' una funzione del dio scelto. Il dato "
-                "per risolverla esiste gia' — `family` su ciascuna delle 21 "
-                "divinita', e `source_2e.priest_alignment`, che e' piu' "
-                "preciso della famiglia — ma legarli qui vorrebbe dire "
-                "decidere la forma del legame, che e' cosa diversa dal "
-                "trascrivere un vincolo."),
+        ragione="non e' un insieme: e' una funzione del dio scelto, e IL "
+                "VINCOLO VA SULLA DIVINITA', non sulla classe — "
+                "decisione 61 (`allineamento-insieme`), nella forma della "
+                "decisione 24 (`sfere-sacerdotali`), dove e' gia' il dio a "
+                "portare il filtro. Il campo da leggere e' "
+                "`source_2e.priest_alignment` e NON `family`, e la ragione e' "
+                "misurata da `divinita_a_confronto()`, non ricordata: i due "
+                "divergono su 7 divinita' su 21, e su 3 di esse la famiglia "
+                "e' PIU' LARGA del vincolo che la fonte scrive, quindi "
+                "leggerla perderebbe informazione vera. Scriverlo nel dato "
+                "delle divinita' e' pero' un passo della "
+                "decisione 24 (`sfere-sacerdotali`) e non di questa: oggi "
+                "`mechanics_5e` e' null su tutte e 21, e aprire quello strato "
+                "per un campo solo vorrebbe dire cominciarlo di sbieco."),
 }
+
+
+VESTI = ("mago-veste-bianca", "mago-veste-rossa", "mago-veste-nera")
+
+
+def unione_vesti():
+    """I nove, e non e' una coincidenza: e' cio' che la fonte dice.
+
+    Le tre Vesti coprono le tre posizioni dell'asse morale, quindi la loro
+    unione e' il vocabolario intero. Serve al Mago dell'Alta Stregoneria, che
+    al 1° livello non ha ancora giurato: derivarla e' il modo di NON scrivere
+    «tutti e nove» a mano accanto a un elenco che gia' lo dice."""
+    fuori = set()
+    for v in VESTI:
+        fuori |= set(RESTRIZIONI[v].valori)
+    return tuple(a for a in ALLINEAMENTI if a in fuori)
+
+
+# --------------------------------------------------------------------------
+# I MOSTRI — l'allineamento dello strato 5e, che era prosa INGLESE dentro lo
+# strato italiano. E' lo stesso difetto per cui `_vocabolari.py` e' nato sui
+# tipi di danno, e si chiude allo stesso modo: non riscrivendo le 52 schede a
+# valle, ma dando alla conversione una funzione da cui il campo esce gia'
+# fatto. decisione 61 (`allineamento-insieme`).
+#
+# TRE COSE IN UNA STRINGA, e per questo la stringa non bastava:
+#   - QUALE dei nove, che e' il vocabolario;
+#   - se e' «typically», che nella 5e non e' un'incertezza nostra ma un
+#     termine della fonte — dice «i piu' di questa specie», e una scheda che
+#     lo perde afferma piu' di quanto la fonte affermi;
+#   - i due termini che la 5e usa AL POSTO di un allineamento: `Unaligned`,
+#     che dice che la creatura non ha bussola morale, e `Any alignment`, che
+#     dice che la scheda non ne fissa una. Non sono un buco del vocabolario e
+#     non vanno contati come tale: sono due forme, e qui hanno un nome.
+# --------------------------------------------------------------------------
+
+FORME_MOSTRO = ("tipico", "fisso", "senza_allineamento", "qualunque")
+
+_PARENTESI = re.compile(r"\s*\((.*)\)\s*$", re.S)
+_TIPICAMENTE = re.compile(r"^typically\s+", re.I)
+
+
+def blocco_mostro(testo):
+    """Il blocco `mechanics_5e.alignment` di un mostro, dalla frase della fonte.
+
+    Da chiamare in conversione: il campo non si digita: si chiede a questa
+    funzione, che o lo produce o si ferma. Un termine sconosciuto e' un
+    errore, non una stringa che passa (stessa regola di `allineamento()`).
+
+        blocco_mostro("Typically Chaotic Evil")
+        {'forma': 'tipico', 'valori': ['caotico_malvagio'], 'note': None}
+    """
+    grezzo = " ".join(str(testo or "").split())
+    if not grezzo:
+        raise KeyError("allineamento vuoto: una scheda 5e ne ha sempre uno, "
+                       "e se la fonte tace la forma e' 'qualunque'")
+
+    nota = None
+    m = _PARENTESI.search(grezzo)
+    if m:
+        nota, grezzo = m.group(1).strip(), grezzo[:m.start()].strip()
+
+    chiave = grezzo.lower().rstrip(".")
+    if chiave == "unaligned":
+        return {"forma": "senza_allineamento", "valori": [], "note": nota}
+    if chiave == "any alignment":
+        return {"forma": "qualunque", "valori": [], "note": nota}
+
+    senza = _TIPICAMENTE.sub("", grezzo)
+    forma = "tipico" if senza != grezzo else "fisso"
+    return {"forma": forma, "valori": [allineamento(senza)], "note": nota}
 
 
 # --------------------------------------------------------------------------
@@ -338,8 +434,22 @@ def fuori_vocabolario():
         }
 
     mostri = _carica("mostri")
-    censisci("mostri/mechanics_5e.alignment",
-             [(m.get("mechanics_5e") or {}).get("alignment") for m in mostri])
+    # CHIUSO dalla decisione 61 (`allineamento-insieme`): il campo non e' piu'
+    # una stringa ma il blocco di `blocco_mostro()`, e resta censito perche'
+    # un difetto chiuso che smette di essere misurato e' un difetto che puo'
+    # tornare senza che nessuno lo veda. I due termini che la 5e usa al posto
+    # di un allineamento contano come tali e non come prosa: e' cio' che
+    # `forma` dichiara.
+    dentro_mostri = []
+    for m in mostri:
+        a = (m.get("mechanics_5e") or {}).get("alignment") or {}
+        if a.get("forma") in ("senza_allineamento", "qualunque"):
+            dentro_mostri.append(a["forma"])
+        else:
+            dentro_mostri.extend(a.get("valori") or [])
+    censisci("mostri/mechanics_5e.alignment", dentro_mostri,
+             vocabolario=set(ALLINEAMENTI) | {"senza_allineamento",
+                                              "qualunque"})
     censisci("mostri/source_2e.alignment",
              [(m.get("source_2e") or {}).get("alignment") for m in mostri])
     dei = _carica("divinita")
@@ -348,6 +458,87 @@ def fuori_vocabolario():
     censisci("divinita/source_2e.priest_alignment",
              [(d.get("source_2e") or {}).get("priest_alignment") for d in dei])
     return fuori
+
+
+# --------------------------------------------------------------------------
+# LE DIVINITA': DUE CAMPI CHE DICONO LA STESSA COSA CON PRECISIONE DIVERSA.
+#
+# Il Sacerdote degli Ordini Sacri ha un vincolo che dipende dal dio servito
+# (decisione 61, `allineamento-insieme`). I campi candidati sono due, e non
+# sono equivalenti: `family` porta il solo asse morale — tre valori — mentre
+# `source_2e.priest_alignment` porta cio' che la fonte scrive davvero, che a
+# volte e' piu' stretto e a volte piu' largo della famiglia.
+#
+# Questa tabella legge le FORME in cui la fonte scrive quel campo, non le
+# divinita' una per una: le forme sono poche e si ripetono, e una riga per
+# dio sarebbe la trascrizione di una tabella privata dentro un file pubblico.
+# Il confronto per dio si calcola a runtime sui dati e non si scrive qui.
+#
+# DUE FORME SONO AMBIGUE, ed e' la stessa ambiguita' della Veste Rossa:
+# «Any Neutral» e «Any N» possono valere i tre dell'asse morale o i cinque
+# che hanno un neutrale addosso. Qui vale la lettura stretta, e la scelta e'
+# marcata: sulle tre divinita' che la portano le due letture danno «uguale
+# alla famiglia» oppure «piu' largo», mai «piu' stretto», quindi la misura
+# che conta — dove la famiglia PERDE informazione — non dipende da come si
+# scioglie. Se un giorno si scrivera' l'insieme nel dato delle divinita',
+# questa e' la riga da rileggere per prima.
+# --------------------------------------------------------------------------
+
+PRIEST_ALIGNMENT = {
+    "any evil": insieme(morale="malvagio"),
+    "any good": insieme(morale="buono"),
+    "any neutral": insieme(morale="neutrale"),
+    "any n": insieme(morale="neutrale"),
+    "any non-evil": tranne(*insieme(morale="malvagio")),
+    "any": ALLINEAMENTI,
+    "n": ("neutrale",),
+    "lg": ("legale_buono",),
+    "lg, cg": ("legale_buono", "caotico_buono"),
+}
+
+AMBIGUE = ("any neutral", "any n")
+
+
+def _da_priest(testo):
+    """L'insieme dei nove che una forma di `priest_alignment` nomina.
+
+    None quando la fonte non scrive nulla (`None`): un dio senza sacerdoti
+    non e' un dio senza vincolo, ed e' un caso diverso da «qualunque»."""
+    if not testo:
+        return None
+    chiave = re.sub(r"\s+", " ", str(testo).strip().lower()).strip(".")
+    if chiave in ("none", "nil"):
+        return None
+    if chiave not in PRIEST_ALIGNMENT:
+        raise KeyError(
+            f"forma di priest_alignment non letta: {testo!r}. Aggiungila a "
+            f"PRIEST_ALIGNMENT con la sua lettura, non indovinarla a valle.")
+    return set(PRIEST_ALIGNMENT[chiave])
+
+
+def divinita_a_confronto():
+    """Dove `family` e `priest_alignment` non dicono la stessa cosa.
+
+    Torna {dio: (verso, dalla_famiglia, dal_sacerdote)} per le sole divinita'
+    su cui i due divergono. `verso` e' `piu_stretto` quando la fonte vincola
+    il sacerdote piu' di quanto faccia la famiglia — cioe' i casi in cui
+    leggere la famiglia PERDEREBBE INFORMAZIONE VERA — e `piu_largo` quando
+    e' il contrario. E' la misura che decide quale dei due campi si legge."""
+    fuori = {}
+    for d in _carica("divinita"):
+        fam = MORALE_DA_SRD.get((d.get("family") or "").strip().lower())
+        if fam is None:
+            continue
+        dalla_famiglia = set(insieme(morale=fam))
+        dal_sacerdote = _da_priest((d.get("source_2e") or {})
+                                   .get("priest_alignment"))
+        if dal_sacerdote is None or dal_sacerdote == dalla_famiglia:
+            continue
+        verso = ("piu_stretto" if dal_sacerdote < dalla_famiglia
+                 else "piu_largo" if dal_sacerdote > dalla_famiglia
+                 else "incrociato")
+        fuori[d["id"]] = (verso, sorted(dalla_famiglia), sorted(dal_sacerdote))
+    return dict(sorted(fuori.items()))
 
 
 # --------------------------------------------------------------------------
@@ -405,6 +596,10 @@ assert {m for _, m in ASSI.values()} == set(MORALE), "asse morale incompleto"
 assert len({ASSI[a] for a in ALLINEAMENTI}) == len(ALLINEAMENTI), \
     "due allineamenti sulla stessa coppia di assi"
 
+assert unione_vesti() == ALLINEAMENTI, (
+    "le tre Vesti non coprono piu' i nove: se una delle tre letture cambia, "
+    "la ragione scritta sul Mago dell'Alta Stregoneria non regge piu'")
+
 assert set(DA_TERMINE.values()) == set(ALLINEAMENTI), (
     "la traduzione e l'enum non si coprono. Fuori dalla traduzione: "
     f"{sorted(set(ALLINEAMENTI) - set(DA_TERMINE.values()))}")
@@ -416,6 +611,13 @@ if __name__ == "__main__":
         print("PROBLEMA:", _x)
     print(f"{len(ALLINEAMENTI)} allineamenti, {len(RESTRIZIONI)} classi "
           f"vincolate, {len(_p)} incoerenze.")
+    print()
+    _c = divinita_a_confronto()
+    _stretti = [_d for _d, (_v, _, _) in _c.items() if _v == "piu_stretto"]
+    print(f"divinita': `family` e `priest_alignment` divergono su {len(_c)} "
+          f"su 21; su {len(_stretti)} la famiglia e' PIU' LARGA del vincolo "
+          f"della fonte, cioe' leggerla perderebbe informazione vera "
+          f"({', '.join(_stretti)}).")
     print()
     for _nome, _m in fuori_vocabolario().items():
         print(f"{_nome}: {_m['riconosciuti']} riconosciuti, "

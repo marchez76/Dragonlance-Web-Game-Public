@@ -431,14 +431,14 @@ razza + classe; la validazione; la soddisfacibilità (`esiste_assegnazione`,
 ### 3.4 Una nota che riguarda tutte e tre: la numerazione — CHIUSA
 
 Le tre questioni sospese si citano per numero, e i numeri **non erano
-stabili**. Il progetto contiene **1418 rimandi a una decisione in
-152 file**, di cui **370 nella fascia 1-12** — che è
+stabili**. Il progetto contiene **1445 rimandi a una decisione in
+152 file**, di cui **375 nella fascia 1-12** — che è
 esattamente dove stavano le tre questioni di questa sezione.
 
 Erano sfasati perché il numero è un ordinale dell'elenco, e l'elenco è
 cambiato: file scritti in momenti diversi hanno continuato a citare il numero
 della propria vintage, senza che nulla li riallineasse. Lette una per una, le
-370 citazioni della fascia bassa hanno dato questa corrispondenza —
+375 citazioni della fascia bassa hanno dato questa corrispondenza —
 **senza uno scarto costante**, e con lo stesso numero giusto in un file e
 sbagliato in un altro:
 
@@ -464,7 +464,7 @@ un `id` stabile che non cambierà mai, e la forma di un rimando è ora
 accanto come derivato. `verifica_decisioni.py` verifica la coppia in tutto il
 progetto e con `--correggi` riscrive i numeri a partire dagli id.
 
-Stato oggi: **1418 rimandi verificati, 0 sfasati,
+Stato oggi: **1445 rimandi verificati, 0 sfasati,
 0 con id ignoto, 0 ancora senza id**. Rinumerare
 adesso costa un comando.
 
@@ -472,7 +472,7 @@ adesso costa un comando.
 quel giorno erano prosa dentro `genera_contesto.py` — senza id, e quindi non
 citabili da nessun altro testo. Un rimando a una di esse si scrive «questione
 aperta (`aumento-oltre-tetto`)» e non ha numero: dove non c'è un derivato non
-c'è niente che possa sfasarsi. Ce ne sono **6** nel progetto,
+c'è niente che possa sfasarsi. Ce ne sono **9** nel progetto,
 0 con id ignoto.
 
 ---

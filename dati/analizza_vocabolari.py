@@ -73,7 +73,8 @@ VOCABOLARI = {
         ("classi", "mechanics_5e.structural.armor_proficiencies.categorie[]"),
     ],
     "allineamento": [
-        ("mostri", "mechanics_5e.alignment"),
+        ("mostri", "mechanics_5e.alignment.valori[]"),
+        ("classi", "mechanics_5e.alignment_restriction.values[]"),
     ],
 }
 
@@ -318,7 +319,7 @@ Il difetto arriva col prossimo file che usa lo stesso termine.
     testa += f"""
 ---
 
-## 3. I tre casi che restano aperti, e cosa costa chiuderli
+## 3. I casi aperti, e cosa costa chiuderli
 
 **`condition_immunities` — chiusa, e non traducendo e basta.**
 `dati/mostri/` dichiarava le immunita' a condizione con i nomi inglesi della
@@ -366,27 +367,33 @@ erano i tipi di danno prima di divergere. Chiuderlo e' **una riga**: il
 questo giro perche' tocca `razza.schema.json`, cioe' apre una delle tre zone
 morte, e quello e' un lavoro a se'.
 
-**`tipo di creatura`, `allineamento`, `scuole di magia` — una sede sola.**
-Nessuno dei tre e' rotto e nessuno dei tre e' al sicuro. Le scuole hanno un
-enum e stanno bene. `mechanics_5e.type` dei mostri
+**`tipo di creatura` e `scuole di magia` — una sede sola, e non e' la
+stessa cosa che essere al sicuro.** Le scuole hanno un enum e stanno bene.
+`mechanics_5e.type` dei mostri
 ({len(misure['tipo di creatura'][0][2])} valori distinti, inglese
 maiuscolizzato) **non ha enum**: il giorno in cui un secondo file — un
 modello, un incantesimo che filtra per tipo di creatura — nominera' gli
-stessi termini, il difetto nasce li'. `mechanics_5e.alignment`
-({len(misure['allineamento'][0][2])} valori distinti) **non e' un
-vocabolario affatto**: e' prosa, e ne porta la prova un valore solo, «Typically
-Chaotic Evil (solo quando animata da un incantesimo malvagio; altrimenti
-inanimata e innocua)». Vincolarlo a un enum vorrebbe dire buttare via quella
-clausola o darle un campo — la stessa forma del problema che `solo_se` ha
-risolto per le resistenze, e la stessa risposta gia' pronta.
+stessi termini, il difetto nasce li'.
+
+**L'`allineamento` non e' piu' fra questi.** Quando questo documento
+e' nato **non era un vocabolario affatto** — era prosa
+inglese dentro lo strato italiano, e ne portava la prova un valore solo,
+«Typically Chaotic Evil (solo quando animata da un incantesimo malvagio;
+altrimenti inanimata e innocua)» — e' ora chiuso da
+{cita('allineamento-insieme')}, e per la strada che questo stesso paragrafo
+indicava: non buttare via la clausola ne' l'avverbio, ma dare a ciascuno un
+campo. La stringa portava tre cose e nessuna verificabile; ora `forma` dice
+se la fonte scrive «typically» o se usa uno dei due termini che la 5e mette
+AL POSTO di un allineamento, `valori` porta gli id del vocabolario, `note`
+la clausola. Le sedi che lo nominano sono ora
+{len(misure['allineamento'])}, vincolate dallo stesso `$ref`.
 
 ---
 
 *Nessuna decisione e' presa in questo documento oltre a quelle gia'
-registrate. I tre casi aperti sono misurati, non chiusi: due di loro tirano
-dentro un lavoro dichiarato a se' (le zone morte di schema, il criterio delle
-condizioni), e chiuderli di straforo sarebbe la scorciatoia che questo
-progetto paga sempre due volte.*
+registrate. I casi ancora aperti sono misurati, non chiusi: tirano dentro un
+lavoro dichiarato a se' (le zone morte di schema), e chiuderli di straforo
+sarebbe la scorciatoia che questo progetto paga sempre due volte.*
 """
     return testa, misure
 

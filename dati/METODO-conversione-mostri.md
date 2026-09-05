@@ -79,6 +79,21 @@ le riorganizza per l'uso, non le sostituisce.
   proprio) su tutti i campi di combattimento — non su `TREASURE`/
   `NO. APPEARING`, che restano dati di mondo. Se presente, la lettura
   completa non è opzionale.
+- **L'allineamento 5e non si digita: si chiede al vocabolario.**
+  `mechanics_5e.alignment` è un blocco — `forma`, `valori`, `note` — e il
+  modo di produrlo è `_allineamenti.blocco_mostro("Typically Chaotic Evil")`,
+  che o restituisce il blocco o si ferma su un termine che non conosce
+  (decisione 61 (`allineamento-insieme`)). Fino al 05/09/2026 il campo era
+  una stringa e conteneva prosa **inglese** dentro lo strato italiano, su
+  tutte e 52 le schede: lo stesso difetto che `_vocabolari.py` era nato per
+  chiudere sui tipi di danno, in un campo che nessuno aveva guardato. Tre
+  cose stavano in quella stringa e nessuna era verificabile — quale dei nove,
+  se la fonte scrive «typically» (che è un termine **suo**: dice «i più di
+  questa specie», e una scheda che lo perde afferma più di quanto la fonte
+  affermi), e i due termini che la 5e usa **al posto** di un allineamento
+  (`Unaligned`, `Any alignment`), che non sono un buco del vocabolario. La
+  clausola fra parentesi, quando c'è, va in `note` e non si butta.
+
 - **Resistenza magica**: si registra in `magic_resistance_2e` con
   `applied: false` (decisione 27 (`sette-campi-2e`), gruppo C — rinviata alla Fase 2), mai
   applicata alla scheda.

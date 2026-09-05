@@ -30,6 +30,7 @@ import sys
 BASE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, BASE)
 
+import _allineamenti as AL
 import _draconici as D
 import _schemi as S
 import _vocabolari as V
@@ -163,7 +164,9 @@ def costruisci(n):
         "type": b["type"].split(" (")[0],
         "subtype": (b["type"].split(" (")[1].rstrip(")")
                     if " (" in b["type"] else None),
-        "alignment": b["alignment"],
+        # non si ridigita: il campo esce dal vocabolario o non esce
+        # (decisione 61, `allineamento-insieme`)
+        "alignment": AL.blocco_mostro(b["alignment"]),
         "armor_class": {
             "value": b["ac"], "from": b["ac_from"], "ac_2e": a["ac"],
             "conversion_status": "direct", "source": FONTE_SOT,
