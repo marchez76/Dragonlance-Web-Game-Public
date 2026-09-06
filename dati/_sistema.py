@@ -30,6 +30,8 @@ COSA ESPONE
     cd_salvezza(competenza, mod)       8 + competenza + modificatore
     MOLTIPLICATORI / ORDINE_DIFESE     resistenza, vulnerabilita', immunita'
     CRITICO_NATURALE / FALLIMENTO_NATURALE
+    ABILITA / ABILITA_PER_ID / caratteristica_di(id)
+                                       le diciotto abilita' della 5e
     ARRAY_STANDARD / COSTO_ACQUISTO / BUDGET_ACQUISTO / TIRO_CARATTERISTICA
                                        i tre metodi di generazione
     copie_nel_codice()                 il controllo anti-duplicazione
@@ -191,6 +193,21 @@ COSTO_ACQUISTO = {c["punteggio"]: c["costo"]
 BUDGET_ACQUISTO = _metodo("punti-acquisto")["budget"]
 TIRO_CARATTERISTICA = _metodo("tiro-4d6-scarta-minore")
 PUNTEGGI = _metodo("array-standard")["punteggi"]
+
+# ------------------------------------------------------------- gli elenchi
+
+# Le diciotto abilita' della 5e. Sono l'INSIEME da cui la competenza di
+# abilita' del personaggio pesca: senza di esso `scelte.competenze_abilita`
+# sarebbe un campo di testo invece che un filtro risolto
+# (decisione 35, `repertori-sono-filtri`). ABILITA e' l'ordine della fonte,
+# ABILITA_PER_ID la lettura per chiave.
+ABILITA = tuple(DATI["abilita"]["voci"])
+ABILITA_PER_ID = {v["id"]: v for v in ABILITA}
+
+
+def caratteristica_di(abilita_id):
+    """Su quale caratteristica si tira la prova di questa abilita'."""
+    return ABILITA_PER_ID[abilita_id]["caratteristica"]
 
 
 # ------------------------------------------------ controllo anti-duplicazione

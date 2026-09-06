@@ -14,36 +14,54 @@
     "mechanics_5e"
   ],
   "additionalProperties": false,
-
   "$defs": {
     "rimando_chassis": {
       "type": "object",
       "description": "Un privilegio della fonte 2e la cui meccanica 5e e' gia' quella del chassis SRD, invece di essere riscritta qui (decisione 23, `principio-del-clone`). Costruito solo da _chassis_5e.rimando_a_privilegio()/rimando_al_chassis(), che falliscono in costruzione se il bersaglio non esiste; _chassis_5e.verifica_rimandi() rifa' la stessa prova sui file gia' scritti.",
-      "required": ["riferimento_a", "srd_class", "name_srd", "name", "level"],
+      "required": [
+        "riferimento_a",
+        "srd_class",
+        "name_srd",
+        "name",
+        "level"
+      ],
       "additionalProperties": false,
       "properties": {
         "riferimento_a": {
           "type": "string",
-          "enum": ["chassis", "privilegio_chassis"],
+          "enum": [
+            "chassis",
+            "privilegio_chassis"
+          ],
           "description": "`chassis`: il privilegio E' la classe stessa (la classe e' un Paladin, punto). `privilegio_chassis`: rimanda a UN privilegio specifico che il chassis concede a un livello preciso."
         },
-        "srd_class": { "type": "string" },
+        "srd_class": {
+          "type": "string"
+        },
         "name_srd": {
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "description": "null solo con riferimento_a: chassis."
         },
         "name": {
-          "type": ["string", "null"],
+          "type": [
+            "string",
+            "null"
+          ],
           "description": "null solo con riferimento_a: chassis."
         },
         "level": {
-          "type": ["integer", "null"],
+          "type": [
+            "integer",
+            "null"
+          ],
           "description": "null solo con riferimento_a: chassis."
         }
       }
     }
   },
-
   "properties": {
     "id": {
       "type": "string",
@@ -400,28 +418,38 @@
             "starting_equipment": {
               "type": "object",
               "additionalProperties": false,
-              "required": ["system", "da_comporre", "scelte"],
-              "description": "L'EQUIPAGGIAMENTO INIZIALE COME ELENCO, non come dichiarazione vuota (decisione 62, `pacchetto-fisso`). Il campo diceva `system: \"pacchetto_fisso_5e\"` su 20 classi su 20 e conteneva zero pacchetti: una dichiarazione senza referente, la stessa forma dell'`alignment_restriction.applied` di prima della decisione 61 (`allineamento-insieme`). Ora le 12 classi con un chassis portano l'elenco del telaio SRD, e le 8 senza dichiarano `da_comporre` — che e' un vuoto VISIBILE, non un elenco assente.",
+              "required": [
+                "system",
+                "composizione",
+                "scelte"
+              ],
+              "description": "L'EQUIPAGGIAMENTO INIZIALE COME ELENCO, non come dichiarazione vuota (decisione 62, `pacchetto-fisso`). Il campo diceva `system: \"pacchetto_fisso_5e\"` su 20 classi su 20 e conteneva zero pacchetti: una dichiarazione senza referente, la stessa forma dell'`alignment_restriction.applied` di prima della decisione 61 (`allineamento-insieme`). Ora le classi con un chassis portano l'elenco del telaio SRD, e le altre dichiarano in `composizione` chi lo comporra' e cosa lo tiene fermo — che e' un vuoto VISIBILE, non un elenco assente.",
               "properties": {
                 "system": {
-                  "enum": ["pacchetto_fisso_5e"],
+                  "enum": [
+                    "pacchetto_fisso_5e"
+                  ],
                   "description": "Un valore solo, ed e' voluto: l'altra economia — il borsello da spendere — e' stata misurata e scartata dalla decisione 62 (`pacchetto-fisso`). Se un giorno tornasse, tornerebbe come decisione e non come valore nuovo scritto di straforo."
                 },
                 "telaio": {
-                  "type": ["string", "null"],
-                  "description": "Il nome della classe SRD da cui l'elenco viene. `null` per le 8 senza chassis, dove combacia con `da_comporre: true`."
-                },
-                "da_comporre": {
-                  "type": "boolean",
-                  "description": "Vero per le classi che nessun telaio 5e copre: l'elenco va COMPOSTO, ed e' una scelta editoriale che la decisione 62 (`pacchetto-fisso`) vuole proposta prima che scritta. Stessa forma dell'`in_sospeso` dei chassis mancanti della decisione 23 (`principio-del-clone`)."
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "description": "Il nome della classe SRD da cui l'elenco viene. `null` per le classi senza chassis, dove combacia con una `composizione.chi` diversa da `dal_telaio`."
                 },
                 "scelte": {
-                  "type": ["array", "null"],
-                  "description": "Le righe dell'elenco SRD: ogni riga e' una scelta fra alternative, ogni alternativa un insieme di voci che si prendono insieme. `null` se `da_comporre`.",
+                  "type": [
+                    "array",
+                    "null"
+                  ],
+                  "description": "Le righe dell'elenco SRD: ogni riga e' una scelta fra alternative, ogni alternativa un insieme di voci che si prendono insieme. `null` quando `composizione.chi` non e' `dal_telaio`.",
                   "items": {
                     "type": "object",
                     "additionalProperties": false,
-                    "required": ["alternative"],
+                    "required": [
+                      "alternative"
+                    ],
                     "properties": {
                       "alternative": {
                         "type": "array",
@@ -429,7 +457,9 @@
                         "items": {
                           "type": "object",
                           "additionalProperties": false,
-                          "required": ["voci"],
+                          "required": [
+                            "voci"
+                          ],
                           "properties": {
                             "voci": {
                               "type": "array",
@@ -437,26 +467,57 @@
                               "items": {
                                 "type": "object",
                                 "additionalProperties": false,
-                                "required": ["quantita", "name_srd", "genere", "riferimento", "filtro"],
+                                "required": [
+                                  "quantita",
+                                  "name_srd",
+                                  "genere",
+                                  "riferimento",
+                                  "filtro"
+                                ],
                                 "properties": {
-                                  "quantita": { "type": "integer", "minimum": 1 },
-                                  "name_srd": { "type": "string" },
+                                  "quantita": {
+                                    "type": "integer",
+                                    "minimum": 1
+                                  },
+                                  "name_srd": {
+                                    "type": "string"
+                                  },
                                   "genere": {
-                                    "enum": ["oggetto", "pacchetto", "scelta"],
+                                    "enum": [
+                                      "oggetto",
+                                      "pacchetto",
+                                      "scelta"
+                                    ],
                                     "description": "Chi risolve la voce, e sono tre risolutori diversi: `oggetto` si legge in `dati/oggetti/`, `pacchetto` in `dati/pacchetti/`, `scelta` NON si risolve — e' un filtro che l'interfaccia deve porre come domanda al giocatore (decisione 35, `repertori-sono-filtri`)."
                                   },
                                   "riferimento": {
-                                    "type": ["string", "null"],
+                                    "type": [
+                                      "string",
+                                      "null"
+                                    ],
                                     "pattern": "^[a-z][a-z0-9-]*$",
                                     "description": "L'id in `dati/oggetti/` o `dati/pacchetti/`. `null` per le voci di genere `scelta`: una scelta aperta che rimandasse a un oggetto preciso non sarebbe piu' aperta. `valida_classi.py` verifica che ogni riferimento risolva."
                                   },
                                   "filtro": {
-                                    "type": ["object", "null"],
+                                    "type": [
+                                      "object",
+                                      "null"
+                                    ],
                                     "additionalProperties": false,
                                     "description": "Cosa delimita una voce di genere `scelta`, nel vocabolario del catalogo e non in quello inglese della fonte. `null` su tutte le altre voci, e `null` anche su due delle cinque scelte — focus arcano e simbolo sacro — dove il filtro esiste ma il catalogo non ha ancora nessun campione: e' un FILTRO SENZA CAMPIONE, e va detto invece di essere aggirato adottando tre voci al volo. La sede delle cinque e' `_fonti/srd51_pacchetti.SCELTE`.",
                                     "properties": {
-                                      "categoria": { "type": ["string", "null"] },
-                                      "tipo": { "type": ["string", "null"] }
+                                      "categoria": {
+                                        "type": [
+                                          "string",
+                                          "null"
+                                        ]
+                                      },
+                                      "tipo": {
+                                        "type": [
+                                          "string",
+                                          "null"
+                                        ]
+                                      }
                                     }
                                   }
                                 }
@@ -471,28 +532,93 @@
                 "source_wealth": {
                   "type": "object",
                   "additionalProperties": false,
-                  "required": ["applied", "sede"],
+                  "required": [
+                    "applied",
+                    "sede"
+                  ],
                   "description": "La formula di ricchezza che la fonte 2e da' a 4 classi su 20, DICHIARATA E NON RICOPIATA. La decisione 62 (`pacchetto-fisso`) sceglie il pacchetto, quindi la formula non si applica; e non si trascrive nemmeno qui, perche' sta gia' in `source_2e.starting_wealth` e portarla in due strati sarebbe la struttura doppia che la decisione 61 (`allineamento-insieme`) ha appena chiuso su `alignment_restriction`. La forma e' quella della decisione 4 (`limiti-di-livello`): `applied: false` piu' la sede, mai il valore.",
                   "properties": {
-                    "applied": { "const": false },
-                    "sede": { "type": "string" },
-                    "presente": { "type": "boolean", "description": "Se la fonte ne dia una per questa classe. E' un fatto, non il valore: dice che c'e' qualcosa da leggere alla `sede`, senza ricopiarlo." },
-                    "note": { "type": ["string", "null"] }
+                    "applied": {
+                      "const": false
+                    },
+                    "sede": {
+                      "type": "string"
+                    },
+                    "presente": {
+                      "type": "boolean",
+                      "description": "Se la fonte ne dia una per questa classe. E' un fatto, non il valore: dice che c'e' qualcosa da leggere alla `sede`, senza ricopiarlo."
+                    },
+                    "note": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
                   }
                 },
                 "constraints": {
                   "type": "object",
                   "additionalProperties": false,
-                  "required": ["applied", "sede"],
+                  "required": [
+                    "applied",
+                    "sede"
+                  ],
                   "description": "Le regole di equipaggiamento della fonte 2e (4 classi su 20), dichiarate come la ricchezza e per la stessa ragione. Su un pacchetto fisso mordono in modo diverso che su un acquisto — o sono gia' rispettate, o chiedono un pacchetto riscritto per quella classe — e QUALE dei due non e' deciso: la decisione 62 (`pacchetto-fisso`) lo registra fra le conseguenze non risolte.",
                   "properties": {
-                    "applied": { "const": false },
-                    "sede": { "type": "string" },
-                    "quante": { "type": "integer", "minimum": 0 },
-                    "note": { "type": ["string", "null"] }
+                    "applied": {
+                      "const": false
+                    },
+                    "sede": {
+                      "type": "string"
+                    },
+                    "quante": {
+                      "type": "integer",
+                      "minimum": 0
+                    },
+                    "note": {
+                      "type": [
+                        "string",
+                        "null"
+                      ]
+                    }
                   }
                 },
-                "note": { "type": ["string", "null"] }
+                "note": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "composizione": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "chi",
+                    "questione_aperta",
+                    "motivo"
+                  ],
+                  "description": "CHI COMPONE L'ELENCO, E COSA LO TIENE FERMO (decisione 64, `composizione-cinque-classi`). Sostituisce il booleano `da_comporre`, che metteva insieme due casi diversi e li faceva contare come otto: le cinque classi che aspettano un chassis e le tre Vesti, a cui la domanda non si applica affatto perche' hanno `entry_level` 3 e non sono classi di partenza. Un booleano non poteva distinguere «da fare» da «non si pone», e la differenza e' tutta la questione.",
+                  "properties": {
+                    "chi": {
+                      "enum": [
+                        "dal_telaio",
+                        "da_comporre",
+                        "non_si_pone"
+                      ],
+                      "description": "`dal_telaio`: la classe sta su un chassis SRD e l'elenco si trascrive. `da_comporre`: nessun telaio la copre, e l'elenco aspetta la questione aperta nominata accanto. `non_si_pone`: non e' una classe di partenza, quindi non riceve equipaggiamento iniziale da nessuno — lo riceve la classe con cui il personaggio comincia."
+                    },
+                    "questione_aperta": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "description": "L'id della questione aperta di `decisioni.APERTE` che tiene ferma la composizione, per le sole `da_comporre`. E' un rimando per id e non per numero, nella forma di CLAUDE.md 3: `_chassis_5e.composizione()` verifica che la questione esista davvero, cosi' che una questione decisa e non riportata qui faccia rumore invece di lasciare una classe ferma per un motivo che non c'e' piu'."
+                    },
+                    "motivo": {
+                      "type": "string"
+                    }
+                  }
+                }
               }
             }
           }
@@ -500,7 +626,10 @@
         "alignment_restriction": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["applied", "values"],
+          "required": [
+            "applied",
+            "values"
+          ],
           "description": "IL VINCOLO DI ALLINEAMENTO COME INSIEME, non come frase (05/09/2026). Prima portava `value`, cioe' la prosa di `source_2e` ricopiata nello strato nostro, con `applied` a `true` accanto: dieci classi su venti dichiaravano applicato un vincolo che nessun motore poteva applicare, perche' non esisteva un vocabolario degli allineamenti contro cui verificarlo, e le stringhe erano in due lingue diverse. La lettura — quale insieme corrisponde a quale frase della fonte, con la ragione per riga — sta in `dati/_allineamenti.py`; qui c'e' il risultato. `applied` e' vero se e solo se `values` non e' vuoto: un campo che dichiara di funzionare e non funziona e' peggio di un campo assente.",
           "properties": {
             "applied": {
@@ -509,45 +638,74 @@
             },
             "values": {
               "type": "array",
-              "items": { "$ref": "vocabolari.schema.json#/$defs/allineamento" },
+              "items": {
+                "$ref": "vocabolari.schema.json#/$defs/allineamento"
+              },
               "description": "Gli allineamenti ammessi, dal vocabolario unico. Vuoto quando `applied` e' falso."
             },
             "source_text": {
-              "type": ["string", "null"],
+              "type": [
+                "string",
+                "null"
+              ],
               "description": "La frase della fonte da cui l'insieme e' stato letto. Resta accanto al risultato perche' la lettura sia verificabile senza aprire il file privato, ed e' l'invariante che `_allineamenti.verifica()` controlla nei due sensi: se la fonte cambia formulazione, la lettura va rifatta e non riallineata."
             },
             "depends_on": {
-              "type": ["string", "null"],
+              "type": [
+                "string",
+                "null"
+              ],
               "description": "Per le due voci che sono REGOLE e non valori: da quale altra scelta dipende l'insieme. `veste` per il Mago dell'Alta Stregoneria (decisione 6, `maghi-delle-torri`: il giuramento avviene al Test, al 3° livello), `divinita` per il Sacerdote degli Ordini Sacri. Sono filtri che dipendono da una scelta successiva, cioe' la forma della decisione 35 (`repertori-sono-filtri`), e appiattirli su un insieme perderebbe proprio cio' che dicono."
             },
             "motivo_non_applicato": {
-              "type": ["string", "null"],
+              "type": [
+                "string",
+                "null"
+              ],
               "description": "Perche' una restrizione che esiste non e' ancora un insieme. Obbligatoria in sostanza dove c'e' `depends_on`: un `applied: false` senza motivo e' indistinguibile da un campo dimenticato."
             },
             "da_confermare": {
-              "type": ["string", "null"],
+              "type": [
+                "string",
+                "null"
+              ],
               "description": "La lettura regge ma ne esiste una seconda plausibile che la fonte non ha ancora escluso, e la riga la dichiara invece di nasconderla. Stessa forma del campo omonimo in `dati/_classi_ammesse.py`: non e' un difetto, e' una riga che aspetta una lettura, e finche' aspetta si vede."
             }
           }
         },
-
         "features": {
           "type": "array",
           "description": "I privilegi e gli impedimenti della fonte 2e (decisione 15, `tratti-trascrizione-integrale`; decisione 23, `principio-del-clone`). Lista separata da `chassis_features` di proposito — vedi la' sopra.",
           "items": {
             "$comment": "NUCLEO COMUNE in vocabolari.schema.json#/$defs/elemento_convertito, come chassis_features e elemento_5e di mostro.schema.json. `kind` NON e' quello di chassis_features: vocabolario incompatibile, vedi il $comment li'.",
             "allOf": [
-              { "$ref": "vocabolari.schema.json#/$defs/elemento_convertito" }
+              {
+                "$ref": "vocabolari.schema.json#/$defs/elemento_convertito"
+              }
             ],
             "unevaluatedProperties": false,
-            "required": ["name", "kind", "level", "text_2e", "conversion_status", "mechanics_5e", "note"],
+            "required": [
+              "name",
+              "kind",
+              "level",
+              "text_2e",
+              "conversion_status",
+              "mechanics_5e",
+              "note"
+            ],
             "properties": {
               "kind": {
                 "type": "string",
-                "enum": ["privilegio", "impedimento"]
+                "enum": [
+                  "privilegio",
+                  "impedimento"
+                ]
               },
               "level": {
-                "type": ["integer", "null"],
+                "type": [
+                  "integer",
+                  "null"
+                ],
                 "minimum": 1,
                 "maximum": 20,
                 "description": "null quando la fonte non lega il privilegio a un livello preciso (la maggioranza: 33/43 oggi)."
@@ -558,8 +716,15 @@
               },
               "mechanics_5e": {
                 "anyOf": [
-                  { "type": ["string", "null"] },
-                  { "$ref": "#/$defs/rimando_chassis" }
+                  {
+                    "type": [
+                      "string",
+                      "null"
+                    ]
+                  },
+                  {
+                    "$ref": "#/$defs/rimando_chassis"
+                  }
                 ],
                 "description": "Di norma stringa o null. Due privilegi su 43 oggi (cavaliere-rosa, cavaliere-spada) sono un RIMANDO al chassis invece: il privilegio della fonte 2e coincide con una meccanica che il chassis SRD concede gia', e non si riscrive due volte. Vedi $defs/rimando_chassis."
               },
@@ -576,7 +741,9 @@
           "items": {
             "$comment": "NUCLEO COMUNE in vocabolari.schema.json#/$defs/elemento_convertito (name, source, conversion_status, mechanics_5e, note), riferito con $ref: stessa forma di elemento_5e (mostro) e di features qui sotto, confrontata campo per campo il 05/09/2026. `kind` NON e' condiviso con quello di `features`: stesso nome, vocabolario incompatibile (privilegio_chassis/opzione_chassis contro privilegio/impedimento), quindi resta locale a ciascuno dei due blocchi.",
             "allOf": [
-              { "$ref": "vocabolari.schema.json#/$defs/elemento_convertito" }
+              {
+                "$ref": "vocabolari.schema.json#/$defs/elemento_convertito"
+              }
             ],
             "unevaluatedProperties": false,
             "required": [

@@ -43,29 +43,29 @@
       "quantita": 1,
       "name_srd": "Alms box",
       "oggetto": null,
-      "stato": "da_decidere",
-      "motivo": "l'SRD la nomina solo dentro la descrizione di questo pacchetto: la tabella dell'attrezzatura non la elenca, quindi non ha ne' prezzo ne' peso propri. Non e' una voce mancante dal catalogo — e' da decidere se diventa un oggetto o resta testo del pacchetto (decisione 62, `pacchetto-fisso`)"
+      "stato": "testo_del_pacchetto",
+      "motivo": "L'altro esempio del criterio, quello negativo: nessuna regola la interroga, nessun tiro la nomina, nessuno stato cambia se c'e'. Puo' essere il centro di una sessione e restare comunque una parola per il motore."
     },
     {
       "quantita": 2,
       "name_srd": "Block of incense",
-      "oggetto": null,
-      "stato": "da_decidere",
-      "motivo": "l'SRD la nomina solo dentro la descrizione di questo pacchetto: la tabella dell'attrezzatura non la elenca, quindi non ha ne' prezzo ne' peso propri. Non e' una voce mancante dal catalogo — e' da decidere se diventa un oggetto o resta testo del pacchetto (decisione 62, `pacchetto-fisso`)"
+      "oggetto": "block-of-incense",
+      "stato": "a_catalogo",
+      "motivo": "La prova degli incantesimi: 12 incantesimi dell'SRD nominano l'incenso fra i componenti materiali, e in 7 di essi il blocco dei componenti porta un costo o un consumo — cioe' proprio i casi che la borsa dei componenti NON copre e che il motore deve contare. Ha una vita fuori dal pacchetto."
     },
     {
       "quantita": 1,
       "name_srd": "Censer",
       "oggetto": null,
-      "stato": "da_decidere",
-      "motivo": "l'SRD la nomina solo dentro la descrizione di questo pacchetto: la tabella dell'attrezzatura non la elenca, quindi non ha ne' prezzo ne' peso propri. Non e' una voce mancante dal catalogo — e' da decidere se diventa un oggetto o resta testo del pacchetto (decisione 62, `pacchetto-fisso`)"
+      "stato": "testo_del_pacchetto",
+      "motivo": "La stessa prova, esito opposto: nessun incantesimo dell'SRD nomina il turibolo. E' il contenitore in cui l'incenso brucia, e il motore non ne calcola niente. Resta testo del pacchetto, dove si legge benissimo."
     },
     {
       "quantita": 1,
       "name_srd": "Vestments",
-      "oggetto": null,
-      "stato": "da_decidere",
-      "motivo": "l'SRD la nomina solo dentro la descrizione di questo pacchetto: la tabella dell'attrezzatura non la elenca, quindi non ha ne' prezzo ne' peso propri. Non e' una voce mancante dal catalogo — e' da decidere se diventa un oggetto o resta testo del pacchetto (decisione 62, `pacchetto-fisso`)"
+      "oggetto": "robes",
+      "stato": "a_catalogo",
+      "motivo": "Non e' una voce da creare: la tabella dell'attrezzatura ha gia' «Robes», con prezzo e peso propri, e le due parole nominano la stessa cosa. L'equivalenza sta in `srd51_pacchetti.EQUIVALENZE` accanto alle altre letture della stessa forma. E' l'unica delle sette a cui ha risposto la fonte invece che noi."
     },
     {
       "quantita": 2,

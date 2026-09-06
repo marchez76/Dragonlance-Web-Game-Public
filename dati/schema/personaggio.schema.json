@@ -1,0 +1,553 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "personaggio.schema.json",
+  "title": "Personaggio",
+  "type": "object",
+  "additionalProperties": false,
+  "description": "UN PERSONAGGIO NON HA UNA FONTE. E' la prima entita' del progetto per cui il doppio strato della decisione 7 (`doppio-strato`) non si applica: non c'e' nessun `source_2e` di un personaggio, perche' non e' materiale convertito ma materiale PRODOTTO. Detto prima di progettare, non scoperto a meta' — la misura sta in `dati/RAPPORTO-personaggio.md` §1.3. COSA C'E' QUI DENTRO: SOLO INGRESSI. Nessun campo di questo schema e' ricalcolabile da un altro. Classe armatura, punti ferita, bonus di attacco, competenza, iniziativa, tiri salvezza, CD degli incantesimi, carico: nessuno di questi ha un campo, e non e' una dimenticanza — la decisione 52 (`attacco-unica-lettura`) li rende una LETTURA e non un dato, e `motore/combattimento.Personaggio` SOLLEVA se qualcuno prova a scriverli. Un derivato scritto si sfasa al primo cambio d'arma o di livello, e non c'e' modo di distinguere un valore copiato apposta da uno rimasto indietro. RIFERIMENTO PER ID, NON COPIA — e la ragione e' misurata, non di principio: 40 privilegi su 43 sono `pending` e 5 classi non hanno ancora un chassis (decisione 64, `composizione-cinque-classi`). Le classi cambieranno molto e presto, e un personaggio che ne avesse copiato i valori resterebbe fermo alla versione del giorno in cui e' stato creato SENZA SAPERLO. L'unica cosa che si scrive per esteso e' cio' che RISOLVE UN FILTRO: la scelta del giocatore non esiste in nessun file, e senza il personaggio andrebbe perduta. Non e' una copia dei dati, e' il complemento dei dati. SCHEDA PERSISTENTE, NON STATO DI SCONTRO. Il criterio e' verificabile e non e' una preferenza: SE UN VALORE SI RICALCOLA DAI FILE E' UNA PROIEZIONE E SI RIGENERA; SE NON SI RICALCOLA E' STATO ED E' DEL PERSONAGGIO. Punti ferita correnti, slot spesi, condizioni attive, concentrazione, azione consumata, posizione, iniziativa, tiri salvezza contro morte cambiano ENTRO UN TURNO e non stanno qui: sono stato di scontro, e vivranno nel combattente che il motore compone, non nella scheda. La scheda e' cio' che sopravvive alla fine dello scontro. IL POSTO SEGNALATO E NON RIEMPITO: `genere` ed `eta`. NON sono campi di questo schema, e la loro assenza e' voluta e registrata — questione aperta (`genere-eta-personaggio`). Andrebbero accanto a `nome`, cioe' fra gli ingressi che nessun file puo' contenere. Non si scrivono finche' non e' deciso se il motore debba saperne qualcosa: e' lo stesso criterio della decisione 63 (`oggetto-se-serve-al-motore`), applicato a un campo invece che a un oggetto. `valida_personaggio.py` controlla che restino assenti finche' la questione e' aperta, cosi' che il posto sia SEGNATO e non solo detto. SI ALLARGA SENZA RISCRITTURE. La decisione 56 (`personaggio-additivo`) prevede un campo `background` piu' avanti: entra come una chiave in piu' accanto a `razza` e `classe` — un riferimento per id a una cartella che ancora non esiste — e non tocca nessun campo scritto oggi, perche' nessun campo di oggi contiene cio' che un background porterebbe. CARTELLA PUBBLICA. `dati/personaggi/` non porta `source_2e` e non riproduce testo di manuale: contiene riferimenti per id e le scelte di un giocatore. Stessa posizione di `dati/pacchetti/`, dichiarata alla nascita della cartella e non a posteriori (CLAUDE.md 1).",
+  "required": [
+    "id",
+    "nome",
+    "razza",
+    "classe",
+    "livello",
+    "punteggi",
+    "allineamento",
+    "lingue",
+    "scelte",
+    "equipaggiato",
+    "corpus"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$",
+      "description": "Chiave stabile, dallo slug del nome. Non cambia se il personaggio viene rinominato in gioco."
+    },
+    "nome": {
+      "type": "string",
+      "minLength": 1,
+      "description": "IL NOME NON E' UNA COPPIA `{en, it}` come nelle altre sei entita', ed e' la divergenza piu' visibile di questo schema: quelle traducono una fonte, qui non c'e' niente da tradurre. E' l'ingresso piu' puro di tutti — nessun file lo contiene e nessuno lo puo' derivare."
+    },
+    "corpus": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "generato_il",
+        "impronta"
+      ],
+      "description": "CONTRO QUALE VERSIONE DEI DATI QUESTO PERSONAGGIO E' STATO COSTRUITO. E' il correttivo che rende accettabile il riferimento per id: il rischio non e' la dipendenza da file esterni, e' la dipendenza NON DATATA. Un personaggio piu' vecchio di una revisione delle classi diventa cosi' RILEVABILE invece di essere reinterpretato in silenzio. Stessa funzione che `pages_pdf` svolge per una trascrizione: non conserva il dato, conserva il modo di ritrovarlo. CAMPO NON PREVISTO dalla lista della decisione 52 (`attacco-unica-lettura`): viene da `dati/RAPPORTO-personaggio.md` §4.2, correttivo 1.",
+      "properties": {
+        "generato_il": {
+          "type": "string",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+        },
+        "impronta": {
+          "type": "string",
+          "description": "Impronta dei file che il personaggio riferisce, calcolata dal generatore."
+        }
+      }
+    },
+    "razza": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$",
+      "description": "Riferimento per id a `dati/razze/`. Non si copia nessun valore della razza: velocita', taglia, scurovisione e aggiustamenti si leggono di la' ogni volta."
+    },
+    "classe": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*$",
+      "description": "Riferimento per id a `dati/classi/`. Dev'essere una classe di PARTENZA: le classi con `entry_level` > 1 non si scelgono in creazione (decisione 6, `maghi-delle-torri`), ed e' la stessa distinzione della decisione 64 (`composizione-cinque-classi`)."
+    },
+    "livello": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 20,
+      "description": "IL LIVELLO E' STATO, NON DERIVATO — oggi. Quando la tabella dei punti esperienza 5e sara' un dato di sistema, il livello diventera' una lettura dei PE e questo campo lascera' il posto a `punti_esperienza`: e' un cambio previsto, non una riscrittura, perche' nessun altro campo dipende da come il livello e' scritto."
+    },
+    "punteggi": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "str",
+        "dex",
+        "con",
+        "int",
+        "wis",
+        "cha"
+      ],
+      "description": "I SEI PUNTEGGI COME ASSEGNATI, prima di ogni aggiustamento razziale: quelli si leggono da `razze/*.json` e si sommano alla lettura. Scrivere qui il punteggio gia' aggiustato renderebbe impossibile distinguere il tiro dall'aggiustamento, e un cambio di razza non si potrebbe piu' rifare. I modificatori NON stanno qui: sono la tabella `dati/sistema/modificatore-caratteristica.json`.",
+      "properties": {
+        "str": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 30
+        },
+        "dex": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 30
+        },
+        "con": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 30
+        },
+        "int": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 30
+        },
+        "wis": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 30
+        },
+        "cha": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 30
+        }
+      }
+    },
+    "metodo_punteggi": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Con quale dei tre metodi i punteggi sono stati prodotti, per id da `dati/sistema/generazione-caratteristiche.json`. `null` quando non lo si e' registrato. NON e' un filtro sul roster: la decisione 60 (`metodo-non-filtra`) dice che il metodo SEGNALA e non toglie voci dall'elenco, quindi questo campo documenta e non vincola. CAMPO NON PREVISTO dalla lista della decisione 52 (`attacco-unica-lettura`): serve perche' senza di esso i sei numeri non si possono piu' rifare."
+    },
+    "allineamento": {
+      "$ref": "vocabolari.schema.json#/$defs/allineamento",
+      "description": "UN VALORE DEI NOVE, non una frase — decisione 61 (`allineamento-insieme`). Il vincolo di classe e' un SOTTOINSIEME dei nove e vive sulla classe: qui si scrive il valore scelto, e il validatore controlla che appartenga al sottoinsieme. Per il sacerdote il vincolo sta sulla DIVINITA' e non sulla classe (decisione 24, `sfere-sacerdotali`)."
+    },
+    "divinita": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[a-z][a-z0-9-]*$",
+      "description": "Riferimento per id a `dati/divinita/`, oppure `null`. `null` non vuol dire ateo: vuol dire che la classe non chiede questa scelta. Per le classi sacerdotali e' la divinita' a portare il filtro delle sfere e dell'allineamento."
+    },
+    "lingue": {
+      "type": "array",
+      "minItems": 0,
+      "description": "LE LINGUE SCELTE DAL GIOCATORE, e solo quelle: le lingue che la razza concede d'ufficio si leggono da `razze/*.json` e non si ricopiano qui — sarebbero un derivato. NON C'E' UNA KEY `lingue` DENTRO `scelte`, ed e' voluto: questo campo E' GIA' la scelta registrata, e scriverla due volte sarebbe la struttura doppia che il progetto ha gia' pagato dodici volte. Ogni voce porta percio' il proprio `aperta_da`, che e' cio' che `scelte` avrebbe aggiunto. IL FILTRO NON ESISTE ANCORA: nessun dato enumera le lingue di Krynn, e non si inventa un elenco SRD al posto loro — questione aperta (`lingue-di-krynn`). Finche' dura, il nome e' testo libero e il validatore lo dichiara invece di fingere di controllarlo.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "lingua",
+          "aperta_da"
+        ],
+        "properties": {
+          "lingua": {
+            "type": "string",
+            "minLength": 1
+          },
+          "aperta_da": {
+            "type": "string",
+            "description": "`razza:<id>` o `classe:<id>`: quale tratto ha aperto la scelta."
+          }
+        }
+      }
+    },
+    "scelte": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "DA DIZIONARIO LIBERO A FORMA DICHIARATA. Fino al 06/09/2026 `scelte` era un dizionario aperto con dentro una cosa sola (`stile`), cioe' un campo in cui qualunque chiave poteva entrare senza che niente la controllasse. Ogni chiave qui sotto ha ora la STESSA forma — chi apre la scelta, il filtro con la sua sede, i valori scelti — che e' la forma della decisione 35 (`repertori-sono-filtri`): filtro dichiarato, scelta registrata. OGNI CHIAVE E' FACOLTATIVA, e la sua presenza non e' arbitraria: c'e' se e solo se la razza o la classe scelte aprono quella scelta. Un Nano non ha `aumenti_caratteristica`, perche' i suoi aggiustamenti sono fissi e si leggono dalla razza. `chiuso: false` SU UN FILTRO NON E' UN PERMESSO: e' una lacuna dichiarata. Dice che l'insieme esiste nella fonte ma vive come prosa dentro un campo, quindi nessun validatore lo puo' applicare. Il giorno in cui quella prosa diventa un dato, il filtro passa a `true` e il controllo comincia a mordere senza che lo schema cambi. OGNI SCELTA PORTA IL LIVELLO A CUI E' STATA FATTA. Non e' un dettaglio di contabilita': percorrere la creazione ha mostrato che «scelta del giocatore» e «scelta di creazione» non sono lo stesso insieme, e uno schema che li confonde non puo' rappresentare un personaggio oltre il 1° livello.",
+      "properties": {
+        "stile": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "aperta_da",
+            "al_livello",
+            "filtro",
+            "valori"
+          ],
+          "description": "LO STILE DI COMBATTIMENTO, l'unica scelta che esisteva prima di questo schema — `motore/arena.INGRESSI_EROE` la scriveva come `{'stile': 'Duello'}`. L'insieme e' chiuso: sono i privilegi del chassis che portano un `effetto`, e `combattimento._modificatori_dello_stile()` solleva gia' se il nome non e' fra quelli.",
+          "properties": {
+            "aperta_da": {
+              "type": "string",
+              "description": "CHI apre la scelta, per riferimento: `razza:<id>`, `classe:<id>`, `pacchetto:<id>`. Senza questo campo una scelta e' un valore senza provenienza, e non si puo' piu' verificare se il filtro che l'ha prodotta esiste ancora."
+            },
+            "al_livello": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 20,
+              "description": "A QUALE LIVELLO la scelta e' stata fatta. CAMPO NON PREVISTO, e scoperto percorrendo la creazione: si dava per scontato che ogni scelta si facesse alla nascita del personaggio, e non e' vero. L'incantesimo che il Dargonesti sceglie arriva al 7° livello — al 3° e al 5° la razza NOMINA l'incantesimo, quindi li' non si sceglie niente — e senza questo campo una scheda non potrebbe dire se una scelta era davvero disponibile quando e' stata fatta. Un validatore puo' allora controllare che non superi il `livello` del personaggio, che e' meno di controllare la regola e piu' di niente."
+            },
+            "filtro": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "sede",
+                "chiuso"
+              ],
+              "description": "IL FILTRO DICHIARATO. La decisione 35 (`repertori-sono-filtri`) dice che la fonte da' l'insieme e non il campione: qui si scrive DOVE vive l'insieme, cosi' che la scelta registrata sotto sia verificabile contro di esso invece che creduta.",
+              "properties": {
+                "sede": {
+                  "type": "string",
+                  "description": "Dove vive l'insieme da cui questa scelta pesca. Oggi: `dati/classi/<id>.json -> mechanics_5e.chassis_features`."
+                },
+                "chiuso": {
+                  "type": "boolean",
+                  "description": "`true` se l'insieme e' ENUMERATO in un dato, e allora un validatore puo' controllare che il valore scelto ne faccia parte. `false` se l'insieme e' descritto in PROSA dentro un campo — allora il filtro esiste ma nessuno lo puo' applicare, ed e' una lacuna dichiarata, non un campo libero."
+                },
+                "quante": {
+                  "type": [
+                    "integer",
+                    "null"
+                  ],
+                  "description": "Quante se ne scelgono, se la fonte lo dice. `null` quando nessun dato lo porta: e' il caso delle competenze di abilita', che nessuna classe quantifica ancora (dati/RAPPORTO-personaggio.md §2.4)."
+                }
+              }
+            },
+            "valori": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 1,
+              "items": {
+                "type": "string"
+              },
+              "description": "Il nome del privilegio, come la classe lo scrive."
+            }
+          }
+        },
+        "competenze_abilita": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "aperta_da",
+            "al_livello",
+            "filtro",
+            "valori"
+          ],
+          "description": "LE COMPETENZE DI ABILITA'. L'insieme e' nato il 06/09/2026 in `dati/sistema/abilita.json`: prima non c'era, e `dati/RAPPORTO-personaggio.md` §2.4 lo aveva misurato — nei dati c'erano le 42 competenze in armi e le 66 non-d'arma della 2e, cioe' il sistema a slot che la decisione 23 (`principio-del-clone`) ha abolito, e nulla del sistema che l'ha sostituito. QUANTE ne concede una classe resta ignoto: nessuna classe lo porta, quindi `filtro.quante` e' `null` e il validatore controlla CHE le abilita' esistano, non QUANTE siano.",
+          "properties": {
+            "aperta_da": {
+              "type": "string",
+              "description": "CHI apre la scelta, per riferimento: `razza:<id>`, `classe:<id>`, `pacchetto:<id>`. Senza questo campo una scelta e' un valore senza provenienza, e non si puo' piu' verificare se il filtro che l'ha prodotta esiste ancora."
+            },
+            "al_livello": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 20,
+              "description": "A QUALE LIVELLO la scelta e' stata fatta. CAMPO NON PREVISTO, e scoperto percorrendo la creazione: si dava per scontato che ogni scelta si facesse alla nascita del personaggio, e non e' vero. L'incantesimo che il Dargonesti sceglie arriva al 7° livello — al 3° e al 5° la razza NOMINA l'incantesimo, quindi li' non si sceglie niente — e senza questo campo una scheda non potrebbe dire se una scelta era davvero disponibile quando e' stata fatta. Un validatore puo' allora controllare che non superi il `livello` del personaggio, che e' meno di controllare la regola e piu' di niente."
+            },
+            "filtro": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "sede",
+                "chiuso"
+              ],
+              "description": "IL FILTRO DICHIARATO. La decisione 35 (`repertori-sono-filtri`) dice che la fonte da' l'insieme e non il campione: qui si scrive DOVE vive l'insieme, cosi' che la scelta registrata sotto sia verificabile contro di esso invece che creduta.",
+              "properties": {
+                "sede": {
+                  "type": "string",
+                  "description": "Dove vive l'insieme da cui questa scelta pesca. Oggi: `dati/sistema/abilita.json`."
+                },
+                "chiuso": {
+                  "type": "boolean",
+                  "description": "`true` se l'insieme e' ENUMERATO in un dato, e allora un validatore puo' controllare che il valore scelto ne faccia parte. `false` se l'insieme e' descritto in PROSA dentro un campo — allora il filtro esiste ma nessuno lo puo' applicare, ed e' una lacuna dichiarata, non un campo libero."
+                },
+                "quante": {
+                  "type": [
+                    "integer",
+                    "null"
+                  ],
+                  "description": "Quante se ne scelgono, se la fonte lo dice. `null` quando nessun dato lo porta: e' il caso delle competenze di abilita', che nessuna classe quantifica ancora (dati/RAPPORTO-personaggio.md §2.4)."
+                }
+              }
+            },
+            "valori": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]*$"
+              },
+              "description": "Gli id delle abilita' scelte."
+            }
+          }
+        },
+        "aumenti_caratteristica": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "aperta_da",
+            "al_livello",
+            "filtro",
+            "valori"
+          ],
+          "description": "GLI AUMENTI CHE LA RAZZA LASCIA SCEGLIERE — oggi solo l'Umano, che la decisione 19 (`compensazione-umano`) compensa con un +1 a due caratteristiche a scelta. Il filtro e' `chiuso: false` perche' la scelta vive come PROSA dentro `traits[].mechanics_5e`: l'insieme esiste (le sei caratteristiche) ma quante e quanto sono scritti in una frase, non in un campo. Il massimale razziale che li limita e' invece un dato (decisione 10, `massimali-razziali`), e il validatore lo applica.",
+          "properties": {
+            "aperta_da": {
+              "type": "string",
+              "description": "CHI apre la scelta, per riferimento: `razza:<id>`, `classe:<id>`, `pacchetto:<id>`. Senza questo campo una scelta e' un valore senza provenienza, e non si puo' piu' verificare se il filtro che l'ha prodotta esiste ancora."
+            },
+            "al_livello": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 20,
+              "description": "A QUALE LIVELLO la scelta e' stata fatta. CAMPO NON PREVISTO, e scoperto percorrendo la creazione: si dava per scontato che ogni scelta si facesse alla nascita del personaggio, e non e' vero. L'incantesimo che il Dargonesti sceglie arriva al 7° livello — al 3° e al 5° la razza NOMINA l'incantesimo, quindi li' non si sceglie niente — e senza questo campo una scheda non potrebbe dire se una scelta era davvero disponibile quando e' stata fatta. Un validatore puo' allora controllare che non superi il `livello` del personaggio, che e' meno di controllare la regola e piu' di niente."
+            },
+            "filtro": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "sede",
+                "chiuso"
+              ],
+              "description": "IL FILTRO DICHIARATO. La decisione 35 (`repertori-sono-filtri`) dice che la fonte da' l'insieme e non il campione: qui si scrive DOVE vive l'insieme, cosi' che la scelta registrata sotto sia verificabile contro di esso invece che creduta.",
+              "properties": {
+                "sede": {
+                  "type": "string",
+                  "description": "Dove vive l'insieme da cui questa scelta pesca. Oggi: `dati/razze/<id>.json -> mechanics_5e.traits[]`."
+                },
+                "chiuso": {
+                  "type": "boolean",
+                  "description": "`true` se l'insieme e' ENUMERATO in un dato, e allora un validatore puo' controllare che il valore scelto ne faccia parte. `false` se l'insieme e' descritto in PROSA dentro un campo — allora il filtro esiste ma nessuno lo puo' applicare, ed e' una lacuna dichiarata, non un campo libero."
+                },
+                "quante": {
+                  "type": [
+                    "integer",
+                    "null"
+                  ],
+                  "description": "Quante se ne scelgono, se la fonte lo dice. `null` quando nessun dato lo porta: e' il caso delle competenze di abilita', che nessuna classe quantifica ancora (dati/RAPPORTO-personaggio.md §2.4)."
+                }
+              }
+            },
+            "valori": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "caratteristica",
+                  "valore"
+                ],
+                "properties": {
+                  "caratteristica": {
+                    "type": "string",
+                    "enum": [
+                      "str",
+                      "dex",
+                      "con",
+                      "int",
+                      "wis",
+                      "cha"
+                    ]
+                  },
+                  "valore": {
+                    "type": "integer",
+                    "minimum": 1
+                  }
+                }
+              },
+              "description": "L'aumento per caratteristica. NON si somma dentro `punteggi`: li' stanno i punteggi come assegnati, e il totale e' una lettura."
+            }
+          }
+        },
+        "incantesimo_razziale": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "aperta_da",
+            "al_livello",
+            "filtro",
+            "valori"
+          ],
+          "description": "L'INCANTESIMO CHE UN TRATTO RAZZIALE CONCEDE — oggi il Dargonesti. Filtro `chiuso: false` per la stessa ragione dell'aumento: quale incantesimo, e con che cadenza, sta in prosa dentro il tratto. L'insieme dei bersagli possibili e' pero' gia' un dato (`dati/incantesimi/`, 319 voci), quindi il validatore puo' almeno controllare che l'id RISOLVA — che e' meno di applicare il filtro, ed e' meglio di niente.",
+          "properties": {
+            "aperta_da": {
+              "type": "string",
+              "description": "CHI apre la scelta, per riferimento: `razza:<id>`, `classe:<id>`, `pacchetto:<id>`. Senza questo campo una scelta e' un valore senza provenienza, e non si puo' piu' verificare se il filtro che l'ha prodotta esiste ancora."
+            },
+            "al_livello": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 20,
+              "description": "A QUALE LIVELLO la scelta e' stata fatta. CAMPO NON PREVISTO, e scoperto percorrendo la creazione: si dava per scontato che ogni scelta si facesse alla nascita del personaggio, e non e' vero. L'incantesimo che il Dargonesti sceglie arriva al 7° livello — al 3° e al 5° la razza NOMINA l'incantesimo, quindi li' non si sceglie niente — e senza questo campo una scheda non potrebbe dire se una scelta era davvero disponibile quando e' stata fatta. Un validatore puo' allora controllare che non superi il `livello` del personaggio, che e' meno di controllare la regola e piu' di niente."
+            },
+            "filtro": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "sede",
+                "chiuso"
+              ],
+              "description": "IL FILTRO DICHIARATO. La decisione 35 (`repertori-sono-filtri`) dice che la fonte da' l'insieme e non il campione: qui si scrive DOVE vive l'insieme, cosi' che la scelta registrata sotto sia verificabile contro di esso invece che creduta.",
+              "properties": {
+                "sede": {
+                  "type": "string",
+                  "description": "Dove vive l'insieme da cui questa scelta pesca. Oggi: `dati/incantesimi.index.json (bersaglio) / dati/razze/<id>.json (filtro)`."
+                },
+                "chiuso": {
+                  "type": "boolean",
+                  "description": "`true` se l'insieme e' ENUMERATO in un dato, e allora un validatore puo' controllare che il valore scelto ne faccia parte. `false` se l'insieme e' descritto in PROSA dentro un campo — allora il filtro esiste ma nessuno lo puo' applicare, ed e' una lacuna dichiarata, non un campo libero."
+                },
+                "quante": {
+                  "type": [
+                    "integer",
+                    "null"
+                  ],
+                  "description": "Quante se ne scelgono, se la fonte lo dice. `null` quando nessun dato lo porta: e' il caso delle competenze di abilita', che nessuna classe quantifica ancora (dati/RAPPORTO-personaggio.md §2.4)."
+                }
+              }
+            },
+            "valori": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "pattern": "^[a-z][a-z0-9-]*$"
+              },
+              "description": "Gli id degli incantesimi scelti."
+            }
+          }
+        },
+        "equipaggiamento_iniziale": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "aperta_da",
+            "al_livello",
+            "filtro",
+            "valori"
+          ],
+          "description": "L'ELENCO INIZIALE DELLA CLASSE, RIGA PER RIGA. La fonte non da' un elenco secco: da' N righe, e ogni riga e' un'alternativa fra due o piu' possibilita' — `mechanics_5e.structural.starting_equipment.scelte`, che per il Chierico sono cinque. Qui si registra, per ciascuna riga, QUALE alternativa e' stata presa, e nient'altro: le voci dell'alternativa si leggono di la'. NON C'E' UNA CHIAVE `pacchetto`, e non e' una dimenticanza. La lista della decisione 52 (`attacco-unica-lettura`) ne prevedeva una, e il percorso di creazione ha mostrato che sarebbe stata una copia: il pacchetto NON e' una scelta a se': e' una delle righe di questo elenco (la quarta, per il Chierico: Priest's Pack oppure Explorer's Pack). Una chiave `pacchetto` accanto a questa avrebbe scritto due volte la stessa scelta, e le due copie sarebbero combaciate il giorno in cui sono state scritte — che e' il modo in cui tutte e dodici le strutture doppie di questo progetto sono nate. Quale pacchetto abbia scelto un personaggio e' una LETTURA di questo campo. IL FILTRO E' CHIUSO, e questa e' l'unica scelta di cui si possa dire: l'elenco delle righe, le alternative di ciascuna e le voci di ciascuna alternativa sono tutti dati, quindi il validatore controlla che l'indice esista, che l'alternativa esista, e che ogni voce di `genere: \"scelta\"` dentro l'alternativa presa sia stata risolta con un oggetto che SODDISFA il suo filtro. Dove il filtro non ha campioni a catalogo — focus arcano, simbolo sacro — `oggetto` resta `null` e il buco si vede.",
+          "properties": {
+            "aperta_da": {
+              "type": "string",
+              "description": "CHI apre la scelta, per riferimento: `razza:<id>`, `classe:<id>`, `pacchetto:<id>`. Senza questo campo una scelta e' un valore senza provenienza, e non si puo' piu' verificare se il filtro che l'ha prodotta esiste ancora."
+            },
+            "al_livello": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 20,
+              "description": "A QUALE LIVELLO la scelta e' stata fatta. CAMPO NON PREVISTO, e scoperto percorrendo la creazione: si dava per scontato che ogni scelta si facesse alla nascita del personaggio, e non e' vero. L'incantesimo che il Dargonesti sceglie arriva al 7° livello — al 3° e al 5° la razza NOMINA l'incantesimo, quindi li' non si sceglie niente — e senza questo campo una scheda non potrebbe dire se una scelta era davvero disponibile quando e' stata fatta. Un validatore puo' allora controllare che non superi il `livello` del personaggio, che e' meno di controllare la regola e piu' di niente."
+            },
+            "filtro": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "sede",
+                "chiuso"
+              ],
+              "description": "IL FILTRO DICHIARATO. La decisione 35 (`repertori-sono-filtri`) dice che la fonte da' l'insieme e non il campione: qui si scrive DOVE vive l'insieme, cosi' che la scelta registrata sotto sia verificabile contro di esso invece che creduta.",
+              "properties": {
+                "sede": {
+                  "type": "string",
+                  "description": "Dove vive l'insieme da cui questa scelta pesca. Oggi: `dati/classi/<id>.json -> mechanics_5e.structural.starting_equipment.scelte`."
+                },
+                "chiuso": {
+                  "type": "boolean",
+                  "description": "`true` se l'insieme e' ENUMERATO in un dato, e allora un validatore puo' controllare che il valore scelto ne faccia parte. `false` se l'insieme e' descritto in PROSA dentro un campo — allora il filtro esiste ma nessuno lo puo' applicare, ed e' una lacuna dichiarata, non un campo libero."
+                },
+                "quante": {
+                  "type": [
+                    "integer",
+                    "null"
+                  ],
+                  "description": "Quante se ne scelgono, se la fonte lo dice. `null` quando nessun dato lo porta: e' il caso delle competenze di abilita', che nessuna classe quantifica ancora (dati/RAPPORTO-personaggio.md §2.4)."
+                }
+              }
+            },
+            "valori": {
+              "type": "array",
+              "minItems": 1,
+              "description": "Una voce per RIGA dell'elenco iniziale. Le righe non scelte non si omettono in silenzio: il validatore confronta il numero di righe registrate con quelle che la classe stampa.",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "riga",
+                  "alternativa"
+                ],
+                "properties": {
+                  "riga": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "description": "Indice della riga in `starting_equipment.scelte`. E' un indice e non un'etichetta perche' un'etichetta non si puo' verificare."
+                  },
+                  "alternativa": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "description": "Indice dell'alternativa presa dentro quella riga."
+                  },
+                  "risolti": {
+                    "type": "array",
+                    "description": "Le voci di `genere: \"scelta\"` dentro l'alternativa presa, risolte. Assente quando l'alternativa non ne ha nessuna.",
+                    "items": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "required": [
+                        "voce",
+                        "oggetto"
+                      ],
+                      "properties": {
+                        "voce": {
+                          "type": "string",
+                          "description": "Il `name_srd` della voce da risolvere, come la fonte la scrive («arma semplice», «simbolo sacro»)."
+                        },
+                        "oggetto": {
+                          "type": [
+                            "string",
+                            "null"
+                          ],
+                          "pattern": "^[a-z][a-z0-9-]*$",
+                          "description": "L'id scelto in `dati/oggetti/`, oppure `null` quando il filtro non ha nessun campione a catalogo: il buco si vede, non si tappa."
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "equipaggiato": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "COSA IL PERSONAGGIO HA ADDOSSO ADESSO: un ruolo, un id di `dati/oggetti/`. E' l'unico campo di questo schema che cambia entro una sessione, e sta qui e non nello stato di scontro perche' NON si ricalcola dai file: quale spada impugni non lo deriva nessuno. I ruoli sono quelli che `motore/combattimento` legge — `arma`, `armatura`, `scudo` — e sono chiusi apposta: un ruolo nuovo e' una regola nuova nel motore, non un campo in piu' nella scheda.",
+      "properties": {
+        "arma": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[a-z][a-z0-9-]*$"
+        },
+        "armatura": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[a-z][a-z0-9-]*$"
+        },
+        "scudo": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[a-z][a-z0-9-]*$"
+        }
+      }
+    },
+    "note": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Tensioni dichiarate su QUESTO personaggio: cosa e' stato assunto e dove i dati non bastavano. Stessa funzione del campo `note` delle altre entita' — non e' prosa di colore."
+    }
+  }
+}

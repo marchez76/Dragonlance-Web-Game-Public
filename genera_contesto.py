@@ -630,8 +630,9 @@ def d_registro_aperte():
         if not a.sede:
             return a.testo
         chiave = a.sede.split('["')[1].rstrip('"]')
-        return (f"{CH.CHASSIS[chiave][1]} Sede: `{a.sede}` — la ragione si "
-                f"legge li' e non si ricopia qui.")
+        return (f"{CH.CHASSIS[chiave][1]} {CH.MOTIVO_DA_COMPORRE} "
+                f"Sede: `{a.sede}` — la ragione si legge li' e non si "
+                f"ricopia qui.")
 
     return [f"- **{a.titolo}** (`{a.id}`). {_corpo(a)}" for a in APERTE]
 

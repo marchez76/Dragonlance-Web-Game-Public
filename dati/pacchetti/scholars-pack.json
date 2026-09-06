@@ -50,15 +50,15 @@
       "quantita": 1,
       "name_srd": "Little bag of sand",
       "oggetto": null,
-      "stato": "da_decidere",
-      "motivo": "l'SRD la nomina solo dentro la descrizione di questo pacchetto: la tabella dell'attrezzatura non la elenca, quindi non ha ne' prezzo ne' peso propri. Non e' una voce mancante dal catalogo — e' da decidere se diventa un oggetto o resta testo del pacchetto (decisione 62, `pacchetto-fisso`)"
+      "stato": "testo_del_pacchetto",
+      "motivo": "Nel Pacchetto dello studioso la sabbia asciuga l'inchiostro: nessun conto la attraversa. LA PROVA DEGLI INCANTESIMI LA PRENDEREBBE — 6 incantesimi la nominano — ed e' la ragione per cui quella prova e' uno strumento del criterio e non il criterio: di quei 6 ne portano un costo o un consumo 0, quindi la borsa dei componenti li copre tutti, e cio' di cui il motore deve sapere e' la borsa. E' anche la differenza esatta con l'incenso, che un costo ce l'ha. La tensione e' misurata da `nominate_ma_testo()` invece che taciuta."
     },
     {
       "quantita": 1,
       "name_srd": "Small knife",
       "oggetto": null,
-      "stato": "da_decidere",
-      "motivo": "l'SRD la nomina solo dentro la descrizione di questo pacchetto: la tabella dell'attrezzatura non la elenca, quindi non ha ne' prezzo ne' peso propri. Non e' una voce mancante dal catalogo — e' da decidere se diventa un oggetto o resta testo del pacchetto (decisione 62, `pacchetto-fisso`)"
+      "stato": "testo_del_pacchetto",
+      "motivo": "Il coltellino dello studioso taglia le penne e apre i sigilli. Non e' un'arma — l'SRD non gli da' ne' dado di danno ne' proprieta' — e promuoverlo a oggetto vorrebbe dire inventargli una scheda d'arma che la fonte non scrive. Nessun incantesimo lo nomina."
     }
   ],
   "note": null

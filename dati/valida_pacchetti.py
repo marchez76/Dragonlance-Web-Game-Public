@@ -9,8 +9,10 @@ OLTRE ALLO SCHEMA, TRE COSE CHE LO SCHEMA NON PUO' VEDERE
        (`_fonti/srd51_pacchetti.py` contro i file scritti): se un giorno la
        trascrizione cambia e i file no, sono due letture della stessa
        sezione che nessuno mette una contro l'altra;
-    3. che ogni voce `da_decidere` porti il suo motivo, e che nessuna voce
-       `a_catalogo` ne porti uno;
+    3. che ogni voce decisa dal criterio porti la sua ragione — a testo o a
+       oggetto, indifferentemente: una decisione senza ragione accanto e'
+       indistinguibile da una svista — e che le voci che nessuno ha dovuto
+       decidere, cioe' le righe della tabella SRD, non ne portino nessuna;
     4. che le cinque SCELTE aperte siano filtri veri: quelle con un filtro
        devono trovare almeno un'arma nel catalogo — un filtro che non
        seleziona niente e' una domanda che nessuno puo' rispondere — e
@@ -91,21 +93,31 @@ def coerenza(d, ids_catalogo, err):
                 f"{len(nostro)} qui, {len(atteso)} li'. Rigenera con "
                 f"build_pacchetti.py invece di correggere a mano")
 
+    # Le voci che il criterio ha dovuto decidere sono esattamente quelle che
+    # la fonte non mette a listino. Non si riconoscono dallo stato — a
+    # catalogo ci finiscono anche le righe ordinarie della tabella — e non si
+    # elencano qui: si leggono in `srd51_pacchetti.PACCHETTI`, che e' dove il
+    # fatto sta.
+    decise = {v for _q, v, a_listino in (voci_fonte or []) if not a_listino}
+
     for x in d["voci"]:
         if x["stato"] == "a_catalogo":
             if x["oggetto"] not in ids_catalogo:
                 err(f"«{x['name_srd']}» rimanda a `{x['oggetto']}`, che in "
                     f"dati/oggetti/ non c'e'")
-            if x.get("motivo"):
-                err(f"«{x['name_srd']}» e' a catalogo e porta un motivo: il "
-                    f"motivo serve solo a spiegare cosa resta da decidere")
         else:
             if x["oggetto"] is not None:
-                err(f"«{x['name_srd']}» e' da decidere e rimanda comunque a "
-                    f"un oggetto: o e' decisa o non lo e'")
-            if not x.get("motivo"):
-                err(f"«{x['name_srd']}» e' da decidere e non dice perche': "
-                    f"indistinguibile da una voce dimenticata")
+                err(f"«{x['name_srd']}» resta testo del pacchetto e rimanda "
+                    f"comunque a un oggetto: o ha un id o non ce l'ha")
+
+        if x["name_srd"] in decise and not x.get("motivo"):
+            err(f"«{x['name_srd']}» e' una delle voci che l'SRD nomina solo "
+                f"dentro un pacchetto: il criterio l'ha decisa e la ragione "
+                f"deve stare accanto al risultato "
+                f"(decisione 63, `oggetto-se-serve-al-motore`)")
+        if x["name_srd"] not in decise and x.get("motivo"):
+            err(f"«{x['name_srd']}» e' una riga della tabella SRD e porta "
+                f"comunque un motivo: non c'era niente da decidere")
 
 
 def main():
@@ -122,7 +134,8 @@ def main():
         return 1
 
     ids_catalogo = catalogo()
-    ids, totale, da_decidere = set(), 0, 0
+    ids, totale = set(), 0
+    per_stato = {"a_catalogo": 0, "testo_del_pacchetto": 0}
     for p in files:
         nome = os.path.basename(p)
         d = json.load(open(p, encoding="utf-8"))
@@ -136,7 +149,8 @@ def main():
         if d["id"] in ids:
             errori.append(f"id duplicato: {d['id']}")
         ids.add(d["id"])
-        da_decidere += sum(1 for x in d["voci"] if x["stato"] == "da_decidere")
+        for x in d["voci"]:
+            per_stato[x["stato"]] = per_stato.get(x["stato"], 0) + 1
 
         if errori:
             print(f"✗ {nome}")
@@ -156,9 +170,10 @@ def main():
     print(f"{len(P.SCELTE)} scelte aperte registrate come filtri "
           f"(decisione 35, `repertori-sono-filtri`), di cui {senza_campione} "
           f"senza campione nel catalogo.")
-    print(f"{da_decidere} voci in attesa di decisione: l'SRD le nomina solo "
-          f"dentro la descrizione di un pacchetto e non da' loro ne' prezzo "
-          f"ne' peso (decisione 62, `pacchetto-fisso`).")
+    print(f"{per_stato['a_catalogo']} voci rimandano al catalogo, "
+          f"{per_stato['testo_del_pacchetto']} restano testo del pacchetto "
+          f"(decisione 63, `oggetto-se-serve-al-motore`): il criterio le ha "
+          f"decise tutte, e nessuna e' piu' in attesa.")
     return 1 if totale else 0
 
 

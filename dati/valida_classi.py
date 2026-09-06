@@ -101,21 +101,31 @@ def equipaggiamento(classi, err):
     di avere `scelte` vuote, che sarebbero indistinguibili da un pacchetto
     davvero vuoto."""
     oggetti, pacchetti = _ids("oggetti"), _ids("pacchetti")
-    voci = da_comporre = 0
+    voci = 0
+    per_chi = {"dal_telaio": 0, "da_comporre": 0, "non_si_pone": 0}
     for d in classi:
         se = (((d.get("mechanics_5e") or {}).get("structural") or {})
               .get("starting_equipment") or {})
         if not se:
             err(f"{d['id']}: nessun blocco starting_equipment")
             continue
-        if se.get("da_comporre"):
-            da_comporre += 1
+        comp = se.get("composizione") or {}
+        chi = comp.get("chi")
+        per_chi[chi] = per_chi.get(chi, 0) + 1
+        if chi != "dal_telaio":
             if se.get("scelte") is not None:
-                err(f"{d['id']}: dichiara da_comporre e porta comunque un "
-                    f"elenco: o e' composto o non lo e'")
+                err(f"{d['id']}: `composizione.chi` e' `{chi}` e porta "
+                    f"comunque un elenco: o l'elenco c'e' o non c'e'")
+            if chi == "da_comporre" and not comp.get("questione_aperta"):
+                err(f"{d['id']}: e' da comporre e non dice cosa la tiene "
+                    f"ferma: «da comporre» senza una questione aperta "
+                    f"accanto e' uno stato senza uscita")
+            if chi == "non_si_pone" and comp.get("questione_aperta"):
+                err(f"{d['id']}: dice che la domanda non si pone e nomina "
+                    f"comunque una questione aperta")
             continue
         if not se.get("scelte"):
-            err(f"{d['id']}: non e' da comporre e non ha elenco")
+            err(f"{d['id']}: sta su un telaio e non ha elenco")
             continue
         for scelta in se["scelte"]:
             for alternativa in scelta["alternative"]:
@@ -131,7 +141,7 @@ def equipaggiamento(classi, err):
                     elif g == "scelta" and r is not None:
                         err(f"{d['id']}: «{v['name_srd']}» e' una scelta "
                             f"aperta e rimanda a un oggetto preciso")
-    return voci, da_comporre
+    return voci, per_chi
 
 
 def incrociato(classi, razze, err):
@@ -321,15 +331,17 @@ def main():
 
     print("\n--- equipaggiamento iniziale ---")
     errori_eq = []
-    voci, da_comporre = equipaggiamento(classi, errori_eq.append)
+    voci, per_chi = equipaggiamento(classi, errori_eq.append)
     for e in errori_eq:
         print(f"    ✗ {e}")
     totale += len(errori_eq)
     if not errori_eq:
         print(f"    ✓ {voci} voci di equipaggiamento, tutti i riferimenti "
               f"risolvono in dati/oggetti/ e dati/pacchetti/")
-        print(f"    ✓ {da_comporre} classi senza chassis dichiarano "
-              f"`da_comporre` invece di un elenco vuoto")
+        print(f"    ✓ {per_chi['da_comporre']} classi senza chassis "
+              f"dichiarano `da_comporre` e la questione aperta che le tiene "
+              f"ferme; {per_chi['non_si_pone']} dichiarano che la domanda "
+              f"non si pone (decisione 64, `composizione-cinque-classi`)")
 
     print("\n--- controllo incrociato razze/classi ---")
     incr = []

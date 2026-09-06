@@ -1,0 +1,113 @@
+{
+ "id": "chierica-di-mishakal",
+ "nome": "Ilenya di Xak Tsaroth",
+ "corpus": {
+  "generato_il": "2026-09-06",
+  "impronta": "e096e165f029a590"
+ },
+ "razza": "umano",
+ "classe": "sacerdote-ordini-sacri",
+ "livello": 1,
+ "punteggi": {
+  "wis": 15,
+  "con": 15,
+  "str": 13,
+  "cha": 12,
+  "dex": 9,
+  "int": 8
+ },
+ "metodo_punteggi": "tiro-4d6-scarta-minore",
+ "allineamento": "legale_buono",
+ "divinita": "mishakal",
+ "lingue": [
+  {
+   "lingua": "Solamnico",
+   "aperta_da": "razza:umano"
+  }
+ ],
+ "scelte": {
+  "competenze_abilita": {
+   "aperta_da": "razza:umano",
+   "al_livello": 1,
+   "filtro": {
+    "sede": "dati/sistema/abilita.json",
+    "chiuso": true,
+    "quante": null
+   },
+   "valori": [
+    "medicine"
+   ]
+  },
+  "aumenti_caratteristica": {
+   "aperta_da": "razza:umano",
+   "al_livello": 1,
+   "filtro": {
+    "sede": "dati/razze/umano.json -> mechanics_5e.traits[]",
+    "chiuso": false,
+    "quante": 2
+   },
+   "valori": [
+    {
+     "caratteristica": "wis",
+     "valore": 1
+    },
+    {
+     "caratteristica": "con",
+     "valore": 1
+    }
+   ]
+  },
+  "equipaggiamento_iniziale": {
+   "aperta_da": "classe:sacerdote-ordini-sacri",
+   "al_livello": 1,
+   "filtro": {
+    "sede": "dati/classi/sacerdote-ordini-sacri.json -> mechanics_5e.structural.starting_equipment.scelte",
+    "chiuso": true,
+    "quante": 5
+   },
+   "valori": [
+    {
+     "riga": 0,
+     "alternativa": 0
+    },
+    {
+     "riga": 1,
+     "alternativa": 0
+    },
+    {
+     "riga": 2,
+     "alternativa": 1,
+     "risolti": [
+      {
+       "voce": "arma semplice",
+       "oggetto": "quarterstaff"
+      }
+     ]
+    },
+    {
+     "riga": 3,
+     "alternativa": 0
+    },
+    {
+     "riga": 4,
+     "alternativa": 0,
+     "risolti": [
+      {
+       "voce": "simbolo sacro",
+       "oggetto": null
+      }
+     ]
+    }
+   ]
+  }
+ },
+ "equipaggiato": {
+  "arma": "mace",
+  "armatura": "scale-mail",
+  "scudo": "shield"
+ },
+ "note": [
+  "Il simbolo sacro resta senza oggetto: il filtro non ha campioni a catalogo, ed e' l'unica delle cinque scelte aperte che non abbia un'alternativa nella stessa riga.",
+  "L'assegnazione dei punteggi mette la Saggezza per prima: e' una scelta del giocatore, non un vincolo — il sacerdote non porta minimi di caratteristica applicati."
+ ]
+}

@@ -1,15 +1,13 @@
-# Lo schema Personaggio — rapporto diagnostico
-
-*Generato da `dati/analizza_personaggio.py` il 2026-09-05.*
-
-> **Diagnostico.** Misura la forma del problema prima di progettarlo. **Non
+scritto dati/RAPPORTO-personaggio.md (667 righe)
+guardia di riduzione: nessun testo di fonte (chiavi sorvegliate: text_2e, descrizione, raw, granted_powers, abilities_text)
+ttarlo. **Non
 > decide niente**: non propone uno schema, non scioglie le tre decisioni
 > sospese, non tocca `dati/`. Ogni numero è derivato dai JSON; le letture sono
 > marcate con un blocco citato e datato.
 >
-> Il corpus letto è di **522 file** per **2,02 MB**:
+> Il corpus letto è di **525 file** per **2,03 MB**:
 > 15 razze, 20 classi, 21 divinità,
-> 319 incantesimi, 92 oggetti,
+> 319 incantesimi, 95 oggetti,
 > 52 mostri, 3 modelli.
 
 ---
@@ -101,7 +99,7 @@ progetto: è il ritmo con cui i valori cambiano.
 | Posizione e ordine di iniziativa | **turno** | no |
 | Tiri salvezza contro morte | **turno** | no |
 
-> **Lettura interpretativa** — registrata il 2026-09-05. Non è derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-06. Non è derivata dai dati.
 >
 > **Cosa i dati impongono, prima di qualunque scelta di progetto.** La colonna
 > "cambia ogni" si divide in due gruppi senza che nessuno l'abbia deciso:
@@ -177,7 +175,7 @@ livello per livello. Non c'è una riga di meccanica: nessuna descrizione di
 Second Wind, nessuna tabella di slot, nessuna lista di competenze, nessuna
 sottoclasse, nessun pacchetto d'equipaggiamento.
 
-> **Lettura interpretativa** — registrata il 2026-09-05. Non è derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-06. Non è derivata dai dati.
 >
 > "Clonato" oggi vuol dire **abbiamo registrato quali privilegi ha il Fighter**,
 > non **abbiamo le regole del Fighter**. È esattamente il rapporto che c'è fra un
@@ -276,7 +274,7 @@ Tre legami esistono come intenzione ma non come chiave.
   `mechanics_5e` a **`null`**: il filtro delle sfere (decisione 24, `sfere-sacerdotali`) vive
   interamente in `dati/_sfere_5e.py`, cioè in codice, non nei dati.
 
-> **Lettura interpretativa** — registrata il 2026-09-05. Non è derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-06. Non è derivata dai dati.
 >
 > I tre giunti hanno la stessa forma e non è un caso: il legame è sempre scritto
 > come **etichetta leggibile**, mai come chiave. Finché i dati servivano a essere
@@ -412,7 +410,7 @@ razza + classe; la validazione; la soddisfacibilità (`esiste_assegnazione`,
 | Copre un passo su molti | punti ferita, competenze, equipaggiamento, incantesimi, denaro iniziale: nessuno di questi passa di qui |
 | La numerazione delle decisioni era sfasata — CHIUSA | il modulo cita ora le decisioni 8 (`generazione-caratteristiche`), 9 (`aggiustamenti-negativi`), 10 (`massimali-razziali`), 11 (`barbaro-vincoli`), 44 (`tetto-punto-perduto`), verificate da `verifica_decisioni.py` — vedi §3.4 |
 
-> **Lettura interpretativa** — registrata il 2026-09-05. Non è derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-06. Non è derivata dai dati.
 >
 > Sul terzo punto vale la pena fermarsi, perché è l'unico che sia un difetto e
 > non un lavoro non ancora fatto. Il modulo legge `source_2e` e non
@@ -431,14 +429,14 @@ razza + classe; la validazione; la soddisfacibilità (`esiste_assegnazione`,
 ### 3.4 Una nota che riguarda tutte e tre: la numerazione — CHIUSA
 
 Le tre questioni sospese si citano per numero, e i numeri **non erano
-stabili**. Il progetto contiene **1592 rimandi a una decisione in
-162 file**, di cui **401 nella fascia 1-12** — che è
+stabili**. Il progetto contiene **1659 rimandi a una decisione in
+164 file**, di cui **406 nella fascia 1-12** — che è
 esattamente dove stavano le tre questioni di questa sezione.
 
 Erano sfasati perché il numero è un ordinale dell'elenco, e l'elenco è
 cambiato: file scritti in momenti diversi hanno continuato a citare il numero
 della propria vintage, senza che nulla li riallineasse. Lette una per una, le
-401 citazioni della fascia bassa hanno dato questa corrispondenza —
+406 citazioni della fascia bassa hanno dato questa corrispondenza —
 **senza uno scarto costante**, e con lo stesso numero giusto in un file e
 sbagliato in un altro:
 
@@ -464,15 +462,15 @@ un `id` stabile che non cambierà mai, e la forma di un rimando è ora
 accanto come derivato. `verifica_decisioni.py` verifica la coppia in tutto il
 progetto e con `--correggi` riscrive i numeri a partire dagli id.
 
-Stato oggi: **1590 rimandi verificati, 0 sfasati,
-0 con id ignoto, 2 ancora senza id**. Rinumerare
+Stato oggi: **1659 rimandi verificati, 0 sfasati,
+0 con id ignoto, 0 ancora senza id**. Rinumerare
 adesso costa un comando.
 
 **Dal 2026-09-05 la stessa sede porta anche le questioni APERTE**, che fino a
 quel giorno erano prosa dentro `genera_contesto.py` — senza id, e quindi non
 citabili da nessun altro testo. Un rimando a una di esse si scrive «questione
 aperta (`aumento-oltre-tetto`)» e non ha numero: dove non c'è un derivato non
-c'è niente che possa sfasarsi. Ce ne sono **10** nel progetto,
+c'è niente che possa sfasarsi. Ce ne sono **23** nel progetto,
 0 con id ignoto.
 
 ---
@@ -505,7 +503,7 @@ esclusi di Dominio — 37 nomi dichiarati in
 `_sfere_5e.ESCLUSI_DI_DOMINIO` — e non sul loro numero, perché un
 incantesimo che entra mentre un altro esce lascerebbe il conteggio fermo.
 
-> **Lettura interpretativa** — registrata il 2026-09-05. Non è derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-06. Non è derivata dai dati.
 >
 > **L'allineamento perfetto è il dato interessante, non quello rassicurante.**
 > Le quattro divergenze già viste in questo progetto non sono nate da distrazione:
@@ -560,7 +558,7 @@ il totale. Lo stesso vale per la ricchezza iniziale, se tirata.
 
 ### 5.1 Non è un problema di velocità
 
-Il corpus intero è **522 file per 2,02 MB**. Caricato una
+Il corpus intero è **525 file per 2,03 MB**. Caricato una
 volta all'avvio e indicizzato per id, ci sta in memoria senza discussione: gli
 indici `*.index.json` esistono già e fanno esattamente questo mestiere.
 **A ogni turno non va letto nessun file.** La domanda "quanto velocemente" ha
@@ -624,7 +622,7 @@ I 9 ruoli già assegnati
 della decisione 27 (`sette-campi-2e`) sono, oggi, la parte dell'arena messa meglio: l'IA sa cosa
 vuole fare una creatura molto prima che il motore sappia risolverne l'attacco.
 
-> **Lettura interpretativa** — registrata il 2026-09-05. Non è derivata dai dati.
+> **Lettura interpretativa** — registrata il 2026-09-06. Non è derivata dai dati.
 >
 > **La scheda non è progettata male: è progettata per un altro uso.** Tutte e sei
 > le entità sono documenti di conversione — devono mostrare cosa dice la fonte,
@@ -659,7 +657,7 @@ vuole fare una creatura molto prima che il motore sappia risolverne l'attacco.
 | 2. Cosa manca | i privilegi del chassis (non contati fra i 40 `pending`), la tabella PE 5e (20/20 non applicata), le competenze 5e, gli slot 5e, l'effetto degli incantesimi, il cambio stl/gp |
 | 3. Le tre sospese | riportate con fonte e opzioni, non sciolte |
 | 4. Riferimento o copia | riferimento per id, più impronta del corpus, più le sole scelte che risolvono un filtro; i derivati non si scrivono |
-| 5. Arena | 2,02 MB stanno in memoria: il vincolo non è la velocità ma che 380 blocchi di meccanica su 405 sono ancora solo prosa |
+| 5. Arena | 2,03 MB stanno in memoria: il vincolo non è la velocità ma che 380 blocchi di meccanica su 405 sono ancora solo prosa |
 
 ---
 

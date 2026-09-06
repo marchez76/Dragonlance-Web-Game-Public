@@ -326,14 +326,33 @@ INDICE_SRD = {
 
 
 # Un nome che le due letture della stessa fonte scrivono in due modi, e la
-# ragione accanto. UNA sola voce, e non e' un caso limite inventato: e' il
-# primo controllo che l'invariante qui sotto ha fermato, appena scritta.
+# ragione accanto. La prima non e' un caso limite inventato: e' il primo
+# controllo che l'invariante qui sotto ha fermato, appena scritta.
+#
+# LE DUE VOCI NON SONO LA STESSA COSA, e vale la pena dirlo perche' la
+# struttura le tratta uguale. `Arrow` e' una differenza di TRASCRIZIONE: due
+# endpoint della stessa fonte scrivono lo stesso nome in due modi.
+# `Vestments` e' una LETTURA: la descrizione di un pacchetto e la tabella
+# dell'attrezzatura usano due parole diverse, e siamo noi a dire che nominano
+# la stessa cosa. La seconda si puo' sbagliare e la prima no — per questo
+# porta la ragione per esteso, e per questo l'alternativa (creare un oggetto
+# «Vestments» accanto a «Robes») e' scritta qui invece che dimenticata.
 EQUIVALENZE = {
     "Arrow": "Arrow (bow)",   # /v2/items/ la stampa col qualificatore
                               # dell'arma; `srd51_equipaggiamento.py` l'ha
                               # adottata senza, perche' li' la freccia sta
                               # accanto ai dardi e agli aghi e il
                               # qualificatore non distingueva niente.
+
+    # Il Pacchetto del sacerdote elenca «Vestments»; la tabella
+    # dell'attrezzatura elenca «Robes», con prezzo e peso propri. Sono la
+    # veste di chi officia e la veste, e la fonte non le distingue in nessun
+    # punto: nessuna regola le tratta diversamente, nessuna delle due porta
+    # meccanica. Leggerle come la stessa voce evita un oggetto nuovo dal
+    # prezzo inventato; leggerle come due voci diverse costerebbe esattamente
+    # quello. E' la sola delle sette voci senza listino a cui ha risposto la
+    # fonte invece che noi — decisione 63 (`oggetto-se-serve-al-motore`).
+    "Vestments": "Robes",
 }
 
 

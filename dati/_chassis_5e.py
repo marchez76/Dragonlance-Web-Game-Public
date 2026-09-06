@@ -43,8 +43,12 @@ import sys
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)),
                                 "_fonti"))
 
+sys.path.insert(0, os.path.dirname(os.path.dirname(
+    os.path.abspath(__file__))))
+
 import _srd51 as R
 import srd51_pacchetti as PK  # noqa: E402
+import decisioni as DECISIONI  # noqa: E402
 
 DEC = "DECISIONE 23 (`principio-del-clone`)"
 
@@ -273,13 +277,34 @@ def verifica_rimandi(docs):
 # telaio SRD (`srd51_pacchetti.EQUIPAGGIAMENTO`), che e' trascritto, e le sue
 # voci RIFERISCONO il catalogo e i pacchetti per id invece di ricopiarli.
 #
-# LE OTTO CLASSI SENZA CHASSIS NON HANNO UN ELENCO, e non e' una dimenticanza
-# che si tappa con un elenco plausibile: comporre un pacchetto per una classe
-# che nessun telaio 5e copre e' una scelta editoriale, e la
+# LE CLASSI SENZA CHASSIS NON HANNO UN ELENCO, e non e' una dimenticanza che
+# si tappa con un elenco plausibile: comporre un pacchetto per una classe che
+# nessun telaio 5e copre e' una scelta editoriale, e la
 # decisione 62 (`pacchetto-fisso`) dice esplicitamente che va PROPOSTA prima
-# di essere scritta. `da_comporre: true` e' quel vuoto reso visibile — stessa forma
-# dell'`in_sospeso` che la decisione 23 (`principio-del-clone`) usa per i
-# chassis mancanti, e per la stessa ragione.
+# di essere scritta.
+#
+# MA NON SONO OTTO, SONO CINQUE, e la differenza non e' un'esclusione: e' che
+# per tre di esse la domanda non si pone. Le tre Vesti hanno `entry_level` 3
+# — si giura al Test, decisione 6 (`maghi-delle-torri`) — e nessuno comincia
+# la carriera li'. L'equipaggiamento INIZIALE lo riceve la classe con cui si
+# parte, che per un mago della Torre e' `mago-alta-stregoneria`, telaio
+# Wizard, elenco trascritto. Chiedere «che pacchetto diamo alla Veste Bianca»
+# e' chiedere con che cosa comincia una cosa con cui non si comincia.
+# La si e' viste come otto finche' si e' guardato il campo `chassis`; si
+# vedono come cinque appena si guarda anche `entry_level`, ed e' una lettura
+# che nessuna ispezione dello schema avrebbe dato — e' venuta fuori
+# compilando (decisione 64, `composizione-cinque-classi`).
+#
+# LE CINQUE VERE non aspettano una proposta qualunque: aspettano il CHASSIS.
+# Comporre un pacchetto per il Marinaio prima di sapere se sta su Fighter o
+# su Rogue vuol dire decidere due volte la stessa cosa, e la seconda volta
+# contro la prima. Per questo ogni classe `da_comporre` dichiara la
+# QUESTIONE APERTA che la tiene ferma, per id: sciolta quella, l'elenco
+# scende dal telaio come per le altre dodici.
+#
+# `composizione` e' quel vuoto reso visibile — stessa forma dell'`in_sospeso`
+# che la decisione 23 (`principio-del-clone`) usa per i chassis mancanti, e
+# per la stessa ragione.
 #
 # TRE GENERI DI VOCE, e la distinzione conta perche' cambia chi le risolve:
 # `oggetto` va letto in dati/oggetti/, `pacchetto` in dati/pacchetti/,
@@ -306,6 +331,68 @@ def _voce(quantita, nome, genere):
                 "riferimento": None, "filtro": PK.SCELTE[nome]["filtro"]}
     return {"quantita": quantita, "name_srd": nome, "genere": "oggetto",
             "riferimento": _slug(nome), "filtro": None}
+
+
+# Cosa la questione aperta tiene fermo OLTRE al telaio, dal 06/09/2026: anche
+# l'elenco dell'equipaggiamento iniziale — vedi
+# decisione 64 (`composizione-cinque-classi`). Sta qui, in una costante, e non dentro le
+# cinque `ragione` di CHASSIS, perche' e' lo STESSO fatto per tutte e cinque:
+# ricopiarlo cinque volte sarebbe la struttura doppia che questo progetto ha
+# gia' pagato dodici volte. Due lettori, una sede — `composizione()` qui sotto
+# lo mette nel campo `motivo` delle classi, `genera_contesto.d_registro_aperte()`
+# lo aggiunge in coda alle cinque questioni `chassis-*` del registro.
+MOTIVO_DA_COMPORRE = (
+    "Nessun telaio 5e copre questa classe, quindi non c'e' un elenco "
+    "da trascrivere. Comporlo PRIMA di sapere quale chassis prendera' "
+    "vuol dire decidere due volte la stessa cosa: l'elenco iniziale "
+    "della 5e e' un attributo del telaio, e sceglierlo a mano ora "
+    "significa scegliere il telaio di nascosto. La composizione si "
+    "lega quindi alla questione aperta, e la segue "
+    "(decisione 64, `composizione-cinque-classi`)."
+)
+
+
+def composizione(c, s):
+    """Chi compone l'elenco iniziale di questa classe, e cosa lo tiene fermo.
+
+    Tre esiti, e nessuno dei due precedenti si perde: `dal_telaio` sono le
+    dodici che hanno un chassis SRD, `da_comporre` le cinque che aspettano di
+    saperlo, `non_si_pone` le tre Vesti. Il vecchio booleano `da_comporre`
+    metteva insieme gli ultimi due e faceva sembrare un lavoro da fare
+    (comporre otto elenchi) cio' che in tre casi su otto era una domanda mal
+    posta.
+    """
+    srd, _ = CHASSIS[c["id"]]
+    if srd is not None:
+        return {
+            "chi": "dal_telaio",
+            "questione_aperta": None,
+            "motivo": f"L'elenco scende dal telaio {srd} e si trascrive: "
+                      f"non c'e' niente da comporre.",
+        }
+    if (s.get("entry_level") or 1) > 1:
+        return {
+            "chi": "non_si_pone",
+            "questione_aperta": None,
+            "motivo":
+                f"Non e' una classe di partenza: vi si entra al "
+                f"{s['entry_level']}° livello, e l'equipaggiamento iniziale "
+                f"lo riceve la classe con cui si comincia. La domanda «che "
+                f"pacchetto le diamo» non ha un posto in cui essere posta — "
+                f"non e' un'esclusione, e' che il caso non esiste "
+                f"(decisione 64, `composizione-cinque-classi`).",
+        }
+    aperta = "chassis-" + c["id"]
+    assert aperta in DECISIONI.PER_ID_APERTA, (
+        f"{c['id']} non ha chassis e parte dal 1° livello, ma non c'e' "
+        f"nessuna questione aperta `{aperta}` che lo dica. O la questione e' "
+        f"stata decisa e questo codice non lo sa, o la classe e' nuova e "
+        f"nessuno ha registrato cosa la tiene ferma")
+    return {
+        "chi": "da_comporre",
+        "questione_aperta": aperta,
+        "motivo": MOTIVO_DA_COMPORRE,
+    }
 
 
 def equipaggiamento_iniziale(c, s):
@@ -348,7 +435,7 @@ def equipaggiamento_iniziale(c, s):
                     "ricopiare la prosa qui.",
         },
         "telaio": srd,
-        "da_comporre": righe is None,
+        "composizione": composizione(c, s),
         "scelte": None if righe is None else [
             {"alternative": [{"voci": [_voce(*v) for v in alternativa]}
                              for alternativa in riga]}
@@ -361,10 +448,8 @@ def equipaggiamento_iniziale(c, s):
                 "ricchezza 2e resta in `source_wealth` come dato di fonte "
                 "NON applicato — stessa forma della "
                 "decisione 4 (`limiti-di-livello`)."
-                + ("" if righe is not None else
-                   " Questa classe non ha chassis 5e: l'elenco va COMPOSTO, "
-                   "e comporlo e' una proposta da portare, non un dato da "
-                   "scrivere di propria iniziativa."),
+                + ("" if righe is not None
+                   else " " + composizione(c, s)["motivo"]),
     }
 
 

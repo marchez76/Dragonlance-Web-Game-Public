@@ -150,6 +150,14 @@ CLAUDE.local.md
 !dati/_fonti/srd51_pacchetti.py
 !dati/analizza_equipaggiamento.py
 
+# Le sette voci che l'SRD nomina solo dentro la descrizione di un pacchetto
+# (06/09/2026, decisione 63, `oggetto-se-serve-al-motore`). Stessa ragione dei
+# due file qui sopra: nomi e descrizioni SRD 5.1, nessun testo 2e. Il modulo
+# legge il corpus degli incantesimi (anch'esso SRD) per la prova del borsello
+# dei componenti, e ne stampa CONTEGGI, non testo. Dichiarato qui nello stesso
+# commit che pubblica il file.
+!dati/_voci_di_pacchetto.py
+
 # Pacchetti di equipaggiamento iniziale (05/09/2026, decisione 62,
 # `pacchetto-fisso`). CARTELLA NUOVA SOTTO dati/, quindi la sua sorte si
 # dichiara ADESSO e non quando qualcuno se ne accorge (CLAUDE.md 1). Resta
@@ -166,6 +174,24 @@ CLAUDE.local.md
 !dati/pacchetti/*.json
 !dati/build_pacchetti.py
 !dati/valida_pacchetti.py
+
+# Personaggi (06/09/2026, decisione 66, `schema-personaggio`). CARTELLA NUOVA
+# SOTTO dati/, quindi la sua sorte si dichiara ADESSO (CLAUDE.md 1). Resta
+# PUBBLICA, e la ragione qui e' piu' netta che altrove: un personaggio non ha
+# `source_2e` per COSTRUZIONE — non e' materiale convertito, e' materiale
+# prodotto — quindi non c'e' nessun testo di manuale che possa passarci
+# dentro. Cio' che contiene sono riferimenti per id a razze, classi, oggetti e
+# divinita' (le cartelle riferite restano private: e' il riferimento a essere
+# pubblico, non il riferito) e le scelte di un giocatore. NON va in PERCORSI
+# di git-privato.sh. Se un giorno una scheda dovesse portare prosa presa da un
+# manuale — la storia di un personaggio pregenerato dei moduli, per dire —
+# quello sara' il momento di rileggere questa riga, e la risposta sara' che
+# quella prosa non entra qui.
+!dati/personaggi/
+!dati/personaggi/*.json
+!dati/crea_personaggio.py
+!dati/valida_personaggio.py
+!dati/schema/personaggio.schema.json
 
 # Allineamento (05/09/2026): il vocabolario dei nove viene dalla sezione
 # Alignment dell'SRD 5.1, la lettura delle restrizioni di classe e' nostra.

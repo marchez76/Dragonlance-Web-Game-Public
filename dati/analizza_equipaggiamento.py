@@ -37,7 +37,8 @@ sys.path.insert(0, RADICE)
 
 import srd51_pacchetti as SRDP      # noqa: E402
 import _valuta as VAL               # noqa: E402
-from decisioni import cita          # noqa: E402
+import _voci_di_pacchetto as VP     # noqa: E402
+from decisioni import cita, cita_aperta  # noqa: E402
 
 
 # LA COLONNA «PRIMA» non e' derivabile: e' la misura di com'era il
@@ -83,21 +84,26 @@ def voci_di(c):
 # ==========================================================================
 
 def stato(classi, oggetti, pacchetti):
-    composte = [c for c in classi if not blocco(c).get("da_comporre")]
-    da_comporre = [c for c in classi if blocco(c).get("da_comporre")]
+    def chi(c):
+        return (blocco(c).get("composizione") or {}).get("chi")
+
+    composte = [c for c in classi if chi(c) == "dal_telaio"]
+    da_comporre = [c for c in classi if chi(c) == "da_comporre"]
+    non_si_pone = [c for c in classi if chi(c) == "non_si_pone"]
     generi = {}
     for c in composte:
         for v in voci_di(c):
             generi[v["genere"]] = generi.get(v["genere"], 0) + 1
-    da_decidere = [(p["id"], x["name_srd"])
-                   for p in pacchetti for x in p["voci"]
-                   if x["stato"] == "da_decidere"]
+    senza_listino = [(p["id"], x["name_srd"], x["stato"], x["oggetto"])
+                     for p in pacchetti for x in p["voci"]
+                     if x["name_srd"] in VP.VOCI]
     con_prezzo = [o for o in oggetti if VAL.prezzo_di(o) is not None]
     return {
         "composte": composte,
         "da_comporre": da_comporre,
+        "non_si_pone": non_si_pone,
         "generi": generi,
-        "da_decidere": da_decidere,
+        "senza_listino": senza_listino,
         "con_prezzo": con_prezzo,
         "ricchezza": [c["id"] for c in classi
                       if blocco(c).get("source_wealth", {}).get("presente")],
@@ -146,10 +152,11 @@ def scritto(classi, pacchetti, s):
           f"Gli altri due non sono stati saltati per fretta: nominano voci "
           f"che il catalogo non ha, e scriverli darebbe riferimenti che non "
           f"risolvono.\n")
-    print("| pacchetto | costo SRD | voci | di cui da decidere |")
+    print("| pacchetto | costo SRD | voci | di cui a testo |")
     print("|---|---:|---:|---:|")
     for p in pacchetti:
-        aperte = sum(1 for x in p["voci"] if x["stato"] == "da_decidere")
+        aperte = sum(1 for x in p["voci"]
+                     if x["stato"] == "testo_del_pacchetto")
         print(f"| {p['name']['it']} (`{p['id']}`) | {p['cost_gp']:g} | "
               f"{len(p['voci'])} | {aperte or ''} |")
 
@@ -185,40 +192,91 @@ def scritto(classi, pacchetti, s):
 def aperto(classi, oggetti, pacchetti, s):
     print("\n## Cosa resta aperto, e perche' non e' stato chiuso di slancio\n")
 
-    print(f"**1. Le {len(s['da_comporre'])} classi senza chassis non hanno un "
-          f"elenco.** Nessun telaio 5e le copre, quindi non c'e' niente da "
-          f"trascrivere: comporre un pacchetto per loro e' una scelta "
-          f"editoriale, e {cita('pacchetto-fisso')} la vuole proposta prima "
-          f"che scritta. Il campo lo dichiara — `da_comporre: true` — invece "
-          f"di portare un elenco plausibile che nessuno ha approvato.\n")
-    print("Cio' su cui una proposta potra' poggiare, e che e' gia' nei "
-          "dati: le armi che la fonte IMPONE alla classe (`forced_equipment`, "
-          "l'unica cosa che la fonte 2e dica sull'inventario di queste otto), "
-          "il dado vita, e le regole di equipaggiamento che portano.\n")
-    print("| classe | armi imposte dalla fonte | dado vita | ricchezza 2e | "
-          "vincoli |")
-    print("|---|---|---:|---|---:|")
-    for c in s["da_comporre"]:
+    print(f"**1. Le {len(s['da_comporre'])} classi che aspettano il "
+          f"chassis.** Erano contate come "
+          f"{len(s['da_comporre']) + len(s['non_si_pone'])} finche' si "
+          f"guardava il solo campo `chassis`. Le altre "
+          f"{len(s['non_si_pone'])} sono le Vesti, e per loro la domanda "
+          f"**non si pone**: hanno `entry_level` "
+          f"{sorted({(c.get('source_2e') or {}).get('entry_level') for c in s['non_si_pone']})[0]} "
+          f"— {cita('maghi-delle-torri')} — quindi nessuno comincia la "
+          f"carriera li' e l'equipaggiamento iniziale lo riceve la classe "
+          f"con cui si parte. Non e' un'esclusione: e' un caso che non "
+          f"esiste, ed e' emerso compilando il campo, non ispezionando lo "
+          f"schema. {cita('composizione-cinque-classi')}.\n")
+    print(f"Per le {len(s['da_comporre'])} vere, comporre l'elenco **prima** "
+          f"di sapere il chassis vorrebbe dire decidere due volte la stessa "
+          f"cosa: nella 5e l'elenco iniziale e' un attributo del telaio, e "
+          f"sceglierlo a mano ora e' scegliere il telaio di nascosto. La "
+          f"composizione si lega quindi alla questione aperta che tiene "
+          f"ferma ciascuna, e la segue.\n")
+    print("| classe | questione aperta | armi imposte dalla fonte | dado vita "
+          "| ricchezza 2e | vincoli |")
+    print("|---|---|---|---:|---|---:|")
+    for c in sorted(s["da_comporre"], key=lambda x: x["id"]):
         b = blocco(c)
         forz = (((c.get("mechanics_5e") or {}).get("structural") or {}
                  ).get("weapon_proficiencies") or {}).get("forced_equipment")
         dado = (c.get("source_2e") or {}).get("hit_die")
         print(f"| `{c['id']}` | "
+              f"{cita_aperta(b['composizione']['questione_aperta'])} | "
               f"{', '.join(forz) if forz else '—'} | "
               f"{dado or '—'} | "
               f"{'si\'' if b.get('source_wealth', {}).get('presente') else '—'} | "
               f"{b.get('constraints', {}).get('quante') or ''} |")
 
-    print(f"\n**2. Le {len(s['da_decidere'])} voci che esistono solo dentro "
-          f"un pacchetto.** L'SRD le nomina nella descrizione e la tabella "
-          f"dell'attrezzatura non le elenca: non hanno ne' prezzo ne' peso, "
-          f"quindi non sono voci MANCANTI dal catalogo. Diventano oggetti o "
-          f"restano testo del pacchetto, ed e' una domanda sul merito di "
-          f"ciascuna.\n")
-    print("| voce | pacchetto |")
-    print("|---|---|")
-    for pid, nome in sorted(s["da_decidere"], key=lambda x: x[1]):
-        print(f"| {nome} | `{pid}` |")
+    forzate = {c["id"]: (((c.get("mechanics_5e") or {}).get("structural")
+                          or {}).get("weapon_proficiencies")
+                         or {}).get("forced_equipment") or []
+               for c in s["da_comporre"]}
+    con_armi = {k: v for k, v in forzate.items() if v}
+    for cid, armi in sorted(con_armi.items()):
+        print(f"\n**Il `{cid}` e' l'eccezione, e va tenuta separata.** "
+              f"{', '.join(armi)} sono armi 2e senza equivalente SRD: "
+              f"costano {len(armi)} voci nuove **a prescindere dal chassis**, "
+              f"perche' nessun telaio 5e le porta e nessuna riga della "
+              f"tabella dell'equipaggiamento le contiene. Non e' un elenco da "
+              f"trascrivere e non e' un elenco da comporre — e' il primo "
+              f"equipaggiamento da **convertire**, con lo stesso metodo dei "
+              f"mostri — {cita('equipaggiamento-da-convertire')}: "
+              f"`dati/METODO-conversione-equipaggiamento.md`.")
+
+    a_catalogo = [x for x in s["senza_listino"] if x[2] == "a_catalogo"]
+    a_testo = [x for x in s["senza_listino"] if x[2] != "a_catalogo"]
+    print(f"\n**2. Le {len(VP.VOCI)} voci che esistono solo dentro un "
+          f"pacchetto: CHIUSE.** Erano la domanda che "
+          f"{cita('pacchetto-fisso')} aveva lasciato aperta. Non sono state "
+          f"decise una per una a occhio: {cita('oggetto-se-serve-al-motore')} "
+          f"da' il criterio — *un oggetto esiste se il motore deve saperne "
+          f"qualcosa* — e le sette sono la sua prima applicazione. "
+          f"{len(set(x[1] for x in a_catalogo))} hanno un id che risolve, "
+          f"{len(set(x[1] for x in a_testo))} restano testo del pacchetto, "
+          f"dove si leggono comunque: nessun conto le attraversa, ed e' "
+          f"tutto cio' che cambia.\n")
+    print("| voce | esito | ragione in breve |")
+    print("|---|---|---|")
+    for nome, v in sorted(VP.VOCI.items()):
+        rif = next((x[3] for x in s["senza_listino"] if x[1] == nome), None)
+        esito = {"oggetto": f"oggetto `{rif}`",
+                 "equivalenza": f"risolta su `{rif}`",
+                 "testo": "testo del pacchetto"}[v["esito"]]
+        print(f"| {nome} | {esito} | {VP.ragione_di(nome).split('.')[0]}. |")
+
+    tensione = VP.nominate_ma_testo()
+    if tensione:
+        righe = ", ".join(f"**{n}** ({len(ids)} incantesimi, di cui "
+                          f"{len(VP.con_costo_o_consumo(VP.VOCI[n]['termine']))} "
+                          f"con un costo)"
+                          for n, ids in sorted(tensione.items()))
+        print(f"\nLo scarto misurato, che il criterio non nasconde: "
+              f"{righe}. La prova degli incantesimi — usata per decidere "
+              f"l'incenso — presa da sola prenderebbe anche questa voce. Non "
+              f"la prende perche' l'SRD dichiara che la borsa dei componenti "
+              f"copre ogni componente **senza costo**, e la borsa e' gia' a "
+              f"catalogo: cio' di cui il motore deve sapere e' la borsa. "
+              f"`_voci_di_pacchetto.nominate_ma_testo()` lo rimisura a ogni "
+              f"giro, cosi' che se un domani quella voce prendesse un costo "
+              f"la decisione si rifaccia invece di essere ereditata.\n")
 
     senza = [n for n, x in sorted(SRDP.SCELTE.items()) if x["filtro"] is None]
     print(f"\n**3. Due dei {len(SRDP.SCELTE)} filtri non hanno campione.** Le "

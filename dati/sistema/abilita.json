@@ -1,0 +1,161 @@
+{
+ "id": "abilita",
+ "name": {
+  "en": "Skills",
+  "it": "Le abilita'"
+ },
+ "genere": "elenco",
+ "source": {
+  "source_edition": "SRD 5.1",
+  "source_book": "SRD 5.1, Using Ability Scores — Skills",
+  "api_ref": null
+ },
+ "mechanics_5e": "Un'abilita' e' un'area d'applicazione di UNA caratteristica: la prova si tira sempre sulla caratteristica, e la competenza nell'abilita' aggiunge il bonus di competenza. L'insieme e' CHIUSO e COMPLETO — l'SRD ne stampa diciotto e le raggruppa sotto sei caratteristiche, di cui una (Costituzione) non ne governa nessuna. L'abbinamento abilita'/caratteristica e' della fonte, non nostro.",
+ "voci": [
+  {
+   "id": "athletics",
+   "name": {
+    "en": "Athletics",
+    "it": "Atletica"
+   },
+   "caratteristica": "str"
+  },
+  {
+   "id": "acrobatics",
+   "name": {
+    "en": "Acrobatics",
+    "it": "Acrobazia"
+   },
+   "caratteristica": "dex"
+  },
+  {
+   "id": "sleight-of-hand",
+   "name": {
+    "en": "Sleight of Hand",
+    "it": "Rapidita' di Mano"
+   },
+   "caratteristica": "dex"
+  },
+  {
+   "id": "stealth",
+   "name": {
+    "en": "Stealth",
+    "it": "Furtivita'"
+   },
+   "caratteristica": "dex"
+  },
+  {
+   "id": "arcana",
+   "name": {
+    "en": "Arcana",
+    "it": "Arcano"
+   },
+   "caratteristica": "int"
+  },
+  {
+   "id": "history",
+   "name": {
+    "en": "History",
+    "it": "Storia"
+   },
+   "caratteristica": "int"
+  },
+  {
+   "id": "investigation",
+   "name": {
+    "en": "Investigation",
+    "it": "Indagare"
+   },
+   "caratteristica": "int"
+  },
+  {
+   "id": "nature",
+   "name": {
+    "en": "Nature",
+    "it": "Natura"
+   },
+   "caratteristica": "int"
+  },
+  {
+   "id": "religion",
+   "name": {
+    "en": "Religion",
+    "it": "Religione"
+   },
+   "caratteristica": "int"
+  },
+  {
+   "id": "animal-handling",
+   "name": {
+    "en": "Animal Handling",
+    "it": "Addestrare Animali"
+   },
+   "caratteristica": "wis"
+  },
+  {
+   "id": "insight",
+   "name": {
+    "en": "Insight",
+    "it": "Intuizione"
+   },
+   "caratteristica": "wis"
+  },
+  {
+   "id": "medicine",
+   "name": {
+    "en": "Medicine",
+    "it": "Medicina"
+   },
+   "caratteristica": "wis"
+  },
+  {
+   "id": "perception",
+   "name": {
+    "en": "Perception",
+    "it": "Percezione"
+   },
+   "caratteristica": "wis"
+  },
+  {
+   "id": "survival",
+   "name": {
+    "en": "Survival",
+    "it": "Sopravvivenza"
+   },
+   "caratteristica": "wis"
+  },
+  {
+   "id": "deception",
+   "name": {
+    "en": "Deception",
+    "it": "Inganno"
+   },
+   "caratteristica": "cha"
+  },
+  {
+   "id": "intimidation",
+   "name": {
+    "en": "Intimidation",
+    "it": "Intimidire"
+   },
+   "caratteristica": "cha"
+  },
+  {
+   "id": "performance",
+   "name": {
+    "en": "Performance",
+    "it": "Intrattenere"
+   },
+   "caratteristica": "cha"
+  },
+  {
+   "id": "persuasion",
+   "name": {
+    "en": "Persuasion",
+    "it": "Persuasione"
+   },
+   "caratteristica": "cha"
+  }
+ ],
+ "note": "PERCHE' NASCE ADESSO. `dati/RAPPORTO-personaggio.md` §2.4 lo aveva misurato: delle diciotto abilita' della 5e nei dati non c'era nulla — ne' l'elenco, ne' quante ne concede una classe, ne' quali. Le competenze presenti erano le 42 in armi e le 66 non-d'arma della 2e, cioe' il sistema a slot che l'incompatibilita' 4 della decisione 23 (`principio-del-clone`) ha abolito. Una scelta di creazione senza l'insieme da cui pesca non e' una scelta: e' un campo di testo. Questo dato e' il filtro che mancava, nella forma della decisione 35 (`repertori-sono-filtri`). QUANTE NE CONCEDE UNA CLASSE non sta qui, ed e' voluto: varia da classe a classe, quindi e' dato di CONTENUTO e non di sistema (decisione 51, `criterio-meccanica`). Oggi nessuna classe lo porta, e finche' non lo portera' il personaggio dichiara le competenze scelte senza che nessuno possa contarle: e' una lacuna nota, non una svista. LA COSTITUZIONE NON GOVERNA NESSUNA ABILITA'. Non e' un buco della trascrizione: e' cosi' nella fonte, ed e' scritto qui perche' un controllo di copertura sulle sei caratteristiche altrimenti segnalerebbe un'assenza che non c'e'."
+}

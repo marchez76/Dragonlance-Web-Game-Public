@@ -28,9 +28,9 @@
     {
       "quantita": 1,
       "name_srd": "String (10 feet)",
-      "oggetto": null,
-      "stato": "da_decidere",
-      "motivo": "l'SRD la nomina solo dentro la descrizione di questo pacchetto: la tabella dell'attrezzatura non la elenca, quindi non ha ne' prezzo ne' peso propri. Non e' una voce mancante dal catalogo — e' da decidere se diventa un oggetto o resta testo del pacchetto (decisione 62, `pacchetto-fisso`)"
+      "oggetto": "string-10-feet",
+      "stato": "a_catalogo",
+      "motivo": "E' l'esempio stesso del criterio: la corda che lega il campanello. Lo scassinatore la tende, la lega, la taglia — sono tre cose che il motore deve poter sapere, e nessuna di esse e' narrazione. La decide il criterio, non la prova degli incantesimi, che pure la conferma (2 incantesimi la nominano come componente)."
     },
     {
       "quantita": 1,

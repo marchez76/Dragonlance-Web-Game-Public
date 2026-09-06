@@ -22,10 +22,12 @@ LE VOCI RIFERISCONO, NON RICOPIANO
     catalogo.
 
     Le 7 voci che l'SRD nomina SOLO dentro la descrizione di un pacchetto —
-    senza prezzo ne' peso — non hanno un id da riferire e non sono voci
-    mancanti: sono una domanda aperta che la decisione 62 (`pacchetto-fisso`)
-    lascia esplicitamente aperta. Escono con `stato: "da_decidere"` e
-    `oggetto: null`, cioe' visibili.
+    senza prezzo ne' peso — erano la domanda aperta che la
+    decisione 62 (`pacchetto-fisso`) aveva lasciato tale. La
+    decisione 63 (`oggetto-se-serve-al-motore`) la chiude, e non a una a
+    una: da' il criterio e lo applica. Quale esito abbia preso ciascuna non
+    e' scritto qui — sta in `_voci_di_pacchetto.VOCI`, unica sede, con la
+    ragione accanto al risultato.
 
 Uso:  python3 dati/build_pacchetti.py
 """
@@ -39,6 +41,7 @@ sys.path.insert(0, BASE)
 sys.path.insert(0, os.path.join(BASE, "_fonti"))
 
 import srd51_pacchetti as P  # noqa: E402
+import _voci_di_pacchetto as VP  # noqa: E402
 from build_oggetti import slugify  # noqa: E402
 
 OUT = os.path.join(BASE, "pacchetti")
@@ -56,13 +59,32 @@ NOMI_IT = {
     "Scholar's Pack": "Pacchetto dello studioso",
 }
 
-MOTIVO_DA_DECIDERE = (
-    "l'SRD la nomina solo dentro la descrizione di questo pacchetto: la "
-    "tabella dell'attrezzatura non la elenca, quindi non ha ne' prezzo ne' "
-    "peso propri. Non e' una voce mancante dal catalogo — e' da decidere se "
-    "diventa un oggetto o resta testo del pacchetto "
-    "(decisione 62, `pacchetto-fisso`)"
-)
+def _voce(quantita, nome, a_listino):
+    """La voce come esce nel JSON, risolta.
+
+    TRE STATI E NON DUE, ed e' la forma della decisione: `a_catalogo` quando
+    la voce ha un id che risolve, `testo_del_pacchetto` quando il criterio ha
+    deciso che non deve averne uno. Il vecchio `da_decidere` non c'e' piu'
+    perche' non c'e' piu' niente da decidere: se un domani un pacchetto nuovo
+    portasse una voce senza listino, il criterio la decide all'arrivo — e
+    `_voci_di_pacchetto` solleva finche' non lo si e' fatto, invece di
+    lasciarla passare come indecisa.
+    """
+    if a_listino:
+        return {"quantita": quantita, "name_srd": nome,
+                "oggetto": slugify(P.canonico(nome)), "stato": "a_catalogo",
+                "motivo": None}
+    esito = VP.esito_di(nome)
+    ragione = VP.ragione_di(nome)
+    if esito == "testo":
+        return {"quantita": quantita, "name_srd": nome, "oggetto": None,
+                "stato": "testo_del_pacchetto", "motivo": ragione}
+    # `oggetto` e `equivalenza` finiscono tutt'e due a catalogo: la
+    # differenza sta in COME ci sono arrivate — creando una voce nuova o
+    # riconoscendone una che c'era gia' — e quella sta nel motivo.
+    return {"quantita": quantita, "name_srd": nome,
+            "oggetto": slugify(P.canonico(nome)), "stato": "a_catalogo",
+            "motivo": ragione}
 
 
 def nominati_dai_telai():
@@ -85,16 +107,7 @@ def documento(nome, costo, voci):
             "api_ref": "v1/sections/equipment-packs",
         },
         "cost_gp": costo,
-        "voci": [
-            {
-                "quantita": q,
-                "name_srd": v,
-                "oggetto": slugify(v) if a_listino else None,
-                "stato": "a_catalogo" if a_listino else "da_decidere",
-                "motivo": None if a_listino else MOTIVO_DA_DECIDERE,
-            }
-            for q, v, a_listino in voci
-        ],
+        "voci": [_voce(q, v, a_listino) for q, v, a_listino in voci],
         "note": None,
     }
 

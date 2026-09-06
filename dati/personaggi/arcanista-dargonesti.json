@@ -1,0 +1,73 @@
+{
+ "id": "arcanista-dargonesti",
+ "nome": "Tanis Ondalunga",
+ "corpus": {
+  "generato_il": "2026-09-06",
+  "impronta": "e096e165f029a590"
+ },
+ "razza": "elfo-dargonesti",
+ "classe": "mago-rinnegato",
+ "livello": 7,
+ "punteggi": {
+  "int": 15,
+  "dex": 15,
+  "con": 15,
+  "wis": 13,
+  "cha": 13,
+  "str": 10
+ },
+ "metodo_punteggi": "tiro-4d6-scarta-minore",
+ "allineamento": "caotico_neutrale",
+ "divinita": null,
+ "lingue": [],
+ "scelte": {
+  "incantesimo_razziale": {
+   "aperta_da": "razza:elfo-dargonesti",
+   "al_livello": 7,
+   "filtro": {
+    "sede": "dati/razze/elfo-dargonesti.json -> traits[] (bersaglio: dati/incantesimi/)",
+    "chiuso": false,
+    "quante": 1
+   },
+   "valori": [
+    "misty-step"
+   ]
+  },
+  "equipaggiamento_iniziale": {
+   "aperta_da": "classe:mago-rinnegato",
+   "al_livello": 1,
+   "filtro": {
+    "sede": "dati/classi/mago-rinnegato.json -> mechanics_5e.structural.starting_equipment.scelte",
+    "chiuso": true,
+    "quante": 4
+   },
+   "valori": [
+    {
+     "riga": 0,
+     "alternativa": 0
+    },
+    {
+     "riga": 1,
+     "alternativa": 0
+    },
+    {
+     "riga": 2,
+     "alternativa": 0
+    },
+    {
+     "riga": 3,
+     "alternativa": 0
+    }
+   ]
+  }
+ },
+ "equipaggiato": {
+  "arma": "quarterstaff",
+  "armatura": null,
+  "scudo": null
+ },
+ "note": [
+  "Nessuna lingua scelta: la razza non lascia questa scelta aperta, e `languages` e' vuoto nei dati — questione aperta (`lingue-di-krynn`).",
+  "7° livello e non 1°: l'unica scelta razziale di incantesimo che i dati portino arriva li', e un personaggio di 1° non avrebbe potuto esercitare il campo."
+ ]
+}

@@ -1239,6 +1239,190 @@ DECISIONI = [
         "l'aritmetica della "
         "decisione 42 (`cambio-acciaio-oro`) poggia su un `cost_gp` che per "
         "l'attrezzatura non esiste."),
+    Decisione(
+        63, 'oggetto-se-serve-al-motore',
+        "Un oggetto esiste se il motore deve saperne qualcosa",
+        "IL CRITERIO, in una riga: **un oggetto esiste se il motore deve "
+        "saperne qualcosa.** La corda che lega il campanello si\', la "
+        "cassetta delle elemosine no. Non e\' un criterio di importanza "
+        "narrativa ne\' di prezzo: e\' la domanda se un conto del sistema "
+        "debba mai attraversare quella voce. Se nessuno la attraversa, la "
+        "voce resta scritta nel pacchetto col suo nome e la sua quantita\' — "
+        "si legge sulla scheda, e non e\' una perdita: e\' l\'assenza di un "
+        "id che nessuno avrebbe risolto. "
+        "PERCHE\' NASCE ORA E NON PRIMA. La "
+        "decisione 62 (`pacchetto-fisso`) ha lasciato 7 voci che l\'SRD "
+        "nomina solo dentro la descrizione di un pacchetto, senza prezzo ne\' "
+        "peso, dicendo che andavano guardate nel merito. Guardarle nel merito "
+        "una per una avrebbe prodotto sette giudizi a occhio, cioe\' sette "
+        "risposte non riproducibili: la prossima voce senza listino sarebbe "
+        "tornata a chiedere la stessa cosa da capo. Il criterio si registra "
+        "percio\' come metodo, non come esito del giro — la sede e\' "
+        "`dati/METODO-conversione-equipaggiamento.md`, accanto a quello dei "
+        "mostri, e l\'applicazione eseguibile e\' `dati/_voci_di_pacchetto.py`, "
+        "che sa i sette esiti e SOLLEVA su una voce senza listino che nessuno "
+        "abbia ancora deciso. "
+        "TRE ESITI, non due: `oggetto` (il motore deve saperne qualcosa, e la "
+        "voce entra nel catalogo), `equivalenza` (la fonte la nomina gia\' "
+        "altrove con un altro nome — non e\' una voce nuova, e\' una "
+        "trascrizione diversa), `testo` (nessun conto la attraversa). "
+        "Distinguere il secondo dal primo evita di creare un doppione del "
+        "catalogo credendo di colmare un buco: `Vestments` e\' `Robes`, e "
+        "l\'unica cosa che mancava erano il prezzo e il peso, letti sulla "
+        "fonte il 05/09/2026 e non ricordati. "
+        "LO STRUMENTO NON E\' IL CRITERIO. Per le voci che potrebbero essere "
+        "componenti materiali la domanda «il motore deve saperne qualcosa?» "
+        "si risolve con una prova sul corpus degli incantesimi, e la prova "
+        "giusta non e\' la prima che viene in mente. «Un incantesimo la "
+        "nomina» promuoverebbe anche il sacchetto di sabbia (6 incantesimi la "
+        "nominano). La prova che decide e\' la regola 5e del borsello dei "
+        "componenti: il borsello copre i componenti **senza costo**, quindi "
+        "cio\' che il motore deve sapere e\' solo cio\' che porta un costo o "
+        "viene consumato. Con quella: incenso 7, sabbia 0. L\'incenso diventa "
+        "oggetto, la sabbia resta testo — che e\' l\'esito deciso a mano, ma "
+        "ora e\' l\'esito di una prova, e la prova e\' scritta. Lo scarto fra "
+        "le due letture non e\' nascosto: `nominate_ma_testo()` lo espone e un "
+        "assert lo tiene fermo, cosi\' che un corpus che cambiasse faccia "
+        "rumore invece di lasciare marcire il ragionamento. "
+        "CONSEGUENZE MISURATE: 2 oggetti nuovi (`String (10 feet)`, `Block of "
+        "incense`), 1 equivalenza (`Vestments` su `Robes`, che entra in "
+        "catalogo per conto suo), 4 voci a testo. Lo stato `da_decidere` "
+        "sparisce da `pacchetto.schema.json`: non c\'e\' piu\' niente di "
+        "indeciso, e una voce nuova viene decisa dal criterio all\'arrivo."),
+    Decisione(
+        64, 'composizione-cinque-classi',
+        "Le classi da comporre sono cinque, e la composizione segue il chassis",
+        "NON SONO OTTO, SONO CINQUE, e la differenza non e\' un conteggio "
+        "sbagliato: e\' un campo che ne metteva insieme due. Il "
+        "booleano `da_comporre` guardava il solo `chassis`, e otto classi non "
+        "ne avevano uno. Tre di quelle otto sono le Vesti, che hanno "
+        "`entry_level` 3 (decisione 6, `maghi-delle-torri`): nessuno comincia "
+        "la carriera li\', quindi l\'equipaggiamento iniziale lo riceve la "
+        "classe con cui si parte e **la domanda non si pone**. Non e\' "
+        "un\'esclusione — e\' un caso che non esiste. La distinzione e\' "
+        "emersa compilando il campo, non ispezionando lo schema: e\' il modo "
+        "in cui questo progetto trova le cose. "
+        "IL CAMPO DIVENTA A TRE VALORI. `composizione.chi` vale "
+        "`dal_telaio` | `da_comporre` | `non_si_pone`, e un booleano non "
+        "poteva reggerlo: «da fare» e «non si applica» hanno lo stesso valore "
+        "in due stati e significati opposti. Accanto, `questione_aperta` — "
+        "obbligatoria per `da_comporre`, vietata altrove: uno stato «da fare» "
+        "senza uscita e\' un lavoro che nessuno viene a riprendere, e "
+        "`valida_classi.py` lo tratta come errore. "
+        "LA COMPOSIZIONE SEGUE IL CHASSIS, NON LO PRECEDE. Nella 5e l\'elenco "
+        "iniziale e\' un attributo del telaio: comporlo prima di sapere quale "
+        "telaio sia significa decidere due volte la stessa cosa, e la seconda "
+        "di nascosto — scegliere l\'elenco e\' scegliere il telaio senza "
+        "dirlo. Le cinque composizioni si legano percio\' alle cinque "
+        "questioni aperte `chassis-*`, e `_chassis_5e.composizione()` "
+        "verifica che l\'id esista davvero in `decisioni.APERTE`: una "
+        "questione decisa e non riportata fa rumore invece di lasciare "
+        "cinque classi appese a un id che non c\'e\' piu\'."),
+    Decisione(
+        65, 'equipaggiamento-da-convertire',
+        "Il Marinaio e\' il primo equipaggiamento da convertire, non da trascrivere",
+        "L\'ECCEZIONE VA TENUTA SEPARATA. `Cutlass`, `Belaying Pin` e "
+        "`Gaff Hook` sono armi 2e senza equivalente SRD: costano tre voci "
+        "nuove **a prescindere dal chassis**, perche\' nessun telaio 5e le "
+        "porta e nessuna riga della tabella SRD le nomina. Non aspettano "
+        "quindi la questione aperta (`chassis-mariner`) come le altre "
+        "quattro composizioni della "
+        "decisione 64 (`composizione-cinque-classi`): quella decide cosa il "
+        "Marinaio riceve, queste esistono comunque. "
+        "IL VERBO CAMBIA, ED E\' TUTTO IL PUNTO. Le 13 voci della "
+        "decisione 62 (`pacchetto-fisso`) si TRASCRIVONO: la fonte SRD le "
+        "stampa, e si copiano. Queste tre si CONVERTONO: la fonte e\' 2e, e "
+        "un\'arma 2e non ha danno, proprieta\' e categoria 5e finche\' "
+        "qualcuno non gliele da\'. E\' esattamente la distinzione dei mostri, "
+        "e il metodo e\' quello — `source_2e` fedele e immutabile, "
+        "`mechanics_5e` dichiaratamente nostro "
+        "(decisione 7, `doppio-strato`), con l\'ancoraggio a un\'arma SRD "
+        "vicina dichiarato riga per riga invece che assunto. "
+        "SI REGISTRA ORA E SI FA DOPO. Le tre conversioni non si scrivono in "
+        "questo giro: si dichiara che esistono, che sono le prime del loro "
+        "genere, e che il metodo da seguire quando toccheranno sta in "
+        "`dati/METODO-conversione-equipaggiamento.md` accanto al criterio "
+        "della decisione 63 (`oggetto-se-serve-al-motore`). Il valore della "
+        "voce e\' che la prossima arma 2e senza equivalente non ricominci la "
+        "discussione da zero."),
+    Decisione(
+        66, 'schema-personaggio',
+        "Lo schema Personaggio: solo ingressi, filtri dichiarati, scheda separata dallo scontro",
+        "LA SETTIMA ENTITA', E LA PRIMA SENZA FONTE. Il doppio strato della "
+        "decisione 7 (`doppio-strato`) qui non si applica: non esiste un "
+        "`source_2e` di un personaggio, perche' non e' materiale convertito "
+        "ma materiale PRODOTTO. Detto prima di progettare e non scoperto a "
+        "meta', come `dati/RAPPORTO-personaggio.md` chiedeva. "
+        "SOLO INGRESSI. Nessun campo dello schema e' ricalcolabile da un "
+        "altro: CA, punti ferita, competenza, iniziativa, tiri salvezza, CD e "
+        "carico non hanno un campo, e la loro assenza e' la "
+        "decisione 52 (`attacco-unica-lettura`) portata dal codice ai file. "
+        "Il divieto non e' scritto due volte: `valida_personaggio.py` "
+        "confronta i campi dello schema con `combattimento.DERIVATI`, e "
+        "`combattimento.INGRESSI` — che fino al 06/09/2026 era una tupla "
+        "battuta a mano — ora si LEGGE dallo schema. Era la tredicesima "
+        "struttura doppia del progetto in attesa di nascere: i due elenchi "
+        "sarebbero combaciati il giorno stesso, come le dodici precedenti. "
+        "OGNI SCELTA PORTA IL SUO FILTRO. `scelte` era un dizionario libero "
+        "con dentro una cosa sola (`stile`); ora ogni chiave ha la stessa "
+        "forma — chi apre la scelta, a che livello, il filtro con la sua "
+        "sede, i valori — che e' la "
+        "decisione 35 (`repertori-sono-filtri`) scritta in uno schema. "
+        "`chiuso: false` non e' un permesso: dice che l'insieme vive come "
+        "PROSA e che nessuno lo puo' applicare, e il validatore lo dichiara "
+        "invece di fingere un controllo. Oggi sono aperti l'aumento "
+        "dell'Umano e l'incantesimo del Dargonesti; chiusi le competenze di "
+        "abilita' e l'elenco iniziale. "
+        "IL FILTRO CHE MANCAVA E' NATO NELLO STESSO GIRO: le diciotto "
+        "abilita' della 5e sono ora `dati/sistema/abilita.json`. "
+        "`dati/RAPPORTO-personaggio.md` §2.4 lo aveva misurato — nei dati "
+        "c'erano le 42 competenze in armi e le 66 non-d'arma della 2e, cioe' "
+        "il sistema a slot che la "
+        "decisione 23 (`principio-del-clone`) ha abolito, e nulla del sistema "
+        "che l'ha sostituito. Una scelta senza l'insieme da cui pesca non e' "
+        "una scelta: e' un campo di testo. "
+        "SCHEDA, NON SCONTRO, con un criterio verificabile e non un gusto: se "
+        "un valore si ricalcola dai file e' una PROIEZIONE e si rigenera; se "
+        "non si ricalcola e' STATO ed e' del personaggio. Punti ferita "
+        "correnti, slot spesi, condizioni, concentrazione, azione consumata, "
+        "posizione e iniziativa cambiano entro un turno e non stanno nella "
+        "scheda. `equipaggiato` ci sta, e non e' un'eccezione: quale spada "
+        "impugni non lo deriva nessuno. "
+        "RIFERIMENTO PER ID, PIU' L'IMPRONTA DEL CORPUS. Il rischio non e' la "
+        "dipendenza da file esterni, e' la dipendenza NON DATATA: la scheda "
+        "registra contro quale versione dei dati e' stata costruita, cosi' un "
+        "personaggio piu' vecchio di una revisione e' RILEVABILE invece che "
+        "reinterpretato in silenzio. "
+        "TRE COSE LE HA DETTE IL PERCORSO, NON IL PROGETTO — ed e' la ragione "
+        "per cui lo schema e' stato percorso invece che validato su un "
+        "esempio. **(a) Non c'e' una chiave `pacchetto`**: il pacchetto non "
+        "e' una scelta a se', e' UNA delle righe dell'elenco iniziale della "
+        "classe (la quarta, per il Chierico), e una chiave accanto avrebbe "
+        "scritto due volte la stessa scelta. **(b) Ogni scelta porta "
+        "`al_livello`**: si dava per scontato che una scelta del giocatore "
+        "fosse una scelta di creazione, e non e' vero — l'unica scelta "
+        "razziale di incantesimo che i dati portino arriva al 7° livello, "
+        "mentre al 3° e al 5° la razza NOMINA l'incantesimo e non si sceglie "
+        "niente. **(c) `ca_di()` non reggeva un personaggio senza "
+        "armatura**: dava per scontato che qualcosa fosse sempre indossato, e "
+        "su un mago sollevava un TypeError invece di dire cosa mancava. "
+        "Nessuna delle tre si sarebbe vista validando un esempio scritto per "
+        "passare. "
+        "DUE POSTI SEGNALATI E NON RIEMPITI, entrambi con un id. "
+        "Questione aperta (`genere-eta-personaggio`): i due campi NON "
+        "esistono, e il validatore controlla che restino assenti finche' la "
+        "questione e' aperta — il posto e' segnato da un'esecuzione, non da "
+        "una frase. Questione aperta (`lingue-di-krynn`): `lingue` registra "
+        "una scelta che nessun insieme puo' controllare, e adottare l'elenco "
+        "SRD avrebbe scritto un dato SBAGLIATO al posto di uno assente. "
+        "SI ALLARGA SENZA RISCRITTURE: il background della "
+        "decisione 56 (`personaggio-additivo`) entra come una chiave accanto "
+        "a `razza` e `classe`, e non tocca nessun campo di oggi. "
+        "CARTELLA PUBBLICA, dichiarata alla nascita: un personaggio non ha "
+        "`source_2e` per costruzione, quindi non c'e' testo di manuale che "
+        "possa passarci dentro — sono riferimenti per id (le cartelle "
+        "riferite restano private: e' il riferimento a essere pubblico, non "
+        "il riferito) e le scelte di un giocatore."),
 ]
 
 PER_ID = {d.id: d for d in DECISIONI}
@@ -1387,6 +1571,47 @@ APERTE = [
        sede='dati/_chassis_5e.CHASSIS["handler"]'),
     _a('chassis-mariner', 'Che chassis 5e dare al Marinaio',
        sede='dati/_chassis_5e.CHASSIS["mariner"]'),
+
+    # --- aperte dalla decisione 66 (`schema-personaggio`), 06/09/2026.
+    _a('genere-eta-personaggio',
+       'Se genere ed eta\' siano campi del personaggio',
+       'IL POSTO E\' SEGNALATO E NON RIEMPITO. Andrebbero accanto a `nome`, '
+       'fra gli ingressi che nessun file puo\' contenere, e non ci sono: '
+       '`personaggio.schema.json` non li dichiara e `valida_personaggio.py` '
+       'controlla che restino assenti finche\' questa questione e\' aperta — '
+       'cosi\' il posto e\' SEGNATO da un\'esecuzione e non solo detto in '
+       'prosa. La domanda da decidere e\' quella della '
+       'decisione 63 (`oggetto-se-serve-al-motore`), applicata a un campo '
+       'invece che a un oggetto: il motore deve saperne qualcosa? Oggi no — '
+       'nessuna regola 5e li interroga, nessun tiro li nomina. Ma non e\' lo '
+       'stesso caso della cassetta delle elemosine, perche\' il genere e '
+       'l\'eta\' sono identita\' del personaggio e non arredo: potrebbero '
+       'valere come dato di SCHEDA anche senza valere come dato di MOTORE, e '
+       'questo schema non ha nessun posto per quella terza categoria. '
+       'Decidere vuol dire decidere anche se quella categoria esiste. In 2e '
+       'l\'eta\' aveva regole (categorie d\'eta, aggiustamenti, '
+       'invecchiamento magico), e la 5e le ha abbandonate: se un giorno '
+       'servissero, sarebbe una conversione, non una trascrizione.'),
+    _a('lingue-di-krynn',
+       'Quale insieme di lingue puo\' scegliere un personaggio',
+       'IL FILTRO NON ESISTE. Il campo `lingue` di '
+       '`personaggio.schema.json` registra una scelta senza che niente possa '
+       'controllarla: nessun dato enumera le lingue, ne\' quelle di Krynn ne\' '
+       'quelle della 5e. E\' esattamente la lacuna che le competenze di '
+       'abilita\' avevano fino al 06/09/2026, e si chiude allo stesso modo — '
+       'un elenco in `dati/sistema/`, nella forma della '
+       'decisione 35 (`repertori-sono-filtri`). '
+       'PERCHE\' NON E\' STATA CHIUSA DI SLANCIO: l\'SRD 5.1 stampa un elenco '
+       'di lingue, ma e\' l\'elenco del suo mondo — Nanico, Elfico, Gigante, '
+       'Gnomesco, Goblin, Halfling, Orchesco. Krynn ne ha di proprie '
+       '(Solamnico, Ergot, la parlata dei kender) e le stampa nei manuali, '
+       'cioe\' in fonte 2e privata. Adottare l\'elenco SRD sarebbe stato '
+       'scrivere un dato SBAGLIATO invece che un dato assente, e un dato '
+       'sbagliato non si vede. Le lingue delle razze convertite sono gia\' in '
+       '`dati/razze/`, quindi il materiale per costruire l\'insieme esiste: '
+       'quello che manca e\' la decisione se l\'insieme sia l\'unione di '
+       'quelle, l\'elenco della fonte, o entrambi con la provenienza '
+       'dichiarata.'),
 ]
 
 PER_ID_APERTA = {a.id: a for a in APERTE}

@@ -259,6 +259,17 @@ def da_mostro(ident, squadra, reg):
 # che la fonte non da'. Cio' che i due lati condividono non e' il CAMPO: e'
 # la LETTURA, e si chiama `attacco_di()`.
 #
+def _campi_dello_schema():
+    """I campi di primo livello di `dati/schema/personaggio.schema.json`.
+
+    Lo schema e' la sede: qui si legge, non si ridigita. E' la stessa scelta
+    di `dati/_sistema.py` verso `dati/sistema/*.json`, per la stessa ragione.
+    """
+    percorso = os.path.join(DATI, "schema", "personaggio.schema.json")
+    with open(percorso, encoding="utf-8") as fh:
+        return list(json.load(fh)["properties"])
+
+
 # Il personaggio porta quindi solo cio' che non e' derivabile da nient'altro:
 # razza, classe, livello, punteggi, cosa ha equipaggiato, quali scelte ha
 # fatto. Ogni campo ricavabile da questi NON PUO' esistere qui dentro — non
@@ -266,7 +277,22 @@ def da_mostro(ident, squadra, reg):
 # del divieto, la stessa che ha reso impossibile e non solo sconsigliato
 # fissare un ospite (decisione 39, `bersaglio-legale-filtro`).
 
-INGRESSI = ("razza", "classe", "livello", "punteggi", "equipaggiato", "scelte")
+# L'ELENCO NON E' SCRITTO QUI: si legge dallo schema. Fino al 06/09/2026
+# questa riga era una tupla battuta a mano, ed era la TREDICESIMA struttura
+# doppia del progetto in attesa di nascere — lo schema Personaggio non
+# esisteva ancora, e il giorno in cui e' nato con la
+# decisione 66 (`schema-personaggio`) i due elenchi sarebbero combaciati e
+# poi divergere in silenzio, come le dodici precedenti. Combaciano invece per
+# LETTURA: chi aggiunge un campo allo schema lo trova qui senza toccare
+# questo file, e chi lo toglie fa fallire l'import.
+INGRESSI = tuple(_campi_dello_schema())
+
+# CIO' CHE IL MOTORE LEGGE DAVVERO, che e' meno di cio' che una scheda porta:
+# nome, allineamento, lingue e divinita' sono ingressi del PERSONAGGIO e non
+# del combattimento. Un `Personaggio` costruito a mano per una prova d'arena
+# deve poterli omettere; non deve poter omettere questi sei.
+NECESSARI = ("razza", "classe", "livello", "punteggi", "equipaggiato",
+             "scelte")
 
 # I nomi che un derivato prenderebbe. L'elenco non e' esaustivo e non puo'
 # esserlo — nessun elenco di nomi vietati lo e' — ma copre cio' che oggi il
@@ -276,6 +302,18 @@ DERIVATI = ("ca", "classe_armatura", "pf", "punti_ferita", "pf_max",
             "attacco", "attacchi", "bonus_colpire", "danno", "competenza",
             "iniziativa", "tiri_salvezza", "velocita", "difese",
             "resistenze", "immunita", "vulnerabilita")
+
+# Le due invarianti che tengono insieme schema e motore. La prima dice che
+# il motore non chiede niente che la scheda non porti; la seconda che lo
+# schema non ha lasciato entrare un derivato fra i campi scrivibili — il
+# divieto del costruttore vale allora anche per i file, e non solo per il
+# codice che costruisce l'oggetto in memoria.
+assert set(NECESSARI) <= set(INGRESSI), (
+    f"il motore chiede campi che lo schema Personaggio non ha: "
+    f"{sorted(set(NECESSARI) - set(INGRESSI))}")
+assert not (set(INGRESSI) & set(DERIVATI)), (
+    f"lo schema Personaggio dichiara campi che sono derivati: "
+    f"{sorted(set(INGRESSI) & set(DERIVATI))}")
 
 
 class Personaggio:
@@ -294,9 +332,13 @@ class Personaggio:
         if ignoti:
             raise ValueError(f"ingressi sconosciuti: {', '.join(ignoti)}. "
                              f"Quelli previsti sono {', '.join(INGRESSI)}")
-        mancanti = sorted(set(INGRESSI) - set(campi))
+        mancanti = sorted(set(NECESSARI) - set(campi))
         if mancanti:
-            raise ValueError(f"ingressi mancanti: {', '.join(mancanti)}")
+            raise ValueError(f"ingressi mancanti: {', '.join(mancanti)}. "
+                             f"Il motore legge questi sei; gli altri campi "
+                             f"della scheda ({', '.join(sorted(set(INGRESSI) - set(NECESSARI)))}) "
+                             f"sono facoltativi qui perche' nessun conto del "
+                             f"combattimento li attraversa")
         for k, v in campi.items():
             setattr(self, k, v)
         self._doc = {}
@@ -362,17 +404,40 @@ def _modificatori_dello_stile(p, reg):
     return danno, ca
 
 
+# La CA di chi non porta armatura. E' una regola della 5e — «senza armatura
+# e senza scudo la CA e' 10 + il modificatore di Destrezza» — e NON e' un dato
+# di sistema: nessun file la porta. Sta qui come costante nominata invece che
+# come un 10 in mezzo a un'espressione, e ogni volta che serve lascia una
+# lacuna: e' il modo in cui questo motore dichiara di aver riempito un buco.
+# Il caso e' emerso il 06/09/2026 percorrendo la creazione di un mago, che di
+# armatura non ne ha nessuna: fino a quel giorno `ca_di()` dava per scontato
+# che qualcosa fosse sempre indossato, e su un `equipaggiato.armatura` a
+# `null` sollevava un TypeError invece di dire cosa mancava.
+CA_SENZA_ARMATURA = 10
+
+
 def ca_di(p, reg=None):
     """Classe Armatura: armatura + Destrezza (col tetto) + scudo + stile."""
-    ca5 = p.doc_oggetto("armatura")["mechanics_5e"]["armor_5e"]["ca_5e"]
-    ca = ca5["ca_base"]
-    if ca5["applica_mod_dex"]:
-        m_dex = mod(p.punteggi["dex"])
-        if ca5["mod_dex_max"] is not None:
-            m_dex = min(m_dex, ca5["mod_dex_max"])
-        ca += m_dex
-    scudo = p.doc_oggetto("scudo")["mechanics_5e"]["armor_5e"]["ca_5e"]
-    ca += scudo["bonus_ca"] or 0
+    if p.equipaggiato.get("armatura"):
+        ca5 = p.doc_oggetto("armatura")["mechanics_5e"]["armor_5e"]["ca_5e"]
+        ca = ca5["ca_base"]
+        if ca5["applica_mod_dex"]:
+            m_dex = mod(p.punteggi["dex"])
+            if ca5["mod_dex_max"] is not None:
+                m_dex = min(m_dex, ca5["mod_dex_max"])
+            ca += m_dex
+    else:
+        if reg:
+            reg.lacuna("ca-senza-armatura",
+                       "classe armatura di chi non indossa armatura",
+                       f"assunto {CA_SENZA_ARMATURA} + mod. Destrezza: e' la "
+                       f"regola 5e, ma nessun dato la porta — la tabella "
+                       f"delle armature dice cosa fa un'armatura, non cosa "
+                       f"succede senza")
+        ca = CA_SENZA_ARMATURA + mod(p.punteggi["dex"])
+    if p.equipaggiato.get("scudo"):
+        scudo = p.doc_oggetto("scudo")["mechanics_5e"]["armor_5e"]["ca_5e"]
+        ca += scudo["bonus_ca"] or 0
     return ca + _modificatori_dello_stile(p, reg)[1]
 
 

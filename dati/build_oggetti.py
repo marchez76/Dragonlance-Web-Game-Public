@@ -21,6 +21,7 @@ BASE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(BASE, "_fonti"))
 sys.path.insert(0, BASE)
 import srd51_equipaggiamento as SRD  # noqa: E402
+import _voci_di_pacchetto as VP  # noqa: E402
 import _vocabolari as VOC  # noqa: E402
 
 OUT = os.path.join(BASE, "oggetti")
@@ -248,9 +249,44 @@ def build_attrezzatura():
     return docs
 
 
+# --------------------------------------------------------------------------
+# LE VOCI CHE ESISTONO SOLO DENTRO UN PACCHETTO e che il criterio promuove a
+# oggetto (decisione 63, `oggetto-se-serve-al-motore`). Quali siano non e'
+# scritto qui: sta in `_voci_di_pacchetto.VOCI`, con la ragione di ciascuna.
+#
+# PREZZO E PESO RESTANO `null`, ed e' il punto. La tabella dell'attrezzatura
+# non le elenca, quindi non c'e' un numero da leggere; scriverne uno
+# plausibile sarebbe un valore nostro travestito da fonte, che e' esattamente
+# cio' che la decisione 7 (`doppio-strato`) vieta. Il campo esiste e dichiara
+# di non sapere — la stessa forma con cui `armor_5e.ac_formula` porta una
+# formula invece di un numero, non un buco silenzioso. Chi somma un carico o
+# un prezzo se ne accorge, e `_valuta.prezzo_di()` ha gia' il caso del
+# `None`.
+# --------------------------------------------------------------------------
+def build_voci_di_pacchetto():
+    docs = []
+    for name_en, name_it, pacchetto in VP.oggetti():
+        id_ = slugify(name_en)
+        descrizione = (
+            f"Voce che l'SRD 5.1 nomina solo dentro la descrizione del "
+            f"{pacchetto} (sezione «Equipment Packs»): la tabella "
+            f"dell'attrezzatura non la elenca, quindi non ha ne' prezzo ne' "
+            f"peso propri.")
+        d = base_doc(id_, name_en, name_it, "attrezzatura", descrizione,
+                     VP.SEZIONE_SRD)
+        d["mechanics_5e"]["attrezzatura_5e"] = {
+            "cost_gp": None,
+            "weight_lb": None,
+        }
+        d["mechanics_5e"]["note"] = [VP.ragione_di(name_en)]
+        docs.append((id_, d))
+    return docs
+
+
 def main():
     os.makedirs(OUT, exist_ok=True)
-    tutti = build_armi() + build_armature() + build_attrezzatura()
+    tutti = (build_armi() + build_armature() + build_attrezzatura()
+             + build_voci_di_pacchetto())
 
     visti = set()
     for id_, _ in tutti:

@@ -171,3 +171,23 @@ ATTREZZATURA = [
     ("Spellbook", "Libro degli incantesimi", "Essential for wizards, a spellbook is a leather-bound tome with 100 blank vellum pages suitable for recording spells.", 50.0, 3.0, "v2/items/srd_spellbook"),
     ("Component Pouch", "Borsa dei componenti", "A component pouch is a small, watertight leather belt pouch that has compartments to hold all the material components and other special items you need to cast your spells, except for those components that have a specific cost (as indicated in a spell's description).", 25.0, 2.0, "v2/items/srd_component-pouch"),
 ]
+
+
+# --------------------------------------------------------------------------
+# LA QUATTORDICESIMA, e non appartiene alle 13 sopra: e' entrata per una
+# ragione diversa e sta in un blocco suo perche' non si confondano.
+#
+# Il Pacchetto del sacerdote elenca «Vestments», che la tabella
+# dell'attrezzatura NON ha. «Robes» invece c'e', con prezzo e peso propri, e
+# le due parole nominano la stessa cosa: la lettura e' registrata in
+# `srd51_pacchetti.EQUIVALENZE` accanto alla sua ragione, non qui. Quella
+# voce del pacchetto smette percio' di essere una voce senza listino e
+# diventa un riferimento che risolve — l'unica delle sette per cui la fonte
+# stessa offriva gia' la risposta, invece di lasciarla a noi.
+#
+# Prezzo e peso letti da api.open5e.com il 05/09/2026 (`/v2/items/srd_robes/`,
+# document key `srd-2014`), non ricordati.
+# --------------------------------------------------------------------------
+ATTREZZATURA += [
+    ("Robes", "Veste", "Robes, for wearing.", 1.0, 4.0, "v2/items/srd_robes"),
+]

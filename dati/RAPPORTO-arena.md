@@ -1,6 +1,6 @@
 # L'arena della fetta verticale — i dati usati per la prima volta
 
-*Generato da `motore/arena.py` il 2026-09-04.*
+*Generato da `motore/arena.py` il 2026-09-06.*
 
 ---
 
