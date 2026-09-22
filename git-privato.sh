@@ -31,6 +31,32 @@
 #           Estratti/, import/, Musica/. Sono 5 GB che non cambiano mai:
 #           vanno in backup, non sotto controllo di versione.
 #     NO    cio' che sta gia' nel repo pubblico: niente duplicazioni.
+#
+# DOVE VIVE IL PRIVATO — registrato il 22/09/2026, e non c'era.
+#     github.com/marchez76/Dragonlance-Web-Game-Private
+#
+#     Questo file descriveva in dettaglio COSA sta nel privato e non diceva
+#     DOVE sta. L'assenza non era innocua: `git-privato.sh` non imposta nessun
+#     remote, nessun altro file del repo pubblico nomina quel repository, e
+#     una ricerca su `ssh`, `git@`, `remote add`, `rsync`, `backup` non dava
+#     niente. Chi guarda solo il pubblico — una sessione nuova, o Marco fra sei
+#     mesi — conclude che `.git-private` esista solo sul Mac e che una copia
+#     sola sia tutta la protezione che c'e'. E' la conclusione che ho tratto io
+#     il 22/09/2026, prima che Marco mi desse l'indirizzo: il backup c'era,
+#     e il progetto non lo sapeva.
+#
+#     NON VERIFICATO DA QUI. L'app GitHub di Claude non e' installata
+#     sull'account, quindi questa sessione non ha potuto ne' leggere quel
+#     repository ne' scrivere sul pubblico. L'indirizzo e' come dichiarato da
+#     Marco: chi passa di qui con l'accesso lo confermi e tolga questa riga.
+#
+#     UN REMOTE NON E' UN BACKUP FINCHE' NON E' COLLEGATO. Se il `.git-private`
+#     sul Mac non ha quel remote configurato, il repository su GitHub e' una
+#     copia ferma al giorno in cui ci si e' spinto l'ultima volta. Da
+#     controllare sul posto:
+#
+#         ./git-privato.sh remote -v
+#         ./git-privato.sh status
 # ==========================================================================
 set -euo pipefail
 cd "$(dirname "$0")"
