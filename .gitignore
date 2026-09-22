@@ -304,3 +304,56 @@ dati/RAPPORTO-*-completo.md
 # --------------------------------------------------------------------------
 .env
 .env.*
+
+# --------------------------------------------------------------------------
+# LE STESSE ESCLUSIONI, NELLA FORMA CHE NON DIPENDE DALLA FORMA.
+#
+# I pattern piu' sopra portano la barra finale — `dati/razze/`, `riscontro/` —
+# e in gitignore la barra significa SOLO DIRECTORY. Finche' il privato e il
+# pubblico condividono una cartella di lavoro, quei percorsi SONO directory
+# vere e l'esclusione regge. Ma regge per la forma che hanno li', non per
+# quello che contengono.
+#
+# Provato il 22/09/2026, clonando il repository privato in una cartella a
+# parte e collegandolo con symlink (l'unico modo di far girare i generatori
+# quando i due repo non convivono):
+#
+#     dati/razze              *** VISIBILE A GIT ***
+#     dati/classi             *** VISIBILE A GIT ***
+#     dati/oggetti            *** VISIBILE A GIT ***
+#     riscontro               *** VISIBILE A GIT ***
+#     dati/razze.index.json   ignorato      <- pattern senza barra
+#     dati/_draconici.py      ignorato      <- pattern senza barra
+#
+# I file erano coperti, le cartelle no: un symlink e' un file, e la barra lo
+# esclude dall'esclusione. Un `git add -A` da quella configurazione avrebbe
+# messo in stage sette puntatori ai dati privati — non il testo dei manuali,
+# ma la dimostrazione che la protezione dipendeva da come i due repository
+# erano disposti su disco e non da cosa proteggono.
+#
+# Le righe qui sotto ripetono gli stessi percorsi SENZA barra: senza, il
+# pattern copre file, directory e symlink. E' strettamente piu' ampio di
+# quello sopra, mai piu' stretto, quindi non toglie niente a nessuno.
+# --------------------------------------------------------------------------
+dati/razze
+dati/classi
+dati/divinita
+dati/mostri
+dati/oggetti
+dati/modelli
+riscontro
+
+# --------------------------------------------------------------------------
+# AMBIENTE DI ESECUZIONE — generato, mai versionato.
+# `.venv/` lo crea `uv run --with jsonschema ...`, il modo documentato di far
+# girare i validatori senza installare niente (vedi dati/crea_personaggio.py).
+# uv scrive un `.gitignore` dentro `.venv/`, quindi `git status` non lo
+# mostrava: ma `git check-ignore` diceva che NON era escluso da qui, e una
+# protezione che dipende da un file generato da un altro programma non e' una
+# protezione. `uv.lock` non si versiona: la sede delle dipendenze e'
+# pyproject.toml, e un lock file accanto sarebbe una seconda sede.
+# --------------------------------------------------------------------------
+.venv/
+uv.lock
+__pycache__/
+*.pyc
