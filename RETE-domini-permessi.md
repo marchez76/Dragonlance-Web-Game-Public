@@ -10,7 +10,7 @@ il registro dentro lo script, da cui derivano sia questo documento sia
 
 ## Due ambienti, e questo elenco ne governa uno solo
 
-**In locale** (il Mac) la shell non ha rete diretta: il traffico passa da un
+**In locale** (Linux, CachyOS) la shell non ha rete diretta: il traffico passa da un
 proxy che gira fuori dal sandbox e decide dominio per dominio. Senza allowlist
 ogni host nuovo fa scattare una richiesta di conferma; con l'allowlist i domini
 qui sotto passano senza chiedere. È l'ambiente per cui questo file è nato.

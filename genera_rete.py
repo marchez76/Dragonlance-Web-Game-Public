@@ -9,11 +9,16 @@ PERCHE' UN GENERATORE E NON DUE FILE SCRITTI A MANO
     entrambi derivati da quello. Non possono divergere.
 
 COME FUNZIONA L'ALLOWLIST, E DOVE NON FUNZIONA AFFATTO
-    L'ambiente LOCALE (il Mac): il sandbox della shell non ha rete diretta,
+    L'ambiente LOCALE (Linux, CachyOS): il sandbox della shell non ha rete
+    diretta,
     tutto passa da un proxy che gira fuori dal sandbox e decide dominio per
     dominio. Senza allowlist, al primo accesso a un host nuovo parte una
     richiesta di conferma; con l'allowlist i domini elencati passano.
-    E' l'ambiente per cui questo file e' stato scritto il 18/08/2026.
+    E' l'ambiente per cui questo file e' stato scritto il 18/08/2026. Che sia
+    Linux (CachyOS) e' dichiarato da Marco il 22/09/2026, e va scritto perche'
+    fino a quel giorno il file non nominava nessun sistema: chi legge un
+    documento di rete senza sapere su che macchina vale finisce per
+    indovinarlo, ed e' esattamente cio' che era successo.
 
     L'ambiente REMOTO (Claude Code on the web, container effimero): questa
     allowlist NON GOVERNA NIENTE. La rete e' decisa dalla policy
@@ -175,7 +180,7 @@ il registro dentro lo script, da cui derivano sia questo documento sia
 
 ## Due ambienti, e questo elenco ne governa uno solo
 
-**In locale** (il Mac) la shell non ha rete diretta: il traffico passa da un
+**In locale** (Linux, CachyOS) la shell non ha rete diretta: il traffico passa da un
 proxy che gira fuori dal sandbox e decide dominio per dominio. Senza allowlist
 ogni host nuovo fa scattare una richiesta di conferma; con l'allowlist i domini
 qui sotto passano senza chiedere. È l'ambiente per cui questo file è nato.

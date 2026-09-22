@@ -40,7 +40,8 @@
 #     remote, nessun altro file del repo pubblico nomina quel repository, e
 #     una ricerca su `ssh`, `git@`, `remote add`, `rsync`, `backup` non dava
 #     niente. Chi guarda solo il pubblico — una sessione nuova, o Marco fra sei
-#     mesi — conclude che `.git-private` esista solo sul Mac e che una copia
+#     mesi — conclude che `.git-private` esista solo sulla macchina locale e
+#     che una copia
 #     sola sia tutta la protezione che c'e'. E' la conclusione che ho tratto io
 #     il 22/09/2026, prima che Marco mi desse l'indirizzo: il backup c'era,
 #     e il progetto non lo sapeva.
@@ -51,7 +52,7 @@
 #     Marco: chi passa di qui con l'accesso lo confermi e tolga questa riga.
 #
 #     UN REMOTE NON E' UN BACKUP FINCHE' NON E' COLLEGATO. Se il `.git-private`
-#     sul Mac non ha quel remote configurato, il repository su GitHub e' una
+#     locale non ha quel remote configurato, il repository su GitHub e' una
 #     copia ferma al giorno in cui ci si e' spinto l'ultima volta. Da
 #     controllare sul posto:
 #
