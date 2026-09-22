@@ -281,3 +281,26 @@ CLAUDE.local.md
 # riduzione e' cosmetica: la stessa ragione di dati/_draconici.py.
 # --------------------------------------------------------------------------
 dati/RAPPORTO-*-completo.md
+
+# --------------------------------------------------------------------------
+# CREDENZIALI — esclusione preventiva, scritta prima che il file esista.
+#
+# Oggi questo progetto NON usa credenziali: nessun `.env*` nel working tree,
+# nessuna variabile d'ambiente di segreto letta dal codice (l'unica presente
+# e' OMP_THREAD_LIMIT in ocrstep.py, che limita i thread di Tesseract), e
+# nessun servizio autenticato — `api.open5e.com` e' pubblica e senza chiave.
+# Verificato anche sulla storia: `.env*` non e' MAI stato committato.
+#
+# La riga esiste lo stesso, ed e' il punto. CLAUDE.md 1 chiede l'esclusione
+# «alla nascita, non quando qualcuno se ne accorge»: il precedente e'
+# dati/oggetti/, rimasta scoperta per settimane e protetta solo perche'
+# git-privato.sh la tracciava comunque. Un `.env.local` qui nascerebbe nella
+# stessa zona morta — con la differenza che un segreto committato non si
+# ripara togliendolo, ma riscrivendo la storia e ruotando la credenziale.
+#
+# `.env*` copre anche `.env.local.bak`, il backup che sync-env.py lascia
+# accanto: contiene i valori PRECEDENTI in chiaro, quindi dopo una rotazione
+# gli sopravvive proprio la password appena cambiata.
+# --------------------------------------------------------------------------
+.env
+.env.*
