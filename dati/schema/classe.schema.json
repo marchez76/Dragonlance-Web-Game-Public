@@ -107,6 +107,14 @@
       ],
       "description": "Posizione nella sequenza di un ordine a gradi. Corona=1, Spada=2, Rosa=3. null se la classe non è a gradi."
     },
+    "playable": {
+      "type": "boolean",
+      "description": "Se la classe si possa SCEGLIERE creando un personaggio. Nasce il 22/09/2026 con la decisione 67 (`barbaro-non-classe`), che ha un solo caso: il Barbaro. Le razze avevano gia' questo campo, le classi no, e l'asimmetria non era voluta — era semplicemente non ancora servita. IL CAMPO NON CANCELLA NIENTE: una classe con `playable: false` conserva il suo `source_2e` intatto, perche' il manuale quella voce la stampa e la trascrizione resta fedele (decisione 7, `doppio-strato`). Dice soltanto che la NOSTRA conversione 5e non la offre. Assente vuol dire `true`: le 19 classi che si scelgono non portano il campo, cosi' il dato dichiara l'eccezione e non la regola. Chi filtra le classi legge questo campo e non un elenco di id scritto altrove, che sarebbe stato una struttura doppia in attesa di nascere."
+    },
+    "playable_note": {
+      "type": "string",
+      "description": "Perche' non e' giocabile. OBBLIGATORIA quando `playable` e' `false`, verificato in dati/valida_classi.py: un'esclusione senza motivo scritto e' esattamente il genere di riga che fra sei mesi nessuno sa perche' c'e'."
+    },
     "requires_class": {
       "type": [
         "string",

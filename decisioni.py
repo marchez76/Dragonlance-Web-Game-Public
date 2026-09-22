@@ -1423,6 +1423,38 @@ DECISIONI = [
         "possa passarci dentro — sono riferimenti per id (le cartelle "
         "riferite restano private: e' il riferimento a essere pubblico, non "
         "il riferito) e le scelte di un giocatore."),
+    Decisione(
+        67, 'barbaro-non-classe',
+        'Il Barbaro e\' una cultura, non un mestiere: esce dalle classi',
+        'CHIUDE LA QUESTIONE APERTA `barbaro-background`, e nel senso che '
+        'l\'analisi aveva gia\' indicato. `dati/analizza_classi.py` lo aveva '
+        'stabilito come **fatto storico** e non come opinione: il barbaro di '
+        '*Tales of the Lance* (1992) e\' un **kit**, non una classe — «non e\' '
+        'un\'ambiguita\', e\' un residuo» — e la 2e del 1992 non aveva ancora una '
+        'classe barbaro da citare. Un kit, in 5e, e\' cio\' che diventa un '
+        'background. IL MERITO E\' DELL\'AMBIENTAZIONE: su Ansalon barbaro '
+        'nomina un popolo — Que-Shu, Ice Folk, le tribu\' delle Pianure — cioe\' '
+        'una provenienza, non un mestiere che si sceglie. Chi ne viene puo\' '
+        'essere guerriero, ladro o sciamano: se fosse una classe, sarebbe '
+        'l\'unica cosa che quel personaggio puo\' fare. '
+        'LA FORMA: `playable: false` sulla classe, NON la cancellazione del '
+        'file. E\' la decisione 7 (`doppio-strato`) applicata a una classe '
+        'intera invece che a un campo: `source_2e` resta fedele al manuale, '
+        'che a pagina 88 la voce di classe la stampa davvero, e `mechanics_5e` '
+        'dichiara la nostra conversione. Cancellare avrebbe buttato la '
+        'trascrizione di quella pagina proprio mentre la '
+        'decisione 43 (`barbaro-rimandato`) prevede che la questione **si '
+        'riapra** con lo schema dei background della Fase 3: quel giorno la '
+        'trascrizione serve, e rifarla vorrebbe dire ritornare al manuale. '
+        'COSA NON CAMBIA: la razza `umano-barbaro` resta dov\'e\', con i suoi '
+        'tetti e il tappo editoriale della decisione 20 (`tappo-barbaro`), che '
+        'resta reversibile. La decisione 11 (`barbaro-vincoli`) non e\' toccata: '
+        'l\'unione dei due set di vincoli valeva per la RAZZA e continua a '
+        'valere. E la conversione a background resta rimandata per la ragione '
+        'di forma della decisione 43 (`barbaro-rimandato`) — manca lo '
+        'schema — non respinta nel '
+        'merito. LE CLASSI GIOCABILI SONO 19: il conteggio e\' derivato dal '
+        'campo, non scritto a mano.'),
 ]
 
 PER_ID = {d.id: d for d in DECISIONI}
@@ -1496,15 +1528,6 @@ APERTE = [
        '*Shadow of the Dragon Queen* continua a mancare',
        'Resta l\'unica fonte 5e ufficiale su Krynn, e da essa dipende '
        'l\'unico tratto ancora provvisorio.'),
-    _a('barbaro-background',
-       'Il Barbaro ha doppia natura',
-       'Il manuale lo tratta sia come cultura umana sia come classe. La '
-       'decisione 20 (`tappo-barbaro`) gli ha dato un tappo reversibile; la '
-       'conversione a background va decisa insieme allo schema Personaggio. '
-       'Le quattro conseguenze sono misurate in '
-       '`dati/RAPPORTO-personaggio.md`. La '
-       'decisione 56 (`personaggio-additivo`) non la scioglie: garantisce '
-       'solo che deciderla dopo non costi una riscrittura.'),
     _a('aumento-oltre-tetto',
        'Cosa succede a un aumento che sfonda un tetto razziale',
        'La decisione 10 (`massimali-razziali`) applica i massimali anche in '

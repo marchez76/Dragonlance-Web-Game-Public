@@ -47,6 +47,23 @@ MAPPA_TABELLA = {e: v.classi for e, v in _CA.ETICHETTE.items() if v.classi}
 def coerenza(d, err):
     s = d["source_2e"]
 
+    # UN'ESCLUSIONE SENZA MOTIVO SCRITTO e' una riga che fra sei mesi nessuno
+    # sa perche' c'e'. Il campo nasce con
+    # la decisione 67 (`barbaro-non-classe`), e lo schema dichiara che il
+    # controllo sta QUI:
+    # senza questa funzione quella dichiarazione sarebbe falsa, che e' peggio
+    # di un controllo assente perche' rassicura.
+    if d.get("playable") is False and not (d.get("playable_note") or "").strip():
+        err("playable: false senza playable_note: l'esclusione non dice perche'")
+    if d.get("playable") is not False and d.get("playable_note"):
+        err("playable_note su una classe giocabile: il motivo non ha oggetto")
+    # `source_2e` NON si svuota quando una classe esce dal gioco: il manuale
+    # quella voce la stampa, e la trascrizione resta fedele
+    # (decisione 7, `doppio-strato`).
+    if d.get("playable") is False and not s:
+        err("playable: false con source_2e vuoto: la trascrizione non si "
+            "cancella insieme alla giocabilita'")
+
     for k, v in s["ability_minimums"].items():
         if not (1 <= v <= 25):
             err(f"minimo {k} = {v} implausibile")
