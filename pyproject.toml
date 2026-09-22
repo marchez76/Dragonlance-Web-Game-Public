@@ -1,0 +1,40 @@
+# Dichiarazione dell'ambiente di esecuzione.
+#
+# PERCHE' ESISTE, e perche' non c'era. Sette file su 71 usano f-string con
+# barra rovesciata e virgolette annidate — sintassi che PEP 701 introduce con
+# Python 3.12 — e fra questi c'e' `motore/generazione.py`, cioe' il motore.
+# Su 3.11 non compilano: `SyntaxError`, e il motore non parte affatto.
+#
+# Il vincolo era REALE e funzionante, ma non scritto da nessuna parte: niente
+# pyproject, niente .python-version, niente riga nel README. Chi arriva digita
+# `python3`, e se quel `python3` e' un 3.11 scopre la dipendenza dal peggior
+# punto di osservazione possibile — un errore di sintassi in un file che non
+# ha toccato. E' successo il 22/09/2026 su un ambiente remoto dove `python3`
+# e' 3.11.15 e `python3.12` c'e' ma va chiamato per nome.
+#
+# SEDE UNICA (CLAUDE.md 3): la versione minima si dichiara QUI e basta.
+# `verifica_ambiente.py` la LEGGE da questo file invece di riscriverla, cosi'
+# le due non possono divergere. Sarebbe stata la quattordicesima struttura
+# doppia del progetto, e come le tredici precedenti avrebbe combaciato il
+# giorno in cui nasceva.
+
+[project]
+name = "dragonlance-gdr"
+version = "0.1.0"
+description = "Conversione dell'ambientazione Dragonlance da AD&D 2e a D&D 5e"
+requires-python = ">=3.12"
+
+dependencies = [
+    # Valida i JSON di dati/ contro dati/schema/*.json. Senza, 7 validatori
+    # su 12 non partono. Gli schemi usano Draft 2020-12 e `unevaluatedProperties`
+    # (vedi il $comment di elemento_convertito in vocabolari.schema.json):
+    # serve una versione che lo implementi.
+    "jsonschema>=4.18",
+]
+
+[tool.dragonlance.strumenti-esterni]
+# NON sono dipendenze Python e non si installano da qui: sono programmi che
+# alcuni script si aspettano nel PATH. Elencati perche' la loro assenza si
+# manifesta a meta' di un'esecuzione lunga, e non all'avvio.
+pdftoppm = "poppler-utils — rende le pagine dei PDF in immagini. Lo usano colstep.py e ocrstep.py, ed e' il presupposto su cui divisione-del-lavoro.md fonda la scelta di tenere qui la lettura dei manuali."
+tesseract = "OCR delle scansioni in coda. Usato da ocrstep.py."
