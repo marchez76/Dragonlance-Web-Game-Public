@@ -1,6 +1,6 @@
 # Domini di rete permessi
 
-*Generato da `genera_rete.py` il 2026-09-01. Non modificare a mano: la sorgente è
+*Generato da `genera_rete.py` il 2026-09-22. Non modificare a mano: la sorgente è
 il registro dentro lo script, da cui derivano sia questo documento sia
 `.claude/settings.json`.*
 
@@ -8,15 +8,30 @@ il registro dentro lo script, da cui derivano sia questo documento sia
 
 ---
 
-## Come funziona
+## Due ambienti, e questo elenco ne governa uno solo
 
-La shell **non ha rete diretta**: nessun `/etc/resolv.conf`, solo l'interfaccia
-di loopback. Tutto il traffico passa da due proxy che girano **fuori** dal
-sandbox — HTTP su `:3128`, SOCKS5 su `:1080` — e il proxy decide dominio per
-dominio.
+**In locale** (il Mac) la shell non ha rete diretta: il traffico passa da un
+proxy che gira fuori dal sandbox e decide dominio per dominio. Senza allowlist
+ogni host nuovo fa scattare una richiesta di conferma; con l'allowlist i domini
+qui sotto passano senza chiedere. È l'ambiente per cui questo file è nato.
 
-Senza allowlist ogni host nuovo fa scattare una richiesta di conferma. Con
-l'allowlist i domini qui sotto passano senza chiedere.
+**In remoto** (Claude Code sul web, container effimero) **questo elenco non
+governa niente.** La rete è decisa dalla policy dell'environment, fuori dal
+progetto. Misurato il 22/09/2026:
+
+| dominio | esito dall'ambiente remoto |
+|---|---|
+| `api.open5e.com` | **403 al CONNECT — bloccato** |
+| `pypi.org` | 200 |
+| `github.com` | 400 (risponde, raggiungibile) |
+| `raw.githubusercontent.com` | 301 |
+
+Passa tutto tranne l'unico dominio che il progetto usi davvero. La tabella qui
+sotto continua a dichiararlo permesso, e da lì non lo è: **il permesso è di
+questo file, il divieto è dell'ambiente, e vince l'ambiente.**
+
+Non è una riga da correggere — l'elenco è giusto dove è in vigore. Quello che
+mancava era dire *quale* ambiente descrive.
 
 **Cosa questo NON cambia:** il recupero di contenuti dal web continua a passare
 dagli strumenti di fetch, non dalla shell. L'allowlist serve a `pip`, `npm`,

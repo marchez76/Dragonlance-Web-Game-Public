@@ -8,12 +8,37 @@ PERCHE' UN GENERATORE E NON DUE FILE SCRITTI A MANO
     configurazione che il sandbox legge e il documento che leggi tu sono
     entrambi derivati da quello. Non possono divergere.
 
-COME FUNZIONA L'ALLOWLIST
-    Il sandbox della shell non ha rete diretta: nessun /etc/resolv.conf, solo
-    loopback. Tutto passa da due proxy che girano FUORI dal sandbox, HTTP su
-    :3128 e SOCKS5 su :1080, e quel proxy decide dominio per dominio.
-    Senza allowlist, al primo accesso a un host nuovo parte una richiesta di
-    conferma. Con l'allowlist, i domini elencati passano senza chiedere.
+COME FUNZIONA L'ALLOWLIST, E DOVE NON FUNZIONA AFFATTO
+    L'ambiente LOCALE (il Mac): il sandbox della shell non ha rete diretta,
+    tutto passa da un proxy che gira fuori dal sandbox e decide dominio per
+    dominio. Senza allowlist, al primo accesso a un host nuovo parte una
+    richiesta di conferma; con l'allowlist i domini elencati passano.
+    E' l'ambiente per cui questo file e' stato scritto il 18/08/2026.
+
+    L'ambiente REMOTO (Claude Code on the web, container effimero): questa
+    allowlist NON GOVERNA NIENTE. La rete e' decisa dalla policy
+    dell'environment, fuori dal progetto e non modificabile da qui. Misurato
+    il 22/09/2026, e il risultato e' il peggiore possibile per un'allowlist:
+
+        api.open5e.com   CONNECT tunnel failed, 403   BLOCCATO
+        pypi.org         200
+        github.com       400 (risponde: raggiungibile)
+        raw.githubusercontent.com  301
+
+    Cioe' passa tutto tranne l'UNICO dominio che il progetto usi davvero — la
+    fonte di dati/_srd51.py, _sfere_5e.py e _fonti/srd51_*.py. Nel frattempo
+    l'elenco qui sotto continua a dichiararlo permesso.
+
+    PERCHE' E' SCRITTO QUI E NON SOLO NEL DOCUMENTO. Un'allowlist che non
+    governa niente e' peggio di un'allowlist assente: quella assente si vede,
+    questa rassicura. E' la stessa forma del difetto che la decisione 58
+    (`telaio-apre-classe-filtra`) ha chiuso altrove — un campo che si dichiara
+    applicato senza essere applicabile — qui trovata in un file di
+    configurazione invece che in un dato.
+
+    NON E' UN ERRORE DA CORREGGERE cambiando i domini: l'elenco e' giusto per
+    l'ambiente locale, dove resta in vigore. Cio' che mancava era dire QUALE
+    ambiente descrive.
 
 SCOPE: DI PROGETTO, NON UTENTE
     Il file generato e' `.claude/settings.json` DENTRO la cartella di progetto,
@@ -32,10 +57,18 @@ Uso:  python3 genera_rete.py
 
 import json
 import os
-from datetime import date
 
 BASE = os.path.dirname(os.path.abspath(__file__))
-OGGI = date.today().isoformat()
+
+# LA DATA E' UN DATO, NON L'OROLOGIO. Era `date.today()`, e questo rendeva il
+# generatore NON RIPRODUCIBILE: rigenerare senza cambiare niente produceva
+# comunque un diff, cioe' rumore indistinguibile da una modifica vera. Il
+# difetto si e' manifestato il 22/09/2026 durante una semplice verifica — lo
+# script e' stato eseguito per controllare che girasse, e ha sporcato l'albero.
+# Un generatore che si dichiara sorgente di verita' deve dare lo stesso file a
+# parita' di ingressi: ora la data si aggiorna quando si tocca il REGISTRO,
+# come ogni altra voce.
+AGGIORNATO = "2026-09-22"
 
 # --------------------------------------------------------------------------
 # REGISTRO — sorgente di verita'.
@@ -132,7 +165,7 @@ def genera_documento():
 
     return f"""# Domini di rete permessi
 
-*Generato da `genera_rete.py` il {OGGI}. Non modificare a mano: la sorgente è
+*Generato da `genera_rete.py` il {AGGIORNATO}. Non modificare a mano: la sorgente è
 il registro dentro lo script, da cui derivano sia questo documento sia
 `.claude/settings.json`.*
 
@@ -140,15 +173,30 @@ il registro dentro lo script, da cui derivano sia questo documento sia
 
 ---
 
-## Come funziona
+## Due ambienti, e questo elenco ne governa uno solo
 
-La shell **non ha rete diretta**: nessun `/etc/resolv.conf`, solo l'interfaccia
-di loopback. Tutto il traffico passa da due proxy che girano **fuori** dal
-sandbox — HTTP su `:3128`, SOCKS5 su `:1080` — e il proxy decide dominio per
-dominio.
+**In locale** (il Mac) la shell non ha rete diretta: il traffico passa da un
+proxy che gira fuori dal sandbox e decide dominio per dominio. Senza allowlist
+ogni host nuovo fa scattare una richiesta di conferma; con l'allowlist i domini
+qui sotto passano senza chiedere. È l'ambiente per cui questo file è nato.
 
-Senza allowlist ogni host nuovo fa scattare una richiesta di conferma. Con
-l'allowlist i domini qui sotto passano senza chiedere.
+**In remoto** (Claude Code sul web, container effimero) **questo elenco non
+governa niente.** La rete è decisa dalla policy dell'environment, fuori dal
+progetto. Misurato il 22/09/2026:
+
+| dominio | esito dall'ambiente remoto |
+|---|---|
+| `api.open5e.com` | **403 al CONNECT — bloccato** |
+| `pypi.org` | 200 |
+| `github.com` | 400 (risponde, raggiungibile) |
+| `raw.githubusercontent.com` | 301 |
+
+Passa tutto tranne l'unico dominio che il progetto usi davvero. La tabella qui
+sotto continua a dichiararlo permesso, e da lì non lo è: **il permesso è di
+questo file, il divieto è dell'ambiente, e vince l'ambiente.**
+
+Non è una riga da correggere — l'elenco è giusto dove è in vigore. Quello che
+mancava era dire *quale* ambiente descrive.
 
 **Cosa questo NON cambia:** il recupero di contenuti dal web continua a passare
 dagli strumenti di fetch, non dalla shell. L'allowlist serve a `pip`, `npm`,
